@@ -1,0 +1,4637 @@
+{
+  "generated_at": "2026-05-10T02:30:00Z",
+  "schema_version": 3,
+  "tenants": {
+    "northwind-prod": {
+      "limits": {
+        "daily_tool_result_mb": 512,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "sec-audit-17",
+        "max_context_policy": "pointer-first",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0000": {
+      "limits": {
+        "daily_tool_result_mb": 64,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-00",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0001": {
+      "limits": {
+        "daily_tool_result_mb": 65,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-01",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0002": {
+      "limits": {
+        "daily_tool_result_mb": 66,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-02",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0003": {
+      "limits": {
+        "daily_tool_result_mb": 67,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-03",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0004": {
+      "limits": {
+        "daily_tool_result_mb": 68,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-04",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0005": {
+      "limits": {
+        "daily_tool_result_mb": 69,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-05",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0006": {
+      "limits": {
+        "daily_tool_result_mb": 70,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-06",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0007": {
+      "limits": {
+        "daily_tool_result_mb": 71,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-07",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0008": {
+      "limits": {
+        "daily_tool_result_mb": 72,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-08",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0009": {
+      "limits": {
+        "daily_tool_result_mb": 73,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-09",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0010": {
+      "limits": {
+        "daily_tool_result_mb": 74,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-10",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0011": {
+      "limits": {
+        "daily_tool_result_mb": 75,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-11",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0012": {
+      "limits": {
+        "daily_tool_result_mb": 76,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-12",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0013": {
+      "limits": {
+        "daily_tool_result_mb": 77,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-13",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0014": {
+      "limits": {
+        "daily_tool_result_mb": 78,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-14",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0015": {
+      "limits": {
+        "daily_tool_result_mb": 79,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-15",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0016": {
+      "limits": {
+        "daily_tool_result_mb": 80,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-16",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0017": {
+      "limits": {
+        "daily_tool_result_mb": 81,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-17",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0018": {
+      "limits": {
+        "daily_tool_result_mb": 82,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-18",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0019": {
+      "limits": {
+        "daily_tool_result_mb": 83,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-19",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0020": {
+      "limits": {
+        "daily_tool_result_mb": 84,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-20",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0021": {
+      "limits": {
+        "daily_tool_result_mb": 85,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-21",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0022": {
+      "limits": {
+        "daily_tool_result_mb": 86,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-22",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0023": {
+      "limits": {
+        "daily_tool_result_mb": 87,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-23",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0024": {
+      "limits": {
+        "daily_tool_result_mb": 88,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-24",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0025": {
+      "limits": {
+        "daily_tool_result_mb": 89,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-25",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0026": {
+      "limits": {
+        "daily_tool_result_mb": 90,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-26",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0027": {
+      "limits": {
+        "daily_tool_result_mb": 91,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-27",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0028": {
+      "limits": {
+        "daily_tool_result_mb": 92,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-28",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0029": {
+      "limits": {
+        "daily_tool_result_mb": 93,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-29",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0030": {
+      "limits": {
+        "daily_tool_result_mb": 94,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-30",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0031": {
+      "limits": {
+        "daily_tool_result_mb": 95,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-31",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0032": {
+      "limits": {
+        "daily_tool_result_mb": 96,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-32",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0033": {
+      "limits": {
+        "daily_tool_result_mb": 97,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-33",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0034": {
+      "limits": {
+        "daily_tool_result_mb": 98,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-34",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0035": {
+      "limits": {
+        "daily_tool_result_mb": 99,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-35",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0036": {
+      "limits": {
+        "daily_tool_result_mb": 100,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-36",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0037": {
+      "limits": {
+        "daily_tool_result_mb": 101,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-37",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0038": {
+      "limits": {
+        "daily_tool_result_mb": 102,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-38",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0039": {
+      "limits": {
+        "daily_tool_result_mb": 103,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-39",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0040": {
+      "limits": {
+        "daily_tool_result_mb": 104,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-40",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0041": {
+      "limits": {
+        "daily_tool_result_mb": 105,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-00",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0042": {
+      "limits": {
+        "daily_tool_result_mb": 106,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-01",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0043": {
+      "limits": {
+        "daily_tool_result_mb": 107,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-02",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0044": {
+      "limits": {
+        "daily_tool_result_mb": 108,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-03",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0045": {
+      "limits": {
+        "daily_tool_result_mb": 109,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-04",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0046": {
+      "limits": {
+        "daily_tool_result_mb": 110,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-05",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0047": {
+      "limits": {
+        "daily_tool_result_mb": 111,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-06",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0048": {
+      "limits": {
+        "daily_tool_result_mb": 112,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-07",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0049": {
+      "limits": {
+        "daily_tool_result_mb": 113,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-08",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0050": {
+      "limits": {
+        "daily_tool_result_mb": 114,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-09",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0051": {
+      "limits": {
+        "daily_tool_result_mb": 115,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-10",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0052": {
+      "limits": {
+        "daily_tool_result_mb": 116,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-11",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0053": {
+      "limits": {
+        "daily_tool_result_mb": 117,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-12",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0054": {
+      "limits": {
+        "daily_tool_result_mb": 118,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-13",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0055": {
+      "limits": {
+        "daily_tool_result_mb": 119,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-14",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0056": {
+      "limits": {
+        "daily_tool_result_mb": 120,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-15",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0057": {
+      "limits": {
+        "daily_tool_result_mb": 121,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-16",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0058": {
+      "limits": {
+        "daily_tool_result_mb": 122,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-17",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0059": {
+      "limits": {
+        "daily_tool_result_mb": 123,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-18",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0060": {
+      "limits": {
+        "daily_tool_result_mb": 124,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-19",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0061": {
+      "limits": {
+        "daily_tool_result_mb": 125,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-20",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0062": {
+      "limits": {
+        "daily_tool_result_mb": 126,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-21",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0063": {
+      "limits": {
+        "daily_tool_result_mb": 127,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-22",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0064": {
+      "limits": {
+        "daily_tool_result_mb": 128,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-23",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0065": {
+      "limits": {
+        "daily_tool_result_mb": 129,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-24",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0066": {
+      "limits": {
+        "daily_tool_result_mb": 130,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-25",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0067": {
+      "limits": {
+        "daily_tool_result_mb": 131,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-26",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0068": {
+      "limits": {
+        "daily_tool_result_mb": 132,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-27",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0069": {
+      "limits": {
+        "daily_tool_result_mb": 133,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-28",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0070": {
+      "limits": {
+        "daily_tool_result_mb": 134,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-29",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0071": {
+      "limits": {
+        "daily_tool_result_mb": 135,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-30",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0072": {
+      "limits": {
+        "daily_tool_result_mb": 136,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-31",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0073": {
+      "limits": {
+        "daily_tool_result_mb": 137,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-32",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0074": {
+      "limits": {
+        "daily_tool_result_mb": 138,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-33",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0075": {
+      "limits": {
+        "daily_tool_result_mb": 139,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-34",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0076": {
+      "limits": {
+        "daily_tool_result_mb": 140,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-35",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0077": {
+      "limits": {
+        "daily_tool_result_mb": 141,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-36",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0078": {
+      "limits": {
+        "daily_tool_result_mb": 142,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-37",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0079": {
+      "limits": {
+        "daily_tool_result_mb": 143,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-38",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0080": {
+      "limits": {
+        "daily_tool_result_mb": 144,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-39",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0081": {
+      "limits": {
+        "daily_tool_result_mb": 145,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-40",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0082": {
+      "limits": {
+        "daily_tool_result_mb": 146,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-00",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0083": {
+      "limits": {
+        "daily_tool_result_mb": 147,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-01",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0084": {
+      "limits": {
+        "daily_tool_result_mb": 148,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-02",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0085": {
+      "limits": {
+        "daily_tool_result_mb": 149,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-03",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0086": {
+      "limits": {
+        "daily_tool_result_mb": 150,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-04",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0087": {
+      "limits": {
+        "daily_tool_result_mb": 151,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-05",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0088": {
+      "limits": {
+        "daily_tool_result_mb": 152,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-06",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0089": {
+      "limits": {
+        "daily_tool_result_mb": 153,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-07",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0090": {
+      "limits": {
+        "daily_tool_result_mb": 154,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-08",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0091": {
+      "limits": {
+        "daily_tool_result_mb": 155,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-09",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0092": {
+      "limits": {
+        "daily_tool_result_mb": 156,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-10",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0093": {
+      "limits": {
+        "daily_tool_result_mb": 157,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-11",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0094": {
+      "limits": {
+        "daily_tool_result_mb": 158,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-12",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0095": {
+      "limits": {
+        "daily_tool_result_mb": 159,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-13",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0096": {
+      "limits": {
+        "daily_tool_result_mb": 160,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-14",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0097": {
+      "limits": {
+        "daily_tool_result_mb": 161,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-15",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0098": {
+      "limits": {
+        "daily_tool_result_mb": 162,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-16",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0099": {
+      "limits": {
+        "daily_tool_result_mb": 163,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-17",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0100": {
+      "limits": {
+        "daily_tool_result_mb": 164,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-18",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0101": {
+      "limits": {
+        "daily_tool_result_mb": 165,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-19",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0102": {
+      "limits": {
+        "daily_tool_result_mb": 166,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-20",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0103": {
+      "limits": {
+        "daily_tool_result_mb": 167,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-21",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0104": {
+      "limits": {
+        "daily_tool_result_mb": 168,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-22",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0105": {
+      "limits": {
+        "daily_tool_result_mb": 169,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-23",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0106": {
+      "limits": {
+        "daily_tool_result_mb": 170,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-24",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0107": {
+      "limits": {
+        "daily_tool_result_mb": 171,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-25",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0108": {
+      "limits": {
+        "daily_tool_result_mb": 172,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-26",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0109": {
+      "limits": {
+        "daily_tool_result_mb": 173,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-27",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0110": {
+      "limits": {
+        "daily_tool_result_mb": 174,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-28",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0111": {
+      "limits": {
+        "daily_tool_result_mb": 175,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-29",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0112": {
+      "limits": {
+        "daily_tool_result_mb": 176,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-30",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0113": {
+      "limits": {
+        "daily_tool_result_mb": 177,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-31",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0114": {
+      "limits": {
+        "daily_tool_result_mb": 178,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-32",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0115": {
+      "limits": {
+        "daily_tool_result_mb": 179,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-33",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0116": {
+      "limits": {
+        "daily_tool_result_mb": 180,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-34",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0117": {
+      "limits": {
+        "daily_tool_result_mb": 181,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-35",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0118": {
+      "limits": {
+        "daily_tool_result_mb": 182,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-36",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0119": {
+      "limits": {
+        "daily_tool_result_mb": 183,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-37",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0120": {
+      "limits": {
+        "daily_tool_result_mb": 184,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-38",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0121": {
+      "limits": {
+        "daily_tool_result_mb": 185,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-39",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0122": {
+      "limits": {
+        "daily_tool_result_mb": 186,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-40",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0123": {
+      "limits": {
+        "daily_tool_result_mb": 187,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-00",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0124": {
+      "limits": {
+        "daily_tool_result_mb": 188,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-01",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0125": {
+      "limits": {
+        "daily_tool_result_mb": 189,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-02",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0126": {
+      "limits": {
+        "daily_tool_result_mb": 190,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-03",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0127": {
+      "limits": {
+        "daily_tool_result_mb": 191,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-04",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0128": {
+      "limits": {
+        "daily_tool_result_mb": 192,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-05",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0129": {
+      "limits": {
+        "daily_tool_result_mb": 193,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-06",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0130": {
+      "limits": {
+        "daily_tool_result_mb": 194,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-07",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0131": {
+      "limits": {
+        "daily_tool_result_mb": 195,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-08",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0132": {
+      "limits": {
+        "daily_tool_result_mb": 196,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-09",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0133": {
+      "limits": {
+        "daily_tool_result_mb": 197,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-10",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0134": {
+      "limits": {
+        "daily_tool_result_mb": 198,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-11",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0135": {
+      "limits": {
+        "daily_tool_result_mb": 199,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-12",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0136": {
+      "limits": {
+        "daily_tool_result_mb": 200,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-13",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0137": {
+      "limits": {
+        "daily_tool_result_mb": 201,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-14",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0138": {
+      "limits": {
+        "daily_tool_result_mb": 202,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-15",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0139": {
+      "limits": {
+        "daily_tool_result_mb": 203,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-16",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0140": {
+      "limits": {
+        "daily_tool_result_mb": 204,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-17",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0141": {
+      "limits": {
+        "daily_tool_result_mb": 205,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-18",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0142": {
+      "limits": {
+        "daily_tool_result_mb": 206,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-19",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0143": {
+      "limits": {
+        "daily_tool_result_mb": 207,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-20",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0144": {
+      "limits": {
+        "daily_tool_result_mb": 208,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-21",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0145": {
+      "limits": {
+        "daily_tool_result_mb": 209,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-22",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0146": {
+      "limits": {
+        "daily_tool_result_mb": 210,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-23",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0147": {
+      "limits": {
+        "daily_tool_result_mb": 211,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-24",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0148": {
+      "limits": {
+        "daily_tool_result_mb": 212,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-25",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0149": {
+      "limits": {
+        "daily_tool_result_mb": 213,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-26",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0150": {
+      "limits": {
+        "daily_tool_result_mb": 214,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-27",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0151": {
+      "limits": {
+        "daily_tool_result_mb": 215,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-28",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0152": {
+      "limits": {
+        "daily_tool_result_mb": 216,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-29",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0153": {
+      "limits": {
+        "daily_tool_result_mb": 217,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-30",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0154": {
+      "limits": {
+        "daily_tool_result_mb": 218,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-31",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0155": {
+      "limits": {
+        "daily_tool_result_mb": 219,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-32",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0156": {
+      "limits": {
+        "daily_tool_result_mb": 220,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-33",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0157": {
+      "limits": {
+        "daily_tool_result_mb": 221,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-34",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0158": {
+      "limits": {
+        "daily_tool_result_mb": 222,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-35",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0159": {
+      "limits": {
+        "daily_tool_result_mb": 223,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-36",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0160": {
+      "limits": {
+        "daily_tool_result_mb": 224,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-37",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0161": {
+      "limits": {
+        "daily_tool_result_mb": 225,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-38",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0162": {
+      "limits": {
+        "daily_tool_result_mb": 226,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-39",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0163": {
+      "limits": {
+        "daily_tool_result_mb": 227,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-40",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0164": {
+      "limits": {
+        "daily_tool_result_mb": 228,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-00",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0165": {
+      "limits": {
+        "daily_tool_result_mb": 229,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-01",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0166": {
+      "limits": {
+        "daily_tool_result_mb": 230,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-02",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0167": {
+      "limits": {
+        "daily_tool_result_mb": 231,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-03",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0168": {
+      "limits": {
+        "daily_tool_result_mb": 232,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-04",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0169": {
+      "limits": {
+        "daily_tool_result_mb": 233,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-05",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0170": {
+      "limits": {
+        "daily_tool_result_mb": 234,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-06",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0171": {
+      "limits": {
+        "daily_tool_result_mb": 235,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-07",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0172": {
+      "limits": {
+        "daily_tool_result_mb": 236,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-08",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0173": {
+      "limits": {
+        "daily_tool_result_mb": 237,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-09",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0174": {
+      "limits": {
+        "daily_tool_result_mb": 238,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-10",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0175": {
+      "limits": {
+        "daily_tool_result_mb": 239,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-11",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0176": {
+      "limits": {
+        "daily_tool_result_mb": 240,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-12",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0177": {
+      "limits": {
+        "daily_tool_result_mb": 241,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-13",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0178": {
+      "limits": {
+        "daily_tool_result_mb": 242,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-14",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0179": {
+      "limits": {
+        "daily_tool_result_mb": 243,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-15",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0180": {
+      "limits": {
+        "daily_tool_result_mb": 244,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-16",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0181": {
+      "limits": {
+        "daily_tool_result_mb": 245,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-17",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0182": {
+      "limits": {
+        "daily_tool_result_mb": 246,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-18",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0183": {
+      "limits": {
+        "daily_tool_result_mb": 247,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-19",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0184": {
+      "limits": {
+        "daily_tool_result_mb": 248,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-20",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0185": {
+      "limits": {
+        "daily_tool_result_mb": 249,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-21",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0186": {
+      "limits": {
+        "daily_tool_result_mb": 250,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-22",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0187": {
+      "limits": {
+        "daily_tool_result_mb": 251,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-23",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0188": {
+      "limits": {
+        "daily_tool_result_mb": 252,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-24",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0189": {
+      "limits": {
+        "daily_tool_result_mb": 253,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-25",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0190": {
+      "limits": {
+        "daily_tool_result_mb": 254,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-26",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0191": {
+      "limits": {
+        "daily_tool_result_mb": 255,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-27",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0192": {
+      "limits": {
+        "daily_tool_result_mb": 256,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-28",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0193": {
+      "limits": {
+        "daily_tool_result_mb": 257,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-29",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0194": {
+      "limits": {
+        "daily_tool_result_mb": 258,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-30",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0195": {
+      "limits": {
+        "daily_tool_result_mb": 259,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-31",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0196": {
+      "limits": {
+        "daily_tool_result_mb": 260,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-32",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0197": {
+      "limits": {
+        "daily_tool_result_mb": 261,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-33",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0198": {
+      "limits": {
+        "daily_tool_result_mb": 262,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-34",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0199": {
+      "limits": {
+        "daily_tool_result_mb": 263,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-35",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0200": {
+      "limits": {
+        "daily_tool_result_mb": 264,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-36",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0201": {
+      "limits": {
+        "daily_tool_result_mb": 265,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-37",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0202": {
+      "limits": {
+        "daily_tool_result_mb": 266,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-38",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0203": {
+      "limits": {
+        "daily_tool_result_mb": 267,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-39",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0204": {
+      "limits": {
+        "daily_tool_result_mb": 268,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-40",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0205": {
+      "limits": {
+        "daily_tool_result_mb": 269,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-00",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0206": {
+      "limits": {
+        "daily_tool_result_mb": 270,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-01",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0207": {
+      "limits": {
+        "daily_tool_result_mb": 271,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-02",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0208": {
+      "limits": {
+        "daily_tool_result_mb": 272,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-03",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0209": {
+      "limits": {
+        "daily_tool_result_mb": 273,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-04",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0210": {
+      "limits": {
+        "daily_tool_result_mb": 274,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-05",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0211": {
+      "limits": {
+        "daily_tool_result_mb": 275,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-06",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0212": {
+      "limits": {
+        "daily_tool_result_mb": 276,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-07",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0213": {
+      "limits": {
+        "daily_tool_result_mb": 277,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-08",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0214": {
+      "limits": {
+        "daily_tool_result_mb": 278,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-09",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0215": {
+      "limits": {
+        "daily_tool_result_mb": 279,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-10",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0216": {
+      "limits": {
+        "daily_tool_result_mb": 280,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-11",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0217": {
+      "limits": {
+        "daily_tool_result_mb": 281,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-12",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0218": {
+      "limits": {
+        "daily_tool_result_mb": 282,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-13",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0219": {
+      "limits": {
+        "daily_tool_result_mb": 283,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-14",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0220": {
+      "limits": {
+        "daily_tool_result_mb": 284,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-15",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0221": {
+      "limits": {
+        "daily_tool_result_mb": 285,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-16",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0222": {
+      "limits": {
+        "daily_tool_result_mb": 286,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-17",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0223": {
+      "limits": {
+        "daily_tool_result_mb": 287,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-18",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0224": {
+      "limits": {
+        "daily_tool_result_mb": 288,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-19",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0225": {
+      "limits": {
+        "daily_tool_result_mb": 289,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-20",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0226": {
+      "limits": {
+        "daily_tool_result_mb": 290,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-21",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0227": {
+      "limits": {
+        "daily_tool_result_mb": 291,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-22",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0228": {
+      "limits": {
+        "daily_tool_result_mb": 292,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-23",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0229": {
+      "limits": {
+        "daily_tool_result_mb": 293,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-24",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0230": {
+      "limits": {
+        "daily_tool_result_mb": 294,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-25",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0231": {
+      "limits": {
+        "daily_tool_result_mb": 295,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-26",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0232": {
+      "limits": {
+        "daily_tool_result_mb": 296,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-27",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0233": {
+      "limits": {
+        "daily_tool_result_mb": 297,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-28",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0234": {
+      "limits": {
+        "daily_tool_result_mb": 298,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-29",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0235": {
+      "limits": {
+        "daily_tool_result_mb": 299,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-30",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0236": {
+      "limits": {
+        "daily_tool_result_mb": 300,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-31",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0237": {
+      "limits": {
+        "daily_tool_result_mb": 301,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-32",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0238": {
+      "limits": {
+        "daily_tool_result_mb": 302,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-33",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0239": {
+      "limits": {
+        "daily_tool_result_mb": 303,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-34",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0240": {
+      "limits": {
+        "daily_tool_result_mb": 304,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-35",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0241": {
+      "limits": {
+        "daily_tool_result_mb": 305,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-36",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0242": {
+      "limits": {
+        "daily_tool_result_mb": 306,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-37",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0243": {
+      "limits": {
+        "daily_tool_result_mb": 307,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-38",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0244": {
+      "limits": {
+        "daily_tool_result_mb": 308,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-39",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0245": {
+      "limits": {
+        "daily_tool_result_mb": 309,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-40",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0246": {
+      "limits": {
+        "daily_tool_result_mb": 310,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-00",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0247": {
+      "limits": {
+        "daily_tool_result_mb": 311,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-01",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0248": {
+      "limits": {
+        "daily_tool_result_mb": 312,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-02",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0249": {
+      "limits": {
+        "daily_tool_result_mb": 313,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-03",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0250": {
+      "limits": {
+        "daily_tool_result_mb": 314,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-04",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0251": {
+      "limits": {
+        "daily_tool_result_mb": 315,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-05",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0252": {
+      "limits": {
+        "daily_tool_result_mb": 316,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-06",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0253": {
+      "limits": {
+        "daily_tool_result_mb": 317,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-07",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0254": {
+      "limits": {
+        "daily_tool_result_mb": 318,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-08",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0255": {
+      "limits": {
+        "daily_tool_result_mb": 319,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-09",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0256": {
+      "limits": {
+        "daily_tool_result_mb": 320,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-10",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0257": {
+      "limits": {
+        "daily_tool_result_mb": 321,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-11",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0258": {
+      "limits": {
+        "daily_tool_result_mb": 322,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-12",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0259": {
+      "limits": {
+        "daily_tool_result_mb": 323,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-13",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0260": {
+      "limits": {
+        "daily_tool_result_mb": 324,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-14",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0261": {
+      "limits": {
+        "daily_tool_result_mb": 325,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-15",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0262": {
+      "limits": {
+        "daily_tool_result_mb": 326,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-16",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0263": {
+      "limits": {
+        "daily_tool_result_mb": 327,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-17",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0264": {
+      "limits": {
+        "daily_tool_result_mb": 328,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-18",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0265": {
+      "limits": {
+        "daily_tool_result_mb": 329,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-19",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0266": {
+      "limits": {
+        "daily_tool_result_mb": 330,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-20",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0267": {
+      "limits": {
+        "daily_tool_result_mb": 331,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-21",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0268": {
+      "limits": {
+        "daily_tool_result_mb": 332,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-22",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0269": {
+      "limits": {
+        "daily_tool_result_mb": 333,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-23",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0270": {
+      "limits": {
+        "daily_tool_result_mb": 334,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-24",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0271": {
+      "limits": {
+        "daily_tool_result_mb": 335,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-25",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0272": {
+      "limits": {
+        "daily_tool_result_mb": 336,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-26",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0273": {
+      "limits": {
+        "daily_tool_result_mb": 337,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-27",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0274": {
+      "limits": {
+        "daily_tool_result_mb": 338,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-28",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0275": {
+      "limits": {
+        "daily_tool_result_mb": 339,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-29",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0276": {
+      "limits": {
+        "daily_tool_result_mb": 340,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-30",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0277": {
+      "limits": {
+        "daily_tool_result_mb": 341,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-31",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0278": {
+      "limits": {
+        "daily_tool_result_mb": 342,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-32",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0279": {
+      "limits": {
+        "daily_tool_result_mb": 343,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-33",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0280": {
+      "limits": {
+        "daily_tool_result_mb": 344,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-34",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0281": {
+      "limits": {
+        "daily_tool_result_mb": 345,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-35",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0282": {
+      "limits": {
+        "daily_tool_result_mb": 346,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-36",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0283": {
+      "limits": {
+        "daily_tool_result_mb": 347,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-37",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0284": {
+      "limits": {
+        "daily_tool_result_mb": 348,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-38",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0285": {
+      "limits": {
+        "daily_tool_result_mb": 349,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-39",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0286": {
+      "limits": {
+        "daily_tool_result_mb": 350,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-40",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0287": {
+      "limits": {
+        "daily_tool_result_mb": 351,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-00",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0288": {
+      "limits": {
+        "daily_tool_result_mb": 352,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-01",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0289": {
+      "limits": {
+        "daily_tool_result_mb": 353,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-02",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0290": {
+      "limits": {
+        "daily_tool_result_mb": 354,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-03",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0291": {
+      "limits": {
+        "daily_tool_result_mb": 355,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-04",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0292": {
+      "limits": {
+        "daily_tool_result_mb": 356,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-05",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0293": {
+      "limits": {
+        "daily_tool_result_mb": 357,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-06",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0294": {
+      "limits": {
+        "daily_tool_result_mb": 358,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-07",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0295": {
+      "limits": {
+        "daily_tool_result_mb": 359,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-08",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0296": {
+      "limits": {
+        "daily_tool_result_mb": 360,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-09",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0297": {
+      "limits": {
+        "daily_tool_result_mb": 361,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-10",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0298": {
+      "limits": {
+        "daily_tool_result_mb": 362,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-11",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0299": {
+      "limits": {
+        "daily_tool_result_mb": 363,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-12",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0300": {
+      "limits": {
+        "daily_tool_result_mb": 364,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-13",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0301": {
+      "limits": {
+        "daily_tool_result_mb": 365,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-14",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0302": {
+      "limits": {
+        "daily_tool_result_mb": 366,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-15",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0303": {
+      "limits": {
+        "daily_tool_result_mb": 367,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-16",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0304": {
+      "limits": {
+        "daily_tool_result_mb": 368,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-17",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0305": {
+      "limits": {
+        "daily_tool_result_mb": 369,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-18",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0306": {
+      "limits": {
+        "daily_tool_result_mb": 370,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-19",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0307": {
+      "limits": {
+        "daily_tool_result_mb": 371,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-20",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0308": {
+      "limits": {
+        "daily_tool_result_mb": 372,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-21",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0309": {
+      "limits": {
+        "daily_tool_result_mb": 373,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-22",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0310": {
+      "limits": {
+        "daily_tool_result_mb": 374,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-23",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0311": {
+      "limits": {
+        "daily_tool_result_mb": 375,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-24",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0312": {
+      "limits": {
+        "daily_tool_result_mb": 376,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-25",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0313": {
+      "limits": {
+        "daily_tool_result_mb": 377,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-26",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0314": {
+      "limits": {
+        "daily_tool_result_mb": 378,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-27",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0315": {
+      "limits": {
+        "daily_tool_result_mb": 379,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-28",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0316": {
+      "limits": {
+        "daily_tool_result_mb": 380,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-29",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0317": {
+      "limits": {
+        "daily_tool_result_mb": 381,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-30",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0318": {
+      "limits": {
+        "daily_tool_result_mb": 382,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-31",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0319": {
+      "limits": {
+        "daily_tool_result_mb": 383,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-32",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0320": {
+      "limits": {
+        "daily_tool_result_mb": 384,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-33",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0321": {
+      "limits": {
+        "daily_tool_result_mb": 385,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-34",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0322": {
+      "limits": {
+        "daily_tool_result_mb": 386,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-35",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0323": {
+      "limits": {
+        "daily_tool_result_mb": 387,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-36",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0324": {
+      "limits": {
+        "daily_tool_result_mb": 388,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-37",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0325": {
+      "limits": {
+        "daily_tool_result_mb": 389,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-38",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0326": {
+      "limits": {
+        "daily_tool_result_mb": 390,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-39",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0327": {
+      "limits": {
+        "daily_tool_result_mb": 391,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-40",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0328": {
+      "limits": {
+        "daily_tool_result_mb": 392,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-00",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0329": {
+      "limits": {
+        "daily_tool_result_mb": 393,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-01",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0330": {
+      "limits": {
+        "daily_tool_result_mb": 394,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-02",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0331": {
+      "limits": {
+        "daily_tool_result_mb": 395,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-03",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0332": {
+      "limits": {
+        "daily_tool_result_mb": 396,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-04",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0333": {
+      "limits": {
+        "daily_tool_result_mb": 397,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-05",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0334": {
+      "limits": {
+        "daily_tool_result_mb": 398,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-06",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0335": {
+      "limits": {
+        "daily_tool_result_mb": 399,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-07",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0336": {
+      "limits": {
+        "daily_tool_result_mb": 400,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-08",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0337": {
+      "limits": {
+        "daily_tool_result_mb": 401,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-09",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0338": {
+      "limits": {
+        "daily_tool_result_mb": 402,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-10",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0339": {
+      "limits": {
+        "daily_tool_result_mb": 403,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-11",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0340": {
+      "limits": {
+        "daily_tool_result_mb": 404,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-12",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0341": {
+      "limits": {
+        "daily_tool_result_mb": 405,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-13",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0342": {
+      "limits": {
+        "daily_tool_result_mb": 406,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-14",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0343": {
+      "limits": {
+        "daily_tool_result_mb": 407,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-15",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0344": {
+      "limits": {
+        "daily_tool_result_mb": 408,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-16",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0345": {
+      "limits": {
+        "daily_tool_result_mb": 409,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-17",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0346": {
+      "limits": {
+        "daily_tool_result_mb": 410,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-18",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0347": {
+      "limits": {
+        "daily_tool_result_mb": 411,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-19",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0348": {
+      "limits": {
+        "daily_tool_result_mb": 412,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-20",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0349": {
+      "limits": {
+        "daily_tool_result_mb": 413,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-21",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0350": {
+      "limits": {
+        "daily_tool_result_mb": 414,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-22",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0351": {
+      "limits": {
+        "daily_tool_result_mb": 415,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-23",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0352": {
+      "limits": {
+        "daily_tool_result_mb": 416,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-24",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0353": {
+      "limits": {
+        "daily_tool_result_mb": 417,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-25",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0354": {
+      "limits": {
+        "daily_tool_result_mb": 418,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-26",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0355": {
+      "limits": {
+        "daily_tool_result_mb": 419,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-27",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0356": {
+      "limits": {
+        "daily_tool_result_mb": 420,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-28",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0357": {
+      "limits": {
+        "daily_tool_result_mb": 421,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-29",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0358": {
+      "limits": {
+        "daily_tool_result_mb": 422,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-30",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0359": {
+      "limits": {
+        "daily_tool_result_mb": 423,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-31",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0360": {
+      "limits": {
+        "daily_tool_result_mb": 424,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-32",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0361": {
+      "limits": {
+        "daily_tool_result_mb": 425,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-33",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0362": {
+      "limits": {
+        "daily_tool_result_mb": 426,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-34",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0363": {
+      "limits": {
+        "daily_tool_result_mb": 427,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-35",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0364": {
+      "limits": {
+        "daily_tool_result_mb": 428,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-36",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0365": {
+      "limits": {
+        "daily_tool_result_mb": 429,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-37",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0366": {
+      "limits": {
+        "daily_tool_result_mb": 430,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-38",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0367": {
+      "limits": {
+        "daily_tool_result_mb": 431,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-39",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0368": {
+      "limits": {
+        "daily_tool_result_mb": 432,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-40",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0369": {
+      "limits": {
+        "daily_tool_result_mb": 433,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-00",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0370": {
+      "limits": {
+        "daily_tool_result_mb": 434,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-01",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0371": {
+      "limits": {
+        "daily_tool_result_mb": 435,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-02",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0372": {
+      "limits": {
+        "daily_tool_result_mb": 436,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-03",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0373": {
+      "limits": {
+        "daily_tool_result_mb": 437,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-04",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0374": {
+      "limits": {
+        "daily_tool_result_mb": 438,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-05",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0375": {
+      "limits": {
+        "daily_tool_result_mb": 439,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-06",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0376": {
+      "limits": {
+        "daily_tool_result_mb": 440,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-07",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0377": {
+      "limits": {
+        "daily_tool_result_mb": 441,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-08",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0378": {
+      "limits": {
+        "daily_tool_result_mb": 442,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-09",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0379": {
+      "limits": {
+        "daily_tool_result_mb": 443,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-10",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0380": {
+      "limits": {
+        "daily_tool_result_mb": 444,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-11",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0381": {
+      "limits": {
+        "daily_tool_result_mb": 445,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-12",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0382": {
+      "limits": {
+        "daily_tool_result_mb": 446,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-13",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0383": {
+      "limits": {
+        "daily_tool_result_mb": 447,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-14",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0384": {
+      "limits": {
+        "daily_tool_result_mb": 448,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-15",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0385": {
+      "limits": {
+        "daily_tool_result_mb": 449,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-16",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0386": {
+      "limits": {
+        "daily_tool_result_mb": 450,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-17",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0387": {
+      "limits": {
+        "daily_tool_result_mb": 451,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-18",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0388": {
+      "limits": {
+        "daily_tool_result_mb": 452,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-19",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0389": {
+      "limits": {
+        "daily_tool_result_mb": 453,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-20",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0390": {
+      "limits": {
+        "daily_tool_result_mb": 454,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-21",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0391": {
+      "limits": {
+        "daily_tool_result_mb": 455,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-22",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0392": {
+      "limits": {
+        "daily_tool_result_mb": 456,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-23",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0393": {
+      "limits": {
+        "daily_tool_result_mb": 457,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-24",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0394": {
+      "limits": {
+        "daily_tool_result_mb": 458,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-25",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0395": {
+      "limits": {
+        "daily_tool_result_mb": 459,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-26",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0396": {
+      "limits": {
+        "daily_tool_result_mb": 460,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-27",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0397": {
+      "limits": {
+        "daily_tool_result_mb": 461,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-28",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0398": {
+      "limits": {
+        "daily_tool_result_mb": 462,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-29",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0399": {
+      "limits": {
+        "daily_tool_result_mb": 463,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-30",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0400": {
+      "limits": {
+        "daily_tool_result_mb": 464,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-31",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0401": {
+      "limits": {
+        "daily_tool_result_mb": 465,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-32",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0402": {
+      "limits": {
+        "daily_tool_result_mb": 466,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-33",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0403": {
+      "limits": {
+        "daily_tool_result_mb": 467,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-34",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0404": {
+      "limits": {
+        "daily_tool_result_mb": 468,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-35",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0405": {
+      "limits": {
+        "daily_tool_result_mb": 469,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-36",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0406": {
+      "limits": {
+        "daily_tool_result_mb": 470,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-37",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0407": {
+      "limits": {
+        "daily_tool_result_mb": 471,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-38",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0408": {
+      "limits": {
+        "daily_tool_result_mb": 472,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-39",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0409": {
+      "limits": {
+        "daily_tool_result_mb": 473,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-40",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0410": {
+      "limits": {
+        "daily_tool_result_mb": 474,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-00",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0411": {
+      "limits": {
+        "daily_tool_result_mb": 475,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-01",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0412": {
+      "limits": {
+        "daily_tool_result_mb": 476,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-02",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0413": {
+      "limits": {
+        "daily_tool_result_mb": 477,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-03",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0414": {
+      "limits": {
+        "daily_tool_result_mb": 478,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-04",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0415": {
+      "limits": {
+        "daily_tool_result_mb": 479,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-05",
+        "max_context_policy": "pointer-preferred",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0416": {
+      "limits": {
+        "daily_tool_result_mb": 480,
+        "max_file_pointer_depth": 2
+      },
+      "security": {
+        "audit_bucket": "audit-06",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0417": {
+      "limits": {
+        "daily_tool_result_mb": 481,
+        "max_file_pointer_depth": 3
+      },
+      "security": {
+        "audit_bucket": "audit-07",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    },
+    "tenant-0418": {
+      "limits": {
+        "daily_tool_result_mb": 482,
+        "max_file_pointer_depth": 4
+      },
+      "security": {
+        "audit_bucket": "audit-08",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": false
+      }
+    },
+    "tenant-0419": {
+      "limits": {
+        "daily_tool_result_mb": 483,
+        "max_file_pointer_depth": 5
+      },
+      "security": {
+        "audit_bucket": "audit-09",
+        "max_context_policy": "raw-ok",
+        "source_pointer_enabled": true
+      }
+    }
+  }
+}

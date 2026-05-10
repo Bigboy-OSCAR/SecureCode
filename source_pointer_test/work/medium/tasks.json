@@ -1,0 +1,52 @@
+[
+  {
+    "id": "log_payment_failure_reason",
+    "question": "For request_id=REQ-042031 in the checkout gateway log, what are the exact payment failure reason and retry_after_ms? Answer as reason=<value>, retry_after_ms=<value>.",
+    "pointer": "source://log/logs/checkout_gateway.log",
+    "tool": {
+      "name": "grep_log",
+      "args": {
+        "pointer": "source://log/logs/checkout_gateway.log",
+        "pattern": "REQ-042031",
+        "before": 1,
+        "after": 1
+      }
+    },
+    "expected_substrings": [
+      "velocity_limit",
+      "7500"
+    ]
+  },
+  {
+    "id": "doc_retry_policy",
+    "question": "In the Payment Gateway Retry Policy section of the operations runbook, what are max_retries and jitter_percent? Answer as max_retries=<value>, jitter_percent=<value>.",
+    "pointer": "source://doc/docs/ops_runbook.md",
+    "tool": {
+      "name": "extract_doc_section",
+      "args": {
+        "pointer": "source://doc/docs/ops_runbook.md",
+        "query": "Payment Gateway Retry Policy"
+      }
+    },
+    "expected_substrings": [
+      "4",
+      "17"
+    ]
+  },
+  {
+    "id": "json_tenant_source_policy",
+    "question": "For tenant northwind-prod in the tenant snapshot JSON, what are source_pointer_enabled and max_context_policy? Answer as enabled=<value>, max_context_policy=<value>.",
+    "pointer": "source://json/json/tenant_snapshot.json",
+    "tool": {
+      "name": "extract_json_field",
+      "args": {
+        "pointer": "source://json/json/tenant_snapshot.json",
+        "path": "tenants.northwind-prod.security"
+      }
+    },
+    "expected_substrings": [
+      "true",
+      "pointer-first"
+    ]
+  }
+]

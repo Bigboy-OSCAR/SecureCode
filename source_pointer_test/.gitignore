@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+work/*_dryrun.jsonl
+work/*_pointer_select_v*.jsonl
+work/small_results.jsonl
+

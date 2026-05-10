@@ -1,0 +1,52 @@
+{
+  "scale": "small",
+  "log_lines": 650,
+  "doc_sections": 48,
+  "json_tenants": 420,
+  "sources_root": "source_pointer_test/work/small/sources",
+  "sources": [
+    {
+      "kind": "log",
+      "rel_path": "logs/checkout_gateway.log",
+      "pointer": "source://log/logs/checkout_gateway.log",
+      "bytes": 79072,
+      "tools": [
+        "grep_log"
+      ],
+      "hints": [
+        "request_id",
+        "payment_gateway",
+        "retry_after_ms",
+        "reason"
+      ]
+    },
+    {
+      "kind": "doc",
+      "rel_path": "docs/ops_runbook.md",
+      "pointer": "source://doc/docs/ops_runbook.md",
+      "bytes": 8388,
+      "tools": [
+        "extract_doc_section"
+      ],
+      "hints": [
+        "Payment Gateway Retry Policy",
+        "max_retries",
+        "jitter_percent"
+      ]
+    },
+    {
+      "kind": "json",
+      "rel_path": "json/tenant_snapshot.json",
+      "pointer": "source://json/json/tenant_snapshot.json",
+      "bytes": 115290,
+      "tools": [
+        "extract_json_field"
+      ],
+      "hints": [
+        "tenants.northwind-prod.security",
+        "source_pointer_enabled",
+        "max_context_policy"
+      ]
+    }
+  ]
+}
