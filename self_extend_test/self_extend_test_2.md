@@ -277,7 +277,37 @@ CPU 실행을 사용한 이유는 Metal backend에서 `llama-perplexity`가 comm
 
 즉, Self-Extend는 코드 어시스턴스에서 필요한 "긴 repo context 안의 정확한 정보 회수"를 보장하지 못했다.
 
-## 7. 코드 어시스턴스에 적용시킬 방법
+## 7. 이전 실험보다 이번 실험에서 있었던 발전 내용
+
+이번 2차 실험은 1차 실험의 단순 재실행이 아니라, 실패 원인을 더 좁혀볼 수 있도록 평가 범위와 실험 조건을 확장했다.
+
+발전 내용은 다음과 같다.
+
+1. 모델 조건을 논문에 더 가깝게 맞췄다. 이전에는 Llama 2 기반 Vicuna를 사용했지만, 이번에는 `Llama-2-7B-chat GGUF`를 직접 사용했다.
+2. 양자화 영향을 비교했다. 이전에는 `Q4_K_M`만 사용했지만, 이번에는 `Q4_K_M`과 `Q5_K_M`을 함께 테스트했다.
+3. passkey 단일 실험에서 벗어났다. 이전에는 synthetic passkey retrieval만 확인했지만, 이번에는 PG-19 PPL과 코드 어시스턴스 benchmark를 추가했다.
+4. 긴 context 수용과 retrieval 정확도를 분리해서 봤다. Self-Extend가 `n_ctx`를 늘리는지와 실제 정답을 회수하는지는 별도 지표로 기록했다.
+5. 코드 어시스턴스에 가까운 benchmark를 만들었다. 긴 repo context 안에 target 함수, symbol reference, failing test 원인을 숨기고 모델이 정확히 찾아내는지 측정했다.
+6. 실험 자동화가 확장되었다. 모델 경로, 결과 저장, CSV/JSON 출력, 로그 저장, PG-19 다운로드, synthetic repo 생성을 각각 스크립트로 분리했다.
+7. 도구별 지원 한계를 확인했다. `llama-passkey`와 `llama-completion`은 `--grp-attn-n`을 지원하지만, `llama-perplexity`는 지원하지 않는다는 점을 실험 과정에서 확인했다.
+
+결과적으로 이번 실험은 "Self-Extend가 실패했다"는 결론을 반복하는 데서 그치지 않고, 실패가 Vicuna만의 문제가 아니며 Q5_K_M에서도 개선되지 않고, 코드 어시스턴스형 retrieval에서도 같은 문제가 재현된다는 점을 확인했다.
+
+## 8. 한계점
+
+이번 실험의 한계는 다음과 같다.
+
+1. `llama-perplexity`가 `--grp-attn-n`을 지원하지 않아 PG-19에서 Self-Extend on/off PPL 비교를 하지 못했다.
+2. Homebrew llama.cpp 빌드의 group attention 구현이 논문 구현과 완전히 같다고 보장할 수 없다.
+3. `--grp-attn-w` neighbor window 계열 옵션은 체계적으로 sweep하지 않았다.
+4. Q8_0은 테스트하지 않았고, Q4_K_M과 Q5_K_M만 비교했다.
+5. PG-19는 test split 전체를 다운로드했지만, PPL 실행은 시간 문제로 앞 8권 샘플만 사용했다.
+6. 코드 어시스턴스 benchmark는 synthetic repo 기반이므로 실제 대규모 코드베이스의 import graph, build system, test fixture 복잡도를 완전히 반영하지 않는다.
+7. passkey와 코드 benchmark는 seed 1 중심의 빠른 matrix로 실행했기 때문에 통계적으로 충분한 반복 실험은 아니다.
+8. Llama-2-7B-chat 자체가 최신 코드 모델이 아니므로 코드 어시스턴스 성능을 일반화하기 어렵다.
+9. 출력 붕괴 원인이 모델, 양자화, llama.cpp 구현, 옵션 조합, prompt 형식 중 어느 요소인지 아직 분리하지 못했다.
+
+## 9. 코드 어시스턴스에 적용시킬 방법
 
 현재 결과 기준으로 Self-Extend를 코드 어시스턴스의 기본 retrieval 방식으로 쓰는 것은 부적절하다. 다만 완전히 배제하기보다는 제한적인 fallback 또는 보조 기능으로는 사용할 수 있다.
 
@@ -308,21 +338,7 @@ CPU 실행을 사용한 이유는 Metal backend에서 `llama-perplexity`가 comm
 
 이번 코드 benchmark 결과에서 G=2/G=4가 입력은 받았지만 답을 못 했기 때문에, 프로덕션 코드 어시스턴스에서는 "길이 확장"보다 "관련 context 선별"이 더 중요하다.
 
-## 8. 한계점
-
-이번 실험의 한계는 다음과 같다.
-
-1. `llama-perplexity`가 `--grp-attn-n`을 지원하지 않아 PG-19에서 Self-Extend on/off PPL 비교를 하지 못했다.
-2. Homebrew llama.cpp 빌드의 group attention 구현이 논문 구현과 완전히 같다고 보장할 수 없다.
-3. `--grp-attn-w` neighbor window 계열 옵션은 체계적으로 sweep하지 않았다.
-4. Q8_0은 테스트하지 않았고, Q4_K_M과 Q5_K_M만 비교했다.
-5. PG-19는 test split 전체를 다운로드했지만, PPL 실행은 시간 문제로 앞 8권 샘플만 사용했다.
-6. 코드 어시스턴스 benchmark는 synthetic repo 기반이므로 실제 대규모 코드베이스의 import graph, build system, test fixture 복잡도를 완전히 반영하지 않는다.
-7. passkey와 코드 benchmark는 seed 1 중심의 빠른 matrix로 실행했기 때문에 통계적으로 충분한 반복 실험은 아니다.
-8. Llama-2-7B-chat 자체가 최신 코드 모델이 아니므로 코드 어시스턴스 성능을 일반화하기 어렵다.
-9. 출력 붕괴 원인이 모델, 양자화, llama.cpp 구현, 옵션 조합, prompt 형식 중 어느 요소인지 아직 분리하지 못했다.
-
-## 9. 앞으로 발전시킬 방향 및 실현 가능성
+## 10. 앞으로 발전시킬 방향 및 실현 가능성
 
 다음 실험 방향은 명확하다.
 
@@ -349,4 +365,3 @@ Self-Extend = long-context retrieval 품질은 현재 환경에서 미검증 또
 코드 어시스턴스 적용 = 기본값 부적합, 실험적 fallback으로만 가능
 다음 단계 = 논문 구현 또는 직접 빌드한 llama.cpp에서 PG-19 PPL + 코드 benchmark 재측정
 ```
-
