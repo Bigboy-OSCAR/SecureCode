@@ -13,13 +13,43 @@ from pathlib import Path
 from statistics import mean
 from typing import Any
 
-from .indexer import compact_outline, read_span, resolve_symbol, symbol_map
+from .indexer import compact_outline, expand_symbol_context, read_span, resolve_symbol, symbol_map
 from .make_corpus import SCALE_DEFAULTS, generate_corpus
 
 
 DEFAULT_MODEL = Path("/Users/oscar/llm/models/qwen2.5-coder-7b/qwen2.5-coder-7b-instruct-q5_k_m.gguf")
 DEFAULT_MODES = ["full_repo", "full_file", "line_span", "symbol_oracle", "symbol_select"]
+EXPERIMENTAL_MODES = ["symbol_bundle_oracle", "symbol_filtered_select_bundle"]
+ALL_MODES = DEFAULT_MODES + EXPERIMENTAL_MODES
 URI_RE = re.compile(r"memory://symbol/[^\s'\"`]+::[A-Za-z_][\w.]*")
+FILE_RE = re.compile(r"\b[\w./-]+\.py\b")
+IDENTIFIER_RE = re.compile(r"\b[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*\b")
+STOPWORDS = {
+    "answer",
+    "class",
+    "combine",
+    "constant",
+    "does",
+    "exact",
+    "file",
+    "final",
+    "for",
+    "function",
+    "given",
+    "inside",
+    "literal",
+    "module",
+    "number",
+    "only",
+    "return",
+    "returns",
+    "string",
+    "the",
+    "value",
+    "what",
+    "when",
+    "with",
+}
 
 
 def _read_json(path: Path) -> Any:
@@ -41,7 +71,10 @@ def _file_code(root: Path, rel_path: str) -> str:
 
 def _answer_prompt(question: str, context: str) -> str:
     return f"""You are answering a code comprehension benchmark.
-Use only the provided code context. Keep the answer short and exact.
+Use only the provided code context. If concrete inputs are given, trace the Python operations exactly.
+For string operations, preserve every character that the code does not change.
+For numeric operations, calculate from the literal constants in the code.
+Return only the requested final value. No markdown, no code fence, no prose.
 
 Question:
 {question}
@@ -195,9 +228,86 @@ def _run_llama(args: argparse.Namespace, prompt: str, purpose: str) -> dict[str,
     }
 
 
-def _is_correct(answer: str, expected_substrings: list[str]) -> bool:
+def _is_correct(answer: str, expected_substrings: list[str], forbidden_substrings: list[str] | None = None) -> bool:
     folded = answer.casefold()
-    return all(item.casefold() in folded for item in expected_substrings)
+    forbidden_substrings = forbidden_substrings or []
+    return all(item.casefold() in folded for item in expected_substrings) and not any(
+        item.casefold() in folded for item in forbidden_substrings
+    )
+
+
+def _required_substrings(task: dict[str, Any]) -> list[str]:
+    return task.get("expected_substrings") or task.get("required_substrings") or []
+
+
+def _forbidden_substrings(task: dict[str, Any]) -> list[str]:
+    return task.get("forbidden_substrings") or []
+
+
+def _question_terms(question: str) -> set[str]:
+    terms: set[str] = set()
+    for match in IDENTIFIER_RE.findall(question):
+        for part in re.split(r"[._]", match):
+            folded = part.casefold()
+            if len(folded) > 1 and folded not in STOPWORDS:
+                terms.add(folded)
+        folded_match = match.casefold()
+        if folded_match not in STOPWORDS:
+            terms.add(folded_match)
+    return terms
+
+
+def _candidate_symbol_outline(index: dict[str, Any], question: str, limit: int) -> list[dict[str, Any]]:
+    explicit_files = {path.lstrip("./") for path in FILE_RE.findall(question)}
+    terms = _question_terms(question)
+    folded_question = question.casefold()
+    scored: list[tuple[int, dict[str, Any]]] = []
+
+    for symbol in index["symbols"]:
+        path = symbol["path"]
+        qualname = symbol["qualname"]
+        name = symbol["name"]
+        if explicit_files and path not in explicit_files and qualname.casefold() not in folded_question:
+            continue
+        symbol_parts = {part.casefold() for part in re.split(r"[._]", qualname)}
+        path_parts = {part.casefold() for part in re.split(r"[/._-]", path)}
+        score = 0
+
+        if path in explicit_files:
+            score += 30
+        if qualname.casefold() in folded_question:
+            score += 20
+        if name.casefold() in terms:
+            score += 16
+        score += 3 * len(symbol_parts & terms)
+        score += len(path_parts & terms)
+
+        if score:
+            scored.append((score, symbol))
+
+    if not scored:
+        scored = [(1, symbol) for symbol in index["symbols"]]
+
+    scored.sort(key=lambda item: (-item[0], item[1]["path"], item[1]["start_line"]))
+    selected = [symbol for _, symbol in scored[:limit]]
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    for symbol in selected:
+        grouped.setdefault(symbol["path"], []).append(symbol)
+
+    return [
+        {
+            "file": path,
+            "symbols": [
+                {
+                    "kind": symbol["kind"],
+                    "qualname": symbol["qualname"],
+                    "uri": symbol["uri"],
+                }
+                for symbol in symbols
+            ],
+        }
+        for path, symbols in sorted(grouped.items())
+    ]
 
 
 def _make_mode_prompt(mode: str, root: Path, index: dict[str, Any], task: dict[str, Any]) -> tuple[str, dict[str, Any]]:
@@ -214,30 +324,63 @@ def _make_mode_prompt(mode: str, root: Path, index: dict[str, Any], task: dict[s
         symbol = resolve_symbol(root, index, task["target_uri"], numbered=True)
         context = f"### symbol: {task['target_uri']}\n```python\n{symbol}\n```"
         return _answer_prompt(task["question"], context), {"resolved_uri": task["target_uri"]}
+    if mode == "symbol_bundle_oracle":
+        bundle = expand_symbol_context(
+            root,
+            index,
+            task["target_uri"],
+            question=task["question"],
+            numbered=False,
+            dependency_depth=1,
+        )
+        bundle_meta = {key: value for key, value in bundle.items() if key != "context"}
+        return _answer_prompt(task["question"], bundle["context"]), {"resolved_uri": task["target_uri"], **bundle_meta}
     raise ValueError(f"unsupported single-prompt mode: {mode}")
 
 
 def _run_case_mode(args: argparse.Namespace, root: Path, index: dict[str, Any], outline: list[dict[str, Any]], task: dict[str, Any], mode: str) -> dict[str, Any]:
-    if mode == "symbol_select":
-        selector_prompt = _selector_prompt(task["question"], outline)
+    if mode in {"symbol_select", "symbol_filtered_select_bundle"}:
+        if mode == "symbol_filtered_select_bundle":
+            selector_outline = _candidate_symbol_outline(index, task["question"], args.selector_candidates)
+        else:
+            selector_outline = outline
+        selector_prompt = _selector_prompt(task["question"], selector_outline)
         selector = _run_llama(args, selector_prompt, "select")
         selected = URI_RE.search(selector["answer"])
         selected_uri = selected.group(0) if selected else None
         selection_correct = selected_uri == task["target_uri"]
         if selected_uri and selected_uri in symbol_map(index):
-            selected_source = resolve_symbol(root, index, selected_uri, numbered=True)
-            context = f"### selected_symbol: {selected_uri}\n```python\n{selected_source}\n```"
+            if mode == "symbol_filtered_select_bundle":
+                bundle = expand_symbol_context(
+                    root,
+                    index,
+                    selected_uri,
+                    question=task["question"],
+                    numbered=False,
+                    dependency_depth=args.bundle_depth,
+                    max_symbols=args.bundle_max_symbols,
+                )
+                context = bundle["context"]
+                bundle = {key: value for key, value in bundle.items() if key != "context"}
+            else:
+                bundle = {}
+                selected_source = resolve_symbol(root, index, selected_uri, numbered=True)
+                context = f"### selected_symbol: {selected_uri}\n```python\n{selected_source}\n```"
         else:
+            bundle = {}
             context = f"### selected_symbol: {selected_uri}\nSelector did not return a resolvable symbol URI."
         answer_prompt = _answer_prompt(task["question"], context)
         answer = _run_llama(args, answer_prompt, "answer")
-        correct = selection_correct and _is_correct(answer["answer"], task["expected_substrings"])
+        answer_correct = _is_correct(answer["answer"], _required_substrings(task), _forbidden_substrings(task))
+        correct = answer_correct if mode == "symbol_filtered_select_bundle" else selection_correct and answer_correct
         return {
             "mode": mode,
             "selected_uri": selected_uri,
             "selection_correct": selection_correct,
             "correct": correct,
             "answer_text": answer["answer"],
+            "candidate_outline_symbols": sum(len(item["symbols"]) for item in selector_outline),
+            **bundle,
             "calls": [selector, answer],
             "prompt_chars": selector["prompt_chars"] + answer["prompt_chars"],
             "estimated_prompt_tokens": selector["estimated_prompt_tokens"] + answer["estimated_prompt_tokens"],
@@ -251,7 +394,7 @@ def _run_case_mode(args: argparse.Namespace, root: Path, index: dict[str, Any], 
     return {
         "mode": mode,
         **extra,
-        "correct": _is_correct(answer["answer"], task["expected_substrings"]),
+        "correct": _is_correct(answer["answer"], _required_substrings(task), _forbidden_substrings(task)),
         "answer_text": answer["answer"],
         "calls": [answer],
         "prompt_chars": answer["prompt_chars"],
@@ -280,7 +423,8 @@ def _prepare_workspace(args: argparse.Namespace) -> tuple[Path, dict[str, Any], 
         manifest = generate_corpus(work_dir, args.scale, args.noise_files, args.noise_functions)
     root = Path(manifest["corpus_root"])
     index = _read_json(work_dir / "symbol_index.json")
-    tasks = _read_json(work_dir / "tasks.json")
+    tasks_path = args.tasks_file or work_dir / "tasks.json"
+    tasks = _read_json(tasks_path)
     outline = compact_outline(index)
     return root, index, outline, tasks, manifest
 
@@ -288,7 +432,7 @@ def _prepare_workspace(args: argparse.Namespace) -> tuple[Path, dict[str, Any], 
 def _print_summary(rows: list[dict[str, Any]]) -> None:
     print("\nSummary")
     print("mode, cases, accuracy, mean_wall_s, mean_prompt_chars, mean_prompt_tokens")
-    for mode in DEFAULT_MODES:
+    for mode in ALL_MODES:
         group = [row for row in rows if row["mode"] == mode]
         if not group:
             continue
@@ -309,9 +453,13 @@ def main() -> None:
     parser.add_argument("--regenerate", action="store_true")
     parser.add_argument("--noise-files", type=int)
     parser.add_argument("--noise-functions", type=int)
-    parser.add_argument("--modes", nargs="+", default=DEFAULT_MODES, choices=DEFAULT_MODES)
+    parser.add_argument("--tasks-file", type=Path)
+    parser.add_argument("--modes", nargs="+", default=DEFAULT_MODES, choices=ALL_MODES)
     parser.add_argument("--limit-cases", type=int)
     parser.add_argument("--runs", type=int, default=1)
+    parser.add_argument("--selector-candidates", type=int, default=24)
+    parser.add_argument("--bundle-depth", type=int, default=1)
+    parser.add_argument("--bundle-max-symbols", type=int, default=8)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--model", type=Path, default=Path(os.environ.get("LLAMA_MODEL", DEFAULT_MODEL)))
     parser.add_argument("--llama-bin", default=os.environ.get("LLAMA_BIN", "llama-completion"))
@@ -345,7 +493,8 @@ def main() -> None:
                         "task_id": task["id"],
                         "question": task["question"],
                         "target_uri": task["target_uri"],
-                        "expected_substrings": task["expected_substrings"],
+                        "expected_substrings": _required_substrings(task),
+                        "forbidden_substrings": _forbidden_substrings(task),
                         "scale": args.scale,
                         "manifest": manifest,
                         **result,
