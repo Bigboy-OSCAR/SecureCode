@@ -1,0 +1,66 @@
+[
+  {
+    "case": "q4_k_m_off_function_definition",
+    "model": "q4_k_m",
+    "group": 1,
+    "label": "off",
+    "task_id": "function_definition",
+    "expected": [
+      "ROTATE::APAC::0007"
+    ],
+    "correct": false,
+    "ctx_size": 4096,
+    "prompt_chars": 22926,
+    "estimated_prompt_tokens": 5732,
+    "manifest": {
+      "corpus_root": "/Users/oscar/Desktop/4th_grade/SecureCode/self_extend_test/work/code_assistant_repo",
+      "files": 11,
+      "noise_files": 8,
+      "noise_functions": 10
+    },
+    "log": "/Users/oscar/Desktop/4th_grade/SecureCode/self_extend_test/results/code_assistance_logs/q4_k_m_off_function_definition.log",
+    "returncode": 1,
+    "failure": "prompt_too_long",
+    "elapsed_sec": 0.569,
+    "answer": "",
+    "prompt_eval_ms": null,
+    "prompt_tokens": null,
+    "eval_ms": null,
+    "eval_tokens": null,
+    "total_ms": null,
+    "prompt_tps": null,
+    "generation_tps": null
+  },
+  {
+    "case": "q4_k_m_g2_function_definition",
+    "model": "q4_k_m",
+    "group": 2,
+    "label": "g2",
+    "task_id": "function_definition",
+    "expected": [
+      "ROTATE::APAC::0007"
+    ],
+    "correct": false,
+    "ctx_size": 8192,
+    "prompt_chars": 22926,
+    "estimated_prompt_tokens": 5732,
+    "manifest": {
+      "corpus_root": "/Users/oscar/Desktop/4th_grade/SecureCode/self_extend_test/work/code_assistant_repo",
+      "files": 11,
+      "noise_files": 8,
+      "noise_functions": 10
+    },
+    "log": "/Users/oscar/Desktop/4th_grade/SecureCode/self_extend_test/results/code_assistance_logs/q4_k_m_g2_function_definition.log",
+    "returncode": 1,
+    "failure": "prompt_too_long",
+    "elapsed_sec": 0.609,
+    "answer": "",
+    "prompt_eval_ms": null,
+    "prompt_tokens": null,
+    "eval_ms": null,
+    "eval_tokens": null,
+    "total_ms": null,
+    "prompt_tps": null,
+    "generation_tps": null
+  }
+]

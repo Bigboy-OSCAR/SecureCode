@@ -1,5 +1,7 @@
 # llama.cpp Self-Extend 테스트 보고서
 
+> 추가 재실험 결과는 `self_extend_test/RESULTS_llama2_selfextend.md`에 정리했다. 새 실험은 Llama-2-7B-chat GGUF `Q4_K_M`/`Q5_K_M`, PG-19 PPL, 코드 어시스턴스 전용 benchmark를 포함한다.
+
 ## 1. CLI를 통한 테스트 실행 방법
 
 이번 테스트는 `llama.cpp`의 `llama-passkey` 예제를 사용했다. `llama-cli`에는 현재 설치된 Homebrew 빌드 기준으로 `--grp-attn-n` 옵션이 노출되지 않았고, `llama-passkey`에는 Self-Extend에 해당하는 group attention 옵션이 제공되었다.
@@ -160,4 +162,3 @@ uv run python selfextend_test/run_vicuna_selfextend_passkey.py
 6. Self-Extend on/off, RoPE scaling, YaRN, context shifting을 같은 데이터셋에서 비교한다.
 
 실현 가능성은 중간 정도다. 컨텍스트 수용량 확장은 이미 CLI에서 확인되었으므로 기술적으로는 적용 가능하다. 하지만 정확도 개선은 아직 확인되지 않았다. 코드 어시스턴스에 실제 적용하려면 "길이 확장"이 아니라 "필요 정보 회수율"을 기준으로 다시 평가해야 한다. 현재 결과 기준으로는 프로덕션 기본값으로 켜기보다는 실험적 옵션 또는 fallback 옵션으로 두는 것이 안전하다.
-

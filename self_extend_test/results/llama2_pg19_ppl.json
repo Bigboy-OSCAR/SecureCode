@@ -1,0 +1,74 @@
+[
+  {
+    "case": "q4_k_m_ctx2048_chunks1",
+    "model": "q4_k_m",
+    "ctx_size": 2048,
+    "chunks": 1,
+    "data_file": "/Users/oscar/Desktop/4th_grade/SecureCode/self_extend_test/work/pg19_test_sample.txt",
+    "returncode": 0,
+    "elapsed_sec": 123.428,
+    "log": "/Users/oscar/Desktop/4th_grade/SecureCode/self_extend_test/results/pg19_ppl_logs/q4_k_m_ctx2048_chunks1.log",
+    "ppl": 7.8529,
+    "ppl_stderr": null,
+    "chunk_ppl": [
+      7.8529
+    ],
+    "prompt_eval_ms": 46076.35,
+    "prompt_tokens": 3072,
+    "prompt_tps": 66.67
+  },
+  {
+    "case": "q4_k_m_ctx4096_chunks1",
+    "model": "q4_k_m",
+    "ctx_size": 4096,
+    "chunks": 1,
+    "data_file": "/Users/oscar/Desktop/4th_grade/SecureCode/self_extend_test/work/pg19_test_sample.txt",
+    "returncode": 0,
+    "elapsed_sec": 292.144,
+    "log": "/Users/oscar/Desktop/4th_grade/SecureCode/self_extend_test/results/pg19_ppl_logs/q4_k_m_ctx4096_chunks1.log",
+    "ppl": 304.6347,
+    "ppl_stderr": null,
+    "chunk_ppl": [
+      304.6347
+    ],
+    "prompt_eval_ms": 216233.56,
+    "prompt_tokens": 6144,
+    "prompt_tps": 28.41
+  },
+  {
+    "case": "q5_k_m_ctx2048_chunks1",
+    "model": "q5_k_m",
+    "ctx_size": 2048,
+    "chunks": 1,
+    "data_file": "/Users/oscar/Desktop/4th_grade/SecureCode/self_extend_test/work/pg19_test_sample.txt",
+    "returncode": 0,
+    "elapsed_sec": 94.23,
+    "log": "/Users/oscar/Desktop/4th_grade/SecureCode/self_extend_test/results/pg19_ppl_logs/q5_k_m_ctx2048_chunks1.log",
+    "ppl": 7.8592,
+    "ppl_stderr": null,
+    "chunk_ppl": [
+      7.8592
+    ],
+    "prompt_eval_ms": 36086.81,
+    "prompt_tokens": 3072,
+    "prompt_tps": 85.13
+  },
+  {
+    "case": "q5_k_m_ctx4096_chunks1",
+    "model": "q5_k_m",
+    "ctx_size": 4096,
+    "chunks": 1,
+    "data_file": "/Users/oscar/Desktop/4th_grade/SecureCode/self_extend_test/work/pg19_test_sample.txt",
+    "returncode": 0,
+    "elapsed_sec": 240.153,
+    "log": "/Users/oscar/Desktop/4th_grade/SecureCode/self_extend_test/results/pg19_ppl_logs/q5_k_m_ctx4096_chunks1.log",
+    "ppl": 309.3053,
+    "ppl_stderr": null,
+    "chunk_ppl": [
+      309.3053
+    ],
+    "prompt_eval_ms": 184938.55,
+    "prompt_tokens": 6144,
+    "prompt_tps": 33.22
+  }
+]
