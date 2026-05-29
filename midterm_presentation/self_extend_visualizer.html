@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Self-Extend Visualizer</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d7dfeb;
+      --base: #2563eb;
+      --base-soft: #e8f1ff;
+      --group: #7c3aed;
+      --group-soft: #f2eaff;
+      --local: #0f766e;
+      --local-soft: #dcf7f1;
+      --danger: #dc2626;
+      --danger-soft: #fee2e2;
+      --warn: #b7791f;
+      --warn-soft: #fff4d6;
+      --success: #15945b;
+      --success-soft: #e5f7ee;
+      --shadow: 0 18px 50px rgba(23, 32, 51, 0.11);
+      --radius: 8px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(246, 248, 251, 0.96)),
+        repeating-linear-gradient(90deg, rgba(37, 99, 235, 0.055) 0 1px, transparent 1px 86px),
+        repeating-linear-gradient(0deg, rgba(15, 118, 110, 0.045) 0 1px, transparent 1px 86px);
+    }
+
+    button {
+      font: inherit;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .app {
+      width: min(1180px, calc(100vw - 28px));
+      min-height: calc(100vh - 28px);
+      margin: 14px auto;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 12px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 3.8vw, 48px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 760px;
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .mode-card {
+      min-width: 220px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow);
+    }
+
+    .mode-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .mode-value {
+      margin-top: 4px;
+      color: var(--ink);
+      font-size: 22px;
+      font-weight: 950;
+    }
+
+    .mode-note {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .visual,
+    .script-panel {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: var(--shadow);
+    }
+
+    .visual {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      gap: 12px;
+      padding: 14px;
+      overflow: hidden;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 30px;
+      color: #1d2939;
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .section-title span:last-child {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .token-stream {
+      display: grid;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #f9fbfe;
+    }
+
+    .token-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 42px;
+      overflow: hidden;
+    }
+
+    .stream-label {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: var(--base-soft);
+      color: var(--base);
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    .token {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      min-height: 30px;
+      border: 1px solid rgba(37, 99, 235, 0.28);
+      border-radius: 6px;
+      background: white;
+      color: var(--base);
+      font-size: 11px;
+      font-weight: 950;
+      animation: enter 260ms ease both;
+      animation-delay: var(--delay, 0ms);
+    }
+
+    .token.grouped {
+      border-color: rgba(124, 58, 237, 0.38);
+      background: var(--group-soft);
+      color: var(--group);
+    }
+
+    .token.local {
+      border-color: rgba(15, 118, 110, 0.38);
+      background: var(--local-soft);
+      color: var(--local);
+    }
+
+    .token.overflow {
+      border-color: rgba(220, 38, 38, 0.42);
+      background: var(--danger-soft);
+      color: var(--danger);
+    }
+
+    .token.key {
+      border-color: rgba(183, 121, 31, 0.58);
+      background: var(--warn-soft);
+      color: #8a5200;
+      box-shadow: inset 0 0 0 2px rgba(183, 121, 31, 0.12);
+    }
+
+    .grid-area {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 170px;
+      gap: 10px;
+      min-height: 138px;
+    }
+
+    .slot-panel,
+    .overflow-panel,
+    .layer-panel,
+    .status-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: 10px;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .slot-grid {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(46px, 1fr));
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .slot {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 58px;
+      border: 1px solid rgba(37, 99, 235, 0.25);
+      border-radius: 7px;
+      background: linear-gradient(180deg, #fff, #f7fbff);
+    }
+
+    .slot::before {
+      content: attr(data-pos);
+      position: absolute;
+      top: 5px;
+      left: 6px;
+      color: #98a2b3;
+      font-size: 9px;
+      font-weight: 950;
+    }
+
+    .slot.empty {
+      border-style: dashed;
+      background: #fbfdff;
+      color: #98a2b3;
+    }
+
+    .slot.compressed {
+      border-color: rgba(124, 58, 237, 0.35);
+      background: linear-gradient(180deg, #fff, #f7f0ff);
+    }
+
+    .slot.local {
+      border-color: rgba(15, 118, 110, 0.35);
+      background: linear-gradient(180deg, #fff, #effbf7);
+    }
+
+    .slot-value {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      min-height: 25px;
+      padding: 0 6px;
+      border-radius: 5px;
+      background: var(--base-soft);
+      color: var(--base);
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    .slot-value.grouped {
+      background: var(--group-soft);
+      color: var(--group);
+    }
+
+    .slot-value.local {
+      background: var(--local-soft);
+      color: var(--local);
+    }
+
+    .slot-value.key {
+      background: var(--warn-soft);
+      color: #8a5200;
+    }
+
+    .overflow-panel {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 8px;
+      border-color: rgba(220, 38, 38, 0.22);
+      background: linear-gradient(180deg, #fff, #fff7f7);
+    }
+
+    .overflow-panel.clear {
+      border-color: rgba(21, 148, 91, 0.22);
+      background: linear-gradient(180deg, #fff, #f2fbf6);
+    }
+
+    .overflow-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      align-content: start;
+    }
+
+    .self-extend {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+      gap: 10px;
+      min-height: 190px;
+    }
+
+    .layer-panel.muted {
+      opacity: 0.45;
+    }
+
+    .group-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+      max-height: 130px;
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .group-card {
+      display: grid;
+      gap: 7px;
+      min-height: 62px;
+      padding: 8px;
+      border: 1px solid rgba(124, 58, 237, 0.28);
+      border-radius: 7px;
+      background: linear-gradient(180deg, #fff, #f8f3ff);
+      animation: enter 240ms ease both;
+    }
+
+    .group-card.key {
+      border-color: rgba(183, 121, 31, 0.52);
+      background: linear-gradient(180deg, #fff, #fff7df);
+    }
+
+    .group-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      color: var(--group);
+      font-size: 10px;
+      font-weight: 950;
+    }
+
+    .mini-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .mini {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 24px;
+      min-height: 20px;
+      padding: 0 4px;
+      border: 1px solid rgba(124, 58, 237, 0.22);
+      border-radius: 4px;
+      background: white;
+      color: var(--group);
+      font-size: 9px;
+      font-weight: 950;
+    }
+
+    .mini.key {
+      border-color: rgba(183, 121, 31, 0.48);
+      background: var(--warn-soft);
+      color: #8a5200;
+    }
+
+    .local-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(46px, 1fr));
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .local-cell {
+      display: grid;
+      place-items: center;
+      min-height: 42px;
+      border: 1px solid rgba(15, 118, 110, 0.34);
+      border-radius: 7px;
+      background: var(--local-soft);
+      color: var(--local);
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    .status-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .status-panel {
+      display: grid;
+      gap: 6px;
+      min-height: 78px;
+    }
+
+    .status-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .status-value {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 950;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      background: var(--muted);
+      box-shadow: 0 0 0 4px rgba(102, 112, 133, 0.13);
+    }
+
+    .dot.success {
+      background: var(--success);
+      box-shadow: 0 0 0 4px rgba(21, 148, 91, 0.13);
+    }
+
+    .dot.fail {
+      background: var(--danger);
+      box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.13);
+    }
+
+    .dot.warn {
+      background: var(--warn);
+      box-shadow: 0 0 0 4px rgba(183, 121, 31, 0.13);
+    }
+
+    .script-panel {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      overflow: hidden;
+    }
+
+    .script-head {
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+      background: #f9fbfe;
+    }
+
+    .step-kicker {
+      color: var(--base);
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .step-title {
+      margin-top: 6px;
+      color: var(--ink);
+      font-size: 23px;
+      line-height: 1.12;
+      font-weight: 950;
+    }
+
+    .script-body {
+      display: grid;
+      align-content: start;
+      gap: 12px;
+      padding: 14px;
+      overflow: auto;
+    }
+
+    .focus-box {
+      display: grid;
+      gap: 6px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: white;
+    }
+
+    .focus-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .focus-text {
+      color: #344054;
+      font-size: 15px;
+      font-weight: 780;
+      line-height: 1.45;
+    }
+
+    .script-footer {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border-top: 1px solid var(--line);
+      background: #fbfdff;
+    }
+
+    .nav-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .nav-button {
+      min-height: 42px;
+      border-radius: 7px;
+      border: 1px solid var(--line);
+      background: white;
+      color: #344054;
+      font-size: 13px;
+      font-weight: 950;
+      transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+    }
+
+    .nav-button.primary {
+      border-color: transparent;
+      background: var(--ink);
+      color: white;
+    }
+
+    .nav-button:hover {
+      border-color: rgba(37, 99, 235, 0.45);
+      background: var(--base-soft);
+      color: var(--base);
+    }
+
+    .nav-button.primary:hover {
+      background: #0f172a;
+      color: white;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
+      text-align: center;
+    }
+
+    .dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 2px 0;
+    }
+
+    .step-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #c7d1df;
+      transition: width 160ms ease, background 160ms ease;
+    }
+
+    .step-dot.active {
+      width: 28px;
+      background: var(--base);
+    }
+
+    .final-note {
+      padding: 12px 14px;
+      border: 1px solid rgba(21, 148, 91, 0.22);
+      border-radius: var(--radius);
+      background: var(--success-soft);
+      color: #244034;
+      font-size: 14px;
+      font-weight: 850;
+      line-height: 1.4;
+    }
+
+    @keyframes enter {
+      from {
+        opacity: 0;
+        transform: translateY(5px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .topbar,
+      .stage,
+      .grid-area,
+      .self-extend,
+      .status-row {
+        grid-template-columns: 1fr;
+      }
+
+      .mode-card {
+        min-width: 0;
+      }
+
+      .script-panel {
+        min-height: 360px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .app {
+        width: min(100vw - 18px, 640px);
+        margin: 9px auto;
+      }
+
+      .slot-grid {
+        grid-template-columns: repeat(4, minmax(54px, 1fr));
+      }
+
+      .token {
+        width: 36px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <h1>Self-Extend Visualizer</h1>
+        <p class="subtitle">
+          The essential flow: base context slots overflow, Self-Extend groups distant positions, local tokens stay precise, and retrieval still needs verification.
+        </p>
+      </div>
+      <div class="mode-card" aria-live="polite">
+        <div class="mode-label">Current mode</div>
+        <div id="modeValue" class="mode-value">Off</div>
+        <div id="capacityValue" class="mode-note">Effective context: ~4K</div>
+      </div>
+    </header>
+
+    <main class="stage">
+      <section class="visual" aria-label="Self-Extend process visualization">
+        <section class="token-stream">
+          <div class="section-title">
+            <strong>Token Stream</strong>
+            <span id="streamCaption">Short prompt</span>
+          </div>
+          <div class="token-row">
+            <span class="stream-label">Prompt</span>
+            <div id="tokenRow" class="token-row" aria-label="Prompt token stream"></div>
+          </div>
+        </section>
+
+        <section class="grid-area">
+          <div class="slot-panel">
+            <div class="section-title">
+              <strong>Base Position Grid</strong>
+              <span>8 slots = trained 4K window</span>
+            </div>
+            <div id="slotGrid" class="slot-grid"></div>
+          </div>
+          <div id="overflowPanel" class="overflow-panel">
+            <div class="section-title">
+              <strong>Overflow</strong>
+              <span id="overflowCount">0</span>
+            </div>
+            <div id="overflowList" class="overflow-list"></div>
+          </div>
+        </section>
+
+        <section class="self-extend">
+          <div id="groupPanel" class="layer-panel muted">
+            <div class="section-title">
+              <strong>Grouped Position Layer</strong>
+              <span id="groupCaption">Inactive</span>
+            </div>
+            <div id="groupList" class="group-list"></div>
+          </div>
+          <div id="localPanel" class="layer-panel muted">
+            <div class="section-title">
+              <strong>Local Neighbor Window</strong>
+              <span>High resolution</span>
+            </div>
+            <div id="localList" class="local-list"></div>
+          </div>
+        </section>
+
+        <section class="status-row" aria-label="Context and retrieval status">
+          <div class="status-panel">
+            <div class="status-label">Accepted by context</div>
+            <div class="status-value"><span id="acceptedDot" class="dot"></span><span id="acceptedText">No</span></div>
+          </div>
+          <div class="status-panel">
+            <div class="status-label">Recovered the answer</div>
+            <div class="status-value"><span id="retrievalDot" class="dot"></span><span id="retrievalText">Not tested</span></div>
+          </div>
+          <div class="status-panel">
+            <div class="status-label">Key idea</div>
+            <div id="keyIdea" class="status-value">Position slots are limited.</div>
+          </div>
+        </section>
+      </section>
+
+      <aside class="script-panel">
+        <div class="script-head">
+          <div id="stepKicker" class="step-kicker">Step 1 of 6</div>
+          <div id="stepTitle" class="step-title">Base context accepts short prompts</div>
+        </div>
+        <div class="script-body">
+          <div class="focus-box">
+            <div class="focus-label">Say this</div>
+            <div id="sayThis" class="focus-text"></div>
+          </div>
+          <div class="focus-box">
+            <div class="focus-label">Point at</div>
+            <div id="pointAt" class="focus-text"></div>
+          </div>
+          <div id="finalNote" class="final-note" hidden>
+            Self-Extend can expand the accepted context length, but the model still needs retrieval verification before using the result for code assistance.
+          </div>
+        </div>
+        <div class="script-footer">
+          <div class="nav-row">
+            <button id="prevButton" class="nav-button" type="button">← Previous</button>
+            <button id="nextButton" class="nav-button primary" type="button">Next →</button>
+          </div>
+          <div class="hint">Use ← and → arrow keys during the demo.</div>
+          <div id="dots" class="dots" aria-label="Step progress"></div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    const BASE_SLOTS = 8;
+    const LOCAL_COUNT = 6;
+
+    const steps = [
+      {
+        title: "Base context accepts short prompts",
+        mode: "Off",
+        groupFactor: 0,
+        tokenCount: 6,
+        keyIndex: null,
+        recovered: null,
+        idea: "Each token owns one position.",
+        say: "In the base model, every token inside the trained context window gets its own position slot.",
+        point: "Point at the blue tokens and the eight base slots. Nothing is compressed yet."
+      },
+      {
+        title: "Overflow at the trained boundary",
+        mode: "Off",
+        groupFactor: 0,
+        tokenCount: 12,
+        keyIndex: null,
+        recovered: null,
+        idea: "No more trained slots.",
+        say: "When the prompt is longer than the trained window, the extra tokens have nowhere to go. This is context overflow.",
+        point: "Point at the red overflow area. The base grid itself did not become larger."
+      },
+      {
+        title: "Self-Extend groups distant positions",
+        mode: "G=2",
+        groupFactor: 2,
+        tokenCount: 12,
+        keyIndex: null,
+        recovered: null,
+        idea: "Distant tokens become coarse groups.",
+        say: "Self-Extend changes the position mapping at inference time. Distant tokens are folded into groups instead of receiving new memory.",
+        point: "Point at the purple grouped layer. Two old tokens share one coarse position."
+      },
+      {
+        title: "Nearby tokens stay high-resolution",
+        mode: "G=4",
+        groupFactor: 4,
+        tokenCount: 18,
+        keyIndex: null,
+        recovered: null,
+        idea: "Near tokens stay precise.",
+        say: "The newest nearby tokens remain in a high-resolution local window. Older tokens are visible through a coarse grouped layer.",
+        point: "Point from the purple groups to the green local window. This is the key resolution tradeoff."
+      },
+      {
+        title: "The long prompt is accepted",
+        mode: "G=4",
+        groupFactor: 4,
+        tokenCount: 24,
+        keyIndex: null,
+        recovered: null,
+        idea: "Accepted does not mean solved.",
+        say: "With G=4, this long prompt now fits the effective context capacity. But accepted only means the input was admitted.",
+        point: "Point at the green Accepted status, then the retrieval status that is still not tested."
+      },
+      {
+        title: "Retrieval must still be verified",
+        mode: "G=4",
+        groupFactor: 4,
+        tokenCount: 24,
+        keyIndex: 12,
+        recovered: false,
+        idea: "Fit and recall are separate.",
+        say: "The passkey is inside the accepted prompt, but it sits in the compressed distant region. The model can still fail to recover it.",
+        point: "Point at the KEY token, then at Recovered the answer: No."
+      }
+    ];
+
+    const els = {
+      modeValue: document.getElementById("modeValue"),
+      capacityValue: document.getElementById("capacityValue"),
+      streamCaption: document.getElementById("streamCaption"),
+      tokenRow: document.getElementById("tokenRow"),
+      slotGrid: document.getElementById("slotGrid"),
+      overflowPanel: document.getElementById("overflowPanel"),
+      overflowCount: document.getElementById("overflowCount"),
+      overflowList: document.getElementById("overflowList"),
+      groupPanel: document.getElementById("groupPanel"),
+      groupCaption: document.getElementById("groupCaption"),
+      groupList: document.getElementById("groupList"),
+      localPanel: document.getElementById("localPanel"),
+      localList: document.getElementById("localList"),
+      acceptedDot: document.getElementById("acceptedDot"),
+      acceptedText: document.getElementById("acceptedText"),
+      retrievalDot: document.getElementById("retrievalDot"),
+      retrievalText: document.getElementById("retrievalText"),
+      keyIdea: document.getElementById("keyIdea"),
+      stepKicker: document.getElementById("stepKicker"),
+      stepTitle: document.getElementById("stepTitle"),
+      sayThis: document.getElementById("sayThis"),
+      pointAt: document.getElementById("pointAt"),
+      finalNote: document.getElementById("finalNote"),
+      prevButton: document.getElementById("prevButton"),
+      nextButton: document.getElementById("nextButton"),
+      dots: document.getElementById("dots")
+    };
+
+    let currentStep = 0;
+
+    function capacity(step) {
+      return step.groupFactor === 0 ? BASE_SLOTS : BASE_SLOTS * step.groupFactor;
+    }
+
+    function formatCapacity(step) {
+      return step.groupFactor === 0 ? "~4K" : `~${4 * step.groupFactor}K`;
+    }
+
+    function labelFor(index, step) {
+      if (step.keyIndex === index) return "KEY";
+      return `T${String(index + 1).padStart(2, "0")}`;
+    }
+
+    function isAccepted(step) {
+      return step.tokenCount <= capacity(step);
+    }
+
+    function localStart(step) {
+      if (step.groupFactor === 0) return 0;
+      return Math.max(0, step.tokenCount - LOCAL_COUNT);
+    }
+
+    function tokenClass(index, step) {
+      const classes = ["token"];
+      if (!isAccepted(step) && index >= capacity(step)) classes.push("overflow");
+      if (step.groupFactor > 0 && index < localStart(step)) classes.push("grouped");
+      if (step.groupFactor > 0 && index >= localStart(step)) classes.push("local");
+      if (step.keyIndex === index) classes.push("key");
+      return classes.join(" ");
+    }
+
+    function renderTokens(step) {
+      els.tokenRow.innerHTML = "";
+      for (let index = 0; index < step.tokenCount; index += 1) {
+        const token = document.createElement("span");
+        token.className = tokenClass(index, step);
+        token.textContent = labelFor(index, step);
+        token.style.setProperty("--delay", `${Math.min(index, 20) * 14}ms`);
+        els.tokenRow.appendChild(token);
+      }
+      els.streamCaption.textContent = `${step.tokenCount} visual tokens`;
+    }
+
+    function renderSlots(step) {
+      els.slotGrid.innerHTML = "";
+      const startLocal = localStart(step);
+      let groupSlotCount = step.groupFactor > 0 ? Math.ceil(startLocal / step.groupFactor) : 0;
+      groupSlotCount = Math.min(groupSlotCount, BASE_SLOTS);
+
+      for (let slotIndex = 0; slotIndex < BASE_SLOTS; slotIndex += 1) {
+        const slot = document.createElement("div");
+        slot.className = "slot";
+        slot.dataset.pos = `P${slotIndex + 1}`;
+
+        const value = document.createElement("span");
+        value.className = "slot-value";
+
+        if (step.groupFactor === 0) {
+          if (slotIndex < Math.min(step.tokenCount, BASE_SLOTS)) {
+            value.textContent = labelFor(slotIndex, step);
+          } else {
+            slot.classList.add("empty");
+            value.textContent = "empty";
+          }
+        } else if (slotIndex < groupSlotCount) {
+          slot.classList.add("compressed");
+          value.classList.add("grouped");
+          value.textContent = `C${slotIndex + 1}`;
+        } else {
+          const localIndex = startLocal + (slotIndex - groupSlotCount);
+          if (localIndex < step.tokenCount) {
+            slot.classList.add("local");
+            value.classList.add("local");
+            if (step.keyIndex === localIndex) value.classList.add("key");
+            value.textContent = labelFor(localIndex, step);
+          } else {
+            slot.classList.add("empty");
+            value.textContent = "empty";
+          }
+        }
+
+        slot.appendChild(value);
+        els.slotGrid.appendChild(slot);
+      }
+    }
+
+    function renderOverflow(step) {
+      els.overflowList.innerHTML = "";
+      const overflowStart = capacity(step);
+      const overflowCount = Math.max(0, step.tokenCount - overflowStart);
+      els.overflowPanel.classList.toggle("clear", overflowCount === 0);
+      els.overflowCount.textContent = `${overflowCount}`;
+
+      if (overflowCount === 0) {
+        const token = document.createElement("span");
+        token.className = "token local";
+        token.textContent = "Clear";
+        els.overflowList.appendChild(token);
+        return;
+      }
+
+      for (let index = overflowStart; index < step.tokenCount; index += 1) {
+        const token = document.createElement("span");
+        token.className = "token overflow";
+        token.textContent = labelFor(index, step);
+        els.overflowList.appendChild(token);
+      }
+    }
+
+    function renderLayers(step) {
+      const active = step.groupFactor > 0;
+      const startLocal = localStart(step);
+      els.groupPanel.classList.toggle("muted", !active);
+      els.localPanel.classList.toggle("muted", !active);
+      els.groupCaption.textContent = active ? `${step.groupFactor} tokens per coarse position` : "Inactive";
+      els.groupList.innerHTML = "";
+      els.localList.innerHTML = "";
+
+      if (!active) {
+        const placeholder = document.createElement("div");
+        placeholder.className = "group-card";
+        placeholder.innerHTML = `<div class="group-head"><span>No grouping</span><span>Base only</span></div><div class="mini-row"><span class="mini">Off</span></div>`;
+        els.groupList.appendChild(placeholder);
+      } else {
+        let groupNumber = 0;
+        for (let index = 0; index < startLocal; index += step.groupFactor) {
+          groupNumber += 1;
+          const members = [];
+          for (let member = index; member < Math.min(index + step.groupFactor, startLocal); member += 1) {
+            members.push(member);
+          }
+          const card = document.createElement("div");
+          card.className = `group-card${members.includes(step.keyIndex) ? " key" : ""}`;
+          const row = members.map((member) => {
+            const keyClass = step.keyIndex === member ? " key" : "";
+            return `<span class="mini${keyClass}">${labelFor(member, step)}</span>`;
+          }).join("");
+          card.innerHTML = `<div class="group-head"><span>Group ${groupNumber}</span><span>C${groupNumber}</span></div><div class="mini-row">${row}</div>`;
+          els.groupList.appendChild(card);
+        }
+      }
+
+      const localTokens = active
+        ? Array.from({ length: step.tokenCount - startLocal }, (_, offset) => startLocal + offset)
+        : Array.from({ length: Math.min(step.tokenCount, LOCAL_COUNT) }, (_, index) => Math.max(0, step.tokenCount - LOCAL_COUNT) + index);
+
+      localTokens.slice(-LOCAL_COUNT).forEach((index) => {
+        const cell = document.createElement("div");
+        cell.className = "local-cell";
+        cell.textContent = labelFor(index, step);
+        els.localList.appendChild(cell);
+      });
+    }
+
+    function renderStatus(step) {
+      const accepted = isAccepted(step);
+      els.acceptedDot.className = `dot ${accepted ? "success" : "fail"}`;
+      els.acceptedText.textContent = accepted ? "Yes" : "No";
+
+      if (step.recovered === null) {
+        els.retrievalDot.className = "dot warn";
+        els.retrievalText.textContent = "Not tested";
+      } else {
+        els.retrievalDot.className = `dot ${step.recovered ? "success" : "fail"}`;
+        els.retrievalText.textContent = step.recovered ? "Yes" : "No";
+      }
+
+      els.keyIdea.textContent = step.idea;
+    }
+
+    function renderScript(step) {
+      els.stepKicker.textContent = `Step ${currentStep + 1} of ${steps.length}`;
+      els.stepTitle.textContent = step.title;
+      els.sayThis.textContent = step.say;
+      els.pointAt.textContent = step.point;
+      els.finalNote.hidden = currentStep !== steps.length - 1;
+      els.prevButton.disabled = currentStep === 0;
+      els.nextButton.textContent = currentStep === steps.length - 1 ? "Restart →" : "Next →";
+    }
+
+    function renderDots() {
+      els.dots.innerHTML = "";
+      steps.forEach((_, index) => {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = `step-dot${index === currentStep ? " active" : ""}`;
+        dot.setAttribute("aria-label", `Go to step ${index + 1}`);
+        dot.addEventListener("click", () => {
+          currentStep = index;
+          render();
+        });
+        els.dots.appendChild(dot);
+      });
+    }
+
+    function render() {
+      const step = steps[currentStep];
+      els.modeValue.textContent = step.mode;
+      els.capacityValue.textContent = `Effective context: ${formatCapacity(step)}`;
+      renderTokens(step);
+      renderSlots(step);
+      renderOverflow(step);
+      renderLayers(step);
+      renderStatus(step);
+      renderScript(step);
+      renderDots();
+    }
+
+    function nextStep() {
+      currentStep = currentStep === steps.length - 1 ? 0 : currentStep + 1;
+      render();
+    }
+
+    function previousStep() {
+      currentStep = Math.max(0, currentStep - 1);
+      render();
+    }
+
+    els.nextButton.addEventListener("click", nextStep);
+    els.prevButton.addEventListener("click", previousStep);
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        nextStep();
+      }
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        previousStep();
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>

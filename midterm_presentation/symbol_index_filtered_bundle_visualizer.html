@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Symbol Index and Filtered Bundle Visualizer</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d7deea;
+      --source: #2563eb;
+      --source-soft: #eaf1ff;
+      --index: #7c3aed;
+      --index-soft: #f1ebff;
+      --term: #c2410c;
+      --term-soft: #fff1e7;
+      --candidate: #0f8a5f;
+      --candidate-soft: #e7f7ef;
+      --selected: #b42318;
+      --selected-soft: #fff0ee;
+      --bundle: #b7791f;
+      --bundle-soft: #fff6df;
+      --llm: #4f46e5;
+      --llm-soft: #eeedff;
+      --shadow: 0 18px 42px rgba(22, 32, 54, 0.1);
+      --radius: 8px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.94), rgba(246,248,251,0.96)),
+        repeating-linear-gradient(90deg, rgba(37,99,235,0.045) 0 1px, transparent 1px 88px),
+        repeating-linear-gradient(0deg, rgba(124,58,237,0.04) 0 1px, transparent 1px 88px);
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .app {
+      width: min(1500px, calc(100vw - 28px));
+      height: calc(100vh - 24px);
+      margin: 12px auto;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      gap: 10px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 3vw, 42px);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 850px;
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.42;
+    }
+
+    .question-row,
+    .timeline,
+    .stage,
+    .guide {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .question-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px;
+      min-width: 0;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .question-button,
+    .nav-button {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #ffffff;
+      color: #344054;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 850;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
+    }
+
+    .question-button {
+      flex: 1 1 0;
+      padding: 0 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .question-button:hover,
+    .nav-button:hover {
+      transform: translateY(-1px);
+      border-color: #aeb9ca;
+    }
+
+    .question-button.active {
+      border-color: rgba(194,65,12,0.44);
+      background: var(--term-soft);
+      color: var(--term);
+    }
+
+    .timeline {
+      padding: 9px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .step {
+      position: relative;
+      min-height: 58px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fbfcff;
+      overflow: hidden;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .step::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 4px;
+      background: #e8ecf3;
+      transition: background 160ms ease;
+    }
+
+    .step.done::after,
+    .step.active::after {
+      background: var(--accent);
+    }
+
+    .step.active {
+      transform: translateY(-2px);
+      background: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .step small {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .step strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+      line-height: 1.15;
+    }
+
+    .stage {
+      min-height: 0;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: minmax(300px, 0.9fr) minmax(410px, 1.14fr) minmax(330px, 0.96fr);
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    .pane {
+      min-width: 0;
+      min-height: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    .pane-head {
+      min-height: 42px;
+      padding: 9px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      border-bottom: 1px solid var(--line);
+      background: #f8fafc;
+    }
+
+    .pane-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: #f2f4f7;
+      color: #475467;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .pane-body {
+      min-height: 0;
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    .source-body {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 8px;
+    }
+
+    .file-strip {
+      display: grid;
+      gap: 5px;
+    }
+
+    .file-row {
+      display: grid;
+      grid-template-columns: 8px 1fr auto;
+      align-items: center;
+      gap: 7px;
+      min-height: 25px;
+      padding: 0 8px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fbfcff;
+      color: #475467;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 11px;
+    }
+
+    .file-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #cbd5e1;
+    }
+
+    .file-row.active {
+      border-color: rgba(37,99,235,0.36);
+      background: var(--source-soft);
+      color: var(--source);
+      font-weight: 900;
+    }
+
+    .file-row.active .file-dot {
+      background: var(--source);
+    }
+
+    .code-window,
+    .terminal {
+      min-height: 0;
+      border: 1px solid #cfd6e5;
+      border-radius: 7px;
+      background: #101828;
+      color: #e4e7ec;
+      overflow: hidden;
+    }
+
+    .window-bar {
+      height: 28px;
+      padding: 0 9px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: #1d2939;
+      color: #98a2b3;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .light {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #667085;
+    }
+
+    .red { background: #f04438; }
+    .yellow { background: #fdb022; }
+    .green { background: #12b76a; }
+
+    .code-lines {
+      height: calc(100% - 28px);
+      margin: 0;
+      padding: 7px 0;
+      list-style: none;
+      overflow: auto;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 11px;
+      line-height: 1.42;
+    }
+
+    .code-line {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 8px;
+      min-height: 19px;
+      padding: 0 8px;
+      border-left: 4px solid transparent;
+      transition: opacity 160ms ease, background 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+
+    .line-no {
+      color: #7d89a1;
+      text-align: right;
+      user-select: none;
+    }
+
+    .code-line code {
+      white-space: pre;
+    }
+
+    .code-line.dim {
+      opacity: 0.46;
+    }
+
+    .code-line.symbol {
+      background: rgba(37,99,235,0.2);
+      border-left-color: var(--source);
+      color: #ffffff;
+    }
+
+    .code-line.primary {
+      background: rgba(183,121,31,0.22);
+      border-left-color: var(--bundle);
+      color: #ffffff;
+    }
+
+    .code-line.dependency {
+      background: rgba(15,118,110,0.22);
+      border-left-color: #0f766e;
+      color: #ffffff;
+    }
+
+    .center-body {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      gap: 8px;
+    }
+
+    .notice {
+      padding: 9px 10px;
+      border: 1px solid rgba(124,58,237,0.28);
+      border-radius: 7px;
+      background: var(--index-soft);
+      color: var(--index);
+      font-size: 12px;
+      line-height: 1.36;
+      font-weight: 850;
+    }
+
+    .terms {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-height: 30px;
+    }
+
+    .term {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: var(--term-soft);
+      color: var(--term);
+      font-size: 11px;
+      font-weight: 900;
+      opacity: 0.35;
+      transform: scale(0.9);
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .term.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .split {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 8px;
+    }
+
+    .box {
+      min-height: 0;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fbfcff;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    .box-head {
+      min-height: 31px;
+      padding: 7px 8px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      color: #344054;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .rows {
+      min-height: 0;
+      overflow: auto;
+      display: grid;
+      align-content: start;
+      gap: 6px;
+      padding: 7px;
+    }
+
+    .index-row,
+    .candidate-row {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #ffffff;
+      padding: 7px;
+      display: grid;
+      gap: 4px;
+      font-size: 11px;
+      line-height: 1.25;
+      opacity: 0.32;
+      transition: opacity 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .index-row.visible {
+      opacity: 1;
+    }
+
+    .index-row.match {
+      border-color: rgba(124,58,237,0.36);
+      background: var(--index-soft);
+    }
+
+    .candidate-row {
+      opacity: 0;
+    }
+
+    .candidate-row.visible {
+      opacity: 1;
+      border-color: rgba(15,138,95,0.34);
+      background: var(--candidate-soft);
+    }
+
+    .candidate-row.selected {
+      border-color: rgba(180,35,24,0.44);
+      background: var(--selected-soft);
+    }
+
+    .row-title {
+      font-weight: 900;
+      color: #344054;
+    }
+
+    .row-meta,
+    .uri {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--muted);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 10.5px;
+    }
+
+    .uri {
+      color: #475467;
+    }
+
+    .selected-uri {
+      min-height: 44px;
+      padding: 8px 10px;
+      border: 1px solid rgba(180,35,24,0.32);
+      border-radius: 7px;
+      background: var(--selected-soft);
+      color: var(--selected);
+      display: grid;
+      gap: 4px;
+      opacity: 0.35;
+      transition: opacity 160ms ease;
+    }
+
+    .selected-uri.active {
+      opacity: 1;
+    }
+
+    .selected-uri strong {
+      font-size: 12px;
+    }
+
+    .selected-uri span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 11px;
+    }
+
+    .right-body {
+      display: grid;
+      grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+      gap: 8px;
+    }
+
+    .resolver {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .resolver-card {
+      min-height: 54px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fbfcff;
+      font-size: 11px;
+      line-height: 1.3;
+      color: #475467;
+    }
+
+    .resolver-card.active {
+      border-color: rgba(180,35,24,0.34);
+      background: var(--selected-soft);
+      color: var(--selected);
+      font-weight: 850;
+    }
+
+    .arrow {
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .builder-rule {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+      padding: 8px;
+      border: 1px solid rgba(15,138,95,0.28);
+      border-radius: 7px;
+      background: var(--candidate-soft);
+      opacity: 0.38;
+      transition: opacity 160ms ease;
+    }
+
+    .builder-rule.active {
+      opacity: 1;
+    }
+
+    .builder-item {
+      min-width: 0;
+      display: grid;
+      gap: 4px;
+      color: #475467;
+      font-size: 11px;
+      line-height: 1.25;
+    }
+
+    .builder-item strong {
+      color: var(--candidate);
+      font-size: 10px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .dependency-line {
+      min-height: 50px;
+      padding: 8px;
+      border: 1px solid rgba(183,121,31,0.28);
+      border-radius: 7px;
+      background: var(--bundle-soft);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      color: var(--bundle);
+      font-size: 11px;
+      font-weight: 900;
+      opacity: 0.38;
+      transition: opacity 160ms ease;
+    }
+
+    .dependency-line.active {
+      opacity: 1;
+    }
+
+    .dep-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border: 1px solid rgba(183,121,31,0.3);
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--bundle);
+      white-space: nowrap;
+    }
+
+    .bundle-list {
+      min-height: 0;
+      overflow: auto;
+      display: grid;
+      align-content: start;
+      gap: 7px;
+    }
+
+    .bundle-card {
+      border: 1px solid rgba(183,121,31,0.32);
+      border-radius: 7px;
+      background: #ffffff;
+      padding: 7px;
+      display: grid;
+      gap: 5px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .bundle-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .bundle-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 10.5px;
+      font-weight: 900;
+    }
+
+    .reason {
+      display: inline-flex;
+      align-items: center;
+      min-height: 21px;
+      padding: 0 7px;
+      border-radius: 999px;
+      background: var(--bundle-soft);
+      color: var(--bundle);
+    }
+
+    .provenance {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--muted);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    .bundle-card pre {
+      margin: 0;
+      padding: 7px;
+      border-radius: 6px;
+      background: #101828;
+      color: #e4e7ec;
+      overflow: auto;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 10.5px;
+      line-height: 1.35;
+    }
+
+    .context {
+      min-height: 84px;
+      border: 1px solid #cfd6e5;
+      border-radius: 7px;
+      background: #101828;
+      color: #e4e7ec;
+      overflow: hidden;
+    }
+
+    .context-body {
+      padding: 8px;
+      display: grid;
+      gap: 5px;
+    }
+
+    .context-slot {
+      min-height: 23px;
+      padding: 5px 7px;
+      border: 1px dashed rgba(255,255,255,0.18);
+      border-radius: 6px;
+      color: #98a2b3;
+      font-size: 11px;
+    }
+
+    .context-slot.filled {
+      border-color: rgba(79,70,229,0.76);
+      background: rgba(79,70,229,0.18);
+      color: #ffffff;
+    }
+
+    .guide {
+      min-height: 74px;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--llm-soft);
+      color: var(--llm);
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .guide-copy strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .guide-copy p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.38;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .nav-button {
+      min-width: 92px;
+      padding: 0 12px;
+    }
+
+    .nav-button.primary {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: #ffffff;
+    }
+
+    .nav-button:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    kbd {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 24px;
+      min-height: 22px;
+      padding: 0 6px;
+      border: 1px solid #cbd5e1;
+      border-bottom-width: 2px;
+      border-radius: 5px;
+      background: #ffffff;
+      color: #475467;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    @media (max-width: 1120px) {
+      body {
+        overflow: auto;
+      }
+
+      .app {
+        height: auto;
+        min-height: calc(100vh - 18px);
+      }
+
+      .topbar {
+        grid-template-columns: 1fr;
+      }
+
+      .question-row {
+        flex-wrap: wrap;
+      }
+
+      .question-button {
+        flex: 1 1 260px;
+      }
+
+      .steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .stage {
+        grid-template-columns: 1fr;
+        overflow: visible;
+      }
+
+      .pane,
+      .source-body,
+      .center-body,
+      .right-body {
+        min-height: 360px;
+      }
+
+      .guide {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <h1>Symbol Index -> Filtered Bundle</h1>
+        <p class="subtitle">This simplified view shows the essential path only: local source is indexed into symbol addresses, the question filters candidates, one URI is resolved, and a local BundleBuilder packs the filtered context.</p>
+      </div>
+      <div class="label"><kbd>Left</kbd> previous <kbd>Right</kbd> next</div>
+    </header>
+
+    <nav class="question-row" aria-label="Example question selector">
+      <span class="label">Question</span>
+      <button class="question-button active" type="button" data-question="expired">What exact literal is raised for an expired token?</button>
+      <button class="question-button" type="button" data-question="cache">What does build_cache_key return?</button>
+      <button class="question-button" type="button" data-question="invoice">What are the invoice status and late fee?</button>
+    </nav>
+
+    <section class="timeline" aria-label="Pipeline steps">
+      <div class="steps" id="steps"></div>
+    </section>
+
+    <section class="stage" aria-label="Visualizer stage">
+      <article class="pane">
+        <div class="pane-head">
+          <div class="pane-title">1. Source File</div>
+          <span class="pill" id="sourceStatus">local parser only</span>
+        </div>
+        <div class="pane-body source-body">
+          <div class="file-strip" id="fileStrip"></div>
+          <div class="code-window">
+            <div class="window-bar">
+              <span class="light red"></span>
+              <span class="light yellow"></span>
+              <span class="light green"></span>
+              <span id="fileName">services/auth_service.py</span>
+            </div>
+            <ol class="code-lines" id="codeLines"></ol>
+          </div>
+        </div>
+      </article>
+
+      <article class="pane">
+        <div class="pane-head">
+          <div class="pane-title">2. Index and Selection</div>
+          <span class="pill" id="middleStatus">address map</span>
+        </div>
+        <div class="pane-body center-body">
+          <div class="notice" id="notice">The LLM has not received source code. The parser is only preparing symbol addresses.</div>
+          <div class="terms" id="terms"></div>
+          <div class="split">
+            <section class="box">
+              <div class="box-head"><span>Symbol Index</span><span id="indexCount">0 rows</span></div>
+              <div class="rows" id="indexRows"></div>
+            </section>
+            <section class="box">
+              <div class="box-head"><span>Candidate Outline</span><span id="candidateCount">0</span></div>
+              <div class="rows" id="candidateRows"></div>
+            </section>
+          </div>
+          <div class="selected-uri" id="selectedUri">
+            <strong>Selected URI</strong>
+            <span>waiting for selector</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="pane">
+        <div class="pane-head">
+          <div class="pane-title">3. Resolve and Bundle</div>
+          <span class="pill" id="bundleStatus">closed</span>
+        </div>
+        <div class="pane-body right-body">
+          <div class="resolver">
+            <div class="resolver-card" id="resolverA">URI waits for selection.</div>
+            <div class="arrow">-&gt;</div>
+            <div class="resolver-card" id="resolverB">No line span opened.</div>
+          </div>
+          <div class="builder-rule" id="builderRule">
+            <div class="builder-item">
+              <strong>Who</strong>
+              <span id="builderWho">Waiting for selected URI.</span>
+            </div>
+            <div class="builder-item">
+              <strong>How</strong>
+              <span id="builderHow">No primary symbol is open yet.</span>
+            </div>
+            <div class="builder-item">
+              <strong>Criteria</strong>
+              <span id="builderCriteria">No dependency rule applied yet.</span>
+            </div>
+          </div>
+          <div class="dependency-line" id="dependencyLine"></div>
+          <div class="bundle-list" id="bundleList"></div>
+          <div class="context">
+            <div class="window-bar">
+              <span class="light red"></span>
+              <span class="light yellow"></span>
+              <span class="light green"></span>
+              <span>LLM Context Window</span>
+            </div>
+            <div class="context-body" id="contextBody"></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <footer class="guide">
+      <div class="step-number" id="stepNumber">1</div>
+      <div class="guide-copy">
+        <strong id="guideTitle">Repository scan builds symbol addresses</strong>
+        <p id="guideText">Focus on the distinction: local parsing reads source files, but the LLM still receives no code body.</p>
+      </div>
+      <div class="nav">
+        <button class="nav-button" id="prevButton" type="button">Previous</button>
+        <button class="nav-button primary" id="nextButton" type="button">Next</button>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const files = [
+      "services/auth_service.py",
+      "reports/cache.py",
+      "billing/invoice.py"
+    ];
+
+    const sourceFiles = {
+      "services/auth_service.py": [
+        [1, "TOKEN_EXPIRED_MESSAGE = \"token expired\""],
+        [2, "TOKEN_REVOKED_MESSAGE = \"token revoked\""],
+        [3, ""],
+        [13, "def parse_bearer_token(header):"],
+        [14, "    prefix, token = header.split(\" \", 1)"],
+        [15, "    return token if prefix == \"Bearer\" else None"],
+        [16, ""],
+        [20, "def validate_token(token, clock):"],
+        [21, "    if token.revoked:"],
+        [22, "        raise ValueError(TOKEN_REVOKED_MESSAGE)"],
+        [23, "    if token.expires_at < clock.now():"],
+        [24, "        raise ValueError(TOKEN_EXPIRED_MESSAGE)"],
+        [25, "    return token.user_id"]
+      ],
+      "reports/cache.py": [
+        [1, "CACHE_NAMESPACE = \"reports\""],
+        [2, ""],
+        [3, "def sanitize_report_name(report_name):"],
+        [4, "    return report_name.strip().lower().replace(\" \", \"-\")"],
+        [5, ""],
+        [6, "def build_cache_key(tenant_id, report_name, period):"],
+        [7, "    safe_name = sanitize_report_name(report_name)"],
+        [8, "    return f\"{CACHE_NAMESPACE}:{tenant_id}:{safe_name}:{period}\""]
+      ],
+      "billing/invoice.py": [
+        [1, "LATE_FEE_RATE = 0.015"],
+        [2, "GRACE_DAYS = 5"],
+        [3, ""],
+        [4, "class InvoiceCalculator:"],
+        [5, "    def __init__(self, clock):"],
+        [6, "        self.clock = clock"],
+        [7, ""],
+        [8, "    def compute_late_fee(self, invoice):"],
+        [9, "        days_late = max(0, (self.clock.today() - invoice.due_date).days - GRACE_DAYS)"],
+        [10, "        return round(invoice.total * LATE_FEE_RATE * days_late, 2)"],
+        [11, ""],
+        [12, "def invoice_status(invoice, clock):"],
+        [13, "    if invoice.paid_at:"],
+        [14, "        return \"paid\""],
+        [15, "    if clock.today() > invoice.due_date:"],
+        [16, "        return \"overdue\""],
+        [17, "    return \"open\""]
+      ]
+    };
+
+    const symbols = [
+      {
+        path: "services/auth_service.py",
+        kind: "function",
+        qualname: "parse_bearer_token",
+        start: 13,
+        end: 15,
+        uri: "memory://symbol/services/auth_service.py::parse_bearer_token"
+      },
+      {
+        path: "services/auth_service.py",
+        kind: "function",
+        qualname: "validate_token",
+        start: 20,
+        end: 25,
+        uri: "memory://symbol/services/auth_service.py::validate_token",
+        body: "def validate_token(token, clock):\n    if token.revoked:\n        raise ValueError(TOKEN_REVOKED_MESSAGE)\n    if token.expires_at < clock.now():\n        raise ValueError(TOKEN_EXPIRED_MESSAGE)\n    return token.user_id"
+      },
+      {
+        path: "reports/cache.py",
+        kind: "function",
+        qualname: "sanitize_report_name",
+        start: 3,
+        end: 4,
+        uri: "memory://symbol/reports/cache.py::sanitize_report_name"
+      },
+      {
+        path: "reports/cache.py",
+        kind: "function",
+        qualname: "build_cache_key",
+        start: 6,
+        end: 8,
+        uri: "memory://symbol/reports/cache.py::build_cache_key",
+        body: "def build_cache_key(tenant_id, report_name, period):\n    safe_name = sanitize_report_name(report_name)\n    return f\"{CACHE_NAMESPACE}:{tenant_id}:{safe_name}:{period}\""
+      },
+      {
+        path: "billing/invoice.py",
+        kind: "class",
+        qualname: "InvoiceCalculator",
+        start: 4,
+        end: 10,
+        uri: "memory://symbol/billing/invoice.py::InvoiceCalculator"
+      },
+      {
+        path: "billing/invoice.py",
+        kind: "function",
+        qualname: "InvoiceCalculator.compute_late_fee",
+        start: 8,
+        end: 10,
+        uri: "memory://symbol/billing/invoice.py::InvoiceCalculator.compute_late_fee",
+        body: "def compute_late_fee(self, invoice):\n    days_late = max(0, (self.clock.today() - invoice.due_date).days - GRACE_DAYS)\n    return round(invoice.total * LATE_FEE_RATE * days_late, 2)"
+      },
+      {
+        path: "billing/invoice.py",
+        kind: "function",
+        qualname: "invoice_status",
+        start: 12,
+        end: 17,
+        uri: "memory://symbol/billing/invoice.py::invoice_status"
+      }
+    ];
+
+    const scenarios = {
+      expired: {
+        question: "What exact literal is raised for an expired token?",
+        file: "services/auth_service.py",
+        terms: ["validate_token", "expired", "TOKEN_EXPIRED_MESSAGE"],
+        selected: "memory://symbol/services/auth_service.py::validate_token",
+        deps: [
+          {
+            label: "TOKEN_EXPIRED_MESSAGE",
+            reason: "Referenced module constant",
+            provenance: "services/auth_service.py#L1-L1",
+            start: 1,
+            end: 1,
+            body: "TOKEN_EXPIRED_MESSAGE = \"token expired\""
+          }
+        ]
+      },
+      cache: {
+        question: "What does build_cache_key return?",
+        file: "reports/cache.py",
+        terms: ["build_cache_key", "cache_key", "report_name"],
+        selected: "memory://symbol/reports/cache.py::build_cache_key",
+        deps: [
+          {
+            label: "sanitize_report_name",
+            reason: "Same-file callee",
+            provenance: "reports/cache.py#L3-L4",
+            start: 3,
+            end: 4,
+            body: "def sanitize_report_name(report_name):\n    return report_name.strip().lower().replace(\" \", \"-\")"
+          },
+          {
+            label: "CACHE_NAMESPACE",
+            reason: "Referenced module constant",
+            provenance: "reports/cache.py#L1-L1",
+            start: 1,
+            end: 1,
+            body: "CACHE_NAMESPACE = \"reports\""
+          }
+        ]
+      },
+      invoice: {
+        question: "What are the invoice status and late fee?",
+        file: "billing/invoice.py",
+        terms: ["compute_late_fee", "invoice_status", "late_fee"],
+        selected: "memory://symbol/billing/invoice.py::InvoiceCalculator.compute_late_fee",
+        deps: [
+          {
+            label: "LATE_FEE_RATE",
+            reason: "Referenced module constant",
+            provenance: "billing/invoice.py#L1-L1",
+            start: 1,
+            end: 1,
+            body: "LATE_FEE_RATE = 0.015"
+          },
+          {
+            label: "GRACE_DAYS",
+            reason: "Referenced module constant",
+            provenance: "billing/invoice.py#L2-L2",
+            start: 2,
+            end: 2,
+            body: "GRACE_DAYS = 5"
+          },
+          {
+            label: "invoice_status",
+            reason: "Symbol mentioned in question",
+            provenance: "billing/invoice.py#L12-L17",
+            start: 12,
+            end: 17,
+            body: "def invoice_status(invoice, clock):\n    if invoice.paid_at:\n        return \"paid\"\n    if clock.today() > invoice.due_date:\n        return \"overdue\"\n    return \"open\""
+          }
+        ]
+      }
+    };
+
+    const steps = [
+      {
+        label: "Scan",
+        title: "Repository scan builds symbol addresses",
+        text: "Focus on the distinction: local parsing reads source files, but the LLM still receives no code body.",
+        accent: "var(--source)"
+      },
+      {
+        label: "Index",
+        title: "AST symbols become an address map",
+        text: "Each row stores path, kind, qualname, line span, and memory://symbol URI. This is metadata, not the function body.",
+        accent: "var(--index)"
+      },
+      {
+        label: "Terms",
+        title: "The question becomes searchable terms",
+        text: "The extracted terms are compared with symbol path, name, and qualname. They are only clues for filtering.",
+        accent: "var(--term)"
+      },
+      {
+        label: "Filter",
+        title: "Candidate outline stays small",
+        text: "The candidate outline contains kind, qualname, score, and URI. It still does not contain code bodies.",
+        accent: "var(--candidate)"
+      },
+      {
+        label: "Select",
+        title: "The selector picks one URI",
+        text: "The LLM selector chooses a symbol address from the outline. It is choosing what to open, not reading the source yet.",
+        accent: "var(--selected)"
+      },
+      {
+        label: "Resolve",
+        title: "The URI opens one exact line span",
+        text: "The resolver looks up the URI in symbol_index.json and reads only the selected path and line range.",
+        accent: "var(--bundle)"
+      },
+      {
+        label: "Bundle",
+        title: "Only the filtered bundle enters context",
+        text: "A local BundleBuilder creates the bundle from the resolved primary symbol, referenced names, same-file callees, and symbols mentioned in the question.",
+        accent: "var(--llm)"
+      }
+    ];
+
+    const state = {
+      step: 0,
+      scenario: "expired"
+    };
+
+    const els = {
+      steps: document.getElementById("steps"),
+      fileStrip: document.getElementById("fileStrip"),
+      fileName: document.getElementById("fileName"),
+      codeLines: document.getElementById("codeLines"),
+      sourceStatus: document.getElementById("sourceStatus"),
+      middleStatus: document.getElementById("middleStatus"),
+      notice: document.getElementById("notice"),
+      terms: document.getElementById("terms"),
+      indexCount: document.getElementById("indexCount"),
+      indexRows: document.getElementById("indexRows"),
+      candidateCount: document.getElementById("candidateCount"),
+      candidateRows: document.getElementById("candidateRows"),
+      selectedUri: document.getElementById("selectedUri"),
+      bundleStatus: document.getElementById("bundleStatus"),
+      resolverA: document.getElementById("resolverA"),
+      resolverB: document.getElementById("resolverB"),
+      builderRule: document.getElementById("builderRule"),
+      builderWho: document.getElementById("builderWho"),
+      builderHow: document.getElementById("builderHow"),
+      builderCriteria: document.getElementById("builderCriteria"),
+      dependencyLine: document.getElementById("dependencyLine"),
+      bundleList: document.getElementById("bundleList"),
+      contextBody: document.getElementById("contextBody"),
+      stepNumber: document.getElementById("stepNumber"),
+      guideTitle: document.getElementById("guideTitle"),
+      guideText: document.getElementById("guideText"),
+      prevButton: document.getElementById("prevButton"),
+      nextButton: document.getElementById("nextButton")
+    };
+
+    function currentScenario() {
+      return scenarios[state.scenario];
+    }
+
+    function selectedSymbol() {
+      return symbols.find((symbol) => symbol.uri === currentScenario().selected);
+    }
+
+    function score(symbol) {
+      const haystack = `${symbol.path} ${symbol.qualname}`.toLowerCase();
+      let value = symbol.uri === currentScenario().selected ? 6 : 0;
+      currentScenario().terms.forEach((term) => {
+        const termValue = term.toLowerCase();
+        if (haystack.includes(termValue)) value += 4;
+        termValue.split("_").forEach((part) => {
+          if (part.length > 2 && haystack.includes(part)) value += 1;
+        });
+      });
+      return value;
+    }
+
+    function candidates() {
+      return symbols
+        .map((symbol) => ({ ...symbol, score: score(symbol) }))
+        .filter((symbol) => symbol.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3);
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function lineClass(lineNo, text) {
+      const selected = selectedSymbol();
+      const deps = currentScenario().deps;
+      if (state.step >= 5 && lineNo >= selected.start && lineNo <= selected.end) return "primary";
+      if (state.step >= 6 && deps.some((dep) => lineNo >= dep.start && lineNo <= dep.end)) return "dependency";
+      if (state.step >= 1 && /^(class|def|async def)|^\s+def/.test(text)) return "symbol";
+      if (state.step >= 5) return "dim";
+      return "";
+    }
+
+    function renderSteps() {
+      els.steps.innerHTML = steps.map((step, index) => `
+        <div class="step ${index < state.step ? "done" : ""} ${index === state.step ? "active" : ""}" style="--accent: ${step.accent}">
+          <small>${String(index + 1).padStart(2, "0")}</small>
+          <strong>${step.label}</strong>
+        </div>
+      `).join("");
+    }
+
+    function renderSource() {
+      const sc = currentScenario();
+      els.fileName.textContent = sc.file;
+      els.sourceStatus.textContent = state.step >= 1 ? "symbols extracted" : "local parser only";
+      els.fileStrip.innerHTML = files.map((file) => `
+        <div class="file-row ${file === sc.file ? "active" : ""}">
+          <span class="file-dot"></span>
+          <span>${file}</span>
+          <span>${file === sc.file && state.step >= 1 ? "opened" : "indexed"}</span>
+        </div>
+      `).join("");
+      els.codeLines.innerHTML = sourceFiles[sc.file].map(([lineNo, text]) => `
+        <li class="code-line ${lineClass(lineNo, text)}">
+          <span class="line-no">${lineNo}</span>
+          <code>${escapeHtml(text) || "&nbsp;"}</code>
+        </li>
+      `).join("");
+    }
+
+    function renderCenter() {
+      const sc = currentScenario();
+      const indexed = state.step >= 1;
+      const termsVisible = state.step >= 2;
+      const filtered = state.step >= 3;
+      const selected = state.step >= 4;
+      els.middleStatus.textContent = indexed ? "symbol_index.json" : "address map";
+      els.notice.textContent = steps[state.step].text;
+      els.terms.innerHTML = sc.terms.map((term) => `<span class="term ${termsVisible ? "visible" : ""}">${term}</span>`).join("");
+      els.indexCount.textContent = indexed ? `${symbols.length} rows` : "0 rows";
+      els.indexRows.innerHTML = symbols.map((symbol) => {
+        const match = symbol.uri === sc.selected;
+        return `
+          <article class="index-row ${indexed ? "visible" : ""} ${match && indexed ? "match" : ""}">
+            <div class="row-title">${symbol.qualname}</div>
+            <div class="row-meta">${symbol.kind} | ${symbol.path}#L${symbol.start}-L${symbol.end}</div>
+            <div class="uri">${symbol.uri}</div>
+          </article>
+        `;
+      }).join("");
+      const rows = candidates();
+      els.candidateCount.textContent = filtered ? String(rows.length) : "0";
+      els.candidateRows.innerHTML = rows.map((symbol) => `
+        <article class="candidate-row ${filtered ? "visible" : ""} ${selected && symbol.uri === sc.selected ? "selected" : ""}">
+          <div class="row-title">${symbol.qualname}</div>
+          <div class="row-meta">${symbol.kind} | score ${symbol.score}</div>
+          <div class="uri">${symbol.uri}</div>
+        </article>
+      `).join("");
+      els.selectedUri.classList.toggle("active", selected);
+      els.selectedUri.innerHTML = `
+        <strong>Selected URI</strong>
+        <span>${selected ? selectedSymbol().uri : "waiting for selector"}</span>
+      `;
+    }
+
+    function renderRight() {
+      const sc = currentScenario();
+      const symbol = selectedSymbol();
+      const selected = state.step >= 4;
+      const resolved = state.step >= 5;
+      const bundled = state.step >= 6;
+      els.bundleStatus.textContent = bundled ? "sent to context" : resolved ? "line span open" : "closed";
+      els.resolverA.classList.toggle("active", selected);
+      els.resolverB.classList.toggle("active", resolved);
+      els.resolverA.textContent = selected ? `URI: ${symbol.uri}` : "URI waits for selection.";
+      els.resolverB.textContent = resolved ? `${symbol.path}#L${symbol.start}-L${symbol.end}` : "No line span opened.";
+      els.builderRule.classList.toggle("active", resolved);
+      els.builderWho.textContent = resolved ? "Local BundleBuilder, not the selector LLM." : "Waiting for selected URI.";
+      els.builderHow.textContent = resolved ? "Start with the resolved primary span, then scan local AST references." : "No primary symbol is open yet.";
+      els.builderCriteria.textContent = bundled
+        ? "Keep the primary symbol, referenced constants, same-file callees, and question-mentioned symbols."
+        : resolved
+          ? "Use reference names, call targets, and question terms as inclusion signals."
+          : "No dependency rule applied yet.";
+      els.dependencyLine.classList.toggle("active", bundled);
+      els.dependencyLine.innerHTML = bundled
+        ? [`<span class="dep-chip">Primary: ${symbol.qualname}</span>`, ...sc.deps.map((dep) => `<span class="dep-chip">${dep.label}</span>`)].join("")
+        : `<span class="dep-chip">Dependencies are discovered after resolve.</span>`;
+      const bundle = bundled ? [
+        {
+          reason: "Primary symbol",
+          provenance: `${symbol.path}#L${symbol.start}-L${symbol.end}`,
+          body: symbol.body
+        },
+        ...sc.deps
+      ] : [];
+      els.bundleList.innerHTML = bundle.map((item) => `
+        <article class="bundle-card visible">
+          <div class="bundle-card-head">
+            <span class="reason">${item.reason}</span>
+            <span class="provenance">${item.provenance}</span>
+          </div>
+          <pre>${escapeHtml(item.body)}</pre>
+        </article>
+      `).join("");
+      els.contextBody.innerHTML = `
+        <div class="context-slot ${bundled ? "filled" : ""}">Question: ${sc.question}</div>
+        <div class="context-slot ${selected ? "filled" : ""}">Selected URI: ${selected ? symbol.uri : "not selected"}</div>
+        <div class="context-slot ${bundled ? "filled" : ""}">Filtered Bundle: ${bundled ? `BundleBuilder packed ${bundle.length} fragments with provenance` : "not packed"}</div>
+      `;
+    }
+
+    function renderGuide() {
+      els.stepNumber.textContent = String(state.step + 1);
+      els.guideTitle.textContent = steps[state.step].title;
+      els.guideText.textContent = steps[state.step].text;
+      els.prevButton.disabled = state.step === 0;
+      els.nextButton.disabled = state.step === steps.length - 1;
+    }
+
+    function renderQuestions() {
+      document.querySelectorAll(".question-button").forEach((button) => {
+        button.classList.toggle("active", button.dataset.question === state.scenario);
+      });
+    }
+
+    function render() {
+      renderQuestions();
+      renderSteps();
+      renderSource();
+      renderCenter();
+      renderRight();
+      renderGuide();
+    }
+
+    function nextStep() {
+      state.step = Math.min(steps.length - 1, state.step + 1);
+      render();
+    }
+
+    function prevStep() {
+      state.step = Math.max(0, state.step - 1);
+      render();
+    }
+
+    document.querySelectorAll(".question-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.scenario = button.dataset.question;
+        state.step = Math.min(state.step, 2);
+        render();
+      });
+    });
+
+    els.prevButton.addEventListener("click", prevStep);
+    els.nextButton.addEventListener("click", nextStep);
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        nextStep();
+      }
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        prevStep();
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>

@@ -8,6 +8,17 @@
     return Math.min(Math.max(value, min), max);
   }
 
+  function renderSlides() {
+    const deck = document.getElementById("deck");
+    deck.innerHTML = window.DeckData.slides
+      .map((slide, index) => {
+        const activeClass = index === 0 ? " is-active" : "";
+        const customClass = slide.className ? ` ${slide.className}` : "";
+        return `<section class="slide${customClass}${activeClass}" data-title="${slide.title}">${slide.html}</section>`;
+      })
+      .join("");
+  }
+
   function updateSlide(nextIndex, pushHash = true) {
     state.index = clamp(nextIndex, 0, state.slides.length - 1);
     state.slides.forEach((slide, index) => {
@@ -27,11 +38,7 @@
     }
   }
 
-  function initSlides() {
-    state.slides = Array.from(document.querySelectorAll(".slide"));
-    const start = Number(window.location.hash.replace("#", "")) - 1;
-    updateSlide(Number.isFinite(start) ? start : 0, false);
-
+  function bindControls() {
     document.getElementById("prev-slide").addEventListener("click", () => updateSlide(state.index - 1));
     document.getElementById("next-slide").addEventListener("click", () => updateSlide(state.index + 1));
 
@@ -44,14 +51,20 @@
         event.preventDefault();
         updateSlide(state.index - 1);
       }
-      if (event.key === "Home") {
-        updateSlide(0);
-      }
-      if (event.key === "End") {
-        updateSlide(state.slides.length - 1);
-      }
+      if (event.key === "Home") updateSlide(0);
+      if (event.key === "End") updateSlide(state.slides.length - 1);
     });
   }
 
-  window.addEventListener("DOMContentLoaded", initSlides);
+  function init() {
+    renderSlides();
+    window.renderDeckCharts();
+    window.renderMiniVisualizers();
+    state.slides = Array.from(document.querySelectorAll(".slide"));
+    const start = Number(window.location.hash.replace("#", "")) - 1;
+    updateSlide(Number.isFinite(start) ? start : 0, false);
+    bindControls();
+  }
+
+  window.addEventListener("DOMContentLoaded", init);
 })();

@@ -1,21 +1,26 @@
 (function () {
-  const data = window.PresentationData;
-
-  function formatNumber(value, suffix) {
+  function formatValue(value, unit) {
     const rounded = Math.abs(value) >= 100 ? Math.round(value) : Number(value.toFixed(2));
-    return `${rounded.toLocaleString("ko-KR")}${suffix || ""}`;
+    return `${rounded.toLocaleString("en-US")}${unit || ""}`;
+  }
+
+  function getRows(config) {
+    const rows = [...(config.rows || [])];
+    if (config.sort === "desc") return rows.sort((a, b) => b.value - a.value);
+    if (config.sort === "asc") return rows.sort((a, b) => a.value - b.value);
+    return rows;
   }
 
   function scaledWidth(value, max, scale) {
-    if (max <= 0) return 0;
+    if (value <= 0 || max <= 0) return 0;
     if (scale === "log") {
       return (Math.log10(value + 1) / Math.log10(max + 1)) * 100;
     }
     return (value / max) * 100;
   }
 
-  function renderBarChart(el, config) {
-    const rows = config.rows || [];
+  function renderBarChart(root, config) {
+    const rows = getRows(config);
     const max = Math.max(...rows.map((row) => row.value), 1);
     const chart = document.createElement("div");
     chart.className = "bar-chart";
@@ -33,39 +38,39 @@
 
       const fill = document.createElement("div");
       fill.className = "bar-fill";
-      fill.style.width = `${Math.max(scaledWidth(row.value, max, config.scale), row.value === 0 ? 0 : 3)}%`;
-      fill.style.background = row.color || data.colors.select;
+      const width = scaledWidth(row.value, max, config.scale);
+      fill.style.width = `${Math.max(width, row.value > 0 ? 2.5 : 0)}%`;
+      fill.style.background = row.color || "#1f6feb";
       track.appendChild(fill);
 
       const value = document.createElement("div");
       value.className = "bar-value";
-      value.textContent = formatNumber(row.value, config.valueSuffix);
+      value.textContent = formatValue(row.value, config.unit);
 
       item.append(label, track, value);
       chart.appendChild(item);
     });
 
-    if (config.scale === "log") {
+    if (config.note) {
       const note = document.createElement("div");
-      note.className = "chart-scale-note";
-      note.textContent = "막대 길이는 log scale";
+      note.className = "chart-note";
+      note.textContent = config.note;
       chart.appendChild(note);
     }
 
-    el.replaceChildren(chart);
+    root.replaceChildren(chart);
   }
 
-  function renderCharts() {
-    document.querySelectorAll("[data-chart]").forEach((el) => {
-      const key = el.getAttribute("data-chart");
-      const config = data.charts[key];
+  window.renderDeckCharts = function renderDeckCharts() {
+    const charts = window.DeckData.charts;
+    document.querySelectorAll("[data-chart]").forEach((root) => {
+      const key = root.getAttribute("data-chart");
+      const config = charts[key];
       if (!config) {
-        el.textContent = `Unknown chart: ${key}`;
+        root.textContent = `Missing chart: ${key}`;
         return;
       }
-      renderBarChart(el, config);
+      renderBarChart(root, config);
     });
-  }
-
-  window.addEventListener("DOMContentLoaded", renderCharts);
+  };
 })();

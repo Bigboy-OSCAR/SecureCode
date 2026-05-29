@@ -1,0 +1,100 @@
+[중요 출력 조건]
+이 프롬프트는 한글로 작성되어 있지만, 이 프롬프트를 통해 생성되는 최종 결과물은 반드시 영어여야 합니다.
+React 앱의 모든 UI 텍스트, 버튼, 라벨, 패널 제목, 그래프 캡션, 도움말 문구, 코드 주석, 예시 질문, 예시 코드 설명, 결과 메시지는 영어로 작성해 주세요.
+
+[목적]
+원본 소스 코드가 `Symbol Index`로 구조화되고, 질문에 맞는 symbol 후보가 필터링된 뒤, 선택된 symbol과 주변 dependency가 `Filtered Bundle`로 구성되는 동작 과정을 보여주는 인터랙티브 시각화 컴포넌트를 제작해 주세요. (React, Tailwind CSS, Framer Motion 사용)
+
+이 시각화는 실험 결과, 성능 평가, 한계점, 성공/실패 사례를 보여주는 도구가 아닙니다. 오직 `Symbol Index`와 `Filtered Bundle`이 어떤 단계로 만들어지고 사용되는지 설명하는 데 집중해 주세요.
+
+[설명해야 할 동작 과정]
+1. Repository Scan:
+   - Python repository의 `.py` 파일들을 parser가 순회합니다.
+   - 파일 트리에서 각 파일이 하나씩 열리고 AST parser로 전달되는 애니메이션을 보여주세요.
+   - 이 단계에서는 코드 본문 전체를 LLM에게 보내지 않고, 구조 정보를 만들기 위해 parser가 로컬에서 읽는다는 점을 표현해 주세요.
+
+2. AST Symbol Extraction:
+   - AST parser가 `class`, `function`, `async function` 노드를 감지합니다.
+   - 각 symbol에 대해 `path`, `kind`, `name`, `qualname`, `start_line`, `end_line`, `uri`를 추출합니다.
+   - URI는 `memory://symbol/path/to/file.py::qualname` 형식입니다.
+   - 코드의 `def validate_token`, `class InvoiceCalculator`, `def build_cache_key`가 하이라이트되고 index row로 변환되는 애니메이션을 구현해 주세요.
+
+3. Symbol Index Build:
+   - 추출된 symbol들이 파일별 목록과 전체 symbol 목록으로 정리되어 `symbol_index.json` 구조를 형성합니다.
+   - 예시 row는 영어 UI에서 다음 형태로 보여주세요.
+     `{ path: "services/auth_service.py", kind: "function", qualname: "validate_token", start_line: 19, end_line: 26, uri: "memory://symbol/services/auth_service.py::validate_token" }`
+   - 이 인덱스는 코드 본문이 아니라 "symbol address map"이라는 점을 시각적으로 구분해 주세요.
+
+4. Question Term Extraction:
+   - 사용자 질문이 들어오면 질문에서 파일명, 함수명, class/method 이름, identifier-like terms를 추출합니다.
+   - 추출된 term을 작은 tag로 표시합니다. 예: `validate_token`, `expired`, `cache_key`, `invoice_status`.
+   - 이 term들이 symbol index의 `path`, `name`, `qualname`과 비교되는 과정을 보여주세요.
+
+5. Candidate Filtering:
+   - 전체 symbol list에서 질문 term과 matching되는 후보에 score를 부여합니다.
+   - score 기준으로 symbol card가 정렬되고, 상위 후보만 `Candidate Outline` 패널로 이동합니다.
+   - 후보 outline에는 code body가 아니라 `kind`, `qualname`, `uri`만 들어갑니다.
+   - funnel animation을 사용해 `All Symbols` -> `Scored Symbols` -> `Candidate Outline` 순서로 줄어드는 과정을 강조해 주세요.
+
+6. LLM Symbol Selection:
+   - LLM selector는 질문과 candidate outline만 보고 하나의 `memory://symbol/...` URI를 선택합니다.
+   - 이 단계에서는 실제 code body를 읽지 않고, symbol address만 고르는 과정으로 보여주세요.
+   - selector output은 terminal chip이나 말풍선으로 표시합니다. 예: `memory://symbol/reports/cache.py::build_cache_key`.
+
+7. Symbol Resolve:
+   - resolver가 선택된 URI를 `symbol_index.json`에서 찾습니다.
+   - URI에 연결된 `path`, `start_line`, `end_line`을 사용해 실제 파일에서 해당 line span을 읽습니다.
+   - source file view에서 선택된 line range만 밝게 하이라이트되고, 그 범위가 code card로 추출되는 애니메이션을 보여주세요.
+
+8. Dependency Discovery:
+   - 선택된 primary symbol 내부를 AST로 다시 훑어 참조된 이름과 호출된 함수 이름을 수집합니다.
+   - module-level constant 또는 assignment가 참조되면 해당 line span을 찾습니다.
+   - 같은 파일 안의 helper/callee symbol을 찾습니다.
+   - 질문에 직접 언급된 관련 symbol도 같은 파일 안에서 찾아 표시합니다.
+   - 이 과정은 dependency graph 형태로 보여주세요.
+
+9. Filtered Bundle Packing:
+   - primary symbol, referenced module constant, same-file callee/helper, question-mentioned symbol을 작은 code fragment card로 묶어 `Filtered Bundle`을 만듭니다.
+   - 각 fragment card에는 영어 reason label을 붙입니다.
+     - `Primary symbol`
+     - `Referenced module constant`
+     - `Same-file callee`
+     - `Symbol mentioned in question`
+   - 각 card에는 provenance를 표시합니다. 예: `services/auth_service.py#L19-L26`.
+   - 최종 bundle이 LLM context window로 들어가는 장면을 보여주세요.
+
+[핵심 시각화 요소]
+1. Left-to-Right Pipeline:
+   - `Source Files` -> `AST Parser` -> `Symbol Index` -> `Question Terms` -> `Candidate Outline` -> `Selected URI` -> `Resolver` -> `Filtered Bundle` -> `LLM Context` 순서로 배치합니다.
+   - 각 단계는 카드형 패널이 아니라 pipeline node처럼 연결되어야 하며, 데이터가 이동하는 방향이 명확해야 합니다.
+
+2. Source to Index Animation:
+   - source code line이 하이라이트된 뒤 JSON row로 변환되어 index table에 꽂히는 애니메이션을 구현합니다.
+   - class/function/method는 서로 다른 색상으로 구분합니다.
+
+3. Candidate Filtering Funnel:
+   - 전체 symbol card들이 질문 term tag와 연결되고, score가 높은 card만 candidate outline으로 이동합니다.
+   - outline에는 짧은 metadata만 남고 code body는 아직 열리지 않는다는 점을 시각적으로 보여주세요.
+
+4. Resolve and Bundle View:
+   - selected URI가 resolver로 들어가면 파일 경로와 line span이 열립니다.
+   - primary symbol card를 중심으로 dependency card들이 연결되고, 선택된 card만 bundle panel에 들어갑니다.
+   - 예시 흐름을 최소 3개 보여주세요.
+     - `validate_token` -> `TOKEN_EXPIRED_MESSAGE`
+     - `build_cache_key` -> `sanitize_report_name`
+     - `compute_late_fee` + question mention -> `invoice_status`
+
+5. Interaction:
+   - 사용자가 예시 질문을 선택할 수 있게 해주세요.
+     - `What exact literal is raised for an expired token?`
+     - `What does build_cache_key return for the given inputs?`
+     - `What are the invoice status and late fee?`
+   - `Run Indexing`, `Extract Terms`, `Filter Candidates`, `Select URI`, `Resolve Symbol`, `Expand Bundle`, `Send Bundle` 버튼을 순서대로 제공해 단계별로 실행할 수 있게 해주세요.
+   - slider로 `Candidate limit`, `Bundle depth`, `Bundle max symbols`를 조절하면 candidate outline과 bundle card 구성이 즉시 바뀌게 해주세요.
+
+[디자인 요구사항]
+- 전체 결과물은 영어 UI로 작성합니다.
+- Symbol Index와 Filtered Bundle의 동작 과정만 설명하고, 실험 결과, 벤치마크 수치, 실패 사례, 한계점, 적용 판단은 포함하지 마세요.
+- 불필요한 장식보다 pipeline, address mapping, dependency expansion이 선명하게 보이도록 설계합니다.
+- 색상은 `source`, `symbol index`, `question term`, `candidate`, `selected URI`, `dependency`, `bundle`, `LLM context`를 구분하는 용도로 사용합니다.
+- 마지막 요약 패널에는 영어로 다음 메시지를 담아 주세요: A symbol index turns code into addressable symbols, and a filtered bundle packs only the selected symbol and its nearby dependencies into the LLM context.

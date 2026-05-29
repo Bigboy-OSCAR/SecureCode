@@ -1,0 +1,2115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pointer Data Visualizer</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --surface: rgba(255, 255, 255, 0.93);
+      --surface-strong: #ffffff;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d7deea;
+      --source: #1769e0;
+      --source-soft: #e8f1ff;
+      --runtime: #a85518;
+      --runtime-soft: #fff0e4;
+      --catalog: #6f3cc3;
+      --catalog-soft: #f0eaff;
+      --resolver: #0f766e;
+      --resolver-soft: #e5f7f2;
+      --tool: #be4b0b;
+      --tool-soft: #fff4e8;
+      --evidence: #0b7a75;
+      --evidence-soft: #e6f7f6;
+      --llm: #3f4acb;
+      --llm-soft: #eceefe;
+      --shadow: 0 16px 42px rgba(26, 39, 68, 0.13);
+      --radius: 8px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      min-height: 100vh;
+      overflow: hidden;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.88), rgba(246,247,251,0.94)),
+        repeating-linear-gradient(90deg, rgba(23,105,224,0.05) 0 1px, transparent 1px 76px),
+        repeating-linear-gradient(0deg, rgba(111,60,195,0.045) 0 1px, transparent 1px 76px);
+    }
+
+    button {
+      font: inherit;
+    }
+
+    code,
+    pre {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    .app {
+      width: min(1536px, calc(100vw - 24px));
+      height: calc(100vh - 16px);
+      min-height: 0;
+      margin: 8px auto;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 10px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(25px, 2.8vw, 38px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 7px 0 0;
+      max-width: 900px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.32;
+    }
+
+    .badges {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 34px;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      color: #344054;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--resolver);
+      box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.14);
+    }
+
+    .workspace {
+      position: relative;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(250px, 0.9fr) minmax(520px, 1.55fr) minmax(250px, 0.9fr);
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    .panel {
+      min-width: 0;
+      min-height: 0;
+      background: var(--surface);
+      border: 1px solid rgba(215, 222, 234, 0.98);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .domain {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    .domain.source {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .domain.runtime {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-height: 44px;
+      padding: 8px 11px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(248, 250, 252, 0.8);
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .panel-title svg {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+    }
+
+    .small-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 25px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: #f2f4f7;
+      color: #475467;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .source .small-tag {
+      background: var(--source-soft);
+      color: var(--source);
+    }
+
+    .runtime .small-tag {
+      background: var(--runtime-soft);
+      color: var(--runtime);
+    }
+
+    .domain-body {
+      min-height: 0;
+      padding: 10px;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 7px;
+    }
+
+    .raw-object {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcff;
+      overflow: hidden;
+    }
+
+    .object-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+      color: #344054;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .raw-body {
+      height: 88px;
+      padding: 8px 9px;
+      overflow: hidden;
+      color: #475467;
+      font-size: 11px;
+      line-height: 1.34;
+      background:
+        linear-gradient(180deg, rgba(251,252,255,0), #fbfcff 82%),
+        #fbfcff;
+      white-space: pre-wrap;
+    }
+
+    .raw-warning {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 8px;
+      border-top: 1px solid var(--line);
+      background: #fff7ed;
+      color: #9a3412;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .manifest,
+    .store {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface-strong);
+    }
+
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10.5px;
+      line-height: 1.28;
+    }
+
+    .mini-table th,
+    .mini-table td {
+      padding: 7px 8px;
+      border-bottom: 1px solid #eef1f6;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .mini-table th {
+      background: #f8fafc;
+      color: var(--muted);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 9.5px;
+    }
+
+    .mini-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .mini-table tr.active-source {
+      background: var(--source-soft);
+      color: var(--source);
+      font-weight: 900;
+    }
+
+    .mini-table tr.active-runtime {
+      background: var(--runtime-soft);
+      color: var(--runtime);
+      font-weight: 900;
+    }
+
+    .token {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      max-width: 100%;
+      padding: 0 7px;
+      border-radius: 6px;
+      background: #f2f4f7;
+      color: #344054;
+      font-size: 10.5px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .token.source-token {
+      background: var(--source-soft);
+      color: var(--source);
+    }
+
+    .token.runtime-token {
+      background: var(--runtime-soft);
+      color: var(--runtime);
+    }
+
+    .token.catalog-token {
+      background: var(--catalog-soft);
+      color: var(--catalog);
+    }
+
+    .difference {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .difference-card {
+      padding: 8px 9px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.74);
+      font-size: 11px;
+      line-height: 1.34;
+      color: var(--muted);
+    }
+
+    .difference-card strong {
+      display: block;
+      color: #344054;
+      margin-bottom: 3px;
+      font-size: 12px;
+    }
+
+    .track-step-card {
+      padding: 7px 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+      color: var(--muted);
+      font-size: 10.5px;
+      line-height: 1.28;
+    }
+
+    .track-step-card strong {
+      display: block;
+      margin-bottom: 3px;
+      color: #344054;
+      font-size: 11.5px;
+    }
+
+    .track-step-card.source-step {
+      border-color: rgba(23, 105, 224, 0.28);
+      background: rgba(232, 241, 255, 0.55);
+    }
+
+    .track-step-card.runtime-step {
+      border-color: rgba(168, 85, 24, 0.28);
+      background: rgba(255, 240, 228, 0.62);
+    }
+
+    .center {
+      grid-column: 2;
+      grid-row: 1;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 8px;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .catalog-panel {
+      background: var(--surface);
+      border: 1px solid rgba(215, 222, 234, 0.98);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .catalog-grid {
+      padding: 8px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .line-legend {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      padding: 0 8px 8px;
+    }
+
+    .legend-item {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 6px;
+      min-height: 28px;
+      padding: 5px 6px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--muted);
+      font-size: 9.5px;
+      line-height: 1.15;
+    }
+
+    .legend-sample {
+      height: 0;
+      border-top: 2px dashed #98a2b3;
+    }
+
+    .legend-sample.source-sample {
+      border-color: var(--source);
+    }
+
+    .legend-sample.runtime-sample {
+      border-color: var(--runtime);
+    }
+
+    .legend-sample.flow-sample {
+      border-color: var(--resolver);
+    }
+
+    .catalog-card {
+      position: relative;
+      display: grid;
+      gap: 7px;
+      min-height: 72px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcff;
+      transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .catalog-card.active {
+      border-color: rgba(111, 60, 195, 0.55);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(111, 60, 195, 0.14);
+    }
+
+    .catalog-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 10.5px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .catalog-pointer {
+      color: #344054;
+      font-size: 10px;
+      line-height: 1.35;
+      word-break: break-all;
+    }
+
+    .catalog-tools {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    .flow-panel {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      min-height: 0;
+      background: var(--surface);
+      border: 1px solid rgba(215, 222, 234, 0.98);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .controls-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 7px 9px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(248,250,252,0.78);
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+      gap: 3px;
+    }
+
+    .segmented.two {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .segmented button {
+      min-height: 30px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: #475467;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .segmented button.active {
+      background: var(--ink);
+      color: #ffffff;
+    }
+
+    .pipeline {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: 6px;
+      padding: 8px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .pipeline-stage {
+      position: relative;
+      min-height: 62px;
+      padding: 6px 5px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcff;
+      overflow: hidden;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .pipeline-stage.active {
+      transform: translateY(-2px);
+      background: #ffffff;
+      border-color: rgba(15, 118, 110, 0.45);
+      box-shadow: 0 9px 20px rgba(15, 118, 110, 0.12);
+    }
+
+    .pipeline-stage.done::after {
+      content: "";
+      position: absolute;
+      left: 7px;
+      right: 7px;
+      bottom: 6px;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--source), var(--runtime), var(--evidence), var(--llm));
+    }
+
+    .stage-num {
+      display: inline-grid;
+      place-items: center;
+      width: 19px;
+      height: 19px;
+      margin-bottom: 3px;
+      border-radius: 50%;
+      background: #eef2f7;
+      color: #475467;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .pipeline-stage.active .stage-num,
+    .pipeline-stage.done .stage-num {
+      background: var(--resolver-soft);
+      color: var(--resolver);
+    }
+
+    .stage-label {
+      color: #344054;
+      font-size: 10px;
+      font-weight: 900;
+      line-height: 1.18;
+    }
+
+    .stage-copy {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.12;
+    }
+
+    .detail-grid {
+      position: relative;
+      min-height: 0;
+      padding: 8px;
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      grid-template-rows: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 7px;
+    }
+
+    .detail-card {
+      min-width: 0;
+      min-height: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcff;
+      overflow: hidden;
+    }
+
+    .detail-card.wide {
+      grid-column: auto;
+    }
+
+    .detail-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      min-height: 32px;
+      padding: 7px 9px;
+      border-bottom: 1px solid var(--line);
+      background: #ffffff;
+      font-size: 12px;
+      font-weight: 900;
+      color: #344054;
+    }
+
+    .resolver-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #f8fafc;
+      gap: 3px;
+    }
+
+    .resolver-tabs button {
+      min-height: 24px;
+      border: 0;
+      border-radius: 5px;
+      background: transparent;
+      color: #475467;
+      font-size: 10.5px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .resolver-tabs button.active {
+      background: var(--resolver);
+      color: #ffffff;
+    }
+
+    .detail-body {
+      padding: 7px;
+      display: grid;
+      gap: 6px;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .resolver-chain {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 6px;
+      align-items: center;
+    }
+
+    .chain-box {
+      min-height: 54px;
+      padding: 7px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+      color: #344054;
+      font-size: 10px;
+      line-height: 1.24;
+      overflow: hidden;
+    }
+
+    .chain-box.active {
+      border-color: rgba(15, 118, 110, 0.45);
+      background: var(--resolver-soft);
+    }
+
+    .arrow {
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .selector-card,
+    .prompt-card,
+    .evidence-card {
+      padding: 7px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+      color: #344054;
+      font-size: 10.5px;
+      line-height: 1.28;
+    }
+
+    .selector-card pre,
+    .prompt-card pre,
+    .evidence-card pre {
+      margin: 0;
+      white-space: pre-wrap;
+      color: #344054;
+      font-size: 10px;
+      line-height: 1.28;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+    }
+
+    .tool-card {
+      min-height: 76px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+      color: #475467;
+      font-size: 9.5px;
+      line-height: 1.2;
+      transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+    }
+
+    .tool-card.active {
+      border-color: rgba(190, 75, 11, 0.46);
+      background: var(--tool-soft);
+      transform: translateY(-1px);
+    }
+
+    .tool-card strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #344054;
+      font-size: 11px;
+    }
+
+    .log-lines {
+      display: grid;
+      gap: 3px;
+    }
+
+    .log-line {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 6px;
+      min-height: 18px;
+      padding: 2px 4px;
+      border-radius: 5px;
+      background: #f8fafc;
+    }
+
+    .log-line.match {
+      background: #ffe8d6;
+      color: #9a3412;
+      font-weight: 900;
+    }
+
+    .doc-section {
+      border: 1px solid #eef1f6;
+      border-radius: 6px;
+      padding: 6px;
+      background: #f8fafc;
+      color: #667085;
+    }
+
+    .doc-section.selected {
+      background: var(--evidence-soft);
+      color: var(--evidence);
+      font-weight: 900;
+    }
+
+    .json-tree {
+      display: grid;
+      gap: 3px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    .json-node {
+      min-height: 18px;
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: #667085;
+      background: #f8fafc;
+    }
+
+    .json-node.active {
+      color: var(--evidence);
+      background: var(--evidence-soft);
+      font-weight: 900;
+    }
+
+    .context-window {
+      position: relative;
+      min-height: 82px;
+      padding: 7px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(63, 74, 203, 0.28);
+      background:
+        linear-gradient(180deg, rgba(236,238,254,0.86), rgba(255,255,255,0.94));
+      overflow: hidden;
+    }
+
+    .context-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .context-slot {
+      min-height: 44px;
+      padding: 6px;
+      border: 1px dashed rgba(63, 74, 203, 0.32);
+      border-radius: var(--radius);
+      background: #ffffff;
+      font-size: 9.5px;
+      line-height: 1.18;
+      color: #475467;
+    }
+
+    .context-slot strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--llm);
+      font-size: 11.5px;
+    }
+
+    .moving-token {
+      position: absolute;
+      z-index: 15;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      max-width: 246px;
+      min-height: 32px;
+      padding: 0 10px;
+      border-radius: 999px;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-shadow: 0 13px 26px rgba(24, 32, 51, 0.2);
+      pointer-events: none;
+      transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 220ms ease;
+      will-change: transform;
+    }
+
+    .moving-token.source-pointer {
+      background: var(--source);
+    }
+
+    .moving-token.runtime-pointer {
+      background: var(--runtime);
+    }
+
+    .moving-token.evidence-token {
+      background: var(--evidence);
+    }
+
+    .moving-token.dimmed {
+      opacity: 0.58;
+    }
+
+    .moving-token.hidden {
+      opacity: 0;
+    }
+
+    .floating-card {
+      position: absolute;
+      z-index: 14;
+      width: 230px;
+      min-height: 78px;
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+      box-shadow: 0 14px 28px rgba(24, 32, 51, 0.16);
+      opacity: 0;
+      transform: translate3d(-50%, -50%, 0) scale(0.92);
+      transition:
+        left 420ms cubic-bezier(0.22, 1, 0.36, 1),
+        top 420ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 200ms ease,
+        transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+
+    .floating-card.visible {
+      opacity: 1;
+      transform: translate3d(-50%, -50%, 0) scale(1);
+    }
+
+    .floating-card strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #344054;
+      font-size: 12px;
+    }
+
+    .floating-card pre {
+      margin: 0;
+      white-space: pre-wrap;
+      color: #475467;
+      font-size: 10.5px;
+      line-height: 1.35;
+    }
+
+    #connectorLayer {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .connector {
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-dasharray: 7 7;
+      opacity: 0.64;
+      animation: dash 1.05s linear infinite;
+    }
+
+    .connector.source-line {
+      stroke: var(--source);
+    }
+
+    .connector.runtime-line {
+      stroke: var(--runtime);
+    }
+
+    .connector.flow-line {
+      stroke: var(--resolver);
+      opacity: 0.42;
+    }
+
+    @keyframes dash {
+      to {
+        stroke-dashoffset: -28;
+      }
+    }
+
+    .bottom {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .main-controls {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      padding: 8px;
+      background: var(--surface);
+      border: 1px solid rgba(215, 222, 234, 0.98);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .control-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 116px;
+      min-height: 38px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #ffffff;
+      color: #344054;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
+    }
+
+    .control-button:hover {
+      transform: translateY(-1px);
+      border-color: #adb7ca;
+    }
+
+    .control-button.primary {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #ffffff;
+    }
+
+    .control-button.playing {
+      background: var(--resolver);
+      border-color: var(--resolver);
+      color: #ffffff;
+    }
+
+    .guide {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 10px;
+      background: var(--surface);
+      border: 1px solid rgba(215, 222, 234, 0.98);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .step-count {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--catalog-soft);
+      color: var(--catalog);
+      font-weight: 900;
+      font-size: 18px;
+    }
+
+    .guide strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 14px;
+    }
+
+    .guide p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.28;
+    }
+
+    .meter-wrap {
+      min-width: 150px;
+      display: grid;
+      gap: 5px;
+    }
+
+    .meter-wrap span {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .meter {
+      width: 150px;
+      height: 9px;
+      border-radius: 999px;
+      background: #e9edf5;
+      overflow: hidden;
+    }
+
+    .meter-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--source), var(--runtime), var(--evidence), var(--llm));
+      transition: width 420ms ease;
+    }
+
+    @media (max-width: 1200px) {
+      .workspace {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+      }
+
+      .domain.source,
+      .center,
+      .domain.runtime {
+        grid-column: 1;
+      }
+
+      .domain.source {
+        grid-row: 1;
+      }
+
+      .center {
+        grid-row: 2;
+      }
+
+      .domain.runtime {
+        grid-row: 3;
+      }
+
+      .pipeline {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      #connectorLayer,
+      .moving-token,
+      .floating-card {
+        display: none;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .app {
+        width: min(100vw - 16px, 1536px);
+        margin: 8px auto;
+      }
+
+      .topbar,
+      .bottom,
+      .controls-row,
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .detail-card.wide {
+        grid-column: 1;
+      }
+
+      .catalog-grid,
+      .tool-grid,
+      .context-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pipeline {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .guide {
+        grid-template-columns: 1fr;
+      }
+
+      .main-controls {
+        flex-wrap: wrap;
+      }
+
+      .control-button {
+        flex: 1 1 130px;
+      }
+
+      .meter-wrap,
+      .meter {
+        min-width: 0;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <h1>Pointer Data Visualizer</h1>
+        <p class="subtitle">This interactive model shows how short source and runtime pointers keep large data outside the prompt, then resolve through typed extraction tools to send only targeted evidence into the LLM context.</p>
+      </div>
+      <div class="badges" aria-label="Architecture properties">
+        <span class="badge"><span class="dot"></span> Closed Network</span>
+        <span class="badge">Raw Data Stays Outside</span>
+        <span class="badge">Typed Extraction Tools</span>
+      </div>
+    </header>
+
+    <section class="workspace" id="workspace">
+      <svg id="connectorLayer" aria-hidden="true">
+        <path id="sourceConnector" class="connector source-line" d="" />
+        <path id="runtimeConnector" class="connector runtime-line" d="" />
+        <path id="flowConnector" class="connector flow-line" d="" />
+      </svg>
+
+      <article class="panel domain source">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M3 7h6l2 2h10v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path>
+              <path d="M3 7V5a2 2 0 0 1 2-2h4l2 2h4"></path>
+            </svg>
+            <span>Source Domain</span>
+          </div>
+          <span class="small-tag">Disk Files</span>
+        </div>
+        <div class="domain-body">
+          <section class="raw-object" id="sourceRaw">
+            <div class="object-head">
+              <span>Large Source Object</span>
+              <span class="token source-token" id="sourceKindTag">log file</span>
+            </div>
+            <pre class="raw-body" id="sourceRawBody"></pre>
+            <div class="raw-warning">Raw source data is cataloged, not copied into the prompt.</div>
+          </section>
+
+          <section class="manifest">
+            <div class="object-head">
+              <span>Source Manifest</span>
+              <span class="token source-token">source://kind/path</span>
+            </div>
+            <table class="mini-table" aria-label="Source manifest">
+              <thead>
+                <tr>
+                  <th>Pointer</th>
+                  <th>Kind</th>
+                  <th>Bytes</th>
+                </tr>
+              </thead>
+              <tbody id="sourceManifestRows"></tbody>
+            </table>
+          </section>
+
+          <section class="difference">
+            <div class="difference-card">
+              <strong>Source Pointer</strong>
+              Points to existing external data on disk through a safe catalog entry, without exposing the real filesystem path to the LLM.
+            </div>
+            <div class="track-step-card source-step">
+              <strong id="sourceTrackTitle">Source Step</strong>
+              <span id="sourceTrackCopy">The source pointer is waiting for a cataloged disk file.</span>
+            </div>
+          </section>
+        </div>
+      </article>
+
+      <section class="center">
+        <article class="catalog-panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M4 5h16"></path>
+                <path d="M4 12h16"></path>
+                <path d="M4 19h16"></path>
+                <path d="M8 5v14"></path>
+              </svg>
+              <span>Pointer Catalog</span>
+            </div>
+            <span class="small-tag">Compact Exposure</span>
+          </div>
+          <div class="catalog-grid">
+            <div class="catalog-card" id="sourceCatalogCard">
+              <div class="catalog-meta"><span>Source Entry</span><span id="sourceBytes">18 KB</span></div>
+              <code class="catalog-pointer" id="sourceCatalogPointer"></code>
+              <div class="catalog-tools" id="sourceCatalogTools"></div>
+              <div class="catalog-tools" id="sourceCatalogHints"></div>
+            </div>
+            <div class="catalog-card" id="runtimeCatalogCard">
+              <div class="catalog-meta"><span>Runtime Entry</span><span id="runtimeBytes">42 KB</span></div>
+              <code class="catalog-pointer" id="runtimeCatalogPointer"></code>
+              <div class="catalog-tools" id="runtimeCatalogTools"></div>
+              <div class="catalog-tools" id="runtimeCatalogHints"></div>
+            </div>
+          </div>
+          <div class="line-legend" aria-label="Dotted line legend">
+            <div class="legend-item">
+              <span class="legend-sample source-sample"></span>
+              <span>Source route: disk object to source catalog.</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-sample runtime-sample"></span>
+              <span>Runtime route: produced value to RuntimeStore catalog.</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-sample flow-sample"></span>
+              <span>Active flow: selected pointer through tools into context.</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="flow-panel">
+          <div class="controls-row">
+            <div class="segmented two" aria-label="Pointer track">
+              <button type="button" id="trackSourceBtn">Source Pointer</button>
+              <button type="button" id="trackRuntimeBtn">Runtime Pointer</button>
+            </div>
+            <div class="segmented" aria-label="Data format">
+              <button type="button" id="typeLogBtn">Log</button>
+              <button type="button" id="typeDocBtn">Document</button>
+              <button type="button" id="typeJsonBtn">JSON</button>
+            </div>
+          </div>
+
+          <div class="pipeline" id="pipeline"></div>
+
+          <div class="detail-grid">
+            <section class="detail-card" id="selectorTarget">
+              <div class="detail-head">
+                <span>LLM Selector Output</span>
+                <span class="token catalog-token">tool command</span>
+              </div>
+              <div class="detail-body">
+                <div class="selector-card">
+                  <pre id="selectorCommand"></pre>
+                </div>
+              </div>
+            </section>
+
+            <section class="detail-card" id="resolverTarget">
+              <div class="detail-head">
+                <span>Resolver Detail View</span>
+                <div class="resolver-tabs" aria-label="Resolver tabs">
+                  <button type="button" id="resolverSourceBtn">Source</button>
+                  <button type="button" id="resolverRuntimeBtn">Runtime</button>
+                </div>
+              </div>
+              <div class="detail-body">
+                <div class="resolver-chain">
+                  <div class="chain-box" id="resolvePointerBox"></div>
+                  <div class="arrow">→</div>
+                  <div class="chain-box" id="resolveLookupBox"></div>
+                  <div class="arrow">→</div>
+                  <div class="chain-box" id="resolveLocationBox"></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="detail-card wide" id="extractionTarget">
+              <div class="detail-head">
+                <span>Format-Specific Extraction</span>
+                <span class="token" id="activeToolToken"></span>
+              </div>
+              <div class="detail-body">
+                <div class="tool-grid">
+                  <div class="tool-card" id="logToolCard">
+                    <strong>Log Extraction</strong>
+                    <div class="log-lines" id="logLines"></div>
+                  </div>
+                  <div class="tool-card" id="docToolCard">
+                    <strong>Document Extraction</strong>
+                    <div id="docSections"></div>
+                  </div>
+                  <div class="tool-card" id="jsonToolCard">
+                    <strong>JSON Extraction</strong>
+                    <div class="json-tree" id="jsonTree"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="detail-card wide" id="contextTarget">
+              <div class="detail-head">
+                <span>LLM Context Window</span>
+                <span class="token catalog-token">assembled prompt</span>
+              </div>
+              <div class="detail-body">
+                <div class="context-window">
+                  <div class="context-grid">
+                    <div class="context-slot">
+                      <strong>Pointer and Tool Call</strong>
+                      <pre id="contextPointer"></pre>
+                    </div>
+                    <div class="context-slot">
+                      <strong>Extracted Evidence Only</strong>
+                      <pre id="contextEvidence"></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </article>
+      </section>
+
+      <article class="panel domain runtime">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <path d="M3.27 6.96L12 12.01l8.73-5.05"></path>
+              <path d="M12 22.08V12"></path>
+            </svg>
+            <span>Runtime Domain</span>
+          </div>
+          <span class="small-tag">RuntimeStore</span>
+        </div>
+        <div class="domain-body">
+          <section class="raw-object" id="runtimeRaw">
+            <div class="object-head">
+              <span>Large Runtime Object</span>
+              <span class="token runtime-token" id="runtimeKindTag">log string</span>
+            </div>
+            <pre class="raw-body" id="runtimeRawBody"></pre>
+            <div class="raw-warning">Raw runtime output is stored, then represented by a short pointer.</div>
+          </section>
+
+          <section class="store">
+            <div class="object-head">
+              <span>RuntimeStore</span>
+              <span class="token runtime-token">runtime://kind/producer/id</span>
+            </div>
+            <table class="mini-table" aria-label="Runtime store">
+              <thead>
+                <tr>
+                  <th>Pointer</th>
+                  <th>Producer</th>
+                  <th>Bytes</th>
+                </tr>
+              </thead>
+              <tbody id="runtimeStoreRows"></tbody>
+            </table>
+          </section>
+
+          <section class="difference">
+            <div class="difference-card">
+              <strong>Runtime Pointer</strong>
+              Points to a value created during the current tool run and stored in RuntimeStore, so the value can move between tools without entering the prompt.
+            </div>
+            <div class="track-step-card runtime-step">
+              <strong id="runtimeTrackTitle">Runtime Step</strong>
+              <span id="runtimeTrackCopy">The runtime pointer is waiting for a producer output stored in RuntimeStore.</span>
+            </div>
+          </section>
+        </div>
+      </article>
+
+      <div class="moving-token source-pointer" id="sourcePointerToken">Source Pointer</div>
+      <div class="moving-token runtime-pointer" id="runtimePointerToken">Runtime Pointer</div>
+      <div class="moving-token evidence-token hidden" id="evidenceToken">Extracted Evidence</div>
+
+      <div class="floating-card" id="evidenceCard">
+        <strong>Extracted Evidence</strong>
+        <pre id="floatingEvidence"></pre>
+      </div>
+    </section>
+
+    <footer class="bottom">
+      <nav class="main-controls" aria-label="Animation controls">
+        <button class="control-button primary" type="button" id="nextBtn">
+          <span aria-hidden="true">→</span>
+          Next Step
+        </button>
+        <button class="control-button" type="button" id="autoBtn">
+          <span aria-hidden="true">▷</span>
+          Auto Play
+        </button>
+        <button class="control-button" type="button" id="resetBtn">
+          <span aria-hidden="true">↺</span>
+          Reset
+        </button>
+      </nav>
+      <section class="guide" aria-live="polite">
+        <div class="step-count" id="stepCount">0</div>
+        <div>
+          <strong id="guideTitle">Ready State</strong>
+          <p id="guideCopy">Choose a pointer track and data format, then step through how raw objects stay outside the prompt.</p>
+        </div>
+        <div class="meter-wrap">
+          <span>Context Fill</span>
+          <div class="meter" aria-hidden="true"><div class="meter-fill" id="meterFill"></div></div>
+        </div>
+      </section>
+    </footer>
+  </main>
+
+  <script>
+    const sourceItems = {
+      log: {
+        pointer: "source://log/logs/checkout_gateway.log",
+        kind: "log",
+        bytes: "18 KB",
+        tools: ["grep_log"],
+        hints: ["checkout", "gateway", "ERROR"],
+        raw: [
+          "09:17:08 INFO checkout request accepted",
+          "09:17:09 INFO tenant_id=acme-42 loaded",
+          "09:17:10 WARN retry policy selected",
+          "09:17:11 ERROR payment gateway timeout",
+          "09:17:11 INFO fallback queue scheduled",
+          "09:17:12 INFO checkout trace closed",
+          "... 640 more local log lines ..."
+        ].join("\n"),
+        evidence: "lines 41-43\n09:17:10 WARN retry policy selected\n09:17:11 ERROR payment gateway timeout\n09:17:11 INFO fallback queue scheduled",
+        provenance: "line 42",
+        query: "Why did checkout fail?",
+        path: "sources_root/logs/checkout_gateway.log",
+        tool: "grep_log",
+        command: '{\n  "tool": "grep_log",\n  "args": {\n    "pointer": "source://log/logs/checkout_gateway.log",\n    "pattern": "ERROR",\n    "before": 1,\n    "after": 1\n  }\n}',
+        contextCall: 'grep_log(pointer, "ERROR", 1, 1)'
+      },
+      doc: {
+        pointer: "source://doc/docs/ops_runbook.md",
+        kind: "doc",
+        bytes: "24 KB",
+        tools: ["extract_doc_section"],
+        hints: ["rollback", "checkout", "runbook"],
+        raw: [
+          "# Checkout Operations Runbook",
+          "## Normal Flow",
+          "Use the gateway health probe before deploy.",
+          "## Gateway Timeout",
+          "If checkout gateway calls time out, verify provider health and enable queue fallback.",
+          "## Rollback",
+          "Revert the gateway route when timeout rate stays elevated.",
+          "... 120 more markdown sections ..."
+        ].join("\n"),
+        evidence: "section: Gateway Timeout\nIf checkout gateway calls time out, verify provider health and enable queue fallback.",
+        provenance: "heading: Gateway Timeout",
+        query: "Which runbook section handles gateway timeout?",
+        path: "sources_root/docs/ops_runbook.md",
+        tool: "extract_doc_section",
+        command: '{\n  "tool": "extract_doc_section",\n  "args": {\n    "pointer": "source://doc/docs/ops_runbook.md",\n    "query": "gateway timeout"\n  }\n}',
+        contextCall: 'extract_doc_section(pointer, "gateway timeout")'
+      },
+      json: {
+        pointer: "source://json/json/tenant_snapshot.json",
+        kind: "json",
+        bytes: "31 KB",
+        tools: ["extract_json_field"],
+        hints: ["tenant", "checkout", "limits"],
+        raw: [
+          "{",
+          '  "tenant": {',
+          '    "id": "acme-42",',
+          '    "features": { "checkout": true },',
+          '    "limits": { "checkout_timeout_ms": 2500 }',
+          "  },",
+          '  "billing": { "tier": "enterprise" },',
+          '  "...": "large snapshot omitted"',
+          "}"
+        ].join("\n"),
+        evidence: "tenant.limits.checkout_timeout_ms = 2500",
+        provenance: "JSON path: tenant.limits.checkout_timeout_ms",
+        query: "What checkout timeout is configured?",
+        path: "sources_root/json/tenant_snapshot.json",
+        tool: "extract_json_field",
+        command: '{\n  "tool": "extract_json_field",\n  "args": {\n    "pointer": "source://json/json/tenant_snapshot.json",\n    "path": "tenant.limits.checkout_timeout_ms"\n  }\n}',
+        contextCall: 'extract_json_field(pointer, "tenant.limits.checkout_timeout_ms")'
+      }
+    };
+
+    const runtimeItems = {
+      log: {
+        pointer: "runtime://log/collect_checkout_trace/0001",
+        kind: "log",
+        producer: "collect_checkout_trace",
+        bytes: "42 KB",
+        tools: ["grep_runtime_log"],
+        hints: ["session", "timeout", "trace"],
+        raw: [
+          "tool: collect_checkout_trace",
+          "session: local-run-7",
+          "TRACE request started",
+          "TRACE provider call started",
+          "ERROR provider timeout after 2940 ms",
+          "TRACE fallback queue created",
+          "... 980 more runtime log lines ..."
+        ].join("\n"),
+        evidence: "runtime lines 88-90\nTRACE provider call started\nERROR provider timeout after 2940 ms\nTRACE fallback queue created",
+        provenance: "runtime line 89",
+        path: "RuntimeStore[0001].value",
+        tool: "grep_runtime_log",
+        command: '{\n  "tool": "grep_runtime_log",\n  "args": {\n    "pointer": "runtime://log/collect_checkout_trace/0001",\n    "pattern": "timeout",\n    "before": 1,\n    "after": 1\n  }\n}',
+        contextCall: 'grep_runtime_log(pointer, "timeout", 1, 1)'
+      },
+      doc: {
+        pointer: "runtime://doc/generate_runbook_summary/0002",
+        kind: "doc",
+        producer: "generate_runbook_summary",
+        bytes: "29 KB",
+        tools: ["extract_runtime_doc_section"],
+        hints: ["generated summary", "fallback", "operator notes"],
+        raw: [
+          "# Generated Runbook Summary",
+          "## Incident Shape",
+          "Checkout requests reached the provider timeout boundary.",
+          "## Recommended Operator Action",
+          "Enable queue fallback and compare provider latency with tenant timeout configuration.",
+          "## Follow-up",
+          "Attach trace evidence to the incident ticket.",
+          "... generated text continues ..."
+        ].join("\n"),
+        evidence: "section: Recommended Operator Action\nEnable queue fallback and compare provider latency with tenant timeout configuration.",
+        provenance: "runtime section: Recommended Operator Action",
+        path: "RuntimeStore[0002].value",
+        tool: "extract_runtime_doc_section",
+        command: '{\n  "tool": "extract_runtime_doc_section",\n  "args": {\n    "pointer": "runtime://doc/generate_runbook_summary/0002",\n    "query": "operator action"\n  }\n}',
+        contextCall: 'extract_runtime_doc_section(pointer, "operator action")'
+      },
+      json: {
+        pointer: "runtime://json/load_tenant_snapshot/0003",
+        kind: "json",
+        producer: "load_tenant_snapshot",
+        bytes: "36 KB",
+        tools: ["extract_runtime_json_path"],
+        hints: ["runtime object", "nested value", "latency"],
+        raw: [
+          "{",
+          '  "trace": {',
+          '    "provider": {',
+          '      "latency_ms": 2940,',
+          '      "status": "timeout"',
+          "    }",
+          "  },",
+          '  "session": "local-run-7",',
+          '  "...": "large runtime dict omitted"',
+          "}"
+        ].join("\n"),
+        evidence: 'trace.provider = { "latency_ms": 2940, "status": "timeout" }',
+        provenance: "runtime JSON path: trace.provider",
+        path: "RuntimeStore[0003].value.trace.provider",
+        tool: "extract_runtime_json_path",
+        command: '{\n  "tool": "extract_runtime_json_path",\n  "args": {\n    "pointer": "runtime://json/load_tenant_snapshot/0003",\n    "path": "trace.provider"\n  }\n}',
+        contextCall: 'extract_runtime_json_path(pointer, "trace.provider")'
+      }
+    };
+
+    const pipelineStages = [
+      ["Raw Data Object", "Large source or runtime data exists outside the prompt."],
+      ["Pointer Issued", "A short address token represents the large object."],
+      ["Catalog Exposed", "Only pointer metadata is shown to the LLM."],
+      ["Tool Selected", "The LLM chooses a typed extraction tool."],
+      ["Pointer Resolved", "Resolver maps the pointer to a concrete location."],
+      ["Evidence Extracted", "Only the needed slice is returned."],
+      ["Prompt Assembled", "Question, tool call, and evidence are packed."],
+      ["LLM Context", "The compact payload enters the context window."]
+    ];
+
+    const guideSteps = [
+      {
+        title: "Ready State",
+        copy: "Choose a pointer track and data format, then step through how raw objects stay outside the prompt.",
+        fill: 0
+      },
+      {
+        title: "Step 1: Raw Objects Stay in Their Domains",
+        copy: "Source files live on disk and runtime outputs live in RuntimeStore. Neither full body is copied into the LLM prompt.",
+        fill: 8
+      },
+      {
+        title: "Step 2: A Short Pointer Is Issued",
+        copy: "The selected domain creates a compact pointer that can move through the system instead of the large data value.",
+        fill: 18
+      },
+      {
+        title: "Step 3: The Compact Catalog Is Exposed",
+        copy: "The LLM sees pointer, kind, byte size, tools, and hints, but not the raw source file or raw runtime output.",
+        fill: 30
+      },
+      {
+        title: "Step 4: The LLM Selects a Typed Extraction Tool",
+        copy: "The selector combines the user question, tool specs, and catalog row into a JSON-like command card.",
+        fill: 42
+      },
+      {
+        title: "Step 5: The Pointer Is Resolved",
+        copy: "Source pointers resolve through the manifest to a safe source root. Runtime pointers resolve through RuntimeStore and optional nested paths.",
+        fill: 55
+      },
+      {
+        title: "Step 6: Format-Specific Evidence Is Extracted",
+        copy: "The extraction tool returns only a log neighborhood, a document section, or a JSON field with provenance.",
+        fill: 70
+      },
+      {
+        title: "Step 7: The Prompt Is Assembled",
+        copy: "The prompt contains the user question, selected pointer and tool call, and extracted evidence only.",
+        fill: 84
+      },
+      {
+        title: "Step 8: LLM Context Receives Only Needed Evidence",
+        copy: "Pointer data keeps large source and runtime objects outside the prompt, then resolves a short pointer through the right extraction tool to send only the needed evidence into the LLM context.",
+        fill: 100
+      }
+    ];
+
+    const sourceTrackSteps = [
+      ["Source Ready", "A disk file is available, but only a safe source catalog entry will be exposed."],
+      ["Source Raw Object", "The full source file remains in the Source Domain and does not move into the prompt."],
+      ["Source Pointer Issued", "The manifest creates a source://kind/path address for the selected disk object."],
+      ["Source Catalog Row", "The LLM sees pointer, kind, byte size, available tools, and hints only."],
+      ["Source Tool Choice", "A source extraction tool is selected, such as grep_log or extract_doc_section."],
+      ["Source Resolve", "The resolver maps source://kind/path through the manifest into sources_root/rel_path."],
+      ["Source Evidence", "The tool extracts only nearby log lines, one document section, or one JSON field."],
+      ["Source Prompt Part", "The prompt receives the source pointer, tool call, and extracted evidence."],
+      ["Source Context Entry", "Only source evidence enters the LLM context while the disk file stays outside."]
+    ];
+
+    const runtimeTrackSteps = [
+      ["Runtime Ready", "A producer tool can create a large value, but the LLM will only receive a pointer."],
+      ["Runtime Raw Object", "The producer output is stored in RuntimeStore instead of being copied into the prompt."],
+      ["Runtime Pointer Issued", "RuntimeStore creates a runtime://kind/producer/id address for the stored value."],
+      ["Runtime Catalog Row", "The LLM sees a compact runtime address card with tools and hints, not the value body."],
+      ["Runtime Tool Choice", "A runtime extraction tool is selected, such as grep_runtime_log or extract_runtime_json_path."],
+      ["Runtime Resolve", "The resolver maps runtime://kind/producer/id to RuntimeStore and optional nested paths."],
+      ["Runtime Evidence", "The tool extracts only the relevant runtime log lines, section, or JSON path."],
+      ["Runtime Prompt Part", "The prompt receives the runtime pointer, tool call, and extracted evidence."],
+      ["Runtime Context Entry", "Only runtime evidence enters the LLM context while the stored value remains outside."]
+    ];
+
+    const state = {
+      step: 0,
+      track: "source",
+      type: "log",
+      resolverTab: "source",
+      timer: null
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    const elements = {
+      sourceRawBody: $("sourceRawBody"),
+      runtimeRawBody: $("runtimeRawBody"),
+      sourceKindTag: $("sourceKindTag"),
+      runtimeKindTag: $("runtimeKindTag"),
+      sourceManifestRows: $("sourceManifestRows"),
+      runtimeStoreRows: $("runtimeStoreRows"),
+      sourceCatalogCard: $("sourceCatalogCard"),
+      runtimeCatalogCard: $("runtimeCatalogCard"),
+      sourceCatalogPointer: $("sourceCatalogPointer"),
+      runtimeCatalogPointer: $("runtimeCatalogPointer"),
+      sourceCatalogTools: $("sourceCatalogTools"),
+      runtimeCatalogTools: $("runtimeCatalogTools"),
+      sourceCatalogHints: $("sourceCatalogHints"),
+      runtimeCatalogHints: $("runtimeCatalogHints"),
+      sourceBytes: $("sourceBytes"),
+      runtimeBytes: $("runtimeBytes"),
+      pipeline: $("pipeline"),
+      selectorCommand: $("selectorCommand"),
+      resolvePointerBox: $("resolvePointerBox"),
+      resolveLookupBox: $("resolveLookupBox"),
+      resolveLocationBox: $("resolveLocationBox"),
+      activeToolToken: $("activeToolToken"),
+      logLines: $("logLines"),
+      docSections: $("docSections"),
+      jsonTree: $("jsonTree"),
+      contextPointer: $("contextPointer"),
+      contextEvidence: $("contextEvidence"),
+      guideTitle: $("guideTitle"),
+      guideCopy: $("guideCopy"),
+      stepCount: $("stepCount"),
+      meterFill: $("meterFill"),
+      sourceTrackTitle: $("sourceTrackTitle"),
+      sourceTrackCopy: $("sourceTrackCopy"),
+      runtimeTrackTitle: $("runtimeTrackTitle"),
+      runtimeTrackCopy: $("runtimeTrackCopy"),
+      sourcePointerToken: $("sourcePointerToken"),
+      runtimePointerToken: $("runtimePointerToken"),
+      evidenceToken: $("evidenceToken"),
+      evidenceCard: $("evidenceCard"),
+      floatingEvidence: $("floatingEvidence"),
+      connectorLayer: $("connectorLayer"),
+      sourceConnector: $("sourceConnector"),
+      runtimeConnector: $("runtimeConnector"),
+      flowConnector: $("flowConnector"),
+      autoBtn: $("autoBtn")
+    };
+
+    function activeItem(track = state.track, type = state.type) {
+      return track === "source" ? sourceItems[type] : runtimeItems[type];
+    }
+
+    function oppositeItem() {
+      return state.track === "source" ? runtimeItems[state.type] : sourceItems[state.type];
+    }
+
+    function toolFor(track, type) {
+      return (track === "source" ? sourceItems[type] : runtimeItems[type]).tool;
+    }
+
+    function renderPipeline() {
+      elements.pipeline.innerHTML = pipelineStages.map(([label, copy], index) => {
+        const stepIndex = index + 1;
+        const status = state.step === stepIndex ? "active" : state.step > stepIndex ? "done" : "";
+        return `
+          <div class="pipeline-stage ${status}" id="pipelineStage${stepIndex}">
+            <span class="stage-num">${stepIndex}</span>
+            <div class="stage-label">${label}</div>
+            <div class="stage-copy">${copy}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderRows() {
+      elements.sourceManifestRows.innerHTML = Object.entries(sourceItems).map(([type, item]) => `
+        <tr class="${state.track === "source" && state.type === type ? "active-source" : ""}">
+          <td><code>${item.pointer}</code></td>
+          <td>${item.kind}</td>
+          <td>${item.bytes}</td>
+        </tr>
+      `).join("");
+
+      elements.runtimeStoreRows.innerHTML = Object.entries(runtimeItems).map(([type, item]) => `
+        <tr class="${state.track === "runtime" && state.type === type ? "active-runtime" : ""}">
+          <td><code>${item.pointer}</code></td>
+          <td>${item.producer}</td>
+          <td>${item.bytes}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderCatalog() {
+      const sourceItem = sourceItems[state.type];
+      const runtimeItem = runtimeItems[state.type];
+      elements.sourceCatalogPointer.textContent = sourceItem.pointer;
+      elements.runtimeCatalogPointer.textContent = runtimeItem.pointer;
+      elements.sourceCatalogTools.textContent = `tools: ${sourceItem.tools.join(", ")}`;
+      elements.runtimeCatalogTools.textContent = `tools: ${runtimeItem.tools.join(", ")}`;
+      elements.sourceCatalogHints.textContent = `hints: ${sourceItem.hints.join(", ")}`;
+      elements.runtimeCatalogHints.textContent = `hints: ${runtimeItem.hints.join(", ")}`;
+      elements.sourceBytes.textContent = sourceItem.bytes;
+      elements.runtimeBytes.textContent = runtimeItem.bytes;
+      elements.sourceCatalogCard.classList.toggle("active", state.track === "source" && state.step >= 3);
+      elements.runtimeCatalogCard.classList.toggle("active", state.track === "runtime" && state.step >= 3);
+    }
+
+    function renderRawObjects() {
+      const sourceItem = sourceItems[state.type];
+      const runtimeItem = runtimeItems[state.type];
+      elements.sourceRawBody.textContent = sourceItem.raw;
+      elements.runtimeRawBody.textContent = runtimeItem.raw;
+      elements.sourceKindTag.textContent = `${sourceItem.kind} file`;
+      elements.runtimeKindTag.textContent = `${runtimeItem.kind} value`;
+    }
+
+    function renderSelector() {
+      const item = activeItem();
+      elements.selectorCommand.textContent = state.step >= 4 ? item.command : "{\n  \"tool\": null,\n  \"args\": {}\n}";
+    }
+
+    function renderResolver() {
+      const track = state.resolverTab;
+      const item = activeItem(track, state.type);
+      const isSource = track === "source";
+      elements.resolvePointerBox.innerHTML = `<strong>Pointer</strong><br><code>${item.pointer}</code>`;
+      elements.resolveLookupBox.innerHTML = isSource
+        ? `<strong>Manifest Lookup</strong><br>Find catalog row and allowed source root.`
+        : `<strong>RuntimeStore Lookup</strong><br>Find stored object by producer and id.`;
+      elements.resolveLocationBox.innerHTML = isSource
+        ? `<strong>Concrete Data Location</strong><br><code>${item.path}</code>`
+        : `<strong>Concrete Runtime Value</strong><br><code>${item.path}</code>`;
+      [elements.resolvePointerBox, elements.resolveLookupBox, elements.resolveLocationBox].forEach((box, index) => {
+        box.classList.toggle("active", state.step >= 5 || (state.step === 4 && index === 0));
+      });
+    }
+
+    function renderExtraction() {
+      const item = activeItem();
+      elements.activeToolToken.textContent = state.step >= 4 ? item.tool : "waiting";
+
+      $("logToolCard").classList.toggle("active", state.type === "log" && state.step >= 6);
+      $("docToolCard").classList.toggle("active", state.type === "doc" && state.step >= 6);
+      $("jsonToolCard").classList.toggle("active", state.type === "json" && state.step >= 6);
+
+      elements.logLines.innerHTML = [
+        ["41", "WARN retry policy selected"],
+        ["42", state.track === "source" ? "ERROR payment gateway timeout" : "ERROR provider timeout after 2940 ms"],
+        ["43", state.track === "source" ? "INFO fallback queue scheduled" : "TRACE fallback queue created"]
+      ].map(([line, text], index) => `
+        <div class="log-line ${index === 1 && state.type === "log" && state.step >= 6 ? "match" : ""}">
+          <span>${line}</span><span>${text}</span>
+        </div>
+      `).join("");
+
+      elements.docSections.innerHTML = [
+        ["Normal Flow", false],
+        [state.track === "source" ? "Gateway Timeout" : "Recommended Operator Action", true],
+        ["Follow-up", false]
+      ].map(([heading, selected]) => `
+        <div class="doc-section ${selected && state.type === "doc" && state.step >= 6 ? "selected" : ""}">
+          ${heading}
+        </div>
+      `).join("");
+
+      const jsonNodes = state.track === "source"
+        ? ["tenant", "tenant.limits", "tenant.limits.checkout_timeout_ms"]
+        : ["trace", "trace.provider", "trace.provider.status"];
+      elements.jsonTree.innerHTML = jsonNodes.map((node, index) => `
+        <div class="json-node ${state.type === "json" && state.step >= 6 && index <= 2 ? "active" : ""}">
+          ${"&nbsp;".repeat(index * 3)}${node}
+        </div>
+      `).join("");
+    }
+
+    function renderContext() {
+      const item = activeItem();
+      if (state.step >= 7) {
+        elements.contextPointer.textContent = `Question: ${item.query || "Use the selected evidence."}\nPointer: ${item.pointer}\nTool call: ${item.contextCall}`;
+      } else {
+        elements.contextPointer.textContent = "No pointer or tool call has entered the prompt yet.";
+      }
+
+      if (state.step >= 8) {
+        elements.contextEvidence.textContent = `${item.evidence}\nprovenance: ${item.provenance}`;
+      } else if (state.step >= 6) {
+        elements.contextEvidence.textContent = `Evidence prepared outside the prompt:\n${item.evidence}`;
+      } else {
+        elements.contextEvidence.textContent = "Raw data is excluded. Evidence will appear after extraction.";
+      }
+    }
+
+    function renderControls() {
+      $("trackSourceBtn").classList.toggle("active", state.track === "source");
+      $("trackRuntimeBtn").classList.toggle("active", state.track === "runtime");
+      $("typeLogBtn").classList.toggle("active", state.type === "log");
+      $("typeDocBtn").classList.toggle("active", state.type === "doc");
+      $("typeJsonBtn").classList.toggle("active", state.type === "json");
+      $("resolverSourceBtn").classList.toggle("active", state.resolverTab === "source");
+      $("resolverRuntimeBtn").classList.toggle("active", state.resolverTab === "runtime");
+    }
+
+    function renderGuide() {
+      const guide = guideSteps[state.step];
+      elements.guideTitle.textContent = guide.title;
+      elements.guideCopy.textContent = guide.copy;
+      elements.stepCount.textContent = String(state.step);
+      elements.meterFill.style.width = `${guide.fill}%`;
+    }
+
+    function renderTrackSteps() {
+      const sourceStep = sourceTrackSteps[state.step];
+      const runtimeStep = runtimeTrackSteps[state.step];
+      elements.sourceTrackTitle.textContent = sourceStep[0];
+      elements.sourceTrackCopy.textContent = sourceStep[1];
+      elements.runtimeTrackTitle.textContent = runtimeStep[0];
+      elements.runtimeTrackCopy.textContent = runtimeStep[1];
+    }
+
+    function getRectCenter(node) {
+      const base = $("workspace").getBoundingClientRect();
+      const rect = node.getBoundingClientRect();
+      return {
+        x: rect.left - base.left + rect.width / 2,
+        y: rect.top - base.top + rect.height / 2,
+        width: rect.width,
+        height: rect.height
+      };
+    }
+
+    function moveToken(token, target, dx = 0, dy = 0) {
+      if (!target) return;
+      const point = getRectCenter(target);
+      const width = token.offsetWidth || 150;
+      const height = token.offsetHeight || 32;
+      token.style.transform = `translate3d(${point.x + dx - width / 2}px, ${point.y + dy - height / 2}px, 0)`;
+    }
+
+    function moveCard(card, target, dx = 0, dy = 0) {
+      if (!target) return;
+      const point = getRectCenter(target);
+      card.style.left = `${point.x + dx}px`;
+      card.style.top = `${point.y + dy}px`;
+    }
+
+    function drawCurve(path, fromNode, toNode) {
+      if (!fromNode || !toNode) return;
+      const from = getRectCenter(fromNode);
+      const to = getRectCenter(toNode);
+      const midX = (from.x + to.x) / 2;
+      path.setAttribute("d", `M ${from.x} ${from.y} C ${midX} ${from.y}, ${midX} ${to.y}, ${to.x} ${to.y}`);
+    }
+
+    function targetForStep() {
+      if (state.step <= 1) return state.track === "source" ? $("sourceRaw") : $("runtimeRaw");
+      if (state.step === 2) return state.track === "source" ? $("sourceManifestRows") : $("runtimeStoreRows");
+      if (state.step === 3) return state.track === "source" ? $("sourceCatalogCard") : $("runtimeCatalogCard");
+      if (state.step === 4) return $("selectorTarget");
+      if (state.step === 5) return $("resolverTarget");
+      if (state.step === 6) return $("extractionTarget");
+      if (state.step === 7) return $("contextTarget");
+      return $("contextTarget");
+    }
+
+    function targetForTrackStep(track) {
+      if (state.step <= 1) return track === "source" ? $("sourceRaw") : $("runtimeRaw");
+      if (state.step === 2) return track === "source" ? $("sourceManifestRows") : $("runtimeStoreRows");
+      if (state.step === 3) return track === "source" ? $("sourceCatalogCard") : $("runtimeCatalogCard");
+      if (state.step === 4) return $("selectorTarget");
+      if (state.step === 5) return $("resolverTarget");
+      if (state.step === 6) return $("extractionTarget");
+      return $("contextTarget");
+    }
+
+    function renderMotion() {
+      elements.sourcePointerToken.classList.remove("hidden");
+      elements.runtimePointerToken.classList.remove("hidden");
+      elements.sourcePointerToken.classList.toggle("dimmed", state.track !== "source");
+      elements.runtimePointerToken.classList.toggle("dimmed", state.track !== "runtime");
+
+      const converged = state.step >= 4;
+      moveToken(elements.sourcePointerToken, targetForTrackStep("source"), converged ? -58 : 0, converged ? -14 : 0);
+      moveToken(elements.runtimePointerToken, targetForTrackStep("runtime"), converged ? 58 : 0, converged ? -14 : 0);
+
+      elements.evidenceToken.classList.toggle("hidden", state.step < 6);
+      if (state.step >= 6) {
+        moveToken(elements.evidenceToken, state.step >= 8 ? $("contextTarget") : $("extractionTarget"), 0, 26);
+      }
+
+      elements.evidenceCard.classList.toggle("visible", state.step >= 6 && state.step < 8);
+      elements.floatingEvidence.textContent = activeItem().evidence;
+      moveCard(elements.evidenceCard, state.step >= 7 ? $("contextTarget") : $("extractionTarget"), 0, 30);
+
+      drawCurve(elements.sourceConnector, $("sourceRaw"), $("sourceCatalogCard"));
+      drawCurve(elements.runtimeConnector, $("runtimeRaw"), $("runtimeCatalogCard"));
+      drawCurve(elements.flowConnector, state.track === "source" ? $("sourceCatalogCard") : $("runtimeCatalogCard"), targetForStep());
+    }
+
+    function renderAll() {
+      renderRawObjects();
+      renderRows();
+      renderCatalog();
+      renderPipeline();
+      renderSelector();
+      renderResolver();
+      renderExtraction();
+      renderContext();
+      renderControls();
+      renderGuide();
+      renderTrackSteps();
+      window.requestAnimationFrame(renderMotion);
+    }
+
+    function setTrack(track) {
+      state.track = track;
+      state.resolverTab = track;
+      renderAll();
+    }
+
+    function setType(type) {
+      state.type = type;
+      renderAll();
+    }
+
+    function setResolverTab(tab) {
+      state.resolverTab = tab;
+      renderAll();
+    }
+
+    function nextStep() {
+      state.step = (state.step + 1) % guideSteps.length;
+      renderAll();
+    }
+
+    function prevStep() {
+      state.step = (state.step - 1 + guideSteps.length) % guideSteps.length;
+      renderAll();
+    }
+
+    function stopAuto() {
+      if (state.timer) {
+        window.clearInterval(state.timer);
+        state.timer = null;
+      }
+      elements.autoBtn.classList.remove("playing");
+      elements.autoBtn.innerHTML = '<span aria-hidden="true">▷</span> Auto Play';
+    }
+
+    function startAuto() {
+      stopAuto();
+      elements.autoBtn.classList.add("playing");
+      elements.autoBtn.innerHTML = '<span aria-hidden="true">Ⅱ</span> Pause';
+      state.timer = window.setInterval(nextStep, 1700);
+    }
+
+    function reset() {
+      state.step = 0;
+      stopAuto();
+      renderAll();
+    }
+
+    $("trackSourceBtn").addEventListener("click", () => setTrack("source"));
+    $("trackRuntimeBtn").addEventListener("click", () => setTrack("runtime"));
+    $("typeLogBtn").addEventListener("click", () => setType("log"));
+    $("typeDocBtn").addEventListener("click", () => setType("doc"));
+    $("typeJsonBtn").addEventListener("click", () => setType("json"));
+    $("resolverSourceBtn").addEventListener("click", () => setResolverTab("source"));
+    $("resolverRuntimeBtn").addEventListener("click", () => setResolverTab("runtime"));
+    $("nextBtn").addEventListener("click", nextStep);
+    $("resetBtn").addEventListener("click", reset);
+    $("autoBtn").addEventListener("click", () => state.timer ? stopAuto() : startAuto());
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        nextStep();
+      }
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        prevStep();
+      }
+    });
+    window.addEventListener("resize", renderAll);
+    window.addEventListener("load", renderAll);
+    renderAll();
+  </script>
+</body>
+</html>

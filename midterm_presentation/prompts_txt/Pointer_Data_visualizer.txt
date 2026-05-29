@@ -1,0 +1,112 @@
+[중요 출력 조건]
+이 프롬프트는 한글로 작성되어 있지만, 이 프롬프트를 통해 생성되는 최종 결과물은 반드시 영어여야 합니다.
+React 앱의 모든 UI 텍스트, 버튼, 라벨, 패널 제목, 그래프 캡션, 도움말 문구, 코드 주석, 예시 질문, 예시 데이터 설명, 결과 메시지는 영어로 작성해 주세요.
+
+[목적]
+`Closed-network Code Assistant` 아키텍처에서 큰 source data와 runtime data를 LLM context에 직접 넣지 않고, 짧은 pointer와 전용 extraction tool을 통해 필요한 부분만 추출해 LLM에 전달하는 동작 과정을 보여주는 웹 기반 인터랙티브 애니메이션 시각화 도구를 제작해 주세요. (React, Tailwind CSS, Framer Motion 사용, 단일 파일 컴포넌트)
+
+이 시각화는 실험 결과, 성능 평가, 한계점, 성공/실패 사례를 보여주는 도구가 아닙니다. 오직 `Source Pointer`와 `Runtime Pointer`가 어떤 순서로 생성, 선택, resolve, 추출, prompt 구성에 사용되는지 설명하는 데 집중해 주세요.
+
+[설명해야 할 동작 과정]
+1. Two Data Domains:
+   - 화면을 두 영역으로 나누어 `Source Domain`과 `Runtime Domain`을 보여주세요.
+   - `Source Domain`은 disk에 이미 존재하는 외부 파일을 나타냅니다. 예: log file, markdown document, JSON snapshot.
+   - `Runtime Domain`은 tool 실행 중 생성된 큰 output을 나타냅니다. 예: runtime log string, generated document text, runtime JSON/dict object.
+   - 두 영역 모두 raw data body 전체가 LLM으로 바로 이동하지 않는다는 점을 구조적으로 보여주세요.
+
+2. Source Pointer Creation:
+   - source file catalog 또는 manifest가 만들어지는 과정을 보여주세요.
+   - 각 source item에는 `pointer`, `kind`, `bytes`, `tools`, `hints`가 들어갑니다.
+   - pointer 형식은 `source://kind/path`입니다.
+   - 예시:
+     - `source://log/logs/checkout_gateway.log`
+     - `source://doc/docs/ops_runbook.md`
+     - `source://json/json/tenant_snapshot.json`
+   - source pointer는 disk file의 실제 위치를 직접 노출하지 않고, 안전한 catalog entry를 통해 접근되는 주소처럼 표현해 주세요.
+
+3. Runtime Pointer Creation:
+   - producer tool이 큰 runtime output을 생성합니다.
+   - output은 `RuntimeStore`에 저장되고, store가 짧은 pointer를 발급합니다.
+   - runtime object에는 `pointer`, `producer`, `kind`, `tools`, `hints`, `value`가 연결됩니다.
+   - pointer 형식은 `runtime://kind/producer/id`입니다.
+   - 예시:
+     - `runtime://log/collect_checkout_trace/0001`
+     - `runtime://doc/generate_runbook_summary/0002`
+     - `runtime://json/load_tenant_snapshot/0003`
+   - runtime pointer가 실제 큰 value를 대신해 LLM과 후속 tool 사이를 이동하는 모습을 보여주세요.
+
+4. Compact Catalog Exposure:
+   - LLM에게 raw source/runtime data가 아니라 compact catalog만 전달됩니다.
+   - catalog row에는 pointer, kind, byte size, available tools, hints만 표시합니다.
+   - 화면 중앙에 `Pointer Catalog` 패널을 두고 source pointer와 runtime pointer가 같은 형식의 작은 address card로 정리되는 모습을 보여주세요.
+
+5. Tool Selection:
+   - 사용자 질문이 들어오면 LLM selector가 catalog와 tool spec을 보고 적절한 pointer와 extraction tool을 선택합니다.
+   - tool 종류를 데이터 타입별로 보여주세요.
+     - Source log: `grep_log(pointer, pattern, before, after)`
+     - Source doc: `extract_doc_section(pointer, query)`
+     - Source JSON: `extract_json_field(pointer, path)`
+     - Runtime log: `grep_runtime_log(pointer, pattern, before, after)`
+     - Runtime doc: `extract_runtime_doc_section(pointer, query)`
+     - Runtime JSON: `extract_runtime_json_path(pointer, path)`
+   - selector output은 JSON-like command card로 표현해 주세요. 예: `{ tool: "grep_log", args: { pointer: "source://log/...", pattern: "ERROR" } }`.
+
+6. Pointer Resolve:
+   - extraction tool은 pointer를 받아 resolver에 전달합니다.
+   - source pointer resolver는 manifest에서 pointer를 찾고, 안전한 source root 안의 파일 경로로 변환합니다.
+   - runtime pointer resolver는 RuntimeStore에서 base pointer를 찾고, 필요한 경우 pointer path suffix를 따라 list/dict 내부 값까지 내려갑니다.
+   - resolve 과정은 `Pointer` -> `Catalog/Store Lookup` -> `Concrete Data Location` 흐름으로 보여주세요.
+
+7. Format-Specific Extraction:
+   - resolver가 찾은 data 전체를 LLM에 넣지 않고, format에 맞는 extraction tool이 필요한 부분만 잘라냅니다.
+   - log extraction은 pattern 주변 line만 선택합니다.
+   - markdown document extraction은 heading/query와 가장 가까운 section만 선택합니다.
+   - JSON extraction은 dot path를 따라 필요한 field 또는 object만 선택합니다.
+   - 추출된 결과는 `Extracted Evidence` 카드로 표시하고, line number, selected section heading, JSON path 같은 provenance를 함께 보여주세요.
+
+8. Prompt Assembly:
+   - 최종 prompt는 사용자 질문, 선택된 pointer/tool call, extracted evidence로 구성됩니다.
+   - raw file 또는 raw runtime output은 prompt 안에 들어가지 않고, 추출된 작은 evidence만 들어가는 구조를 시각화해 주세요.
+   - `LLM Context Window` 패널에는 pointer card와 extracted evidence card가 함께 들어가는 모습을 보여주세요.
+
+9. Source Pointer와 Runtime Pointer의 차이:
+   - 같은 pipeline 안에서 둘의 차이를 명확히 보여주세요.
+   - Source pointer는 disk에 이미 존재하는 외부 자료를 가리킵니다.
+   - Runtime pointer는 현재 세션 또는 tool run 중 생성되어 RuntimeStore에 저장된 값을 가리킵니다.
+   - 둘 다 짧은 pointer와 extraction tool을 통해 큰 data object와 LLM context를 분리한다는 공통점을 보여주세요.
+
+[핵심 시각화 요소]
+1. Two-Track Pointer Tracking:
+   - 좌측에는 `Source Domain` 파일 트리, 우측에는 `Runtime Domain` memory store를 배치합니다.
+   - `Source Pointer`와 `Runtime Pointer`라는 라벨이 붙은 두 개의 움직이는 pointer indicator를 생성해 주세요.
+   - source pointer는 manifest/catalog entry를 거쳐 disk file로 연결되고, runtime pointer는 RuntimeStore entry를 거쳐 stored value로 연결되는 선을 보여주세요.
+
+2. Data Pipeline Animation:
+   - 가로형 pipeline을 구성합니다.
+   - `Raw Data Object` -> `Pointer Issued` -> `Catalog Exposed` -> `Tool Selected` -> `Pointer Resolved` -> `Evidence Extracted` -> `Prompt Assembled` -> `LLM Context`
+   - 사용자가 `Next Step` 버튼을 누를 때마다 pointer card와 evidence card가 다음 stage로 이동해야 합니다.
+
+3. Resolver Detail View:
+   - source resolver와 runtime resolver를 탭으로 나누어 보여주세요.
+   - source resolver 탭에는 `source://kind/path`가 manifest lookup을 통해 `sources_root/rel_path`로 변환되는 과정을 표시합니다.
+   - runtime resolver 탭에는 `runtime://kind/producer/0001`이 RuntimeStore object로 resolve되고, optional path suffix가 nested value로 내려가는 과정을 표시합니다.
+
+4. Extraction Tool View:
+   - log, doc, JSON extraction을 세 개의 작은 panels로 보여주세요.
+   - log panel은 matching line과 before/after context line을 하이라이트합니다.
+   - doc panel은 여러 heading 중 선택된 section만 접혀 나오게 합니다.
+   - JSON panel은 dot path traversal을 tree animation으로 보여줍니다.
+
+5. Control Interface:
+   - `Next Step`, `Auto Play`, `Reset` 버튼을 제공합니다.
+   - `Source Pointer` / `Runtime Pointer` toggle을 제공합니다.
+   - `Log`, `Document`, `JSON` segmented control을 제공합니다.
+   - 화면 하단에는 현재 단계의 설명을 영어로 표시하는 guide panel을 포함해 주세요.
+
+[디자인 요구사항]
+- 전체 결과물은 영어 UI로 작성합니다.
+- Pointer data의 동작 과정만 설명하고, 실험 결과, 벤치마크 수치, 실패 사례, 한계점, 적용 판단은 포함하지 마세요.
+- source/runtime raw data와 LLM context를 시각적으로 분리해서 보여주세요.
+- pointer는 작은 address token처럼, raw data는 큰 저장소 object처럼, extracted evidence는 작은 근거 card처럼 표현해 주세요.
+- 색상은 source pointer, runtime pointer, catalog, resolver, extraction tool, evidence, LLM context를 구분하는 용도로 사용합니다.
+- 마지막 요약 패널에는 영어로 다음 메시지를 담아 주세요: Pointer data keeps large source and runtime objects outside the prompt, then resolves a short pointer through the right extraction tool to send only the needed evidence into the LLM context.
