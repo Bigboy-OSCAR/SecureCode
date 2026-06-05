@@ -111,6 +111,10 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/xurl/xurl.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/xurl/xurl.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/ragged2e/ragged2e.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/ragged2e/ragged2e.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/listings/listings.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/listings/listings.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstpatch.sty
@@ -338,6 +342,8 @@ INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/nanumtype1/nanummjbae.
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/nanumtype1/nanummjbb2.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/nanumtype1/nanummjbbe.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/nanumtype1/nanummjbcc.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/nanumtype1/nanummjbd3.tfm
 INPUT main.aux
 INPUT ./main.out

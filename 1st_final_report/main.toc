@@ -15,9 +15,9 @@
 \contentsline {subsubsection}{\numberline {3.2.2}\texttt {source\_pointer}: disk 외부 자료 접근}{9}{subsubsection.3.2.2}%
 \contentsline {subsubsection}{\numberline {3.2.3}\texttt {runtime\_pointer}: 실행 중 생성된 tool output 접근}{11}{subsubsection.3.2.3}%
 \contentsline {subsubsection}{\numberline {3.2.4}\texttt {self\_extend}: 긴 context 직접 수용 fallback}{12}{subsubsection.3.2.4}%
-\contentsline {subsection}{\numberline {3.3}개선점: 기존 시스템의 문제 해결}{14}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.3}개선점: 기존 시스템의 문제 해결}{13}{subsection.3.3}%
 \contentsline {subsection}{\numberline {3.4}차별점: 추가된 기술과 기능}{14}{subsection.3.4}%
-\contentsline {subsection}{\numberline {3.5}목적과 구현 방식}{15}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.5}목적과 구현 방식}{14}{subsection.3.5}%
 \contentsline {section}{\numberline {4}Evaluation}{15}{section.4}%
 \contentsline {subsection}{\numberline {4.1}실험 환경}{15}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Symbol Index와 Symbol Bundle 실험}{15}{subsection.4.2}%
@@ -25,12 +25,12 @@
 \contentsline {subsubsection}{\numberline {4.2.2}쉬운 질문 결과}{16}{subsubsection.4.2.2}%
 \contentsline {subsubsection}{\numberline {4.2.3}Medium corpus 결과}{16}{subsubsection.4.2.3}%
 \contentsline {subsubsection}{\numberline {4.2.4}Hard task 결과}{17}{subsubsection.4.2.4}%
-\contentsline {subsection}{\numberline {4.3}Source Pointer 실험}{18}{subsection.4.3}%
-\contentsline {subsubsection}{\numberline {4.3.1}비교 방식}{18}{subsubsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3}Source Pointer 실험}{17}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1}비교 방식}{17}{subsubsection.4.3.1}%
 \contentsline {subsubsection}{\numberline {4.3.2}결과 분석}{18}{subsubsection.4.3.2}%
 \contentsline {subsection}{\numberline {4.4}Runtime Pointer 실험}{18}{subsection.4.4}%
 \contentsline {subsubsection}{\numberline {4.4.1}비교 방식}{18}{subsubsection.4.4.1}%
-\contentsline {subsubsection}{\numberline {4.4.2}결과 분석}{19}{subsubsection.4.4.2}%
+\contentsline {subsubsection}{\numberline {4.4.2}결과 분석}{18}{subsubsection.4.4.2}%
 \contentsline {subsection}{\numberline {4.5}Self-Extend 실험}{19}{subsection.4.5}%
 \contentsline {subsubsection}{\numberline {4.5.1}비교 방식}{19}{subsubsection.4.5.1}%
 \contentsline {subsubsection}{\numberline {4.5.2}결과 분석}{19}{subsubsection.4.5.2}%

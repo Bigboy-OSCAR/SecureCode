@@ -9,6 +9,8 @@
 \usepackage{enumitem}
 \usepackage{amsmath}
 \usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{ragged2e}
 \usepackage{listings}
 
 \hypersetup{
@@ -18,7 +20,11 @@
   citecolor=black
 }
 
-\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\newcommand{\codepath}[1]{\path{#1}}
+\emergencystretch=2em
+\hbadness=10000
 \setlist[itemize]{leftmargin=*, topsep=2pt}
 \setlist[enumerate]{leftmargin=*, topsep=2pt}
 \lstset{
@@ -66,7 +72,7 @@
   \item \textbf{코드 생성}: 요구사항을 받아 함수, 테스트, API handler, script 등을 작성한다.
   \item \textbf{코드 이해}: 특정 함수가 어떤 값을 반환하는지, 어떤 경로로 호출되는지, 어떤 예외가 발생하는지 설명한다.
   \item \textbf{디버깅}: stack trace, failing test, runtime log를 보고 원인 파일과 symbol을 찾는다.
-  \item \textbf{코드 수정}: 버그 수정, 리팩터링, 타입 오류 수정, 설정 변경 등을 patch 형태로 만든다.
+  \item \textbf{코드 수정}: 버그 수정, 리팩토링, 타입 오류 수정, 설정 변경 등을 patch 형태로 만든다.
   \item \textbf{테스트 보조}: 테스트 실패 원인을 분석하고, 필요한 테스트를 추가하거나 기존 테스트를 갱신한다.
   \item \textbf{문서화}: 코드 흐름, API 사용법, 내부 convention을 문서로 정리한다.
 \end{itemize}
@@ -157,15 +163,15 @@ Self-Extend 논문은 fine-tuning 없이 inference 단계에서 group-level atte
 
 이를 위해 시스템은 세 종류의 pointer를 사용한다.
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
-\begin{tabularx}{\textwidth}{lYY}
+\begin{tabularx}{\textwidth}{L{0.23\textwidth}L{0.25\textwidth}Y}
 \toprule
 Pointer type & 대상 & 예시 \\
 \midrule
-\texttt{memory://symbol/...} & repository 내부 코드 symbol & \texttt{memory://symbol/services/payment.py::authorize\_payment} \\
-\texttt{source://...} & disk에 존재하는 외부 자료 & \texttt{source://log/logs/checkout\_gateway.log} \\
-\texttt{runtime://...} & tool 실행 중 생성된 큰 결과 & \texttt{runtime://log/run\_tests/0001} \\
+\codepath{memory://symbol/...} & repository 내부 코드 symbol & \codepath{memory://symbol/services/payment.py::authorize_payment} \\
+\codepath{source://...} & disk에 존재하는 외부 자료 & \codepath{source://log/logs/checkout_gateway.log} \\
+\codepath{runtime://...} & tool 실행 중 생성된 큰 결과 & \codepath{runtime://log/run_tests/0001} \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -176,7 +182,7 @@ Pointer type & 대상 & 예시 \\
 
 네 항목은 모두 같은 시점에 한꺼번에 동작하지 않는다. \texttt{symbol\_index}는 repository 구조를 미리 또는 변경 시점에 준비하는 장기 cache이고, \texttt{source\_pointer}는 허용된 disk 자료를 필요할 때 등록하는 evidence catalog이며, \texttt{runtime\_pointer}는 tool 실행 이후 생긴 큰 결과를 session 안에서 보관하는 임시 pointer이다. 반면 \texttt{self\_extend}는 어떤 데이터를 저장하거나 index하는 구성요소가 아니라, 특정 LLM 호출에서만 선택되는 fallback 실행 옵션이다. 실제 운영 시점은 다음과 같이 구분한다.
 
-\begin{longtable}{@{}p{0.19\textwidth}p{0.34\textwidth}p{0.36\textwidth}@{}}
+\begin{longtable}{@{}L{0.19\textwidth}L{0.34\textwidth}L{0.36\textwidth}@{}}
 \toprule
 항목 & 생성 및 갱신 타이밍 & 실제 운영 원칙 \\
 \midrule
@@ -189,7 +195,7 @@ Pointer type & 대상 & 예시 \\
 
 \subsubsection{\texttt{symbol\_index}: repository 내부 코드 접근}
 
-\texttt{symbol\_index}는 코드베이스 전체를 prompt에 넣지 않기 위한 첫 번째 단계이다. 이 단계는 \texttt{symbol\_test/symbol\_bench/indexer.py}에 구현되어 있으며, Python AST parser를 사용한다. 실험에서는 benchmark 실행 전에 corpus를 만들고 그 시점의 repository snapshot에 대해 index를 한 번 생성했다. 그러나 실제 코드 어시스턴스에서는 workspace를 열 때 background job으로 만들거나, 첫 질문이 들어왔을 때 lazy build한 뒤 cache해야 한다. 이후 사용자가 파일을 저장하거나 agent가 새 코드를 생성하면 해당 파일만 다시 parse해 index를 갱신한다. 이렇게 해야 LLM이 오래된 symbol 위치를 보지 않으면서도, 모든 질문마다 전체 repository를 다시 읽는 비용을 피할 수 있다.
+\texttt{symbol\_index}는 코드베이스 전체를 prompt에 넣지 않기 위한 첫 번째 단계이다. 이 단계는 \codepath{symbol_test/symbol_bench/indexer.py}에 구현되어 있으며, Python AST parser를 사용한다. 실험에서는 benchmark 실행 전에 corpus를 만들고 그 시점의 repository snapshot에 대해 index를 한 번 생성했다. 그러나 실제 코드 어시스턴스에서는 workspace를 열 때 background job으로 만들거나, 첫 질문이 들어왔을 때 lazy build한 뒤 cache해야 한다. 이후 사용자가 파일을 저장하거나 agent가 새 코드를 생성하면 해당 파일만 다시 parse해 index를 갱신한다. 이렇게 해야 LLM이 오래된 symbol 위치를 보지 않으면서도, 모든 질문마다 전체 repository를 다시 읽는 비용을 피할 수 있다.
 
 중요한 점은 index freshness를 LLM의 판단에 맡기지 않는 것이다. LLM은 ``이 파일이 방금 수정되었는지''를 안정적으로 알 수 없으므로, system layer가 file watcher, mtime/hash, branch 변경 이벤트를 보고 index version을 관리해야 한다. 예를 들어 agent가 \texttt{services/auth\_service.py}를 생성하거나 수정한 직후에는 patch 적용이 끝난 시점에 해당 파일을 즉시 reparse하고, selector가 보는 \texttt{memory://symbol/...} URI도 새 line range를 가리키도록 바꾼다. 반대로 사용자가 아무 파일도 바꾸지 않았다면 같은 index cache를 재사용한다. 동작 순서는 다음과 같다.
 
@@ -259,11 +265,11 @@ LLM에 실제로 전달되는 bundle context는 다음처럼 provenance와 sourc
 0023:         raise ValueError(TOKEN_EXPIRED_MESSAGE)
 \end{lstlisting}
 
-이 구조에서 각 레벨의 출력은 명확하다. AST parser는 \texttt{symbol\_index.json}을 출력하고, selector는 \texttt{memory://symbol/...} URI를 출력하며, resolver는 line-numbered source fragment를 출력한다. Bundle expander는 여러 fragment를 provenance와 함께 묶어 LLM의 최종 evidence context로 전달한다.
+이 구조에서 각 레벨의 출력은 다음과 같다. AST parser는 \texttt{symbol\_index.json}을 출력하고, selector는 \texttt{memory://symbol/...} URI를 출력하며, resolver는 line-numbered source fragment를 출력한다. Bundle expander는 여러 fragment를 provenance와 함께 묶어 LLM의 최종 evidence context로 전달한다.
 
 \subsubsection{\texttt{source\_pointer}: disk 외부 자료 접근}
 
-\texttt{source\_pointer}는 repository 밖 또는 repository 안에 저장된 큰 외부 자료를 raw context로 넣지 않기 위한 계층이다. 실험 코드는 \texttt{source\_pointer\_test/source\_pointer\_bench/source\_tools.py}에 있으며, 대상 데이터는 log, markdown document, JSON이다. 실험에서는 \texttt{make\_corpus.py}가 synthetic source file을 만든 뒤 모든 실험 대상 파일에 대해 \texttt{manifest.json}을 미리 생성했다. 하지만 실제 코드 어시스턴스가 disk의 모든 파일을 미리 scan해 pointer를 만드는 방식은 적절하지 않다. 보안상 사용자 home directory나 임의 경로 전체를 catalog화하면 안 되고, 성능상으로도 대부분의 파일은 현재 질문과 무관하기 때문이다.
+\texttt{source\_pointer}는 repository 밖 또는 repository 안에 저장된 큰 외부 자료를 raw context로 넣지 않기 위한 계층이다. 실험 코드는 \codepath{source_pointer_test/source_pointer_bench/source_tools.py}에 있으며, 대상 데이터는 log, markdown document, JSON이다. 실험에서는 \texttt{make\_corpus.py}가 synthetic source file을 만든 뒤 모든 실험 대상 파일에 대해 \texttt{manifest.json}을 미리 생성했다. 하지만 실제 코드 어시스턴스가 disk의 모든 파일을 미리 scan해 pointer를 만드는 방식은 적절하지 않다. 보안상 사용자 home directory나 임의 경로 전체를 catalog화하면 안 되고, 성능상으로도 대부분의 파일은 현재 질문과 무관하기 때문이다.
 
 실제 운영에서는 project 설정이나 사용자 명시 경로로 허용된 source root만 다룬다. 예를 들어 \texttt{logs/}, \texttt{reports/}, \texttt{docs/}, \texttt{snapshots/}처럼 코드 어시스턴스가 참조할 수 있는 directory를 allowlist로 등록하고, 그 안에서도 log, markdown, JSON, CSV, test report처럼 extractor가 있는 file kind만 pointer 후보로 둔다. Pointer는 세 시점에 생성된다. 첫째, 사용자가 질문에서 특정 파일 경로를 언급했을 때이다. 둘째, project 설정에 등록된 source root를 background catalog job이 발견했을 때이다. 셋째, test나 build가 disk에 report를 남겨 다음 단계에서 참조할 가능성이 생겼을 때이다. 이미 등록된 파일은 mtime/hash가 바뀌었을 때만 manifest entry를 갱신한다. 동작 순서는 다음과 같다.
 
@@ -333,7 +339,7 @@ enabled=true, max_context_policy=pointer-first
 
 \subsubsection{\texttt{runtime\_pointer}: 실행 중 생성된 tool output 접근}
 
-\texttt{runtime\_pointer}는 source pointer와 유사하지만, 대상이 disk file이 아니라 agent 실행 중 생성된 runtime object라는 점이 다르다. 예를 들어 test 실행 결과, build log, API response, static analysis report는 사용자가 처음부터 제공한 file이 아니라 tool 실행 이후에 생긴다. 실험 코드는 \texttt{runtime\_pointer\_test/runtime\_pointer\_bench/runtime\_tools.py}에 있다. 실험에서는 producer를 실행하면 큰 log/doc/JSON output을 항상 \texttt{RuntimeStore}에 저장하고 pointer catalog를 만들었다. 실제 agent에서는 더 선택적으로 동작해야 한다.
+\texttt{runtime\_pointer}는 source pointer와 유사하지만, 대상이 disk file이 아니라 agent 실행 중 생성된 runtime object라는 점이 다르다. 예를 들어 test 실행 결과, build log, API response, static analysis report는 사용자가 처음부터 제공한 file이 아니라 tool 실행 이후에 생긴다. 실험 코드는 \codepath{runtime_pointer_test/runtime_pointer_bench/runtime_tools.py}에 있다. 실험에서는 producer를 실행하면 큰 log/doc/JSON output을 항상 \texttt{RuntimeStore}에 저장하고 pointer catalog를 만들었다. 실제 agent에서는 더 선택적으로 동작해야 한다.
 
 Runtime pointer는 미리 만들 수 없다. 어떤 runtime data가 생길지는 사용자가 어떤 명령을 실행하는지, 테스트가 성공하는지, tool이 어떤 응답을 돌려주는지에 따라 달라지기 때문이다. 따라서 생성 시점은 tool output이 반환되는 순간이다. 이때 system layer가 output 크기, type, 재사용 가능성, 민감도에 따라 세 가지 중 하나를 선택한다. 출력이 짧고 안전하면 그대로 LLM message에 넣는다. 출력이 길거나 JSON/list/table처럼 구조화되어 있거나 이후 단계에서 다시 참조될 가능성이 있으면 \texttt{RuntimeStore}에 저장하고 \texttt{runtime://...} pointer와 compact summary만 반환한다. 출력에 secret이나 credential이 섞일 가능성이 있으면 raw text를 그대로 prompt에 넣지 않고, hint를 축약하거나 mask한 뒤 extractor를 통해 필요한 부분만 노출한다.
 
@@ -404,7 +410,7 @@ Runtime pointer는 실제 코드 어시스턴스에서 특히 중요하다. 테�
 
 \subsubsection{\texttt{self\_extend}: 긴 context 직접 수용 fallback}
 
-\texttt{self\_extend}는 앞의 세 pointer 계층과 성격이 다르다. Pointer 계층은 context를 줄이는 구조이고, Self-Extend는 긴 context를 모델이 직접 받도록 attention 설정을 바꾸는 방법이다. 실험 코드는 \texttt{self\_extend\_test/run\_llama2\_selfextend\_passkey.py}, \texttt{self\_extend\_test/run\_code\_assistance\_bench.py}에 있다.
+\texttt{self\_extend}는 앞의 세 pointer 계층과 성격이 다르다. Pointer 계층은 context를 줄이는 구조이고, Self-Extend는 긴 context를 모델이 직접 받도록 attention 설정을 바꾸는 방법이다. 실험 코드는 \codepath{self_extend_test/run_llama2_selfextend_passkey.py}, \codepath{self_extend_test/run_code_assistance_bench.py}에 있다.
 
 \texttt{self\_extend}는 \texttt{symbol\_index}, \texttt{source\_pointer}, \texttt{runtime\_pointer}처럼 사전에 만들어두거나 갱신하는 구조가 아니다. 이것은 특정 LLM 호출에서 context 수용 방식을 바꾸는 실행 옵션이다. 따라서 실제 코드 어시스턴스에서는 항상 켜두지 않는다. 기본 경로는 먼저 symbol/source/runtime pointer로 evidence를 줄이는 것이고, 그 결과도 여전히 너무 크거나 사용자가 repository 전체 요약처럼 넓은 범위의 질문을 했을 때만 fallback으로 사용한다. 또한 Self-Extend 실행 결과가 곧바로 code patch로 이어지면 안 된다. 출력이 어떤 파일, 어떤 symbol, 어떤 line, 어떤 test failure에 근거하는지 validation 단계에서 확인하고, 구체적 근거를 제시하지 못하면 다시 pointer 기반 검색으로 돌아가야 한다.
 
@@ -482,9 +488,9 @@ Code assistance benchmark의 결과 row도 같은 패턴을 보인다.
 기존 시스템의 차별점은 code pointer, source pointer, runtime pointer를 하나의 코드 어시스턴스 workflow로 결합한다는 점이다. 기존 agent context overflow 논문은 runtime tool output을 memory pointer로 처리한다. 본 연구는 그 아이디어를 코드 어시스턴스에 맞게 다음 세 영역으로 확장한다.
 
 \begin{itemize}
-  \item \textbf{Code structure layer}: \texttt{symbol\_test/symbol\_bench/indexer.py}는 AST 기반으로 \texttt{build\_index}, \texttt{compact\_outline}, \texttt{resolve\_symbol}, \texttt{read\_span}, \texttt{expand\_symbol\_context}를 제공한다.
-  \item \textbf{External evidence layer}: \texttt{source\_pointer\_test/source\_pointer\_bench/source\_tools.py}는 \texttt{source://} URI 검증, manifest lookup, source file resolver, format-specific extractor를 제공한다.
-  \item \textbf{Runtime evidence layer}: \texttt{runtime\_pointer\_test/runtime\_pointer\_bench/runtime\_tools.py}는 \texttt{RuntimeStore}, runtime pointer resolver, runtime log/doc/JSON extractor를 제공한다.
+  \item \textbf{Code structure layer}: \codepath{symbol_test/symbol_bench/indexer.py}는 AST 기반으로 \texttt{build\_index}, \texttt{compact\_outline}, \texttt{resolve\_symbol}, \texttt{read\_span}, \texttt{expand\_symbol\_context}를 제공한다.
+  \item \textbf{External evidence layer}: \codepath{source_pointer_test/source_pointer_bench/source_tools.py}는 \codepath{source://} URI 검증, manifest lookup, source file resolver, format-specific extractor를 제공한다.
+  \item \textbf{Runtime evidence layer}: \codepath{runtime_pointer_test/runtime_pointer_bench/runtime_tools.py}는 \texttt{RuntimeStore}, runtime pointer resolver, runtime log/doc/JSON extractor를 제공한다.
 \end{itemize}
 
 또한 각 fragment에는 path, line range, URI, 포함 이유를 남긴다. 이 provenance는 LLM이 어떤 근거로 답변했는지 추적하고, 코드 수정 단계에서 어떤 파일을 수정해야 하는지 결정하는 데 사용된다.
@@ -513,7 +519,7 @@ Code assistance benchmark의 결과 row도 같은 패턴을 보인다.
 
 실험은 로컬 환경에서 진행되었다. symbol, source pointer, runtime pointer 실험은 Apple M3 MacBook Pro, llama.cpp Metal backend, Qwen2.5 Coder 7B Instruct GGUF Q5\_K\_M 모델을 사용했다. Self-Extend 실험은 Llama-2-7B-chat GGUF Q4\_K\_M과 Q5\_K\_M을 사용했다. 대부분의 generation 설정은 temperature 0, seed 1로 고정했다.
 
-본 절의 모든 실험 코드는 실험 결과 markdown 파일과 동일한 이름의 폴더에 위치한다. 예를 들어 \texttt{Documents/Experiments\_result/source\_pointer\_test.md}의 코드는 \texttt{source\_pointer\_test/}에 있다.
+본 절의 모든 실험 코드는 실험 결과 markdown 파일과 동일한 이름의 폴더에 위치한다. 예를 들어 \codepath{Documents/Experiments_result/source_pointer_test.md}의 코드는 \codepath{source_pointer_test/}에 있다.
 
 \subsection{Symbol Index와 Symbol Bundle 실험}
 
@@ -521,7 +527,7 @@ Code assistance benchmark의 결과 row도 같은 패턴을 보인다.
 
 Symbol 실험은 repository 내부 코드를 어떤 단위로 LLM에게 전달하는지가 성능에 미치는 영향을 측정한다. 비교 방식은 다음과 같다.
 
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.30\textwidth}p{0.64\textwidth}}
+\begin{longtable}{@{}L{0.30\textwidth}L{0.64\textwidth}@{}}
 \toprule
 Mode & 설명 \\
 \midrule
@@ -539,8 +545,10 @@ Mode & 설명 \\
 
 Small corpus의 1개 쉬운 질문에서는 모든 방식이 정답을 맞혔다. 그러나 token과 시간은 크게 달랐다.
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
+\small
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lrrrr}
 \toprule
 Mode & Accuracy & Wall time & Prompt tokens & Prompt eval \\
@@ -550,20 +558,22 @@ Mode & Accuracy & Wall time & Prompt tokens & Prompt eval \\
 \texttt{line\_span} & 1.00 & 2.110s & 217 & 694.36ms \\
 \texttt{symbol\_oracle} & 1.00 & 2.109s & 214 & 683.56ms \\
 \texttt{symbol\_select} & 1.00 & 11.304s & 2709 & 8390.18ms \\
-\texttt{symbol\_bundle\_oracle} & 1.00 & 5.052s & 302 & 973.31ms \\
-\texttt{symbol\_filtered\_select\_bundle} & 1.00 & 4.766s & 728 & 2268.92ms \\
+\begin{tabular}[t]{@{}l@{}}\texttt{symbol\_bundle}\\\texttt{\_oracle}\end{tabular} & 1.00 & 5.052s & 302 & 973.31ms \\
+\begin{tabular}[t]{@{}l@{}}\texttt{symbol\_filtered}\\\texttt{\_select}\\\texttt{\_bundle}\end{tabular} & 1.00 & 4.766s & 728 & 2268.92ms \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\texttt{symbol\_oracle}은 \texttt{full\_repo} 대비 prompt token을 약 94.8\%, wall time을 약 85.1\% 줄였다. \texttt{symbol\_select}는 정답 symbol을 선택했지만 selector 호출 때문에 작은 corpus에서는 oracle보다 느렸다. 추가 측정한 bundle 계열도 정답은 맞혔다. 다만 쉬운 질문은 단일 함수 또는 단일 상수 수준에서 답이 나오므로 bundle 확장의 장점이 크게 드러나지 않는다. \texttt{symbol\_bundle\_oracle}은 상수와 주변 fragment를 함께 넣어 prompt token이 302로 증가했고, \texttt{symbol\_filtered\_select\_bundle}은 selector 호출까지 포함해 728 token을 사용했다. 그럼에도 두 방식 모두 \texttt{full\_repo}와 naive \texttt{symbol\_select}보다 작은 prompt로 동작했다.
+\texttt{symbol\_oracle}은 \texttt{full\_repo} 대비 prompt token을 약 94.8\%, wall time을 약 85.1\% 줄였다. \texttt{symbol\_select}는 정답 symbol을 선택했지만 selector 호출 때문에 작은 corpus에서는 oracle보다 느렸다. 추가 측정한 bundle 계열도 정답은 맞혔다. 다만 쉬운 질문은 단일 함수 또는 단일 상수 수준에서 답이 나오므로 bundle 확장의 장점이 크게 드러나지 않는다. \codepath{symbol_bundle_oracle}은 상수와 주변 fragment를 함께 넣어 prompt token이 302로 증가했고, \codepath{symbol_filtered_select_bundle}은 selector 호출까지 포함해 728 token을 사용했다. 그럼에도 두 방식 모두 \texttt{full\_repo}와 naive \texttt{symbol\_select}보다 작은 prompt로 동작했다.
 
 \subsubsection{Medium corpus 결과}
 
 Medium corpus는 27개 파일, 638개 symbol, 3개 task로 구성되었다. \texttt{full\_repo}는 65k context에서 \texttt{prompt is too long}으로 실패했고, 131k context에서 첫 케이스만 재측정했다.
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
+\small
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lrrrrr}
 \toprule
 Mode & Cases & Accuracy & Mean wall & Mean tokens & Selection acc. \\
@@ -573,22 +583,24 @@ Mode & Cases & Accuracy & Mean wall & Mean tokens & Selection acc. \\
 \texttt{line\_span} & 3 & 1.000 & 2.120s & 199 & -- \\
 \texttt{symbol\_oracle} & 3 & 1.000 & 2.131s & 199 & -- \\
 \texttt{symbol\_select} & 3 & 1.000 & 181.191s & 33871 & 1.000 \\
-\texttt{symbol\_bundle\_oracle} & 3 & 1.000 & 2.600s & 305 & -- \\
-\texttt{symbol\_filtered\_select\_bundle} & 3 & 1.000 & 6.262s & 824 & 1.000 \\
+\begin{tabular}[t]{@{}l@{}}\texttt{symbol\_bundle}\\\texttt{\_oracle}\end{tabular} & 3 & 1.000 & 2.600s & 305 & -- \\
+\begin{tabular}[t]{@{}l@{}}\texttt{symbol\_filtered}\\\texttt{\_select}\\\texttt{\_bundle}\end{tabular} & 3 & 1.000 & 6.262s & 824 & 1.000 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 결과적으로 \texttt{symbol\_oracle}은 \texttt{full\_repo} 대비 prompt token과 wall time을 모두 약 99.7\% 줄였다. 반면 naive \texttt{symbol\_select}는 정답률과 selection accuracy가 1.000이지만, 전체 638개 symbol index를 매번 prompt에 넣어 평균 181.191초가 걸렸다. 이는 selector 입력을 줄이지 않으면 symbol 접근 자체의 장점이 사라진다는 것을 보여준다.
 
-추가 측정한 bundle 계열 결과는 제안 시스템의 실제 동작 비용을 더 잘 보여준다. \texttt{symbol\_bundle\_oracle}은 단일 symbol보다 많은 context를 넣기 때문에 평균 prompt token이 305로 증가했지만, 평균 wall time은 2.600초로 여전히 매우 작았다. \texttt{symbol\_filtered\_select\_bundle}은 selector와 bundle answer 호출을 모두 포함해 평균 824 token, 6.262초가 걸렸다. 이는 \texttt{symbol\_oracle}보다는 느리지만, naive \texttt{symbol\_select}의 33,871 token과 181.191초에 비해 prompt token은 약 97.6\%, wall time은 약 96.5\% 감소한 값이다. 따라서 후보 symbol을 먼저 줄인 뒤 bundle을 확장하는 방식은 medium 규모에서도 정확도를 유지하면서 selector 비용을 현실적인 수준으로 낮춘다.
+추가 측정한 bundle 계열 결과는 제안 시스템의 실제 동작 비용을 더 잘 보여준다. \codepath{symbol_bundle_oracle}은 단일 symbol보다 많은 context를 넣기 때문에 평균 prompt token이 305로 증가했지만, 평균 wall time은 2.600초로 여전히 매우 작았다. \codepath{symbol_filtered_select_bundle}은 selector와 bundle answer 호출을 모두 포함해 평균 824 token, 6.262초가 걸렸다. 이는 \texttt{symbol\_oracle}보다는 느리지만, naive \texttt{symbol\_select}의 33,871 token과 181.191초에 비해 prompt token은 약 97.6\%, wall time은 약 96.5\% 감소한 값이다. 따라서 후보 symbol을 먼저 줄인 뒤 bundle을 확장하는 방식은 medium 규모에서도 정확도를 유지하면서 selector 비용을 현실적인 수준으로 낮춘다.
 
 \subsubsection{Hard task 결과}
 
 Hard task는 단일 함수 본문만으로는 답을 알 수 없도록 구성되었다. 예를 들어 \texttt{validate\_token}의 예외 literal은 함수 내부가 아니라 module-level constant에 있고, \texttt{build\_cache\_key}의 최종 결과는 helper 함수 \texttt{sanitize\_report\_name}까지 읽어야 계산할 수 있다.
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
+\small
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lrrrrr}
 \toprule
 Mode & Cases & Accuracy & Mean wall & Mean tokens & Selection acc. \\
@@ -604,10 +616,12 @@ Mode & Cases & Accuracy & Mean wall & Mean tokens & Selection acc. \\
 
 \texttt{symbol\_select}는 3개 질문 모두 대표 symbol URI를 올바르게 선택했지만 최종 답은 모두 실패했다. 즉 이 결과에서 병목은 ``대표 symbol을 찾는 것''이 아니라 ``대표 symbol 하나만 읽었을 때 필요한 주변 정보가 누락되는 것''이었다. 실제 코드 이해 질문은 상수, helper 함수, class method, 관련 함수 호출을 함께 봐야 하는 경우가 많으므로 hard task 결과는 단일 \texttt{read\_symbol} 구조의 한계를 보여준다.
 
-이를 확인하기 위해 hard task 결과에는 \texttt{symbol\_bundle\_oracle}과 \texttt{symbol\_filtered\_select\_bundle}을 추가했다. 이 두 mode는 대표 symbol을 찾은 뒤 \texttt{expand\_symbol\_context}를 실행하여 module-level constant, same-file helper/callee, 질문에 직접 언급된 관련 symbol을 bundle로 묶는다.
+이를 확인하기 위해 hard task 결과에는 \codepath{symbol_bundle_oracle}과 \codepath{symbol_filtered_select_bundle}을 추가했다. 이 두 mode는 대표 symbol을 찾은 뒤 \texttt{expand\_symbol\_context}를 실행하여 module-level constant, same-file helper/callee, 질문에 직접 언급된 관련 symbol을 bundle로 묶는다.
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
+\small
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lrrrrr}
 \toprule
 Mode & Cases & Accuracy & Mean wall & Mean tokens & Selection acc. \\
@@ -618,7 +632,7 @@ Mode & Cases & Accuracy & Mean wall & Mean tokens & Selection acc. \\
 \end{tabular}
 \end{table}
 
-Hard task에서 \texttt{symbol\_filtered\_select\_bundle}은 기존 \texttt{symbol\_select}와 비교해 prompt token을 33,922에서 587로 줄였다. 이는 약 98.3\% 감소이다. Wall time도 172.170초에서 4.588초로 줄어 약 97.3\% 감소했다. Selection accuracy는 1.000으로 유지되었다.
+Hard task에서 \codepath{symbol_filtered_select_bundle}은 기존 \texttt{symbol\_select}와 비교해 prompt token을 33,922에서 587로 줄였다. 이는 약 98.3\% 감소이다. Wall time도 172.170초에서 4.588초로 줄어 약 97.3\% 감소했다. Selection accuracy는 1.000으로 유지되었다.
 
 다만 정확도는 1/3에 그쳤다. 실패 원인은 retrieval 부족이 아니라 reasoning 오류였다. \texttt{build\_cache\_key} task에서는 helper가 bundle에 포함되었지만 모델이 slash를 underscore로 잘못 바꾸었고, billing task에서는 10000 $\times$ 0.0125 계산을 125가 아니라 150으로 답했다. 따라서 제안 시스템은 다음 단계에서 deterministic evaluator를 추가해야 한다.
 
@@ -628,7 +642,7 @@ Hard task에서 \texttt{symbol\_filtered\_select\_bundle}은 기존 \texttt{symb
 
 Source pointer 실험은 disk에 존재하는 큰 외부 데이터를 LLM context에 직접 넣는 방식과 pointer 기반 extraction 방식을 비교한다. 외부 데이터는 log, markdown document, JSON으로 구성되었다.
 
-\begin{longtable}{p{0.25\textwidth}p{0.70\textwidth}}
+\begin{longtable}{@{}L{0.25\textwidth}L{0.70\textwidth}@{}}
 \toprule
 Mode & 설명 \\
 \midrule
@@ -642,8 +656,10 @@ Mode & 설명 \\
 
 \subsubsection{결과 분석}
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
+\small
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lrrrrr}
 \toprule
 Scale & Mode & Accuracy & Mean wall & Mean tokens & Selection acc. \\
@@ -670,7 +686,7 @@ Medium 기준으로 \texttt{pointer\_oracle}은 \texttt{full\_source} 대비 pro
 
 Runtime pointer 실험은 실행 중 생성되는 큰 tool output을 다룬다. Source pointer가 disk에 이미 있는 외부 파일을 가리킨다면, runtime pointer는 현재 agent session에서 tool이 생성한 중간 결과를 가리킨다.
 
-\begin{longtable}{p{0.30\textwidth}p{0.65\textwidth}}
+\begin{longtable}{@{}L{0.30\textwidth}L{0.65\textwidth}@{}}
 \toprule
 Mode & 설명 \\
 \midrule
@@ -680,22 +696,24 @@ Mode & 설명 \\
 \bottomrule
 \end{longtable}
 
-Runtime object는 \texttt{RuntimeStore}에 저장되며, pointer는 \texttt{runtime://log/collect\_checkout\_trace/0001} 같은 형식을 가진다. 사용한 tool은 \texttt{grep\_runtime\_log}, \texttt{extract\_runtime\_doc\_section}, \texttt{extract\_runtime\_json\_path}이다.
+Runtime object는 \texttt{RuntimeStore}에 저장되며, pointer는 \codepath{runtime://log/collect_checkout_trace/0001} 같은 형식을 가진다. 사용한 tool은 \codepath{grep_runtime_log}, \codepath{extract_runtime_doc_section}, \codepath{extract_runtime_json_path}이다.
 
 \subsubsection{결과 분석}
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
+\small
+\setlength{\tabcolsep}{3pt}
 \begin{tabular}{lrrrrrr}
 \toprule
 Scale & Mode & Accuracy & Mean wall & Mean tokens & Selection acc. & Tool chars \\
 \midrule
 Small & \texttt{full\_runtime} & 0.333 & 4.961s & 18785 & -- & 0 \\
-Small & \texttt{runtime\_pointer\_oracle} & 1.000 & 2.768s & 311 & -- & 365 \\
-Small & \texttt{runtime\_pointer\_select} & 1.000 & 7.050s & 756 & 1.000 & 430 \\
+Small & \begin{tabular}[t]{@{}l@{}}\texttt{runtime\_pointer}\\\texttt{\_oracle}\end{tabular} & 1.000 & 2.768s & 311 & -- & 365 \\
+Small & \begin{tabular}[t]{@{}l@{}}\texttt{runtime\_pointer}\\\texttt{\_select}\end{tabular} & 1.000 & 7.050s & 756 & 1.000 & 430 \\
 Medium & \texttt{full\_runtime} & 0.333 & 26.270s & 131136 & -- & 0 \\
-Medium & \texttt{runtime\_pointer\_oracle} & 1.000 & 2.610s & 311 & -- & 365 \\
-Medium & \texttt{runtime\_pointer\_select} & 1.000 & 6.891s & 757 & 1.000 & 430 \\
+Medium & \begin{tabular}[t]{@{}l@{}}\texttt{runtime\_pointer}\\\texttt{\_oracle}\end{tabular} & 1.000 & 2.610s & 311 & -- & 365 \\
+Medium & \begin{tabular}[t]{@{}l@{}}\texttt{runtime\_pointer}\\\texttt{\_select}\end{tabular} & 1.000 & 6.891s & 757 & 1.000 & 430 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -721,7 +739,7 @@ Self-Extend 실험은 context window를 늘리는 방식이 코드 어시스턴�
 
 \subsubsection{결과 분석}
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
 \begin{tabular}{lrrp{0.45\textwidth}}
 \toprule
@@ -745,9 +763,9 @@ Code assistance benchmark에서는 2개 모델, 3개 조건, 3개 task를 합쳐
 
 \subsection{종합 평가}
 
-전체 실험의 결론은 명확하다. 로컬 LLM 기반 코드 어시스턴스에서는 full-context 방식보다 pointer와 retrieval 기반 방식이 훨씬 적합하다.
+전체 실험의 결론은 로컬 LLM 기반 코드 어시스턴스에서는 full-context 방식보다 pointer와 retrieval 기반 방식이 훨씬 적합하다는 것을 보여준다.
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
 \begin{tabularx}{\textwidth}{lY}
 \toprule
@@ -761,7 +779,7 @@ Self-Extend & context 수용량 확장은 가능하지만 retrieval 품질은 �
 \end{tabularx}
 \end{table}
 
-정확도 측면에서 pointer 방식은 source/runtime 실험에서 명확히 우수했다. Symbol 실험에서는 bundle 확장이 retrieval 문제를 일부 해결했지만 reasoning 오류가 남았다. 따라서 최종 시스템은 pointer retrieval뿐 아니라 deterministic computation, schema validation, test execution feedback을 함께 포함해야 한다.
+정확도 측면에서 pointer 방식은 source/runtime 실험에서 full-context 방식보다 우수했다. Symbol 실험에서는 bundle 확장이 retrieval 문제를 일부 해결했지만 reasoning 오류가 남았다. 따라서 최종 시스템은 pointer retrieval뿐 아니라 deterministic computation, schema validation, test execution feedback을 함께 포함해야 한다.
 
 \section{Conclusion}
 
@@ -779,7 +797,7 @@ Symbol 실험은 코드 접근 계층에서 두 가지 교훈을 준다. 첫째,
 
 Self-Extend 실험은 ``context window를 늘리면 문제가 해결된다''는 가정에 한계가 있음을 보여준다. G=2와 G=4 조건은 입력 수용량을 늘렸지만 passkey retrieval과 code assistance benchmark에서 정답을 회수하지 못했다. 특히 code assistance benchmark에서는 off 조건이 prompt too long으로 실패했고, G=2/G=4 조건은 입력을 받았지만 함수 반환값, symbol reference, failing test 원인을 모두 맞히지 못했다. 이는 긴 prompt를 넣을 수 있는 능력과 긴 prompt 안에서 필요한 코드 사실을 정확히 찾아 사용하는 능력이 다르다는 점을 보여준다. 따라서 Self-Extend는 본 시스템의 기본 retrieval 방식이 아니라, pointer 기반으로 context를 줄인 뒤에도 필요할 때 제한적으로 검증하며 사용하는 fallback이어야 한다.
 
-본 연구의 남은 한계도 명확하다. 실험 corpus는 synthetic Python 중심이므로 실제 repository의 import graph, framework convention, decorator, dynamic dispatch, generated code, build system, test fixture 복잡도를 충분히 반영하지 못한다. 또한 현재 \texttt{expand\_symbol\_context}는 same-file constant와 helper 중심이므로 cross-file dependency를 따라가는 능력이 제한적이다. 마지막으로 bundle에 필요한 코드가 들어와도 LLM이 계산을 틀릴 수 있으므로 deterministic evaluator가 아직 핵심 미완성 요소로 남아 있다.
+본 연구의 남은 한계는 다음의 사항들이다. 실험 corpus는 synthetic Python 중심이므로 실제 repository의 import graph, framework convention, decorator, dynamic dispatch, generated code, build system, test fixture 복잡도를 충분히 반영하지 못한다. 또한 현재 \texttt{expand\_symbol\_context}는 same-file constant와 helper 중심이므로 cross-file dependency를 따라가는 능력이 제한적이다. 마지막으로 bundle에 필요한 코드가 들어와도 LLM이 계산을 틀릴 수 있으므로 deterministic evaluator가 아직 핵심 미완성 요소로 남아 있다.
 
 실제 제품 구현에서는 사용자가 pointer 관리 자체를 의식하지 않도록 만드는 것도 중요하다. \texttt{symbol\_index}는 workspace open, file save, agent patch 적용 시점에 자동으로 갱신되어야 하며, 사용자는 ``index를 다시 만들라''고 직접 지시하지 않아도 되어야 한다. \texttt{source\_pointer}는 모든 disk file을 훑는 방식이 아니라 project별 allowlist와 file kind 설정으로 제한해야 하고, 사용자가 질문에서 파일 경로를 언급하면 필요한 entry만 즉시 등록하는 lazy 방식을 제공해야 한다. \texttt{runtime\_pointer}는 tool output 크기와 type에 따라 자동으로 pointer화하되, session TTL, LRU cleanup, 사용자가 보존한 report의 source pointer 승격 정책을 가져야 한다. \texttt{self\_extend}는 사용자가 직접 attention 설정을 고르는 기능이 아니라, pointer 경로가 실패했을 때 agent가 제한적으로 시도하고 검증 결과를 사용자에게 설명하는 fallback으로 감춰지는 편이 사용성이 좋다.
 
