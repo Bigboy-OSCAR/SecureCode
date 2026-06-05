@@ -1,0 +1,35 @@
+\begin{thebibliography}{1}
+
+\bibitem{hui2024qwen25coder}
+Binyuan Hui, Jian Yang, Zeyu Cui, Jiaxi Yang, Dayiheng Liu, Lei Zhang, Tianyu Liu, Jiajun Zhang, Bowen Yu, Keming Lu, et~al.
+\newblock {Qwen2.5-Coder} technical report.
+\newblock {\em arXiv preprint arXiv:2409.12186}, 2024.
+
+\bibitem{jin2024selfextend}
+Hongye Jin, Xiaotian Han, Jingfeng Yang, Zhimeng Jiang, Zirui Liu, Chia-Yuan Chang, Huiyuan Chen, and Xia Hu.
+\newblock {LLM} maybe {LongLM}: Self-extend {LLM} context window without tuning.
+\newblock In {\em Proceedings of the 41st International Conference on Machine Learning}, 2024.
+\newblock arXiv:2401.01325.
+
+\bibitem{chen2021codex}
+Mark Chen, Jerry Tworek, Heewoo Jun, Qiming Yuan, Henrique Ponde de~Oliveira Pinto, Jared Kaplan, Harri Edwards, Yuri Burda, Nicholas Joseph, Greg Brockman, et~al.
+\newblock Evaluating large language models trained on code.
+\newblock {\em arXiv preprint arXiv:2107.03374}, 2021.
+
+\bibitem{roziere2023codellama}
+Baptiste Roziere, Jonas Gehring, Fabian Gloeckle, Sten Sootla, Itai Gat, Xiaoqing~Ellen Tan, Yossi Adi, Jingyu Liu, Tal Remez, Jeremy Rapin, et~al.
+\newblock Code llama: Open foundation models for code.
+\newblock {\em arXiv preprint arXiv:2308.12950}, 2023.
+
+\bibitem{jimenez2023swebench}
+Carlos~E. Jimenez, John Yang, Alexander Wettig, Shunyu Yao, Kexin Pei, Ofir Press, and Karthik Narasimhan.
+\newblock {SWE}-bench: Can language models resolve real-world {GitHub} issues?
+\newblock In {\em International Conference on Learning Representations}, 2024.
+\newblock arXiv:2310.06770.
+
+\bibitem{labate2025contextoverflow}
+Anton~Bulle Labate, Valesca~Moura de~Sousa, Sandro~Rama Fiorini, Leonardo~Guerreiro Azevedo, Raphael~Melo Thiago, and Viviane~Torres da~Silva.
+\newblock Solving context window overflow in {AI} agents.
+\newblock {\em arXiv preprint arXiv:2511.22729}, 2025.
+
+\end{thebibliography}

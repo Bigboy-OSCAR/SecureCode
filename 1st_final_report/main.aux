@@ -5,52 +5,88 @@
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{2}{section.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.1}문제 배경}{2}{subsection.1.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.2}코드 어시스턴스의 역할}{2}{subsection.1.2}\protected@file@percent }
+\citation{hui2024qwen25coder}
+\citation{jin2024selfextend}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces 클라우드 기반 코드 어시스턴스와 로컬 pointer 기반 코드 어시스턴스의 보안 및 context 처리 차이}}{3}{figure.1}\protected@file@percent }
+\newlabel{fig:cloud-vs-local-pointer-architecture}{{1}{3}{클라우드 기반 코드 어시스턴스와 로컬 pointer 기반 코드 어시스턴스의 보안 및 context 처리 차이}{figure.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.3}클라우드 모델 대비 로컬 LLM의 제약}{3}{subsection.1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.4}성능 하락의 원인}{3}{subsection.1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{4}{section.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}코드 생성 모델과 코드 어시스턴스}{4}{subsection.2.1}\protected@file@percent }
+\citation{jin2024selfextend}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4}성능 하락의 원인}{4}{subsection.1.4}\protected@file@percent }
+\citation{chen2021codex}
+\citation{roziere2023codellama}
+\citation{jimenez2023swebench}
+\citation{hui2024qwen25coder}
+\citation{labate2025contextoverflow}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{5}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}코드 생성 모델과 코드 어시스턴스}{5}{subsection.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}오픈 코드 모델과 로컬 실행}{5}{subsection.2.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Context Window Overflow와 Pointer 방식}{5}{subsection.2.3}\protected@file@percent }
+\citation{labate2025contextoverflow}
+\citation{jin2024selfextend}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Self-Extend와 Long Context 확장}{6}{subsection.2.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {3}Proposed System}{6}{section.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}시스템 목표}{6}{subsection.3.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces 제안 시스템의 전체 구조와 요청 처리 흐름}}{7}{figure.2}\protected@file@percent }
+\newlabel{fig:system-architecture-overview}{{2}{7}{제안 시스템의 전체 구조와 요청 처리 흐름}{figure.2}{}}
 \gdef \LT@i {\LT@entry 
     {1}{92.49748pt}\LT@entry 
     {1}{166.78133pt}\LT@entry 
     {1}{169.88815pt}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}구성요소별 동작 순서와 중간 산출물}{7}{subsection.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}\texttt  {symbol\_index}: repository 내부 코드 접근}{8}{subsubsection.3.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}\texttt  {source\_pointer}: disk 외부 자료 접근}{9}{subsubsection.3.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}\texttt  {runtime\_pointer}: 실행 중 생성된 tool output 접근}{11}{subsubsection.3.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.4}\texttt  {self\_extend}: 긴 context 직접 수용 fallback}{12}{subsubsection.3.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}개선점: 기존 시스템의 문제 해결}{13}{subsection.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}차별점: 추가된 기술과 기능}{14}{subsection.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}목적과 구현 방식}{14}{subsection.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}구성요소별 동작 순서와 중간 산출물}{8}{subsection.3.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 구성요소별 생성 및 갱신 타이밍}}{9}{figure.3}\protected@file@percent }
+\newlabel{fig:component-operation-timing}{{3}{9}{구성요소별 생성 및 갱신 타이밍}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}\texttt  {symbol\_index}: repository 내부 코드 접근}{9}{subsubsection.3.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Symbol index 생성, selector 축소, bundle 확장 pipeline}}{10}{figure.4}\protected@file@percent }
+\newlabel{fig:symbol-index-bundle-pipeline}{{4}{10}{Symbol index 생성, selector 축소, bundle 확장 pipeline}{figure.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}\texttt  {source\_pointer}: disk 외부 자료 접근}{11}{subsubsection.3.2.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Source pointer manifest, catalog, extractor 기반 접근 pipeline}}{12}{figure.5}\protected@file@percent }
+\newlabel{fig:source-pointer-pipeline}{{5}{12}{Source pointer manifest, catalog, extractor 기반 접근 pipeline}{figure.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}\texttt  {runtime\_pointer}: 실행 중 생성된 tool output 접근}{13}{subsubsection.3.2.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Runtime object 저장, pointer 발급, extractor feedback pipeline}}{14}{figure.6}\protected@file@percent }
+\newlabel{fig:runtime-pointer-pipeline}{{6}{14}{Runtime object 저장, pointer 발급, extractor feedback pipeline}{figure.6}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.4}\texttt  {self\_extend}: 긴 context 직접 수용 fallback}{15}{subsubsection.3.2.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Self-Extend fallback 사용 조건과 검증 흐름}}{15}{figure.7}\protected@file@percent }
+\newlabel{fig:self-extend-fallback-validation}{{7}{15}{Self-Extend fallback 사용 조건과 검증 흐름}{figure.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}개선점: 기존 시스템의 문제 해결}{16}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}차별점: 추가된 기술과 기능}{17}{subsection.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}목적과 구현 방식}{17}{subsection.3.5}\protected@file@percent }
 \gdef \LT@ii {\LT@entry 
     {1}{142.57462pt}\LT@entry 
     {1}{297.35594pt}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Evaluation}{15}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}실험 환경}{15}{subsection.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Symbol Index와 Symbol Bundle 실험}{15}{subsection.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}비교 방식}{15}{subsubsection.4.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}쉬운 질문 결과}{16}{subsubsection.4.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.3}Medium corpus 결과}{16}{subsubsection.4.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Evaluation}{18}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}실험 환경}{18}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Symbol Index와 Symbol Bundle 실험}{18}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}비교 방식}{18}{subsubsection.4.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}쉬운 질문 결과}{18}{subsubsection.4.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.3}Medium corpus 결과}{19}{subsubsection.4.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.4}Hard task 결과}{19}{subsubsection.4.2.4}\protected@file@percent }
 \gdef \LT@iii {\LT@entry 
     {1}{119.81102pt}\LT@entry 
     {1}{324.66948pt}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.4}Hard task 결과}{17}{subsubsection.4.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Source Pointer 실험}{17}{subsection.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}비교 방식}{17}{subsubsection.4.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Source Pointer 실험}{20}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}비교 방식}{20}{subsubsection.4.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}결과 분석}{20}{subsubsection.4.3.2}\protected@file@percent }
 \gdef \LT@iv {\LT@entry 
     {1}{142.57462pt}\LT@entry 
     {1}{301.90588pt}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}결과 분석}{18}{subsubsection.4.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Runtime Pointer 실험}{18}{subsection.4.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.1}비교 방식}{18}{subsubsection.4.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.2}결과 분석}{18}{subsubsection.4.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Self-Extend 실험}{19}{subsection.4.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.1}비교 방식}{19}{subsubsection.4.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.2}결과 분석}{19}{subsubsection.4.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}종합 평가}{20}{subsection.4.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{20}{section.5}\protected@file@percent }
-\gdef \@abspage@last{22}
+\citation{jin2024selfextend}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Runtime Pointer 실험}{21}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.1}비교 방식}{21}{subsubsection.4.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.2}결과 분석}{21}{subsubsection.4.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Self-Extend 실험}{21}{subsection.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.1}비교 방식}{21}{subsubsection.4.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.2}결과 분석}{22}{subsubsection.4.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}종합 평가}{22}{subsection.4.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Baseline, oracle, selected workflow의 token 및 wall time 비교}}{23}{figure.8}\protected@file@percent }
+\newlabel{fig:evaluation-token-time-reduction-summary}{{8}{23}{Baseline, oracle, selected workflow의 token 및 wall time 비교}{figure.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{23}{section.5}\protected@file@percent }
+\bibstyle{unsrt}
+\bibdata{references}
+\bibcite{hui2024qwen25coder}{1}
+\bibcite{jin2024selfextend}{2}
+\bibcite{chen2021codex}{3}
+\bibcite{roziere2023codellama}{4}
+\bibcite{jimenez2023swebench}{5}
+\bibcite{labate2025contextoverflow}{6}
+\@writefile{toc}{\contentsline {section}{\numberline {6}References}{26}{section.6}\protected@file@percent }
+\gdef \@abspage@last{26}

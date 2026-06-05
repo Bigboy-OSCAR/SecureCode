@@ -12,6 +12,7 @@
 \usepackage{xurl}
 \usepackage{ragged2e}
 \usepackage{listings}
+\usepackage{graphicx}
 
 \hypersetup{
   colorlinks=true,
@@ -23,6 +24,15 @@
 \newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
 \newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
 \newcommand{\codepath}[1]{\path{#1}}
+\graphicspath{{Images/}}
+\newcommand{\reportfigure}[4]{%
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=#2\textwidth]{#1}
+    \caption{#3}
+    \label{#4}
+  \end{figure}
+}
 \emergencystretch=2em
 \hbadness=10000
 \setlist[itemize]{leftmargin=*, topsep=2pt}
@@ -64,6 +74,8 @@
 보안을 위해 로컬 LLM을 사용하되, 로컬 모델의 context와 reasoning 한계를 고려하여 코드와 데이터 접근 방식을 pointer 중심으로 재설계해야 한다.
 \end{quote}
 
+\reportfigure{fig01_cloud_vs_local_pointer_architecture}{0.92}{클라우드 기반 코드 어시스턴스와 로컬 pointer 기반 코드 어시스턴스의 보안 및 context 처리 차이}{fig:cloud-vs-local-pointer-architecture}
+
 \subsection{코드 어시스턴스의 역할}
 
 코드 어시스턴스는 단순한 자동완성보다 넓은 범위의 작업을 수행한다. 대표적인 기능은 다음과 같다.
@@ -91,7 +103,7 @@
   \item \textbf{Long-context retrieval}: 긴 입력을 수용하는 것과 긴 입력 안에서 필요한 symbol 또는 값을 정확히 회수하는 것은 다른 문제다.
 \end{itemize}
 
-실제 논문과 기술 보고서에서도 이러한 차이를 정량적으로 확인할 수 있다. Qwen2.5-Coder Technical Report는 Qwen2.5-Coder-7B-Instruct가 HumanEval 88.4\%, MBPP 83.5\%, BigCodeBench Full 41.0\%, Aider Pass@1 55.6\%를 기록했다고 보고한다. 같은 표에서 GPT-4o-2024-08-06은 Aider Pass@1 56.8\%, Claude-3.5-Sonnet-20241022는 71.4\%, o1-preview는 69.9\%를 기록한다. 즉 HumanEval처럼 짧은 함수 생성 문제에서는 최신 7B 코드 모델이 클라우드 모델에 근접할 수 있지만, code editing benchmark에서는 Claude-3.5-Sonnet 대비 15.8 percentage point 낮다. 또한 Self-Extend 논문의 L-Eval 표에서는 GPT-4-32k 평균이 73.11, Claude1.3-100k 평균이 65.97인 반면, Llama2-7B-chat 4k는 33.12, SelfExtend-Llama2-7B-chat 16k는 35.99로 보고된다. CodeU 항목에서도 GPT-4-32k는 25.55인 반면 Llama2-7B-chat은 1.11이다. 이는 로컬 7B급 모델에서 long-context와 코드 reasoning이 동시에 필요한 경우 성능 저하가 크게 나타날 수 있음을 보여준다.
+실제 논문과 기술 보고서에서도 이러한 차이를 정량적으로 확인할 수 있다. Qwen2.5-Coder Technical Report는 Qwen2.5-Coder-7B-Instruct가 HumanEval 88.4\%, MBPP 83.5\%, BigCodeBench Full 41.0\%, Aider Pass@1 55.6\%를 기록했다고 보고한다~\cite{hui2024qwen25coder}. 같은 표에서 GPT-4o-2024-08-06은 Aider Pass@1 56.8\%, Claude-3.5-Sonnet-20241022는 71.4\%, o1-preview는 69.9\%를 기록한다. 즉 HumanEval처럼 짧은 함수 생성 문제에서는 최신 7B 코드 모델이 클라우드 모델에 근접할 수 있지만, code editing benchmark에서는 Claude-3.5-Sonnet 대비 15.8 percentage point 낮다. 또한 Self-Extend 논문의 L-Eval 표에서는 GPT-4-32k 평균이 73.11, Claude1.3-100k 평균이 65.97인 반면, Llama2-7B-chat 4k는 33.12, SelfExtend-Llama2-7B-chat 16k는 35.99로 보고된다~\cite{jin2024selfextend}. CodeU 항목에서도 GPT-4-32k는 25.55인 반면 Llama2-7B-chat은 1.11이다. 이는 로컬 7B급 모델에서 long-context와 코드 reasoning이 동시에 필요한 경우 성능 저하가 크게 나타날 수 있음을 보여준다.
 
 본 연구의 자체 실험에서도 같은 문제가 관찰되었다. medium symbol 실험에서 전체 repository를 넣는 \texttt{full\_repo} 방식은 65k context에서 실패했고, 131k context로 늘려도 한 질문 처리에 612.869초가 걸렸다. Self-Extend 실험에서는 group attention을 적용해 \texttt{n\_ctx}를 약 8k 또는 16k로 늘릴 수 있었지만, passkey retrieval과 코드 어시스턴스 benchmark는 모두 실패했다. 따라서 긴 context 자체를 늘리는 방식만으로는 보안형 로컬 코드 어시스턴스를 안정적으로 만들기 어렵다.
 
@@ -101,7 +113,7 @@
 
 \begin{enumerate}
   \item \textbf{모델 capacity 차이}: 작은 모델은 복잡한 cross-file reasoning, tool-call planning, code edit formatting에서 클라우드 frontier model보다 취약하다.
-  \item \textbf{Context length와 positional out-of-distribution}: Transformer 계열 LLM은 token의 내용뿐 아니라 token 사이의 상대적 거리도 attention 계산에 사용한다. 문제는 모델이 학습 중 주로 경험한 길이를 넘어서는 prompt를 받으면, 이전에 거의 보지 못한 ``먼 거리의 token 관계''를 처리해야 한다는 점이다. 예를 들어 4k context로 학습된 모델에 6k, 8k 입력을 넣으면 모델은 입력을 물리적으로 받을 수 있더라도, 앞부분의 함수와 뒷부분의 질문이 어떤 관계인지 안정적으로 연결하지 못할 수 있다. 이 현상을 positional out-of-distribution이라고 볼 수 있다. 코드 어시스턴스에서는 이 문제가 ``관련 함수가 prompt 안에 있는데도 찾지 못함'', ``비슷한 이름의 다른 함수와 혼동함'', ``앞쪽에 나온 상수 정의를 뒤쪽 계산에 반영하지 못함''으로 나타난다. Self-Extend 논문 Table 1에서 Llama-2-7B-chat은 4096 token에서 PPL 9.181이지만 6144 token 이상에서는 $>10^3$으로 증가한다. 이는 단순히 prompt가 길어질수록 느려지는 문제가 아니라, 모델이 긴 입력 내부의 위치 관계를 신뢰성 있게 해석하지 못할 수 있음을 의미한다.
+  \item \textbf{Context length와 positional out-of-distribution}: Transformer 계열 LLM은 token의 내용뿐 아니라 token 사이의 상대적 거리도 attention 계산에 사용한다. 문제는 모델이 학습 중 주로 경험한 길이를 넘어서는 prompt를 받으면, 이전에 거의 보지 못한 ``먼 거리의 token 관계''를 처리해야 한다는 점이다. 예를 들어 4k context로 학습된 모델에 6k, 8k 입력을 넣으면 모델은 입력을 물리적으로 받을 수 있더라도, 앞부분의 함수와 뒷부분의 질문이 어떤 관계인지 안정적으로 연결하지 못할 수 있다. 이 현상을 positional out-of-distribution이라고 볼 수 있다. 코드 어시스턴스에서는 이 문제가 ``관련 함수가 prompt 안에 있는데도 찾지 못함'', ``비슷한 이름의 다른 함수와 혼동함'', ``앞쪽에 나온 상수 정의를 뒤쪽 계산에 반영하지 못함''으로 나타난다. Self-Extend 논문 Table 1에서 Llama-2-7B-chat은 4096 token에서 PPL 9.181이지만 6144 token 이상에서는 $>10^3$으로 증가한다~\cite{jin2024selfextend}. 이는 단순히 prompt가 길어질수록 느려지는 문제가 아니라, 모델이 긴 입력 내부의 위치 관계를 신뢰성 있게 해석하지 못할 수 있음을 의미한다.
   \item \textbf{긴 context 내부의 정보 희석}: prompt가 길어지면 관련 코드가 context 안에 있더라도 distractor 함수, 유사 symbol, noise log 때문에 모델이 잘못된 위치를 참조할 수 있다. source pointer 실험의 \texttt{full\_source} JSON task가 context 안에 들어갔음에도 distractor 값을 답한 것이 그 예다.
   \item \textbf{추론과 실행의 혼합}: 코드 어시스턴스는 두 종류의 일을 동시에 해야 한다. 첫째는 ``어느 코드가 필요한가''를 찾는 retrieval 문제이고, 둘째는 찾은 코드를 실제로 실행했을 때 어떤 값이 나오는지 계산하는 execution 문제이다. LLM은 Python interpreter가 아니라 다음 token을 생성하는 모델이므로, \texttt{strip()}, \texttt{replace()}, \texttt{lower()}를 순서대로 적용하거나 \texttt{10000 * 0.0125}를 정확히 계산하는 일을 항상 안정적으로 수행하지 못한다. 따라서 올바른 helper 함수와 상수를 모두 찾아 prompt에 넣어도, 모델이 그 코드를 머릿속으로 실행하는 과정에서 문자열 치환 순서나 산술 결과를 틀릴 수 있다. 본 연구의 symbol bundle 2차 실험에서도 retrieval은 성공했지만 \texttt{North/East Plan}의 slash를 잘못 바꾸거나 late fee를 125가 아닌 150으로 계산하는 오답이 발생했다. 즉 문제는 ``정보를 못 찾은 것''이 아니라 ``찾은 코드를 정확히 실행하지 못한 것''이다.
 \end{enumerate}
@@ -112,35 +124,35 @@
 
 \subsection{코드 생성 모델과 코드 어시스턴스}
 
-Codex 논문인 ``Evaluating Large Language Models Trained on Code''는 HumanEval을 통해 code generation을 기능적 정확성으로 평가했다. 이 논문에서 Codex는 HumanEval pass@1 28.8\%를 기록했고, GPT-3는 0\%, GPT-J는 11.4\%를 기록했다. 또한 100개 sample을 생성해 선택하는 방식에서는 70.2\%까지 올라갈 수 있음을 보였다. 이는 코드 어시스턴스에서 단일 답변보다 반복 생성, 검증, 테스트 실행이 중요하다는 점을 보여준다.
+Codex 논문인 ``Evaluating Large Language Models Trained on Code''는 HumanEval을 통해 code generation을 기능적 정확성으로 평가했다~\cite{chen2021codex}. 이 논문에서 Codex는 HumanEval pass@1 28.8\%를 기록했고, GPT-3는 0\%, GPT-J는 11.4\%를 기록했다. 또한 100개 sample을 생성해 선택하는 방식에서는 70.2\%까지 올라갈 수 있음을 보였다. 이는 코드 어시스턴스에서 단일 답변보다 반복 생성, 검증, 테스트 실행이 중요하다는 점을 보여준다.
 
-Code Llama 논문은 Llama 2 기반 code model을 7B, 13B, 34B, 70B 크기로 공개하고, HumanEval과 MBPP에서 open model의 성능을 크게 끌어올렸다. 논문 초록은 Code Llama가 HumanEval 최대 67\%, MBPP 최대 65\%를 달성한다고 보고한다. 이 결과는 open-weight 모델도 코드 생성에서는 실용적인 수준에 도달할 수 있음을 보여준다.
+Code Llama 논문은 Llama 2 기반 code model을 7B, 13B, 34B, 70B 크기로 공개하고, HumanEval과 MBPP에서 open model의 성능을 크게 끌어올렸다~\cite{roziere2023codellama}. 논문 초록은 Code Llama가 HumanEval 최대 67\%, MBPP 최대 65\%를 달성한다고 보고한다. 이 결과는 open-weight 모델도 코드 생성에서는 실용적인 수준에 도달할 수 있음을 보여준다.
 
 하지만 코드 생성 benchmark와 실제 software engineering issue 해결은 문제 구조가 다르다. HumanEval이나 MBPP는 보통 함수 signature, 요구사항, 짧은 단위 테스트가 한 prompt 안에 주어지고, 모델은 하나의 함수 본문을 생성하면 된다. 반면 실제 issue 해결에서는 먼저 어떤 파일을 봐야 하는지 찾아야 하고, 여러 함수와 class의 호출 관계를 따라가야 하며, test fixture, configuration, 기존 convention, error log, dependency version까지 함께 고려해야 한다. 또한 정답은 독립적인 함수 하나가 아니라 기존 코드베이스에 들어가는 최소 patch여야 하므로, 수정하지 말아야 할 public API나 다른 테스트와의 상호작용도 신경 써야 한다. 따라서 코드 생성 benchmark가 높다는 것은 ``짧고 잘 정의된 함수 작성'' 능력을 보여주지만, 실제 코드 어시스턴스에 필요한 ``관련 context 검색, 원인 진단, 안전한 수정, 테스트 기반 검증'' 능력을 그대로 보장하지 않는다.
 
-SWE-bench는 실제 GitHub issue와 pull request를 기반으로 모델이 codebase를 수정해 issue를 해결할 수 있는지 평가한다. SWE-bench 논문은 issue 해결이 여러 함수, class, file을 동시에 이해해야 하고, 실행 환경과 긴 context 처리가 필요하다고 설명한다. 해당 논문에서 가장 좋은 Claude 2도 1.96\%만 해결했다. 이는 ``코드를 한 함수 단위로 생성하는 능력''과 ``실제 repository에서 문제를 찾아 수정하는 능력'' 사이에 큰 차이가 있음을 보여준다.
+SWE-bench는 실제 GitHub issue와 pull request를 기반으로 모델이 codebase를 수정해 issue를 해결할 수 있는지 평가한다~\cite{jimenez2023swebench}. SWE-bench 논문은 issue 해결이 여러 함수, class, file을 동시에 이해해야 하고, 실행 환경과 긴 context 처리가 필요하다고 설명한다. 해당 논문에서 가장 좋은 Claude 2도 1.96\%만 해결했다. 이는 ``코드를 한 함수 단위로 생성하는 능력''과 ``실제 repository에서 문제를 찾아 수정하는 능력'' 사이에 큰 차이가 있음을 보여준다.
 
 \subsection{오픈 코드 모델과 로컬 실행}
 
-Qwen2.5-Coder Technical Report는 0.5B부터 32B까지 다양한 크기의 code-specific model을 제시한다. 특히 Qwen2.5-Coder-7B-Instruct는 HumanEval 88.4\%, MBPP 83.5\%, Aider Pass@1 55.6\%를 기록해 7B급 모델 중 강한 성능을 보인다. 그러나 같은 보고서의 Aider 결과에서 Claude-3.5-Sonnet-20241022는 Pass@1 71.4\%를 기록하므로, 실제 code editing 성능에서는 여전히 cloud model과 차이가 있다.
+Qwen2.5-Coder Technical Report는 0.5B부터 32B까지 다양한 크기의 code-specific model을 제시한다~\cite{hui2024qwen25coder}. 특히 Qwen2.5-Coder-7B-Instruct는 HumanEval 88.4\%, MBPP 83.5\%, Aider Pass@1 55.6\%를 기록해 7B급 모델 중 강한 성능을 보인다. 그러나 같은 보고서의 Aider 결과에서 Claude-3.5-Sonnet-20241022는 Pass@1 71.4\%를 기록하므로, 실제 code editing 성능에서는 여전히 cloud model과 차이가 있다.
 
 Qwen2.5-Coder는 file-level pretraining 이후 repo-level pretraining을 수행하고, context length를 8,192에서 32,768로 확장하며, YaRN을 통해 131,072 token까지 다룰 수 있도록 설계한다. 이는 code assistant가 repository-level context를 필요로 한다는 점을 반영한다. 본 연구는 이 방향과 유사하게 repository-level 정보를 다루지만, 전체 repo를 raw context로 넣기보다는 symbol index와 pointer resolver를 통해 필요한 부분만 선택한다.
 
 \subsection{Context Window Overflow와 Pointer 방식}
 
-``Solving Context Window Overflow in AI Agents''가 다루는 핵심 문제는 agent가 tool을 사용할 때 발생한다. 일반적인 tool-calling workflow에서는 tool의 반환값이 그대로 다음 LLM message에 삽입된다. 반환값이 짧은 문자열이면 문제가 없지만, PDF 전체 텍스트, 긴 로그, 큰 JSON, 대규모 행렬처럼 반환값이 매우 크면 두 가지 문제가 생긴다. 첫째, 반환값 자체가 context window보다 커서 다음 LLM 호출이 실패한다. 둘째, context window 안에 들어가더라도 대부분의 token이 raw data를 담는 데 쓰이므로, 모델이 실제로 필요한 정보에 attention을 집중하기 어렵고 prompt evaluation 비용도 증가한다.
+``Solving Context Window Overflow in AI Agents''가 다루는 핵심 문제는 agent가 tool을 사용할 때 발생한다~\cite{labate2025contextoverflow}. 일반적인 tool-calling workflow에서는 tool의 반환값이 그대로 다음 LLM message에 삽입된다. 반환값이 짧은 문자열이면 문제가 없지만, PDF 전체 텍스트, 긴 로그, 큰 JSON, 대규모 행렬처럼 반환값이 매우 크면 두 가지 문제가 생긴다. 첫째, 반환값 자체가 context window보다 커서 다음 LLM 호출이 실패한다. 둘째, context window 안에 들어가더라도 대부분의 token이 raw data를 담는 데 쓰이므로, 모델이 실제로 필요한 정보에 attention을 집중하기 어렵고 prompt evaluation 비용도 증가한다.
 
 단순한 truncation이나 summarization은 이 문제를 완전히 해결하지 못한다. Truncation은 뒤쪽 또는 앞쪽의 원본 정보를 버리므로 필요한 값이 잘릴 수 있다. Summarization은 token 수를 줄이지만 원본과 동일한 tool input을 보존하지 못한다. 예를 들어 어떤 tool이 앞 단계 tool의 원본 JSON 전체나 3D matrix 전체를 입력으로 받아야 한다면, 요약문은 다음 tool의 올바른 입력이 될 수 없다. 즉 agent workflow에서는 ``LLM이 읽기 위한 정보''와 ``다음 tool이 처리해야 하는 원본 값''을 구분해야 한다.
 
 해당 논문은 이 구분을 위해 mirrored tool 구조를 제안한다. Mirrored tool은 원래 tool의 앞뒤에 wrapper를 둔다. Tool 출력이 작으면 기존처럼 반환하지만, 출력이 크면 runtime memory에 저장하고 LLM에게는 짧은 memory pointer와 접근 방법만 돌려준다. 이후 다른 tool이 그 pointer를 인자로 받으면 wrapper가 pointer를 원본 값으로 resolve한 뒤 원래 tool에 전달한다. LLM은 거대한 raw data를 직접 보지 않고도 ``이 값을 다음 tool에 넘겨라''라는 계획을 세울 수 있고, tool은 원본 데이터를 손실 없이 사용할 수 있다.
 
-논문 실험은 이 설계가 단순한 아이디어가 아니라 실제 context overflow를 해결한다는 점을 보여준다. Materials Science workflow에서는 128 $\times$ 128 $\times$ 128 크기의 electronic grid, 즉 2,097,152개의 float32 값을 생성한다. Conventional workflow는 이 값을 LLM context에 넣으려다 실패하지만, pointer 방식은 grid를 memory에 저장하고 pointer만 전달하여 전체 pipeline을 완료한다. 또한 context에 들어갈 수 있는 크기의 SDS ingredient extraction 실험에서도 기존 workflow는 평균 6,411.36 token과 43.05초를 사용한 반면, pointer 방식은 841.66 token과 11.05초만 사용했다. 이는 약 7배 token 절감과 약 3.9배 시간 단축이다. 따라서 pointer 방식은 overflow가 발생하는 extreme case뿐 아니라, context에 들어갈 수는 있지만 비효율적인 중간 크기 데이터에도 효과가 있다.
+논문 실험은 이 설계가 단순한 아이디어가 아니라 실제 context overflow를 해결한다는 점을 보여준다~\cite{labate2025contextoverflow}. Materials Science workflow에서는 128 $\times$ 128 $\times$ 128 크기의 electronic grid, 즉 2,097,152개의 float32 값을 생성한다. Conventional workflow는 이 값을 LLM context에 넣으려다 실패하지만, pointer 방식은 grid를 memory에 저장하고 pointer만 전달하여 전체 pipeline을 완료한다. 또한 context에 들어갈 수 있는 크기의 SDS ingredient extraction 실험에서도 기존 workflow는 평균 6,411.36 token과 43.05초를 사용한 반면, pointer 방식은 841.66 token과 11.05초만 사용했다. 이는 약 7배 token 절감과 약 3.9배 시간 단축이다. 따라서 pointer 방식은 overflow가 발생하는 extreme case뿐 아니라, context에 들어갈 수는 있지만 비효율적인 중간 크기 데이터에도 효과가 있다.
 
 본 연구의 source pointer와 runtime pointer 실험은 이 아이디어를 코드 어시스턴스에 맞게 확장한다. 코드 어시스턴스에서 큰 데이터는 tool output만이 아니다. 이미 disk에 존재하는 운영 로그, markdown runbook, JSON snapshot도 크고, repository 내부 코드도 전체를 넣으면 과도하게 크다. 따라서 본 연구는 실행 중 생성된 값은 \texttt{runtime://}, disk source는 \texttt{source://}, 코드 symbol은 \texttt{memory://symbol/...}로 분리한다. 이 분리는 데이터의 lifecycle과 접근 방식이 다르기 때문에 필요하다. Runtime 값은 session 단위로 저장과 삭제가 필요하고, source file은 manifest와 파일 권한 검사가 필요하며, code symbol은 AST index와 line range provenance가 필요하다. 세 pointer를 구분하면 각 데이터 유형에 맞는 resolver와 extractor를 붙일 수 있고, LLM에게는 모든 원본을 노출하지 않고도 필요한 증거만 제공할 수 있다.
 
 \subsection{Self-Extend와 Long Context 확장}
 
-Self-Extend 논문은 fine-tuning 없이 inference 단계에서 group-level attention과 neighbor-level attention을 구성해 context window를 확장하는 방법을 제안한다. 논문 Table 1에서 Llama-2-7B-chat은 4096 token 이후 PPL이 $>10^3$으로 폭증하지만, SelfExtend-Llama-2-7B-chat은 16384 token에서도 PPL 약 9 수준을 유지한다. 또한 Mistral passkey retrieval에서는 4k부터 24k까지 100\% retrieval accuracy를 보고한다.
+Self-Extend 논문은 fine-tuning 없이 inference 단계에서 group-level attention과 neighbor-level attention을 구성해 context window를 확장하는 방법을 제안한다~\cite{jin2024selfextend}. 논문 Table 1에서 Llama-2-7B-chat은 4096 token 이후 PPL이 $>10^3$으로 폭증하지만, SelfExtend-Llama-2-7B-chat은 16384 token에서도 PPL 약 9 수준을 유지한다. 또한 Mistral passkey retrieval에서는 4k부터 24k까지 100\% retrieval accuracy를 보고한다.
 
 하지만 Self-Extend 논문 자체도 낮은 PPL이 실제 long-context 이해를 보장하지 않는다고 지적한다. 본 연구의 재현 실험에서도 이 점이 중요하게 나타났다. 로컬 llama.cpp 환경에서 Self-Extend는 context 수용량은 늘렸지만 passkey retrieval과 code assistance retrieval에는 실패했다. 따라서 본 연구에서는 Self-Extend를 기본 retrieval 방식으로 사용하지 않고, pointer와 symbol retrieval로 context를 줄인 뒤에도 부족한 경우에만 실험적 fallback으로 간주한다.
 
@@ -156,6 +168,8 @@ Self-Extend 논문은 fine-tuning 없이 inference 단계에서 group-level atte
   \item 전체 repository나 전체 로그를 prompt에 넣는 방식을 기본값으로 사용하지 않는다.
   \item 코드 어시스턴스의 작업을 retrieval, extraction, deterministic execution, validation 단계로 분리해 각 단계의 입력과 출력을 검증 가능하게 만든다.
 \end{itemize}
+
+\reportfigure{fig02_system_architecture_overview}{0.95}{제안 시스템의 전체 구조와 요청 처리 흐름}{fig:system-architecture-overview}
 
 이 단계들을 분리해야 하는 이유는 각 단계의 실패 양상이 서로 다르기 때문이다. Retrieval은 ``어떤 파일과 symbol이 관련 있는가''를 고르는 문제이다. 여기서 실패하면 LLM은 애초에 잘못된 근거를 보게 된다. Extraction은 ``선택된 로그, 문서, JSON, 코드에서 어느 부분만 잘라낼 것인가''의 문제이다. 이 단계는 데이터 형식별 규칙이 중요하므로 log는 grep, document는 section heading, JSON은 path lookup처럼 deterministic tool로 처리하는 편이 안정적이다. Deterministic execution은 ``찾은 코드나 값으로 실제 결과를 계산하는 문제''이다. 구체적인 입력값이 있는 문자열 변환, 산술, JSON path 평가는 LLM에게 추측하게 하기보다 interpreter나 evaluator가 계산해야 오차가 줄어든다. Validation은 LLM이나 selector가 만든 pointer, tool name, JSON path, patch가 schema와 allowlist를 만족하는지 확인하는 단계이다. 이 검사를 분리하면 잘못된 pointer나 잘못된 tool call이 다음 단계로 전달되기 전에 차단된다.
 
@@ -193,6 +207,8 @@ Pointer type & 대상 & 예시 \\
 \bottomrule
 \end{longtable}
 
+\reportfigure{fig04_component_operation_timing}{0.95}{구성요소별 생성 및 갱신 타이밍}{fig:component-operation-timing}
+
 \subsubsection{\texttt{symbol\_index}: repository 내부 코드 접근}
 
 \texttt{symbol\_index}는 코드베이스 전체를 prompt에 넣지 않기 위한 첫 번째 단계이다. 이 단계는 \codepath{symbol_test/symbol_bench/indexer.py}에 구현되어 있으며, Python AST parser를 사용한다. 실험에서는 benchmark 실행 전에 corpus를 만들고 그 시점의 repository snapshot에 대해 index를 한 번 생성했다. 그러나 실제 코드 어시스턴스에서는 workspace를 열 때 background job으로 만들거나, 첫 질문이 들어왔을 때 lazy build한 뒤 cache해야 한다. 이후 사용자가 파일을 저장하거나 agent가 새 코드를 생성하면 해당 파일만 다시 parse해 index를 갱신한다. 이렇게 해야 LLM이 오래된 symbol 위치를 보지 않으면서도, 모든 질문마다 전체 repository를 다시 읽는 비용을 피할 수 있다.
@@ -208,6 +224,8 @@ Pointer type & 대상 & 예시 \\
   \item \textbf{Symbol resolve}: \texttt{resolve\_symbol}은 선택된 URI의 line range를 읽는다. Hard task에서는 \texttt{expand\_symbol\_context}가 primary symbol뿐 아니라 같은 파일의 상수, helper/callee, 질문에 언급된 관련 symbol까지 bundle로 확장한다.
   \item \textbf{LLM 입력}: 최종적으로 LLM에는 전체 repository가 아니라 선택된 symbol bundle만 들어간다.
 \end{enumerate}
+
+\reportfigure{fig05_symbol_index_bundle_pipeline}{0.95}{Symbol index 생성, selector 축소, bundle 확장 pipeline}{fig:symbol-index-bundle-pipeline}
 
 AST parser가 생성한 실제 \texttt{symbol\_index.json} 항목 예시는 다음과 같다.
 
@@ -283,6 +301,8 @@ LLM에 실제로 전달되는 bundle context는 다음처럼 provenance와 sourc
   \item \textbf{LLM 입력}: 최종 답변 LLM 호출에는 전체 source file이 아니라 extractor output만 들어간다.
 \end{enumerate}
 
+\reportfigure{fig06_source_pointer_pipeline}{0.95}{Source pointer manifest, catalog, extractor 기반 접근 pipeline}{fig:source-pointer-pipeline}
+
 실제 \texttt{manifest.json}의 일부는 다음과 같다.
 
 \begin{lstlisting}
@@ -355,6 +375,8 @@ Runtime pointer는 session-local resource이다. 같은 대화 안에서는 이�
   \item \textbf{LLM 입력}: LLM에는 extractor output과 질문만 전달된다.
 \end{enumerate}
 
+\reportfigure{fig07_runtime_pointer_pipeline}{0.95}{Runtime object 저장, pointer 발급, extractor feedback pipeline}{fig:runtime-pointer-pipeline}
+
 실제 runtime JSON producer를 실행하면 catalog는 다음과 같은 형태가 된다.
 
 \begin{lstlisting}
@@ -413,6 +435,8 @@ Runtime pointer는 실제 코드 어시스턴스에서 특히 중요하다. 테�
 \texttt{self\_extend}는 앞의 세 pointer 계층과 성격이 다르다. Pointer 계층은 context를 줄이는 구조이고, Self-Extend는 긴 context를 모델이 직접 받도록 attention 설정을 바꾸는 방법이다. 실험 코드는 \codepath{self_extend_test/run_llama2_selfextend_passkey.py}, \codepath{self_extend_test/run_code_assistance_bench.py}에 있다.
 
 \texttt{self\_extend}는 \texttt{symbol\_index}, \texttt{source\_pointer}, \texttt{runtime\_pointer}처럼 사전에 만들어두거나 갱신하는 구조가 아니다. 이것은 특정 LLM 호출에서 context 수용 방식을 바꾸는 실행 옵션이다. 따라서 실제 코드 어시스턴스에서는 항상 켜두지 않는다. 기본 경로는 먼저 symbol/source/runtime pointer로 evidence를 줄이는 것이고, 그 결과도 여전히 너무 크거나 사용자가 repository 전체 요약처럼 넓은 범위의 질문을 했을 때만 fallback으로 사용한다. 또한 Self-Extend 실행 결과가 곧바로 code patch로 이어지면 안 된다. 출력이 어떤 파일, 어떤 symbol, 어떤 line, 어떤 test failure에 근거하는지 validation 단계에서 확인하고, 구체적 근거를 제시하지 못하면 다시 pointer 기반 검색으로 돌아가야 한다.
+
+\reportfigure{fig08_self_extend_fallback_validation}{0.94}{Self-Extend fallback 사용 조건과 검증 흐름}{fig:self-extend-fallback-validation}
 
 동작 순서는 다음과 같다.
 
@@ -600,7 +624,7 @@ Hard task는 단일 함수 본문만으로는 답을 알 수 없도록 구성되
 \begin{table}[htbp]
 \centering
 \small
-\setlength{\tabcolsep}{4pt}
+\setlength{\tabcolsep}{3.5pt}
 \begin{tabular}{lrrrrr}
 \toprule
 Mode & Cases & Accuracy & Mean wall & Mean tokens & Selection acc. \\
@@ -610,27 +634,13 @@ Mode & Cases & Accuracy & Mean wall & Mean tokens & Selection acc. \\
 \texttt{line\_span} & 3 & 0.000 & 2.461s & 224 & -- \\
 \texttt{symbol\_oracle} & 3 & 0.000 & 2.451s & 225 & -- \\
 \texttt{symbol\_select} & 3 & 0.000 & 172.170s & 33922 & 1.000 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\texttt{symbol\_select}는 3개 질문 모두 대표 symbol URI를 올바르게 선택했지만 최종 답은 모두 실패했다. 즉 이 결과에서 병목은 ``대표 symbol을 찾는 것''이 아니라 ``대표 symbol 하나만 읽었을 때 필요한 주변 정보가 누락되는 것''이었다. 실제 코드 이해 질문은 상수, helper 함수, class method, 관련 함수 호출을 함께 봐야 하는 경우가 많으므로 hard task 결과는 단일 \texttt{read\_symbol} 구조의 한계를 보여준다.
-
-이를 확인하기 위해 hard task 결과에는 \codepath{symbol_bundle_oracle}과 \codepath{symbol_filtered_select_bundle}을 추가했다. 이 두 mode는 대표 symbol을 찾은 뒤 \texttt{expand\_symbol\_context}를 실행하여 module-level constant, same-file helper/callee, 질문에 직접 언급된 관련 symbol을 bundle로 묶는다.
-
-\begin{table}[htbp]
-\centering
-\small
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{lrrrrr}
-\toprule
-Mode & Cases & Accuracy & Mean wall & Mean tokens & Selection acc. \\
-\midrule
 \begin{tabular}[t]{@{}l@{}}\texttt{symbol\_bundle}\\\texttt{\_oracle}\end{tabular} & 3 & 0.333 & 2.298s & 369 & -- \\
 \begin{tabular}[t]{@{}l@{}}\texttt{symbol\_filtered}\\\texttt{\_select}\\\texttt{\_bundle}\end{tabular} & 3 & 0.333 & 4.588s & 587 & 1.000 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\texttt{symbol\_select}는 3개 질문 모두 대표 symbol URI를 올바르게 선택했지만 최종 답은 모두 실패했다. 즉 이 결과에서 병목은 ``대표 symbol을 찾는 것''이 아니라 ``대표 symbol 하나만 읽었을 때 필요한 주변 정보가 누락되는 것''이었다. 이를 보완하기 위해 \codepath{symbol_bundle_oracle}과 \codepath{symbol_filtered_select_bundle}은 대표 symbol을 찾은 뒤 \texttt{expand\_symbol\_context}를 실행하여 module-level constant, same-file helper/callee, 질문에 직접 언급된 관련 symbol을 bundle로 묶는다.
 
 Hard task에서 \codepath{symbol_filtered_select_bundle}은 기존 \texttt{symbol\_select}와 비교해 prompt token을 33,922에서 587로 줄였다. 이는 약 98.3\% 감소이다. Wall time도 172.170초에서 4.588초로 줄어 약 97.3\% 감소했다. Selection accuracy는 1.000으로 유지되었다.
 
@@ -728,7 +738,7 @@ Medium 기준으로 \texttt{runtime\_pointer\_oracle}은 prompt token을 131,136
 
 \subsubsection{비교 방식}
 
-Self-Extend 실험은 context window를 늘리는 방식이 코드 어시스턴스의 기본 해결책이 될 수 있는지 확인하기 위해 수행했다. 비교 조건은 Self-Extend off, group attention G=2, G=4이다. 모델은 Llama-2-7B-chat Q4\_K\_M과 Q5\_K\_M을 사용했다.
+Self-Extend 실험은 context window를 늘리는 방식이 코드 어시스턴스의 기본 해결책이 될 수 있는지 확인하기 위해 수행했다~\cite{jin2024selfextend}. 비교 조건은 Self-Extend off, group attention G=2, G=4이다. 모델은 Llama-2-7B-chat Q4\_K\_M과 Q5\_K\_M을 사용했다.
 
 실험은 두 종류로 구성되었다.
 
@@ -764,6 +774,8 @@ Code assistance benchmark에서는 2개 모델, 3개 조건, 3개 task를 합쳐
 \subsection{종합 평가}
 
 전체 실험의 결론은 로컬 LLM 기반 코드 어시스턴스에서는 full-context 방식보다 pointer와 retrieval 기반 방식이 훨씬 적합하다는 것을 보여준다.
+
+\reportfigure{fig09_evaluation_token_time_reduction_summary}{0.95}{Baseline, oracle, selected workflow의 token 및 wall time 비교}{fig:evaluation-token-time-reduction-summary}
 
 \begin{table}[htbp]
 \centering
@@ -804,5 +816,13 @@ Self-Extend 실험은 ``context window를 늘리면 문제가 해결된다''는 
 향후 작업은 이 한계를 직접 줄이는 방향이어야 한다. 첫째, tree-sitter 기반 다중 언어 parser를 붙여 Python 외의 TypeScript, Java, C/C++ 코드에도 같은 symbol pointer 구조를 적용해야 한다. 둘째, import graph와 call graph를 이용해 cross-file symbol bundle을 구성해야 한다. 셋째, 문자열 처리, 산술, 작은 함수 실행, JSON path 평가를 담당하는 deterministic evaluator를 추가해야 한다. 넷째, source/runtime pointer catalog와 selector output에 schema validation, path normalization, fallback extraction을 넣어 tool-call 안정성을 높여야 한다. 다섯째, file watcher, index versioning, source root allowlist, runtime object TTL을 하나의 lifecycle manager로 묶어 pointer가 오래되거나 과도하게 쌓이는 문제를 방지해야 한다. 마지막으로 실제 오픈소스 repository나 내부와 유사한 대형 benchmark에서 반복 실험을 수행해 정확도, latency, token 사용량의 분산을 측정해야 한다.
 
 결론적으로, 보안형 로컬 코드 어시스턴스의 핵심은 더 긴 prompt를 무작정 허용하는 것이 아니라, LLM이 봐야 하는 evidence를 작고 정확하게 만드는 것이다. Pointer 기반 code/source/runtime 접근 계층은 로컬 LLM의 context 제약과 보안 요구를 동시에 만족시키는 실용적인 구조이며, symbol bundle과 deterministic execution을 결합하면 실제 코드 수정 workflow에 필요한 신뢰성을 더 높일 수 있다.
+
+\clearpage
+\section{References}
+\begingroup
+\renewcommand{\section}[2]{}
+\bibliographystyle{unsrt}
+\bibliography{references}
+\endgroup
 
 \end{document}
