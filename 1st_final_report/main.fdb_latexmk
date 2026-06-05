@@ -1,14 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1780662614.61974 "main.aux" "main.bbl" "main" 1780662616.18819 0
+["bibtex main"] 1780662614.61974 "main.aux" "main.bbl" "main" 1780665085.83471 0
   "./references.bib" 1780661964.16323 2642 dad17719f685140c4403b8770c0567af ""
   "/usr/local/texlive/2025/texmf-dist/bibtex/bst/base/unsrt.bst" 1292289607 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "main.aux" 1780662615.52211 8877 3450efb06322e94fd9b51078d801711a "pdflatex"
+  "main.aux" 1780665084.93534 8877 3450efb06322e94fd9b51078d801711a "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1780662614.71894 "/Users/oscar/Desktop/4th_grade/SecureCode/1st_final_report/main.tex" "main.pdf" "main" 1780662616.18833 0
-  "/Users/oscar/Desktop/4th_grade/SecureCode/1st_final_report/main.tex" 1780662611.34771 81750 3f0f14afed8c14868caa9a3656e4b736 ""
+["pdflatex"] 1780665083.93321 "main.tex" "main.pdf" "main" 1780665085.83489 0
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -276,19 +275,19 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1741666930 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741666870 3345735 ad8df5b1778f0caa90381087268f3a04 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "Images/fig01_cloud_vs_local_pointer_architecture.pdf" 1780660596.89939 3311 8afdc6b5a89d901f424a8b9753d28c07 ""
-  "Images/fig02_system_architecture_overview.pdf" 1780660221.49548 3660 b9a59569bd3923ad0b6116a8bab021c3 ""
-  "Images/fig04_component_operation_timing.pdf" 1780651553.38645 5282 834a82452fe5ed969e9ee742a317547e ""
-  "Images/fig05_symbol_index_bundle_pipeline.pdf" 1780660221.49773 3623 63a3fba9030a81616936910703048a30 ""
-  "Images/fig06_source_pointer_pipeline.pdf" 1780660221.49959 3075 b522f5b87957293c8d1693aa5ed61066 ""
-  "Images/fig07_runtime_pointer_pipeline.pdf" 1780660221.50206 4152 48e196d30b7aea946fa527232fd3db5a ""
-  "Images/fig08_self_extend_fallback_validation.pdf" 1780651553.39451 4173 20805e031a708b737889d8dff25d5bea ""
-  "Images/fig09_evaluation_token_time_reduction_summary.pdf" 1780661525.03642 5607 707e725aa7e941ccfaacc7a27f3b2b20 ""
-  "main.aux" 1780662615.52211 8877 3450efb06322e94fd9b51078d801711a "pdflatex"
+  "Images/fig01_cloud_vs_local_pointer_architecture.pdf" 1780665018.31396 3351 21484e8cc975684c1c83413a80484e52 ""
+  "Images/fig02_system_architecture_overview.pdf" 1780665018.31623 3706 fbd4062cdd2351d5a77a3775fbf8857f ""
+  "Images/fig04_component_operation_timing.pdf" 1780665018.32125 5347 09bbce2fd403a3b504f043823bed2ea5 ""
+  "Images/fig05_symbol_index_bundle_pipeline.pdf" 1780665018.32348 3685 04dab62c9ea4c9ae808fce51092a0b44 ""
+  "Images/fig06_source_pointer_pipeline.pdf" 1780665018.32538 3142 b81d5eabe02073116ab0fc0746d05545 ""
+  "Images/fig07_runtime_pointer_pipeline.pdf" 1780665064.32688 4223 d973edf22432ca85d8d52a72caf5f6e8 ""
+  "Images/fig08_self_extend_fallback_validation.pdf" 1780665018.32958 4207 7cc045cfe51ecca9f3fe33859d6973b2 ""
+  "Images/fig09_evaluation_token_time_reduction_summary.pdf" 1780665018.33209 5610 53c5c5212899ae5918b55c4441aa7847 ""
+  "main.aux" 1780665084.93534 8877 3450efb06322e94fd9b51078d801711a "pdflatex"
   "main.bbl" 1780662614.71576 1858 772877d1de59ee37313823df6e85216b "bibtex main"
-  "main.out" 1780662615.52315 6051 08576729fa1027a02735c49018a72828 "pdflatex"
+  "main.out" 1780665084.93655 6051 08576729fa1027a02735c49018a72828 "pdflatex"
   "main.tex" 1780662611.34771 81750 3f0f14afed8c14868caa9a3656e4b736 ""
-  "main.toc" 1780662615.52342 3693 89477bee31d3c376adc77ec3180242c1 "pdflatex"
+  "main.toc" 1780665084.93686 3693 89477bee31d3c376adc77ec3180242c1 "pdflatex"
   (generated)
   "main.aux"
   "main.log"

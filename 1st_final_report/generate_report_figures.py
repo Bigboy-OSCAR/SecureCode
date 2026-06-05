@@ -25,7 +25,7 @@ CROP_BOTTOMS = {
 }
 
 INK = HexColor("#20242c")
-MUTED = HexColor("#5a6472")
+MUTED = HexColor("#46515f")
 GRID = HexColor("#d5dbe5")
 BLUE = HexColor("#376fc8")
 BLUE_LIGHT = HexColor("#eaf2ff")
@@ -132,11 +132,16 @@ def centered_text(
     if leading is None:
         leading = size + 3
     lines = wrap_text(text, font, size, w)
-    top_y = y + h / 2 + ((len(lines) - 1) * leading) / 2 + size / 3
+    if not lines:
+        return
+    ascent = pdfmetrics.getAscent(font, size)
+    descent = pdfmetrics.getDescent(font, size)
+    center_y = y + h / 2
+    first_baseline = center_y + ((len(lines) - 1) * leading) / 2 - (ascent + descent) / 2
     c.setFont(font, size)
     c.setFillColor(color)
     for i, line in enumerate(lines):
-        yy = top_y - i * leading
+        yy = first_baseline - i * leading
         if align == "center":
             c.drawCentredString(x + w / 2, yy, line)
         elif align == "right":
@@ -153,7 +158,7 @@ def title(c: canvas.Canvas, name: str, subtitle: str | None = None):
     c.setLineWidth(1.2)
     c.line(36, PAGE_H - 50, PAGE_W - 36, PAGE_H - 50)
     if subtitle:
-        c.setFont("Helvetica", 9.5)
+        c.setFont("Helvetica", 10.2)
         c.setFillColor(MUTED)
         c.drawRightString(PAGE_W - 36, PAGE_H - 36, subtitle)
 
@@ -178,7 +183,7 @@ def box(
     heading_color=INK,
     body_color=MUTED,
     heading_size: float = 10,
-    body_size: float = 8,
+    body_size: float = 8.8,
     heading_font: str = "Helvetica-Bold",
     body_font: str = "Helvetica",
 ):
@@ -188,8 +193,7 @@ def box(
     c.roundRect(x, y, w, h, radius, fill=1, stroke=1)
     multiline(c, heading, x + 10, y + h - 18, w - 20, heading_font, heading_size, heading_color, align="center")
     if body:
-        body_top = y + h - 39
-        multiline(c, body, x + 12, body_top, w - 24, body_font, body_size, body_color, align="center")
+        centered_text(c, body, x + 12, y + 8, w - 24, h - 40, body_font, body_size, body_color)
 
 
 def centered_box(
@@ -226,7 +230,7 @@ def box_with_centered_body(
     stroke=GRID,
     radius: float = 10,
     heading_size: float = 10,
-    body_size: float = 8,
+    body_size: float = 8.8,
 ):
     c.setFillColor(fill)
     c.setStrokeColor(stroke)
@@ -247,7 +251,7 @@ def label_box(
     stroke=GRID,
     color=INK,
     font="Helvetica",
-    size=8.5,
+    size=8.8,
 ):
     c.setFillColor(fill)
     c.setStrokeColor(stroke)
@@ -280,7 +284,7 @@ def cylinder(
     c.arc(x, y, x + w, y + 20, 180, 180)
     multiline(c, heading, x + 10, y + h - 30, w - 20, "Helvetica-Bold", 9.5, INK, align="center")
     if body:
-        multiline(c, body, x + 10, y + h - 52, w - 20, "Helvetica", 7.8, MUTED, align="center")
+        multiline(c, body, x + 10, y + h - 52, w - 20, "Helvetica", 8.5, MUTED, align="center")
 
 
 def arrow(c: canvas.Canvas, x1: float, y1: float, x2: float, y2: float, color=INK, width: float = 1.4, label: str | None = None):
@@ -302,7 +306,7 @@ def arrow(c: canvas.Canvas, x1: float, y1: float, x2: float, y2: float, color=IN
     if label:
         lx = (x1 + x2) / 2
         ly = (y1 + y2) / 2 + 9
-        c.setFont("Helvetica", 7.5)
+        c.setFont("Helvetica", 8.0)
         c.setFillColor(MUTED)
         c.drawCentredString(lx, ly, label)
 
@@ -337,7 +341,7 @@ def poly_arrow(
     if label:
         lx = sum(p[0] for p in points) / len(points)
         ly = sum(p[1] for p in points) / len(points)
-        c.setFont("Helvetica", 7.5)
+        c.setFont("Helvetica", 8.0)
         c.setFillColor(MUTED)
         c.drawCentredString(lx, ly + 8, label)
 
@@ -504,7 +508,7 @@ def fig03_pointer_lifecycle(path: Path):
         for i in range(6):
             fill = row[6] if i == 0 else WHITE
             stroke = row[7] if i == 0 else GRID
-            centered_box(c, xs[i], y, ws[i], 92, row[i], fill, stroke, radius=8, font="Helvetica-Bold", size=8.3)
+            centered_box(c, xs[i], y, ws[i], 92, row[i], fill, stroke, radius=8, font="Helvetica-Bold", size=8.8)
         for i in range(5):
             arrow(c, xs[i] + ws[i], y + 46, xs[i + 1] - 4, y + 46, row[7], width=1.0)
 
@@ -526,7 +530,7 @@ def fig04_component_timing(path: Path):
         ("Validation or\nfallback", 860),
     ]
     for label, x in cols:
-        label_box(c, x - 56, 505, 112, 42, label, fill=HexColor("#eef1f6"), stroke=GRID, font="Helvetica-Bold", size=7.8)
+        label_box(c, x - 56, 505, 112, 42, label, fill=HexColor("#eef1f6"), stroke=GRID, font="Helvetica-Bold", size=8.3)
 
     lane_names = [
         ("symbol_index", BLUE, BLUE_LIGHT),
@@ -566,7 +570,7 @@ def fig04_component_timing(path: Path):
     for lane, event_list in events.items():
         y = y_lanes[[name for name, _, _ in lane_names].index(lane)]
         for x, label, fill, stroke in event_list:
-            centered_box(c, x - 52, y + 4, 104, 50, label, fill, stroke, radius=8, font="Helvetica-Bold", size=7.5)
+            centered_box(c, x - 52, y + 4, 104, 50, label, fill, stroke, radius=8, font="Helvetica-Bold", size=8.1)
 
     for y in y_lanes:
         for i in range(len(cols) - 1):
@@ -576,7 +580,7 @@ def fig04_component_timing(path: Path):
             c.line(cols[i][1] + 58, y + 29, cols[i + 1][1] - 58, y + 29)
             c.restoreState()
 
-    box(c, 230, 34, 500, 54, "Design implication", "Index/catalog/storage are maintained by system lifecycle events; LLM calls consume small, current evidence bundles.", AMBER_LIGHT, AMBER, heading_size=9.5, body_size=8)
+    box(c, 230, 34, 500, 54, "Design implication", "Index/catalog/storage are maintained by system lifecycle events; LLM calls consume small, current evidence bundles.", AMBER_LIGHT, AMBER, heading_size=9.5, body_size=8.8)
     save(c)
 
 
@@ -654,13 +658,13 @@ def fig07_runtime_pipeline(path: Path):
 
     arrow(c, 175, 446, 185, 446, GREEN)
     arrow(c, 335, 446, 430, 490, GREEN)
-    label_box(c, 374, 475, 26, 16, "no", fill=WHITE, stroke=WHITE, color=MUTED, size=7.5)
+    label_box(c, 374, 475, 26, 16, "no", fill=WHITE, stroke=WHITE, color=MUTED, size=8.0)
     arrow(c, 260, 398, 430, 378, GREEN)
-    label_box(c, 343, 392, 30, 16, "yes", fill=WHITE, stroke=WHITE, color=MUTED, size=7.5)
+    label_box(c, 343, 392, 30, 16, "yes", fill=WHITE, stroke=WHITE, color=MUTED, size=8.0)
 
     box(c, 630, 333, 145, 90, "Runtime selector", "choose extractor\nfrom pointer catalog", PURPLE_LIGHT, PURPLE)
     box(c, 630, 455, 145, 70, "Next LLM call", "small output can be\nused immediately", BLUE_LIGHT, BLUE)
-    box(c, 805, 333, 120, 90, "Extractor", "grep_runtime_log\nextract_runtime_json_path", AMBER_LIGHT, AMBER)
+    box(c, 805, 333, 120, 90, "Extractor", "grep_runtime_log\nextract_runtime_\njson_path", AMBER_LIGHT, AMBER)
     box(c, 805, 205, 120, 76, "Evidence", "failure block\nJSON field\ndoc section", WHITE, GRID)
     box(c, 630, 205, 145, 76, "Symbol/source follow-up", "failure text can guide\nsymbol selection", BLUE_LIGHT, BLUE)
 
@@ -670,11 +674,11 @@ def fig07_runtime_pipeline(path: Path):
     arrow(c, 865, 333, 865, 281, AMBER)
     arrow(c, 805, 243, 775, 243, BLUE)
     dashed_arrow(c, 630, 243, 325, 140, BLUE)
-    label_box(c, 438, 198, 100, 18, "feedback to retrieval", fill=WHITE, stroke=WHITE, color=MUTED, size=7.2)
+    label_box(c, 438, 198, 100, 18, "feedback to retrieval", fill=WHITE, stroke=WHITE, color=MUTED, size=8.2)
 
     cylinder(c, 100, 122, 165, 85, "RuntimeStore", "session scope\nTTL + LRU cleanup\nnot a disk manifest", GREEN_LIGHT, GREEN)
     dashed_arrow(c, 505, 333, 182, 207, GREEN)
-    label_box(c, 304, 282, 102, 18, "raw object stays here", fill=WHITE, stroke=WHITE, color=MUTED, size=7.2)
+    label_box(c, 304, 282, 102, 18, "raw object stays here", fill=WHITE, stroke=WHITE, color=MUTED, size=8.2)
 
     save(c)
 
@@ -693,17 +697,17 @@ def fig08_self_extend_fallback(path: Path):
 
     arrow(c, 200, 462, 225, 462, GREEN)
     arrow(c, 375, 462, 460, 462, PURPLE)
-    label_box(c, 410, 472, 30, 16, "yes", fill=WHITE, stroke=WHITE, color=MUTED, size=7.5)
+    label_box(c, 410, 472, 30, 16, "yes", fill=WHITE, stroke=WHITE, color=MUTED, size=8.0)
     arrow(c, 605, 462, 660, 462, PURPLE)
     arrow(c, 732, 420, 786, 376, PURPLE)
     arrow(c, 760, 308, 720, 252, GREEN)
-    label_box(c, 727, 284, 30, 16, "yes", fill=WHITE, stroke=WHITE, color=MUTED, size=7.5)
+    label_box(c, 727, 284, 30, 16, "yes", fill=WHITE, stroke=WHITE, color=MUTED, size=8.0)
     arrow(c, 830, 286, 858, 196, RED)
-    label_box(c, 850, 245, 26, 16, "no", fill=WHITE, stroke=WHITE, color=MUTED, size=7.5)
+    label_box(c, 850, 245, 26, 16, "no", fill=WHITE, stroke=WHITE, color=MUTED, size=8.0)
     poly_arrow(c, [(785, 158), (340, 158), (340, 398), (200, 438)], RED, dashed=True, label="retry pointer-based narrowing")
 
-    box(c, 68, 246, 250, 82, "Observed limitation", "Group attention increased context capacity, but passkey retrieval and code-assistance retrieval still failed in this setup.", RED_LIGHT, RED, body_size=8.2)
-    box(c, 350, 74, 280, 82, "Operational rule", "Self-Extend produces no index, no catalog, and no persistent pointer. It is only an execution option for one LLM call.", AMBER_LIGHT, AMBER, body_size=8.2)
+    box(c, 68, 246, 250, 82, "Observed limitation", "Group attention increased context capacity, but passkey retrieval and code-assistance retrieval still failed in this setup.", RED_LIGHT, RED, body_size=8.8)
+    box(c, 350, 74, 280, 82, "Operational rule", "Self-Extend produces no index, no catalog, and no persistent pointer. It is only an execution option for one LLM call.", AMBER_LIGHT, AMBER, body_size=8.8)
 
     save(c)
 
@@ -717,7 +721,7 @@ def bar(c: canvas.Canvas, x: float, y: float, w: float, h: float, value: float, 
     c.setFont("Helvetica-Bold", 8)
     c.setFillColor(INK)
     c.drawRightString(x + w - 6, y + h / 2 - 3, f"{value:.1f}%")
-    c.setFont("Helvetica", 7.6)
+    c.setFont("Helvetica", 8.2)
     c.setFillColor(MUTED)
     c.drawString(x, y + h + 5, label)
 
