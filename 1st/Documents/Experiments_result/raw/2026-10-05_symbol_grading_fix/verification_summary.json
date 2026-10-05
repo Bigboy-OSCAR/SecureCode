@@ -1,0 +1,97 @@
+{
+  "regression_tests": {
+    "total": 9,
+    "passed": 9,
+    "transcript": "regression_tests.txt"
+  },
+  "historical_rescore": {
+    "records": 43,
+    "changed_decisions": 1
+  },
+  "actual_reruns": [
+    {
+      "file": "basic_full_repo_rerun.jsonl",
+      "mode": "full_repo",
+      "cases": 3,
+      "executed": 0,
+      "correct": 0,
+      "selection_correct": null,
+      "mean_prompt_tokens": null,
+      "mean_wall_seconds": 1.265608249666305
+    },
+    {
+      "file": "hard_default_rerun.jsonl",
+      "mode": "full_repo",
+      "cases": 3,
+      "executed": 0,
+      "correct": 0,
+      "selection_correct": null,
+      "mean_prompt_tokens": null,
+      "mean_wall_seconds": 1.0932933053336455
+    },
+    {
+      "file": "hard_default_rerun.jsonl",
+      "mode": "full_file",
+      "cases": 3,
+      "executed": 3,
+      "correct": 1,
+      "selection_correct": null,
+      "mean_prompt_tokens": 330,
+      "mean_wall_seconds": 2.772155513666803
+    },
+    {
+      "file": "hard_default_rerun.jsonl",
+      "mode": "line_span",
+      "cases": 3,
+      "executed": 3,
+      "correct": 0,
+      "selection_correct": null,
+      "mean_prompt_tokens": 273.3333333333333,
+      "mean_wall_seconds": 2.6138757226666107
+    },
+    {
+      "file": "hard_default_rerun.jsonl",
+      "mode": "symbol_oracle",
+      "cases": 3,
+      "executed": 3,
+      "correct": 0,
+      "selection_correct": null,
+      "mean_prompt_tokens": 273.6666666666667,
+      "mean_wall_seconds": 2.6130457086665047
+    },
+    {
+      "file": "hard_default_rerun.jsonl",
+      "mode": "symbol_select",
+      "cases": 3,
+      "executed": 3,
+      "correct": 0,
+      "selection_correct": 3,
+      "mean_prompt_tokens": 33971,
+      "mean_wall_seconds": 165.71127994466647
+    },
+    {
+      "file": "hard_bundle_rerun.jsonl",
+      "mode": "symbol_bundle_oracle",
+      "cases": 3,
+      "executed": 3,
+      "correct": 1,
+      "selection_correct": null,
+      "mean_prompt_tokens": 369,
+      "mean_wall_seconds": 2.776488916333316
+    },
+    {
+      "file": "hard_bundle_rerun.jsonl",
+      "mode": "symbol_filtered_select_bundle",
+      "cases": 3,
+      "executed": 3,
+      "correct": 1,
+      "selection_correct": 3,
+      "mean_prompt_tokens": 587,
+      "mean_wall_seconds": 4.573541028000061
+    }
+  ],
+  "finished_at": "2026-10-05T17:26:52.525312+09:00",
+  "actual_case_count": 24,
+  "actual_model_call_count": 30,
+  "execution_failure_count": 6
+}

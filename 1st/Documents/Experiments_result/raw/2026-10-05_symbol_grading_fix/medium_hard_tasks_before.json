@@ -1,0 +1,26 @@
+[
+  {
+    "id": "hard_auth_exact_exception_literal",
+    "question": "In services/auth_service.py, validate_token uses a module-level constant when an active token is expired. What is the exact string literal value raised inside ValueError? Answer with only the literal value, not the constant name.",
+    "target_uri": "memory://symbol/services/auth_service.py::validate_token",
+    "required_substrings": ["TOKEN_EXPIRED"],
+    "forbidden_substrings": ["TOKEN_EXPIRED_MESSAGE"],
+    "notes": "Requires reading validate_token plus the module-level TOKEN_EXPIRED_MESSAGE constant."
+  },
+  {
+    "id": "hard_report_cache_key_composed_result",
+    "question": "Given report_name=' North/East Plan ', tenant_id=' TEAM-A ', and version=12, what exact string does build_cache_key return? Answer with only the final string.",
+    "target_uri": "memory://symbol/reports/reporting.py::build_cache_key",
+    "required_substrings": ["report:team-a:north/east_plan:v12"],
+    "forbidden_substrings": ["north_east", "North/East", "TEAM-A"],
+    "notes": "Requires reading build_cache_key and sanitize_report_name behavior."
+  },
+  {
+    "id": "hard_billing_status_and_fee",
+    "question": "For days_late=4 and subtotal_cents=10000, combine invoice_status(days_late) and InvoiceCalculator.compute_late_fee(days_late, subtotal_cents). What are the status and fee? Answer as status=<status>, fee=<number>.",
+    "target_uri": "memory://symbol/billing/payments.py::InvoiceCalculator.compute_late_fee",
+    "required_substrings": ["late", "125"],
+    "forbidden_substrings": ["grace", "0"],
+    "notes": "Requires reading compute_late_fee plus invoice_status."
+  }
+]

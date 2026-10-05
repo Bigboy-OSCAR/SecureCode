@@ -1,0 +1,9 @@
+[17:18:04] run=1 task=auth_expired_token_message mode=full_repo
+[17:18:05] run=1 task=billing_late_fee_grace mode=full_repo
+[17:18:06] run=1 task=reports_cache_key_format mode=full_repo
+
+Wrote 3 rows -> /Users/oscar/Desktop/SecureCode/1st/Documents/Experiments_result/raw/2026-10-05_symbol_grading_fix/basic_full_repo_rerun.jsonl
+
+Summary
+mode, cases, accuracy, mean_wall_s, mean_prompt_chars, mean_prompt_tokens
+full_repo, 3, 0.00, 1.266, 209424, 52356

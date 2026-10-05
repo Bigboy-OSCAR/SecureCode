@@ -230,18 +230,14 @@ def _run_llama(args: argparse.Namespace, prompt: str, purpose: str) -> dict[str,
 
 def _normalize_exact_answer(answer: str) -> str:
     answer = answer.strip().replace("\r", "")
-    if answer.startswith("```"):
-        lines = answer.splitlines()
-        if lines and lines[0].startswith("```"):
-            lines = lines[1:]
-        if lines and lines[-1].startswith("```"):
-            lines = lines[:-1]
+    if answer.startswith("```") and answer.endswith("```") and len(answer) >= 6:
+        lines = answer[3:-3].strip().splitlines()
         if lines and lines[0].strip().casefold() in {"text", "python", "json"}:
             lines = lines[1:]
         answer = "\n".join(lines).strip()
     answer = answer.strip().strip("`").strip()
     if len(answer) >= 2 and answer[0] == answer[-1] and answer[0] in {"'", '"'}:
-        answer = answer[1:-1].strip()
+        answer = answer[1:-1]
     return answer
 
 
@@ -276,6 +272,15 @@ def _expected_exact(task: dict[str, Any]) -> list[str]:
     if isinstance(value, str):
         return [value]
     return list(value)
+
+
+def _answer_is_correct(call: dict[str, Any], task: dict[str, Any]) -> bool:
+    return call.get("returncode") == 0 and _is_correct(
+        call["answer"],
+        _required_substrings(task),
+        _forbidden_substrings(task),
+        _expected_exact(task),
+    )
 
 
 def _question_terms(question: str) -> set[str]:
@@ -380,7 +385,8 @@ def _run_case_mode(args: argparse.Namespace, root: Path, index: dict[str, Any], 
             selector_outline = outline
         selector_prompt = _selector_prompt(task["question"], selector_outline)
         selector = _run_llama(args, selector_prompt, "select")
-        selected = URI_RE.search(selector["answer"])
+        selector_ok = selector["returncode"] == 0
+        selected = URI_RE.search(selector["answer"]) if selector_ok else None
         selected_uri = selected.group(0) if selected else None
         selection_correct = selected_uri == task["target_uri"]
         if selected_uri and selected_uri in symbol_map(index):
@@ -405,15 +411,14 @@ def _run_case_mode(args: argparse.Namespace, root: Path, index: dict[str, Any], 
             context = f"### selected_symbol: {selected_uri}\nSelector did not return a resolvable symbol URI."
         answer_prompt = _answer_prompt(task["question"], context)
         answer = _run_llama(args, answer_prompt, "answer")
-        answer_correct = _is_correct(
-            answer["answer"],
-            _required_substrings(task),
-            _forbidden_substrings(task),
-            _expected_exact(task),
+        answer_correct = _answer_is_correct(answer, task)
+        execution_ok = selector_ok and answer["returncode"] == 0
+        correct = execution_ok and (
+            answer_correct if mode == "symbol_filtered_select_bundle" else selection_correct and answer_correct
         )
-        correct = answer_correct if mode == "symbol_filtered_select_bundle" else selection_correct and answer_correct
         return {
             "mode": mode,
+            "execution_ok": execution_ok,
             "selected_uri": selected_uri,
             "selection_correct": selection_correct,
             "correct": correct,
@@ -433,12 +438,8 @@ def _run_case_mode(args: argparse.Namespace, root: Path, index: dict[str, Any], 
     return {
         "mode": mode,
         **extra,
-        "correct": _is_correct(
-            answer["answer"],
-            _required_substrings(task),
-            _forbidden_substrings(task),
-            _expected_exact(task),
-        ),
+        "execution_ok": answer["returncode"] == 0,
+        "correct": _answer_is_correct(answer, task),
         "answer_text": answer["answer"],
         "calls": [answer],
         "prompt_chars": answer["prompt_chars"],

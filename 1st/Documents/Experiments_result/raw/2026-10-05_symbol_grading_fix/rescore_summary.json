@@ -1,0 +1,39 @@
+[
+  {
+    "original": "/Users/oscar/Desktop/SecureCode/1st/Documents/Experiments_result/raw/medium_real_strict_rescore_results.jsonl",
+    "rescored": "/Users/oscar/Desktop/SecureCode/1st/Documents/Experiments_result/raw/2026-10-05_symbol_grading_fix/medium_real_strict_rescore_results_rescored.jsonl",
+    "rows": 15,
+    "changed": [
+      {
+        "task_id": "billing_late_fee_grace",
+        "mode": "full_repo",
+        "before": true,
+        "after": false
+      }
+    ]
+  },
+  {
+    "original": "/Users/oscar/Desktop/SecureCode/1st/Documents/Experiments_result/raw/medium_bundle_strict_rescore_results.jsonl",
+    "rescored": "/Users/oscar/Desktop/SecureCode/1st/Documents/Experiments_result/raw/2026-10-05_symbol_grading_fix/medium_bundle_strict_rescore_results_rescored.jsonl",
+    "rows": 6,
+    "changed": []
+  },
+  {
+    "original": "/Users/oscar/Desktop/SecureCode/1st/Documents/Experiments_result/raw/medium_hard_bundle_results.jsonl",
+    "rescored": "/Users/oscar/Desktop/SecureCode/1st/Documents/Experiments_result/raw/2026-10-05_symbol_grading_fix/medium_hard_bundle_results_rescored.jsonl",
+    "rows": 6,
+    "changed": []
+  },
+  {
+    "original": "/Users/oscar/Desktop/SecureCode/1st/Documents/Experiments_result/raw/medium_fullrepo_131k_onecase_strict_rescore_results.jsonl",
+    "rescored": "/Users/oscar/Desktop/SecureCode/1st/Documents/Experiments_result/raw/2026-10-05_symbol_grading_fix/medium_fullrepo_131k_onecase_strict_rescore_results_rescored.jsonl",
+    "rows": 1,
+    "changed": []
+  },
+  {
+    "original": "/Users/oscar/Desktop/SecureCode/1st/symbol_test/work/medium_hard_results.jsonl",
+    "rescored": "/Users/oscar/Desktop/SecureCode/1st/Documents/Experiments_result/raw/2026-10-05_symbol_grading_fix/medium_hard_results_rescored.jsonl",
+    "rows": 15,
+    "changed": []
+  }
+]

@@ -1,0 +1,14 @@
+test_cache_key_matches_executed_python_ground_truth (test_grading.GradingRegressionTests.test_cache_key_matches_executed_python_ground_truth) ... ok
+test_error_log_containing_expected_number_never_passes (test_grading.GradingRegressionTests.test_error_log_containing_expected_number_never_passes) ... ok
+test_exact_answer_accepts_only_outer_presentation_wrappers (test_grading.GradingRegressionTests.test_exact_answer_accepts_only_outer_presentation_wrappers) ... ok
+test_failed_final_call_cannot_pass_after_successful_selection (test_grading.GradingRegressionTests.test_failed_final_call_cannot_pass_after_successful_selection) ... ok
+test_failed_selector_cannot_pass_even_with_valid_uri_and_answer (test_grading.GradingRegressionTests.test_failed_selector_cannot_pass_even_with_valid_uri_and_answer) ... ok
+test_saved_correct_key_uses_fixed_task_instead_of_old_forbidden_strings (test_grading.GradingRegressionTests.test_saved_correct_key_uses_fixed_task_instead_of_old_forbidden_strings) ... ok
+test_saved_error_is_regraded_without_changing_timing_or_original_row (test_grading.GradingRegressionTests.test_saved_error_is_regraded_without_changing_timing_or_original_row) ... ok
+test_successful_correct_calls_still_pass_in_every_mode (test_grading.GradingRegressionTests.test_successful_correct_calls_still_pass_in_every_mode) ... ok
+test_wrong_slash_case_suffix_or_explanation_is_rejected (test_grading.GradingRegressionTests.test_wrong_slash_case_suffix_or_explanation_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.008s
+
+OK

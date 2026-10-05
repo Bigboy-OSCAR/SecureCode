@@ -1,0 +1,13 @@
+[17:17:42] run=1 task=hard_auth_exact_exception_literal mode=symbol_bundle_oracle
+[17:17:45] run=1 task=hard_auth_exact_exception_literal mode=symbol_filtered_select_bundle
+[17:17:49] run=1 task=hard_report_cache_key_composed_result mode=symbol_bundle_oracle
+[17:17:51] run=1 task=hard_report_cache_key_composed_result mode=symbol_filtered_select_bundle
+[17:17:55] run=1 task=hard_billing_status_and_fee mode=symbol_bundle_oracle
+[17:17:58] run=1 task=hard_billing_status_and_fee mode=symbol_filtered_select_bundle
+
+Wrote 6 rows -> /Users/oscar/Desktop/SecureCode/1st/Documents/Experiments_result/raw/2026-10-05_symbol_grading_fix/hard_bundle_rerun.jsonl
+
+Summary
+mode, cases, accuracy, mean_wall_s, mean_prompt_chars, mean_prompt_tokens
+symbol_bundle_oracle, 3, 0.33, 2.776, 1481, 369
+symbol_filtered_select_bundle, 3, 0.33, 4.574, 2361, 587

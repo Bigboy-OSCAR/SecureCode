@@ -1,0 +1,25 @@
+[17:18:08] run=1 task=hard_auth_exact_exception_literal mode=full_repo
+[17:18:09] run=1 task=hard_auth_exact_exception_literal mode=full_file
+[17:18:12] run=1 task=hard_auth_exact_exception_literal mode=line_span
+[17:18:14] run=1 task=hard_auth_exact_exception_literal mode=symbol_oracle
+[17:18:17] run=1 task=hard_auth_exact_exception_literal mode=symbol_select
+[17:20:59] run=1 task=hard_report_cache_key_composed_result mode=full_repo
+[17:21:00] run=1 task=hard_report_cache_key_composed_result mode=full_file
+[17:21:03] run=1 task=hard_report_cache_key_composed_result mode=line_span
+[17:21:05] run=1 task=hard_report_cache_key_composed_result mode=symbol_oracle
+[17:21:08] run=1 task=hard_report_cache_key_composed_result mode=symbol_select
+[17:23:56] run=1 task=hard_billing_status_and_fee mode=full_repo
+[17:23:57] run=1 task=hard_billing_status_and_fee mode=full_file
+[17:23:59] run=1 task=hard_billing_status_and_fee mode=line_span
+[17:24:02] run=1 task=hard_billing_status_and_fee mode=symbol_oracle
+[17:24:04] run=1 task=hard_billing_status_and_fee mode=symbol_select
+
+Wrote 15 rows -> /Users/oscar/Desktop/SecureCode/1st/Documents/Experiments_result/raw/2026-10-05_symbol_grading_fix/hard_default_rerun.jsonl
+
+Summary
+mode, cases, accuracy, mean_wall_s, mean_prompt_chars, mean_prompt_tokens
+full_repo, 3, 0.00, 1.093, 209517, 52379
+full_file, 3, 0.33, 2.772, 1317, 330
+line_span, 3, 0.00, 2.614, 989, 273
+symbol_oracle, 3, 0.00, 2.613, 1014, 274
+symbol_select, 3, 0.00, 165.711, 88082, 33971

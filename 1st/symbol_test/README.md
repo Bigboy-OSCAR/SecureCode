@@ -61,3 +61,32 @@ uv run python -m symbol_test.symbol_bench.analyze_results symbol_test/work/resul
 - `symbol_select`의 URI 선택 정확도가 충분히 높음
 
 예상되는 개선 구간은 `full_repo`나 `full_file`이 큰데 실제 답에 필요한 symbol이 작고, 질문이 함수/클래스명을 명시하거나 symbol index만으로 타깃을 안정적으로 고를 수 있는 경우입니다.
+
+## 2026-10-05 채점 수정과 재시험
+
+모든 필수 모델 호출이 정상 종료된 경우에만 정답으로 집계합니다. 선택 단계가 실패한 경우에도 성공으로 집계하지 않습니다. 확장 문자열 문제는 대소문자를 무시하는 금지어 검사 대신 최종 문자열을 정확하게 비교합니다. 코드 블록·바깥 인용부호는 제거하되, 문자열 내부의 대소문자·슬래시·공백은 보존합니다.
+
+수정된 확장 문제의 기준 파일은 `symbol_test/tasks/medium_hard_tasks.json`입니다. 기존 `work/medium_hard_tasks.json`도 같은 내용으로 갱신했습니다.
+
+```bash
+cd /Users/oscar/Desktop/SecureCode/1st
+python3 -m unittest discover -s symbol_test/tests -v
+python3 -m symbol_test.symbol_bench.run_benchmark \
+  --scale medium \
+  --tasks-file symbol_test/tasks/medium_hard_tasks.json \
+  --modes symbol_bundle_oracle symbol_filtered_select_bundle \
+  --model symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf \
+  --ctx-size 8192 --n-predict 64 --seed 1 --runs 1 \
+  --out symbol_test/work/medium_hard_grading_fixed_results.jsonl
+```
+
+기존 답변을 다시 생성하지 않고 수정한 규칙으로만 재채점하려면 다음 명령을 사용합니다. 결과의 시간·토큰은 원래 실행 당시의 값으로 유지됩니다.
+
+```bash
+python3 -m symbol_test.symbol_bench.rescore_results \
+  Documents/Experiments_result/raw/medium_hard_bundle_results.jsonl \
+  --tasks-file symbol_test/tasks/medium_hard_tasks.json \
+  --out symbol_test/work/medium_hard_bundle_rescored.jsonl
+```
+
+이번 수정의 테스트 기록과 실제 재실행 결과는 `Documents/Experiments_result/raw/2026-10-05_symbol_grading_fix/`에 저장합니다.
