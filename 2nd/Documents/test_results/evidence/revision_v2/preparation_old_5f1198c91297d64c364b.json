@@ -1,0 +1,14 @@
+{
+  "recorded_at_utc": "2026-10-20T11:12:25.247983+00:00",
+  "session_id": "5f1198c91297d64c364b",
+  "document_vector_build_seconds": {
+    "eval_authorization": 0.0023377920006169006,
+    "eval_cache": 0.0019784169999184087,
+    "eval_inventory": 0.0018670830031624064,
+    "eval_pricing": 0.001906499994220212,
+    "eval_routing": 0.00196604200755246,
+    "eval_schedules": 0.001993833007873036
+  },
+  "summary_source": "unchanged v1 summaries; no new summary model calls",
+  "runtime_fingerprint_sha256": "4bc7b3bf9c1b65479e39a29ce9d5c7724fe9b9fad6f3c15f9a6ca3c7cb8bb0e0"
+}

@@ -1,0 +1,60 @@
+{
+  "config": {
+    "version": "1.0",
+    "arms": [
+      "A",
+      "B",
+      "R0",
+      "RF",
+      "RH"
+    ],
+    "main_budget": 1024,
+    "sensitivity_budget": 512,
+    "repeats": 3,
+    "temperature": 0,
+    "seed": 1,
+    "order_seed": 20261020,
+    "ctx_size": 8192,
+    "answer_max_tokens": 128,
+    "summary_max_tokens": 256,
+    "selector_candidates": 24,
+    "selector_max_tokens": 96,
+    "cache_prompt": false,
+    "timeout_seconds": 300,
+    "raw_bundle_dependency_depth": 3,
+    "baseline_bundle_dependency_depth": 1,
+    "baseline_bundle_max_symbols": 8,
+    "B_max_function_hops": 2,
+    "B_max_functions": 8,
+    "retrieval": "cosine TF-IDF, IDF fitted on raw candidates; unseen terms use smoothed df=0 IDF in every arm",
+    "raw_candidates": "dependency bundles plus atomic function/constant originals; identical in R0/RF/RH",
+    "grouping": "AST symbol dependency bundles -> per-file summaries -> project summary",
+    "packing": "descending cosine; skip whole nodes that do not fit; no truncation",
+    "grading": "exact JSON object/value and types after stripping at most one complete outer JSON code fence",
+    "primary_comparison": "RH-A",
+    "summary_comparison": "RH-R0",
+    "hierarchy_comparison": "RH-RF",
+    "bootstrap_unit": "project"
+  },
+  "experiment_sha256": "b8f664facdff58c7b410f704216611e5a4e5bbd239ac394a9bb4e5f29f9234cb",
+  "split": "dev",
+  "budget": 1024,
+  "repeats": 1,
+  "arms": [
+    "A",
+    "B",
+    "R0",
+    "RF",
+    "RH"
+  ],
+  "task_sha256": "5cc7aa7fb5025c97184dbe2933141d3c7cc2351a9d594ca217976aedb99078f4",
+  "asset_hashes": {
+    "dev_shipping.json": "fca07d41c3098d1acbcf8b47469a042635bd5b234f15a6287417360204015614",
+    "eval_authorization.json": "c0be4504632825f57a906749ef275544e73bcc94c916a464b3f97e24aa265d37",
+    "eval_cache.json": "89974521ee89b4c1c94aebbcfec2c246b4bab84c47b8c4359f3c0e2924d206d3",
+    "eval_inventory.json": "3d0c0771dc09926916d0c3d2fbd91dfa1bfce1cb9df3c440ef38802b5a1dbcdb",
+    "eval_pricing.json": "3c587dc77dce8ad63974f24863e554d720bf8cb43a617ef6be2e5265607c75e7",
+    "eval_routing.json": "24e3f453825d2e01d29039ed1e051ff97791056c69d9f4c4b69ab99b304468c5",
+    "eval_schedules.json": "c17b6d3841841b4c6736694e1385ce7b2ecadcf2ce7bd3d88b5c8e5f6ea6703a"
+  }
+}

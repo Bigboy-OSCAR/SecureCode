@@ -1,0 +1,18 @@
+{
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "machine": "arm64",
+  "python": "3.14.4 (main, Apr  7 2026, 13:13:20) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "model_path": "/Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf",
+  "model_sha256": "586844eac4d6d6321689f0192c8aa8e69cd8625974a5cc2d925b1a03366e4d16",
+  "model_bytes": 5444831232,
+  "llama_version": "",
+  "git_head": "898f56ca32924202f3b61e11d88d27ec0e7edde7",
+  "experiment_sha256": "b8f664facdff58c7b410f704216611e5a4e5bbd239ac394a9bb4e5f29f9234cb",
+  "corpus_builder_sha256": "719f9d68b892a95c2b7c0d506868dc42e7cdadf11c732e7f8660f09f99112e4e",
+  "baseline_indexer_sha256": "cbd1334a7c9e040ad30081bf1e29c355d0cdc6247366417918549b9b4a4c909a",
+  "baseline_runner_sha256": "b5eff2970604e89ac3680a02029eed4e98b04e8d8b953f183cf7793a3f452248",
+  "hw.memsize": "38654705664",
+  "hw.model": "Mac15,7",
+  "machdep.cpu.brand_string": "Apple M3 Pro",
+  "macos": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434"
+}

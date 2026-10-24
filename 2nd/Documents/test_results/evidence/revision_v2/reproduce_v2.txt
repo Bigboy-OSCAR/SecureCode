@@ -1,0 +1,73 @@
+Revision 2 audit and controlled remeasurement
+
+Scope
+  This is a RAPTOR-inspired code retrieval adaptation with lexical TF-IDF and
+  source/file/project summary hierarchy. It is not a reproduction of the full
+  embedding/clustering algorithm in Sarthi et al. (2024).
+  Original paper: https://arxiv.org/abs/2401.18059 (checked 2026-10-20).
+  The 48 new questions concern the same six previously seen synthetic projects.
+  They are a fixed additional-question evaluation, not unseen-project validation.
+
+Evidence preservation
+  Original reports, evidence and source snapshot are under ../../archive/v1_20261020.
+  Original evidence files outside revision_v2 were not overwritten.
+  Old questions are remeasured and reported separately from new questions.
+
+Frozen experiment
+  experiment_v2.py, dependencies, task artifacts, asset hashes, actual model and
+  server binary hashes are pinned by protocol.json and environment.json.
+  identity_{new,old,dev}.json captures the exact randomized schedule.
+  Run rejects changed frozen inputs; it never refills compacted context capacity.
+  A uses an independently executed selector for every question.
+  RH and C select identical items at the original 1024-token evidence cap.
+  C removes duplicate code/import bodies and shortens metadata headers only.
+  No accuracy tuning occurred after new-question evaluation began.
+
+Run from repository root with system Python 3.14.4
+  python3 2nd/experiments/symbol_raptor/holdout_v2.py --out NEW_OUTPUT/holdout
+  python3 2nd/experiments/symbol_raptor/preflight_v2.py --out NEW_OUTPUT
+  Start the server command stored in environment.json.
+  python3 2nd/experiments/symbol_raptor/experiment_v2.py prepare --out NEW_OUTPUT
+  python3 2nd/experiments/symbol_raptor/experiment_v2.py dev --out NEW_OUTPUT
+  python3 2nd/experiments/symbol_raptor/experiment_v2.py new --out NEW_OUTPUT
+  python3 2nd/experiments/symbol_raptor/experiment_v2.py old --out NEW_OUTPUT
+  Do not write fresh experiments into the delivered evidence directory.
+  The audit/preflight tools default to the delivered revision_v2 directory;
+  inspect --help and supply a separate output path when rerunning those checks.
+
+Analysis and verification of the delivered run
+  python3 2nd/experiments/symbol_raptor/audit_v2.py
+  python3 2nd/experiments/symbol_raptor/integrity_v2.py
+  python3 2nd/experiments/symbol_raptor/analyze_v2.py
+
+Measurement boundary
+  Physical query wall time begins before retrieval/selection and ends after the
+  answer completion call and its small audit-log write. It includes token-count
+  HTTP calls, selector calls (A), packing, compaction (C), and answer inference.
+  Gold grading and final result-record file writes are excluded.
+  Token-count memoization is cleared before every query; within-query reuse is
+  allowed. Model prompt caching is disabled and returned cache_n is inspected.
+  Vector preparation and unrelated warmup occur before measured queries.
+  Every execution session receives its own warmup and session ID.
+  Model loading and original summary build are not part of query latency.
+  Tokenizer and compaction durations overlap other stages and must not be added
+  to prefill/decode/physical query totals.
+
+Statistical boundary
+  New: 48 questions x 3 methods x 3 repetitions = 432 answers.
+  Old: 48 questions x 3 methods x 1 repetition = 144 answers, exploratory only.
+  Development: 8 questions x 3 methods = 24 answers, plumbing only.
+  Main latency is the mean of per-question median-of-three query times.
+  Request p50/p95 use all actual requests and are labeled separately.
+  Quality is exact typed JSON answer success including requested sorted order.
+  Order-tolerant diagnostics only forgive duplicate-free same-string-set lists.
+  Intervals resample six project clusters, enumerating all 6^6 ordered draws.
+  With six small related projects these intervals remain exploratory.
+  Accuracy noninferiority and general superiority are not established by a
+  small point difference or by preserved source bytes.
+
+Record limitations
+  Hashes and UTC times are local provenance, not externally notarized records.
+  Runtime properties and exact request payloads are retained; only selected
+  response fields, not every byte of each HTTP response, are stored.
+  v1 chronology and effective runtime cannot be retroactively proven.

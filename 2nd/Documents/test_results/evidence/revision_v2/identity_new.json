@@ -1,0 +1,2210 @@
+{
+  "config": {
+    "version": "2.0",
+    "arms": [
+      "A",
+      "RH",
+      "C"
+    ],
+    "evidence_cap": 1024,
+    "new_question_repeats": 3,
+    "old_question_repeats": 1,
+    "temperature": 0,
+    "seed": 1,
+    "order_seed": 20261021,
+    "answer_max_tokens": 128,
+    "selector_max_tokens": 96,
+    "ctx_size": 8192,
+    "model_prompt_cache": false,
+    "token_count_cache": "cleared at every query; ordinary memoization allowed within a query",
+    "schedule": "randomized task-repeat blocks; six arm permutations balanced within each repeat",
+    "C": "RH's identical selected items, same order; remove duplicate raw symbol/import payloads and shorten headers; preserve every unique source and summary body exactly; do not refill freed capacity",
+    "reader": "unchanged v1 answer_prompt and chat wrapper",
+    "primary_speed_contrast": "C minus RH, new questions",
+    "quality_contrasts": [
+      "C minus A",
+      "C minus RH"
+    ],
+    "inference": "six project clusters; exploratory intervals, no claim of independent new repositories",
+    "timing": "physical query wall time including tokenizer, selectors, packing, compaction, answer HTTP and small audit-log overhead; no shared selector",
+    "known_test_reuse": "original 48 questions are a separate exploratory regression set; not held out"
+  },
+  "code_sha256": "86fbbf165c2ad44c21fe0a0554b6624e86961246c9abb9aceed547f1a8d606be",
+  "v1_code_sha256": "b8f664facdff58c7b410f704216611e5a4e5bbd239ac394a9bb4e5f29f9234cb",
+  "task_sha256": "06a9efc888fff9dd99681f38bffdfd5c32c878ae8850af5ed801d8024a2226ef",
+  "protocol_sha256": "52e133d47d313b74aa24438d7d5508cbdd22dde7c5b85e60dc69aa798310436d",
+  "asset_sha256": {
+    "dev_shipping.json": "fca07d41c3098d1acbcf8b47469a042635bd5b234f15a6287417360204015614",
+    "eval_authorization.json": "c0be4504632825f57a906749ef275544e73bcc94c916a464b3f97e24aa265d37",
+    "eval_cache.json": "89974521ee89b4c1c94aebbcfec2c246b4bab84c47b8c4359f3c0e2924d206d3",
+    "eval_inventory.json": "3d0c0771dc09926916d0c3d2fbd91dfa1bfce1cb9df3c440ef38802b5a1dbcdb",
+    "eval_pricing.json": "3c587dc77dce8ad63974f24863e554d720bf8cb43a617ef6be2e5265607c75e7",
+    "eval_routing.json": "24e3f453825d2e01d29039ed1e051ff97791056c69d9f4c4b69ab99b304468c5",
+    "eval_schedules.json": "c17b6d3841841b4c6736694e1385ce7b2ecadcf2ce7bd3d88b5c8e5f6ea6703a"
+  },
+  "runtime_fingerprint_sha256": "4bc7b3bf9c1b65479e39a29ce9d5c7724fe9b9fad6f3c15f9a6ca3c7cb8bb0e0",
+  "environment_sha256": "7d757341d315fc006dc13ada353f0906b0bcb8afef3bec153f064616998f3e76",
+  "schedule": [
+    {
+      "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_bucket_near_wrap",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_bucket_near_wrap",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_bucket_near_wrap",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_receipt_transitive_calls",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_receipt_transitive_calls",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_receipt_transitive_calls",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_duplicate_write_permission",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_duplicate_write_permission",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_duplicate_write_permission",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_enough_stock",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_enough_stock",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_enough_stock",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_revoked_admin",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_revoked_admin",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_revoked_admin",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_below_safety_reserve",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_below_safety_reserve",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_below_safety_reserve",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_latency_intervention",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_latency_intervention",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_latency_intervention",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_default_public_lifetime",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_default_public_lifetime",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_default_public_lifetime",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_private_ttl_exact_edge",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_private_ttl_exact_edge",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_private_ttl_exact_edge",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_transitive_calls",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_transitive_calls",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_transitive_calls",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_zero_units",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_zero_units",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_zero_units",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_canary_exact_threshold",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_canary_exact_threshold",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_canary_exact_threshold",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_last_valid_session_second",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_last_valid_session_second",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_last_valid_session_second",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_empty_path",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_empty_path",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_empty_path",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_last_retry_fallback",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_last_retry_fallback",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_last_retry_fallback",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_new_query_key",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_new_query_key",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_new_query_key",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_partial_depletes_available",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_partial_depletes_available",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_partial_depletes_available",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_two_busy_intervals",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_two_busy_intervals",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_two_busy_intervals",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_large_member_order",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_large_member_order",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_large_member_order",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_negative_unit_price",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_negative_unit_price",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_negative_unit_price",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_without_backend",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_without_backend",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_without_backend",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_max_duration_closing_edge",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_max_duration_closing_edge",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_max_duration_closing_edge",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_nonowner_read",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_nonowner_read",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_nonowner_read",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_private_cap_intervention",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_private_cap_intervention",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_private_cap_intervention",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_five_member_receipt",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_five_member_receipt",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_five_member_receipt",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_owner_case_mismatch",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_owner_case_mismatch",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_owner_case_mismatch",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_appointment_transitive_calls",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_appointment_transitive_calls",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_appointment_transitive_calls",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_remaining_transitive_calls",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_remaining_transitive_calls",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_remaining_transitive_calls",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_short_private_ttl",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_short_private_ttl",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_short_private_ttl",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_two_nonmember_items",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_two_nonmember_items",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_two_nonmember_items",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_entry_transitive_calls",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_entry_transitive_calls",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_entry_transitive_calls",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_next_week_opening",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_next_week_opening",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_next_week_opening",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_overlong_duration",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_overlong_duration",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_overlong_duration",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_wrapped_workday",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_wrapped_workday",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_wrapped_workday",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_order_cap_intervention",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_order_cap_intervention",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_order_cap_intervention",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_write_scope_intervention",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_write_scope_intervention",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_write_scope_intervention",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_buffer_exact_separation",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_buffer_exact_separation",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_buffer_exact_separation",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_priority_not_fastest",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_priority_not_fastest",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_priority_not_fastest",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_maximum_valid_reservation",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_maximum_valid_reservation",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_maximum_valid_reservation",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_slot_size_intervention",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_slot_size_intervention",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_slot_size_intervention",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_refund_capped_units",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_refund_capped_units",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_refund_capped_units",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_negative_private_lifetime",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_negative_private_lifetime",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_negative_private_lifetime",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_allocate_exact_available",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_allocate_exact_available",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_allocate_exact_available",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_private_lifetime_clamp",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_private_lifetime_clamp",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_private_lifetime_clamp",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_write_scope_intervention",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_write_scope_intervention",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_write_scope_intervention",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_private_lifetime_clamp",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_private_lifetime_clamp",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_private_lifetime_clamp",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_last_retry_fallback",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_last_retry_fallback",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_last_retry_fallback",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_short_private_ttl",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_short_private_ttl",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_short_private_ttl",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_partial_depletes_available",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_partial_depletes_available",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_partial_depletes_available",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_remaining_transitive_calls",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_remaining_transitive_calls",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_remaining_transitive_calls",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_slot_size_intervention",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_slot_size_intervention",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_slot_size_intervention",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_revoked_admin",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_revoked_admin",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_revoked_admin",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_receipt_transitive_calls",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_receipt_transitive_calls",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_receipt_transitive_calls",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_wrapped_workday",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_wrapped_workday",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_wrapped_workday",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_canary_exact_threshold",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_canary_exact_threshold",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_canary_exact_threshold",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_buffer_exact_separation",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_buffer_exact_separation",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_buffer_exact_separation",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_overlong_duration",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_overlong_duration",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_overlong_duration",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_enough_stock",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_enough_stock",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_enough_stock",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_nonowner_read",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_nonowner_read",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_nonowner_read",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_next_week_opening",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_next_week_opening",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_next_week_opening",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_appointment_transitive_calls",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_appointment_transitive_calls",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_appointment_transitive_calls",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_private_cap_intervention",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_private_cap_intervention",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_private_cap_intervention",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_last_valid_session_second",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_last_valid_session_second",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_last_valid_session_second",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_max_duration_closing_edge",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_max_duration_closing_edge",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_max_duration_closing_edge",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_five_member_receipt",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_five_member_receipt",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_five_member_receipt",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_transitive_calls",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_transitive_calls",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_transitive_calls",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_below_safety_reserve",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_below_safety_reserve",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_below_safety_reserve",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_new_query_key",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_new_query_key",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_new_query_key",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_negative_private_lifetime",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_negative_private_lifetime",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_negative_private_lifetime",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_negative_unit_price",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_negative_unit_price",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_negative_unit_price",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_latency_intervention",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_latency_intervention",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_latency_intervention",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_entry_transitive_calls",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_entry_transitive_calls",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_entry_transitive_calls",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_order_cap_intervention",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_order_cap_intervention",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_order_cap_intervention",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_priority_not_fastest",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_priority_not_fastest",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_priority_not_fastest",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_bucket_near_wrap",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_bucket_near_wrap",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_bucket_near_wrap",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_large_member_order",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_large_member_order",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_large_member_order",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_two_nonmember_items",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_two_nonmember_items",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_two_nonmember_items",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_empty_path",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_empty_path",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_empty_path",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_private_ttl_exact_edge",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_private_ttl_exact_edge",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_private_ttl_exact_edge",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_without_backend",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_without_backend",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_without_backend",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_duplicate_write_permission",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_duplicate_write_permission",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_duplicate_write_permission",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_refund_capped_units",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_refund_capped_units",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_refund_capped_units",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_owner_case_mismatch",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_owner_case_mismatch",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_owner_case_mismatch",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_zero_units",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_zero_units",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_zero_units",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_allocate_exact_available",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_allocate_exact_available",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_allocate_exact_available",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_two_busy_intervals",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_two_busy_intervals",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_two_busy_intervals",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_maximum_valid_reservation",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_maximum_valid_reservation",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_maximum_valid_reservation",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_default_public_lifetime",
+      "repeat": 1,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_default_public_lifetime",
+      "repeat": 1,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_default_public_lifetime",
+      "repeat": 1,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_revoked_admin",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_revoked_admin",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_revoked_admin",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_maximum_valid_reservation",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_maximum_valid_reservation",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_maximum_valid_reservation",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_owner_case_mismatch",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_owner_case_mismatch",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_owner_case_mismatch",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_five_member_receipt",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_five_member_receipt",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_five_member_receipt",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_default_public_lifetime",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_default_public_lifetime",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_default_public_lifetime",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_zero_units",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_zero_units",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_zero_units",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_entry_transitive_calls",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_entry_transitive_calls",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_entry_transitive_calls",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_without_backend",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_without_backend",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_without_backend",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_buffer_exact_separation",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_buffer_exact_separation",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_buffer_exact_separation",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_wrapped_workday",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_wrapped_workday",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_wrapped_workday",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_write_scope_intervention",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_write_scope_intervention",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_write_scope_intervention",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_canary_exact_threshold",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_canary_exact_threshold",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_canary_exact_threshold",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_overlong_duration",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_overlong_duration",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_overlong_duration",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_negative_private_lifetime",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_negative_private_lifetime",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_negative_private_lifetime",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_partial_depletes_available",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_partial_depletes_available",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_partial_depletes_available",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_latency_intervention",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_latency_intervention",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_latency_intervention",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_large_member_order",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_large_member_order",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_large_member_order",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_refund_capped_units",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_refund_capped_units",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_refund_capped_units",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_bucket_near_wrap",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_bucket_near_wrap",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_bucket_near_wrap",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_remaining_transitive_calls",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_remaining_transitive_calls",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_remaining_transitive_calls",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_last_valid_session_second",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_last_valid_session_second",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_last_valid_session_second",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_two_nonmember_items",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_two_nonmember_items",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_two_nonmember_items",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_appointment_transitive_calls",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_appointment_transitive_calls",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_appointment_transitive_calls",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_receipt_transitive_calls",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_receipt_transitive_calls",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_receipt_transitive_calls",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_private_ttl_exact_edge",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_private_ttl_exact_edge",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_private_ttl_exact_edge",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_new_query_key",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_new_query_key",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_new_query_key",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_duplicate_write_permission",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_duplicate_write_permission",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_duplicate_write_permission",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_priority_not_fastest",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_priority_not_fastest",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_priority_not_fastest",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_private_lifetime_clamp",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_private_lifetime_clamp",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_private_lifetime_clamp",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_below_safety_reserve",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_below_safety_reserve",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_below_safety_reserve",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_slot_size_intervention",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_slot_size_intervention",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_slot_size_intervention",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_negative_unit_price",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_negative_unit_price",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_negative_unit_price",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_max_duration_closing_edge",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_max_duration_closing_edge",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_max_duration_closing_edge",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_next_week_opening",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_next_week_opening",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_next_week_opening",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__v2_two_busy_intervals",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__v2_two_busy_intervals",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__v2_two_busy_intervals",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_last_retry_fallback",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__v2_last_retry_fallback",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_last_retry_fallback",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_empty_path",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_empty_path",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_empty_path",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_allocate_exact_available",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_allocate_exact_available",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_allocate_exact_available",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_nonowner_read",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__v2_nonowner_read",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__v2_nonowner_read",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_enough_stock",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_enough_stock",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__v2_enough_stock",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_transitive_calls",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_transitive_calls",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__v2_retry_transitive_calls",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_short_private_ttl",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_short_private_ttl",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__v2_short_private_ttl",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_private_cap_intervention",
+      "repeat": 2,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__v2_private_cap_intervention",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__v2_private_cap_intervention",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_order_cap_intervention",
+      "repeat": 2,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__v2_order_cap_intervention",
+      "repeat": 2,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__v2_order_cap_intervention",
+      "repeat": 2,
+      "arm": "C"
+    }
+  ],
+  "split": "new"
+}

@@ -1,0 +1,56 @@
+{
+  "version": "2.0",
+  "arms": [
+    "A",
+    "RH",
+    "C"
+  ],
+  "evidence_cap": 1024,
+  "new_question_repeats": 3,
+  "old_question_repeats": 1,
+  "temperature": 0,
+  "seed": 1,
+  "order_seed": 20261021,
+  "answer_max_tokens": 128,
+  "selector_max_tokens": 96,
+  "ctx_size": 8192,
+  "model_prompt_cache": false,
+  "token_count_cache": "cleared at every query; ordinary memoization allowed within a query",
+  "schedule": "randomized task-repeat blocks; six arm permutations balanced within each repeat",
+  "C": "RH's identical selected items, same order; remove duplicate raw symbol/import payloads and shorten headers; preserve every unique source and summary body exactly; do not refill freed capacity",
+  "reader": "unchanged v1 answer_prompt and chat wrapper",
+  "primary_speed_contrast": "C minus RH, new questions",
+  "quality_contrasts": [
+    "C minus A",
+    "C minus RH"
+  ],
+  "inference": "six project clusters; exploratory intervals, no claim of independent new repositories",
+  "timing": "physical query wall time including tokenizer, selectors, packing, compaction, answer HTTP and small audit-log overhead; no shared selector",
+  "known_test_reuse": "original 48 questions are a separate exploratory regression set; not held out",
+  "frozen_at_utc": "2026-10-20T10:44:25.338603+00:00",
+  "new_task_sha256": "06a9efc888fff9dd99681f38bffdfd5c32c878ae8850af5ed801d8024a2226ef",
+  "old_task_sha256": "857883a571e5a781d237609578dbd909953efb16da837dea58030aa5339b072b",
+  "experiment_v2_sha256": "86fbbf165c2ad44c21fe0a0554b6624e86961246c9abb9aceed547f1a8d606be",
+  "task_artifact_hashes": {
+    "eval_tasks.json": "06a9efc888fff9dd99681f38bffdfd5c32c878ae8850af5ed801d8024a2226ef",
+    "manifest.json": "b7c64db6610455f183d86cfc6f13f0319c451d996ec75e8592c2c0b0e5e3de5a",
+    "gold_validation.json": "91c246d275aa35f4a868f8cf7fbaa04e4ba6a16fb9c5a4ec1d6fc5918a872cc9"
+  },
+  "holdout_generator_sha256": "267e4412e063f4d2f2e7e3417257ee418ac8d2acceb8d55d20d3c7b120fd45e5",
+  "dependency_hashes": {
+    "experiment_v1": "b8f664facdff58c7b410f704216611e5a4e5bbd239ac394a9bb4e5f29f9234cb",
+    "baseline_indexer": "cbd1334a7c9e040ad30081bf1e29c355d0cdc6247366417918549b9b4a4c909a",
+    "baseline_runner": "b5eff2970604e89ac3680a02029eed4e98b04e8d8b953f183cf7793a3f452248"
+  },
+  "source_snapshot": {
+    "dev_shipping.json": "fca07d41c3098d1acbcf8b47469a042635bd5b234f15a6287417360204015614",
+    "eval_authorization.json": "c0be4504632825f57a906749ef275544e73bcc94c916a464b3f97e24aa265d37",
+    "eval_cache.json": "89974521ee89b4c1c94aebbcfec2c246b4bab84c47b8c4359f3c0e2924d206d3",
+    "eval_inventory.json": "3d0c0771dc09926916d0c3d2fbd91dfa1bfce1cb9df3c440ef38802b5a1dbcdb",
+    "eval_pricing.json": "3c587dc77dce8ad63974f24863e554d720bf8cb43a617ef6be2e5265607c75e7",
+    "eval_routing.json": "24e3f453825d2e01d29039ed1e051ff97791056c69d9f4c4b69ab99b304468c5",
+    "eval_schedules.json": "c17b6d3841841b4c6736694e1385ce7b2ecadcf2ce7bd3d88b5c8e5f6ea6703a"
+  },
+  "development_policy": "Only 8 original development questions used for plumbing; no accuracy-based parameter search",
+  "change_rationale": "V1 server timings identify prefill as the dominant cost; preserve evidence bodies rather than blindly halving the context budget"
+}

@@ -1,0 +1,161 @@
+{
+  "all96": {
+    "metrics": {
+      "A": {
+        "accuracy": 0.17708333333333334,
+        "mean_query_seconds": 2.3477362595727604,
+        "mean_context_tokens": 97.0625,
+        "unstable_questions": 0
+      },
+      "B": {
+        "accuracy": 0.22916666666666666,
+        "mean_query_seconds": 3.1736306119482074,
+        "mean_context_tokens": 348.4791666666667,
+        "unstable_questions": 0
+      }
+    },
+    "difference": {
+      "higher": "B",
+      "base": "A",
+      "delta_pp": 5.208333333333334,
+      "ci95_pp": [
+        -1.0416666666666665,
+        12.5
+      ],
+      "win": 10,
+      "loss": 5,
+      "tie": 81,
+      "latency_delta_seconds": 0.825894352375447,
+      "latency_ci95_seconds": [
+        0.6687352608653327,
+        0.986085388740169
+      ],
+      "latency_ratio": 1.3517832759143664,
+      "latency_reduction_pct": -35.17832759143664,
+      "latency_reduction_ci95_pct": [
+        -40.4631241384374,
+        -29.052102323136843
+      ],
+      "both_success_n": 12,
+      "both_success_latency_ratio": 1.1768765701641979,
+      "project_deltas_pp": {
+        "eval_authorization": 0,
+        "eval_cache": -6.25,
+        "eval_inventory": 12.5,
+        "eval_pricing": 6.25,
+        "eval_routing": 18.75,
+        "eval_schedules": 0
+      },
+      "unadjusted_project_signflip_p": 0.375,
+      "bootstrap_resamples": 46656,
+      "cluster_count": 6,
+      "interpretation": "Exploratory exact-enumerated percentile bootstrap over six project clusters; repeated questions are not independent observations. No noninferiority claim."
+    }
+  },
+  "original48": {
+    "metrics": {
+      "A": {
+        "accuracy": 0.16666666666666666,
+        "mean_query_seconds": 2.318995888062394,
+        "mean_context_tokens": 93.33333333333333,
+        "unstable_questions": 0
+      },
+      "B": {
+        "accuracy": 0.25,
+        "mean_query_seconds": 3.1332000632492054,
+        "mean_context_tokens": 351.125,
+        "unstable_questions": 0
+      }
+    },
+    "difference": {
+      "higher": "B",
+      "base": "A",
+      "delta_pp": 8.333333333333332,
+      "ci95_pp": [
+        2.083333333333333,
+        16.666666666666664
+      ],
+      "win": 5,
+      "loss": 1,
+      "tie": 42,
+      "latency_delta_seconds": 0.8142041751868114,
+      "latency_ci95_seconds": [
+        0.6895946716657209,
+        0.9286348357060588
+      ],
+      "latency_ratio": 1.3511020348842053,
+      "latency_reduction_pct": -35.11020348842053,
+      "latency_reduction_ci95_pct": [
+        -40.17313864942969,
+        -30.355569112589542
+      ],
+      "both_success_n": 7,
+      "both_success_latency_ratio": 1.259925920700732,
+      "project_deltas_pp": {
+        "eval_authorization": 25.0,
+        "eval_cache": 0,
+        "eval_inventory": 0,
+        "eval_pricing": 0,
+        "eval_routing": 12.5,
+        "eval_schedules": 12.5
+      },
+      "unadjusted_project_signflip_p": 0.25,
+      "bootstrap_resamples": 46656,
+      "cluster_count": 6,
+      "interpretation": "Exploratory exact-enumerated percentile bootstrap over six project clusters; repeated questions are not independent observations. No noninferiority claim."
+    }
+  },
+  "additional48": {
+    "metrics": {
+      "A": {
+        "accuracy": 0.1875,
+        "mean_query_seconds": 2.376476631083127,
+        "mean_context_tokens": 100.79166666666667,
+        "unstable_questions": 0
+      },
+      "B": {
+        "accuracy": 0.20833333333333334,
+        "mean_query_seconds": 3.21406116064721,
+        "mean_context_tokens": 345.8333333333333,
+        "unstable_questions": 0
+      }
+    },
+    "difference": {
+      "higher": "B",
+      "base": "A",
+      "delta_pp": 2.083333333333333,
+      "ci95_pp": [
+        -12.5,
+        16.666666666666664
+      ],
+      "win": 5,
+      "loss": 4,
+      "tie": 39,
+      "latency_delta_seconds": 0.8375845295640829,
+      "latency_ci95_seconds": [
+        0.646479877647228,
+        1.0479047934186383
+      ],
+      "latency_ratio": 1.3524480395089502,
+      "latency_reduction_pct": -35.24480395089502,
+      "latency_reduction_ci95_pct": [
+        -41.447066838048066,
+        -27.954178802548093
+      ],
+      "both_success_n": 5,
+      "both_success_latency_ratio": 1.0440699917450789,
+      "project_deltas_pp": {
+        "eval_authorization": -25.0,
+        "eval_cache": -12.5,
+        "eval_inventory": 25.0,
+        "eval_pricing": 12.5,
+        "eval_routing": 25.0,
+        "eval_schedules": -12.5
+      },
+      "unadjusted_project_signflip_p": 1.0,
+      "bootstrap_resamples": 46656,
+      "cluster_count": 6,
+      "interpretation": "Exploratory exact-enumerated percentile bootstrap over six project clusters; repeated questions are not independent observations. No noninferiority claim."
+    }
+  }
+}

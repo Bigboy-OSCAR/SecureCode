@@ -1,0 +1,1706 @@
+{
+  "project": "dev_shipping",
+  "nodes": {
+    "memory://symbol/audit.py::AUDIT_VERSION": {
+      "id": "memory://symbol/audit.py::AUDIT_VERSION",
+      "path": "audit.py",
+      "name": "AUDIT_VERSION",
+      "source": "AUDIT_VERSION = 2",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::MAX_RECENT_EVENTS": {
+      "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+      "path": "audit.py",
+      "name": "MAX_RECENT_EVENTS",
+      "source": "MAX_RECENT_EVENTS = 20",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::REDACTION_MARKER": {
+      "id": "memory://symbol/audit.py::REDACTION_MARKER",
+      "path": "audit.py",
+      "name": "REDACTION_MARKER",
+      "source": "REDACTION_MARKER = \"***\"",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::DEFAULT_ACTOR": {
+      "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+      "path": "audit.py",
+      "name": "DEFAULT_ACTOR",
+      "source": "DEFAULT_ACTOR = \"system\"",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::audit_key": {
+      "id": "memory://symbol/audit.py::audit_key",
+      "path": "audit.py",
+      "name": "audit_key",
+      "source": "def audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+      "imports": "",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "AUDIT_VERSION",
+        "action",
+        "actor",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::recent_events": {
+      "id": "memory://symbol/audit.py::recent_events",
+      "path": "audit.py",
+      "name": "recent_events",
+      "source": "def recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+      "imports": "",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "MAX_RECENT_EVENTS",
+        "events"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::redact_identifier": {
+      "id": "memory://symbol/audit.py::redact_identifier",
+      "path": "audit.py",
+      "name": "redact_identifier",
+      "source": "def redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+      "imports": "",
+      "start": 12,
+      "end": 13,
+      "refs": [
+        "REDACTION_MARKER",
+        "identifier",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::event_record": {
+      "id": "memory://symbol/audit.py::event_record",
+      "path": "audit.py",
+      "name": "event_record",
+      "source": "def event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+      "imports": "",
+      "start": 15,
+      "end": 16,
+      "refs": [
+        "AUDIT_VERSION",
+        "DEFAULT_ACTOR",
+        "action",
+        "actor"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/policy.py::BASE_CENTS": {
+      "id": "memory://symbol/policy.py::BASE_CENTS",
+      "path": "policy.py",
+      "name": "BASE_CENTS",
+      "source": "BASE_CENTS = 350",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::STEP_GRAMS": {
+      "id": "memory://symbol/policy.py::STEP_GRAMS",
+      "path": "policy.py",
+      "name": "STEP_GRAMS",
+      "source": "STEP_GRAMS = 500",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::STEP_CENTS": {
+      "id": "memory://symbol/policy.py::STEP_CENTS",
+      "path": "policy.py",
+      "name": "STEP_CENTS",
+      "source": "STEP_CENTS = 90",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::FREE_FROM_CENTS": {
+      "id": "memory://symbol/policy.py::FREE_FROM_CENTS",
+      "path": "policy.py",
+      "name": "FREE_FROM_CENTS",
+      "source": "FREE_FROM_CENTS = 8000",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::REMOTE_SURCHARGE": {
+      "id": "memory://symbol/policy.py::REMOTE_SURCHARGE",
+      "path": "policy.py",
+      "name": "REMOTE_SURCHARGE",
+      "source": "REMOTE_SURCHARGE = 240",
+      "imports": "",
+      "start": 5,
+      "end": 5,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::MAX_GRAMS": {
+      "id": "memory://symbol/policy.py::MAX_GRAMS",
+      "path": "policy.py",
+      "name": "MAX_GRAMS",
+      "source": "MAX_GRAMS = 20000",
+      "imports": "",
+      "start": 6,
+      "end": 6,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::MIN_GRAMS": {
+      "id": "memory://symbol/policy.py::MIN_GRAMS",
+      "path": "policy.py",
+      "name": "MIN_GRAMS",
+      "source": "MIN_GRAMS = 1",
+      "imports": "",
+      "start": 7,
+      "end": 7,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::TRACKING_PREFIX": {
+      "id": "memory://symbol/policy.py::TRACKING_PREFIX",
+      "path": "policy.py",
+      "name": "TRACKING_PREFIX",
+      "source": "TRACKING_PREFIX = \"parcel\"",
+      "imports": "",
+      "start": 8,
+      "end": 8,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::DISPLAY_PREFIX": {
+      "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+      "path": "presentation.py",
+      "name": "DISPLAY_PREFIX",
+      "source": "DISPLAY_PREFIX = \"parcel\"",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::DISPLAY_WIDTH": {
+      "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+      "path": "presentation.py",
+      "name": "DISPLAY_WIDTH",
+      "source": "DISPLAY_WIDTH = 12",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::UNKNOWN_LABEL": {
+      "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+      "path": "presentation.py",
+      "name": "UNKNOWN_LABEL",
+      "source": "UNKNOWN_LABEL = \"unknown\"",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::MAX_LABEL_LENGTH": {
+      "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+      "path": "presentation.py",
+      "name": "MAX_LABEL_LENGTH",
+      "source": "MAX_LABEL_LENGTH = 48",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::normalize_label": {
+      "id": "memory://symbol/presentation.py::normalize_label",
+      "path": "presentation.py",
+      "name": "normalize_label",
+      "source": "def normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+      "imports": "",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "MAX_LABEL_LENGTH",
+        "label"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::display_reference": {
+      "id": "memory://symbol/presentation.py::display_reference",
+      "path": "presentation.py",
+      "name": "display_reference",
+      "source": "def display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+      "imports": "",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "DISPLAY_PREFIX",
+        "DISPLAY_WIDTH",
+        "reference",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::status_label": {
+      "id": "memory://symbol/presentation.py::status_label",
+      "path": "presentation.py",
+      "name": "status_label",
+      "source": "def status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+      "imports": "",
+      "start": 12,
+      "end": 13,
+      "refs": [
+        "UNKNOWN_LABEL",
+        "code"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::summarize_count": {
+      "id": "memory://symbol/presentation.py::summarize_count",
+      "path": "presentation.py",
+      "name": "summarize_count",
+      "source": "def summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+      "imports": "",
+      "start": 15,
+      "end": 16,
+      "refs": [
+        "DISPLAY_PREFIX",
+        "len",
+        "values"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::weight_steps": {
+      "id": "memory://symbol/rules.py::weight_steps",
+      "path": "rules.py",
+      "name": "weight_steps",
+      "source": "def weight_steps(grams):\n    return (max(grams, MIN_GRAMS) + STEP_GRAMS - 1) // STEP_GRAMS",
+      "imports": "from policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS",
+      "start": 3,
+      "end": 4,
+      "refs": [
+        "MIN_GRAMS",
+        "STEP_GRAMS",
+        "grams",
+        "max"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::MIN_GRAMS",
+        "memory://symbol/policy.py::STEP_GRAMS"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::weight_charge": {
+      "id": "memory://symbol/rules.py::weight_charge",
+      "path": "rules.py",
+      "name": "weight_charge",
+      "source": "def weight_charge(grams):\n    return weight_steps(grams) * STEP_CENTS",
+      "imports": "from policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "STEP_CENTS",
+        "grams",
+        "weight_steps"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::STEP_CENTS",
+        "memory://symbol/rules.py::weight_steps"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::free_shipping": {
+      "id": "memory://symbol/rules.py::free_shipping",
+      "path": "rules.py",
+      "name": "free_shipping",
+      "source": "def free_shipping(order_cents):\n    return order_cents >= FREE_FROM_CENTS",
+      "imports": "from policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "FREE_FROM_CENTS",
+        "order_cents"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::FREE_FROM_CENTS"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::allowed_weight": {
+      "id": "memory://symbol/rules.py::allowed_weight",
+      "path": "rules.py",
+      "name": "allowed_weight",
+      "source": "def allowed_weight(grams):\n    return MIN_GRAMS <= grams <= MAX_GRAMS",
+      "imports": "from policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS",
+      "start": 12,
+      "end": 13,
+      "refs": [
+        "MAX_GRAMS",
+        "MIN_GRAMS",
+        "grams"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::MAX_GRAMS",
+        "memory://symbol/policy.py::MIN_GRAMS"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::shipping_quote": {
+      "id": "memory://symbol/service.py::shipping_quote",
+      "path": "service.py",
+      "name": "shipping_quote",
+      "source": "def shipping_quote(order_cents, grams, remote):\n    if not allowed_weight(grams):\n        return {\"status\": \"rejected\", \"cents\": 0}\n    charge = 0 if free_shipping(order_cents) else BASE_CENTS + weight_charge(grams)\n    if remote:\n        charge += REMOTE_SURCHARGE\n    return {\"status\": \"accepted\", \"cents\": charge}",
+      "imports": "from policy import BASE_CENTS, REMOTE_SURCHARGE, TRACKING_PREFIX\nfrom rules import weight_charge, free_shipping, allowed_weight",
+      "start": 4,
+      "end": 10,
+      "refs": [
+        "BASE_CENTS",
+        "REMOTE_SURCHARGE",
+        "allowed_weight",
+        "charge",
+        "free_shipping",
+        "grams",
+        "order_cents",
+        "remote",
+        "weight_charge"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::BASE_CENTS",
+        "memory://symbol/policy.py::REMOTE_SURCHARGE",
+        "memory://symbol/rules.py::allowed_weight",
+        "memory://symbol/rules.py::free_shipping",
+        "memory://symbol/rules.py::weight_charge"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::parcel_total": {
+      "id": "memory://symbol/service.py::parcel_total",
+      "path": "service.py",
+      "name": "parcel_total",
+      "source": "def parcel_total(order_cents, grams, remote):\n    quote = shipping_quote(order_cents, grams, remote)\n    return order_cents + quote[\"cents\"] if quote[\"status\"] == \"accepted\" else -1",
+      "imports": "from policy import BASE_CENTS, REMOTE_SURCHARGE, TRACKING_PREFIX\nfrom rules import weight_charge, free_shipping, allowed_weight",
+      "start": 12,
+      "end": 14,
+      "refs": [
+        "grams",
+        "order_cents",
+        "quote",
+        "remote",
+        "shipping_quote"
+      ],
+      "deps": [
+        "memory://symbol/service.py::shipping_quote"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::tracking_key": {
+      "id": "memory://symbol/service.py::tracking_key",
+      "path": "service.py",
+      "name": "tracking_key",
+      "source": "def tracking_key(order_id):\n    return TRACKING_PREFIX + \":\" + order_id.strip().upper()",
+      "imports": "from policy import BASE_CENTS, REMOTE_SURCHARGE, TRACKING_PREFIX\nfrom rules import weight_charge, free_shipping, allowed_weight",
+      "start": 16,
+      "end": 17,
+      "refs": [
+        "TRACKING_PREFIX",
+        "order_id"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::TRACKING_PREFIX"
+      ],
+      "kind": "function"
+    }
+  },
+  "raw": [
+    {
+      "id": "memory://symbol/audit.py::AUDIT_VERSION",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::MAX_RECENT_EVENTS lines 2-2\n\nMAX_RECENT_EVENTS = 20",
+      "source_uris": [
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::REDACTION_MARKER",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::REDACTION_MARKER lines 3-3\n\nREDACTION_MARKER = \"***\"",
+      "source_uris": [
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::DEFAULT_ACTOR lines 4-4\n\nDEFAULT_ACTOR = \"system\"",
+      "source_uris": [
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::audit_key",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::audit_key lines 6-7\n\ndef audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action\n\n### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::audit_key",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::audit_key lines 6-7\n\ndef audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::recent_events",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::recent_events lines 9-10\n\ndef recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]\n\n### memory://symbol/audit.py::MAX_RECENT_EVENTS lines 2-2\n\nMAX_RECENT_EVENTS = 20",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::recent_events",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::recent_events lines 9-10\n\ndef recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::redact_identifier",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::redact_identifier lines 12-13\n\ndef redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]\n\n### memory://symbol/audit.py::REDACTION_MARKER lines 3-3\n\nREDACTION_MARKER = \"***\"",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::redact_identifier",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::redact_identifier lines 12-13\n\ndef redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::event_record",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::event_record lines 15-16\n\ndef event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}\n\n### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2\n\n### memory://symbol/audit.py::DEFAULT_ACTOR lines 4-4\n\nDEFAULT_ACTOR = \"system\"",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::event_record",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::event_record lines 15-16\n\ndef event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/policy.py::BASE_CENTS",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::BASE_CENTS lines 1-1\n\nBASE_CENTS = 350",
+      "source_uris": [
+        "memory://symbol/policy.py::BASE_CENTS"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::STEP_GRAMS",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::STEP_GRAMS lines 2-2\n\nSTEP_GRAMS = 500",
+      "source_uris": [
+        "memory://symbol/policy.py::STEP_GRAMS"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::STEP_CENTS",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::STEP_CENTS lines 3-3\n\nSTEP_CENTS = 90",
+      "source_uris": [
+        "memory://symbol/policy.py::STEP_CENTS"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::FREE_FROM_CENTS",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::FREE_FROM_CENTS lines 4-4\n\nFREE_FROM_CENTS = 8000",
+      "source_uris": [
+        "memory://symbol/policy.py::FREE_FROM_CENTS"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::REMOTE_SURCHARGE",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::REMOTE_SURCHARGE lines 5-5\n\nREMOTE_SURCHARGE = 240",
+      "source_uris": [
+        "memory://symbol/policy.py::REMOTE_SURCHARGE"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::MAX_GRAMS",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::MAX_GRAMS lines 6-6\n\nMAX_GRAMS = 20000",
+      "source_uris": [
+        "memory://symbol/policy.py::MAX_GRAMS"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::MIN_GRAMS",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::MIN_GRAMS lines 7-7\n\nMIN_GRAMS = 1",
+      "source_uris": [
+        "memory://symbol/policy.py::MIN_GRAMS"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::TRACKING_PREFIX",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::TRACKING_PREFIX lines 8-8\n\nTRACKING_PREFIX = \"parcel\"",
+      "source_uris": [
+        "memory://symbol/policy.py::TRACKING_PREFIX"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"parcel\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::DISPLAY_WIDTH lines 2-2\n\nDISPLAY_WIDTH = 12",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::UNKNOWN_LABEL lines 3-3\n\nUNKNOWN_LABEL = \"unknown\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::MAX_LABEL_LENGTH lines 4-4\n\nMAX_LABEL_LENGTH = 48",
+      "source_uris": [
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::normalize_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::normalize_label lines 6-7\n\ndef normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]\n\n### memory://symbol/presentation.py::MAX_LABEL_LENGTH lines 4-4\n\nMAX_LABEL_LENGTH = 48",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::normalize_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::normalize_label lines 6-7\n\ndef normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::display_reference",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::display_reference lines 9-10\n\ndef display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"parcel\"\n\n### memory://symbol/presentation.py::DISPLAY_WIDTH lines 2-2\n\nDISPLAY_WIDTH = 12",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::display_reference",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::display_reference lines 9-10\n\ndef display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::status_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::status_label lines 12-13\n\ndef status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)\n\n### memory://symbol/presentation.py::UNKNOWN_LABEL lines 3-3\n\nUNKNOWN_LABEL = \"unknown\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::status_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::status_label lines 12-13\n\ndef status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::summarize_count",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::summarize_count lines 15-16\n\ndef summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"parcel\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::summarize_count",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::summarize_count lines 15-16\n\ndef summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::weight_steps",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::weight_steps lines 3-4\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef weight_steps(grams):\n    return (max(grams, MIN_GRAMS) + STEP_GRAMS - 1) // STEP_GRAMS\n\n### memory://symbol/policy.py::MIN_GRAMS lines 7-7\n\nMIN_GRAMS = 1\n\n### memory://symbol/policy.py::STEP_GRAMS lines 2-2\n\nSTEP_GRAMS = 500",
+      "source_uris": [
+        "memory://symbol/rules.py::weight_steps",
+        "memory://symbol/policy.py::MIN_GRAMS",
+        "memory://symbol/policy.py::STEP_GRAMS"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::weight_steps",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::weight_steps lines 3-4\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef weight_steps(grams):\n    return (max(grams, MIN_GRAMS) + STEP_GRAMS - 1) // STEP_GRAMS",
+      "source_uris": [
+        "memory://symbol/rules.py::weight_steps"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::weight_charge",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::weight_charge lines 6-7\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef weight_charge(grams):\n    return weight_steps(grams) * STEP_CENTS\n\n### memory://symbol/policy.py::STEP_CENTS lines 3-3\n\nSTEP_CENTS = 90\n\n### memory://symbol/rules.py::weight_steps lines 3-4\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef weight_steps(grams):\n    return (max(grams, MIN_GRAMS) + STEP_GRAMS - 1) // STEP_GRAMS\n\n### memory://symbol/policy.py::MIN_GRAMS lines 7-7\n\nMIN_GRAMS = 1\n\n### memory://symbol/policy.py::STEP_GRAMS lines 2-2\n\nSTEP_GRAMS = 500",
+      "source_uris": [
+        "memory://symbol/rules.py::weight_charge",
+        "memory://symbol/policy.py::STEP_CENTS",
+        "memory://symbol/rules.py::weight_steps",
+        "memory://symbol/policy.py::MIN_GRAMS",
+        "memory://symbol/policy.py::STEP_GRAMS"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::weight_charge",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::weight_charge lines 6-7\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef weight_charge(grams):\n    return weight_steps(grams) * STEP_CENTS",
+      "source_uris": [
+        "memory://symbol/rules.py::weight_charge"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::free_shipping",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::free_shipping lines 9-10\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef free_shipping(order_cents):\n    return order_cents >= FREE_FROM_CENTS\n\n### memory://symbol/policy.py::FREE_FROM_CENTS lines 4-4\n\nFREE_FROM_CENTS = 8000",
+      "source_uris": [
+        "memory://symbol/rules.py::free_shipping",
+        "memory://symbol/policy.py::FREE_FROM_CENTS"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::free_shipping",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::free_shipping lines 9-10\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef free_shipping(order_cents):\n    return order_cents >= FREE_FROM_CENTS",
+      "source_uris": [
+        "memory://symbol/rules.py::free_shipping"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::allowed_weight",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::allowed_weight lines 12-13\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef allowed_weight(grams):\n    return MIN_GRAMS <= grams <= MAX_GRAMS\n\n### memory://symbol/policy.py::MAX_GRAMS lines 6-6\n\nMAX_GRAMS = 20000\n\n### memory://symbol/policy.py::MIN_GRAMS lines 7-7\n\nMIN_GRAMS = 1",
+      "source_uris": [
+        "memory://symbol/rules.py::allowed_weight",
+        "memory://symbol/policy.py::MAX_GRAMS",
+        "memory://symbol/policy.py::MIN_GRAMS"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::allowed_weight",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::allowed_weight lines 12-13\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef allowed_weight(grams):\n    return MIN_GRAMS <= grams <= MAX_GRAMS",
+      "source_uris": [
+        "memory://symbol/rules.py::allowed_weight"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::shipping_quote",
+      "level": 0,
+      "text": "### memory://symbol/service.py::shipping_quote lines 4-10\nfrom policy import BASE_CENTS, REMOTE_SURCHARGE, TRACKING_PREFIX\nfrom rules import weight_charge, free_shipping, allowed_weight\ndef shipping_quote(order_cents, grams, remote):\n    if not allowed_weight(grams):\n        return {\"status\": \"rejected\", \"cents\": 0}\n    charge = 0 if free_shipping(order_cents) else BASE_CENTS + weight_charge(grams)\n    if remote:\n        charge += REMOTE_SURCHARGE\n    return {\"status\": \"accepted\", \"cents\": charge}\n\n### memory://symbol/policy.py::BASE_CENTS lines 1-1\n\nBASE_CENTS = 350\n\n### memory://symbol/policy.py::REMOTE_SURCHARGE lines 5-5\n\nREMOTE_SURCHARGE = 240\n\n### memory://symbol/rules.py::allowed_weight lines 12-13\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef allowed_weight(grams):\n    return MIN_GRAMS <= grams <= MAX_GRAMS\n\n### memory://symbol/rules.py::free_shipping lines 9-10\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef free_shipping(order_cents):\n    return order_cents >= FREE_FROM_CENTS\n\n### memory://symbol/rules.py::weight_charge lines 6-7\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef weight_charge(grams):\n    return weight_steps(grams) * STEP_CENTS\n\n### memory://symbol/policy.py::MAX_GRAMS lines 6-6\n\nMAX_GRAMS = 20000\n\n### memory://symbol/policy.py::MIN_GRAMS lines 7-7\n\nMIN_GRAMS = 1\n\n### memory://symbol/policy.py::FREE_FROM_CENTS lines 4-4\n\nFREE_FROM_CENTS = 8000\n\n### memory://symbol/policy.py::STEP_CENTS lines 3-3\n\nSTEP_CENTS = 90\n\n### memory://symbol/rules.py::weight_steps lines 3-4\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef weight_steps(grams):\n    return (max(grams, MIN_GRAMS) + STEP_GRAMS - 1) // STEP_GRAMS\n\n### memory://symbol/policy.py::STEP_GRAMS lines 2-2\n\nSTEP_GRAMS = 500",
+      "source_uris": [
+        "memory://symbol/service.py::shipping_quote",
+        "memory://symbol/policy.py::BASE_CENTS",
+        "memory://symbol/policy.py::REMOTE_SURCHARGE",
+        "memory://symbol/rules.py::allowed_weight",
+        "memory://symbol/rules.py::free_shipping",
+        "memory://symbol/rules.py::weight_charge",
+        "memory://symbol/policy.py::MAX_GRAMS",
+        "memory://symbol/policy.py::MIN_GRAMS",
+        "memory://symbol/policy.py::FREE_FROM_CENTS",
+        "memory://symbol/policy.py::STEP_CENTS",
+        "memory://symbol/rules.py::weight_steps",
+        "memory://symbol/policy.py::STEP_GRAMS"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::shipping_quote",
+      "level": 0,
+      "text": "### memory://symbol/service.py::shipping_quote lines 4-10\nfrom policy import BASE_CENTS, REMOTE_SURCHARGE, TRACKING_PREFIX\nfrom rules import weight_charge, free_shipping, allowed_weight\ndef shipping_quote(order_cents, grams, remote):\n    if not allowed_weight(grams):\n        return {\"status\": \"rejected\", \"cents\": 0}\n    charge = 0 if free_shipping(order_cents) else BASE_CENTS + weight_charge(grams)\n    if remote:\n        charge += REMOTE_SURCHARGE\n    return {\"status\": \"accepted\", \"cents\": charge}",
+      "source_uris": [
+        "memory://symbol/service.py::shipping_quote"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::parcel_total",
+      "level": 0,
+      "text": "### memory://symbol/service.py::parcel_total lines 12-14\nfrom policy import BASE_CENTS, REMOTE_SURCHARGE, TRACKING_PREFIX\nfrom rules import weight_charge, free_shipping, allowed_weight\ndef parcel_total(order_cents, grams, remote):\n    quote = shipping_quote(order_cents, grams, remote)\n    return order_cents + quote[\"cents\"] if quote[\"status\"] == \"accepted\" else -1\n\n### memory://symbol/service.py::shipping_quote lines 4-10\nfrom policy import BASE_CENTS, REMOTE_SURCHARGE, TRACKING_PREFIX\nfrom rules import weight_charge, free_shipping, allowed_weight\ndef shipping_quote(order_cents, grams, remote):\n    if not allowed_weight(grams):\n        return {\"status\": \"rejected\", \"cents\": 0}\n    charge = 0 if free_shipping(order_cents) else BASE_CENTS + weight_charge(grams)\n    if remote:\n        charge += REMOTE_SURCHARGE\n    return {\"status\": \"accepted\", \"cents\": charge}\n\n### memory://symbol/policy.py::BASE_CENTS lines 1-1\n\nBASE_CENTS = 350\n\n### memory://symbol/policy.py::REMOTE_SURCHARGE lines 5-5\n\nREMOTE_SURCHARGE = 240\n\n### memory://symbol/rules.py::allowed_weight lines 12-13\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef allowed_weight(grams):\n    return MIN_GRAMS <= grams <= MAX_GRAMS\n\n### memory://symbol/rules.py::free_shipping lines 9-10\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef free_shipping(order_cents):\n    return order_cents >= FREE_FROM_CENTS\n\n### memory://symbol/rules.py::weight_charge lines 6-7\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef weight_charge(grams):\n    return weight_steps(grams) * STEP_CENTS\n\n### memory://symbol/policy.py::MAX_GRAMS lines 6-6\n\nMAX_GRAMS = 20000\n\n### memory://symbol/policy.py::MIN_GRAMS lines 7-7\n\nMIN_GRAMS = 1\n\n### memory://symbol/policy.py::FREE_FROM_CENTS lines 4-4\n\nFREE_FROM_CENTS = 8000\n\n### memory://symbol/policy.py::STEP_CENTS lines 3-3\n\nSTEP_CENTS = 90\n\n### memory://symbol/rules.py::weight_steps lines 3-4\nfrom policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS\ndef weight_steps(grams):\n    return (max(grams, MIN_GRAMS) + STEP_GRAMS - 1) // STEP_GRAMS",
+      "source_uris": [
+        "memory://symbol/service.py::parcel_total",
+        "memory://symbol/service.py::shipping_quote",
+        "memory://symbol/policy.py::BASE_CENTS",
+        "memory://symbol/policy.py::REMOTE_SURCHARGE",
+        "memory://symbol/rules.py::allowed_weight",
+        "memory://symbol/rules.py::free_shipping",
+        "memory://symbol/rules.py::weight_charge",
+        "memory://symbol/policy.py::MAX_GRAMS",
+        "memory://symbol/policy.py::MIN_GRAMS",
+        "memory://symbol/policy.py::FREE_FROM_CENTS",
+        "memory://symbol/policy.py::STEP_CENTS",
+        "memory://symbol/rules.py::weight_steps"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::parcel_total",
+      "level": 0,
+      "text": "### memory://symbol/service.py::parcel_total lines 12-14\nfrom policy import BASE_CENTS, REMOTE_SURCHARGE, TRACKING_PREFIX\nfrom rules import weight_charge, free_shipping, allowed_weight\ndef parcel_total(order_cents, grams, remote):\n    quote = shipping_quote(order_cents, grams, remote)\n    return order_cents + quote[\"cents\"] if quote[\"status\"] == \"accepted\" else -1",
+      "source_uris": [
+        "memory://symbol/service.py::parcel_total"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::tracking_key",
+      "level": 0,
+      "text": "### memory://symbol/service.py::tracking_key lines 16-17\nfrom policy import BASE_CENTS, REMOTE_SURCHARGE, TRACKING_PREFIX\nfrom rules import weight_charge, free_shipping, allowed_weight\ndef tracking_key(order_id):\n    return TRACKING_PREFIX + \":\" + order_id.strip().upper()\n\n### memory://symbol/policy.py::TRACKING_PREFIX lines 8-8\n\nTRACKING_PREFIX = \"parcel\"",
+      "source_uris": [
+        "memory://symbol/service.py::tracking_key",
+        "memory://symbol/policy.py::TRACKING_PREFIX"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::tracking_key",
+      "level": 0,
+      "text": "### memory://symbol/service.py::tracking_key lines 16-17\nfrom policy import BASE_CENTS, REMOTE_SURCHARGE, TRACKING_PREFIX\nfrom rules import weight_charge, free_shipping, allowed_weight\ndef tracking_key(order_id):\n    return TRACKING_PREFIX + \":\" + order_id.strip().upper()",
+      "source_uris": [
+        "memory://symbol/service.py::tracking_key"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    }
+  ],
+  "summaries": [
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::audit_key",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::audit_key\nThe `audit_key` function constructs a string key for auditing purposes. It takes two parameters: `actor` and `action`. The function returns a string formatted as `AUDIT_VERSION:actor:action`, where `actor` is stripped of leading and trailing whitespace and converted to lowercase. The constant `AUDIT_VERSION` is set to 2.",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "children": [
+        "memory://symbol/audit.py::audit_key"
+      ],
+      "call_id": "ea80c49ff6efb97c"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::recent_events",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::recent_events\nThe `recent_events` function takes a list of events and returns the last `MAX_RECENT_EVENTS` elements. It uses the constant `MAX_RECENT_EVENTS` which is set to 20. The function does not perform any string operations or calls other functions.",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "children": [
+        "memory://symbol/audit.py::recent_events"
+      ],
+      "call_id": "0e159aa2386f298a"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::redact_identifier",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::redact_identifier\nThe `redact_identifier` function takes an `identifier` as input and returns a string where the last four characters of the `identifier` are preserved, prefixed by the `REDACTION_MARKER` \"***\". The function uses the `str` function to convert the `identifier` to a string and then slices the last four characters. The `REDACTION_MARKER` is a constant defined as \"***\".",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "children": [
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "call_id": "15c24678ecc41ec7"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::event_record",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::event_record\nThe `event_record` function in `audit.py` creates a dictionary representing an audit event. It takes two parameters: `action` (required) and `actor` (optional, defaults to \"system\"). The function returns a dictionary with keys \"actor\", \"action\", and \"version\". The \"actor\" key uses the provided `actor` value if it exists, otherwise it uses the constant `DEFAULT_ACTOR`. The \"version\" key always uses the constant `AUDIT_VERSION`, which is set to 2.",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "children": [
+        "memory://symbol/audit.py::event_record"
+      ],
+      "call_id": "b936af186371bdf7"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::normalize_label",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::normalize_label\nThe `normalize_label` function in `presentation.py` processes a label string by stripping leading and trailing whitespace, converting it to lowercase, replacing spaces with hyphens, and truncating it to a maximum length of 48 characters.",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::normalize_label"
+      ],
+      "call_id": "1a13c049cd24833f"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::display_reference",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::display_reference\nThe `display_reference` function formats a reference number by prefixing it with \"parcel:\" and padding it with zeros to a width of 12 characters. It uses constants `DISPLAY_PREFIX` and `DISPLAY_WIDTH` for the prefix and width, respectively.",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::display_reference"
+      ],
+      "call_id": "7a2638a60a1794bc"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::status_label",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::status_label\nThe `status_label` function maps an integer code to a corresponding status label. It uses a dictionary to look up the label based on the code. If the code is not found, it returns the `UNKNOWN_LABEL`. The `UNKNOWN_LABEL` is defined as \"unknown\".",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::status_label"
+      ],
+      "call_id": "6347571fd8f9ba8c"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::summarize_count\nThe `summarize_count` function takes a list of values as input and returns a dictionary with a key \"domain\" set to the constant `DISPLAY_PREFIX` (which is \"parcel\") and a key \"count\" set to the length of the input list.",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "call_id": "cd3644b76ffb89fe"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::weight_steps",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::weight_steps\nThe `weight_steps` function calculates the number of steps based on the grams input, ensuring it's at least `MIN_GRAMS` (1 gram). It uses integer division to round up to the nearest step size (`STEP_GRAMS` = 500 grams). No string operations or external calls are made.",
+      "source_uris": [
+        "memory://symbol/rules.py::weight_steps",
+        "memory://symbol/policy.py::MIN_GRAMS",
+        "memory://symbol/policy.py::STEP_GRAMS"
+      ],
+      "children": [
+        "memory://symbol/rules.py::weight_steps"
+      ],
+      "call_id": "6c0b2251b968e033"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::weight_charge",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::weight_charge\nThe `weight_charge` function calculates the charge for a given weight in grams. It uses the `weight_steps` function to determine the number of steps based on the grams, then multiplies by `STEP_CENTS` to get the total charge. The `weight_steps` function ensures the grams are at least `MIN_GRAMS` and then calculates steps by dividing the adjusted grams by `STEP_GRAMS` and rounding up. Constants include `STEP_CENTS` (90), `MIN_GRAMS` (1), and `STEP_GRAMS` (500).",
+      "source_uris": [
+        "memory://symbol/rules.py::weight_charge",
+        "memory://symbol/policy.py::STEP_CENTS",
+        "memory://symbol/rules.py::weight_steps",
+        "memory://symbol/policy.py::MIN_GRAMS",
+        "memory://symbol/policy.py::STEP_GRAMS"
+      ],
+      "children": [
+        "memory://symbol/rules.py::weight_charge"
+      ],
+      "call_id": "95a4392b56017c9a"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::free_shipping",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::free_shipping\nThe `free_shipping` function checks if an order qualifies for free shipping based on its total value in cents. It returns `True` if the order value is greater than or equal to `8000` cents (i.e., $80), otherwise it returns `False`.",
+      "source_uris": [
+        "memory://symbol/rules.py::free_shipping",
+        "memory://symbol/policy.py::FREE_FROM_CENTS"
+      ],
+      "children": [
+        "memory://symbol/rules.py::free_shipping"
+      ],
+      "call_id": "3ea0f47974b7a536"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::allowed_weight",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::allowed_weight\nThe `allowed_weight` function checks if a given weight in grams is within a specified range. It uses constants `MIN_GRAMS` and `MAX_GRAMS` from the `policy` module to define the valid range. The function returns `True` if the weight is between `MIN_GRAMS` and `MAX_GRAMS` (inclusive), otherwise it returns `False`.",
+      "source_uris": [
+        "memory://symbol/rules.py::allowed_weight",
+        "memory://symbol/policy.py::MAX_GRAMS",
+        "memory://symbol/policy.py::MIN_GRAMS"
+      ],
+      "children": [
+        "memory://symbol/rules.py::allowed_weight"
+      ],
+      "call_id": "3569151ab7ec588b"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::shipping_quote",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::shipping_quote\nThe `shipping_quote` function calculates shipping charges based on order value and weight. It checks if the weight is allowed using `allowed_weight`. If not, it returns a rejected quote. If allowed, it calculates the base charge and adds weight-based charges using `weight_charge`. If the order is remote, it adds a remote surcharge. The function returns an accepted quote with the total charge in cents. Constants define base charges, surcharges, and weight limits.",
+      "source_uris": [
+        "memory://symbol/service.py::shipping_quote",
+        "memory://symbol/policy.py::BASE_CENTS",
+        "memory://symbol/policy.py::REMOTE_SURCHARGE",
+        "memory://symbol/rules.py::allowed_weight",
+        "memory://symbol/rules.py::free_shipping",
+        "memory://symbol/rules.py::weight_charge",
+        "memory://symbol/policy.py::MAX_GRAMS",
+        "memory://symbol/policy.py::MIN_GRAMS",
+        "memory://symbol/policy.py::FREE_FROM_CENTS",
+        "memory://symbol/policy.py::STEP_CENTS",
+        "memory://symbol/rules.py::weight_steps",
+        "memory://symbol/policy.py::STEP_GRAMS"
+      ],
+      "children": [
+        "memory://symbol/service.py::shipping_quote"
+      ],
+      "call_id": "214e17546c55c4a0"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::parcel_total",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::parcel_total\nThe `parcel_total` function calculates the total cost of a parcel order, including shipping. It calls `shipping_quote` to determine the shipping charge. If the shipping quote is accepted, it adds the shipping charge to the order amount; otherwise, it returns -1.\n\nThe `shipping_quote` function checks if the parcel weight is within allowed limits. If not, it returns a rejected quote. Otherwise, it calculates the base shipping charge and adds a remote surcharge if applicable. It returns an accepted quote with the total shipping charge.\n\nImportant branches:\n- `allowed_weight` checks if the weight is within the allowed range.\n- `free_shipping` checks if the order cost is above the free shipping threshold.\n- `weight_charge` calculates the shipping charge based on the weight.\n\nString operations: None\n\nCalls:\n- `parcel_total` calls `shipping_quote`.\n- `shipping_quote` calls `allowed_weight`, `free_shipping`, and `weight_charge`.\n\nConstants:\n- `BASE_CENTS`, `REMOTE_SURCHARGE`, `MAX_GRAMS`, `MIN_GRAMS`, `FREE_FROM_CENTS`, `STEP_CENTS`",
+      "source_uris": [
+        "memory://symbol/service.py::parcel_total",
+        "memory://symbol/service.py::shipping_quote",
+        "memory://symbol/policy.py::BASE_CENTS",
+        "memory://symbol/policy.py::REMOTE_SURCHARGE",
+        "memory://symbol/rules.py::allowed_weight",
+        "memory://symbol/rules.py::free_shipping",
+        "memory://symbol/rules.py::weight_charge",
+        "memory://symbol/policy.py::MAX_GRAMS",
+        "memory://symbol/policy.py::MIN_GRAMS",
+        "memory://symbol/policy.py::FREE_FROM_CENTS",
+        "memory://symbol/policy.py::STEP_CENTS",
+        "memory://symbol/rules.py::weight_steps"
+      ],
+      "children": [
+        "memory://symbol/service.py::parcel_total"
+      ],
+      "call_id": "d348658d4f2e1383"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::tracking_key",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::tracking_key\nThe `tracking_key` function in `service.py` generates a tracking key for an order. It takes an `order_id` as input, strips any leading or trailing whitespace, converts it to uppercase, and prepends the `TRACKING_PREFIX` from `policy.py` (which is \"parcel\"). The function returns the formatted tracking key.",
+      "source_uris": [
+        "memory://symbol/service.py::tracking_key",
+        "memory://symbol/policy.py::TRACKING_PREFIX"
+      ],
+      "children": [
+        "memory://symbol/service.py::tracking_key"
+      ],
+      "call_id": "ca1d5d20d0d34a29"
+    },
+    {
+      "id": "summary:level2:audit.py",
+      "level": 2,
+      "path": "audit.py",
+      "text": "### summary:level2:audit.py\nThe `audit.py` module contains functions for constructing audit keys, managing recent events, redacting identifiers, and recording events. The `audit_key` function creates a string key for auditing, `recent_events` returns the last 20 events from a list, `redact_identifier` masks all but the last four characters of an identifier, and `event_record` creates a dictionary representing an audit event with a specified action and optional actor. Constants like `AUDIT_VERSION`, `MAX_RECENT_EVENTS`, and `REDACTION_MARKER` are used to maintain consistency and control the behavior of these functions.",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "memory://symbol/audit.py::REDACTION_MARKER",
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/audit.py::audit_key",
+        "summary:leaf:memory://symbol/audit.py::recent_events",
+        "summary:leaf:memory://symbol/audit.py::redact_identifier",
+        "summary:leaf:memory://symbol/audit.py::event_record"
+      ],
+      "call_id": "a44b845e66645ebf"
+    },
+    {
+      "id": "summary:level2:presentation.py",
+      "level": 2,
+      "path": "presentation.py",
+      "text": "### summary:level2:presentation.py\nThe `presentation.py` module contains functions for normalizing labels, displaying references, mapping status codes, and summarizing counts. The `normalize_label` function processes strings by stripping whitespace, converting to lowercase, replacing spaces with hyphens, and truncating to 48 characters. The `display_reference` function formats reference numbers with a \"parcel:\" prefix and zero-padding to 12 characters. The `status_label` function maps integer codes to status labels using a dictionary, defaulting to \"unknown\" if the code is not found. The `summarize_count` function returns a dictionary summarizing the count of items in a list, with a \"parcel\" domain.",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/presentation.py::normalize_label",
+        "summary:leaf:memory://symbol/presentation.py::display_reference",
+        "summary:leaf:memory://symbol/presentation.py::status_label",
+        "summary:leaf:memory://symbol/presentation.py::summarize_count"
+      ],
+      "call_id": "d4e09e9f4de1ee80"
+    },
+    {
+      "id": "summary:level2:rules.py",
+      "level": 2,
+      "path": "rules.py",
+      "text": "### summary:level2:rules.py\nThe `rules.py` module contains functions for calculating weight steps, charge, and determining free shipping eligibility. The `weight_steps` function calculates the number of steps based on grams, rounding up to the nearest 500 grams. The `weight_charge` function uses `weight_steps` to calculate the charge in cents, with each step costing 90 cents. The `free_shipping` function checks if an order qualifies for free shipping based on its total value in cents. The `allowed_weight` function ensures a weight is within a specified range (1 to 1000 grams).",
+      "source_uris": [
+        "memory://symbol/policy.py::FREE_FROM_CENTS",
+        "memory://symbol/policy.py::MAX_GRAMS",
+        "memory://symbol/policy.py::MIN_GRAMS",
+        "memory://symbol/policy.py::STEP_CENTS",
+        "memory://symbol/policy.py::STEP_GRAMS",
+        "memory://symbol/rules.py::allowed_weight",
+        "memory://symbol/rules.py::free_shipping",
+        "memory://symbol/rules.py::weight_charge",
+        "memory://symbol/rules.py::weight_steps"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/rules.py::weight_steps",
+        "summary:leaf:memory://symbol/rules.py::weight_charge",
+        "summary:leaf:memory://symbol/rules.py::free_shipping",
+        "summary:leaf:memory://symbol/rules.py::allowed_weight"
+      ],
+      "call_id": "eb622aa981798c66"
+    },
+    {
+      "id": "summary:level2:service.py",
+      "level": 2,
+      "path": "service.py",
+      "text": "### summary:level2:service.py\nThe `tracking_key` function in `service.py` generates a tracking key for an order. It takes an `order_id`, strips whitespace, converts to uppercase, and prepends \"parcel\" as the prefix. The `TRACKING_PREFIX` is defined in `policy.py`.",
+      "source_uris": [
+        "memory://symbol/policy.py::BASE_CENTS",
+        "memory://symbol/policy.py::FREE_FROM_CENTS",
+        "memory://symbol/policy.py::MAX_GRAMS",
+        "memory://symbol/policy.py::MIN_GRAMS",
+        "memory://symbol/policy.py::REMOTE_SURCHARGE",
+        "memory://symbol/policy.py::STEP_CENTS",
+        "memory://symbol/policy.py::STEP_GRAMS",
+        "memory://symbol/policy.py::TRACKING_PREFIX",
+        "memory://symbol/rules.py::allowed_weight",
+        "memory://symbol/rules.py::free_shipping",
+        "memory://symbol/rules.py::weight_charge",
+        "memory://symbol/rules.py::weight_steps",
+        "memory://symbol/service.py::parcel_total",
+        "memory://symbol/service.py::shipping_quote",
+        "memory://symbol/service.py::tracking_key"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/service.py::shipping_quote",
+        "summary:leaf:memory://symbol/service.py::parcel_total",
+        "summary:leaf:memory://symbol/service.py::tracking_key"
+      ],
+      "call_id": "7daf9c52c5eddb01"
+    },
+    {
+      "id": "summary:level3:project",
+      "level": 3,
+      "path": "project",
+      "text": "### summary:level3:project\nThe `audit.py` module handles audit-related tasks such as creating keys, managing recent events, redacting identifiers, and recording events. It uses constants like `AUDIT_VERSION` and `MAX_RECENT_EVENTS` for consistency.\n\nThe `presentation.py` module formats labels, displays references, maps status codes, and summarizes counts. Functions like `normalize_label` and `display_reference` ensure uniformity in data presentation.\n\nThe `rules.py` module calculates weight steps, charges, and determines free shipping eligibility. It includes functions like `weight_steps`, `weight_charge`, and `free_shipping` to manage order details.\n\nThe `service.py` module generates tracking keys for orders. It uses the `TRACKING_PREFIX` defined in `policy.py` to ensure consistent tracking key formatting.",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "memory://symbol/audit.py::REDACTION_MARKER",
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/policy.py::BASE_CENTS",
+        "memory://symbol/policy.py::FREE_FROM_CENTS",
+        "memory://symbol/policy.py::MAX_GRAMS",
+        "memory://symbol/policy.py::MIN_GRAMS",
+        "memory://symbol/policy.py::REMOTE_SURCHARGE",
+        "memory://symbol/policy.py::STEP_CENTS",
+        "memory://symbol/policy.py::STEP_GRAMS",
+        "memory://symbol/policy.py::TRACKING_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/rules.py::allowed_weight",
+        "memory://symbol/rules.py::free_shipping",
+        "memory://symbol/rules.py::weight_charge",
+        "memory://symbol/rules.py::weight_steps",
+        "memory://symbol/service.py::parcel_total",
+        "memory://symbol/service.py::shipping_quote",
+        "memory://symbol/service.py::tracking_key"
+      ],
+      "children": [
+        "summary:level2:audit.py",
+        "summary:level2:presentation.py",
+        "summary:level2:rules.py",
+        "summary:level2:service.py"
+      ],
+      "call_id": "f3bcbdc8f4f181d9"
+    }
+  ],
+  "index": {
+    "version": 1,
+    "root": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/dataset/projects/dev_shipping",
+    "files": [
+      {
+        "path": "audit.py",
+        "symbols": [
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "audit_key",
+            "qualname": "audit_key",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/audit.py::audit_key"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "recent_events",
+            "qualname": "recent_events",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/audit.py::recent_events"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "redact_identifier",
+            "qualname": "redact_identifier",
+            "start_line": 12,
+            "end_line": 13,
+            "uri": "memory://symbol/audit.py::redact_identifier"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "event_record",
+            "qualname": "event_record",
+            "start_line": 15,
+            "end_line": 16,
+            "uri": "memory://symbol/audit.py::event_record"
+          }
+        ]
+      },
+      {
+        "path": "policy.py",
+        "symbols": []
+      },
+      {
+        "path": "presentation.py",
+        "symbols": [
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "normalize_label",
+            "qualname": "normalize_label",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/presentation.py::normalize_label"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "display_reference",
+            "qualname": "display_reference",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/presentation.py::display_reference"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "status_label",
+            "qualname": "status_label",
+            "start_line": 12,
+            "end_line": 13,
+            "uri": "memory://symbol/presentation.py::status_label"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "summarize_count",
+            "qualname": "summarize_count",
+            "start_line": 15,
+            "end_line": 16,
+            "uri": "memory://symbol/presentation.py::summarize_count"
+          }
+        ]
+      },
+      {
+        "path": "rules.py",
+        "symbols": [
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "weight_steps",
+            "qualname": "weight_steps",
+            "start_line": 3,
+            "end_line": 4,
+            "uri": "memory://symbol/rules.py::weight_steps"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "weight_charge",
+            "qualname": "weight_charge",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/rules.py::weight_charge"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "free_shipping",
+            "qualname": "free_shipping",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/rules.py::free_shipping"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "allowed_weight",
+            "qualname": "allowed_weight",
+            "start_line": 12,
+            "end_line": 13,
+            "uri": "memory://symbol/rules.py::allowed_weight"
+          }
+        ]
+      },
+      {
+        "path": "service.py",
+        "symbols": [
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "shipping_quote",
+            "qualname": "shipping_quote",
+            "start_line": 4,
+            "end_line": 10,
+            "uri": "memory://symbol/service.py::shipping_quote"
+          },
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "parcel_total",
+            "qualname": "parcel_total",
+            "start_line": 12,
+            "end_line": 14,
+            "uri": "memory://symbol/service.py::parcel_total"
+          },
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "tracking_key",
+            "qualname": "tracking_key",
+            "start_line": 16,
+            "end_line": 17,
+            "uri": "memory://symbol/service.py::tracking_key"
+          }
+        ]
+      }
+    ],
+    "symbols": [
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "audit_key",
+        "qualname": "audit_key",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/audit.py::audit_key"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "recent_events",
+        "qualname": "recent_events",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/audit.py::recent_events"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "redact_identifier",
+        "qualname": "redact_identifier",
+        "start_line": 12,
+        "end_line": 13,
+        "uri": "memory://symbol/audit.py::redact_identifier"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "event_record",
+        "qualname": "event_record",
+        "start_line": 15,
+        "end_line": 16,
+        "uri": "memory://symbol/audit.py::event_record"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "normalize_label",
+        "qualname": "normalize_label",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/presentation.py::normalize_label"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "display_reference",
+        "qualname": "display_reference",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/presentation.py::display_reference"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "status_label",
+        "qualname": "status_label",
+        "start_line": 12,
+        "end_line": 13,
+        "uri": "memory://symbol/presentation.py::status_label"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "summarize_count",
+        "qualname": "summarize_count",
+        "start_line": 15,
+        "end_line": 16,
+        "uri": "memory://symbol/presentation.py::summarize_count"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "weight_steps",
+        "qualname": "weight_steps",
+        "start_line": 3,
+        "end_line": 4,
+        "uri": "memory://symbol/rules.py::weight_steps"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "weight_charge",
+        "qualname": "weight_charge",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/rules.py::weight_charge"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "free_shipping",
+        "qualname": "free_shipping",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/rules.py::free_shipping"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "allowed_weight",
+        "qualname": "allowed_weight",
+        "start_line": 12,
+        "end_line": 13,
+        "uri": "memory://symbol/rules.py::allowed_weight"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "shipping_quote",
+        "qualname": "shipping_quote",
+        "start_line": 4,
+        "end_line": 10,
+        "uri": "memory://symbol/service.py::shipping_quote"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "parcel_total",
+        "qualname": "parcel_total",
+        "start_line": 12,
+        "end_line": 14,
+        "uri": "memory://symbol/service.py::parcel_total"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "tracking_key",
+        "qualname": "tracking_key",
+        "start_line": 16,
+        "end_line": 17,
+        "uri": "memory://symbol/service.py::tracking_key"
+      }
+    ]
+  },
+  "build_seconds": 100.1467402499984,
+  "build_input_tokens": 6130,
+  "build_output_tokens": 1837,
+  "build_model_seconds": 100.12734233403171,
+  "build_call_ids": [
+    "ea80c49ff6efb97c",
+    "0e159aa2386f298a",
+    "15c24678ecc41ec7",
+    "b936af186371bdf7",
+    "1a13c049cd24833f",
+    "7a2638a60a1794bc",
+    "6347571fd8f9ba8c",
+    "cd3644b76ffb89fe",
+    "6c0b2251b968e033",
+    "95a4392b56017c9a",
+    "3ea0f47974b7a536",
+    "3569151ab7ec588b",
+    "214e17546c55c4a0",
+    "d348658d4f2e1383",
+    "ca1d5d20d0d34a29",
+    "a44b845e66645ebf",
+    "d4e09e9f4de1ee80",
+    "eb622aa981798c66",
+    "7daf9c52c5eddb01",
+    "f3bcbdc8f4f181d9"
+  ],
+  "source_sha256": {
+    "audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+    "policy.py": "71ac84828c4f56c3f9b5bff94f52d999ef1cbd1dc8d20be476a6993f419944b5",
+    "presentation.py": "a95030d22e457af79af69da7d75b9557324cd10cdcc1a05110867730c345646c",
+    "rules.py": "4d5ebada390fa485330be8e472dcbc3bd060dcee1dbfe1a36521c36e2f5b9faf",
+    "service.py": "161b98628297bae8a7405f17ecb6f5cb976ff7f818ddf2c31fb926d45db1b570"
+  }
+}

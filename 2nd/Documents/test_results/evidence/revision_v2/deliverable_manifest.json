@@ -1,0 +1,72 @@
+{
+  "version": 2,
+  "completed_at_utc": "2026-10-20T11:29:49.363274+00:00",
+  "reports": {
+    "01_symbol_index와_RAPTOR_정량평가_상세보고서.pdf": {
+      "path": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/01_symbol_index와_RAPTOR_정량평가_상세보고서.pdf",
+      "sha256": "8b538d9f1269bad945dd6a009cfb53b2970a54aa293af7d400a26b0de1fe4203",
+      "bytes": 132395,
+      "pages": 12
+    },
+    "02_그림으로_이해하는_symbol_index와_RAPTOR_비교.pdf": {
+      "path": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/02_그림으로_이해하는_symbol_index와_RAPTOR_비교.pdf",
+      "sha256": "bc73801c3d707cd4a57eb4806eb4c0ceca11e746e4bd6e13354743a1d4f58e3e",
+      "bytes": 96686,
+      "pages": 4
+    }
+  },
+  "original_version_archive": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/archive/v1_20261020",
+  "original_evidence_preserved": true,
+  "primary_rows": 432,
+  "regression_rows": 144,
+  "development_rows": 24,
+  "model_calls": 803,
+  "integrity_status": "PASS",
+  "statistical_review_status": "PASS",
+  "snapshot_hashes": {
+    "analyze.py": "ae04b2ce78b4634e4fca493bd69e325cfed02fdb23b2e8cc9a17959b7d5e3c60",
+    "analyze_v2.py": "e4fd7c4ef7c9f3c3734d526569d9e1322ae49e08062c2b12492f53c49ee69ae5",
+    "audit_v2.py": "bb10ae56108fb131077597552cb83909fc909b68518bf9afc0563868e35bbca6",
+    "corpus_builder.py": "719f9d68b892a95c2b7c0d506868dc42e7cdadf11c732e7f8660f09f99112e4e",
+    "experiment.py": "b8f664facdff58c7b410f704216611e5a4e5bbd239ac394a9bb4e5f29f9234cb",
+    "experiment_v2.py": "86fbbf165c2ad44c21fe0a0554b6624e86961246c9abb9aceed547f1a8d606be",
+    "holdout_v2.py": "267e4412e063f4d2f2e7e3417257ee418ac8d2acceb8d55d20d3c7b120fd45e5",
+    "integrity_checks.py": "2f23d6d76389f883e3016b42a89ece61f49daa3d5359409c3a854d36664b3012",
+    "integrity_v2.py": "16b7a8943ca0cd4689a6d3edfa8d3d57cad3e416c5b1a6650283663276a38585",
+    "output_diagnostics.py": "61dc56a7f165527ed08b107552b7872884f0a4c58c8898b3dc139371808514e7",
+    "preflight_v2.py": "e0da13556f2d8f6d4b229320dfed8ee5f20e841ce706e7043ab2e105dea0b913",
+    "report_builder.py": "4a1288fc608397b0a843e1b30ca9e66c16d6bf4625c7aaf049555f0ab59ef012",
+    "report_builder_v2.py": "175fa3fcbf69fc50c3efb29faeffe26389707c59d3d1f16212270cbcc872be2d",
+    "statistical_review_v2.py": "f217d0c5ff7a16b913f72dd7ca44a31d7e336c7dd42f1e9c675ea774a39e80f3"
+  },
+  "evidence_hashes": {
+    "analysis_stdout.json": "3ca80e2954de0bb2d8b6e2c858813344424017d48d3be7c3445573a753b685df",
+    "archive_verification.json": "384273c8dabb28607cfb819550893b01b62c2e4914adc571b1c1a4507b0f28b0",
+    "audit.json": "b25580f7c91a5e21736a140627b5bb09a1df415a95bc5ccb5f9b7c7ba83d530f",
+    "environment.json": "7d757341d315fc006dc13ada353f0906b0bcb8afef3bec153f064616998f3e76",
+    "hardware_observation.json": "0a9765f46dd7c4575ba0752f27daf3a500acd82cf04784ababcef6cd897b278f",
+    "holdout/eval_tasks.json": "06a9efc888fff9dd99681f38bffdfd5c32c878ae8850af5ed801d8024a2226ef",
+    "holdout/gold_validation.json": "91c246d275aa35f4a868f8cf7fbaa04e4ba6a16fb9c5a4ec1d6fc5918a872cc9",
+    "holdout/manifest.json": "b7c64db6610455f183d86cfc6f13f0319c451d996ec75e8592c2c0b0e5e3de5a",
+    "identity_dev.json": "acd6ff3ccd29b245dfd60220b49ff7bc6bd67770192753e419cddf3917b878de",
+    "identity_new.json": "dfa2fb57bca6c81a4b877299db56139c584c7b8b49e9e6018b193edba43f4252",
+    "identity_old.json": "0642e794f3e49f5adf06a35421805962c2f0a3a5723cb61a8c0a3645ff56cf35",
+    "integrity_v2.json": "b283797696576e24f26c25043d923948aaf602f2fc3716af8b369300f409fe2c",
+    "model_calls.jsonl": "f70caa3f622786a75f3c8d33b705a650614ccbd5472fc03a7b7fd4ac5ffd92bb",
+    "preflight_independent.json": "be0615d377e582981c57d6463eba331646093dbf43e4bbebb476c21916debfa8",
+    "preparation_dev_79d20aa28647af97e610.json": "b3852e6a6fec73191f308ba3ff89f5225ed1f9307c7bdc3fe1246b275d5ad1cc",
+    "preparation_new_e9a49fafdcbdea0bc0db.json": "14d67a1a93128a7b8eea75647989278b11a321d695986caae59133a24ae8623e",
+    "preparation_old_5f1198c91297d64c364b.json": "17dd1a2af368bee238faa6b3cc4a791add6be3c5bf1cc3b2790f68b51e7e589e",
+    "protocol.json": "52e133d47d313b74aa24438d7d5508cbdd22dde7c5b85e60dc69aa798310436d",
+    "reproduce_v2.txt": "5b1f7b2eead39be520294ef6b702af33f5d8189996d03651965ef7b79e2157a8",
+    "results_dev.jsonl": "18e3cbe148b43b86b7a520951c18e1075e303a78a395e324860c62429ea84901",
+    "results_new.jsonl": "60138e011dd992aef4944daf8916b30455be67cfafae6cdf6ef0f3a4b3d46e44",
+    "results_old.jsonl": "df7d1cbdd97d8d2cb2c64df7696ac7c3e86ac6e49d5db7cb5e413f32011a5131",
+    "server.log": "b14dc4646c052c45b46c7cd428f7522b038f12b9732105755677dbb283fb0259",
+    "server_launch_observation.json": "92663a608cc344331a6be0ce37ebf0709dbefdb42fad2b892c0799d2a44a19ff",
+    "server_shutdown.json": "f967234a4f0dfdd4a3385a69e7f99a709b94bd2b7dffe4ffce41f67e27cbf69f",
+    "statistical_review_v2.json": "937a6ed1b0777501af1edce32179babdd430de3fbbdecd38d2e7f6bddb55e20e",
+    "summary_v2.json": "47cafa8bdbf6033d473b76dfb01d12d69b30af93e96dc9bd76053567dfa10e80",
+    "tokenizer_counts.json": "8f2c90a4b081aecad300deb7c9a794d5de44baf6d180586fa075d84cbdee8390"
+  }
+}

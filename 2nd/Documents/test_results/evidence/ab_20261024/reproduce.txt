@@ -1,0 +1,55 @@
+A/B rerun — 2026-10-24
+
+Delivered run
+  96 fixed questions on six known synthetic Python projects.
+  Original 48 plus previously authored additional 48; neither is an unseen holdout.
+  A and B are the unchanged original implementations, including their formatting.
+  3 repetitions per question per arm = 576 new evaluation answers.
+  16 development answers are separate and excluded from evaluation metrics.
+  Every selector and answer is independently executed; prompt cache is disabled.
+
+Do not rerun into this delivered evidence directory.
+From /Users/oscar/Desktop/SecureCode, use a new output directory, for example:
+
+  python3 2nd/experiments/symbol_raptor/experiment_ab.py prepare --out /tmp/securecode-ab-rerun
+
+In another terminal, with port 8766 free, start the local server:
+
+  /opt/homebrew/bin/llama-server -m /Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf --host 127.0.0.1 --port 8766 --ctx-size 8192 --parallel 1 --no-warmup --cache-ram 0 --no-cache-prompt
+
+Then:
+
+  python3 2nd/experiments/symbol_raptor/experiment_ab.py dev --out /tmp/securecode-ab-rerun
+  python3 2nd/experiments/symbol_raptor/experiment_ab.py run --out /tmp/securecode-ab-rerun
+  python3 2nd/experiments/symbol_raptor/analyze_ab.py --out /tmp/securecode-ab-rerun
+  python3 2nd/experiments/symbol_raptor/verify_ab.py --out /tmp/securecode-ab-rerun
+
+Stop only the server process started for this run after analysis/verification.
+The report builder is for the delivered test_results directory layout; new runs
+can be reviewed through their summary.json and verification.json.
+
+Dependencies
+  System Python and the existing local llama.cpp installation/model.
+  No new packages or network model services are required.
+  The original experiment, audited client, indexer, selector and source corpus
+  are hash-pinned in protocol.json; source_snapshot contains code copies.
+
+Measurement and interpretation
+  Main time = mean over 96 question-specific medians of three physical requests.
+  Request p95 uses all 288 requests per arm.
+  Physical time includes selector, expansion, packing/token counting and answer.
+  Model loading, initial index/graph preparation and grading are excluded.
+  Token counting durations overlap processing stages and are not added twice.
+  Whole source fragments that do not fit the 1024-token cap are skipped.
+  Primary accuracy requires exact JSON values/types and requested list ordering.
+  Order-tolerant accuracy is a secondary list-order-only diagnostic.
+  Confidence intervals resample six project clusters, not repeated requests.
+  A/B formatting and import presentation differ as well as traversal scope.
+  This is a local replication on known small projects, not a broad deployment claim.
+
+Review
+  verify_ab.py independently grades output and recomputes primary and breakdown
+  statistics. Context reconstruction reuses the unchanged implementations.
+  A separate tokenizer verifies candidate/context/prompt token counts offline.
+  Runtime settings, hashes and UTC records provide local provenance, not external
+  certification or an externally signed preregistration.

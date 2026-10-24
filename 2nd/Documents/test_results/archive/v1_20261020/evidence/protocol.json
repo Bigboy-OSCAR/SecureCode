@@ -1,0 +1,53 @@
+{
+  "version": "1.0",
+  "arms": [
+    "A",
+    "B",
+    "R0",
+    "RF",
+    "RH"
+  ],
+  "main_budget": 1024,
+  "sensitivity_budget": 512,
+  "repeats": 3,
+  "temperature": 0,
+  "seed": 1,
+  "order_seed": 20261020,
+  "ctx_size": 8192,
+  "answer_max_tokens": 128,
+  "summary_max_tokens": 256,
+  "selector_candidates": 24,
+  "selector_max_tokens": 96,
+  "cache_prompt": false,
+  "timeout_seconds": 300,
+  "raw_bundle_dependency_depth": 3,
+  "baseline_bundle_dependency_depth": 1,
+  "baseline_bundle_max_symbols": 8,
+  "B_max_function_hops": 2,
+  "B_max_functions": 8,
+  "retrieval": "cosine TF-IDF, IDF fitted on raw candidates; unseen terms use smoothed df=0 IDF in every arm",
+  "raw_candidates": "dependency bundles plus atomic function/constant originals; identical in R0/RF/RH",
+  "grouping": "AST symbol dependency bundles -> per-file summaries -> project summary",
+  "packing": "descending cosine; skip whole nodes that do not fit; no truncation",
+  "primary_comparison": "RH-A",
+  "summary_comparison": "RH-R0",
+  "hierarchy_comparison": "RH-RF",
+  "bootstrap_unit": "project",
+  "created_at": "2026-10-20T09:01:13.525224+00:00",
+  "note": "Fixed before any evaluation outputs; development project only for plumbing checks.",
+  "frozen_before_development_and_evaluation_at": "2026-10-20T09:12:54.098054+00:00",
+  "pre_evaluation_refinements": [
+    "Atomic raw source candidates supplement bundles to avoid excluding long entrypoints.",
+    "Common source-derived IDF uses smoothed df=0 weight for unseen natural-language words.",
+    "B matches A two reference-expansion rounds and eight-function maximum.",
+    "Tokenization and all charged selector costs included in query latency."
+  ],
+  "grading": "exact JSON object/value and types after stripping at most one complete outer JSON code fence",
+  "frozen_before_evaluation_at": "2026-10-20T09:16:38.994198+00:00",
+  "development_calibration": [
+    "Removed a per-question JSON suffix that conflicted with the original URI-only selector; JSON instruction is applied only in the answer prompt.",
+    "Allow exactly one outer JSON Markdown code fence before strict JSON value/type grading; prose and malformed outputs remain failures.",
+    "No evaluation answers were generated before these interface corrections; original development outputs are preserved under development_calibration/.",
+    "No retrieval weights, model, budget, summary content, or task answers were tuned from development accuracy."
+  ]
+}

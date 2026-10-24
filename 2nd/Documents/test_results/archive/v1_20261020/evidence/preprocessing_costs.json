@@ -1,0 +1,110 @@
+[
+  {
+    "project": "eval_authorization",
+    "repeat": 0,
+    "symbol_index_seconds": 0.0016523749945918098,
+    "graph_raw_retrieval_index_seconds": 0.002552499994635582
+  },
+  {
+    "project": "eval_authorization",
+    "repeat": 1,
+    "symbol_index_seconds": 0.0007543749961769208,
+    "graph_raw_retrieval_index_seconds": 0.002288666000822559
+  },
+  {
+    "project": "eval_authorization",
+    "repeat": 2,
+    "symbol_index_seconds": 0.0007662919961148873,
+    "graph_raw_retrieval_index_seconds": 0.002255624989629723
+  },
+  {
+    "project": "eval_cache",
+    "repeat": 0,
+    "symbol_index_seconds": 0.0013393749977694824,
+    "graph_raw_retrieval_index_seconds": 0.0021904160093981773
+  },
+  {
+    "project": "eval_cache",
+    "repeat": 1,
+    "symbol_index_seconds": 0.0007363750046351925,
+    "graph_raw_retrieval_index_seconds": 0.002062832994852215
+  },
+  {
+    "project": "eval_cache",
+    "repeat": 2,
+    "symbol_index_seconds": 0.0007123329996829852,
+    "graph_raw_retrieval_index_seconds": 0.0020443340035853907
+  },
+  {
+    "project": "eval_inventory",
+    "repeat": 0,
+    "symbol_index_seconds": 0.0007559580117231235,
+    "graph_raw_retrieval_index_seconds": 0.001939583002240397
+  },
+  {
+    "project": "eval_inventory",
+    "repeat": 1,
+    "symbol_index_seconds": 0.000684083002852276,
+    "graph_raw_retrieval_index_seconds": 0.001888540995423682
+  },
+  {
+    "project": "eval_inventory",
+    "repeat": 2,
+    "symbol_index_seconds": 0.0006809170008637011,
+    "graph_raw_retrieval_index_seconds": 0.0018815829971572384
+  },
+  {
+    "project": "eval_pricing",
+    "repeat": 0,
+    "symbol_index_seconds": 0.000760082999477163,
+    "graph_raw_retrieval_index_seconds": 0.00201237500004936
+  },
+  {
+    "project": "eval_pricing",
+    "repeat": 1,
+    "symbol_index_seconds": 0.0006941250030649826,
+    "graph_raw_retrieval_index_seconds": 0.001956291001988575
+  },
+  {
+    "project": "eval_pricing",
+    "repeat": 2,
+    "symbol_index_seconds": 0.0006866659969091415,
+    "graph_raw_retrieval_index_seconds": 0.0019499579939292744
+  },
+  {
+    "project": "eval_routing",
+    "repeat": 0,
+    "symbol_index_seconds": 0.0014380829961737618,
+    "graph_raw_retrieval_index_seconds": 0.0019635420030681416
+  },
+  {
+    "project": "eval_routing",
+    "repeat": 1,
+    "symbol_index_seconds": 0.0006825000018579885,
+    "graph_raw_retrieval_index_seconds": 0.0019182920077582821
+  },
+  {
+    "project": "eval_routing",
+    "repeat": 2,
+    "symbol_index_seconds": 0.000669832996209152,
+    "graph_raw_retrieval_index_seconds": 0.0019120840006507933
+  },
+  {
+    "project": "eval_schedules",
+    "repeat": 0,
+    "symbol_index_seconds": 0.0010301250003976747,
+    "graph_raw_retrieval_index_seconds": 0.002259957997011952
+  },
+  {
+    "project": "eval_schedules",
+    "repeat": 1,
+    "symbol_index_seconds": 0.0007855000003473833,
+    "graph_raw_retrieval_index_seconds": 0.002112500005750917
+  },
+  {
+    "project": "eval_schedules",
+    "repeat": 2,
+    "symbol_index_seconds": 0.0007768750074319541,
+    "graph_raw_retrieval_index_seconds": 0.0020729579991893843
+  }
+]

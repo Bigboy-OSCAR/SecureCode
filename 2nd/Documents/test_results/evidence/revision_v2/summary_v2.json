@@ -1,0 +1,3790 @@
+{
+  "schema_version": 2,
+  "status": "complete",
+  "created_at_utc": "2026-10-20T11:22:12.667201+00:00",
+  "report_date": "2026-10-20",
+  "by_split": {
+    "new": {
+      "rows": 432,
+      "unique_questions": 48,
+      "projects": 6,
+      "repeats": 3,
+      "metrics_by_arm": {
+        "A": {
+          "correct": 27,
+          "total": 144,
+          "accuracy": 0.1875,
+          "unique_questions": 48,
+          "order_only_count": 0,
+          "order_tolerant_accuracy": 0.1875,
+          "mean_query_seconds": 2.3780212091663393,
+          "request_mean_seconds": 2.379895151576117,
+          "request_p50_seconds": 2.2640076459938427,
+          "request_p95_seconds": 3.1689015829935667,
+          "question_median_p95_seconds": 3.148919120848586,
+          "mean_context_tokens": 100.79166666666667,
+          "mean_selected_context_tokens": 100.79166666666667,
+          "mean_input_tokens": 417.1666666666667,
+          "mean_output_tokens": 26.5625,
+          "mean_prefill_seconds": 1.3253502430555555,
+          "mean_decode_seconds": 1.03691925,
+          "mean_other_seconds": 0.017625658520561454,
+          "mean_tokenize_seconds": 0.008572085798227312,
+          "mean_compaction_seconds": 0,
+          "raw_evidence_recall": 0.22909125018500018,
+          "all_raw_evidence": 0.08333333333333333,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 105,
+            "abstained": 9,
+            "invalid_json": 3
+          },
+          "by_category": {
+            "architecture": {
+              "correct": 0,
+              "total": 18,
+              "accuracy": 0,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 0,
+              "total": 18,
+              "accuracy": 0,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 3,
+              "total": 36,
+              "accuracy": 0.08333333333333333,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 0,
+              "total": 36,
+              "accuracy": 0,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 18,
+              "total": 18,
+              "accuracy": 1,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 9,
+              "total": 24,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            }
+          }
+        },
+        "RH": {
+          "correct": 30,
+          "total": 144,
+          "accuracy": 0.20833333333333334,
+          "unique_questions": 48,
+          "order_only_count": 0,
+          "order_tolerant_accuracy": 0.20833333333333334,
+          "mean_query_seconds": 4.393546560770119,
+          "request_mean_seconds": 4.398423639742861,
+          "request_p50_seconds": 4.324512458500976,
+          "request_p95_seconds": 5.215827998198074,
+          "question_median_p95_seconds": 5.199323098252353,
+          "mean_context_tokens": 1014.5208333333334,
+          "mean_selected_context_tokens": 1014.5208333333334,
+          "mean_input_tokens": 1164.6041666666667,
+          "mean_output_tokens": 19.479166666666668,
+          "mean_prefill_seconds": 3.4424825416666667,
+          "mean_decode_seconds": 0.7850262638888889,
+          "mean_other_seconds": 0.1709148341873049,
+          "mean_tokenize_seconds": 0.16556946410744583,
+          "mean_compaction_seconds": 0,
+          "raw_evidence_recall": 0.5400305423742924,
+          "all_raw_evidence": 0.4375,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 105,
+            "invalid_json": 6,
+            "abstained": 3
+          },
+          "by_category": {
+            "architecture": {
+              "correct": 3,
+              "total": 18,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 3,
+              "total": 36,
+              "accuracy": 0.08333333333333333,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 0,
+              "total": 36,
+              "accuracy": 0,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 12,
+              "total": 18,
+              "accuracy": 0.6666666666666666,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 9,
+              "total": 24,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            }
+          }
+        },
+        "C": {
+          "correct": 33,
+          "total": 144,
+          "accuracy": 0.22916666666666666,
+          "unique_questions": 48,
+          "order_only_count": 3,
+          "order_tolerant_accuracy": 0.25,
+          "mean_query_seconds": 3.8180470789163032,
+          "request_mean_seconds": 3.822178361415657,
+          "request_p50_seconds": 3.9536866874987027,
+          "request_p95_seconds": 5.115024347358121,
+          "question_median_p95_seconds": 5.040702828856592,
+          "mean_context_tokens": 817.3333333333334,
+          "mean_selected_context_tokens": 1014.5208333333334,
+          "mean_input_tokens": 967.4166666666666,
+          "mean_output_tokens": 19.583333333333332,
+          "mean_prefill_seconds": 2.8619938125,
+          "mean_decode_seconds": 0.7888484375,
+          "mean_other_seconds": 0.17133611141565686,
+          "mean_tokenize_seconds": 0.1661917920348262,
+          "mean_compaction_seconds": 0.0020954354717509383,
+          "raw_evidence_recall": 0.5400305423742924,
+          "all_raw_evidence": 0.4375,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 102,
+            "invalid_json": 3,
+            "abstained": 6
+          },
+          "by_category": {
+            "architecture": {
+              "correct": 3,
+              "total": 18,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 3,
+              "total": 18,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 6,
+              "total": 36,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 0,
+              "total": 36,
+              "accuracy": 0,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 15,
+              "total": 18,
+              "accuracy": 0.8333333333333334,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 9,
+              "total": 24,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            }
+          }
+        }
+      },
+      "comparisons": {
+        "C-RH": {
+          "higher": "C",
+          "base": "RH",
+          "delta_pp": 2.083333333333333,
+          "ci95_pp": [
+            -4.166666666666666,
+            8.333333333333332
+          ],
+          "win": 2,
+          "loss": 1,
+          "tie": 45,
+          "latency_delta_seconds": -0.5754994818538157,
+          "latency_ci95_seconds": [
+            -0.6401713238319648,
+            -0.5097626330216372
+          ],
+          "latency_ratio": 0.8690125451287035,
+          "latency_reduction_pct": 13.098745487129648,
+          "latency_reduction_ci95_pct": [
+            11.10321846036303,
+            15.070978016486647
+          ],
+          "both_success_n": 9,
+          "both_success_latency_ratio": 0.7964532705055449,
+          "project_deltas_pp": {
+            "eval_authorization": -12.5,
+            "eval_cache": 0,
+            "eval_inventory": 12.5,
+            "eval_pricing": 12.5,
+            "eval_routing": 0,
+            "eval_schedules": 0
+          },
+          "unadjusted_project_signflip_p": 1.0,
+          "bootstrap_resamples": 46656,
+          "cluster_count": 6,
+          "interpretation": "Exploratory exact-enumerated percentile bootstrap over six project clusters; repeated questions are not independent observations. No noninferiority claim.",
+          "holm_p_two_quality_comparisons": 1
+        },
+        "C-A": {
+          "higher": "C",
+          "base": "A",
+          "delta_pp": 4.166666666666666,
+          "ci95_pp": [
+            -6.25,
+            14.583333333333334
+          ],
+          "win": 5,
+          "loss": 3,
+          "tie": 40,
+          "latency_delta_seconds": 1.440025869749964,
+          "latency_ci95_seconds": [
+            1.385564706605995,
+            1.4909826163754283
+          ],
+          "latency_ratio": 1.60555636097745,
+          "latency_reduction_pct": -60.555636097744994,
+          "latency_reduction_ci95_pct": [
+            -65.96479494577841,
+            -54.684000191014825
+          ],
+          "both_success_n": 6,
+          "both_success_latency_ratio": 1.639506334650982,
+          "project_deltas_pp": {
+            "eval_authorization": -12.5,
+            "eval_cache": 0,
+            "eval_inventory": 12.5,
+            "eval_pricing": 25.0,
+            "eval_routing": 12.5,
+            "eval_schedules": -12.5
+          },
+          "unadjusted_project_signflip_p": 0.75,
+          "bootstrap_resamples": 46656,
+          "cluster_count": 6,
+          "interpretation": "Exploratory exact-enumerated percentile bootstrap over six project clusters; repeated questions are not independent observations. No noninferiority claim.",
+          "holm_p_two_quality_comparisons": 1
+        },
+        "RH-A": {
+          "higher": "RH",
+          "base": "A",
+          "delta_pp": 2.083333333333333,
+          "ci95_pp": [
+            -4.166666666666666,
+            8.333333333333332
+          ],
+          "win": 4,
+          "loss": 3,
+          "tie": 41,
+          "latency_delta_seconds": 2.0155253516037797,
+          "latency_ci95_seconds": [
+            1.9513964348931645,
+            2.0765303534368895
+          ],
+          "latency_ratio": 1.8475640771557125,
+          "latency_reduction_pct": -84.75640771557124,
+          "latency_reduction_ci95_pct": [
+            -92.93038221751215,
+            -74.90657090522504
+          ],
+          "both_success_n": 6,
+          "both_success_latency_ratio": 2.1120771203347486,
+          "project_deltas_pp": {
+            "eval_authorization": 0,
+            "eval_cache": 0,
+            "eval_inventory": 0,
+            "eval_pricing": 12.5,
+            "eval_routing": 12.5,
+            "eval_schedules": -12.5
+          },
+          "unadjusted_project_signflip_p": 1.0,
+          "bootstrap_resamples": 46656,
+          "cluster_count": 6,
+          "interpretation": "Exploratory exact-enumerated percentile bootstrap over six project clusters; repeated questions are not independent observations. No noninferiority claim."
+        }
+      }
+    },
+    "old": {
+      "rows": 144,
+      "unique_questions": 48,
+      "projects": 6,
+      "repeats": 1,
+      "metrics_by_arm": {
+        "A": {
+          "correct": 8,
+          "total": 48,
+          "accuracy": 0.16666666666666666,
+          "unique_questions": 48,
+          "order_only_count": 0,
+          "order_tolerant_accuracy": 0.16666666666666666,
+          "mean_query_seconds": 2.3202881674984988,
+          "request_mean_seconds": 2.3202881674984988,
+          "request_p50_seconds": 2.194570000494423,
+          "request_p95_seconds": 3.456937891651614,
+          "question_median_p95_seconds": 3.456937891651614,
+          "mean_context_tokens": 93.33333333333333,
+          "mean_selected_context_tokens": 93.33333333333333,
+          "mean_input_tokens": 401.1041666666667,
+          "mean_output_tokens": 26.479166666666668,
+          "mean_prefill_seconds": 1.2697977291666667,
+          "mean_decode_seconds": 1.0335024375,
+          "mean_other_seconds": 0.016988000831832217,
+          "mean_tokenize_seconds": 0.008078062479701961,
+          "mean_compaction_seconds": 0,
+          "raw_evidence_recall": 0.3462607126669627,
+          "all_raw_evidence": 0.20833333333333334,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 37,
+            "abstained": 1,
+            "invalid_json": 2
+          },
+          "by_category": {
+            "architecture": {
+              "correct": 2,
+              "total": 6,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 2,
+              "total": 6,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 0,
+              "total": 6,
+              "accuracy": 0,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 0,
+              "total": 12,
+              "accuracy": 0,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 2,
+              "total": 12,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 2,
+              "total": 6,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 2,
+              "total": 8,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 3,
+              "total": 8,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 0,
+              "total": 8,
+              "accuracy": 0,
+              "unique_questions": 8
+            }
+          }
+        },
+        "RH": {
+          "correct": 9,
+          "total": 48,
+          "accuracy": 0.1875,
+          "unique_questions": 48,
+          "order_only_count": 3,
+          "order_tolerant_accuracy": 0.25,
+          "mean_query_seconds": 4.284299051249339,
+          "request_mean_seconds": 4.284299051249339,
+          "request_p50_seconds": 4.146800375005114,
+          "request_p95_seconds": 5.194938685656962,
+          "question_median_p95_seconds": 5.194938685656962,
+          "mean_context_tokens": 1013.5,
+          "mean_selected_context_tokens": 1013.5,
+          "mean_input_tokens": 1160.0416666666667,
+          "mean_output_tokens": 17.229166666666668,
+          "mean_prefill_seconds": 3.423768395833333,
+          "mean_decode_seconds": 0.6906958541666667,
+          "mean_other_seconds": 0.16983480124933914,
+          "mean_tokenize_seconds": 0.16437082253924018,
+          "mean_compaction_seconds": 0,
+          "raw_evidence_recall": 0.5689664502164502,
+          "all_raw_evidence": 0.5,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 36,
+            "abstained": 2,
+            "invalid_json": 1
+          },
+          "by_category": {
+            "architecture": {
+              "correct": 0,
+              "total": 6,
+              "accuracy": 0,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 1,
+              "total": 6,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 0,
+              "total": 6,
+              "accuracy": 0,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 2,
+              "total": 12,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 3,
+              "total": 12,
+              "accuracy": 0.25,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 3,
+              "total": 6,
+              "accuracy": 0.5,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 4,
+              "total": 8,
+              "accuracy": 0.5,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 0,
+              "total": 8,
+              "accuracy": 0,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 0,
+              "total": 8,
+              "accuracy": 0,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 3,
+              "total": 8,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            }
+          }
+        },
+        "C": {
+          "correct": 10,
+          "total": 48,
+          "accuracy": 0.20833333333333334,
+          "unique_questions": 48,
+          "order_only_count": 2,
+          "order_tolerant_accuracy": 0.25,
+          "mean_query_seconds": 3.694187775124192,
+          "request_mean_seconds": 3.694187775124192,
+          "request_p50_seconds": 3.850253958502435,
+          "request_p95_seconds": 5.0225717035020345,
+          "question_median_p95_seconds": 5.0225717035020345,
+          "mean_context_tokens": 800,
+          "mean_selected_context_tokens": 1013.5,
+          "mean_input_tokens": 946.5208333333334,
+          "mean_output_tokens": 18.020833333333332,
+          "mean_prefill_seconds": 2.8027480208333335,
+          "mean_decode_seconds": 0.7230310416666667,
+          "mean_other_seconds": 0.16840871262419185,
+          "mean_tokenize_seconds": 0.16351057033868224,
+          "mean_compaction_seconds": 0.0020505858747128514,
+          "raw_evidence_recall": 0.5689664502164502,
+          "all_raw_evidence": 0.5,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "invalid_json": 2,
+            "wrong_answer": 35,
+            "abstained": 1
+          },
+          "by_category": {
+            "architecture": {
+              "correct": 0,
+              "total": 6,
+              "accuracy": 0,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 1,
+              "total": 6,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 1,
+              "total": 6,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 2,
+              "total": 12,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 3,
+              "total": 12,
+              "accuracy": 0.25,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 3,
+              "total": 6,
+              "accuracy": 0.5,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 4,
+              "total": 8,
+              "accuracy": 0.5,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 0,
+              "total": 8,
+              "accuracy": 0,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 3,
+              "total": 8,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            }
+          }
+        }
+      },
+      "comparisons": {
+        "C-RH": {
+          "higher": "C",
+          "base": "RH",
+          "delta_pp": 2.083333333333333,
+          "ci95_pp": [
+            0.0,
+            6.25
+          ],
+          "win": 1,
+          "loss": 0,
+          "tie": 47,
+          "latency_delta_seconds": -0.590111276125147,
+          "latency_ci95_seconds": [
+            -0.6718533049367275,
+            -0.5049258151899871
+          ],
+          "latency_ratio": 0.8622618848343312,
+          "latency_reduction_pct": 13.77381151656688,
+          "latency_reduction_ci95_pct": [
+            11.89268726289663,
+            15.80327805718924
+          ],
+          "both_success_n": 9,
+          "both_success_latency_ratio": 0.8032302209031535,
+          "project_deltas_pp": {
+            "eval_authorization": 0,
+            "eval_cache": 0,
+            "eval_inventory": 12.5,
+            "eval_pricing": 0,
+            "eval_routing": 0,
+            "eval_schedules": 0
+          },
+          "unadjusted_project_signflip_p": 1.0,
+          "bootstrap_resamples": 46656,
+          "cluster_count": 6,
+          "interpretation": "Exploratory exact-enumerated percentile bootstrap over six project clusters; repeated questions are not independent observations. No noninferiority claim.",
+          "holm_p_two_quality_comparisons": 1
+        },
+        "C-A": {
+          "higher": "C",
+          "base": "A",
+          "delta_pp": 4.166666666666666,
+          "ci95_pp": [
+            -4.166666666666666,
+            14.583333333333334
+          ],
+          "win": 5,
+          "loss": 3,
+          "tie": 40,
+          "latency_delta_seconds": 1.373899607625693,
+          "latency_ci95_seconds": [
+            1.310591810794297,
+            1.4424857700205393
+          ],
+          "latency_ratio": 1.592124558867571,
+          "latency_reduction_pct": -59.2124558867571,
+          "latency_reduction_ci95_pct": [
+            -63.5146305523401,
+            -52.61727498531095
+          ],
+          "both_success_n": 5,
+          "both_success_latency_ratio": 1.6289418404907667,
+          "project_deltas_pp": {
+            "eval_authorization": 25.0,
+            "eval_cache": 0,
+            "eval_inventory": 0,
+            "eval_pricing": -12.5,
+            "eval_routing": 0,
+            "eval_schedules": 12.5
+          },
+          "unadjusted_project_signflip_p": 0.75,
+          "bootstrap_resamples": 46656,
+          "cluster_count": 6,
+          "interpretation": "Exploratory exact-enumerated percentile bootstrap over six project clusters; repeated questions are not independent observations. No noninferiority claim.",
+          "holm_p_two_quality_comparisons": 1
+        },
+        "RH-A": {
+          "higher": "RH",
+          "base": "A",
+          "delta_pp": 2.083333333333333,
+          "ci95_pp": [
+            -8.333333333333332,
+            12.5
+          ],
+          "win": 4,
+          "loss": 3,
+          "tie": 41,
+          "latency_delta_seconds": 1.96401088375084,
+          "latency_ci95_seconds": [
+            1.891384781293406,
+            2.0268049628123963
+          ],
+          "latency_ratio": 1.8464512775877484,
+          "latency_reduction_pct": -84.64512775877483,
+          "latency_reduction_ci95_pct": [
+            -92.39960396869844,
+            -76.02764603135437
+          ],
+          "both_success_n": 5,
+          "both_success_latency_ratio": 2.0677425753591696,
+          "project_deltas_pp": {
+            "eval_authorization": 25.0,
+            "eval_cache": 0,
+            "eval_inventory": -12.5,
+            "eval_pricing": -12.5,
+            "eval_routing": 0,
+            "eval_schedules": 12.5
+          },
+          "unadjusted_project_signflip_p": 1.0,
+          "bootstrap_resamples": 46656,
+          "cluster_count": 6,
+          "interpretation": "Exploratory exact-enumerated percentile bootstrap over six project clusters; repeated questions are not independent observations. No noninferiority claim."
+        }
+      }
+    }
+  },
+  "validation": {
+    "all_payload_preserved": true,
+    "paired_selection_equal": true,
+    "expected_rows": 576,
+    "actual_rows": 576,
+    "development_rows": 24,
+    "execution_errors": 0,
+    "context_overruns": 0,
+    "generation_limits": 0,
+    "prompt_cache_hits": 0,
+    "all_calls_prompt_cache_disabled": true,
+    "independent_integrity": {
+      "version": 2,
+      "created_at_utc": "2026-10-20T11:21:26.678142+00:00",
+      "mode": "final",
+      "status": "PASS",
+      "checks": [
+        {
+          "check": "protocol_code_config",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "v1_dependency_fingerprints",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "holdout_artifacts_frozen",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "frozen_original_summaries",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "environment_fingerprint",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "server_context_and_slots",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "binary_fingerprint",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "model_fingerprint",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "observed_launch_command",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "model_path_matches_launch",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "tokenizer_reset_policy_in_frozen_code",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "unique_call_ids",
+          "passed": true,
+          "detail": {
+            "calls": 803,
+            "purposes": {
+              "warmup": 3,
+              "answer": 600,
+              "select": 200
+            }
+          }
+        },
+        {
+          "check": "call_request_response_timing_reconstruction",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "sequential_calls_do_not_overlap",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "preparation_5f1198c91297d64c364b",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "preparation_e9a49fafdcbdea0bc0db",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "preparation_79d20aa28647af97e610",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "warmup_per_preparation",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "unique_and_schedule_prefix_dev",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "complete_dev",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "identity_dev",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "arm_permutations_dev_0",
+          "passed": true,
+          "detail": {
+            "('RH', 'A', 'C')": 2,
+            "('C', 'A', 'RH')": 2,
+            "('RH', 'C', 'A')": 1,
+            "('C', 'RH', 'A')": 1,
+            "('A', 'RH', 'C')": 1,
+            "('A', 'C', 'RH')": 1
+          }
+        },
+        {
+          "check": "unique_and_schedule_prefix_new",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "complete_new",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "identity_new",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "arm_permutations_new_0",
+          "passed": true,
+          "detail": {
+            "('A', 'C', 'RH')": 8,
+            "('C', 'RH', 'A')": 8,
+            "('RH', 'A', 'C')": 8,
+            "('C', 'A', 'RH')": 8,
+            "('A', 'RH', 'C')": 8,
+            "('RH', 'C', 'A')": 8
+          }
+        },
+        {
+          "check": "arm_permutations_new_1",
+          "passed": true,
+          "detail": {
+            "('RH', 'C', 'A')": 8,
+            "('A', 'RH', 'C')": 8,
+            "('C', 'RH', 'A')": 8,
+            "('RH', 'A', 'C')": 8,
+            "('C', 'A', 'RH')": 8,
+            "('A', 'C', 'RH')": 8
+          }
+        },
+        {
+          "check": "arm_permutations_new_2",
+          "passed": true,
+          "detail": {
+            "('A', 'RH', 'C')": 8,
+            "('RH', 'C', 'A')": 8,
+            "('A', 'C', 'RH')": 8,
+            "('C', 'RH', 'A')": 8,
+            "('C', 'A', 'RH')": 8,
+            "('RH', 'A', 'C')": 8
+          }
+        },
+        {
+          "check": "unique_and_schedule_prefix_old",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "complete_old",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "identity_old",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "arm_permutations_old_0",
+          "passed": true,
+          "detail": {
+            "('A', 'RH', 'C')": 8,
+            "('A', 'C', 'RH')": 8,
+            "('C', 'RH', 'A')": 8,
+            "('C', 'A', 'RH')": 8,
+            "('RH', 'C', 'A')": 8,
+            "('RH', 'A', 'C')": 8
+          }
+        },
+        {
+          "check": "all_result_row_links_and_payloads",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "RH_C_identical_selected_evidence",
+          "passed": true,
+          "detail": {
+            "pairs": 200
+          }
+        },
+        {
+          "check": "no_selector_sharing",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "no_unmapped_model_calls",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "vocab_only_actual_context_and_input_counts",
+          "passed": true,
+          "detail": []
+        }
+      ],
+      "failed_checks": [],
+      "pending": [],
+      "completion": {
+        "dev": {
+          "actual": 24,
+          "expected": 24
+        },
+        "new": {
+          "actual": 432,
+          "expected": 432
+        },
+        "old": {
+          "actual": 144,
+          "expected": 144
+        }
+      },
+      "model_calls": 803,
+      "rows": 600,
+      "paired_evidence": [
+        {
+          "split": "dev",
+          "task_id": "dev_shipping__quote",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1020,
+          "compacted_tokens": 594
+        },
+        {
+          "split": "dev",
+          "task_id": "dev_shipping__total",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1024,
+          "compacted_tokens": 705
+        },
+        {
+          "split": "dev",
+          "task_id": "dev_shipping__remote_free",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 963
+        },
+        {
+          "split": "dev",
+          "task_id": "dev_shipping__policy_change",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1022,
+          "compacted_tokens": 947
+        },
+        {
+          "split": "dev",
+          "task_id": "dev_shipping__max_weight",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1020,
+          "compacted_tokens": 594
+        },
+        {
+          "split": "dev",
+          "task_id": "dev_shipping__direct_calls",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1011,
+          "compacted_tokens": 962
+        },
+        {
+          "split": "dev",
+          "task_id": "dev_shipping__invalid_total",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 968
+        },
+        {
+          "split": "dev",
+          "task_id": "dev_shipping__steps",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1022,
+          "compacted_tokens": 461
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1024,
+          "compacted_tokens": 928
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_bucket_near_wrap",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 669
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_receipt_transitive_calls",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 963
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 964
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_duplicate_write_permission",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 705
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_enough_stock",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 960
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_revoked_admin",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1004,
+          "compacted_tokens": 955
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_below_safety_reserve",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 960
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_latency_intervention",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1003,
+          "compacted_tokens": 751
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_default_public_lifetime",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 966
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_private_ttl_exact_edge",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1003,
+          "compacted_tokens": 636
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_retry_transitive_calls",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1019,
+          "compacted_tokens": 954
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_zero_units",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 919
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_canary_exact_threshold",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1009,
+          "compacted_tokens": 467
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_last_valid_session_second",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 705
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_empty_path",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1022,
+          "compacted_tokens": 772
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_last_retry_fallback",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1024,
+          "compacted_tokens": 730
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_new_query_key",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1016,
+          "compacted_tokens": 689
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_partial_depletes_available",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1020,
+          "compacted_tokens": 746
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_two_busy_intervals",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 561
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_large_member_order",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1020,
+          "compacted_tokens": 980
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_negative_unit_price",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 952
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1024,
+          "compacted_tokens": 459
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_retry_without_backend",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1015,
+          "compacted_tokens": 965
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_max_duration_closing_edge",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1013,
+          "compacted_tokens": 669
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_nonowner_read",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 651
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_private_cap_intervention",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1021,
+          "compacted_tokens": 946
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_five_member_receipt",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1016,
+          "compacted_tokens": 732
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_owner_case_mismatch",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 958
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_appointment_transitive_calls",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 983
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_remaining_transitive_calls",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1019,
+          "compacted_tokens": 961
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_short_private_ttl",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1011,
+          "compacted_tokens": 671
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 594
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_two_nonmember_items",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 594
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_entry_transitive_calls",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 977
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_next_week_opening",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 961
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_overlong_duration",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1005,
+          "compacted_tokens": 970
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_wrapped_workday",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1015,
+          "compacted_tokens": 635
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_order_cap_intervention",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1021,
+          "compacted_tokens": 935
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_write_scope_intervention",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1022,
+          "compacted_tokens": 954
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_buffer_exact_separation",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1013,
+          "compacted_tokens": 788
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_priority_not_fastest",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 951
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_maximum_valid_reservation",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 715
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_slot_size_intervention",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1004,
+          "compacted_tokens": 953
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_refund_capped_units",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 808
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_negative_private_lifetime",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 961
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_allocate_exact_available",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1015,
+          "compacted_tokens": 619
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_private_lifetime_clamp",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1020,
+          "compacted_tokens": 890
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_write_scope_intervention",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1022,
+          "compacted_tokens": 954
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_private_lifetime_clamp",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1020,
+          "compacted_tokens": 890
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_last_retry_fallback",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1024,
+          "compacted_tokens": 730
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_short_private_ttl",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1011,
+          "compacted_tokens": 671
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_partial_depletes_available",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1020,
+          "compacted_tokens": 746
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_remaining_transitive_calls",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1019,
+          "compacted_tokens": 961
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_slot_size_intervention",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1004,
+          "compacted_tokens": 953
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_revoked_admin",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1004,
+          "compacted_tokens": 955
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_receipt_transitive_calls",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 963
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_wrapped_workday",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1015,
+          "compacted_tokens": 635
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_canary_exact_threshold",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1009,
+          "compacted_tokens": 467
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_buffer_exact_separation",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1013,
+          "compacted_tokens": 788
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_overlong_duration",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1005,
+          "compacted_tokens": 970
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 594
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_enough_stock",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 960
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_nonowner_read",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 651
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_next_week_opening",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 961
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_appointment_transitive_calls",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 983
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_private_cap_intervention",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1021,
+          "compacted_tokens": 946
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_last_valid_session_second",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 705
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_max_duration_closing_edge",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1013,
+          "compacted_tokens": 669
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_five_member_receipt",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1016,
+          "compacted_tokens": 732
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_retry_transitive_calls",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1019,
+          "compacted_tokens": 954
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_below_safety_reserve",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 960
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_new_query_key",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1016,
+          "compacted_tokens": 689
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_negative_private_lifetime",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 961
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_negative_unit_price",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 952
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_latency_intervention",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1003,
+          "compacted_tokens": 751
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_entry_transitive_calls",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 977
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1024,
+          "compacted_tokens": 459
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_order_cap_intervention",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1021,
+          "compacted_tokens": 935
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_priority_not_fastest",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 951
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 964
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_bucket_near_wrap",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 669
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_large_member_order",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1020,
+          "compacted_tokens": 980
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_two_nonmember_items",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 594
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_empty_path",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1022,
+          "compacted_tokens": 772
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_private_ttl_exact_edge",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1003,
+          "compacted_tokens": 636
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_retry_without_backend",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1015,
+          "compacted_tokens": 965
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_duplicate_write_permission",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 705
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_refund_capped_units",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 808
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_owner_case_mismatch",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 958
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_zero_units",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 919
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_allocate_exact_available",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1015,
+          "compacted_tokens": 619
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1024,
+          "compacted_tokens": 928
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_two_busy_intervals",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 561
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_maximum_valid_reservation",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 715
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_default_public_lifetime",
+          "repeat": 1,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 966
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_revoked_admin",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1004,
+          "compacted_tokens": 955
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_maximum_valid_reservation",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 715
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_owner_case_mismatch",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 958
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_five_member_receipt",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1016,
+          "compacted_tokens": 732
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_default_public_lifetime",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 966
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_zero_units",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 919
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_entry_transitive_calls",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 977
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_retry_without_backend",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1015,
+          "compacted_tokens": 965
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_buffer_exact_separation",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1013,
+          "compacted_tokens": 788
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_wrapped_workday",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1015,
+          "compacted_tokens": 635
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_write_scope_intervention",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1022,
+          "compacted_tokens": 954
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_canary_exact_threshold",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1009,
+          "compacted_tokens": 467
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_overlong_duration",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1005,
+          "compacted_tokens": 970
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_negative_private_lifetime",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 961
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_partial_depletes_available",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1020,
+          "compacted_tokens": 746
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_latency_intervention",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1003,
+          "compacted_tokens": 751
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_large_member_order",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1020,
+          "compacted_tokens": 980
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_refund_capped_units",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 808
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_bucket_near_wrap",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 669
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1024,
+          "compacted_tokens": 459
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_remaining_transitive_calls",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1019,
+          "compacted_tokens": 961
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_last_valid_session_second",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 705
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1024,
+          "compacted_tokens": 928
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_two_nonmember_items",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 594
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_appointment_transitive_calls",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 983
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_receipt_transitive_calls",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 963
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_private_ttl_exact_edge",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1003,
+          "compacted_tokens": 636
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_new_query_key",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1016,
+          "compacted_tokens": 689
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_duplicate_write_permission",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 705
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_priority_not_fastest",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 951
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_private_lifetime_clamp",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1020,
+          "compacted_tokens": 890
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_below_safety_reserve",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 960
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_slot_size_intervention",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1004,
+          "compacted_tokens": 953
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_negative_unit_price",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 952
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_max_duration_closing_edge",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1013,
+          "compacted_tokens": 669
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_next_week_opening",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 961
+        },
+        {
+          "split": "new",
+          "task_id": "eval_schedules__v2_two_busy_intervals",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 561
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_last_retry_fallback",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1024,
+          "compacted_tokens": 730
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_empty_path",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1022,
+          "compacted_tokens": 772
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 964
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_allocate_exact_available",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1015,
+          "compacted_tokens": 619
+        },
+        {
+          "split": "new",
+          "task_id": "eval_authorization__v2_nonowner_read",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 651
+        },
+        {
+          "split": "new",
+          "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 594
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_enough_stock",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 960
+        },
+        {
+          "split": "new",
+          "task_id": "eval_routing__v2_retry_transitive_calls",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1019,
+          "compacted_tokens": 954
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_short_private_ttl",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1011,
+          "compacted_tokens": 671
+        },
+        {
+          "split": "new",
+          "task_id": "eval_cache__v2_private_cap_intervention",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1021,
+          "compacted_tokens": 946
+        },
+        {
+          "split": "new",
+          "task_id": "eval_inventory__v2_order_cap_intervention",
+          "repeat": 2,
+          "identical_selected_evidence": true,
+          "original_tokens": 1021,
+          "compacted_tokens": 935
+        },
+        {
+          "split": "old",
+          "task_id": "eval_authorization__own_write",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1004,
+          "compacted_tokens": 567
+        },
+        {
+          "split": "old",
+          "task_id": "eval_inventory__safety_buffer",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1016,
+          "compacted_tokens": 950
+        },
+        {
+          "split": "old",
+          "task_id": "eval_routing__fallback",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1008,
+          "compacted_tokens": 676
+        },
+        {
+          "split": "old",
+          "task_id": "eval_inventory__direct_calls",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 953
+        },
+        {
+          "split": "old",
+          "task_id": "eval_pricing__member_order",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 594
+        },
+        {
+          "split": "old",
+          "task_id": "eval_routing__no_backend",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 950
+        },
+        {
+          "split": "old",
+          "task_id": "eval_routing__path",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1017,
+          "compacted_tokens": 518
+        },
+        {
+          "split": "old",
+          "task_id": "eval_authorization__unknown_action",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 958
+        },
+        {
+          "split": "old",
+          "task_id": "eval_inventory__order_limit",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 811
+        },
+        {
+          "split": "old",
+          "task_id": "eval_cache__resource",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1020,
+          "compacted_tokens": 647
+        },
+        {
+          "split": "old",
+          "task_id": "eval_schedules__too_late",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1005,
+          "compacted_tokens": 970
+        },
+        {
+          "split": "old",
+          "task_id": "eval_schedules__busy_buffer",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1013,
+          "compacted_tokens": 669
+        },
+        {
+          "split": "old",
+          "task_id": "eval_authorization__normalize",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1024,
+          "compacted_tokens": 459
+        },
+        {
+          "split": "old",
+          "task_id": "eval_schedules__appointment",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1013,
+          "compacted_tokens": 869
+        },
+        {
+          "split": "old",
+          "task_id": "eval_authorization__session_change",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1020,
+          "compacted_tokens": 689
+        },
+        {
+          "split": "old",
+          "task_id": "eval_cache__direct_calls",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1013,
+          "compacted_tokens": 979
+        },
+        {
+          "split": "old",
+          "task_id": "eval_inventory__all_or_nothing",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1021,
+          "compacted_tokens": 921
+        },
+        {
+          "split": "old",
+          "task_id": "eval_pricing__tax_change",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1013,
+          "compacted_tokens": 887
+        },
+        {
+          "split": "old",
+          "task_id": "eval_inventory__remaining",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1005,
+          "compacted_tokens": 700
+        },
+        {
+          "split": "old",
+          "task_id": "eval_cache__negative_ttl",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1011,
+          "compacted_tokens": 671
+        },
+        {
+          "split": "old",
+          "task_id": "eval_schedules__rounding",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1020,
+          "compacted_tokens": 561
+        },
+        {
+          "split": "old",
+          "task_id": "eval_schedules__direct_calls",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 957
+        },
+        {
+          "split": "old",
+          "task_id": "eval_inventory__allocation",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1015,
+          "compacted_tokens": 619
+        },
+        {
+          "split": "old",
+          "task_id": "eval_authorization__direct_calls",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 965
+        },
+        {
+          "split": "old",
+          "task_id": "eval_pricing__receipt",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1016,
+          "compacted_tokens": 732
+        },
+        {
+          "split": "old",
+          "task_id": "eval_authorization__future_session",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1003,
+          "compacted_tokens": 946
+        },
+        {
+          "split": "old",
+          "task_id": "eval_pricing__direct_calls",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1024,
+          "compacted_tokens": 984
+        },
+        {
+          "split": "old",
+          "task_id": "eval_pricing__quantity_cap",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1023,
+          "compacted_tokens": 551
+        },
+        {
+          "split": "old",
+          "task_id": "eval_routing__latency_edge",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1013,
+          "compacted_tokens": 729
+        },
+        {
+          "split": "old",
+          "task_id": "eval_inventory__buffer_change",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 911
+        },
+        {
+          "split": "old",
+          "task_id": "eval_schedules__closing_edge",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1013,
+          "compacted_tokens": 669
+        },
+        {
+          "split": "old",
+          "task_id": "eval_inventory__partial",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1021,
+          "compacted_tokens": 819
+        },
+        {
+          "split": "old",
+          "task_id": "eval_cache__public_lifetime",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 976
+        },
+        {
+          "split": "old",
+          "task_id": "eval_cache__private_entry",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1003,
+          "compacted_tokens": 636
+        },
+        {
+          "split": "old",
+          "task_id": "eval_cache__do_not_store",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1009,
+          "compacted_tokens": 965
+        },
+        {
+          "split": "old",
+          "task_id": "eval_schedules__weekend",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 961
+        },
+        {
+          "split": "old",
+          "task_id": "eval_routing__direct_calls",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1010,
+          "compacted_tokens": 957
+        },
+        {
+          "split": "old",
+          "task_id": "eval_authorization__admin_without_scope",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1011,
+          "compacted_tokens": 615
+        },
+        {
+          "split": "old",
+          "task_id": "eval_schedules__buffer_change",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1022,
+          "compacted_tokens": 945
+        },
+        {
+          "split": "old",
+          "task_id": "eval_pricing__refund",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 808
+        },
+        {
+          "split": "old",
+          "task_id": "eval_pricing__discount_delivery",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1020,
+          "compacted_tokens": 980
+        },
+        {
+          "split": "old",
+          "task_id": "eval_routing__retry_exhausted",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1010,
+          "compacted_tokens": 942
+        },
+        {
+          "split": "old",
+          "task_id": "eval_pricing__invalid_receipt",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1007,
+          "compacted_tokens": 963
+        },
+        {
+          "split": "old",
+          "task_id": "eval_cache__schema_change",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1006,
+          "compacted_tokens": 797
+        },
+        {
+          "split": "old",
+          "task_id": "eval_routing__canary_change",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1018,
+          "compacted_tokens": 811
+        },
+        {
+          "split": "old",
+          "task_id": "eval_routing__preferred",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1008,
+          "compacted_tokens": 676
+        },
+        {
+          "split": "old",
+          "task_id": "eval_authorization__expiry",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1012,
+          "compacted_tokens": 705
+        },
+        {
+          "split": "old",
+          "task_id": "eval_cache__canonical_key",
+          "repeat": 0,
+          "identical_selected_evidence": true,
+          "original_tokens": 1022,
+          "compacted_tokens": 782
+        }
+      ],
+      "tokenizer": {
+        "status": "completed",
+        "distinct_strings": 638,
+        "method": {
+          "binary": "/opt/homebrew/Cellar/llama.cpp/8680/bin/llama-tokenize",
+          "binary_sha256": "a6364e9a027fa6e76b66f6e61b6af397dc63128f7072be6c1589e80830e349d5",
+          "command": [
+            "/opt/homebrew/bin/llama-tokenize",
+            "-m",
+            "/Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf",
+            "--no-bos",
+            "--no-escape",
+            "--ids",
+            "--log-disable",
+            "--stdin"
+          ],
+          "separator_token": 151643,
+          "standalone_crosschecks": 13,
+          "all_standalone_crosschecks_passed": true
+        }
+      },
+      "timing_definition": "query_seconds is observed physical wall. pre_answer_seconds includes selector/packing/compaction; answer_call.wall_seconds plus small logging overhead completes query. tokenize_seconds is nested across these phases, and compaction_seconds includes its tokenizer work: neither is added again.",
+      "evidence_limits": [
+        "Protocol/UTC logs are local mutable evidence, not externally signed preregistration.",
+        "Frozen code clears token-count cache at each query; original per-tokenize HTTP payloads/responses are not individually logged, so cache-reset behavior is supported by code and per-query request counts, not a complete tokenization wire trace.",
+        "Complete HTTP request payloads and selected response timing fields are saved; full raw server responses are not retained.",
+        "C preserves unique raw/import/summary body strings. It changes headers, repetition, grouping and positional presentation; equivalent reasoning behavior is not guaranteed.",
+        "New questions reuse six original synthetic projects and summaries. Old questions are explicitly exploratory regression; this is not validation on independent real repositories."
+      ],
+      "input_fingerprints": {
+        "protocol": "52e133d47d313b74aa24438d7d5508cbdd22dde7c5b85e60dc69aa798310436d",
+        "environment": "7d757341d315fc006dc13ada353f0906b0bcb8afef3bec153f064616998f3e76",
+        "experiment_v2": "86fbbf165c2ad44c21fe0a0554b6624e86961246c9abb9aceed547f1a8d606be",
+        "runtime_fingerprint": "4bc7b3bf9c1b65479e39a29ce9d5c7724fe9b9fad6f3c15f9a6ca3c7cb8bb0e0"
+      }
+    }
+  },
+  "costs": {
+    "new_summary_calls": 0,
+    "original_summary_build_seconds": 569.5474355830083,
+    "original_summary_count": 121,
+    "mean_vector_build_seconds": 0.00197634733679782,
+    "vector_build_total_seconds": 0.011858084020786919,
+    "v1_rh_request_mean_seconds": 4.231650235762976,
+    "v1_rh_mean_prefill_seconds": 3.476298604166667,
+    "v1_rh_mean_decode_seconds": 0.7036745277777777,
+    "initialization_note": "Existing v1 summaries reused. Document vectors timed separately. Historical summary build cost is not full cold-start cost."
+  },
+  "examples": [
+    {
+      "kind": "C_gain_RH",
+      "split": "new",
+      "task_id": "eval_inventory__v2_partial_depletes_available",
+      "repeat": 0,
+      "question": "What does remaining_after(9,1,8,True) return?",
+      "expected": 0,
+      "description_ko": "표시를 줄인 뒤 정답으로 바뀐 사례",
+      "observation_ko": "안전재고 3개를 빼면 처음 판매 가능량은 5개입니다. 5개를 부분 예약한 뒤 남는 판매 가능량은 0개입니다.",
+      "caution_ko": "같은 근거에서 답이 바뀐 관찰입니다. 중복 제거와 제목 변경 중 어느 요소가 영향을 주었는지는 분리하지 않았습니다.",
+      "arms": {
+        "A": {
+          "correct": false,
+          "parsed_answer": 8,
+          "context_tokens": 182,
+          "query_seconds": 2.0845932090014685,
+          "failure": "wrong_answer",
+          "chosen": [
+            {
+              "id": "native:0",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::reserve"
+              ]
+            },
+            {
+              "id": "native:1",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::remaining_after"
+              ]
+            }
+          ]
+        },
+        "C": {
+          "correct": true,
+          "parsed_answer": 0,
+          "context_tokens": 746,
+          "query_seconds": 3.1664072499988833,
+          "failure": null,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::remaining_after",
+              "level": 0,
+              "score": 0.28119946640093646,
+              "source_uris": [
+                "memory://symbol/service.py::remaining_after"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::remaining_after",
+              "level": 1,
+              "score": 0.23991593198201971,
+              "source_uris": [
+                "memory://symbol/service.py::remaining_after",
+                "memory://symbol/rules.py::sellable",
+                "memory://symbol/service.py::reserve",
+                "memory://symbol/policy.py::SAFETY_STOCK",
+                "memory://symbol/policy.py::ACCEPTED",
+                "memory://symbol/policy.py::DENIED",
+                "memory://symbol/policy.py::PARTIAL",
+                "memory://symbol/policy.py::RESERVATION_TTL",
+                "memory://symbol/rules.py::allocate",
+                "memory://symbol/rules.py::valid_quantity",
+                "memory://symbol/policy.py::MAX_PER_ORDER",
+                "memory://symbol/policy.py::MIN_ORDER"
+              ]
+            },
+            {
+              "id": "summary:level2:service.py",
+              "level": 2,
+              "score": 0.14803940276232458,
+              "source_uris": [
+                "memory://symbol/policy.py::ACCEPTED",
+                "memory://symbol/policy.py::DENIED",
+                "memory://symbol/policy.py::MAX_PER_ORDER",
+                "memory://symbol/policy.py::MIN_ORDER",
+                "memory://symbol/policy.py::PARTIAL",
+                "memory://symbol/policy.py::RESERVATION_TTL",
+                "memory://symbol/policy.py::SAFETY_STOCK",
+                "memory://symbol/rules.py::allocate",
+                "memory://symbol/rules.py::sellable",
+                "memory://symbol/rules.py::valid_quantity",
+                "memory://symbol/service.py::remaining_after",
+                "memory://symbol/service.py::reserve",
+                "memory://symbol/service.py::stock_label"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::remaining_after",
+              "level": 0,
+              "score": 0.14054743780903833,
+              "source_uris": [
+                "memory://symbol/service.py::remaining_after",
+                "memory://symbol/rules.py::sellable",
+                "memory://symbol/service.py::reserve",
+                "memory://symbol/policy.py::SAFETY_STOCK",
+                "memory://symbol/policy.py::ACCEPTED",
+                "memory://symbol/policy.py::DENIED",
+                "memory://symbol/policy.py::PARTIAL",
+                "memory://symbol/policy.py::RESERVATION_TTL",
+                "memory://symbol/rules.py::allocate",
+                "memory://symbol/rules.py::valid_quantity",
+                "memory://symbol/policy.py::MAX_PER_ORDER",
+                "memory://symbol/policy.py::MIN_ORDER"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::stock_label",
+              "level": 1,
+              "score": 0.07405745379980794,
+              "source_uris": [
+                "memory://symbol/service.py::stock_label"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::can_backorder",
+              "level": 1,
+              "score": 0.07149390370715472,
+              "source_uris": [
+                "memory://symbol/rules.py::can_backorder",
+                "memory://symbol/policy.py::BACKORDER_LIMIT"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/presentation.py::normalize_label",
+              "level": 0,
+              "score": 0.013663232577999687,
+              "source_uris": [
+                "memory://symbol/presentation.py::normalize_label"
+              ]
+            }
+          ]
+        },
+        "RH": {
+          "correct": false,
+          "parsed_answer": 5,
+          "context_tokens": 1020,
+          "query_seconds": 3.9387618750042748,
+          "failure": "wrong_answer",
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::remaining_after",
+              "level": 0,
+              "score": 0.28119946640093646,
+              "source_uris": [
+                "memory://symbol/service.py::remaining_after"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::remaining_after",
+              "level": 1,
+              "score": 0.23991593198201971,
+              "source_uris": [
+                "memory://symbol/service.py::remaining_after",
+                "memory://symbol/rules.py::sellable",
+                "memory://symbol/service.py::reserve",
+                "memory://symbol/policy.py::SAFETY_STOCK",
+                "memory://symbol/policy.py::ACCEPTED",
+                "memory://symbol/policy.py::DENIED",
+                "memory://symbol/policy.py::PARTIAL",
+                "memory://symbol/policy.py::RESERVATION_TTL",
+                "memory://symbol/rules.py::allocate",
+                "memory://symbol/rules.py::valid_quantity",
+                "memory://symbol/policy.py::MAX_PER_ORDER",
+                "memory://symbol/policy.py::MIN_ORDER"
+              ]
+            },
+            {
+              "id": "summary:level2:service.py",
+              "level": 2,
+              "score": 0.14803940276232458,
+              "source_uris": [
+                "memory://symbol/policy.py::ACCEPTED",
+                "memory://symbol/policy.py::DENIED",
+                "memory://symbol/policy.py::MAX_PER_ORDER",
+                "memory://symbol/policy.py::MIN_ORDER",
+                "memory://symbol/policy.py::PARTIAL",
+                "memory://symbol/policy.py::RESERVATION_TTL",
+                "memory://symbol/policy.py::SAFETY_STOCK",
+                "memory://symbol/rules.py::allocate",
+                "memory://symbol/rules.py::sellable",
+                "memory://symbol/rules.py::valid_quantity",
+                "memory://symbol/service.py::remaining_after",
+                "memory://symbol/service.py::reserve",
+                "memory://symbol/service.py::stock_label"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::remaining_after",
+              "level": 0,
+              "score": 0.14054743780903833,
+              "source_uris": [
+                "memory://symbol/service.py::remaining_after",
+                "memory://symbol/rules.py::sellable",
+                "memory://symbol/service.py::reserve",
+                "memory://symbol/policy.py::SAFETY_STOCK",
+                "memory://symbol/policy.py::ACCEPTED",
+                "memory://symbol/policy.py::DENIED",
+                "memory://symbol/policy.py::PARTIAL",
+                "memory://symbol/policy.py::RESERVATION_TTL",
+                "memory://symbol/rules.py::allocate",
+                "memory://symbol/rules.py::valid_quantity",
+                "memory://symbol/policy.py::MAX_PER_ORDER",
+                "memory://symbol/policy.py::MIN_ORDER"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::stock_label",
+              "level": 1,
+              "score": 0.07405745379980794,
+              "source_uris": [
+                "memory://symbol/service.py::stock_label"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::can_backorder",
+              "level": 1,
+              "score": 0.07149390370715472,
+              "source_uris": [
+                "memory://symbol/rules.py::can_backorder",
+                "memory://symbol/policy.py::BACKORDER_LIMIT"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/presentation.py::normalize_label",
+              "level": 0,
+              "score": 0.013663232577999687,
+              "source_uris": [
+                "memory://symbol/presentation.py::normalize_label"
+              ]
+            }
+          ]
+        }
+      },
+      "question_ko": "재고 9개 중 1개가 이미 잡혀 있을 때 8개를 요청하고 부분 예약을 허용하면, 예약 뒤 판매 가능한 수량은 얼마인가? remaining_after(9,1,8,True)"
+    },
+    {
+      "kind": "C_loss_RH",
+      "split": "new",
+      "task_id": "eval_authorization__v2_last_valid_session_second",
+      "repeat": 0,
+      "question": "What does can_edit_own('owner',['document:write'],200,3799) return?",
+      "expected": true,
+      "description_ko": "표시를 줄인 뒤 오답으로 바뀐 사례",
+      "observation_ko": "세션 나이 3599는 제한 3600보다 작으므로 반환값은 불리언 true입니다. 문자열 \"allowed\"는 허용이라는 뜻이어도 반환 자료형이 달라 오답입니다.",
+      "caution_ko": "이 사례는 자료형 준수 실패입니다. 이를 곧바로 권한 로직 자체를 이해하지 못한 증거로 해석하지 않습니다.",
+      "arms": {
+        "RH": {
+          "correct": true,
+          "parsed_answer": true,
+          "context_tokens": 1012,
+          "query_seconds": 3.907955957998638,
+          "failure": null,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.3294279682152731,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::can_edit_own",
+              "level": 1,
+              "score": 0.25238871307061006,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.19445363052889622,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::WRITE_SCOPE",
+              "level": 0,
+              "score": 0.16231423829592406,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "summary:level2:service.py",
+              "level": 2,
+              "score": 0.15883880794335056,
+              "source_uris": [
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/policy.py::MAX_SESSION_AGE",
+                "memory://symbol/policy.py::READ_ACTION",
+                "memory://symbol/policy.py::READ_SCOPE",
+                "memory://symbol/policy.py::WRITE_ACTION",
+                "memory://symbol/policy.py::WRITE_SCOPE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::user_key"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::WRITE_ACTION",
+              "level": 0,
+              "score": 0.10090378615433415,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_ACTION"
+              ]
+            }
+          ]
+        },
+        "A": {
+          "correct": true,
+          "parsed_answer": true,
+          "context_tokens": 158,
+          "query_seconds": 2.096178958992823,
+          "failure": null,
+          "chosen": [
+            {
+              "id": "native:0",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::authorize"
+              ]
+            },
+            {
+              "id": "native:1",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            }
+          ]
+        },
+        "C": {
+          "correct": false,
+          "parsed_answer": "allowed",
+          "context_tokens": 705,
+          "query_seconds": 3.10360541701084,
+          "failure": "wrong_answer",
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.3294279682152731,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::can_edit_own",
+              "level": 1,
+              "score": 0.25238871307061006,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.19445363052889622,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::WRITE_SCOPE",
+              "level": 0,
+              "score": 0.16231423829592406,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "summary:level2:service.py",
+              "level": 2,
+              "score": 0.15883880794335056,
+              "source_uris": [
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/policy.py::MAX_SESSION_AGE",
+                "memory://symbol/policy.py::READ_ACTION",
+                "memory://symbol/policy.py::READ_SCOPE",
+                "memory://symbol/policy.py::WRITE_ACTION",
+                "memory://symbol/policy.py::WRITE_SCOPE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::user_key"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::WRITE_ACTION",
+              "level": 0,
+              "score": 0.10090378615433415,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_ACTION"
+              ]
+            }
+          ]
+        }
+      },
+      "question_ko": "자기 문서의 쓰기 권한이 있고 세션 시작이 200, 현재 시각이 3799라면 편집 가능한가? can_edit_own('owner',['document:write'],200,3799)"
+    },
+    {
+      "kind": "C_gain_A",
+      "split": "new",
+      "task_id": "eval_cache__v2_private_cap_intervention",
+      "repeat": 0,
+      "question": "If policy.PRIVATE_TTL changes from 30 to 10 before the program is loaded, which exact calls change their return values: cache_ttl(25,True), cache_entry('x2','Result',{},25,True,5), render_cache_key('x2','Result',{})? Return a sorted list of changed function names.",
+      "expected": [
+        "cache_entry",
+        "cache_ttl"
+      ],
+      "description_ko": "기존 방식보다 나아진 사례",
+      "observation_ko": "A/RH/C의 동일 질문·반복 결과를 원자료에서 직접 비교했습니다.",
+      "caution_ko": "선택된 근거와 답변을 함께 확인한 질적 사례이며 전체 개선의 증명은 아닙니다.",
+      "arms": {
+        "RH": {
+          "correct": true,
+          "parsed_answer": [
+            "cache_entry",
+            "cache_ttl"
+          ],
+          "context_tokens": 1021,
+          "query_seconds": 4.360503459000029,
+          "failure": null,
+          "chosen": [
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::cache_ttl",
+              "level": 1,
+              "score": 0.32150216651829855,
+              "source_uris": [
+                "memory://symbol/rules.py::cache_ttl",
+                "memory://symbol/policy.py::DEFAULT_TTL",
+                "memory://symbol/policy.py::MAX_TTL",
+                "memory://symbol/policy.py::PRIVATE_TTL"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::cache_entry",
+              "level": 1,
+              "score": 0.2891438382457949,
+              "source_uris": [
+                "memory://symbol/service.py::cache_entry",
+                "memory://symbol/rules.py::cache_ttl",
+                "memory://symbol/service.py::render_cache_key",
+                "memory://symbol/policy.py::DEFAULT_TTL",
+                "memory://symbol/policy.py::MAX_TTL",
+                "memory://symbol/policy.py::PRIVATE_TTL",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::ANONYMOUS_TENANT"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::normalize_tenant",
+              "level": 1,
+              "score": 0.2684304661712985,
+              "source_uris": [
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/policy.py::ANONYMOUS_TENANT"
+              ]
+            },
+            {
+              "id": "summary:level2:service.py",
+              "level": 2,
+              "score": 0.26016828011617926,
+              "source_uris": [
+                "memory://symbol/policy.py::ANONYMOUS_TENANT",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::DEFAULT_TTL",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::MAX_TTL",
+                "memory://symbol/policy.py::PRIVATE_TTL",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::cache_ttl",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/service.py::cache_entry",
+                "memory://symbol/service.py::cache_partition",
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::cache_partition",
+              "level": 1,
+              "score": 0.25263460617589373,
+              "source_uris": [
+                "memory://symbol/service.py::cache_partition",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/policy.py::ANONYMOUS_TENANT"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+              "level": 1,
+              "score": 0.2473865922174156,
+              "source_uris": [
+                "memory://symbol/presentation.py::summarize_count",
+                "memory://symbol/presentation.py::DISPLAY_PREFIX"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/audit.py::recent_events",
+              "level": 1,
+              "score": 0.24364078518239843,
+              "source_uris": [
+                "memory://symbol/audit.py::recent_events",
+                "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/service.py::cache_entry",
+              "level": 0,
+              "score": 0.23971814219434873,
+              "source_uris": [
+                "memory://symbol/service.py::cache_entry"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::cache_ttl",
+              "level": 0,
+              "score": 0.19938157705270235,
+              "source_uris": [
+                "memory://symbol/rules.py::cache_ttl",
+                "memory://symbol/policy.py::DEFAULT_TTL",
+                "memory://symbol/policy.py::MAX_TTL",
+                "memory://symbol/policy.py::PRIVATE_TTL"
+              ]
+            }
+          ]
+        },
+        "A": {
+          "correct": false,
+          "parsed_answer": [
+            "cache_entry",
+            "render_cache_key"
+          ],
+          "context_tokens": 57,
+          "query_seconds": 2.610264874994755,
+          "failure": "wrong_answer",
+          "chosen": [
+            {
+              "id": "native:0",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::cache_ttl"
+              ]
+            }
+          ]
+        },
+        "C": {
+          "correct": true,
+          "parsed_answer": [
+            "cache_entry",
+            "cache_ttl"
+          ],
+          "context_tokens": 946,
+          "query_seconds": 4.173128082999028,
+          "failure": null,
+          "chosen": [
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::cache_ttl",
+              "level": 1,
+              "score": 0.32150216651829855,
+              "source_uris": [
+                "memory://symbol/rules.py::cache_ttl",
+                "memory://symbol/policy.py::DEFAULT_TTL",
+                "memory://symbol/policy.py::MAX_TTL",
+                "memory://symbol/policy.py::PRIVATE_TTL"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::cache_entry",
+              "level": 1,
+              "score": 0.2891438382457949,
+              "source_uris": [
+                "memory://symbol/service.py::cache_entry",
+                "memory://symbol/rules.py::cache_ttl",
+                "memory://symbol/service.py::render_cache_key",
+                "memory://symbol/policy.py::DEFAULT_TTL",
+                "memory://symbol/policy.py::MAX_TTL",
+                "memory://symbol/policy.py::PRIVATE_TTL",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::ANONYMOUS_TENANT"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::normalize_tenant",
+              "level": 1,
+              "score": 0.2684304661712985,
+              "source_uris": [
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/policy.py::ANONYMOUS_TENANT"
+              ]
+            },
+            {
+              "id": "summary:level2:service.py",
+              "level": 2,
+              "score": 0.26016828011617926,
+              "source_uris": [
+                "memory://symbol/policy.py::ANONYMOUS_TENANT",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::DEFAULT_TTL",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::MAX_TTL",
+                "memory://symbol/policy.py::PRIVATE_TTL",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::cache_ttl",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/service.py::cache_entry",
+                "memory://symbol/service.py::cache_partition",
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::cache_partition",
+              "level": 1,
+              "score": 0.25263460617589373,
+              "source_uris": [
+                "memory://symbol/service.py::cache_partition",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/policy.py::ANONYMOUS_TENANT"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+              "level": 1,
+              "score": 0.2473865922174156,
+              "source_uris": [
+                "memory://symbol/presentation.py::summarize_count",
+                "memory://symbol/presentation.py::DISPLAY_PREFIX"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/audit.py::recent_events",
+              "level": 1,
+              "score": 0.24364078518239843,
+              "source_uris": [
+                "memory://symbol/audit.py::recent_events",
+                "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/service.py::cache_entry",
+              "level": 0,
+              "score": 0.23971814219434873,
+              "source_uris": [
+                "memory://symbol/service.py::cache_entry"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::cache_ttl",
+              "level": 0,
+              "score": 0.19938157705270235,
+              "source_uris": [
+                "memory://symbol/rules.py::cache_ttl",
+                "memory://symbol/policy.py::DEFAULT_TTL",
+                "memory://symbol/policy.py::MAX_TTL",
+                "memory://symbol/policy.py::PRIVATE_TTL"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "all_wrong",
+      "split": "new",
+      "task_id": "eval_authorization__v2_nonowner_read",
+      "repeat": 0,
+      "question": "What does authorize('a9','b2','member',['document:read'],'read',1000,1001,False) return?",
+      "expected": {
+        "allowed": false,
+        "reason": "denied"
+      },
+      "description_ko": "세 방식 모두 실패한 사례",
+      "observation_ko": "A/RH/C의 동일 질문·반복 결과를 원자료에서 직접 비교했습니다.",
+      "caution_ko": "검색 결과만으로 모델의 계산·추론 오류가 해결되지는 않습니다.",
+      "arms": {
+        "C": {
+          "correct": false,
+          "parsed_answer": null,
+          "context_tokens": 651,
+          "query_seconds": 3.270935708991601,
+          "failure": "invalid_json",
+          "chosen": [
+            {
+              "id": "memory://symbol/policy.py::READ_SCOPE",
+              "level": 0,
+              "score": 0.21934846094846983,
+              "source_uris": [
+                "memory://symbol/policy.py::READ_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::READ_ACTION",
+              "level": 0,
+              "score": 0.16768735868667178,
+              "source_uris": [
+                "memory://symbol/policy.py::READ_ACTION"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::required_scope",
+              "level": 0,
+              "score": 0.13248159259255515,
+              "source_uris": [
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::READ_ACTION",
+                "memory://symbol/policy.py::READ_SCOPE",
+                "memory://symbol/policy.py::WRITE_ACTION",
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.1150562785023393,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::can_edit_own",
+              "level": 1,
+              "score": 0.07830614419587742,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+              "level": 0,
+              "score": 0.051403408705654845,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/audit.py::recent_events",
+              "level": 0,
+              "score": 0.009809040541888572,
+              "source_uris": [
+                "memory://symbol/audit.py::recent_events"
+              ]
+            }
+          ]
+        },
+        "RH": {
+          "correct": false,
+          "parsed_answer": null,
+          "context_tokens": 1018,
+          "query_seconds": 4.346702916998765,
+          "failure": "invalid_json",
+          "chosen": [
+            {
+              "id": "memory://symbol/policy.py::READ_SCOPE",
+              "level": 0,
+              "score": 0.21934846094846983,
+              "source_uris": [
+                "memory://symbol/policy.py::READ_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::READ_ACTION",
+              "level": 0,
+              "score": 0.16768735868667178,
+              "source_uris": [
+                "memory://symbol/policy.py::READ_ACTION"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::required_scope",
+              "level": 0,
+              "score": 0.13248159259255515,
+              "source_uris": [
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::READ_ACTION",
+                "memory://symbol/policy.py::READ_SCOPE",
+                "memory://symbol/policy.py::WRITE_ACTION",
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.1150562785023393,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::can_edit_own",
+              "level": 1,
+              "score": 0.07830614419587742,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+              "level": 0,
+              "score": 0.051403408705654845,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/audit.py::recent_events",
+              "level": 0,
+              "score": 0.009809040541888572,
+              "source_uris": [
+                "memory://symbol/audit.py::recent_events"
+              ]
+            }
+          ]
+        },
+        "A": {
+          "correct": false,
+          "parsed_answer": null,
+          "context_tokens": 100,
+          "query_seconds": 2.2025960409955587,
+          "failure": "invalid_json",
+          "chosen": [
+            {
+              "id": "native:0",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::authorize"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "source_hashes": {
+    "results_new.jsonl": "60138e011dd992aef4944daf8916b30455be67cfafae6cdf6ef0f3a4b3d46e44",
+    "results_old.jsonl": "df7d1cbdd97d8d2cb2c64df7696ac7c3e86ac6e49d5db7cb5e413f32011a5131",
+    "results_dev.jsonl": "18e3cbe148b43b86b7a520951c18e1075e303a78a395e324860c62429ea84901",
+    "protocol.json": "52e133d47d313b74aa24438d7d5508cbdd22dde7c5b85e60dc69aa798310436d",
+    "environment.json": "7d757341d315fc006dc13ada353f0906b0bcb8afef3bec153f064616998f3e76",
+    "model_calls.jsonl": "f70caa3f622786a75f3c8d33b705a650614ccbd5472fc03a7b7fd4ac5ffd92bb",
+    "holdout/eval_tasks.json": "06a9efc888fff9dd99681f38bffdfd5c32c878ae8850af5ed801d8024a2226ef",
+    "holdout/gold_validation.json": "91c246d275aa35f4a868f8cf7fbaa04e4ba6a16fb9c5a4ec1d6fc5918a872cc9",
+    "audit.json": "b25580f7c91a5e21736a140627b5bb09a1df415a95bc5ccb5f9b7c7ba83d530f",
+    "preflight_independent.json": "be0615d377e582981c57d6463eba331646093dbf43e4bbebb476c21916debfa8",
+    "integrity_v2.json": "b283797696576e24f26c25043d923948aaf602f2fc3716af8b369300f409fe2c",
+    "../results_eval_main.jsonl": "2c619e280d34a8c04f5865fc35caf4902e93cb4710a59ae6cc5cdcca9f6497d9",
+    "../analysis.json": "a0cd9de2634e33e2c582d90e04f25c0da74486b79ae7ed965a8f021447a48f64"
+  },
+  "measurement_notes": [
+    "Primary mean_query_seconds is the mean across 48 question-specific median-of-three physical query times.",
+    "Request p50/p95 use all 144 observed requests per arm, not question medians.",
+    "Prefill + decode + other form a disjoint decomposition of mean request time.",
+    "Tokenizer and compaction durations overlap other stages; do not add them to a stacked total.",
+    "New means new questions on already seen synthetic projects; no independent repository generalization.",
+    "Strict JSON/type/list order scoring remains primary. Order-tolerant diagnostics are supplementary.",
+    "Old and new question scores must not be pooled or treated as 96 independent projects."
+  ]
+}

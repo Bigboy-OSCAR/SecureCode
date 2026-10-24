@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "verified_at_utc": "2026-10-24T09:07:37.265084+00:00",
+  "requirements": {
+    "fresh_A_B_execution": {
+      "questions": 96,
+      "repeats": 3,
+      "answers": 576,
+      "independent_model_calls": 1152
+    },
+    "quantitative_comparison": "accuracy, latency, evidence volume, category/project breakdown, paired uncertainty",
+    "method_explanation": "A/B table, flowchart, actual source-code traversal example, limits",
+    "new_markdown_report": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md",
+    "verification": {
+      "checks": 21,
+      "independent_numeric_values": 594
+    },
+    "experiment_server_stopped": true
+  },
+  "report_sha256": "9e05b5f280e1c6fc1390f1b6623d5466097c8709f59379b3f3aec428d86ac125"
+}

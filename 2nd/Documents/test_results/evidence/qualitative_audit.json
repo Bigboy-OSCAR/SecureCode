@@ -1,0 +1,201 @@
+{
+  "created_at_utc": "2026-10-20T09:26:32.437926+00:00",
+  "status": "illustrative_examples_from_observed_records",
+  "evaluation_rows_available_at_review": 123,
+  "scope": "Two paired scored examples selected for explanation; not a representative frequency estimate. One additional summary-content observation is unscored.",
+  "development_calibration": "Before any evaluation answers, the development-only run exposed a JSON suffix that conflicted with URI selection. That suffix was removed and one complete outer JSON fence was permitted before exact value/type grading. Sources and generated summaries remained unchanged; original development outputs were archived. No evaluation-driven tuning was performed by this reviewer.",
+  "scored_examples": [
+    {
+      "task_id": "eval_inventory__safety_buffer",
+      "question": "A warehouse has 8 physical units and 5 already held units. A customer requests 1 unit, permits partial fulfillment, and the current time is 200. Return the reservation object containing status, units, and expires.",
+      "comparison": "R0 versus RH, same question and zero-based repeat",
+      "repeat_zero_based": 2,
+      "classification": "different_wrong_answers_with_summary_omission_and_missing_raw_value",
+      "observed_answer": {
+        "R0": {
+          "status": "partial",
+          "units": 3,
+          "expires": 1090
+        },
+        "RH": {
+          "status": "partial",
+          "units": 1,
+          "expires": 1080
+        }
+      },
+      "gold": {
+        "expires": 200,
+        "status": "denied",
+        "units": 0
+      },
+      "correct": {
+        "R0": false,
+        "RH": false
+      },
+      "rawfact": {
+        "source_files": [
+          "dataset/projects/eval_inventory/service.py",
+          "dataset/projects/eval_inventory/rules.py",
+          "dataset/projects/eval_inventory/policy.py"
+        ],
+        "quotes": [
+          "SAFETY_STOCK = 3",
+          "return max(on_hand - held - SAFETY_STOCK, 0)",
+          "return available if allow_partial else 0",
+          "status = ACCEPTED if units == requested else PARTIAL if units else DENIED",
+          "\"expires\": now + RESERVATION_TTL if units else now"
+        ],
+        "trace": "on_hand=8, held=5, safety=3 gives zero sellable units. No units are allocated; status is denied and expires remains now=200."
+      },
+      "summaryquote": {
+        "node_id": "summary:leaf:memory://symbol/rules.py::sellable",
+        "text": "The `sellable` function calculates the number of items that can be sold based on the current stock and held items, minus a safety stock. It returns the maximum of the calculated value and zero. Dependencies: `SAFETY_STOCK` from `policy.py`.",
+        "observation": "RH contains this summary but no SAFETY_STOCK = 3 source or numerical safety-stock value. Only PARTIAL and RESERVATION_TTL source constants among the 11 specified references were packed."
+      },
+      "interpretation": "Observed: RH replaced precise source with summaries that omit the numerical safety reserve; its answer differs from R0 but both are wrong. R0 received all specified source references and still failed to trace the calculation. This is consistent with summary information loss in RH plus a separate reader reasoning failure in R0.",
+      "caution": "The absent constant makes RH evidence insufficient for this exact calculation, but it does not prove that this omission uniquely caused the specific invented units or expiry. No counterfactual repair/re-run was performed. This case does not count as a correctness win or loss for RH.",
+      "evidence": {
+        "R0": {
+          "answer_call_id": "4526e16dfff5a067",
+          "context_tokens": 1023,
+          "raw_reference_recall": 1.0,
+          "chosen_ids": [
+            "atomic:memory://symbol/service.py::reserve",
+            "memory://symbol/service.py::reserve",
+            "atomic:memory://symbol/service.py::remaining_after",
+            "memory://symbol/presentation.py::DISPLAY_PREFIX",
+            "atomic:memory://symbol/presentation.py::status_label",
+            "memory://symbol/service.py::stock_label",
+            "memory://symbol/presentation.py::status_label",
+            "memory://symbol/presentation.py::summarize_count",
+            "atomic:memory://symbol/audit.py::recent_events"
+          ],
+          "context_sha256": "06b521fcde224ae032ed7993c38b34c05cc6cada5f9f1de2d7cc979493f7fa1e"
+        },
+        "RH": {
+          "answer_call_id": "2c9b232f91523e08",
+          "context_tokens": 1016,
+          "raw_reference_recall": 0.18181818181818182,
+          "chosen_ids": [
+            "summary:leaf:memory://symbol/service.py::remaining_after",
+            "summary:level2:service.py",
+            "summary:leaf:memory://symbol/service.py::reserve",
+            "summary:leaf:memory://symbol/rules.py::sellable",
+            "summary:leaf:memory://symbol/rules.py::valid_quantity",
+            "summary:level3:project",
+            "summary:leaf:memory://symbol/presentation.py::summarize_count",
+            "summary:leaf:memory://symbol/audit.py::audit_key",
+            "summary:leaf:memory://symbol/audit.py::redact_identifier",
+            "summary:leaf:memory://symbol/rules.py::can_backorder",
+            "memory://symbol/policy.py::PARTIAL",
+            "memory://symbol/policy.py::RESERVATION_TTL"
+          ],
+          "context_sha256": "7a7ef4164be0db1f0ba477c43c29c11bd0fe7861f3ae65ccda8a23c801d19bd9"
+        }
+      },
+      "results_file": "results_eval_main.jsonl"
+    },
+    {
+      "task_id": "eval_pricing__refund",
+      "question": "What does refundable(1001, 2, 3) return?",
+      "comparison": "R0 versus RH, same question and zero-based repeat",
+      "repeat_zero_based": 2,
+      "classification": "same_wrong_answer_despite_exact_formula_in_both_contexts",
+      "observed_answer": {
+        "R0": 1001,
+        "RH": 1001
+      },
+      "gold": 667,
+      "correct": {
+        "R0": false,
+        "RH": false
+      },
+      "rawfact": {
+        "source_files": [
+          "dataset/projects/eval_pricing/rules.py"
+        ],
+        "quotes": [
+          "def refundable(net_cents, returned_units, total_units):",
+          "    return net_cents * min(returned_units, total_units) // total_units"
+        ],
+        "trace": "1001 * min(2,3) // 3 = 2002 // 3 = 667. The complete function occurs at the beginning of both actual contexts."
+      },
+      "summaryquote": {
+        "node_id": "summary:leaf:memory://symbol/rules.py::refundable",
+        "text": "The formula is `net_cents * min(returned_units, total_units) // total_units`.",
+        "observation": "RH includes the exact source and a summary reproducing the correct formula; both R0 and RH answer 1001."
+      },
+      "interpretation": "Observed: retrieval delivered the necessary formula in both conditions, and RH repeated it accurately. The final arithmetic answer is still wrong. The failure therefore cannot be attributed solely to missing source retrieval or omission of this formula from the selected summary.",
+      "caution": "This is evidence of a downstream reader/calculation failure in the supplied contexts, not a direct view of the model internal reasoning. Distracting context or the output-only answering procedure could contribute; this experiment does not isolate those causes.",
+      "evidence": {
+        "R0": {
+          "answer_call_id": "c0d9d3bbf314ec1a",
+          "context_tokens": 1015,
+          "raw_reference_recall": 1.0,
+          "chosen_ids": [
+            "memory://symbol/rules.py::refundable",
+            "atomic:memory://symbol/rules.py::line_subtotal",
+            "memory://symbol/rules.py::line_subtotal",
+            "atomic:memory://symbol/audit.py::recent_events",
+            "atomic:memory://symbol/presentation.py::normalize_label",
+            "atomic:memory://symbol/audit.py::audit_key",
+            "atomic:memory://symbol/audit.py::redact_identifier",
+            "atomic:memory://symbol/service.py::checkout_total",
+            "atomic:memory://symbol/presentation.py::display_reference",
+            "atomic:memory://symbol/presentation.py::status_label",
+            "atomic:memory://symbol/presentation.py::summarize_count",
+            "atomic:memory://symbol/rules.py::member_discount",
+            "atomic:memory://symbol/rules.py::sales_tax",
+            "memory://symbol/audit.py::audit_key",
+            "memory://symbol/audit.py::recent_events",
+            "atomic:memory://symbol/audit.py::event_record"
+          ],
+          "context_sha256": "cb76415a900413d47f25137caf49a2de0b2613f56b45c012eb8d7563bf4a1cc2"
+        },
+        "RH": {
+          "answer_call_id": "a5d4e57c23baa8ab",
+          "context_tokens": 1018,
+          "raw_reference_recall": 1.0,
+          "chosen_ids": [
+            "memory://symbol/rules.py::refundable",
+            "summary:leaf:memory://symbol/rules.py::refundable",
+            "summary:leaf:memory://symbol/audit.py::recent_events",
+            "summary:level2:rules.py",
+            "summary:level3:project",
+            "atomic:memory://symbol/rules.py::line_subtotal",
+            "memory://symbol/rules.py::line_subtotal",
+            "atomic:memory://symbol/audit.py::recent_events",
+            "atomic:memory://symbol/presentation.py::normalize_label",
+            "atomic:memory://symbol/audit.py::audit_key",
+            "atomic:memory://symbol/audit.py::redact_identifier",
+            "atomic:memory://symbol/service.py::checkout_total",
+            "memory://symbol/audit.py::AUDIT_VERSION"
+          ],
+          "context_sha256": "58451901167661b1bcc21e9991efa06daa55b20347900c51ad683d02c061081b"
+        }
+      },
+      "results_file": "results_eval_main.jsonl"
+    }
+  ],
+  "unscored_summary_observations": [
+    {
+      "task_id": null,
+      "comparison": "Generated summary versus its original source, not a scored task difference",
+      "node_id": "summary:leaf:memory://symbol/rules.py::canonical_query",
+      "call_id": "00cce4f612523b48",
+      "observed_answer": null,
+      "gold": null,
+      "rawfact": "canonical_query concatenates str(key) + \"=\" + str(value) with \"&\" after sorting and excluding designated keys. It does not percent-encode keys or values.",
+      "source_file": "dataset/projects/eval_cache/rules.py",
+      "summaryquote": "It constructs this string by joining key-value pairs from the dictionary, sorted by key, into a URL-encoded format.",
+      "interpretation": "The phrase URL-encoded adds behavior unsupported by the source. This is a concrete generated-summary factual issue.",
+      "caution": "The scored queries do not test escaped characters, so this observation must not be claimed to have caused a measured task failure or converted into an overall summary hallucination rate."
+    }
+  ],
+  "limitations": [
+    "No intervention or counterfactual re-run: inferred causes are distinguished from directly observed context and answers.",
+    "No model/server calls were made by this audit.",
+    "Evaluation remained in progress when these already completed records were reviewed; later records do not change the quoted answers.",
+    "Scoring differences due only to required sorted-list order should be distinguished from incorrect function membership."
+  ]
+}

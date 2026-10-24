@@ -1,0 +1,3423 @@
+{
+  "audit_version": 2,
+  "audited_at_utc": "2026-10-20T10:45:19.691691+00:00",
+  "status": "PASS_WITH_MATERIAL_LIMITATIONS",
+  "scope": "Original frozen pilot only; no generation or server requests. Independent parser/graph/gold/grade/ranking/packing/token/metric reconstruction. Native baseline expansion is re-executed from its archived implementation.",
+  "checks": [
+    {
+      "check": "manifest_hashes_match",
+      "passed": true,
+      "detail": {
+        "files": 74,
+        "mismatches": {}
+      }
+    },
+    {
+      "check": "protocol_config_matches_archived_code",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "environment_source_hashes_match",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "current_experiment_matches_snapshot",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unique_model_call_ids",
+      "passed": true,
+      "detail": {
+        "calls": 1199,
+        "purposes": {
+          "smoke": 1,
+          "build_leaf": 106,
+          "build_level_2": 28,
+          "build_level_3": 7,
+          "answer": 896,
+          "select": 160,
+          "dev_interface_probe": 1
+        }
+      }
+    },
+    {
+      "check": "server_token_fields_match",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no_reported_generation_failure_or_KV_reuse",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "output_hard_token_caps",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "server_timing_units",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all_recorded_input_plus_reserve_fit_8192",
+      "passed": true,
+      "detail": {
+        "maximum": 1344
+      }
+    },
+    {
+      "check": "impact_record_dev_shipping__policy_change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "impact_record_eval_pricing__tax_change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "impact_record_eval_authorization__session_change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "impact_record_eval_routing__canary_change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "impact_record_eval_inventory__buffer_change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "impact_record_eval_cache__schema_change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "impact_record_eval_schedules__buffer_change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "fresh_independent_gold_reexecution",
+      "passed": true,
+      "detail": {
+        "tasks": 56,
+        "eval_tasks": 48,
+        "methods": "Fresh isolated Python subprocess for execution/impact; separate AST resolver for direct calls."
+      }
+    },
+    {
+      "check": "question_operation_semantics_review",
+      "passed": true,
+      "detail": {
+        "tasks": 48,
+        "literal_execution": 24,
+        "fixed_probe_impact": 6,
+        "direct_call_architecture": 6,
+        "semantic_manual_review": 12,
+        "limitations": "Manual semantic review is judgment, not a machine proof; impact scope is the listed input probes, and direct calls are syntactic, not a specific execution path."
+      }
+    },
+    {
+      "check": "source_and_dependency_graph_dev_shipping",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_hashes_dev_shipping",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_index_dev_shipping",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "summary_aggregate_dev_shipping",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_and_dependency_graph_eval_authorization",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_hashes_eval_authorization",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_index_eval_authorization",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "summary_aggregate_eval_authorization",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_and_dependency_graph_eval_cache",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_hashes_eval_cache",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_index_eval_cache",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "summary_aggregate_eval_cache",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_and_dependency_graph_eval_inventory",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_hashes_eval_inventory",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_index_eval_inventory",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "summary_aggregate_eval_inventory",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_and_dependency_graph_eval_pricing",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_hashes_eval_pricing",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_index_eval_pricing",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "summary_aggregate_eval_pricing",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_and_dependency_graph_eval_routing",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_hashes_eval_routing",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_index_eval_routing",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "summary_aggregate_eval_routing",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_and_dependency_graph_eval_schedules",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_hashes_eval_schedules",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_index_eval_schedules",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "summary_aggregate_eval_schedules",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "summary_prompts_outputs_ancestry_reconstructed",
+      "passed": true,
+      "detail": {
+        "summaries": 141,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "all_build_calls_accounted_for",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "append_order_build_before_eval",
+      "passed": true,
+      "detail": {
+        "last_build_log_line": 142,
+        "first_eval_answer_log_line": 240,
+        "limitation": "Append order is internally consistent; logs are mutable and have no absolute call timestamps."
+      }
+    },
+    {
+      "check": "complete_unique_eval_main",
+      "passed": true,
+      "detail": {
+        "rows": 720,
+        "expected": 720
+      }
+    },
+    {
+      "check": "run_identity_eval_main",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "schedule_eval_main",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "selector_shared_pairs_eval_main",
+      "passed": true,
+      "detail": {
+        "unique_pairs": 144
+      }
+    },
+    {
+      "check": "complete_unique_eval_budget512",
+      "passed": true,
+      "detail": {
+        "rows": 96,
+        "expected": 96
+      }
+    },
+    {
+      "check": "run_identity_eval_budget512",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "schedule_eval_budget512",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "selector_shared_pairs_eval_budget512",
+      "passed": true,
+      "detail": {
+        "unique_pairs": 0
+      }
+    },
+    {
+      "check": "complete_unique_dev_main",
+      "passed": true,
+      "detail": {
+        "rows": 40,
+        "expected": 40
+      }
+    },
+    {
+      "check": "run_identity_dev_main",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "schedule_dev_main",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "selector_shared_pairs_dev_main",
+      "passed": true,
+      "detail": {
+        "unique_pairs": 8
+      }
+    },
+    {
+      "check": "all_current_rows_reconstructed",
+      "passed": true,
+      "detail": {
+        "rows": 856,
+        "failures": []
+      }
+    },
+    {
+      "check": "archived_initial_dev_call_linkage",
+      "passed": true,
+      "detail": {
+        "rows": 40,
+        "limitation": "Archived initial development used earlier interface/grader; excluded from current primary metrics."
+      }
+    },
+    {
+      "check": "all_answer_calls_accounted_for",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all_selector_calls_accounted_for",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "independent_tokenizer_all_call_inputs",
+      "passed": true,
+      "detail": {
+        "calls": 1199,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "independent_tokenizer_all_saved_contexts",
+      "passed": true,
+      "detail": {
+        "rows": 856,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "independent_pack_fit_decisions",
+      "passed": true,
+      "detail": {
+        "attempts": 27570,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "metrics_A",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "metrics_B",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "metrics_R0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "metrics_RF",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "metrics_RH",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "comparison_RH-A",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "comparison_RH-R0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "comparison_RH-RF",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no_observed_duplicate_JSON_keys_or_nonfinite_values",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "original_files_unchanged_by_audit",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "failed_checks": [],
+  "summary": {
+    "checks_passed": 79,
+    "checks_total": 79,
+    "current_result_rows": 856,
+    "model_calls": 1199,
+    "summary_calls": 141,
+    "original_files_sha256_verified": 75
+  },
+  "findings": [
+    {
+      "severity": "observed_summary_error",
+      "id": "summary_factuality",
+      "finding": "At least one frozen leaf summary makes an unsupported URL-encoding claim. Exact prompt/output reconstruction validates lineage but cannot certify all summary facts.",
+      "evidence": {
+        "project": "eval_cache",
+        "node": "memory://symbol/rules.py::canonical_query",
+        "summary_call_id": "00cce4f612523b48",
+        "summary": "### summary:leaf:memory://symbol/rules.py::canonical_query\nThe `canonical_query` function in `rules.py` takes a dictionary `query` as input and returns a string. It constructs this string by joining key-value pairs from the dictionary, sorted by key, into a URL-encoded format. The function excludes certain keys, specified in `EXCLUDED_QUERY_KEYS` from `policy.py`, from the output.",
+        "raw_source": "def canonical_query(query):\n    return \"&\".join(str(key) + \"=\" + str(query[key]) for key in sorted(query) if key not in EXCLUDED_QUERY_KEYS)",
+        "audit_only_probe": {
+          "query": {
+            "a b": "x&y"
+          },
+          "actual_return": "a b=x&y"
+        },
+        "observation": "The summary says URL-encoded format, but source concatenates str(key), equals, and str(value), without percent-encoding spaces or ampersands.",
+        "caution": "This audit-only probe is not added to the frozen benchmark. Existing evaluated query keys do not isolate this defect, so it is not evidence that this error caused a scored failure."
+      },
+      "implication": "Treat summaries as fallible derived context. This known error has no established causal link to an evaluated failure; all 141 summaries were not semantically certified."
+    },
+    {
+      "severity": "material_interpretation",
+      "id": "latency_cache_and_charging",
+      "finding": "Original query_seconds is reconstructed per-arm charged latency. A and B reuse one selector result per task/repeat but each is charged its full recorded selector pipeline time. Client.token_cache is shared across all arms and repeats within one process; it is not disabled by cache_prompt=False.",
+      "evidence": [
+        "source_snapshot/experiment.py:Client.tokens",
+        "source_snapshot/experiment.py:run_eval",
+        "results_eval_main.jsonl"
+      ],
+      "implication": "Do not label this cold independent end-to-end latency. Tiny RH-R0 differences are not established speed improvements. New query-level cache policy and phase timestamps are needed."
+    },
+    {
+      "severity": "missing_evidence",
+      "id": "effective_runtime",
+      "finding": "Original model_calls retain unwrapped prompts and selected response fields, not exact HTTP payloads, full responses, an executed server startup log/properties, effective runtime settings, or absolute call times. reproduce.txt contains a suggested startup command but is not an execution record. environment.llama_version is empty.",
+      "implication": "Saved code supports intended temperature/seed/cache/context settings; actual original server configuration and chronology cannot be independently proven. A matching model file today does not prove original server loaded it."
+    },
+    {
+      "severity": "missing_evidence",
+      "id": "preregistration",
+      "finding": "Protocol states multiple freeze/refinement times and initial development records are archived, but protocol and run identities are mutable local files. The manifest hashes were created after evaluation.",
+      "implication": "Hashes prove current internal consistency, not that no post-result changes occurred. Internal append order does support build-before-eval, without tamper-evident chronological proof."
+    },
+    {
+      "severity": "scope",
+      "id": "RAPTOR_adaptation",
+      "finding": "R0/RF/RH use source-derived lexical TF-IDF cosine and AST dependency/per-file/project grouping; no SBERT embedding, UMAP reduction, or GMM clustering.",
+      "implication": "Results apply to this RAPTOR-inspired code adaptation, not original RAPTOR generally. RH-A changes selector, cross-file reach, candidate pool and context usage together; RH-R0 is the cleaner added-summary comparison."
+    },
+    {
+      "severity": "scope",
+      "id": "gold_and_recall",
+      "finding": "Gold execution, interventions and AST direct calls are reproducible. required_uris are conservative metadata dependencies, not proof every symbol is necessary. Summary ancestry recall does not establish information retained accurately.",
+      "implication": "Use raw_evidence_recall as source inclusion; do not equate it or ancestor coverage with factual sufficiency."
+    },
+    {
+      "severity": "scope",
+      "id": "small_correlated_pilot",
+      "finding": "48 questions in six small synthetic projects; three identical deterministic repeats yielded identical outcomes per question/arm. Projects share file scaffold and ancillary functions.",
+      "implication": "Six project clusters, not 144 independent trials per arm. Cluster intervals and sign flips remain exploratory with six heterogeneous clusters; no production generalization or causal proof from examples."
+    },
+    {
+      "severity": "minor_protocol_deviation",
+      "id": "summary_word_limit",
+      "finding": "Five generated summaries exceed the requested 100 English words, though all satisfy the 256-token hard output cap. Four belong to evaluation projects.",
+      "evidence": [
+        {
+          "project": "dev_shipping",
+          "id": "summary:leaf:memory://symbol/service.py::parcel_total",
+          "call_id": "d348658d4f2e1383",
+          "level": 1,
+          "prompt_sha256": "6c35e1d079bade8bdad7eb29fd3ffdb4f669eb719dfce0a0f27090a575dd9c2d",
+          "answer_sha256": "e41654394c0176a8d61d0c5b1321fb06d31ee22d30dc3d85115dda772502e177",
+          "word_count": 142,
+          "output_tokens": 228,
+          "source_and_children_reconstructed": true
+        },
+        {
+          "project": "eval_inventory",
+          "id": "summary:leaf:memory://symbol/service.py::reserve",
+          "call_id": "d8f995b7796ed786",
+          "level": 1,
+          "prompt_sha256": "41df4160d3a25a55c70162a7aa87ca6e80d754e5e0ea07d8aa68abfb0a65c188",
+          "answer_sha256": "405ad40832e599877525876f74bc2174c6e5b00486088d8116590b1bae6fac1f",
+          "word_count": 121,
+          "output_tokens": 176,
+          "source_and_children_reconstructed": true
+        },
+        {
+          "project": "eval_pricing",
+          "id": "summary:level2:rules.py",
+          "call_id": "9141ded5fa9ed8b9",
+          "level": 2,
+          "prompt_sha256": "c3ede2ab4ca428d0706b97669bafe9351bbc74d03933f64454b0a97c7cd867dd",
+          "answer_sha256": "0fed3b95940a80e7de32da0fa3866d7ace77b8c5e9620a62ef038796d0c55924",
+          "word_count": 104,
+          "output_tokens": 151,
+          "source_and_children_reconstructed": true
+        },
+        {
+          "project": "eval_pricing",
+          "id": "summary:level2:service.py",
+          "call_id": "6be5040d1788b62a",
+          "level": 2,
+          "prompt_sha256": "5c22847dc4d5a568e63b9e5ab4d0253bcf420d3b9814a4d1561f322cf60c1c50",
+          "answer_sha256": "de7b9742b4229d07b462448acf1b97c907b1a18994cc01cbf91012938ece5c71",
+          "word_count": 104,
+          "output_tokens": 127,
+          "source_and_children_reconstructed": true
+        },
+        {
+          "project": "eval_schedules",
+          "id": "summary:leaf:memory://symbol/service.py::appointment",
+          "call_id": "9418dfa732bb4c59",
+          "level": 1,
+          "prompt_sha256": "352293bddf9593f416760dffd25ab3ecc9ab73464e97ea407ae40b9797ff49cd",
+          "answer_sha256": "02be66f41f758de3c0db0e313e090fae93584687f66fe3f3c72e5cd5b826a1d0",
+          "word_count": 129,
+          "output_tokens": 168,
+          "source_and_children_reconstructed": true
+        }
+      ],
+      "implication": "Report requested natural-language length as guidance, not a verified enforced maximum. Context token caps are separately audited."
+    },
+    {
+      "severity": "implementation_limit",
+      "id": "asset_cache_guard",
+      "finding": "Asset reuse checks source hashes only; model/prompt/build configuration are not part of the cache guard. Current assets are linked exactly to saved build calls.",
+      "implication": "A future run after changing model or summarizer could reuse stale summaries unless an explicit build identity is added."
+    },
+    {
+      "severity": "implementation_limit",
+      "id": "pack_partial_duplicate",
+      "finding": "Packing skips a raw candidate only if all its source URIs were seen. Partial overlap preserves duplicate fragments.",
+      "implication": "Token caps are respected but available information per token may fall, affecting the experimental policy itself."
+    },
+    {
+      "severity": "grading_definition",
+      "id": "strict_sorted_lists",
+      "finding": "Primary scoring includes sorted-list order and JSON/schema compliance; a secondary order-tolerant diagnostic recovers same-set lists only.",
+      "evidence": {
+        "A": {
+          "strict_correct": 24,
+          "order_only_wrong": 0,
+          "order_tolerant_correct_secondary": 24
+        },
+        "B": {
+          "strict_correct": 36,
+          "order_only_wrong": 3,
+          "order_tolerant_correct_secondary": 39
+        },
+        "R0": {
+          "strict_correct": 36,
+          "order_only_wrong": 0,
+          "order_tolerant_correct_secondary": 36
+        },
+        "RF": {
+          "strict_correct": 27,
+          "order_only_wrong": 9,
+          "order_tolerant_correct_secondary": 36
+        },
+        "RH": {
+          "strict_correct": 27,
+          "order_only_wrong": 9,
+          "order_tolerant_correct_secondary": 36
+        }
+      },
+      "implication": "Primary accuracy is exact structured-answer success, not pure semantic correctness. Do not substitute the posthoc diagnostic for the fixed primary score."
+    },
+    {
+      "severity": "implementation_limit",
+      "id": "json_parser",
+      "finding": "Python json.loads accepts duplicate object keys and nonfinite constants unless configured otherwise; none observed in saved parseable answer outputs.",
+      "implication": "No observed scoring effect, but future strict-JSON claims should use a standards-strict parser."
+    },
+    {
+      "severity": "missing_evidence",
+      "id": "preprocessing_measurement_boundary",
+      "finding": "preprocessing_costs.json contains 18 small A/raw index measurements, but no corresponding measurement script is archived. RH raw+summary vectors are computed before query timers and are not included in build_assets build_seconds.",
+      "implication": "Preprocessing numbers can be aggregated, but their measured boundary cannot be independently reconstructed. Setup extrapolations omit a small unmeasured vector construction phase and are not verified complete cold-start costs."
+    },
+    {
+      "severity": "cost_definition",
+      "id": "setup_and_units",
+      "finding": "Server prompt_ms/predicted_ms are milliseconds. Per-call wall_seconds includes tokenizer lookup/HTTP/processing overhead. Build wall includes source/index/summary work; retrieval document vectors are constructed outside query timing.",
+      "implication": "Do not call model_seconds pure inference or compare token totals with milliseconds. Dataset-specific build-cost amortization is conditional on stable corpus and workload."
+    }
+  ],
+  "tokenizer": {
+    "status": "completed",
+    "distinct_strings": 11617,
+    "distinct_wrapped_prompts": 556,
+    "distinct_contexts": 300,
+    "method": {
+      "binary": "/opt/homebrew/Cellar/llama.cpp/8680/bin/llama-tokenize",
+      "binary_sha256": "a6364e9a027fa6e76b66f6e61b6af397dc63128f7072be6c1589e80830e349d5",
+      "command": [
+        "/opt/homebrew/bin/llama-tokenize",
+        "-m",
+        "/Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf",
+        "--no-bos",
+        "--no-escape",
+        "--ids",
+        "--log-disable",
+        "--stdin"
+      ],
+      "separator_token": 151643,
+      "standalone_crosschecks": 13,
+      "all_standalone_crosschecks_passed": true
+    },
+    "model_sha256_matches_environment": true,
+    "output_token_note": "Generated output token counts match server predicted_n. Stripped text cannot independently recover hidden EOS or stripped whitespace token counts."
+  },
+  "recomputed_main_metrics": {
+    "A": {
+      "correct": 24,
+      "total": 144,
+      "accuracy": 0.16666666666666666,
+      "mean_query_seconds": 2.3491264418141022,
+      "mean_input_tokens": 401.1041666666667,
+      "mean_output_tokens": 26.479166666666668
+    },
+    "B": {
+      "correct": 36,
+      "total": 144,
+      "accuracy": 0.25,
+      "mean_query_seconds": 3.1717085478348963,
+      "mean_input_tokens": 658.625,
+      "mean_output_tokens": 27.770833333333332
+    },
+    "R0": {
+      "correct": 36,
+      "total": 144,
+      "accuracy": 0.25,
+      "mean_query_seconds": 4.25778961095754,
+      "mean_input_tokens": 1162.6875,
+      "mean_output_tokens": 18.125
+    },
+    "RF": {
+      "correct": 27,
+      "total": 144,
+      "accuracy": 0.1875,
+      "mean_query_seconds": 4.298475756875632,
+      "mean_input_tokens": 1161.4375,
+      "mean_output_tokens": 18.9375
+    },
+    "RH": {
+      "correct": 27,
+      "total": 144,
+      "accuracy": 0.1875,
+      "mean_query_seconds": 4.222684625789346,
+      "mean_input_tokens": 1160.0416666666667,
+      "mean_output_tokens": 17.229166666666668
+    }
+  },
+  "recomputed_comparisons": {
+    "RH-A": {
+      "delta_pp": 2.083333333333333,
+      "ci95_pp": [
+        -8.333333333333332,
+        12.5
+      ],
+      "p_value": 1.0
+    },
+    "RH-R0": {
+      "delta_pp": -6.25,
+      "ci95_pp": [
+        -16.666666666666664,
+        4.166666666666666
+      ],
+      "p_value": 0.5
+    },
+    "RH-RF": {
+      "delta_pp": 0.0,
+      "ci95_pp": [
+        -6.25,
+        6.25
+      ],
+      "p_value": 1.0
+    }
+  },
+  "latency_diagnostics": {
+    "A": {
+      "mean_retrieval_seconds": 0.0019152580892599265,
+      "median_retrieval_seconds": 0.0014727915113326162,
+      "mean_physical_loop_seconds": 1.903933997132602,
+      "mean_charged_query_seconds": 2.3462121512988636,
+      "mean_answer_wall_minus_server_compute_seconds": 0.00384333911847286,
+      "unique_answer_prompts": 48
+    },
+    "B": {
+      "mean_retrieval_seconds": 0.002446831937251975,
+      "median_retrieval_seconds": 0.00012347901065368205,
+      "mean_physical_loop_seconds": 2.6878450054999927,
+      "mean_charged_query_seconds": 3.1648489476547184,
+      "mean_answer_wall_minus_server_compute_seconds": 0.005059242181890988,
+      "unique_answer_prompts": 48
+    },
+    "R0": {
+      "mean_retrieval_seconds": 0.022443121229722845,
+      "median_retrieval_seconds": 0.00063937550294213,
+      "mean_physical_loop_seconds": 4.256608500027647,
+      "mean_charged_query_seconds": 4.255969398409131,
+      "mean_answer_wall_minus_server_compute_seconds": 0.0068077702349633945,
+      "unique_answer_prompts": 48
+    },
+    "RF": {
+      "mean_retrieval_seconds": 0.03924604685370367,
+      "median_retrieval_seconds": 0.000904061998880934,
+      "mean_physical_loop_seconds": 4.299523832770117,
+      "mean_charged_query_seconds": 4.29899658129135,
+      "mean_answer_wall_minus_server_compute_seconds": 0.006849680270979415,
+      "unique_answer_prompts": 48
+    },
+    "RH": {
+      "mean_retrieval_seconds": 0.045083512145740516,
+      "median_retrieval_seconds": 0.0010269790000165813,
+      "mean_physical_loop_seconds": 4.232254656243943,
+      "mean_charged_query_seconds": 4.231650235762976,
+      "mean_answer_wall_minus_server_compute_seconds": 0.0065935916727915544,
+      "unique_answer_prompts": 48
+    }
+  },
+  "secondary_order_diagnostics": {
+    "A": {
+      "strict_correct": 24,
+      "order_only_wrong": 0,
+      "order_tolerant_correct_secondary": 24
+    },
+    "B": {
+      "strict_correct": 36,
+      "order_only_wrong": 3,
+      "order_tolerant_correct_secondary": 39
+    },
+    "R0": {
+      "strict_correct": 36,
+      "order_only_wrong": 0,
+      "order_tolerant_correct_secondary": 36
+    },
+    "RF": {
+      "strict_correct": 27,
+      "order_only_wrong": 9,
+      "order_tolerant_correct_secondary": 36
+    },
+    "RH": {
+      "strict_correct": 27,
+      "order_only_wrong": 9,
+      "order_tolerant_correct_secondary": 36
+    }
+  },
+  "call_prompt_cache_diagnostic": {
+    "distinct_wrapped_prompts": 556,
+    "repeated_call_prompt_instances": 643,
+    "caution": "Exact cache state per original run and per packing tokenization is not logged; repeats illustrate potential reuse, not per-request hit reconstruction."
+  },
+  "gold_reexecution": [
+    {
+      "task_id": "dev_shipping__steps",
+      "kind": "execution",
+      "recomputed": 2,
+      "expected": 2,
+      "passed": true
+    },
+    {
+      "task_id": "dev_shipping__quote",
+      "kind": "execution",
+      "recomputed": {
+        "status": "accepted",
+        "cents": 770
+      },
+      "expected": {
+        "cents": 770,
+        "status": "accepted"
+      },
+      "passed": true
+    },
+    {
+      "task_id": "dev_shipping__total",
+      "kind": "execution",
+      "recomputed": 9240,
+      "expected": 9240,
+      "passed": true
+    },
+    {
+      "task_id": "dev_shipping__max_weight",
+      "kind": "execution",
+      "recomputed": {
+        "status": "rejected",
+        "cents": 0
+      },
+      "expected": {
+        "cents": 0,
+        "status": "rejected"
+      },
+      "passed": true
+    },
+    {
+      "task_id": "dev_shipping__remote_free",
+      "kind": "execution",
+      "recomputed": {
+        "status": "accepted",
+        "cents": 240
+      },
+      "expected": {
+        "cents": 240,
+        "status": "accepted"
+      },
+      "passed": true
+    },
+    {
+      "task_id": "dev_shipping__invalid_total",
+      "kind": "execution",
+      "recomputed": -1,
+      "expected": -1,
+      "passed": true
+    },
+    {
+      "task_id": "dev_shipping__policy_change",
+      "kind": "impact",
+      "before": [
+        180,
+        6730,
+        "parcel:A9"
+      ],
+      "after": [
+        240,
+        6790,
+        "parcel:A9"
+      ],
+      "recomputed": [
+        "parcel_total",
+        "weight_charge"
+      ],
+      "expected": [
+        "parcel_total",
+        "weight_charge"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "dev_shipping__direct_calls",
+      "kind": "architecture",
+      "recomputed": [
+        "allowed_weight",
+        "free_shipping",
+        "weight_charge"
+      ],
+      "expected": [
+        "allowed_weight",
+        "free_shipping",
+        "weight_charge"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__refund",
+      "kind": "execution",
+      "recomputed": 667,
+      "expected": 667,
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__member_order",
+      "kind": "execution",
+      "recomputed": 6505,
+      "expected": 6505,
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__receipt",
+      "kind": "execution",
+      "recomputed": {
+        "currency": "USD",
+        "total": 12016,
+        "accepted": true
+      },
+      "expected": {
+        "accepted": true,
+        "currency": "USD",
+        "total": 12016
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__quantity_cap",
+      "kind": "execution",
+      "recomputed": -1,
+      "expected": -1,
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__discount_delivery",
+      "kind": "execution",
+      "recomputed": 6507,
+      "expected": 6507,
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__invalid_receipt",
+      "kind": "execution",
+      "recomputed": {
+        "currency": "USD",
+        "total": -1,
+        "accepted": false
+      },
+      "expected": {
+        "accepted": false,
+        "currency": "USD",
+        "total": -1
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__tax_change",
+      "kind": "impact",
+      "before": [
+        83,
+        6507,
+        10
+      ],
+      "after": [
+        100,
+        6604,
+        10
+      ],
+      "recomputed": [
+        "checkout_total",
+        "sales_tax"
+      ],
+      "expected": [
+        "checkout_total",
+        "sales_tax"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__direct_calls",
+      "kind": "architecture",
+      "recomputed": [
+        "line_subtotal",
+        "member_discount",
+        "sales_tax"
+      ],
+      "expected": [
+        "line_subtotal",
+        "member_discount",
+        "sales_tax"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__normalize",
+      "kind": "execution",
+      "recomputed": [
+        "document:read",
+        "document:write"
+      ],
+      "expected": [
+        "document:read",
+        "document:write"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__own_write",
+      "kind": "execution",
+      "recomputed": {
+        "allowed": true,
+        "reason": "allowed"
+      },
+      "expected": {
+        "allowed": true,
+        "reason": "allowed"
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__admin_without_scope",
+      "kind": "execution",
+      "recomputed": {
+        "allowed": false,
+        "reason": "denied"
+      },
+      "expected": {
+        "allowed": false,
+        "reason": "denied"
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__expiry",
+      "kind": "execution",
+      "recomputed": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__unknown_action",
+      "kind": "execution",
+      "recomputed": {
+        "allowed": false,
+        "reason": "denied"
+      },
+      "expected": {
+        "allowed": false,
+        "reason": "denied"
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__future_session",
+      "kind": "execution",
+      "recomputed": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__session_change",
+      "kind": "impact",
+      "before": [
+        true,
+        true,
+        "account:u1"
+      ],
+      "after": [
+        false,
+        false,
+        "account:u1"
+      ],
+      "recomputed": [
+        "can_edit_own",
+        "session_valid"
+      ],
+      "expected": [
+        "can_edit_own",
+        "session_valid"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__direct_calls",
+      "kind": "architecture",
+      "recomputed": [
+        "role_allows",
+        "scope_allows",
+        "session_valid"
+      ],
+      "expected": [
+        "role_allows",
+        "scope_allows",
+        "session_valid"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__path",
+      "kind": "execution",
+      "recomputed": "/orders",
+      "expected": "/orders",
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__preferred",
+      "kind": "execution",
+      "recomputed": "east:/orders",
+      "expected": "east:/orders",
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__fallback",
+      "kind": "execution",
+      "recomputed": "west-canary:/health",
+      "expected": "west-canary:/health",
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__latency_edge",
+      "kind": "execution",
+      "recomputed": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__no_backend",
+      "kind": "execution",
+      "recomputed": "unavailable",
+      "expected": "unavailable",
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__retry_exhausted",
+      "kind": "execution",
+      "recomputed": "exhausted",
+      "expected": "exhausted",
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__canary_change",
+      "kind": "impact",
+      "before": [
+        true,
+        "east-canary:/x",
+        "route:EAST"
+      ],
+      "after": [
+        false,
+        "east:/x",
+        "route:EAST"
+      ],
+      "recomputed": [
+        "route_request",
+        "use_canary"
+      ],
+      "expected": [
+        "route_request",
+        "use_canary"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__direct_calls",
+      "kind": "architecture",
+      "recomputed": [
+        "healthy",
+        "normalize_path",
+        "use_canary"
+      ],
+      "expected": [
+        "healthy",
+        "normalize_path",
+        "use_canary"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__allocation",
+      "kind": "execution",
+      "recomputed": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__partial",
+      "kind": "execution",
+      "recomputed": {
+        "status": "partial",
+        "units": 5,
+        "expires": 1000
+      },
+      "expected": {
+        "expires": 1000,
+        "status": "partial",
+        "units": 5
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__remaining",
+      "kind": "execution",
+      "recomputed": 9,
+      "expected": 9,
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__order_limit",
+      "kind": "execution",
+      "recomputed": {
+        "status": "denied",
+        "units": 0,
+        "expires": 50
+      },
+      "expected": {
+        "expires": 50,
+        "status": "denied",
+        "units": 0
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__safety_buffer",
+      "kind": "execution",
+      "recomputed": {
+        "status": "denied",
+        "units": 0,
+        "expires": 200
+      },
+      "expected": {
+        "expires": 200,
+        "status": "denied",
+        "units": 0
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__all_or_nothing",
+      "kind": "execution",
+      "recomputed": 8,
+      "expected": 8,
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__buffer_change",
+      "kind": "impact",
+      "before": [
+        5,
+        {
+          "status": "partial",
+          "units": 5,
+          "expires": 1000
+        },
+        "stocked"
+      ],
+      "after": [
+        3,
+        {
+          "status": "partial",
+          "units": 3,
+          "expires": 1000
+        },
+        "stocked"
+      ],
+      "recomputed": [
+        "reserve",
+        "sellable"
+      ],
+      "expected": [
+        "reserve",
+        "sellable"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__direct_calls",
+      "kind": "architecture",
+      "recomputed": [
+        "allocate",
+        "sellable",
+        "valid_quantity"
+      ],
+      "expected": [
+        "allocate",
+        "sellable",
+        "valid_quantity"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__resource",
+      "kind": "execution",
+      "recomputed": "north/east_plan",
+      "expected": "north/east_plan",
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__canonical_key",
+      "kind": "execution",
+      "recomputed": "render|team-a|summary_view|a=1&z=2|v4",
+      "expected": "render|team-a|summary_view|a=1&z=2|v4",
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__private_entry",
+      "kind": "execution",
+      "recomputed": {
+        "key": "render|public|revenue||v4",
+        "expires": 130,
+        "store": true
+      },
+      "expected": {
+        "expires": 130,
+        "key": "render|public|revenue||v4",
+        "store": true
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__negative_ttl",
+      "kind": "execution",
+      "recomputed": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__public_lifetime",
+      "kind": "execution",
+      "recomputed": {
+        "key": "render|acme|monthly_sales|a=1&b=2|v4",
+        "expires": 3610,
+        "store": true
+      },
+      "expected": {
+        "expires": 3610,
+        "key": "render|acme|monthly_sales|a=1&b=2|v4",
+        "store": true
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__do_not_store",
+      "kind": "execution",
+      "recomputed": {
+        "key": "render|acme|daily||v4",
+        "expires": 50,
+        "store": false
+      },
+      "expected": {
+        "expires": 50,
+        "key": "render|acme|daily||v4",
+        "store": false
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__schema_change",
+      "kind": "impact",
+      "before": [
+        "render|acme|daily||v4",
+        {
+          "key": "render|acme|daily||v4",
+          "expires": 70,
+          "store": true
+        },
+        6
+      ],
+      "after": [
+        "render|acme|daily||v5",
+        {
+          "key": "render|acme|daily||v5",
+          "expires": 70,
+          "store": true
+        },
+        6
+      ],
+      "recomputed": [
+        "cache_entry",
+        "render_cache_key"
+      ],
+      "expected": [
+        "cache_entry",
+        "render_cache_key"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__direct_calls",
+      "kind": "architecture",
+      "recomputed": [
+        "canonical_query",
+        "normalize_resource",
+        "normalize_tenant"
+      ],
+      "expected": [
+        "canonical_query",
+        "normalize_resource",
+        "normalize_tenant"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__rounding",
+      "kind": "execution",
+      "recomputed": 570,
+      "expected": 570,
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__busy_buffer",
+      "kind": "execution",
+      "recomputed": 630,
+      "expected": 630,
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__appointment",
+      "kind": "execution",
+      "recomputed": {
+        "day": 2,
+        "start": 690,
+        "end": 750
+      },
+      "expected": {
+        "day": 2,
+        "end": 750,
+        "start": 690
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__closing_edge",
+      "kind": "execution",
+      "recomputed": 990,
+      "expected": 990,
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__weekend",
+      "kind": "execution",
+      "recomputed": {
+        "day": 5,
+        "start": -1,
+        "end": -1
+      },
+      "expected": {
+        "day": 5,
+        "end": -1,
+        "start": -1
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__too_late",
+      "kind": "execution",
+      "recomputed": -1,
+      "expected": -1,
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__buffer_change",
+      "kind": "impact",
+      "before": [
+        true,
+        630,
+        "mon"
+      ],
+      "after": [
+        false,
+        540,
+        "mon"
+      ],
+      "recomputed": [
+        "first_available",
+        "overlaps"
+      ],
+      "expected": [
+        "first_available",
+        "overlaps"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__direct_calls",
+      "kind": "architecture",
+      "recomputed": [
+        "overlaps",
+        "round_slot",
+        "valid_duration",
+        "working_day"
+      ],
+      "expected": [
+        "overlaps",
+        "round_slot",
+        "valid_duration",
+        "working_day"
+      ],
+      "passed": true
+    }
+  ],
+  "question_operation_review": [
+    {
+      "task_id": "eval_pricing__refund",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_pricing__member_order",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_pricing__receipt",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_pricing__quantity_cap",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_pricing__discount_delivery",
+      "passed": true,
+      "method": "manual semantic review of all named actors, inputs, units and requested return shape"
+    },
+    {
+      "task_id": "eval_pricing__invalid_receipt",
+      "passed": true,
+      "method": "manual semantic review of all named actors, inputs, units and requested return shape"
+    },
+    {
+      "task_id": "eval_pricing__tax_change",
+      "passed": true,
+      "method": "all three literal probe calls and intervention parsed from question; sorted names checked"
+    },
+    {
+      "task_id": "eval_pricing__direct_calls",
+      "passed": true,
+      "method": "explicit direct-call target and sorted names matched"
+    },
+    {
+      "task_id": "eval_authorization__normalize",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_authorization__own_write",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_authorization__admin_without_scope",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_authorization__expiry",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_authorization__unknown_action",
+      "passed": true,
+      "method": "manual semantic review of all named actors, inputs, units and requested return shape"
+    },
+    {
+      "task_id": "eval_authorization__future_session",
+      "passed": true,
+      "method": "manual semantic review of all named actors, inputs, units and requested return shape"
+    },
+    {
+      "task_id": "eval_authorization__session_change",
+      "passed": true,
+      "method": "all three literal probe calls and intervention parsed from question; sorted names checked"
+    },
+    {
+      "task_id": "eval_authorization__direct_calls",
+      "passed": true,
+      "method": "explicit direct-call target and sorted names matched"
+    },
+    {
+      "task_id": "eval_routing__path",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_routing__preferred",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_routing__fallback",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_routing__latency_edge",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_routing__no_backend",
+      "passed": true,
+      "method": "manual semantic review of all named actors, inputs, units and requested return shape"
+    },
+    {
+      "task_id": "eval_routing__retry_exhausted",
+      "passed": true,
+      "method": "manual semantic review of all named actors, inputs, units and requested return shape"
+    },
+    {
+      "task_id": "eval_routing__canary_change",
+      "passed": true,
+      "method": "all three literal probe calls and intervention parsed from question; sorted names checked"
+    },
+    {
+      "task_id": "eval_routing__direct_calls",
+      "passed": true,
+      "method": "explicit direct-call target and sorted names matched"
+    },
+    {
+      "task_id": "eval_inventory__allocation",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_inventory__partial",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_inventory__remaining",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_inventory__order_limit",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_inventory__safety_buffer",
+      "passed": true,
+      "method": "manual semantic review of all named actors, inputs, units and requested return shape"
+    },
+    {
+      "task_id": "eval_inventory__all_or_nothing",
+      "passed": true,
+      "method": "manual semantic review of all named actors, inputs, units and requested return shape"
+    },
+    {
+      "task_id": "eval_inventory__buffer_change",
+      "passed": true,
+      "method": "all three literal probe calls and intervention parsed from question; sorted names checked"
+    },
+    {
+      "task_id": "eval_inventory__direct_calls",
+      "passed": true,
+      "method": "explicit direct-call target and sorted names matched"
+    },
+    {
+      "task_id": "eval_cache__resource",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_cache__canonical_key",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_cache__private_entry",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_cache__negative_ttl",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_cache__public_lifetime",
+      "passed": true,
+      "method": "manual semantic review of all named actors, inputs, units and requested return shape"
+    },
+    {
+      "task_id": "eval_cache__do_not_store",
+      "passed": true,
+      "method": "manual semantic review of all named actors, inputs, units and requested return shape"
+    },
+    {
+      "task_id": "eval_cache__schema_change",
+      "passed": true,
+      "method": "all three literal probe calls and intervention parsed from question; sorted names checked"
+    },
+    {
+      "task_id": "eval_cache__direct_calls",
+      "passed": true,
+      "method": "explicit direct-call target and sorted names matched"
+    },
+    {
+      "task_id": "eval_schedules__rounding",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_schedules__busy_buffer",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_schedules__appointment",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_schedules__closing_edge",
+      "passed": true,
+      "method": "question literal parsed independently by AST"
+    },
+    {
+      "task_id": "eval_schedules__weekend",
+      "passed": true,
+      "method": "manual semantic review of all named actors, inputs, units and requested return shape"
+    },
+    {
+      "task_id": "eval_schedules__too_late",
+      "passed": true,
+      "method": "manual semantic review of all named actors, inputs, units and requested return shape"
+    },
+    {
+      "task_id": "eval_schedules__buffer_change",
+      "passed": true,
+      "method": "all three literal probe calls and intervention parsed from question; sorted names checked"
+    },
+    {
+      "task_id": "eval_schedules__direct_calls",
+      "passed": true,
+      "method": "explicit direct-call target and sorted names matched"
+    }
+  ],
+  "summary_factual_example": {
+    "project": "eval_cache",
+    "node": "memory://symbol/rules.py::canonical_query",
+    "summary_call_id": "00cce4f612523b48",
+    "summary": "### summary:leaf:memory://symbol/rules.py::canonical_query\nThe `canonical_query` function in `rules.py` takes a dictionary `query` as input and returns a string. It constructs this string by joining key-value pairs from the dictionary, sorted by key, into a URL-encoded format. The function excludes certain keys, specified in `EXCLUDED_QUERY_KEYS` from `policy.py`, from the output.",
+    "raw_source": "def canonical_query(query):\n    return \"&\".join(str(key) + \"=\" + str(query[key]) for key in sorted(query) if key not in EXCLUDED_QUERY_KEYS)",
+    "audit_only_probe": {
+      "query": {
+        "a b": "x&y"
+      },
+      "actual_return": "a b=x&y"
+    },
+    "observation": "The summary says URL-encoded format, but source concatenates str(key), equals, and str(value), without percent-encoding spaces or ampersands.",
+    "caution": "This audit-only probe is not added to the frozen benchmark. Existing evaluated query keys do not isolate this defect, so it is not evidence that this error caused a scored failure."
+  },
+  "summary_reconstruction": [
+    {
+      "project": "dev_shipping",
+      "id": "summary:leaf:memory://symbol/audit.py::audit_key",
+      "call_id": "ea80c49ff6efb97c",
+      "level": 1,
+      "prompt_sha256": "b2be149f739d760029a89322d5b23599ed856b912e7583414e7fbc4d2cf15dcd",
+      "answer_sha256": "0cb47561ebe9149043f7eb48697abea1db281e2de908638d67c82d97070ee209",
+      "word_count": 45,
+      "output_tokens": 72,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:leaf:memory://symbol/audit.py::recent_events",
+      "call_id": "0e159aa2386f298a",
+      "level": 1,
+      "prompt_sha256": "30a481249f7a5fb667924f42bf4b41bd3e98e7e3c7523a8789d21bcb63695300",
+      "answer_sha256": "25005d737a688cd5ccecbaf1de200d65fb163b713eaf9c10a78c5d41b15a4cec",
+      "word_count": 36,
+      "output_tokens": 55,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:leaf:memory://symbol/audit.py::redact_identifier",
+      "call_id": "15c24678ecc41ec7",
+      "level": 1,
+      "prompt_sha256": "116fdcfa054d2aada663443108452dfbf8ae279c2ca90acc7b69ae61e1038f56",
+      "answer_sha256": "e7c44bd52c918491dbfbbc9ea029e788642854e6296928afb27270e19bf8903c",
+      "word_count": 55,
+      "output_tokens": 82,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:leaf:memory://symbol/audit.py::event_record",
+      "call_id": "b936af186371bdf7",
+      "level": 1,
+      "prompt_sha256": "de36e7e8c9c8a1d293b29fc96d37c72db8cfeca6774bbb9285ba78d4853470ea",
+      "answer_sha256": "bfc8dc03ea4adb59c33e5daf7998572752684e193d2d550abb0b63578fcb98bd",
+      "word_count": 65,
+      "output_tokens": 107,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:leaf:memory://symbol/presentation.py::normalize_label",
+      "call_id": "1a13c049cd24833f",
+      "level": 1,
+      "prompt_sha256": "890c84bd1a5d153979c6a65d5d8a21e401c60db7f01cfd43ad04668c36badeea",
+      "answer_sha256": "148af62175bba5e7c9a3ff98899fade198b8a56ed5a64b9b3fb166fa09ea34c3",
+      "word_count": 33,
+      "output_tokens": 49,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:leaf:memory://symbol/presentation.py::display_reference",
+      "call_id": "7a2638a60a1794bc",
+      "level": 1,
+      "prompt_sha256": "e05f1aae4605a6954fcffcb34198533b7aa8f0b1205984896fd06ea8f1599400",
+      "answer_sha256": "38a197aa507348bb4aa0d2e8964a80a146d769183b52ed991d859b1845a53849",
+      "word_count": 35,
+      "output_tokens": 53,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:leaf:memory://symbol/presentation.py::status_label",
+      "call_id": "6347571fd8f9ba8c",
+      "level": 1,
+      "prompt_sha256": "1856960d8e1cda3d573ae63c858c6b27bf723070da572ad3ca4a41a18add657e",
+      "answer_sha256": "9456e5d6789321b9ac215a74badce500dda9a5bd8b5f9d17ea2829b3fcfa3293",
+      "word_count": 41,
+      "output_tokens": 56,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+      "call_id": "cd3644b76ffb89fe",
+      "level": 1,
+      "prompt_sha256": "c6008ea0fd5d2c61294ae7b6f578373fae01f1d5db111fdf14766e639a4eb82d",
+      "answer_sha256": "926fe85a761925e680504eb7c1b19d06a64d3267f9efac8242948e1145026a13",
+      "word_count": 38,
+      "output_tokens": 55,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:leaf:memory://symbol/rules.py::weight_steps",
+      "call_id": "6c0b2251b968e033",
+      "level": 1,
+      "prompt_sha256": "e9b60e965888bd987db1a64b0a37df5fedd95e5f5e8582e0666615d6a71c8959",
+      "answer_sha256": "7057f81c1e6dc1f2f98a95bcfc6875ee8dfb095d989af9f7082c6933be534727",
+      "word_count": 44,
+      "output_tokens": 65,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:leaf:memory://symbol/rules.py::weight_charge",
+      "call_id": "95a4392b56017c9a",
+      "level": 1,
+      "prompt_sha256": "d97fbe71fc6edfe1b9742fbfb3d1107f1d38845e6abe082af0663666bf08840b",
+      "answer_sha256": "79a6d0b6e8928567be140de972941de21ed624ecb020610666b8c4125c38e6ac",
+      "word_count": 69,
+      "output_tokens": 117,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:leaf:memory://symbol/rules.py::free_shipping",
+      "call_id": "3ea0f47974b7a536",
+      "level": 1,
+      "prompt_sha256": "28a68bd2b6ba27ff31cd5ba019106d32a86ada582c214553023e1ed8823928e8",
+      "answer_sha256": "ecad054ea65ca57aedff90a4a1d93c9b87935591fd66328201da4436a351bb55",
+      "word_count": 39,
+      "output_tokens": 59,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:leaf:memory://symbol/rules.py::allowed_weight",
+      "call_id": "3569151ab7ec588b",
+      "level": 1,
+      "prompt_sha256": "52897c3c17f5c441dd5395d19ae1531cf022064063f691a0a3413c5fb6f36181",
+      "answer_sha256": "aed73e5c46378a71accd7a00994cb7ab292f12561db070ba2c328e8bcbce2ef0",
+      "word_count": 47,
+      "output_tokens": 77,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:leaf:memory://symbol/service.py::shipping_quote",
+      "call_id": "214e17546c55c4a0",
+      "level": 1,
+      "prompt_sha256": "34e7c92095783b42275cc03179d9d7b1deddb72b892ee3b74e8e0f402f640301",
+      "answer_sha256": "39d331c94ea776353b61a8bc902e92e7ab3e5c5e86597981984af1c7277f9d6c",
+      "word_count": 71,
+      "output_tokens": 94,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:leaf:memory://symbol/service.py::parcel_total",
+      "call_id": "d348658d4f2e1383",
+      "level": 1,
+      "prompt_sha256": "6c35e1d079bade8bdad7eb29fd3ffdb4f669eb719dfce0a0f27090a575dd9c2d",
+      "answer_sha256": "e41654394c0176a8d61d0c5b1321fb06d31ee22d30dc3d85115dda772502e177",
+      "word_count": 142,
+      "output_tokens": 228,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:leaf:memory://symbol/service.py::tracking_key",
+      "call_id": "ca1d5d20d0d34a29",
+      "level": 1,
+      "prompt_sha256": "4c53c5f8aead71a98b10960018275cfd8c203cf56310265ea09fd054ca08f87e",
+      "answer_sha256": "42cffb4e1e9b55142a8aeade147a6b10b3ceac2387295cc43c206556eb09dbaa",
+      "word_count": 44,
+      "output_tokens": 70,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:level2:audit.py",
+      "call_id": "a44b845e66645ebf",
+      "level": 2,
+      "prompt_sha256": "0ef9fdf97b58b4dc8ddb40b141c8b75bf48d3ae5233f83197715f77491215b0b",
+      "answer_sha256": "c301ecab6589f74850632b9ed425b483aeb1ea2a36c2259e3f6b99bda1d3ebb8",
+      "word_count": 80,
+      "output_tokens": 123,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:level2:presentation.py",
+      "call_id": "d4e09e9f4de1ee80",
+      "level": 2,
+      "prompt_sha256": "6847458d496ac13d06205ec28340cefd1205f0b280677f98b3349b229bedc404",
+      "answer_sha256": "8cba64c3bd0c64e4284ddef1310be73d0008e7f8494296b3b6fed4d7955f3350",
+      "word_count": 90,
+      "output_tokens": 139,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:level2:rules.py",
+      "call_id": "eb622aa981798c66",
+      "level": 2,
+      "prompt_sha256": "b7f79293b1c5f51dfd2aeaff1c9853043239a7cbc86fb9ad18bfdfe29b67d67a",
+      "answer_sha256": "fedc9c770038e0865579bead5ea1cf80abe0fa20468d21ad118b4c4308feb96e",
+      "word_count": 83,
+      "output_tokens": 121,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:level2:service.py",
+      "call_id": "7daf9c52c5eddb01",
+      "level": 2,
+      "prompt_sha256": "31b3b93610eeac9549a9784ed2b8574c94f3f2a0578049841b3e374b618f7db4",
+      "answer_sha256": "e72dbc7785cc323a98a8bbb1afbc9a4b0b4076fa130305f8f01a2db32e6a9114",
+      "word_count": 33,
+      "output_tokens": 57,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "dev_shipping",
+      "id": "summary:level3:project",
+      "call_id": "f3bcbdc8f4f181d9",
+      "level": 3,
+      "prompt_sha256": "e708b015b0f8bec1dd89347d04189675019ed5ad7c59ed9664cac2a4dd600f28",
+      "answer_sha256": "e996f21f4eab5fc9b509f1c61f2e1db1d39f6f4e519059386ff1e6944924f7ad",
+      "word_count": 95,
+      "output_tokens": 158,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/audit.py::audit_key",
+      "call_id": "8b73e65e54737a34",
+      "level": 1,
+      "prompt_sha256": "b2be149f739d760029a89322d5b23599ed856b912e7583414e7fbc4d2cf15dcd",
+      "answer_sha256": "0cb47561ebe9149043f7eb48697abea1db281e2de908638d67c82d97070ee209",
+      "word_count": 45,
+      "output_tokens": 72,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/audit.py::recent_events",
+      "call_id": "e011f82d499de87d",
+      "level": 1,
+      "prompt_sha256": "30a481249f7a5fb667924f42bf4b41bd3e98e7e3c7523a8789d21bcb63695300",
+      "answer_sha256": "25005d737a688cd5ccecbaf1de200d65fb163b713eaf9c10a78c5d41b15a4cec",
+      "word_count": 36,
+      "output_tokens": 55,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/audit.py::redact_identifier",
+      "call_id": "41990a2593d9aa13",
+      "level": 1,
+      "prompt_sha256": "116fdcfa054d2aada663443108452dfbf8ae279c2ca90acc7b69ae61e1038f56",
+      "answer_sha256": "e7c44bd52c918491dbfbbc9ea029e788642854e6296928afb27270e19bf8903c",
+      "word_count": 55,
+      "output_tokens": 82,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/audit.py::event_record",
+      "call_id": "5d59cc0c5f29de77",
+      "level": 1,
+      "prompt_sha256": "de36e7e8c9c8a1d293b29fc96d37c72db8cfeca6774bbb9285ba78d4853470ea",
+      "answer_sha256": "bfc8dc03ea4adb59c33e5daf7998572752684e193d2d550abb0b63578fcb98bd",
+      "word_count": 65,
+      "output_tokens": 107,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/presentation.py::normalize_label",
+      "call_id": "832406c8b2c0a29f",
+      "level": 1,
+      "prompt_sha256": "890c84bd1a5d153979c6a65d5d8a21e401c60db7f01cfd43ad04668c36badeea",
+      "answer_sha256": "148af62175bba5e7c9a3ff98899fade198b8a56ed5a64b9b3fb166fa09ea34c3",
+      "word_count": 33,
+      "output_tokens": 49,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/presentation.py::display_reference",
+      "call_id": "6c5c954438f6a126",
+      "level": 1,
+      "prompt_sha256": "d7ff23bca3cfe8b7a42261131c42d34ef32ce20d5ca3990a9be3bd471da05367",
+      "answer_sha256": "9115f2b231a13c6030a54e8f1306956ad0278beff0d9322ada1fe2bcff0fdc42",
+      "word_count": 35,
+      "output_tokens": 53,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/presentation.py::status_label",
+      "call_id": "91d416526f20c735",
+      "level": 1,
+      "prompt_sha256": "1856960d8e1cda3d573ae63c858c6b27bf723070da572ad3ca4a41a18add657e",
+      "answer_sha256": "9456e5d6789321b9ac215a74badce500dda9a5bd8b5f9d17ea2829b3fcfa3293",
+      "word_count": 41,
+      "output_tokens": 56,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+      "call_id": "93465adb502259fd",
+      "level": 1,
+      "prompt_sha256": "94b1f7622b9dd8fcbead87149e9b55d3ceb591cb757bc1fa01ef30460deb3f9e",
+      "answer_sha256": "4c677db06cca826f60901a9ac8447a52e763cf05f191fa530f15bf87ae543333",
+      "word_count": 38,
+      "output_tokens": 55,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/rules.py::normalized_scopes",
+      "call_id": "c6bdab70b0d16d6d",
+      "level": 1,
+      "prompt_sha256": "417ac988edfd34f93b6ce7e36c66a38b5d6ae5aa193a98c2056b4ac566e5f7c1",
+      "answer_sha256": "8c6b1d82ad199106f50eade898c4e08744ddf7dc11fbde52feec6204c66373f9",
+      "word_count": 50,
+      "output_tokens": 64,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/rules.py::session_valid",
+      "call_id": "5258697d93ad388a",
+      "level": 1,
+      "prompt_sha256": "61862679556ed77a0cf3d5801e0339e27c71b352081830e9d1203370b55d6816",
+      "answer_sha256": "9dd0a1b5f129712a009b28b098930525743818a9aad628e604c835a3a0b3977e",
+      "word_count": 52,
+      "output_tokens": 79,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/rules.py::required_scope",
+      "call_id": "972cfb2bde02ef08",
+      "level": 1,
+      "prompt_sha256": "1819253f621a441519b7b82894a1b5b4dfa45306a833141dffe74562aa0adeb0",
+      "answer_sha256": "0e7ea0fc13e6e3664866fbaa12ba9a996e91e56df779fd5639e7f423759d992b",
+      "word_count": 41,
+      "output_tokens": 68,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/rules.py::role_allows",
+      "call_id": "226265051ae55e99",
+      "level": 1,
+      "prompt_sha256": "399fae2f619aa34cff18b70e0c2feca779fe35976576f1fc99158736a51a50e5",
+      "answer_sha256": "4b8a2b15c0747be6542a5f4d00f9beaa57b9c0088d63f3cfc2ed0f9eba6e52d2",
+      "word_count": 61,
+      "output_tokens": 85,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/rules.py::scope_allows",
+      "call_id": "3cdebef32441e982",
+      "level": 1,
+      "prompt_sha256": "0e6133783c05ee2ba55164b48570ea9b254e88805c5a55507aab14e0fbb07c14",
+      "answer_sha256": "922b389dd065646d84689bf0efc8b762f5247d5d9b5c16f6c2642e858075efb1",
+      "word_count": 65,
+      "output_tokens": 95,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/service.py::authorize",
+      "call_id": "434d347b212610ae",
+      "level": 1,
+      "prompt_sha256": "9859d764c7235d5ffb1103d04a5061ee1fe5f85e42f0d34d3dd2e107534adf68",
+      "answer_sha256": "bff37f09998b38f3340ca08cc34e124178ccf3c8a4858f8e975de8d14e889fe5",
+      "word_count": 54,
+      "output_tokens": 66,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/service.py::can_edit_own",
+      "call_id": "068247bb72289a8f",
+      "level": 1,
+      "prompt_sha256": "8436cebcfe53515ef2141fbb610c0b6a1024db18b06d7c6fab2b6aa7266b6445",
+      "answer_sha256": "cb55669d13927108323e77767e7fb39b17598bb3f687534ba079094423cf98de",
+      "word_count": 79,
+      "output_tokens": 129,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:leaf:memory://symbol/service.py::user_key",
+      "call_id": "140a5af5ff199df2",
+      "level": 1,
+      "prompt_sha256": "091193f8b630cfd4d22ffdecc29d2d55d82134c8832c188d610842894869e675",
+      "answer_sha256": "b153d25683d6f7d23c85b874ece753fa7d5ff76812fc71c77645ca6b139dfa95",
+      "word_count": 30,
+      "output_tokens": 46,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:level2:audit.py",
+      "call_id": "ce59bdb5ec2062b9",
+      "level": 2,
+      "prompt_sha256": "0ef9fdf97b58b4dc8ddb40b141c8b75bf48d3ae5233f83197715f77491215b0b",
+      "answer_sha256": "c301ecab6589f74850632b9ed425b483aeb1ea2a36c2259e3f6b99bda1d3ebb8",
+      "word_count": 80,
+      "output_tokens": 123,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:level2:presentation.py",
+      "call_id": "f247248e6e4827d0",
+      "level": 2,
+      "prompt_sha256": "954b4e6ce9ad13b5f010046dc5d1aa072d61d1be5b5d809b8cb32a70a9eadae8",
+      "answer_sha256": "cd3dc3ae3e02277a6f3db1996e1e4093662bafda975a9b371545e4034727dd62",
+      "word_count": 61,
+      "output_tokens": 86,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:level2:rules.py",
+      "call_id": "208b1b9dd958be66",
+      "level": 2,
+      "prompt_sha256": "a885d201fb67111f039024acb86158d23d8e7da272c7e012e4bce3c2d2199529",
+      "answer_sha256": "e3591cc85ea0363841ed4e1a7afd8083da8df4fec6364b14b0c497660e1adbdc",
+      "word_count": 88,
+      "output_tokens": 117,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:level2:service.py",
+      "call_id": "c31bacdb5b0dd80f",
+      "level": 2,
+      "prompt_sha256": "023a25f836e740e7b5c213609a6a6c69596edf8b486b5045e261e9a46890c04e",
+      "answer_sha256": "5036709ec56bbfa93bbea2e29624d29399cbf1521ba59cd8937b3a9f3487ebfe",
+      "word_count": 80,
+      "output_tokens": 115,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_authorization",
+      "id": "summary:level3:project",
+      "call_id": "7bf8110a32edcd69",
+      "level": 3,
+      "prompt_sha256": "1f93dd3c3a0fb4a0f379f6475f4e1e3db6ca8db84446fdf3c1df4390ce0fac5f",
+      "answer_sha256": "d68ec9c410fe29d1296c5b357d9b201cf9e74d767e7853c290d018ae448c19de",
+      "word_count": 86,
+      "output_tokens": 124,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:leaf:memory://symbol/audit.py::audit_key",
+      "call_id": "2d0f89e036ab08a9",
+      "level": 1,
+      "prompt_sha256": "b2be149f739d760029a89322d5b23599ed856b912e7583414e7fbc4d2cf15dcd",
+      "answer_sha256": "0cb47561ebe9149043f7eb48697abea1db281e2de908638d67c82d97070ee209",
+      "word_count": 45,
+      "output_tokens": 72,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:leaf:memory://symbol/audit.py::recent_events",
+      "call_id": "d77f2a500e04b0f1",
+      "level": 1,
+      "prompt_sha256": "30a481249f7a5fb667924f42bf4b41bd3e98e7e3c7523a8789d21bcb63695300",
+      "answer_sha256": "25005d737a688cd5ccecbaf1de200d65fb163b713eaf9c10a78c5d41b15a4cec",
+      "word_count": 36,
+      "output_tokens": 55,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:leaf:memory://symbol/audit.py::redact_identifier",
+      "call_id": "522f0570149632a9",
+      "level": 1,
+      "prompt_sha256": "116fdcfa054d2aada663443108452dfbf8ae279c2ca90acc7b69ae61e1038f56",
+      "answer_sha256": "e7c44bd52c918491dbfbbc9ea029e788642854e6296928afb27270e19bf8903c",
+      "word_count": 55,
+      "output_tokens": 82,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:leaf:memory://symbol/audit.py::event_record",
+      "call_id": "86a948eca4b28a05",
+      "level": 1,
+      "prompt_sha256": "de36e7e8c9c8a1d293b29fc96d37c72db8cfeca6774bbb9285ba78d4853470ea",
+      "answer_sha256": "bfc8dc03ea4adb59c33e5daf7998572752684e193d2d550abb0b63578fcb98bd",
+      "word_count": 65,
+      "output_tokens": 107,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:leaf:memory://symbol/presentation.py::normalize_label",
+      "call_id": "67b9ae8b3bf96c4a",
+      "level": 1,
+      "prompt_sha256": "890c84bd1a5d153979c6a65d5d8a21e401c60db7f01cfd43ad04668c36badeea",
+      "answer_sha256": "148af62175bba5e7c9a3ff98899fade198b8a56ed5a64b9b3fb166fa09ea34c3",
+      "word_count": 33,
+      "output_tokens": 49,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:leaf:memory://symbol/presentation.py::display_reference",
+      "call_id": "4f476adb129906d8",
+      "level": 1,
+      "prompt_sha256": "12f0d399b3e4055b44d7df543a39c4508e316dd0421d1719ed56cc2584578688",
+      "answer_sha256": "91f9eb3cc0c03ce2feff442033b1f9662fb5cf6dc886845d683e8e4bbd31f7ee",
+      "word_count": 35,
+      "output_tokens": 53,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:leaf:memory://symbol/presentation.py::status_label",
+      "call_id": "39520f0f609758e6",
+      "level": 1,
+      "prompt_sha256": "1856960d8e1cda3d573ae63c858c6b27bf723070da572ad3ca4a41a18add657e",
+      "answer_sha256": "9456e5d6789321b9ac215a74badce500dda9a5bd8b5f9d17ea2829b3fcfa3293",
+      "word_count": 41,
+      "output_tokens": 56,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+      "call_id": "f2b9a24c6dfc7ef4",
+      "level": 1,
+      "prompt_sha256": "0670cb4a7e79b79f3d67a190be42fded608b4c28ecfafdb5fd814482ec3678ad",
+      "answer_sha256": "f21031094d722602ed31ceff65a3a5970979985e3c5f81f56c85f06fc589741e",
+      "word_count": 44,
+      "output_tokens": 63,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:leaf:memory://symbol/rules.py::normalize_tenant",
+      "call_id": "b376eff73dae8b49",
+      "level": 1,
+      "prompt_sha256": "378b424e9dc26ae67593b1ae078ce6499d896d1a90a4c81db9dd0c316b09a724",
+      "answer_sha256": "67b0eed3221fd41895d56e7a7585498bad948b93c20bf20ba74a4451f3fec910",
+      "word_count": 56,
+      "output_tokens": 89,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:leaf:memory://symbol/rules.py::normalize_resource",
+      "call_id": "65e96dfaa122425d",
+      "level": 1,
+      "prompt_sha256": "ea0b0c9ea854ef036607d6c058f78b60e2d0f669956106ab72d219ad4f9370df",
+      "answer_sha256": "8ab37d0021f2113eebebf7fd38029e2c799558c1c8b8f9735f9d6622cf7b34a9",
+      "word_count": 50,
+      "output_tokens": 75,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:leaf:memory://symbol/rules.py::canonical_query",
+      "call_id": "00cce4f612523b48",
+      "level": 1,
+      "prompt_sha256": "c78dd75880ed6bc35d6bfd185706abb2e484abe34b69cbe45214688fd7ccc648",
+      "answer_sha256": "823f838381095f57a821a0b66a37fe17d71aa72b7daf923975ca7f1f9ff3392d",
+      "word_count": 46,
+      "output_tokens": 71,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:leaf:memory://symbol/rules.py::cache_ttl",
+      "call_id": "2c95d5e92737c253",
+      "level": 1,
+      "prompt_sha256": "8052b21c11630ec89da814852e712e245b5c0c3126c854ea9fc77acff31964e8",
+      "answer_sha256": "c778ea4d12ac54b7a7f413e2bc9d8070f7951fe3be0c62e6f6c3c2a6688baa9a",
+      "word_count": 62,
+      "output_tokens": 114,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:leaf:memory://symbol/service.py::render_cache_key",
+      "call_id": "2070fb40f43a8720",
+      "level": 1,
+      "prompt_sha256": "441cbb3f0033ac6d1bd133ba9312a4f947ab04d678c1e06e1aa54455fdeec91d",
+      "answer_sha256": "392eed6e35e6d7fcba38b9bc4a29e5281e528421f263ef1ecf2933742bf02878",
+      "word_count": 64,
+      "output_tokens": 113,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:leaf:memory://symbol/service.py::cache_entry",
+      "call_id": "1e56a2fa421035f6",
+      "level": 1,
+      "prompt_sha256": "87d99f5cd55e8443bf57a267b52f43f0873def8432cf73ce51c4d3c92467b0ad",
+      "answer_sha256": "db4b38ac136b3733663c73780f82ef72bf12636ee598a839be335206467107c9",
+      "word_count": 86,
+      "output_tokens": 130,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:leaf:memory://symbol/service.py::cache_partition",
+      "call_id": "96bc06653798ec44",
+      "level": 1,
+      "prompt_sha256": "48a76dc9463432e167f48029714bcefd4b39be81148891ba4a053c62d09244a1",
+      "answer_sha256": "58706b5c1b99babeb963b5497a5ad56cd959d029b58bc0466604efa2aeab8efc",
+      "word_count": 54,
+      "output_tokens": 72,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:level2:audit.py",
+      "call_id": "e9bac9a44ab4025b",
+      "level": 2,
+      "prompt_sha256": "0ef9fdf97b58b4dc8ddb40b141c8b75bf48d3ae5233f83197715f77491215b0b",
+      "answer_sha256": "c301ecab6589f74850632b9ed425b483aeb1ea2a36c2259e3f6b99bda1d3ebb8",
+      "word_count": 80,
+      "output_tokens": 123,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:level2:presentation.py",
+      "call_id": "c3ce3a5705d0af38",
+      "level": 2,
+      "prompt_sha256": "527b0b93c53f2a8de67a0347cdd8a69d23f842b6167fabb49feaa97513bec18c",
+      "answer_sha256": "6e27ac32df64216dd73a9fb97037140dbe9524ee70adb5ccd1b29443bc18b5e3",
+      "word_count": 99,
+      "output_tokens": 152,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:level2:rules.py",
+      "call_id": "4d60f36b851392f2",
+      "level": 2,
+      "prompt_sha256": "61bf098d61a5f17a36b28000a74ffb4567453731d01aa6f1724e11761464a19c",
+      "answer_sha256": "fbe95c3504c27cd9a3f836fd0ee9d3e01b3709145c17e39b6e902896477c9649",
+      "word_count": 79,
+      "output_tokens": 117,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:level2:service.py",
+      "call_id": "8907cb46a8413b73",
+      "level": 2,
+      "prompt_sha256": "b00972dfc2ef036c7a11520d56d8f2db6a8ad7457b3b2b8390281aebcf901a1a",
+      "answer_sha256": "9e67d1dfae3b4f3132b7bc7023188bca2be4d67ea2c10089c487a0d76e76a2d4",
+      "word_count": 97,
+      "output_tokens": 143,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_cache",
+      "id": "summary:level3:project",
+      "call_id": "85643ae79dfeb6c4",
+      "level": 3,
+      "prompt_sha256": "38b1f5a0ef62cadbec3f397007d6d6331823f93663e64110817de28d4f5de8d7",
+      "answer_sha256": "688be1856923beb2bd472a6b49d2d0e0b5b05ce08ede8c2f966ebfb076d0a9fe",
+      "word_count": 79,
+      "output_tokens": 123,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:leaf:memory://symbol/audit.py::audit_key",
+      "call_id": "e4dd666ebe7d4f31",
+      "level": 1,
+      "prompt_sha256": "b2be149f739d760029a89322d5b23599ed856b912e7583414e7fbc4d2cf15dcd",
+      "answer_sha256": "0cb47561ebe9149043f7eb48697abea1db281e2de908638d67c82d97070ee209",
+      "word_count": 45,
+      "output_tokens": 72,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:leaf:memory://symbol/audit.py::recent_events",
+      "call_id": "01c7a5bac1d12b9e",
+      "level": 1,
+      "prompt_sha256": "30a481249f7a5fb667924f42bf4b41bd3e98e7e3c7523a8789d21bcb63695300",
+      "answer_sha256": "25005d737a688cd5ccecbaf1de200d65fb163b713eaf9c10a78c5d41b15a4cec",
+      "word_count": 36,
+      "output_tokens": 55,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:leaf:memory://symbol/audit.py::redact_identifier",
+      "call_id": "e2cbe59dd4d58497",
+      "level": 1,
+      "prompt_sha256": "116fdcfa054d2aada663443108452dfbf8ae279c2ca90acc7b69ae61e1038f56",
+      "answer_sha256": "e7c44bd52c918491dbfbbc9ea029e788642854e6296928afb27270e19bf8903c",
+      "word_count": 55,
+      "output_tokens": 82,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:leaf:memory://symbol/audit.py::event_record",
+      "call_id": "d246527212b10f79",
+      "level": 1,
+      "prompt_sha256": "de36e7e8c9c8a1d293b29fc96d37c72db8cfeca6774bbb9285ba78d4853470ea",
+      "answer_sha256": "bfc8dc03ea4adb59c33e5daf7998572752684e193d2d550abb0b63578fcb98bd",
+      "word_count": 65,
+      "output_tokens": 107,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:leaf:memory://symbol/presentation.py::normalize_label",
+      "call_id": "551542d2a7dacd2c",
+      "level": 1,
+      "prompt_sha256": "890c84bd1a5d153979c6a65d5d8a21e401c60db7f01cfd43ad04668c36badeea",
+      "answer_sha256": "148af62175bba5e7c9a3ff98899fade198b8a56ed5a64b9b3fb166fa09ea34c3",
+      "word_count": 33,
+      "output_tokens": 49,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:leaf:memory://symbol/presentation.py::display_reference",
+      "call_id": "f25494ad9ea5b836",
+      "level": 1,
+      "prompt_sha256": "18c3c1835a5821f7ed716b26e74f899ed30297a10d720223a3298b3d0fa13832",
+      "answer_sha256": "5511da216cc13700bd41ef3932b36a3147644dabc97efc5152ab09af15972d71",
+      "word_count": 35,
+      "output_tokens": 53,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:leaf:memory://symbol/presentation.py::status_label",
+      "call_id": "5dd102410d956683",
+      "level": 1,
+      "prompt_sha256": "1856960d8e1cda3d573ae63c858c6b27bf723070da572ad3ca4a41a18add657e",
+      "answer_sha256": "9456e5d6789321b9ac215a74badce500dda9a5bd8b5f9d17ea2829b3fcfa3293",
+      "word_count": 41,
+      "output_tokens": 56,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+      "call_id": "ce1571a362e6107f",
+      "level": 1,
+      "prompt_sha256": "ef9c8d471cf48b4414ba147132cc910be423f967dbfe8313f73cce689864c118",
+      "answer_sha256": "b75a490b03a5fd8fa5f1a9145a306c61ea4b4cd7d38a678cfed7d5e1eb7839ed",
+      "word_count": 38,
+      "output_tokens": 55,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:leaf:memory://symbol/rules.py::sellable",
+      "call_id": "b6bab7bda7f3e2a9",
+      "level": 1,
+      "prompt_sha256": "dfd81a22109d638ccb17d37b3b1a82bb1fab21526729b7005bb68001633f9da8",
+      "answer_sha256": "86742fc13cc960122569de51caeac9242979f544663c5cf31c421cd11d28ddf5",
+      "word_count": 38,
+      "output_tokens": 54,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:leaf:memory://symbol/rules.py::valid_quantity",
+      "call_id": "746a71d350411739",
+      "level": 1,
+      "prompt_sha256": "fdc6b2a8960337bbd58c8c20f0bc4351b6b36eb6f78660759e2307477cf1ef58",
+      "answer_sha256": "6dadd37368209243928fb7e42b833fb3ecdff599fc52dc6cdd6138911605491a",
+      "word_count": 43,
+      "output_tokens": 66,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:leaf:memory://symbol/rules.py::allocate",
+      "call_id": "4d462ccbdc6b6e37",
+      "level": 1,
+      "prompt_sha256": "f7e1283cd766f2d4b77402789b3a44d871df0560f653a7aefe3332181198fa8d",
+      "answer_sha256": "bdfe6b3fd53eb6baffb6038cc922ddd1902f498e202a9a1d26c1a6e73f91ef43",
+      "word_count": 91,
+      "output_tokens": 137,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:leaf:memory://symbol/rules.py::can_backorder",
+      "call_id": "623a6838ce338334",
+      "level": 1,
+      "prompt_sha256": "ff65afb2f8be5464d9d55292d032785583be37bb8247c9bb119f3e89b1e63ddc",
+      "answer_sha256": "4a18619161f248441c37feeffbb8b2fd2418bd9160191b990c6045faff5cdf0e",
+      "word_count": 36,
+      "output_tokens": 55,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:leaf:memory://symbol/service.py::reserve",
+      "call_id": "d8f995b7796ed786",
+      "level": 1,
+      "prompt_sha256": "41df4160d3a25a55c70162a7aa87ca6e80d754e5e0ea07d8aa68abfb0a65c188",
+      "answer_sha256": "405ad40832e599877525876f74bc2174c6e5b00486088d8116590b1bae6fac1f",
+      "word_count": 121,
+      "output_tokens": 176,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:leaf:memory://symbol/service.py::remaining_after",
+      "call_id": "50da2de4fc13cc93",
+      "level": 1,
+      "prompt_sha256": "04b7a13c0adb115376084534d1b839724b0a23077af1297e30d29e8c85367565",
+      "answer_sha256": "1422ea1eef82a534c34d9b5149293554f7cceca811edee2d69e26d99e9ea233b",
+      "word_count": 79,
+      "output_tokens": 103,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:leaf:memory://symbol/service.py::stock_label",
+      "call_id": "f87eb33aeff2a29f",
+      "level": 1,
+      "prompt_sha256": "4f66bc5754ef51f2e23570ab5f85fbcba8e65c4c2bd0cd33fac90080b2a72dfe",
+      "answer_sha256": "2f59ade952f0bebfb943ba2fe54552b795540144b547027c23377586bb0d040c",
+      "word_count": 32,
+      "output_tokens": 48,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:level2:audit.py",
+      "call_id": "7d26b200780f1db8",
+      "level": 2,
+      "prompt_sha256": "0ef9fdf97b58b4dc8ddb40b141c8b75bf48d3ae5233f83197715f77491215b0b",
+      "answer_sha256": "c301ecab6589f74850632b9ed425b483aeb1ea2a36c2259e3f6b99bda1d3ebb8",
+      "word_count": 80,
+      "output_tokens": 123,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:level2:presentation.py",
+      "call_id": "6d9fdbfed8b9cf0b",
+      "level": 2,
+      "prompt_sha256": "db3a7593673110f027d96d28b9c9b1be06e9c0c0543dcbb29769e3e5d308b585",
+      "answer_sha256": "1c2d7312c5a10e7a9a1462e00380add0f57de577ed168e115747522cf455fa58",
+      "word_count": 45,
+      "output_tokens": 74,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:level2:rules.py",
+      "call_id": "d4627f690435adeb",
+      "level": 2,
+      "prompt_sha256": "52b9e384a22dc5e44f5f886cd55b57e71d5481482317c3415830db5125e27f72",
+      "answer_sha256": "afecd05122d83c6afcc5d27f9ae49c3f975882d3c9a95266bf830157ea8f8540",
+      "word_count": 78,
+      "output_tokens": 102,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:level2:service.py",
+      "call_id": "78243ac3254c82ca",
+      "level": 2,
+      "prompt_sha256": "64286b98a1cc59e84853658a0e26e576b4f2032b360739572bb59bc37ef82081",
+      "answer_sha256": "07dc66ff84cea5140527283808be7de26b41a75788015e6283be33c964b35812",
+      "word_count": 42,
+      "output_tokens": 66,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_inventory",
+      "id": "summary:level3:project",
+      "call_id": "338db924ba90d281",
+      "level": 3,
+      "prompt_sha256": "d176840573a2ee79c97fc9a645fa6aea37538e6baebc5756bca4c2a7124965a6",
+      "answer_sha256": "036a22109a99f00874b37bdb055944f180c1b7de3c64cc264a05cbd9795ce715",
+      "word_count": 75,
+      "output_tokens": 111,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:leaf:memory://symbol/audit.py::audit_key",
+      "call_id": "e08cdd6d99d946a9",
+      "level": 1,
+      "prompt_sha256": "b2be149f739d760029a89322d5b23599ed856b912e7583414e7fbc4d2cf15dcd",
+      "answer_sha256": "0cb47561ebe9149043f7eb48697abea1db281e2de908638d67c82d97070ee209",
+      "word_count": 45,
+      "output_tokens": 72,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:leaf:memory://symbol/audit.py::recent_events",
+      "call_id": "6fddd6a0037d2ca4",
+      "level": 1,
+      "prompt_sha256": "30a481249f7a5fb667924f42bf4b41bd3e98e7e3c7523a8789d21bcb63695300",
+      "answer_sha256": "25005d737a688cd5ccecbaf1de200d65fb163b713eaf9c10a78c5d41b15a4cec",
+      "word_count": 36,
+      "output_tokens": 55,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:leaf:memory://symbol/audit.py::redact_identifier",
+      "call_id": "8aeab15a22752f51",
+      "level": 1,
+      "prompt_sha256": "116fdcfa054d2aada663443108452dfbf8ae279c2ca90acc7b69ae61e1038f56",
+      "answer_sha256": "e7c44bd52c918491dbfbbc9ea029e788642854e6296928afb27270e19bf8903c",
+      "word_count": 55,
+      "output_tokens": 82,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:leaf:memory://symbol/audit.py::event_record",
+      "call_id": "dfe70125116bfab9",
+      "level": 1,
+      "prompt_sha256": "de36e7e8c9c8a1d293b29fc96d37c72db8cfeca6774bbb9285ba78d4853470ea",
+      "answer_sha256": "bfc8dc03ea4adb59c33e5daf7998572752684e193d2d550abb0b63578fcb98bd",
+      "word_count": 65,
+      "output_tokens": 107,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:leaf:memory://symbol/presentation.py::normalize_label",
+      "call_id": "6ffd9c2688def601",
+      "level": 1,
+      "prompt_sha256": "890c84bd1a5d153979c6a65d5d8a21e401c60db7f01cfd43ad04668c36badeea",
+      "answer_sha256": "148af62175bba5e7c9a3ff98899fade198b8a56ed5a64b9b3fb166fa09ea34c3",
+      "word_count": 33,
+      "output_tokens": 49,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:leaf:memory://symbol/presentation.py::display_reference",
+      "call_id": "7a18cebd53a0f695",
+      "level": 1,
+      "prompt_sha256": "138f30a8f79a440615d29eb573503dc5ed61103043708016ecb78af4f8879a2b",
+      "answer_sha256": "a803c0745b446e8a503195b18656540f7811925e3fac25a8cb5d7f6295ed08ae",
+      "word_count": 35,
+      "output_tokens": 54,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:leaf:memory://symbol/presentation.py::status_label",
+      "call_id": "a9ee5c14def0298a",
+      "level": 1,
+      "prompt_sha256": "1856960d8e1cda3d573ae63c858c6b27bf723070da572ad3ca4a41a18add657e",
+      "answer_sha256": "9456e5d6789321b9ac215a74badce500dda9a5bd8b5f9d17ea2829b3fcfa3293",
+      "word_count": 41,
+      "output_tokens": 56,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+      "call_id": "b2c48b7d59ae82dc",
+      "level": 1,
+      "prompt_sha256": "6940676c20b261c634be81f19cd5b1929f2c43122135cd11fc942813cfaf21db",
+      "answer_sha256": "433ba6425927571e2b1b14ee02935a1cc38536b075f3abb1c8f687b8b25a5279",
+      "word_count": 38,
+      "output_tokens": 56,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:leaf:memory://symbol/rules.py::line_subtotal",
+      "call_id": "52a5c15bd713e14d",
+      "level": 1,
+      "prompt_sha256": "112d7c6193f0296ea2fb3831dbcbc254b2d295757bc41080d1f6057f2aa52a6f",
+      "answer_sha256": "7a1383094c701442af93bcd4cbcc1c179d80ee9cd25a162d06f443623de8134b",
+      "word_count": 65,
+      "output_tokens": 111,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:leaf:memory://symbol/rules.py::member_discount",
+      "call_id": "ba623ccfa47c8faa",
+      "level": 1,
+      "prompt_sha256": "34442db95cea932f739164aac5be3ac53977dc95eb405511e27eb020ab6d586a",
+      "answer_sha256": "4da1701e77fb18402fe5a8dcb3ba627806fbfe7bb4a22720b3e8f374149adbae",
+      "word_count": 64,
+      "output_tokens": 96,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:leaf:memory://symbol/rules.py::sales_tax",
+      "call_id": "c7463f25af3ffff3",
+      "level": 1,
+      "prompt_sha256": "b3c4fc0f3b03b8370040df53e962a48cd8fa3ae1f08bb7caa104e24dfdbb8c14",
+      "answer_sha256": "5ea1f6ec603fafea2274a65fcf83e43a8ef94e5b1e51ed7eec1a061ba13e776d",
+      "word_count": 52,
+      "output_tokens": 90,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:leaf:memory://symbol/rules.py::refundable",
+      "call_id": "16bd8ae72aacfcf1",
+      "level": 1,
+      "prompt_sha256": "e4a1ee9992e0eb1f405922ed10ddad08bed7ca1026fc4cb5484f745020986b3e",
+      "answer_sha256": "2c5c087d91321ec0713cf8c3857410391e97c64dfaa0a10f10e343d497ae785a",
+      "word_count": 39,
+      "output_tokens": 61,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:leaf:memory://symbol/service.py::checkout_total",
+      "call_id": "4d8c60b6514c3db6",
+      "level": 1,
+      "prompt_sha256": "c0e27f0cad0cb83d25356ef7e761f4a46d23a5a03750bbfab5834bba337b0858",
+      "answer_sha256": "2f28d56f2bab58fb4706ae0b92b8ddafd381b68fd1ec123743fcd741222fdb3d",
+      "word_count": 63,
+      "output_tokens": 82,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:leaf:memory://symbol/service.py::order_receipt",
+      "call_id": "1980a9bf0149f62d",
+      "level": 1,
+      "prompt_sha256": "e878ba1ba1244a363caab5c49cae0a2997c9bd8f95cd9b0ab01ad1e1a0b92b38",
+      "answer_sha256": "99b2a2ab952ae8bfa9d3b13b17304178e7b2dc06a60dc5154c9bd9b6f00da5d9",
+      "word_count": 84,
+      "output_tokens": 110,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:leaf:memory://symbol/service.py::reward_points",
+      "call_id": "f927ad317c13326b",
+      "level": 1,
+      "prompt_sha256": "3b304258895c483b1a9372d79c1875e92d7c8bc346730c940e2c934746979b3c",
+      "answer_sha256": "582a48e1f089bc285dd094ecd6ce37467eece8e14b3140fe676ffafffafa10c2",
+      "word_count": 55,
+      "output_tokens": 76,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:level2:audit.py",
+      "call_id": "e5da7dda9b5cc9ed",
+      "level": 2,
+      "prompt_sha256": "0ef9fdf97b58b4dc8ddb40b141c8b75bf48d3ae5233f83197715f77491215b0b",
+      "answer_sha256": "c301ecab6589f74850632b9ed425b483aeb1ea2a36c2259e3f6b99bda1d3ebb8",
+      "word_count": 80,
+      "output_tokens": 123,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:level2:presentation.py",
+      "call_id": "62efda64900084f1",
+      "level": 2,
+      "prompt_sha256": "f8956f7971187d125705c44e38624c99cb7da1418ce70d6426542405aa9a07d3",
+      "answer_sha256": "340f5b0ca23f8ffc7ccded32f6f982c335f719e1148940100e69e5af3f9e264a",
+      "word_count": 86,
+      "output_tokens": 135,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:level2:rules.py",
+      "call_id": "9141ded5fa9ed8b9",
+      "level": 2,
+      "prompt_sha256": "c3ede2ab4ca428d0706b97669bafe9351bbc74d03933f64454b0a97c7cd867dd",
+      "answer_sha256": "0fed3b95940a80e7de32da0fa3866d7ace77b8c5e9620a62ef038796d0c55924",
+      "word_count": 104,
+      "output_tokens": 151,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:level2:service.py",
+      "call_id": "6be5040d1788b62a",
+      "level": 2,
+      "prompt_sha256": "5c22847dc4d5a568e63b9e5ab4d0253bcf420d3b9814a4d1561f322cf60c1c50",
+      "answer_sha256": "de7b9742b4229d07b462448acf1b97c907b1a18994cc01cbf91012938ece5c71",
+      "word_count": 104,
+      "output_tokens": 127,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_pricing",
+      "id": "summary:level3:project",
+      "call_id": "bcf0a6888a508c7d",
+      "level": 3,
+      "prompt_sha256": "ac4c637acabfd25bbc0c6590992a2c8bf075f07b0d361ed36be30d5881ead304",
+      "answer_sha256": "aad4d532a63822f93ea83ef9b5ba02b5655ebc67d5cae45c5a5b88758f25dfbb",
+      "word_count": 89,
+      "output_tokens": 124,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:leaf:memory://symbol/audit.py::audit_key",
+      "call_id": "51f7205657d018aa",
+      "level": 1,
+      "prompt_sha256": "b2be149f739d760029a89322d5b23599ed856b912e7583414e7fbc4d2cf15dcd",
+      "answer_sha256": "0cb47561ebe9149043f7eb48697abea1db281e2de908638d67c82d97070ee209",
+      "word_count": 45,
+      "output_tokens": 72,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:leaf:memory://symbol/audit.py::recent_events",
+      "call_id": "ec6c8cd4e3b98004",
+      "level": 1,
+      "prompt_sha256": "30a481249f7a5fb667924f42bf4b41bd3e98e7e3c7523a8789d21bcb63695300",
+      "answer_sha256": "25005d737a688cd5ccecbaf1de200d65fb163b713eaf9c10a78c5d41b15a4cec",
+      "word_count": 36,
+      "output_tokens": 55,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:leaf:memory://symbol/audit.py::redact_identifier",
+      "call_id": "beccda4bff6c4bbe",
+      "level": 1,
+      "prompt_sha256": "116fdcfa054d2aada663443108452dfbf8ae279c2ca90acc7b69ae61e1038f56",
+      "answer_sha256": "e7c44bd52c918491dbfbbc9ea029e788642854e6296928afb27270e19bf8903c",
+      "word_count": 55,
+      "output_tokens": 82,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:leaf:memory://symbol/audit.py::event_record",
+      "call_id": "7ca0e7d01f290946",
+      "level": 1,
+      "prompt_sha256": "de36e7e8c9c8a1d293b29fc96d37c72db8cfeca6774bbb9285ba78d4853470ea",
+      "answer_sha256": "bfc8dc03ea4adb59c33e5daf7998572752684e193d2d550abb0b63578fcb98bd",
+      "word_count": 65,
+      "output_tokens": 107,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:leaf:memory://symbol/presentation.py::normalize_label",
+      "call_id": "2a1e5bac46187897",
+      "level": 1,
+      "prompt_sha256": "890c84bd1a5d153979c6a65d5d8a21e401c60db7f01cfd43ad04668c36badeea",
+      "answer_sha256": "148af62175bba5e7c9a3ff98899fade198b8a56ed5a64b9b3fb166fa09ea34c3",
+      "word_count": 33,
+      "output_tokens": 49,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:leaf:memory://symbol/presentation.py::display_reference",
+      "call_id": "ea517894ec047012",
+      "level": 1,
+      "prompt_sha256": "7a4b399fc1b8338c865bf8c7bd185254399aaeedfb22d12937ae3fe11a6a8918",
+      "answer_sha256": "f129d7e89c45485a360b4afefc26cc3080dd2f0bad34243b5072afd1783aa7c2",
+      "word_count": 35,
+      "output_tokens": 53,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:leaf:memory://symbol/presentation.py::status_label",
+      "call_id": "2ca375487b3491ed",
+      "level": 1,
+      "prompt_sha256": "1856960d8e1cda3d573ae63c858c6b27bf723070da572ad3ca4a41a18add657e",
+      "answer_sha256": "9456e5d6789321b9ac215a74badce500dda9a5bd8b5f9d17ea2829b3fcfa3293",
+      "word_count": 41,
+      "output_tokens": 56,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+      "call_id": "f755173f2da10954",
+      "level": 1,
+      "prompt_sha256": "5affbed9e9de1bc87bd501631d691a99b619e670bb55a3b893534d587b7b9b62",
+      "answer_sha256": "e38d4ee06c82dfeb4d6521ca74e2b4cf75cf979120f3f85e8a39a192962d52ec",
+      "word_count": 38,
+      "output_tokens": 55,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:leaf:memory://symbol/rules.py::normalize_path",
+      "call_id": "1720f31e330cd39d",
+      "level": 1,
+      "prompt_sha256": "f494384af8ee86e25163571a250e30895e4e791d0693d6f6889dfec4d7f72012",
+      "answer_sha256": "e43ae4924cd26f5cf15d1ec5c54fc1642037b806ce19725d7f8e6e8f5db996e2",
+      "word_count": 37,
+      "output_tokens": 58,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:leaf:memory://symbol/rules.py::bucket",
+      "call_id": "85cf61a977ad2945",
+      "level": 1,
+      "prompt_sha256": "a3813335b51ef654dc5a5235e6212706c325178e3afe33fbf281568d304742a6",
+      "answer_sha256": "562c9b6ca86156fdf9f75b0b3a1edddd717698af8c208f824149c29fb9ea6d13",
+      "word_count": 63,
+      "output_tokens": 78,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:leaf:memory://symbol/rules.py::use_canary",
+      "call_id": "8838f99f1896e4e6",
+      "level": 1,
+      "prompt_sha256": "eb14c0671604b5416ebbfdd9bbde639947127e4819856bd61b0b8ef21ce6d61d",
+      "answer_sha256": "4ae252e58c79976e2408fbdc2b8746b60ba4c520b90b20b8542f8a615dbb7acd",
+      "word_count": 65,
+      "output_tokens": 91,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:leaf:memory://symbol/rules.py::healthy",
+      "call_id": "44eaed01bb3085d3",
+      "level": 1,
+      "prompt_sha256": "db93fe7016cfe6b8fae818f5453119d571d0177c7b98307376edb73ca16bc2a1",
+      "answer_sha256": "dcd0b739702f7b07f696c7eb9ba46bc34b37741670deac00fbe69ef40154bdcc",
+      "word_count": 43,
+      "output_tokens": 64,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:leaf:memory://symbol/service.py::route_request",
+      "call_id": "cfcac114541572b2",
+      "level": 1,
+      "prompt_sha256": "06bef3db78cee1f0978d5a3904a4b178666f1de0b3f0313ff2fff33540e4615e",
+      "answer_sha256": "01aab13280810590d26c2f9f26405b5f094cae962efa9debb63b210498d7bf4c",
+      "word_count": 65,
+      "output_tokens": 88,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:leaf:memory://symbol/service.py::retry_destination",
+      "call_id": "068577d5f01229f8",
+      "level": 1,
+      "prompt_sha256": "bb635bab78178fdd7075bb00c29adee0693ca9bb7889973eaf5baec4d83ee705",
+      "answer_sha256": "b64210d70a2e42adc6e6f0e88146b356b78c9b6b7500ce16cfb34182bb61b7fc",
+      "word_count": 66,
+      "output_tokens": 90,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:leaf:memory://symbol/service.py::route_tag",
+      "call_id": "7504e8c2df363b8a",
+      "level": 1,
+      "prompt_sha256": "c0ceef50b7d2256422e1ff7124c2730d48b056e137cc7202aafdd1fa010b8a3b",
+      "answer_sha256": "c9bc9bfa1ad720b49aa037e08d3874c27c33eec49cdeaa074c58199917c69b52",
+      "word_count": 45,
+      "output_tokens": 62,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:level2:audit.py",
+      "call_id": "467b2ad6eb00ee3f",
+      "level": 2,
+      "prompt_sha256": "0ef9fdf97b58b4dc8ddb40b141c8b75bf48d3ae5233f83197715f77491215b0b",
+      "answer_sha256": "c301ecab6589f74850632b9ed425b483aeb1ea2a36c2259e3f6b99bda1d3ebb8",
+      "word_count": 80,
+      "output_tokens": 123,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:level2:presentation.py",
+      "call_id": "4bd778eebaa0453d",
+      "level": 2,
+      "prompt_sha256": "3fe7562183dce6165a2629ed9b245aefdd397e152f456403320d92cea69b4a2d",
+      "answer_sha256": "1c2d7312c5a10e7a9a1462e00380add0f57de577ed168e115747522cf455fa58",
+      "word_count": 45,
+      "output_tokens": 74,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:level2:rules.py",
+      "call_id": "87aab54a852dd2f0",
+      "level": 2,
+      "prompt_sha256": "7deba8f0499e54d2b710accba9eccc58f0e2532a7b2902dcc335dbafdfc8e4b1",
+      "answer_sha256": "92a94995e3b755080774c57fb18ad54eb8c28dec9d71c0f38b44112c3c1043ca",
+      "word_count": 78,
+      "output_tokens": 114,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:level2:service.py",
+      "call_id": "674beebda26a018b",
+      "level": 2,
+      "prompt_sha256": "d615609dc1e11439585186de102aaa00230187266bdfdbd853786395efebf144",
+      "answer_sha256": "87bade0307ddd3c65747a19ae95d075ea49ab5a56d213a0b6bdfd7b9e056f777",
+      "word_count": 75,
+      "output_tokens": 111,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_routing",
+      "id": "summary:level3:project",
+      "call_id": "68ea81ea76cab36f",
+      "level": 3,
+      "prompt_sha256": "594ab514fa5467afc6f5cbe918a74175f35e16949e87c67f1967c4d2f57d4055",
+      "answer_sha256": "8d5bd8525ef83a95564c5f1171c89681e4c3ac8d3ceba5c9e3a14d60b0866521",
+      "word_count": 90,
+      "output_tokens": 128,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:leaf:memory://symbol/audit.py::audit_key",
+      "call_id": "fc9d77207c51932a",
+      "level": 1,
+      "prompt_sha256": "b2be149f739d760029a89322d5b23599ed856b912e7583414e7fbc4d2cf15dcd",
+      "answer_sha256": "0cb47561ebe9149043f7eb48697abea1db281e2de908638d67c82d97070ee209",
+      "word_count": 45,
+      "output_tokens": 72,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:leaf:memory://symbol/audit.py::recent_events",
+      "call_id": "e7d6d3ae7333b33b",
+      "level": 1,
+      "prompt_sha256": "30a481249f7a5fb667924f42bf4b41bd3e98e7e3c7523a8789d21bcb63695300",
+      "answer_sha256": "25005d737a688cd5ccecbaf1de200d65fb163b713eaf9c10a78c5d41b15a4cec",
+      "word_count": 36,
+      "output_tokens": 55,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:leaf:memory://symbol/audit.py::redact_identifier",
+      "call_id": "9e227f8514f79287",
+      "level": 1,
+      "prompt_sha256": "116fdcfa054d2aada663443108452dfbf8ae279c2ca90acc7b69ae61e1038f56",
+      "answer_sha256": "e7c44bd52c918491dbfbbc9ea029e788642854e6296928afb27270e19bf8903c",
+      "word_count": 55,
+      "output_tokens": 82,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:leaf:memory://symbol/audit.py::event_record",
+      "call_id": "5aa12258dec4d0e3",
+      "level": 1,
+      "prompt_sha256": "de36e7e8c9c8a1d293b29fc96d37c72db8cfeca6774bbb9285ba78d4853470ea",
+      "answer_sha256": "bfc8dc03ea4adb59c33e5daf7998572752684e193d2d550abb0b63578fcb98bd",
+      "word_count": 65,
+      "output_tokens": 107,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:leaf:memory://symbol/presentation.py::normalize_label",
+      "call_id": "50461c9229c3a495",
+      "level": 1,
+      "prompt_sha256": "890c84bd1a5d153979c6a65d5d8a21e401c60db7f01cfd43ad04668c36badeea",
+      "answer_sha256": "148af62175bba5e7c9a3ff98899fade198b8a56ed5a64b9b3fb166fa09ea34c3",
+      "word_count": 33,
+      "output_tokens": 49,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:leaf:memory://symbol/presentation.py::display_reference",
+      "call_id": "d7f2fd67e52969e8",
+      "level": 1,
+      "prompt_sha256": "81c698f98a7a097ee8b4672e5291ef7bc87c107ab479e93bbeedce03dad97ce5",
+      "answer_sha256": "ce62e5036b08f9e8ec519391c104bad4f3516838666d9bd6cd8d0a91d6292033",
+      "word_count": 35,
+      "output_tokens": 53,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:leaf:memory://symbol/presentation.py::status_label",
+      "call_id": "c4457d1f91c6483a",
+      "level": 1,
+      "prompt_sha256": "1856960d8e1cda3d573ae63c858c6b27bf723070da572ad3ca4a41a18add657e",
+      "answer_sha256": "9456e5d6789321b9ac215a74badce500dda9a5bd8b5f9d17ea2829b3fcfa3293",
+      "word_count": 41,
+      "output_tokens": 56,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+      "call_id": "7d006639ba91d41a",
+      "level": 1,
+      "prompt_sha256": "5b2ae81ac7ee91222daa6231f2c477e3cf97b8519fc5616474e0fc32e70e238a",
+      "answer_sha256": "23d683a43fedfdbd72420833a320973243c4d65d53919eb1f16753799817f6a8",
+      "word_count": 38,
+      "output_tokens": 55,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:leaf:memory://symbol/rules.py::round_slot",
+      "call_id": "f0c16d9d0f3d6e44",
+      "level": 1,
+      "prompt_sha256": "8d16caef80a5ebfc87b9837e18aaf948816eb59b2e5afeb72d8598362d88f560",
+      "answer_sha256": "58451b65b15043a59a6845b7ab57282c0eea74237c15de8b13cc35c09e560874",
+      "word_count": 77,
+      "output_tokens": 120,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:leaf:memory://symbol/rules.py::working_day",
+      "call_id": "997d118c4e243eb7",
+      "level": 1,
+      "prompt_sha256": "dacbbd67b97f95233bee9a5eb44bfddb8eadbd9c5914625e9a98752d7dddd9c8",
+      "answer_sha256": "89e9e0bc2c2228431e5260d030341a8904a2fd321af0897b16337492c5d09b44",
+      "word_count": 43,
+      "output_tokens": 71,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:leaf:memory://symbol/rules.py::valid_duration",
+      "call_id": "f070d0421521374f",
+      "level": 1,
+      "prompt_sha256": "14d0df8e32adecc706b4c30137d4fd4651d7b50a00dc464b14c545b47cbd0dc4",
+      "answer_sha256": "bbcad70ad4f39e3a87b81619e6d79148a0d0b83e80d11b2d832dd1fa95cad64b",
+      "word_count": 44,
+      "output_tokens": 76,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:leaf:memory://symbol/rules.py::overlaps",
+      "call_id": "24867141e713f8ac",
+      "level": 1,
+      "prompt_sha256": "2034339c42e934ea309efa7da3e6dc9d17bcb90731220799d7bc848df1d03bf2",
+      "answer_sha256": "add6286fe2993325e41ad181c989d099a01486e773a5d1058f46e42030ed95b2",
+      "word_count": 63,
+      "output_tokens": 85,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:leaf:memory://symbol/service.py::first_available",
+      "call_id": "0362b444769f31a1",
+      "level": 1,
+      "prompt_sha256": "9b281e45620ad6ab2a159ba99d8b795056cf5d2ee4048b1cdeefb1930e198fab",
+      "answer_sha256": "b18532041cca9ec9f2155fea5e3e3a27b412036f317ff4fc0b1b5637f95ba720",
+      "word_count": 93,
+      "output_tokens": 130,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:leaf:memory://symbol/service.py::appointment",
+      "call_id": "9418dfa732bb4c59",
+      "level": 1,
+      "prompt_sha256": "352293bddf9593f416760dffd25ab3ecc9ab73464e97ea407ae40b9797ff49cd",
+      "answer_sha256": "02be66f41f758de3c0db0e313e090fae93584687f66fe3f3c72e5cd5b826a1d0",
+      "word_count": 129,
+      "output_tokens": 168,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:leaf:memory://symbol/service.py::weekday_label",
+      "call_id": "c12cb6b27587d458",
+      "level": 1,
+      "prompt_sha256": "457b6a7bb3abf5aa0b1195474ae1f100c613331457ac44e2444cc5cbc2d571f9",
+      "answer_sha256": "0bdd14acf025f24605c04cea53c8d2de077310a36ec7f6aba94af37ad4a112dc",
+      "word_count": 43,
+      "output_tokens": 59,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:level2:audit.py",
+      "call_id": "d292ae47a441e73f",
+      "level": 2,
+      "prompt_sha256": "0ef9fdf97b58b4dc8ddb40b141c8b75bf48d3ae5233f83197715f77491215b0b",
+      "answer_sha256": "c301ecab6589f74850632b9ed425b483aeb1ea2a36c2259e3f6b99bda1d3ebb8",
+      "word_count": 80,
+      "output_tokens": 123,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:level2:presentation.py",
+      "call_id": "9f7f986e5242968b",
+      "level": 2,
+      "prompt_sha256": "a48d821c24159eaf224599b907f1e5ae884eaf9250c9b1b9936bc1a461b19dd2",
+      "answer_sha256": "65bfd0385a53c759738854f83afb5a4034f3831e85c73bba7492a0781db45115",
+      "word_count": 82,
+      "output_tokens": 126,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:level2:rules.py",
+      "call_id": "6601b016e33d66af",
+      "level": 2,
+      "prompt_sha256": "06e0ff70218d4770ef1f3c6daa05b4cd6e60272b08307a3fae291fb5691c2cfc",
+      "answer_sha256": "039240138b7ca98f5ead021779976b59b21bf2bb38ba2caec0110a763ac5c674",
+      "word_count": 80,
+      "output_tokens": 128,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:level2:service.py",
+      "call_id": "cbbdb4ce2992f002",
+      "level": 2,
+      "prompt_sha256": "58aeb5829666966177079ce1cd650dbcf086091ba4163e67f48835bc1ed3d449",
+      "answer_sha256": "1b4ac75b4a7b2592a21ce08e1be0ed73fafc5302ae09e7506a5aa761149087bd",
+      "word_count": 100,
+      "output_tokens": 129,
+      "source_and_children_reconstructed": true
+    },
+    {
+      "project": "eval_schedules",
+      "id": "summary:level3:project",
+      "call_id": "c9f410a034b01d33",
+      "level": 3,
+      "prompt_sha256": "6f07ef2ec0e0ab4cf086d6a346918b4561f10bacae1e95b2c6d5d224d095295d",
+      "answer_sha256": "a08d447c21a641c1152da9d997225d38ce5cbce149bf6c5f483b4bb61a7f1e8e",
+      "word_count": 90,
+      "output_tokens": 136,
+      "source_and_children_reconstructed": true
+    }
+  ],
+  "original_hashes_before_and_after": {
+    "analysis.json": "a0cd9de2634e33e2c582d90e04f25c0da74486b79ae7ed965a8f021447a48f64",
+    "assets/dev_shipping.json": "fca07d41c3098d1acbcf8b47469a042635bd5b234f15a6287417360204015614",
+    "assets/eval_authorization.json": "c0be4504632825f57a906749ef275544e73bcc94c916a464b3f97e24aa265d37",
+    "assets/eval_cache.json": "89974521ee89b4c1c94aebbcfec2c246b4bab84c47b8c4359f3c0e2924d206d3",
+    "assets/eval_inventory.json": "3d0c0771dc09926916d0c3d2fbd91dfa1bfce1cb9df3c440ef38802b5a1dbcdb",
+    "assets/eval_pricing.json": "3c587dc77dce8ad63974f24863e554d720bf8cb43a617ef6be2e5265607c75e7",
+    "assets/eval_routing.json": "24e3f453825d2e01d29039ed1e051ff97791056c69d9f4c4b69ab99b304468c5",
+    "assets/eval_schedules.json": "c17b6d3841841b4c6736694e1385ce7b2ecadcf2ce7bd3d88b5c8e5f6ea6703a",
+    "contrastive_cases.json": "b5dd5fbfeeccf9eac58a6e71810b3138a2ee6f1ecf386cf019f94b00e09524b4",
+    "dataset/dev_tasks.json": "5cc7aa7fb5025c97184dbe2933141d3c7cc2351a9d594ca217976aedb99078f4",
+    "dataset/eval_tasks.json": "857883a571e5a781d237609578dbd909953efb16da837dea58030aa5339b072b",
+    "dataset/gold_validation.json": "b439763a361b95aca0bcc0c9747a25188fd3021d84d0cbed6c0bc1a2a2e7b963",
+    "dataset/manifest.json": "d6dca65c8693976968e1cd2fd98ad17feae8e505b61bda1fdec9141fbc458ccc",
+    "dataset/projects/dev_shipping/audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+    "dataset/projects/dev_shipping/policy.py": "71ac84828c4f56c3f9b5bff94f52d999ef1cbd1dc8d20be476a6993f419944b5",
+    "dataset/projects/dev_shipping/presentation.py": "a95030d22e457af79af69da7d75b9557324cd10cdcc1a05110867730c345646c",
+    "dataset/projects/dev_shipping/rules.py": "4d5ebada390fa485330be8e472dcbc3bd060dcee1dbfe1a36521c36e2f5b9faf",
+    "dataset/projects/dev_shipping/service.py": "161b98628297bae8a7405f17ecb6f5cb976ff7f818ddf2c31fb926d45db1b570",
+    "dataset/projects/eval_authorization/audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+    "dataset/projects/eval_authorization/policy.py": "d79ab9ec78b1a6cd03d384b32a5b79b3f8eb5b5b95815d44d0d2a6064d9c295f",
+    "dataset/projects/eval_authorization/presentation.py": "8414911630f3200a92919ffae9bab8ba6e703e82396ddf83c5e608793d7d81e2",
+    "dataset/projects/eval_authorization/rules.py": "46240886758ebd522e5976fc2f5a1c102ee4a909fc3d02b51cee4a3d67c78404",
+    "dataset/projects/eval_authorization/service.py": "4c416c5a9bf93a2b0e91155f19d15c745626835000ab65cbf458f95c1fb09ede",
+    "dataset/projects/eval_cache/audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+    "dataset/projects/eval_cache/policy.py": "b903d3fb3e1a8699df42d6d942815d95d924ff0cfc9004137c7a5aba42107b35",
+    "dataset/projects/eval_cache/presentation.py": "1b9eed863be9040cd83248fcce7f59e972da731f11d92a2c19bd3ddd93d3e164",
+    "dataset/projects/eval_cache/rules.py": "7b5f69f2f74095a686701927647af1e18e89bdf38de28a42c70b9c751cc1d3c2",
+    "dataset/projects/eval_cache/service.py": "e104b71da7f0bfd25b45cc4aea4548660aaa5d61b588d279a98feb931355baeb",
+    "dataset/projects/eval_inventory/audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+    "dataset/projects/eval_inventory/policy.py": "a90fcdae9e90cff3ac6f197c750c565f3997aac8244226da3ddac89efd860aea",
+    "dataset/projects/eval_inventory/presentation.py": "42b00ba82a833855929a5e2bfa194f7dc916ee72d4c52cc12eaaea2fdeaa6c29",
+    "dataset/projects/eval_inventory/rules.py": "713c73e112288e6e08b74cb77cb1bf76f662d33b93b50160bbe7592fd1e82342",
+    "dataset/projects/eval_inventory/service.py": "7b573a3b41a132b4258b9b68bdacb66320b3b3e86332c23e225e1d616b01aa8b",
+    "dataset/projects/eval_pricing/audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+    "dataset/projects/eval_pricing/policy.py": "21b1323726325adf5a7b82cb91f58e7abdc26d77480dc7b607502a705addb312",
+    "dataset/projects/eval_pricing/presentation.py": "c2698e79e084b757546adce76f45a3ad559bc8ead5616162a7aa155e2953fb38",
+    "dataset/projects/eval_pricing/rules.py": "74c3d4f20e54e46962b0c97acf1b12309ad4ab82a78207eebafe5d5889e9b44b",
+    "dataset/projects/eval_pricing/service.py": "c7c90407e85b3a976009a0baf8ffcc19002247c3728b684d4b3f4dd25fd91a2c",
+    "dataset/projects/eval_routing/audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+    "dataset/projects/eval_routing/policy.py": "731ee0887392944eebfcc51e11d8ce719e9c0b069557ab50fa062e035f31d330",
+    "dataset/projects/eval_routing/presentation.py": "32334ba69d17cbe8b65d4c54ec9cff261e925e93e0eaa35a60ed2c71e22bea9d",
+    "dataset/projects/eval_routing/rules.py": "74affeb72b5ed642da170c93ba0c918ad6e3944643fa9bbdd88ff4215c885683",
+    "dataset/projects/eval_routing/service.py": "042cf30fe6e63431c047e6e5e7051bb3e7f1452891bb15da5d203d07b1013c29",
+    "dataset/projects/eval_schedules/audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+    "dataset/projects/eval_schedules/policy.py": "62915bdaa654f4a5f66c091437a0d417ca5c8b5bfa2e05eae30830cdc6ce1150",
+    "dataset/projects/eval_schedules/presentation.py": "fac5c58d65a71251b19480a86fdb1a03fd8e9e1785cc937fe855706f277350ed",
+    "dataset/projects/eval_schedules/rules.py": "d7da8cb453232890a42b0013ddc107cde2448b137d0a93e2965abefc8692593c",
+    "dataset/projects/eval_schedules/service.py": "0f8be208721bb92bb38e341a60f6c613d2b00dd91b8260de237739f677f2c014",
+    "development_calibration/initial_results_dev_main.jsonl": "cb1392955fce7f4cbc243b11d25ed4cac86c7700d70fea2fd5580f057ddb8f96",
+    "development_calibration/initial_run_identity_dev_main.json": "96521a979ccd3058ce00458134d118c63b3429e51466fcabbd193c8c15259bd3",
+    "environment.json": "976b74ca3bc04f43c1cf48e43e99502126640f40fca3645fa3e2450bf01df768",
+    "integrity_checks.json": "f8366a1c7c15f7065bc4b75e0c32608b36a4bcf0f8a18ef573712a9e11107fb5",
+    "model_calls.jsonl": "efd7969d2219e3cc4ad888cf2211d7e08b5ec6d322b21cfee02cfcc7c6441109",
+    "output_diagnostics.json": "4d8d6097abdd21439a15637836d98def97a4323eefd4436b2738b6cbc9c688d8",
+    "per_question_results.csv": "2b1cfcbd454d2eced8590237e2082ab10224720ee08fc4083fa327c1d0427854",
+    "preprocessing_costs.json": "73697a44c324b2b860ffedf5cfa91a36a8ddaaf17a4f37e510a8cf4c0db40116",
+    "protocol.json": "ddc46132dd5501fae8d11a4e87a607d339b7ca4bb9099e72e553d877de6fc53c",
+    "qualitative_audit.json": "73f2c4e3300ba7885e935608729c4767a863777b20cbd3d093c5d19e38f7272f",
+    "reproduce.txt": "1f93a453c891cd84d01b2c78c23fa8072e4573e0b6d141d699c2ac55ba6f428c",
+    "results_dev_main.jsonl": "fd7a7e0a23640a60fb4e75fa19d90c1fc03df0b446271ca2c0d9cbaac631b1b1",
+    "results_eval_budget512.jsonl": "f2feddeecac78071c01c68118b3ecefd19c1187f567058288d8ab756f7e94ca3",
+    "results_eval_main.jsonl": "2c619e280d34a8c04f5865fc35caf4902e93cb4710a59ae6cc5cdcca9f6497d9",
+    "run_identity_dev_main.json": "948d5c43af263db8a6b3aa8a41315c1f1b36ead426ad37323d61bbc450c5726f",
+    "run_identity_eval_budget512.json": "f4aaab8f5572124b2d9d778d5155f377f0d0fe6da20e2c823aa91b14462275b4",
+    "run_identity_eval_main.json": "a5616dce804b8cda49ac06919ac61a344d8aa3425779f5f24f75e7b7fdfbedba",
+    "source_snapshot/analyze.py": "ae04b2ce78b4634e4fca493bd69e325cfed02fdb23b2e8cc9a17959b7d5e3c60",
+    "source_snapshot/baseline_indexer.py": "cbd1334a7c9e040ad30081bf1e29c355d0cdc6247366417918549b9b4a4c909a",
+    "source_snapshot/baseline_run_benchmark.py": "b5eff2970604e89ac3680a02029eed4e98b04e8d8b953f183cf7793a3f452248",
+    "source_snapshot/corpus_builder.py": "719f9d68b892a95c2b7c0d506868dc42e7cdadf11c732e7f8660f09f99112e4e",
+    "source_snapshot/experiment.py": "b8f664facdff58c7b410f704216611e5a4e5bbd239ac394a9bb4e5f29f9234cb",
+    "source_snapshot/integrity_checks.py": "2f23d6d76389f883e3016b42a89ece61f49daa3d5359409c3a854d36664b3012",
+    "source_snapshot/output_diagnostics.py": "61dc56a7f165527ed08b107552b7872884f0a4c58c8898b3dc139371808514e7",
+    "source_snapshot/report_builder.py": "4a1288fc608397b0a843e1b30ca9e66c16d6bf4625c7aaf049555f0ab59ef012",
+    "task_semantics_audit.json": "52519e6ee2802180ea21b9233fe466f65ee924a21dffdf6883c40dd35a92822b",
+    "deliverable_manifest.json": "edf7eb0f5dc3afcf8cb850a2924e8a9bf491d8e3acb1e5cdb474deb67340132c"
+  },
+  "recommendation": "Retain original accuracy as internally reproducible pilot evidence with explicit limitations. Re-measure latency with exact requests/runtime identity, UTC timestamps, observed phase durations, explicit tokenizer cache policy, isolated selector accounting, frozen summary hashes, and a pre-result protocol hash. Do not claim original RAPTOR superiority."
+}

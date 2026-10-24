@@ -1,0 +1,1700 @@
+{
+  "project": "eval_schedules",
+  "nodes": {
+    "memory://symbol/audit.py::AUDIT_VERSION": {
+      "id": "memory://symbol/audit.py::AUDIT_VERSION",
+      "path": "audit.py",
+      "name": "AUDIT_VERSION",
+      "source": "AUDIT_VERSION = 2",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::MAX_RECENT_EVENTS": {
+      "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+      "path": "audit.py",
+      "name": "MAX_RECENT_EVENTS",
+      "source": "MAX_RECENT_EVENTS = 20",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::REDACTION_MARKER": {
+      "id": "memory://symbol/audit.py::REDACTION_MARKER",
+      "path": "audit.py",
+      "name": "REDACTION_MARKER",
+      "source": "REDACTION_MARKER = \"***\"",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::DEFAULT_ACTOR": {
+      "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+      "path": "audit.py",
+      "name": "DEFAULT_ACTOR",
+      "source": "DEFAULT_ACTOR = \"system\"",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::audit_key": {
+      "id": "memory://symbol/audit.py::audit_key",
+      "path": "audit.py",
+      "name": "audit_key",
+      "source": "def audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+      "imports": "",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "AUDIT_VERSION",
+        "action",
+        "actor",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::recent_events": {
+      "id": "memory://symbol/audit.py::recent_events",
+      "path": "audit.py",
+      "name": "recent_events",
+      "source": "def recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+      "imports": "",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "MAX_RECENT_EVENTS",
+        "events"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::redact_identifier": {
+      "id": "memory://symbol/audit.py::redact_identifier",
+      "path": "audit.py",
+      "name": "redact_identifier",
+      "source": "def redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+      "imports": "",
+      "start": 12,
+      "end": 13,
+      "refs": [
+        "REDACTION_MARKER",
+        "identifier",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::event_record": {
+      "id": "memory://symbol/audit.py::event_record",
+      "path": "audit.py",
+      "name": "event_record",
+      "source": "def event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+      "imports": "",
+      "start": 15,
+      "end": 16,
+      "refs": [
+        "AUDIT_VERSION",
+        "DEFAULT_ACTOR",
+        "action",
+        "actor"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/policy.py::OPEN_MINUTE": {
+      "id": "memory://symbol/policy.py::OPEN_MINUTE",
+      "path": "policy.py",
+      "name": "OPEN_MINUTE",
+      "source": "OPEN_MINUTE = 540",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::CLOSE_MINUTE": {
+      "id": "memory://symbol/policy.py::CLOSE_MINUTE",
+      "path": "policy.py",
+      "name": "CLOSE_MINUTE",
+      "source": "CLOSE_MINUTE = 1020",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::SLOT_MINUTES": {
+      "id": "memory://symbol/policy.py::SLOT_MINUTES",
+      "path": "policy.py",
+      "name": "SLOT_MINUTES",
+      "source": "SLOT_MINUTES = 30",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::BUFFER_MINUTES": {
+      "id": "memory://symbol/policy.py::BUFFER_MINUTES",
+      "path": "policy.py",
+      "name": "BUFFER_MINUTES",
+      "source": "BUFFER_MINUTES = 10",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::WORK_DAYS": {
+      "id": "memory://symbol/policy.py::WORK_DAYS",
+      "path": "policy.py",
+      "name": "WORK_DAYS",
+      "source": "WORK_DAYS = (0, 1, 2, 3, 4)",
+      "imports": "",
+      "start": 5,
+      "end": 5,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::MAX_DURATION": {
+      "id": "memory://symbol/policy.py::MAX_DURATION",
+      "path": "policy.py",
+      "name": "MAX_DURATION",
+      "source": "MAX_DURATION = 180",
+      "imports": "",
+      "start": 6,
+      "end": 6,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::MIN_DURATION": {
+      "id": "memory://symbol/policy.py::MIN_DURATION",
+      "path": "policy.py",
+      "name": "MIN_DURATION",
+      "source": "MIN_DURATION = 1",
+      "imports": "",
+      "start": 7,
+      "end": 7,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::UNAVAILABLE": {
+      "id": "memory://symbol/policy.py::UNAVAILABLE",
+      "path": "policy.py",
+      "name": "UNAVAILABLE",
+      "source": "UNAVAILABLE = -1",
+      "imports": "",
+      "start": 8,
+      "end": 8,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::DISPLAY_PREFIX": {
+      "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+      "path": "presentation.py",
+      "name": "DISPLAY_PREFIX",
+      "source": "DISPLAY_PREFIX = \"appointment\"",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::DISPLAY_WIDTH": {
+      "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+      "path": "presentation.py",
+      "name": "DISPLAY_WIDTH",
+      "source": "DISPLAY_WIDTH = 12",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::UNKNOWN_LABEL": {
+      "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+      "path": "presentation.py",
+      "name": "UNKNOWN_LABEL",
+      "source": "UNKNOWN_LABEL = \"unknown\"",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::MAX_LABEL_LENGTH": {
+      "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+      "path": "presentation.py",
+      "name": "MAX_LABEL_LENGTH",
+      "source": "MAX_LABEL_LENGTH = 48",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::normalize_label": {
+      "id": "memory://symbol/presentation.py::normalize_label",
+      "path": "presentation.py",
+      "name": "normalize_label",
+      "source": "def normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+      "imports": "",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "MAX_LABEL_LENGTH",
+        "label"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::display_reference": {
+      "id": "memory://symbol/presentation.py::display_reference",
+      "path": "presentation.py",
+      "name": "display_reference",
+      "source": "def display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+      "imports": "",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "DISPLAY_PREFIX",
+        "DISPLAY_WIDTH",
+        "reference",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::status_label": {
+      "id": "memory://symbol/presentation.py::status_label",
+      "path": "presentation.py",
+      "name": "status_label",
+      "source": "def status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+      "imports": "",
+      "start": 12,
+      "end": 13,
+      "refs": [
+        "UNKNOWN_LABEL",
+        "code"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::summarize_count": {
+      "id": "memory://symbol/presentation.py::summarize_count",
+      "path": "presentation.py",
+      "name": "summarize_count",
+      "source": "def summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+      "imports": "",
+      "start": 15,
+      "end": 16,
+      "refs": [
+        "DISPLAY_PREFIX",
+        "len",
+        "values"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::round_slot": {
+      "id": "memory://symbol/rules.py::round_slot",
+      "path": "rules.py",
+      "name": "round_slot",
+      "source": "def round_slot(minute):\n    return ((minute + SLOT_MINUTES - 1) // SLOT_MINUTES) * SLOT_MINUTES",
+      "imports": "from policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION",
+      "start": 3,
+      "end": 4,
+      "refs": [
+        "SLOT_MINUTES",
+        "minute"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::SLOT_MINUTES"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::working_day": {
+      "id": "memory://symbol/rules.py::working_day",
+      "path": "rules.py",
+      "name": "working_day",
+      "source": "def working_day(day):\n    return day % 7 in WORK_DAYS",
+      "imports": "from policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "WORK_DAYS",
+        "day"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::WORK_DAYS"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::valid_duration": {
+      "id": "memory://symbol/rules.py::valid_duration",
+      "path": "rules.py",
+      "name": "valid_duration",
+      "source": "def valid_duration(duration):\n    return MIN_DURATION <= duration <= MAX_DURATION",
+      "imports": "from policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "MAX_DURATION",
+        "MIN_DURATION",
+        "duration"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::MAX_DURATION",
+        "memory://symbol/policy.py::MIN_DURATION"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::overlaps": {
+      "id": "memory://symbol/rules.py::overlaps",
+      "path": "rules.py",
+      "name": "overlaps",
+      "source": "def overlaps(start, end, busy):\n    return any(start < busy_end + BUFFER_MINUTES and end > busy_start - BUFFER_MINUTES for busy_start, busy_end in busy)",
+      "imports": "from policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION",
+      "start": 12,
+      "end": 13,
+      "refs": [
+        "BUFFER_MINUTES",
+        "any",
+        "busy",
+        "busy_end",
+        "busy_start",
+        "end",
+        "start"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::BUFFER_MINUTES"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::first_available": {
+      "id": "memory://symbol/service.py::first_available",
+      "path": "service.py",
+      "name": "first_available",
+      "source": "def first_available(day, earliest, duration, busy):\n    if not working_day(day) or not valid_duration(duration):\n        return UNAVAILABLE\n    start = round_slot(max(earliest, OPEN_MINUTE))\n    while start + duration <= CLOSE_MINUTE:\n        if not overlaps(start, start + duration, busy):\n            return start\n        start += SLOT_MINUTES\n    return UNAVAILABLE",
+      "imports": "from policy import OPEN_MINUTE, CLOSE_MINUTE, SLOT_MINUTES, UNAVAILABLE\nfrom rules import round_slot, working_day, valid_duration, overlaps",
+      "start": 4,
+      "end": 12,
+      "refs": [
+        "CLOSE_MINUTE",
+        "OPEN_MINUTE",
+        "SLOT_MINUTES",
+        "UNAVAILABLE",
+        "busy",
+        "day",
+        "duration",
+        "earliest",
+        "max",
+        "overlaps",
+        "round_slot",
+        "start",
+        "valid_duration",
+        "working_day"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::CLOSE_MINUTE",
+        "memory://symbol/policy.py::OPEN_MINUTE",
+        "memory://symbol/policy.py::SLOT_MINUTES",
+        "memory://symbol/policy.py::UNAVAILABLE",
+        "memory://symbol/rules.py::overlaps",
+        "memory://symbol/rules.py::round_slot",
+        "memory://symbol/rules.py::valid_duration",
+        "memory://symbol/rules.py::working_day"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::appointment": {
+      "id": "memory://symbol/service.py::appointment",
+      "path": "service.py",
+      "name": "appointment",
+      "source": "def appointment(day, earliest, duration, busy):\n    start = first_available(day, earliest, duration, busy)\n    return {\"day\": day, \"start\": start, \"end\": start + duration if start >= 0 else UNAVAILABLE}",
+      "imports": "from policy import OPEN_MINUTE, CLOSE_MINUTE, SLOT_MINUTES, UNAVAILABLE\nfrom rules import round_slot, working_day, valid_duration, overlaps",
+      "start": 14,
+      "end": 16,
+      "refs": [
+        "UNAVAILABLE",
+        "busy",
+        "day",
+        "duration",
+        "earliest",
+        "first_available",
+        "start"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::UNAVAILABLE",
+        "memory://symbol/service.py::first_available"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::weekday_label": {
+      "id": "memory://symbol/service.py::weekday_label",
+      "path": "service.py",
+      "name": "weekday_label",
+      "source": "def weekday_label(day):\n    return (\"mon\", \"tue\", \"wed\", \"thu\", \"fri\", \"sat\", \"sun\")[day % 7]",
+      "imports": "from policy import OPEN_MINUTE, CLOSE_MINUTE, SLOT_MINUTES, UNAVAILABLE\nfrom rules import round_slot, working_day, valid_duration, overlaps",
+      "start": 18,
+      "end": 19,
+      "refs": [
+        "day"
+      ],
+      "deps": [],
+      "kind": "function"
+    }
+  },
+  "raw": [
+    {
+      "id": "memory://symbol/audit.py::AUDIT_VERSION",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::MAX_RECENT_EVENTS lines 2-2\n\nMAX_RECENT_EVENTS = 20",
+      "source_uris": [
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::REDACTION_MARKER",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::REDACTION_MARKER lines 3-3\n\nREDACTION_MARKER = \"***\"",
+      "source_uris": [
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::DEFAULT_ACTOR lines 4-4\n\nDEFAULT_ACTOR = \"system\"",
+      "source_uris": [
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::audit_key",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::audit_key lines 6-7\n\ndef audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action\n\n### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::audit_key",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::audit_key lines 6-7\n\ndef audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::recent_events",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::recent_events lines 9-10\n\ndef recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]\n\n### memory://symbol/audit.py::MAX_RECENT_EVENTS lines 2-2\n\nMAX_RECENT_EVENTS = 20",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::recent_events",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::recent_events lines 9-10\n\ndef recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::redact_identifier",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::redact_identifier lines 12-13\n\ndef redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]\n\n### memory://symbol/audit.py::REDACTION_MARKER lines 3-3\n\nREDACTION_MARKER = \"***\"",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::redact_identifier",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::redact_identifier lines 12-13\n\ndef redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::event_record",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::event_record lines 15-16\n\ndef event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}\n\n### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2\n\n### memory://symbol/audit.py::DEFAULT_ACTOR lines 4-4\n\nDEFAULT_ACTOR = \"system\"",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::event_record",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::event_record lines 15-16\n\ndef event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/policy.py::OPEN_MINUTE",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::OPEN_MINUTE lines 1-1\n\nOPEN_MINUTE = 540",
+      "source_uris": [
+        "memory://symbol/policy.py::OPEN_MINUTE"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::CLOSE_MINUTE",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::CLOSE_MINUTE lines 2-2\n\nCLOSE_MINUTE = 1020",
+      "source_uris": [
+        "memory://symbol/policy.py::CLOSE_MINUTE"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::SLOT_MINUTES",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::SLOT_MINUTES lines 3-3\n\nSLOT_MINUTES = 30",
+      "source_uris": [
+        "memory://symbol/policy.py::SLOT_MINUTES"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::BUFFER_MINUTES",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::BUFFER_MINUTES lines 4-4\n\nBUFFER_MINUTES = 10",
+      "source_uris": [
+        "memory://symbol/policy.py::BUFFER_MINUTES"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::WORK_DAYS",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::WORK_DAYS lines 5-5\n\nWORK_DAYS = (0, 1, 2, 3, 4)",
+      "source_uris": [
+        "memory://symbol/policy.py::WORK_DAYS"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::MAX_DURATION",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::MAX_DURATION lines 6-6\n\nMAX_DURATION = 180",
+      "source_uris": [
+        "memory://symbol/policy.py::MAX_DURATION"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::MIN_DURATION",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::MIN_DURATION lines 7-7\n\nMIN_DURATION = 1",
+      "source_uris": [
+        "memory://symbol/policy.py::MIN_DURATION"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::UNAVAILABLE",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::UNAVAILABLE lines 8-8\n\nUNAVAILABLE = -1",
+      "source_uris": [
+        "memory://symbol/policy.py::UNAVAILABLE"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"appointment\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::DISPLAY_WIDTH lines 2-2\n\nDISPLAY_WIDTH = 12",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::UNKNOWN_LABEL lines 3-3\n\nUNKNOWN_LABEL = \"unknown\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::MAX_LABEL_LENGTH lines 4-4\n\nMAX_LABEL_LENGTH = 48",
+      "source_uris": [
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::normalize_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::normalize_label lines 6-7\n\ndef normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]\n\n### memory://symbol/presentation.py::MAX_LABEL_LENGTH lines 4-4\n\nMAX_LABEL_LENGTH = 48",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::normalize_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::normalize_label lines 6-7\n\ndef normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::display_reference",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::display_reference lines 9-10\n\ndef display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"appointment\"\n\n### memory://symbol/presentation.py::DISPLAY_WIDTH lines 2-2\n\nDISPLAY_WIDTH = 12",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::display_reference",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::display_reference lines 9-10\n\ndef display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::status_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::status_label lines 12-13\n\ndef status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)\n\n### memory://symbol/presentation.py::UNKNOWN_LABEL lines 3-3\n\nUNKNOWN_LABEL = \"unknown\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::status_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::status_label lines 12-13\n\ndef status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::summarize_count",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::summarize_count lines 15-16\n\ndef summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"appointment\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::summarize_count",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::summarize_count lines 15-16\n\ndef summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::round_slot",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::round_slot lines 3-4\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef round_slot(minute):\n    return ((minute + SLOT_MINUTES - 1) // SLOT_MINUTES) * SLOT_MINUTES\n\n### memory://symbol/policy.py::SLOT_MINUTES lines 3-3\n\nSLOT_MINUTES = 30",
+      "source_uris": [
+        "memory://symbol/rules.py::round_slot",
+        "memory://symbol/policy.py::SLOT_MINUTES"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::round_slot",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::round_slot lines 3-4\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef round_slot(minute):\n    return ((minute + SLOT_MINUTES - 1) // SLOT_MINUTES) * SLOT_MINUTES",
+      "source_uris": [
+        "memory://symbol/rules.py::round_slot"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::working_day",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::working_day lines 6-7\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef working_day(day):\n    return day % 7 in WORK_DAYS\n\n### memory://symbol/policy.py::WORK_DAYS lines 5-5\n\nWORK_DAYS = (0, 1, 2, 3, 4)",
+      "source_uris": [
+        "memory://symbol/rules.py::working_day",
+        "memory://symbol/policy.py::WORK_DAYS"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::working_day",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::working_day lines 6-7\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef working_day(day):\n    return day % 7 in WORK_DAYS",
+      "source_uris": [
+        "memory://symbol/rules.py::working_day"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::valid_duration",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::valid_duration lines 9-10\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef valid_duration(duration):\n    return MIN_DURATION <= duration <= MAX_DURATION\n\n### memory://symbol/policy.py::MAX_DURATION lines 6-6\n\nMAX_DURATION = 180\n\n### memory://symbol/policy.py::MIN_DURATION lines 7-7\n\nMIN_DURATION = 1",
+      "source_uris": [
+        "memory://symbol/rules.py::valid_duration",
+        "memory://symbol/policy.py::MAX_DURATION",
+        "memory://symbol/policy.py::MIN_DURATION"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::valid_duration",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::valid_duration lines 9-10\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef valid_duration(duration):\n    return MIN_DURATION <= duration <= MAX_DURATION",
+      "source_uris": [
+        "memory://symbol/rules.py::valid_duration"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::overlaps",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::overlaps lines 12-13\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef overlaps(start, end, busy):\n    return any(start < busy_end + BUFFER_MINUTES and end > busy_start - BUFFER_MINUTES for busy_start, busy_end in busy)\n\n### memory://symbol/policy.py::BUFFER_MINUTES lines 4-4\n\nBUFFER_MINUTES = 10",
+      "source_uris": [
+        "memory://symbol/rules.py::overlaps",
+        "memory://symbol/policy.py::BUFFER_MINUTES"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::overlaps",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::overlaps lines 12-13\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef overlaps(start, end, busy):\n    return any(start < busy_end + BUFFER_MINUTES and end > busy_start - BUFFER_MINUTES for busy_start, busy_end in busy)",
+      "source_uris": [
+        "memory://symbol/rules.py::overlaps"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::first_available",
+      "level": 0,
+      "text": "### memory://symbol/service.py::first_available lines 4-12\nfrom policy import OPEN_MINUTE, CLOSE_MINUTE, SLOT_MINUTES, UNAVAILABLE\nfrom rules import round_slot, working_day, valid_duration, overlaps\ndef first_available(day, earliest, duration, busy):\n    if not working_day(day) or not valid_duration(duration):\n        return UNAVAILABLE\n    start = round_slot(max(earliest, OPEN_MINUTE))\n    while start + duration <= CLOSE_MINUTE:\n        if not overlaps(start, start + duration, busy):\n            return start\n        start += SLOT_MINUTES\n    return UNAVAILABLE\n\n### memory://symbol/policy.py::CLOSE_MINUTE lines 2-2\n\nCLOSE_MINUTE = 1020\n\n### memory://symbol/policy.py::OPEN_MINUTE lines 1-1\n\nOPEN_MINUTE = 540\n\n### memory://symbol/policy.py::SLOT_MINUTES lines 3-3\n\nSLOT_MINUTES = 30\n\n### memory://symbol/policy.py::UNAVAILABLE lines 8-8\n\nUNAVAILABLE = -1\n\n### memory://symbol/rules.py::overlaps lines 12-13\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef overlaps(start, end, busy):\n    return any(start < busy_end + BUFFER_MINUTES and end > busy_start - BUFFER_MINUTES for busy_start, busy_end in busy)\n\n### memory://symbol/rules.py::round_slot lines 3-4\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef round_slot(minute):\n    return ((minute + SLOT_MINUTES - 1) // SLOT_MINUTES) * SLOT_MINUTES\n\n### memory://symbol/rules.py::valid_duration lines 9-10\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef valid_duration(duration):\n    return MIN_DURATION <= duration <= MAX_DURATION\n\n### memory://symbol/rules.py::working_day lines 6-7\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef working_day(day):\n    return day % 7 in WORK_DAYS\n\n### memory://symbol/policy.py::BUFFER_MINUTES lines 4-4\n\nBUFFER_MINUTES = 10\n\n### memory://symbol/policy.py::MAX_DURATION lines 6-6\n\nMAX_DURATION = 180\n\n### memory://symbol/policy.py::MIN_DURATION lines 7-7\n\nMIN_DURATION = 1\n\n### memory://symbol/policy.py::WORK_DAYS lines 5-5\n\nWORK_DAYS = (0, 1, 2, 3, 4)",
+      "source_uris": [
+        "memory://symbol/service.py::first_available",
+        "memory://symbol/policy.py::CLOSE_MINUTE",
+        "memory://symbol/policy.py::OPEN_MINUTE",
+        "memory://symbol/policy.py::SLOT_MINUTES",
+        "memory://symbol/policy.py::UNAVAILABLE",
+        "memory://symbol/rules.py::overlaps",
+        "memory://symbol/rules.py::round_slot",
+        "memory://symbol/rules.py::valid_duration",
+        "memory://symbol/rules.py::working_day",
+        "memory://symbol/policy.py::BUFFER_MINUTES",
+        "memory://symbol/policy.py::MAX_DURATION",
+        "memory://symbol/policy.py::MIN_DURATION",
+        "memory://symbol/policy.py::WORK_DAYS"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::first_available",
+      "level": 0,
+      "text": "### memory://symbol/service.py::first_available lines 4-12\nfrom policy import OPEN_MINUTE, CLOSE_MINUTE, SLOT_MINUTES, UNAVAILABLE\nfrom rules import round_slot, working_day, valid_duration, overlaps\ndef first_available(day, earliest, duration, busy):\n    if not working_day(day) or not valid_duration(duration):\n        return UNAVAILABLE\n    start = round_slot(max(earliest, OPEN_MINUTE))\n    while start + duration <= CLOSE_MINUTE:\n        if not overlaps(start, start + duration, busy):\n            return start\n        start += SLOT_MINUTES\n    return UNAVAILABLE",
+      "source_uris": [
+        "memory://symbol/service.py::first_available"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::appointment",
+      "level": 0,
+      "text": "### memory://symbol/service.py::appointment lines 14-16\nfrom policy import OPEN_MINUTE, CLOSE_MINUTE, SLOT_MINUTES, UNAVAILABLE\nfrom rules import round_slot, working_day, valid_duration, overlaps\ndef appointment(day, earliest, duration, busy):\n    start = first_available(day, earliest, duration, busy)\n    return {\"day\": day, \"start\": start, \"end\": start + duration if start >= 0 else UNAVAILABLE}\n\n### memory://symbol/policy.py::UNAVAILABLE lines 8-8\n\nUNAVAILABLE = -1\n\n### memory://symbol/service.py::first_available lines 4-12\nfrom policy import OPEN_MINUTE, CLOSE_MINUTE, SLOT_MINUTES, UNAVAILABLE\nfrom rules import round_slot, working_day, valid_duration, overlaps\ndef first_available(day, earliest, duration, busy):\n    if not working_day(day) or not valid_duration(duration):\n        return UNAVAILABLE\n    start = round_slot(max(earliest, OPEN_MINUTE))\n    while start + duration <= CLOSE_MINUTE:\n        if not overlaps(start, start + duration, busy):\n            return start\n        start += SLOT_MINUTES\n    return UNAVAILABLE\n\n### memory://symbol/policy.py::CLOSE_MINUTE lines 2-2\n\nCLOSE_MINUTE = 1020\n\n### memory://symbol/policy.py::OPEN_MINUTE lines 1-1\n\nOPEN_MINUTE = 540\n\n### memory://symbol/policy.py::SLOT_MINUTES lines 3-3\n\nSLOT_MINUTES = 30\n\n### memory://symbol/rules.py::overlaps lines 12-13\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef overlaps(start, end, busy):\n    return any(start < busy_end + BUFFER_MINUTES and end > busy_start - BUFFER_MINUTES for busy_start, busy_end in busy)\n\n### memory://symbol/rules.py::round_slot lines 3-4\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef round_slot(minute):\n    return ((minute + SLOT_MINUTES - 1) // SLOT_MINUTES) * SLOT_MINUTES\n\n### memory://symbol/rules.py::valid_duration lines 9-10\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef valid_duration(duration):\n    return MIN_DURATION <= duration <= MAX_DURATION\n\n### memory://symbol/rules.py::working_day lines 6-7\nfrom policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION\ndef working_day(day):\n    return day % 7 in WORK_DAYS\n\n### memory://symbol/policy.py::BUFFER_MINUTES lines 4-4\n\nBUFFER_MINUTES = 10\n\n### memory://symbol/policy.py::MAX_DURATION lines 6-6\n\nMAX_DURATION = 180\n\n### memory://symbol/policy.py::MIN_DURATION lines 7-7\n\nMIN_DURATION = 1\n\n### memory://symbol/policy.py::WORK_DAYS lines 5-5\n\nWORK_DAYS = (0, 1, 2, 3, 4)",
+      "source_uris": [
+        "memory://symbol/service.py::appointment",
+        "memory://symbol/policy.py::UNAVAILABLE",
+        "memory://symbol/service.py::first_available",
+        "memory://symbol/policy.py::CLOSE_MINUTE",
+        "memory://symbol/policy.py::OPEN_MINUTE",
+        "memory://symbol/policy.py::SLOT_MINUTES",
+        "memory://symbol/rules.py::overlaps",
+        "memory://symbol/rules.py::round_slot",
+        "memory://symbol/rules.py::valid_duration",
+        "memory://symbol/rules.py::working_day",
+        "memory://symbol/policy.py::BUFFER_MINUTES",
+        "memory://symbol/policy.py::MAX_DURATION",
+        "memory://symbol/policy.py::MIN_DURATION",
+        "memory://symbol/policy.py::WORK_DAYS"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::appointment",
+      "level": 0,
+      "text": "### memory://symbol/service.py::appointment lines 14-16\nfrom policy import OPEN_MINUTE, CLOSE_MINUTE, SLOT_MINUTES, UNAVAILABLE\nfrom rules import round_slot, working_day, valid_duration, overlaps\ndef appointment(day, earliest, duration, busy):\n    start = first_available(day, earliest, duration, busy)\n    return {\"day\": day, \"start\": start, \"end\": start + duration if start >= 0 else UNAVAILABLE}",
+      "source_uris": [
+        "memory://symbol/service.py::appointment"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::weekday_label",
+      "level": 0,
+      "text": "### memory://symbol/service.py::weekday_label lines 18-19\nfrom policy import OPEN_MINUTE, CLOSE_MINUTE, SLOT_MINUTES, UNAVAILABLE\nfrom rules import round_slot, working_day, valid_duration, overlaps\ndef weekday_label(day):\n    return (\"mon\", \"tue\", \"wed\", \"thu\", \"fri\", \"sat\", \"sun\")[day % 7]",
+      "source_uris": [
+        "memory://symbol/service.py::weekday_label"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    }
+  ],
+  "summaries": [
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::audit_key",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::audit_key\nThe `audit_key` function constructs a string key for auditing purposes. It takes two parameters: `actor` and `action`. The function returns a string formatted as `AUDIT_VERSION:actor:action`, where `actor` is stripped of leading and trailing whitespace and converted to lowercase. The constant `AUDIT_VERSION` is set to 2.",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "children": [
+        "memory://symbol/audit.py::audit_key"
+      ],
+      "call_id": "fc9d77207c51932a"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::recent_events",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::recent_events\nThe `recent_events` function takes a list of events and returns the last `MAX_RECENT_EVENTS` elements. It uses the constant `MAX_RECENT_EVENTS` which is set to 20. The function does not perform any string operations or calls other functions.",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "children": [
+        "memory://symbol/audit.py::recent_events"
+      ],
+      "call_id": "e7d6d3ae7333b33b"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::redact_identifier",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::redact_identifier\nThe `redact_identifier` function takes an `identifier` as input and returns a string where the last four characters of the `identifier` are preserved, prefixed by the `REDACTION_MARKER` \"***\". The function uses the `str` function to convert the `identifier` to a string and then slices the last four characters. The `REDACTION_MARKER` is a constant defined as \"***\".",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "children": [
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "call_id": "9e227f8514f79287"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::event_record",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::event_record\nThe `event_record` function in `audit.py` creates a dictionary representing an audit event. It takes two parameters: `action` (required) and `actor` (optional, defaults to \"system\"). The function returns a dictionary with keys \"actor\", \"action\", and \"version\". The \"actor\" key uses the provided `actor` value if it exists, otherwise it uses the constant `DEFAULT_ACTOR`. The \"version\" key always uses the constant `AUDIT_VERSION`, which is set to 2.",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "children": [
+        "memory://symbol/audit.py::event_record"
+      ],
+      "call_id": "5aa12258dec4d0e3"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::normalize_label",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::normalize_label\nThe `normalize_label` function in `presentation.py` processes a label string by stripping leading and trailing whitespace, converting it to lowercase, replacing spaces with hyphens, and truncating it to a maximum length of 48 characters.",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::normalize_label"
+      ],
+      "call_id": "50461c9229c3a495"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::display_reference",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::display_reference\nThe `display_reference` function formats a reference number by prefixing it with \"appointment:\" and padding it with zeros to a width of 12 characters. It uses constants `DISPLAY_PREFIX` and `DISPLAY_WIDTH` for the prefix and width, respectively.",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::display_reference"
+      ],
+      "call_id": "d7f2fd67e52969e8"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::status_label",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::status_label\nThe `status_label` function maps an integer code to a corresponding status label. It uses a dictionary to look up the label based on the code. If the code is not found, it returns the `UNKNOWN_LABEL`. The `UNKNOWN_LABEL` is defined as \"unknown\".",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::status_label"
+      ],
+      "call_id": "c4457d1f91c6483a"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::summarize_count\nThe `summarize_count` function takes a list of values as input and returns a dictionary with a key \"domain\" set to the constant `DISPLAY_PREFIX` (which is \"appointment\") and a key \"count\" set to the length of the input list.",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "call_id": "7d006639ba91d41a"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::round_slot",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::round_slot\nThe `round_slot` function rounds a given minute to the nearest 30-minute slot. It uses integer division to achieve this. The function takes one parameter: `minute`. The formula used is `((minute + SLOT_MINUTES - 1) // SLOT_MINUTES) * SLOT_MINUTES`. This ensures that any minute is rounded up to the next 30-minute mark. The function does not have any branches, string operations, or calls. It relies on the constant `SLOT_MINUTES` from the `policy.py` module, which is set to 30.",
+      "source_uris": [
+        "memory://symbol/rules.py::round_slot",
+        "memory://symbol/policy.py::SLOT_MINUTES"
+      ],
+      "children": [
+        "memory://symbol/rules.py::round_slot"
+      ],
+      "call_id": "f0c16d9d0f3d6e44"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::working_day",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::working_day\nThe `working_day` function checks if a given day is a weekday. It uses the `WORK_DAYS` constant from the `policy` module, which contains the days of the week (0=Monday, 1=Tuesday, ..., 4=Friday). The function returns `True` if the day is a weekday, otherwise `False`.",
+      "source_uris": [
+        "memory://symbol/rules.py::working_day",
+        "memory://symbol/policy.py::WORK_DAYS"
+      ],
+      "children": [
+        "memory://symbol/rules.py::working_day"
+      ],
+      "call_id": "997d118c4e243eb7"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::valid_duration",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::valid_duration\nThe `valid_duration` function checks if a given `duration` is within the allowed range defined by `MIN_DURATION` and `MAX_DURATION` from the `policy` module. It returns `True` if the duration is valid, otherwise `False`. The constants `MIN_DURATION` and `MAX_DURATION` are set to 1 and 180, respectively.",
+      "source_uris": [
+        "memory://symbol/rules.py::valid_duration",
+        "memory://symbol/policy.py::MAX_DURATION",
+        "memory://symbol/policy.py::MIN_DURATION"
+      ],
+      "children": [
+        "memory://symbol/rules.py::valid_duration"
+      ],
+      "call_id": "f070d0421521374f"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::overlaps",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::overlaps\nThe `overlaps` function checks if a time slot overlaps with any busy time slot in a list, considering a buffer of 10 minutes. It takes three parameters: `start` and `end` of the time slot, and a list of tuples `busy` representing busy time slots. The function returns `True` if any part of the time slot overlaps with any busy time slot, otherwise `False`.",
+      "source_uris": [
+        "memory://symbol/rules.py::overlaps",
+        "memory://symbol/policy.py::BUFFER_MINUTES"
+      ],
+      "children": [
+        "memory://symbol/rules.py::overlaps"
+      ],
+      "call_id": "24867141e713f8ac"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::first_available",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::first_available\nThe `first_available` function finds the earliest available time slot for a given duration on a specified day, considering busy times. It rounds up the earliest time to the nearest slot, checks if the duration is valid and the day is a workday, and then iterates through time slots until it finds an available one or reaches the close time. It uses helper functions from `policy` and `rules` modules to validate the day, duration, and check for overlaps with busy times. Constants like `OPEN_MINUTE`, `CLOSE_MINUTE`, `SLOT_MINUTES`, and `UNAVAILABLE` are defined in the `policy` module.",
+      "source_uris": [
+        "memory://symbol/service.py::first_available",
+        "memory://symbol/policy.py::CLOSE_MINUTE",
+        "memory://symbol/policy.py::OPEN_MINUTE",
+        "memory://symbol/policy.py::SLOT_MINUTES",
+        "memory://symbol/policy.py::UNAVAILABLE",
+        "memory://symbol/rules.py::overlaps",
+        "memory://symbol/rules.py::round_slot",
+        "memory://symbol/rules.py::valid_duration",
+        "memory://symbol/rules.py::working_day",
+        "memory://symbol/policy.py::BUFFER_MINUTES",
+        "memory://symbol/policy.py::MAX_DURATION",
+        "memory://symbol/policy.py::MIN_DURATION",
+        "memory://symbol/policy.py::WORK_DAYS"
+      ],
+      "children": [
+        "memory://symbol/service.py::first_available"
+      ],
+      "call_id": "0362b444769f31a1"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::appointment",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::appointment\nThe `appointment` function calculates the start time for an appointment on a given day, considering the earliest available time, duration, and busy slots. It uses helper functions from `policy` and `rules` modules. The `first_available` function finds the first slot that is not busy and within working hours. It rounds the earliest time to the nearest slot and iterates through slots until a suitable one is found or the day ends. The `overlaps` function checks if a proposed slot conflicts with any busy slots. The `round_slot` function rounds a given minute to the nearest slot. The `valid_duration` function ensures the duration is within the allowed range. The `working_day` function checks if the day is a workday. Constants define the opening and closing times, slot size, buffer minutes, and duration limits.",
+      "source_uris": [
+        "memory://symbol/service.py::appointment",
+        "memory://symbol/policy.py::UNAVAILABLE",
+        "memory://symbol/service.py::first_available",
+        "memory://symbol/policy.py::CLOSE_MINUTE",
+        "memory://symbol/policy.py::OPEN_MINUTE",
+        "memory://symbol/policy.py::SLOT_MINUTES",
+        "memory://symbol/rules.py::overlaps",
+        "memory://symbol/rules.py::round_slot",
+        "memory://symbol/rules.py::valid_duration",
+        "memory://symbol/rules.py::working_day",
+        "memory://symbol/policy.py::BUFFER_MINUTES",
+        "memory://symbol/policy.py::MAX_DURATION",
+        "memory://symbol/policy.py::MIN_DURATION",
+        "memory://symbol/policy.py::WORK_DAYS"
+      ],
+      "children": [
+        "memory://symbol/service.py::appointment"
+      ],
+      "call_id": "9418dfa732bb4c59"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::weekday_label",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::weekday_label\nThe `weekday_label` function converts a day index (0-6) to its corresponding weekday label (e.g., \"mon\" for Monday). It uses a tuple to map day indices to labels and returns the label for the given day. No string operations or external calls are made.",
+      "source_uris": [
+        "memory://symbol/service.py::weekday_label"
+      ],
+      "children": [
+        "memory://symbol/service.py::weekday_label"
+      ],
+      "call_id": "c12cb6b27587d458"
+    },
+    {
+      "id": "summary:level2:audit.py",
+      "level": 2,
+      "path": "audit.py",
+      "text": "### summary:level2:audit.py\nThe `audit.py` module contains functions for constructing audit keys, managing recent events, redacting identifiers, and recording events. The `audit_key` function creates a string key for auditing, `recent_events` returns the last 20 events from a list, `redact_identifier` masks all but the last four characters of an identifier, and `event_record` creates a dictionary representing an audit event with a specified action and optional actor. Constants like `AUDIT_VERSION`, `MAX_RECENT_EVENTS`, and `REDACTION_MARKER` are used to maintain consistency and control the behavior of these functions.",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "memory://symbol/audit.py::REDACTION_MARKER",
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/audit.py::audit_key",
+        "summary:leaf:memory://symbol/audit.py::recent_events",
+        "summary:leaf:memory://symbol/audit.py::redact_identifier",
+        "summary:leaf:memory://symbol/audit.py::event_record"
+      ],
+      "call_id": "d292ae47a441e73f"
+    },
+    {
+      "id": "summary:level2:presentation.py",
+      "level": 2,
+      "path": "presentation.py",
+      "text": "### summary:level2:presentation.py\nThe `presentation.py` module contains functions for normalizing labels, displaying references, mapping status codes, and summarizing counts. The `normalize_label` function processes strings by stripping whitespace, converting to lowercase, replacing spaces with hyphens, and truncating to 48 characters. The `display_reference` function formats reference numbers with a prefix and zero-padding. The `status_label` function maps integer codes to status labels, defaulting to \"unknown\" if the code is not found. The `summarize_count` function returns a dictionary summarizing the count of items in a list, prefixed with \"appointment\".",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/presentation.py::normalize_label",
+        "summary:leaf:memory://symbol/presentation.py::display_reference",
+        "summary:leaf:memory://symbol/presentation.py::status_label",
+        "summary:leaf:memory://symbol/presentation.py::summarize_count"
+      ],
+      "call_id": "9f7f986e5242968b"
+    },
+    {
+      "id": "summary:level2:rules.py",
+      "level": 2,
+      "path": "rules.py",
+      "text": "### summary:level2:rules.py\nThe `rules.py` module contains several functions to validate and process time-related data. The `round_slot` function rounds minutes to the nearest 30-minute slot. The `working_day` function checks if a day is a weekday. The `valid_duration` function ensures a duration is within a specified range. The `overlaps` function checks if a time slot conflicts with any busy time slots, considering a 10-minute buffer. Each function relies on constants defined in the `policy.py` module, such as `SLOT_MINUTES`, `WORK_DAYS`, `MIN_DURATION`, `MAX_DURATION`, and buffer time.",
+      "source_uris": [
+        "memory://symbol/policy.py::BUFFER_MINUTES",
+        "memory://symbol/policy.py::MAX_DURATION",
+        "memory://symbol/policy.py::MIN_DURATION",
+        "memory://symbol/policy.py::SLOT_MINUTES",
+        "memory://symbol/policy.py::WORK_DAYS",
+        "memory://symbol/rules.py::overlaps",
+        "memory://symbol/rules.py::round_slot",
+        "memory://symbol/rules.py::valid_duration",
+        "memory://symbol/rules.py::working_day"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/rules.py::round_slot",
+        "summary:leaf:memory://symbol/rules.py::working_day",
+        "summary:leaf:memory://symbol/rules.py::valid_duration",
+        "summary:leaf:memory://symbol/rules.py::overlaps"
+      ],
+      "call_id": "6601b016e33d66af"
+    },
+    {
+      "id": "summary:level2:service.py",
+      "level": 2,
+      "path": "service.py",
+      "text": "### summary:level2:service.py\nThe `service.py` module contains functions for scheduling appointments, finding available time slots, and converting day indices to labels. The `first_available` function determines the earliest available time slot for a given duration, considering busy times and working hours. The `appointment` function calculates the start time for an appointment, ensuring it doesn't overlap with busy slots and is within working hours. The `weekday_label` function converts a day index to its corresponding weekday label. All functions use helper functions from the `policy` and `rules` modules to validate inputs and check for overlaps. Constants define opening and closing times, slot sizes, and duration limits.",
+      "source_uris": [
+        "memory://symbol/policy.py::BUFFER_MINUTES",
+        "memory://symbol/policy.py::CLOSE_MINUTE",
+        "memory://symbol/policy.py::MAX_DURATION",
+        "memory://symbol/policy.py::MIN_DURATION",
+        "memory://symbol/policy.py::OPEN_MINUTE",
+        "memory://symbol/policy.py::SLOT_MINUTES",
+        "memory://symbol/policy.py::UNAVAILABLE",
+        "memory://symbol/policy.py::WORK_DAYS",
+        "memory://symbol/rules.py::overlaps",
+        "memory://symbol/rules.py::round_slot",
+        "memory://symbol/rules.py::valid_duration",
+        "memory://symbol/rules.py::working_day",
+        "memory://symbol/service.py::appointment",
+        "memory://symbol/service.py::first_available",
+        "memory://symbol/service.py::weekday_label"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/service.py::first_available",
+        "summary:leaf:memory://symbol/service.py::appointment",
+        "summary:leaf:memory://symbol/service.py::weekday_label"
+      ],
+      "call_id": "cbbdb4ce2992f002"
+    },
+    {
+      "id": "summary:level3:project",
+      "level": 3,
+      "path": "project",
+      "text": "### summary:level3:project\nThe `audit.py` module handles audit-related tasks like creating keys, managing recent events, redacting identifiers, and recording events. The `presentation.py` module normalizes labels, displays references, maps status codes, and summarizes counts. The `rules.py` module validates and processes time-related data, including rounding slots, checking working days, ensuring valid durations, and detecting overlaps. The `service.py` module schedules appointments, finds available slots, and converts day indices to labels, using helper functions from `policy.py` and `rules.py` for validation and overlap checks. Constants in `policy.py` define various parameters like slot sizes, working hours, and duration limits.",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "memory://symbol/audit.py::REDACTION_MARKER",
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/policy.py::BUFFER_MINUTES",
+        "memory://symbol/policy.py::CLOSE_MINUTE",
+        "memory://symbol/policy.py::MAX_DURATION",
+        "memory://symbol/policy.py::MIN_DURATION",
+        "memory://symbol/policy.py::OPEN_MINUTE",
+        "memory://symbol/policy.py::SLOT_MINUTES",
+        "memory://symbol/policy.py::UNAVAILABLE",
+        "memory://symbol/policy.py::WORK_DAYS",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/rules.py::overlaps",
+        "memory://symbol/rules.py::round_slot",
+        "memory://symbol/rules.py::valid_duration",
+        "memory://symbol/rules.py::working_day",
+        "memory://symbol/service.py::appointment",
+        "memory://symbol/service.py::first_available",
+        "memory://symbol/service.py::weekday_label"
+      ],
+      "children": [
+        "summary:level2:audit.py",
+        "summary:level2:presentation.py",
+        "summary:level2:rules.py",
+        "summary:level2:service.py"
+      ],
+      "call_id": "c9f410a034b01d33"
+    }
+  ],
+  "index": {
+    "version": 1,
+    "root": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/dataset/projects/eval_schedules",
+    "files": [
+      {
+        "path": "audit.py",
+        "symbols": [
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "audit_key",
+            "qualname": "audit_key",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/audit.py::audit_key"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "recent_events",
+            "qualname": "recent_events",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/audit.py::recent_events"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "redact_identifier",
+            "qualname": "redact_identifier",
+            "start_line": 12,
+            "end_line": 13,
+            "uri": "memory://symbol/audit.py::redact_identifier"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "event_record",
+            "qualname": "event_record",
+            "start_line": 15,
+            "end_line": 16,
+            "uri": "memory://symbol/audit.py::event_record"
+          }
+        ]
+      },
+      {
+        "path": "policy.py",
+        "symbols": []
+      },
+      {
+        "path": "presentation.py",
+        "symbols": [
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "normalize_label",
+            "qualname": "normalize_label",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/presentation.py::normalize_label"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "display_reference",
+            "qualname": "display_reference",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/presentation.py::display_reference"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "status_label",
+            "qualname": "status_label",
+            "start_line": 12,
+            "end_line": 13,
+            "uri": "memory://symbol/presentation.py::status_label"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "summarize_count",
+            "qualname": "summarize_count",
+            "start_line": 15,
+            "end_line": 16,
+            "uri": "memory://symbol/presentation.py::summarize_count"
+          }
+        ]
+      },
+      {
+        "path": "rules.py",
+        "symbols": [
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "round_slot",
+            "qualname": "round_slot",
+            "start_line": 3,
+            "end_line": 4,
+            "uri": "memory://symbol/rules.py::round_slot"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "working_day",
+            "qualname": "working_day",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/rules.py::working_day"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "valid_duration",
+            "qualname": "valid_duration",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/rules.py::valid_duration"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "overlaps",
+            "qualname": "overlaps",
+            "start_line": 12,
+            "end_line": 13,
+            "uri": "memory://symbol/rules.py::overlaps"
+          }
+        ]
+      },
+      {
+        "path": "service.py",
+        "symbols": [
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "first_available",
+            "qualname": "first_available",
+            "start_line": 4,
+            "end_line": 12,
+            "uri": "memory://symbol/service.py::first_available"
+          },
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "appointment",
+            "qualname": "appointment",
+            "start_line": 14,
+            "end_line": 16,
+            "uri": "memory://symbol/service.py::appointment"
+          },
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "weekday_label",
+            "qualname": "weekday_label",
+            "start_line": 18,
+            "end_line": 19,
+            "uri": "memory://symbol/service.py::weekday_label"
+          }
+        ]
+      }
+    ],
+    "symbols": [
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "audit_key",
+        "qualname": "audit_key",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/audit.py::audit_key"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "recent_events",
+        "qualname": "recent_events",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/audit.py::recent_events"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "redact_identifier",
+        "qualname": "redact_identifier",
+        "start_line": 12,
+        "end_line": 13,
+        "uri": "memory://symbol/audit.py::redact_identifier"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "event_record",
+        "qualname": "event_record",
+        "start_line": 15,
+        "end_line": 16,
+        "uri": "memory://symbol/audit.py::event_record"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "normalize_label",
+        "qualname": "normalize_label",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/presentation.py::normalize_label"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "display_reference",
+        "qualname": "display_reference",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/presentation.py::display_reference"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "status_label",
+        "qualname": "status_label",
+        "start_line": 12,
+        "end_line": 13,
+        "uri": "memory://symbol/presentation.py::status_label"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "summarize_count",
+        "qualname": "summarize_count",
+        "start_line": 15,
+        "end_line": 16,
+        "uri": "memory://symbol/presentation.py::summarize_count"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "round_slot",
+        "qualname": "round_slot",
+        "start_line": 3,
+        "end_line": 4,
+        "uri": "memory://symbol/rules.py::round_slot"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "working_day",
+        "qualname": "working_day",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/rules.py::working_day"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "valid_duration",
+        "qualname": "valid_duration",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/rules.py::valid_duration"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "overlaps",
+        "qualname": "overlaps",
+        "start_line": 12,
+        "end_line": 13,
+        "uri": "memory://symbol/rules.py::overlaps"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "first_available",
+        "qualname": "first_available",
+        "start_line": 4,
+        "end_line": 12,
+        "uri": "memory://symbol/service.py::first_available"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "appointment",
+        "qualname": "appointment",
+        "start_line": 14,
+        "end_line": 16,
+        "uri": "memory://symbol/service.py::appointment"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "weekday_label",
+        "qualname": "weekday_label",
+        "start_line": 18,
+        "end_line": 19,
+        "uri": "memory://symbol/service.py::weekday_label"
+      }
+    ]
+  },
+  "build_seconds": 99.75327787500282,
+  "build_input_tokens": 6110,
+  "build_output_tokens": 1880,
+  "build_model_seconds": 99.7300033349893,
+  "build_call_ids": [
+    "fc9d77207c51932a",
+    "e7d6d3ae7333b33b",
+    "9e227f8514f79287",
+    "5aa12258dec4d0e3",
+    "50461c9229c3a495",
+    "d7f2fd67e52969e8",
+    "c4457d1f91c6483a",
+    "7d006639ba91d41a",
+    "f0c16d9d0f3d6e44",
+    "997d118c4e243eb7",
+    "f070d0421521374f",
+    "24867141e713f8ac",
+    "0362b444769f31a1",
+    "9418dfa732bb4c59",
+    "c12cb6b27587d458",
+    "d292ae47a441e73f",
+    "9f7f986e5242968b",
+    "6601b016e33d66af",
+    "cbbdb4ce2992f002",
+    "c9f410a034b01d33"
+  ],
+  "source_sha256": {
+    "audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+    "policy.py": "62915bdaa654f4a5f66c091437a0d417ca5c8b5bfa2e05eae30830cdc6ce1150",
+    "presentation.py": "fac5c58d65a71251b19480a86fdb1a03fd8e9e1785cc937fe855706f277350ed",
+    "rules.py": "d7da8cb453232890a42b0013ddc107cde2448b137d0a93e2965abefc8692593c",
+    "service.py": "0f8be208721bb92bb38e341a60f6c613d2b00dd91b8260de237739f677f2c014"
+  }
+}

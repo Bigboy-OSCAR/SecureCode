@@ -1,0 +1,441 @@
+{
+  "created_at_utc": "2026-10-20T09:35:50.290488+00:00",
+  "status": "no_question_gold_semantic_mismatch_found",
+  "reviewed_evaluation_tasks": 48,
+  "literal_calls_programmatically_matched": 24,
+  "impact_question_probe_sets_programmatically_matched": 6,
+  "architecture_question_targets_matched": 6,
+  "semantic_paraphrases_manually_reviewed": 12,
+  "task_checks": [
+    {
+      "task_id": "eval_pricing__refund",
+      "category": "single_function",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_pricing__member_order",
+      "category": "cross_file",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_pricing__receipt",
+      "category": "cross_file",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_pricing__quantity_cap",
+      "category": "boundary",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_pricing__discount_delivery",
+      "category": "semantic",
+      "status": "pass",
+      "note": "manually reviewed semantic paraphrase matches recorded call"
+    },
+    {
+      "task_id": "eval_pricing__invalid_receipt",
+      "category": "semantic",
+      "status": "pass",
+      "note": "manually reviewed semantic paraphrase matches recorded call"
+    },
+    {
+      "task_id": "eval_pricing__tax_change",
+      "category": "change_impact",
+      "status": "pass",
+      "note": "All three explicitly named probe calls, old/new constant values, and sorted answer list match gold"
+    },
+    {
+      "task_id": "eval_pricing__direct_calls",
+      "category": "architecture",
+      "status": "pass",
+      "note": "Requested function and sorted direct-call set match manually inspected source"
+    },
+    {
+      "task_id": "eval_authorization__normalize",
+      "category": "single_function",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_authorization__own_write",
+      "category": "cross_file",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_authorization__admin_without_scope",
+      "category": "cross_file",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_authorization__expiry",
+      "category": "boundary",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_authorization__unknown_action",
+      "category": "semantic",
+      "status": "pass",
+      "note": "manually reviewed semantic paraphrase matches recorded call"
+    },
+    {
+      "task_id": "eval_authorization__future_session",
+      "category": "semantic",
+      "status": "pass",
+      "note": "manually reviewed semantic paraphrase matches recorded call"
+    },
+    {
+      "task_id": "eval_authorization__session_change",
+      "category": "change_impact",
+      "status": "pass",
+      "note": "All three explicitly named probe calls, old/new constant values, and sorted answer list match gold"
+    },
+    {
+      "task_id": "eval_authorization__direct_calls",
+      "category": "architecture",
+      "status": "pass",
+      "note": "Requested function and sorted direct-call set match manually inspected source"
+    },
+    {
+      "task_id": "eval_routing__path",
+      "category": "single_function",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_routing__preferred",
+      "category": "cross_file",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_routing__fallback",
+      "category": "cross_file",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_routing__latency_edge",
+      "category": "boundary",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_routing__no_backend",
+      "category": "semantic",
+      "status": "pass",
+      "note": "manually reviewed semantic paraphrase matches recorded call"
+    },
+    {
+      "task_id": "eval_routing__retry_exhausted",
+      "category": "semantic",
+      "status": "pass",
+      "note": "manually reviewed semantic paraphrase matches recorded call"
+    },
+    {
+      "task_id": "eval_routing__canary_change",
+      "category": "change_impact",
+      "status": "pass",
+      "note": "All three explicitly named probe calls, old/new constant values, and sorted answer list match gold"
+    },
+    {
+      "task_id": "eval_routing__direct_calls",
+      "category": "architecture",
+      "status": "pass",
+      "note": "Requested function and sorted direct-call set match manually inspected source"
+    },
+    {
+      "task_id": "eval_inventory__allocation",
+      "category": "single_function",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_inventory__partial",
+      "category": "cross_file",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_inventory__remaining",
+      "category": "cross_file",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_inventory__order_limit",
+      "category": "boundary",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_inventory__safety_buffer",
+      "category": "semantic",
+      "status": "pass",
+      "note": "manually reviewed semantic paraphrase matches recorded call"
+    },
+    {
+      "task_id": "eval_inventory__all_or_nothing",
+      "category": "semantic",
+      "status": "pass",
+      "note": "manually reviewed semantic paraphrase matches recorded call"
+    },
+    {
+      "task_id": "eval_inventory__buffer_change",
+      "category": "change_impact",
+      "status": "pass",
+      "note": "All three explicitly named probe calls, old/new constant values, and sorted answer list match gold"
+    },
+    {
+      "task_id": "eval_inventory__direct_calls",
+      "category": "architecture",
+      "status": "pass",
+      "note": "Requested function and sorted direct-call set match manually inspected source"
+    },
+    {
+      "task_id": "eval_cache__resource",
+      "category": "single_function",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_cache__canonical_key",
+      "category": "cross_file",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_cache__private_entry",
+      "category": "cross_file",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_cache__negative_ttl",
+      "category": "boundary",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_cache__public_lifetime",
+      "category": "semantic",
+      "status": "pass",
+      "note": "manually reviewed semantic paraphrase matches recorded call"
+    },
+    {
+      "task_id": "eval_cache__do_not_store",
+      "category": "semantic",
+      "status": "pass",
+      "note": "manually reviewed semantic paraphrase matches recorded call"
+    },
+    {
+      "task_id": "eval_cache__schema_change",
+      "category": "change_impact",
+      "status": "pass",
+      "note": "All three explicitly named probe calls, old/new constant values, and sorted answer list match gold"
+    },
+    {
+      "task_id": "eval_cache__direct_calls",
+      "category": "architecture",
+      "status": "pass",
+      "note": "Requested function and sorted direct-call set match manually inspected source"
+    },
+    {
+      "task_id": "eval_schedules__rounding",
+      "category": "single_function",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_schedules__busy_buffer",
+      "category": "cross_file",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_schedules__appointment",
+      "category": "cross_file",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_schedules__closing_edge",
+      "category": "boundary",
+      "status": "pass",
+      "note": "Literal call in question exactly matches executable gold call and arguments"
+    },
+    {
+      "task_id": "eval_schedules__weekend",
+      "category": "semantic",
+      "status": "pass",
+      "note": "manually reviewed semantic paraphrase matches recorded call"
+    },
+    {
+      "task_id": "eval_schedules__too_late",
+      "category": "semantic",
+      "status": "pass",
+      "note": "manually reviewed semantic paraphrase matches recorded call"
+    },
+    {
+      "task_id": "eval_schedules__buffer_change",
+      "category": "change_impact",
+      "status": "pass",
+      "note": "All three explicitly named probe calls, old/new constant values, and sorted answer list match gold"
+    },
+    {
+      "task_id": "eval_schedules__direct_calls",
+      "category": "architecture",
+      "status": "pass",
+      "note": "Requested function and sorted direct-call set match manually inspected source"
+    }
+  ],
+  "interpretation_notes": [
+    {
+      "topic": "change_impact",
+      "note": "Correctness applies only to the three fixed probe inputs in each question. The intervention is interpreted as changing the source policy before a fresh program load; imported aliases in an already running process are not patched. This is not general whole-program change impact."
+    },
+    {
+      "topic": "architecture",
+      "note": "Direct calls are syntactic calls in the requested function body, across possible branches. There are no concrete execution inputs in these questions. Transitive callees and builtins/string methods are excluded."
+    },
+    {
+      "topic": "strict_list_order",
+      "note": "Questions explicitly request sorted lists. A correct unordered membership set still fails the fixed primary metric if order is wrong. Define primary results as correct code answer plus output-instruction adherence. Report order-only failures as a separate diagnostic without changing the fixed primary scoring."
+    },
+    {
+      "topic": "source_information",
+      "note": "All tested policies, constants, functions and literal values exist in the retrievable project source. Whether a specific arm actually packs those sources is a retrieval outcome, not a missing-dataset-answer issue."
+    },
+    {
+      "topic": "synthetic_scope",
+      "note": "The six domains use distinct algorithms but share policy/rules/service layout and common ancillary files. These are small synthetic programs, not independent samples of production repository architectures."
+    }
+  ],
+  "nonfinal_order_only_diagnostic": {
+    "rows_available_at_snapshot": 279,
+    "order_only_failure_rows": 10,
+    "by_arm": {
+      "RH": 5,
+      "B": 1,
+      "RF": 4
+    },
+    "examples": [
+      {
+        "task_id": "eval_pricing__tax_change",
+        "arm": "RH",
+        "repeat": 0,
+        "actual": [
+          "sales_tax",
+          "checkout_total"
+        ],
+        "expected": [
+          "checkout_total",
+          "sales_tax"
+        ]
+      },
+      {
+        "task_id": "eval_pricing__tax_change",
+        "arm": "RH",
+        "repeat": 1,
+        "actual": [
+          "sales_tax",
+          "checkout_total"
+        ],
+        "expected": [
+          "checkout_total",
+          "sales_tax"
+        ]
+      },
+      {
+        "task_id": "eval_inventory__buffer_change",
+        "arm": "RH",
+        "repeat": 1,
+        "actual": [
+          "sellable",
+          "reserve"
+        ],
+        "expected": [
+          "reserve",
+          "sellable"
+        ]
+      },
+      {
+        "task_id": "eval_cache__direct_calls",
+        "arm": "B",
+        "repeat": 2,
+        "actual": [
+          "normalize_resource",
+          "normalize_tenant",
+          "canonical_query"
+        ],
+        "expected": [
+          "canonical_query",
+          "normalize_resource",
+          "normalize_tenant"
+        ]
+      },
+      {
+        "task_id": "eval_schedules__buffer_change",
+        "arm": "RH",
+        "repeat": 2,
+        "actual": [
+          "overlaps",
+          "first_available"
+        ],
+        "expected": [
+          "first_available",
+          "overlaps"
+        ]
+      },
+      {
+        "task_id": "eval_schedules__buffer_change",
+        "arm": "RF",
+        "repeat": 2,
+        "actual": [
+          "overlaps",
+          "first_available"
+        ],
+        "expected": [
+          "first_available",
+          "overlaps"
+        ]
+      },
+      {
+        "task_id": "eval_schedules__buffer_change",
+        "arm": "RH",
+        "repeat": 0,
+        "actual": [
+          "overlaps",
+          "first_available"
+        ],
+        "expected": [
+          "first_available",
+          "overlaps"
+        ]
+      },
+      {
+        "task_id": "eval_inventory__buffer_change",
+        "arm": "RF",
+        "repeat": 1,
+        "actual": [
+          "sellable",
+          "reserve"
+        ],
+        "expected": [
+          "reserve",
+          "sellable"
+        ]
+      }
+    ],
+    "warning": "Evaluation is ongoing; recompute on final data before reporting counts."
+  },
+  "frozen_inputs_modified": false,
+  "model_calls_made": false
+}

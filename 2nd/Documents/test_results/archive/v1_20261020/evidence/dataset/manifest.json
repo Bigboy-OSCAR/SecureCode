@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "corpus_type": "bounded synthetic Python retrieval pilot",
+  "project_split": "one development shipping project; six structurally different evaluation domains",
+  "project_count": 7,
+  "eval_project_count": 6,
+  "dev_tasks": 8,
+  "eval_tasks": 48,
+  "categories_per_project": {
+    "single_function": 1,
+    "cross_file": 2,
+    "boundary": 1,
+    "semantic": 2,
+    "change_impact": 1,
+    "architecture": 1
+  },
+  "gold_separation": "Only projects/<name>/*.py are retrieval/summary inputs. Task/gold/manifest files must never be indexed or summarized.",
+  "scope_limitations": [
+    "Synthetic, small projects; not representative production repositories.",
+    "Tasks within each project are correlated. Six evaluation projects are the independent clusters.",
+    "required_uris list conservative source dependencies, not proof that every listed symbol is necessary for every branch.",
+    "Change impact is defined for the listed inputs, not every possible execution.",
+    "No code modification, mutation-refresh benchmark, or dynamic dispatch coverage."
+  ],
+  "projects": [
+    {
+      "name": "dev_shipping",
+      "split": "dev",
+      "domain": "parcel delivery",
+      "relative_root": "projects/dev_shipping",
+      "files": 5,
+      "functions": 15,
+      "constants": 16,
+      "chunks": 31,
+      "source_chars": 2230,
+      "source_sha256": "8d5aeb2fde74520c10859893f0e2e3efb2e541856ae5acb0b6789d957e8c9cdb",
+      "tasks": 8
+    },
+    {
+      "name": "eval_pricing",
+      "split": "eval",
+      "domain": "retail checkout",
+      "relative_root": "projects/eval_pricing",
+      "files": 5,
+      "functions": 15,
+      "constants": 16,
+      "chunks": 31,
+      "source_chars": 2385,
+      "source_sha256": "0d8baa7b98bc04e603a9234cb6aa4d098855a5e822b09b8f32ac8b789e77d541",
+      "tasks": 8
+    },
+    {
+      "name": "eval_authorization",
+      "split": "eval",
+      "domain": "document authorization",
+      "relative_root": "projects/eval_authorization",
+      "files": 5,
+      "functions": 16,
+      "constants": 16,
+      "chunks": 32,
+      "source_chars": 2470,
+      "source_sha256": "c33a707f4d5cffcac4a55c1ea9b13d46b75adbdc41e0cb302ec0afac0a5389cd",
+      "tasks": 8
+    },
+    {
+      "name": "eval_routing",
+      "split": "eval",
+      "domain": "service request routing",
+      "relative_root": "projects/eval_routing",
+      "files": 5,
+      "functions": 15,
+      "constants": 16,
+      "chunks": 31,
+      "source_chars": 2309,
+      "source_sha256": "64480179ebada5ac8526885f9fd610970ea625df323f9aca4b9da19a21ec4530",
+      "tasks": 8
+    },
+    {
+      "name": "eval_inventory",
+      "split": "eval",
+      "domain": "warehouse reservation",
+      "relative_root": "projects/eval_inventory",
+      "files": 5,
+      "functions": 15,
+      "constants": 16,
+      "chunks": 31,
+      "source_chars": 2376,
+      "source_sha256": "c55193ae9b45d436a7b29946446109d2440f4dd939fe0d10976942513867d2c4",
+      "tasks": 8
+    },
+    {
+      "name": "eval_cache",
+      "split": "eval",
+      "domain": "render cache",
+      "relative_root": "projects/eval_cache",
+      "files": 5,
+      "functions": 15,
+      "constants": 16,
+      "chunks": 31,
+      "source_chars": 2396,
+      "source_sha256": "9cf2be2c4d95bdc4f1f4bfb7e85debad4378455e4cbea114839d6f4facdc4042",
+      "tasks": 8
+    },
+    {
+      "name": "eval_schedules",
+      "split": "eval",
+      "domain": "appointment scheduling",
+      "relative_root": "projects/eval_schedules",
+      "files": 5,
+      "functions": 15,
+      "constants": 16,
+      "chunks": 31,
+      "source_chars": 2414,
+      "source_sha256": "49cd30ba6d77eacc4d0feaa476be113c291ded7c5e8ee5486a1122c210e4eb82",
+      "tasks": 8
+    }
+  ]
+}

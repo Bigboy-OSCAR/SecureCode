@@ -1,0 +1,10 @@
+{
+  "at_utc": "2026-10-24T08:37:27.831716+00:00",
+  "pid": 50339,
+  "command": "50339 Sat Oct 24 17:36:36 2026     /opt/homebrew/bin/llama-server -m /Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf --host 127.0.0.1 --port 8766 --ctx-size 8192 --parallel 1 --no-warmup --cache-ram 0 --no-cache-prompt",
+  "hardware": {
+    "hw.model": "Mac15,7",
+    "hw.memsize": "38654705664",
+    "machdep.cpu.brand_string": "Apple M3 Pro"
+  }
+}

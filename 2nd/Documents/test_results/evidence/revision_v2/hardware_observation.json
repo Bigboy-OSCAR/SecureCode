@@ -1,0 +1,7 @@
+{
+  "machdep.cpu.brand_string": "Apple M3 Pro",
+  "hw.memsize": "38654705664",
+  "hw.model": "Mac15,7",
+  "recorded_at_utc": "2026-10-20T11:27:22.449730+00:00",
+  "note": "Host observation after completed run; frozen environment.json is preserved."
+}

@@ -1,0 +1,46 @@
+재현 안내
+
+원본 결과를 보존하려면 반드시 새 출력 폴더를 사용하세요.
+작업 위치: /Users/oscar/Desktop/SecureCode
+
+1. 별도 터미널에서 기존 로컬 모델 서버를 준비합니다.
+
+/opt/homebrew/bin/llama-server \
+  -m /Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf \
+  --host 127.0.0.1 --port 8766 --ctx-size 8192 --parallel 1 \
+  --no-warmup --cache-ram 0 --no-cache-prompt
+
+2. 아래 단계들을 순서대로 실행합니다.
+   예시의 NEW_RUN은 아직 존재하지 않는 실행 결과 폴더명으로 바꿉니다.
+   실험 본체는 Python 표준 라이브러리만 사용합니다.
+
+python3 2nd/experiments/symbol_raptor/experiment.py prepare --out 2nd/Documents/test_results/NEW_RUN
+python3 2nd/experiments/symbol_raptor/experiment.py build --out 2nd/Documents/test_results/NEW_RUN
+python3 2nd/experiments/symbol_raptor/experiment.py dev --out 2nd/Documents/test_results/NEW_RUN
+python3 2nd/experiments/symbol_raptor/experiment.py eval --out 2nd/Documents/test_results/NEW_RUN
+python3 2nd/experiments/symbol_raptor/experiment.py sensitivity --out 2nd/Documents/test_results/NEW_RUN
+python3 2nd/experiments/symbol_raptor/analyze.py --out 2nd/Documents/test_results/NEW_RUN
+
+3. 기존 결과의 집계만 다시 계산할 때는 모델을 호출할 필요가 없습니다.
+
+python3 2nd/experiments/symbol_raptor/analyze.py --out 2nd/Documents/test_results/evidence
+python3 2nd/experiments/symbol_raptor/integrity_checks.py
+python3 2nd/experiments/symbol_raptor/output_diagnostics.py
+
+4. 보고서 생성에는 ReportLab, NumPy와 한국어 글꼴을 사용합니다.
+   이 실행에서 사용한 Python:
+   /Users/oscar/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3
+   보고서 생성기:
+   2nd/experiments/symbol_raptor/report_builder.py
+   입력:
+   2nd/Documents/test_results/evidence/analysis.json
+
+주의
+- 원문·질문·정답·요약·문제별 결과·모델 호출은 각기 별도 파일에 보관했습니다.
+- source_snapshot에는 실행에 사용한 실험 코드와 기존 기준선 코드가 들어 있습니다.
+- 모델 SHA-256과 실행기·운영체제 정보는 environment.json을 확인하세요.
+- 하드웨어·실행기 변경에 따라 시간과 일부 생성 결과가 달라질 수 있습니다.
+- 여러 실험을 동시에 돌리면 지연시간 비교 조건이 바뀝니다.
+- 동일 결과 파일에 다른 설정을 이어 쓰는 것은 실행 식별 검사로 차단합니다.
+- development_calibration에는 평가 전에 발견한 출력 형식 충돌의 최초 개발용 기록을 보존했습니다.
+  본 평가 결과에는 포함하지 않습니다.

@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "recorded_at_utc": "2026-10-20T11:29:49.363274+00:00",
+  "documents": {
+    "01_symbol_index와_RAPTOR_정량평가_상세보고서.pdf": {
+      "path": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/01_symbol_index와_RAPTOR_정량평가_상세보고서.pdf",
+      "sha256": "8b538d9f1269bad945dd6a009cfb53b2970a54aa293af7d400a26b0de1fe4203",
+      "bytes": 132395,
+      "pages": 12
+    },
+    "02_그림으로_이해하는_symbol_index와_RAPTOR_비교.pdf": {
+      "path": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/02_그림으로_이해하는_symbol_index와_RAPTOR_비교.pdf",
+      "sha256": "bc73801c3d707cd4a57eb4806eb4c0ceca11e746e4bd6e13354743a1d4f58e3e",
+      "bytes": 96686,
+      "pages": 4
+    }
+  },
+  "all_16_pages_visually_reviewed": true,
+  "reviewers": [
+    "root: detailed 1-12, changed 7/9/12, newcomer1-4",
+    "report_builder: newcomer1-4 and final detail12",
+    "review_design: final full PDF content/statistical interpretation"
+  ],
+  "findings": [],
+  "scope": "No clipping, overlap, missing glyphs or unreadable chart labels observed. Latest minor wording edit on detailed page12 separately visually checked."
+}

@@ -1,0 +1,1272 @@
+[
+  {
+    "id": "dev_shipping__steps",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "weight_steps",
+      "args": [
+        501
+      ]
+    },
+    "expected": 2,
+    "independent_check_passed": true
+  },
+  {
+    "id": "dev_shipping__quote",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "shipping_quote",
+      "args": [
+        6200,
+        501,
+        true
+      ]
+    },
+    "expected": {
+      "cents": 770,
+      "status": "accepted"
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "dev_shipping__total",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "parcel_total",
+      "args": [
+        9000,
+        1600,
+        true
+      ]
+    },
+    "expected": 9240,
+    "independent_check_passed": true
+  },
+  {
+    "id": "dev_shipping__max_weight",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "shipping_quote",
+      "args": [
+        9000,
+        20001,
+        false
+      ]
+    },
+    "expected": {
+      "cents": 0,
+      "status": "rejected"
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "dev_shipping__remote_free",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "shipping_quote",
+      "args": [
+        8000,
+        500,
+        true
+      ]
+    },
+    "expected": {
+      "cents": 240,
+      "status": "accepted"
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "dev_shipping__invalid_total",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "parcel_total",
+      "args": [
+        4000,
+        0,
+        false
+      ]
+    },
+    "expected": -1,
+    "independent_check_passed": true
+  },
+  {
+    "id": "dev_shipping__policy_change",
+    "kind": "impact",
+    "probes": [
+      {
+        "module": "rules",
+        "function": "weight_charge",
+        "args": [
+          501
+        ]
+      },
+      {
+        "module": "service",
+        "function": "parcel_total",
+        "args": [
+          6200,
+          501,
+          false
+        ]
+      },
+      {
+        "module": "service",
+        "function": "tracking_key",
+        "args": [
+          " a9 "
+        ]
+      }
+    ],
+    "override": {
+      "module": "policy",
+      "name": "STEP_CENTS",
+      "value": 120
+    },
+    "before": [
+      180,
+      6730,
+      "parcel:A9"
+    ],
+    "after": [
+      240,
+      6790,
+      "parcel:A9"
+    ],
+    "expected": [
+      "parcel_total",
+      "weight_charge"
+    ],
+    "independent_check_passed": true
+  },
+  {
+    "id": "dev_shipping__direct_calls",
+    "kind": "architecture",
+    "module": "service",
+    "function": "shipping_quote",
+    "expected": [
+      "allowed_weight",
+      "free_shipping",
+      "weight_charge"
+    ],
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_pricing__refund",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "refundable",
+      "args": [
+        1001,
+        2,
+        3
+      ]
+    },
+    "expected": 667,
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_pricing__member_order",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "checkout_total",
+      "args": [
+        1999,
+        3,
+        true
+      ]
+    },
+    "expected": 6505,
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_pricing__receipt",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "order_receipt",
+      "args": [
+        4000,
+        3,
+        true
+      ]
+    },
+    "expected": {
+      "accepted": true,
+      "currency": "USD",
+      "total": 12016
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_pricing__quantity_cap",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "checkout_total",
+      "args": [
+        100,
+        21,
+        false
+      ]
+    },
+    "expected": -1,
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_pricing__discount_delivery",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "checkout_total",
+      "args": [
+        2000,
+        3,
+        true
+      ]
+    },
+    "expected": 6507,
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_pricing__invalid_receipt",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "order_receipt",
+      "args": [
+        2500,
+        0,
+        false
+      ]
+    },
+    "expected": {
+      "accepted": false,
+      "currency": "USD",
+      "total": -1
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_pricing__tax_change",
+    "kind": "impact",
+    "probes": [
+      {
+        "module": "rules",
+        "function": "sales_tax",
+        "args": [
+          1000
+        ]
+      },
+      {
+        "module": "service",
+        "function": "checkout_total",
+        "args": [
+          2000,
+          3,
+          true
+        ]
+      },
+      {
+        "module": "service",
+        "function": "reward_points",
+        "args": [
+          1000
+        ]
+      }
+    ],
+    "override": {
+      "module": "policy",
+      "name": "TAX_BPS",
+      "value": 1000
+    },
+    "before": [
+      83,
+      6507,
+      10
+    ],
+    "after": [
+      100,
+      6604,
+      10
+    ],
+    "expected": [
+      "checkout_total",
+      "sales_tax"
+    ],
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_pricing__direct_calls",
+    "kind": "architecture",
+    "module": "service",
+    "function": "checkout_total",
+    "expected": [
+      "line_subtotal",
+      "member_discount",
+      "sales_tax"
+    ],
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_authorization__normalize",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "normalized_scopes",
+      "args": [
+        [
+          " Document:Read ",
+          "document:read",
+          " DOCUMENT:WRITE "
+        ]
+      ]
+    },
+    "expected": [
+      "document:read",
+      "document:write"
+    ],
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_authorization__own_write",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "authorize",
+      "args": [
+        "u1",
+        "u1",
+        "member",
+        [
+          " DOCUMENT:WRITE "
+        ],
+        "write",
+        100,
+        200,
+        false
+      ]
+    },
+    "expected": {
+      "allowed": true,
+      "reason": "allowed"
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_authorization__admin_without_scope",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "authorize",
+      "args": [
+        "u1",
+        "u2",
+        "admin",
+        [
+          "document:read"
+        ],
+        "write",
+        100,
+        200,
+        false
+      ]
+    },
+    "expected": {
+      "allowed": false,
+      "reason": "denied"
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_authorization__expiry",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "can_edit_own",
+      "args": [
+        "u1",
+        [
+          "document:write"
+        ],
+        100,
+        3700
+      ]
+    },
+    "expected": false,
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_authorization__unknown_action",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "authorize",
+      "args": [
+        "u1",
+        "u2",
+        "admin",
+        [
+          "document:read",
+          "document:write"
+        ],
+        "delete",
+        100,
+        200,
+        false
+      ]
+    },
+    "expected": {
+      "allowed": false,
+      "reason": "denied"
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_authorization__future_session",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "can_edit_own",
+      "args": [
+        "u1",
+        [
+          "document:write"
+        ],
+        500,
+        499
+      ]
+    },
+    "expected": false,
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_authorization__session_change",
+    "kind": "impact",
+    "probes": [
+      {
+        "module": "rules",
+        "function": "session_valid",
+        "args": [
+          100,
+          2500,
+          false
+        ]
+      },
+      {
+        "module": "service",
+        "function": "can_edit_own",
+        "args": [
+          "u1",
+          [
+            "document:write"
+          ],
+          100,
+          2500
+        ]
+      },
+      {
+        "module": "service",
+        "function": "user_key",
+        "args": [
+          " U1 "
+        ]
+      }
+    ],
+    "override": {
+      "module": "policy",
+      "name": "MAX_SESSION_AGE",
+      "value": 1800
+    },
+    "before": [
+      true,
+      true,
+      "account:u1"
+    ],
+    "after": [
+      false,
+      false,
+      "account:u1"
+    ],
+    "expected": [
+      "can_edit_own",
+      "session_valid"
+    ],
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_authorization__direct_calls",
+    "kind": "architecture",
+    "module": "service",
+    "function": "authorize",
+    "expected": [
+      "role_allows",
+      "scope_allows",
+      "session_valid"
+    ],
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_routing__path",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "normalize_path",
+      "args": [
+        "  ///orders///  "
+      ]
+    },
+    "expected": "/orders",
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_routing__preferred",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "route_request",
+      "args": [
+        "ab",
+        " /orders/ ",
+        {
+          "east": {
+            "up": true,
+            "latency_ms": 120
+          },
+          "west": {
+            "up": true,
+            "latency_ms": 90
+          }
+        }
+      ]
+    },
+    "expected": "east:/orders",
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_routing__fallback",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "route_request",
+      "args": [
+        "d",
+        " /health/ ",
+        {
+          "east": {
+            "up": true,
+            "latency_ms": 151
+          },
+          "west": {
+            "up": true,
+            "latency_ms": 100
+          }
+        }
+      ]
+    },
+    "expected": "west-canary:/health",
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_routing__latency_edge",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "healthy",
+      "args": [
+        {
+          "up": true,
+          "latency_ms": 150
+        }
+      ]
+    },
+    "expected": true,
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_routing__no_backend",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "route_request",
+      "args": [
+        "d",
+        "/orders",
+        {
+          "east": {
+            "up": false,
+            "latency_ms": 10
+          },
+          "west": {
+            "up": true,
+            "latency_ms": 200
+          }
+        }
+      ]
+    },
+    "expected": "unavailable",
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_routing__retry_exhausted",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "retry_destination",
+      "args": [
+        "d",
+        "/health",
+        {
+          "east": {
+            "up": true,
+            "latency_ms": 120
+          },
+          "west": {
+            "up": true,
+            "latency_ms": 90
+          }
+        },
+        3
+      ]
+    },
+    "expected": "exhausted",
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_routing__canary_change",
+    "kind": "impact",
+    "probes": [
+      {
+        "module": "rules",
+        "function": "use_canary",
+        "args": [
+          "d"
+        ]
+      },
+      {
+        "module": "service",
+        "function": "route_request",
+        "args": [
+          "d",
+          "/x",
+          {
+            "east": {
+              "up": true,
+              "latency_ms": 120
+            },
+            "west": {
+              "up": true,
+              "latency_ms": 90
+            }
+          }
+        ]
+      },
+      {
+        "module": "service",
+        "function": "route_tag",
+        "args": [
+          "east"
+        ]
+      }
+    ],
+    "override": {
+      "module": "policy",
+      "name": "CANARY_PERCENT",
+      "value": 0
+    },
+    "before": [
+      true,
+      "east-canary:/x",
+      "route:EAST"
+    ],
+    "after": [
+      false,
+      "east:/x",
+      "route:EAST"
+    ],
+    "expected": [
+      "route_request",
+      "use_canary"
+    ],
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_routing__direct_calls",
+    "kind": "architecture",
+    "module": "service",
+    "function": "route_request",
+    "expected": [
+      "healthy",
+      "normalize_path",
+      "use_canary"
+    ],
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_inventory__allocation",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "allocate",
+      "args": [
+        4,
+        7,
+        false
+      ]
+    },
+    "expected": 0,
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_inventory__partial",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "reserve",
+      "args": [
+        12,
+        4,
+        7,
+        true,
+        100
+      ]
+    },
+    "expected": {
+      "expires": 1000,
+      "status": "partial",
+      "units": 5
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_inventory__remaining",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "remaining_after",
+      "args": [
+        20,
+        2,
+        6,
+        false
+      ]
+    },
+    "expected": 9,
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_inventory__order_limit",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "reserve",
+      "args": [
+        100,
+        0,
+        13,
+        true,
+        50
+      ]
+    },
+    "expected": {
+      "expires": 50,
+      "status": "denied",
+      "units": 0
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_inventory__safety_buffer",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "reserve",
+      "args": [
+        8,
+        5,
+        1,
+        true,
+        200
+      ]
+    },
+    "expected": {
+      "expires": 200,
+      "status": "denied",
+      "units": 0
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_inventory__all_or_nothing",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "remaining_after",
+      "args": [
+        14,
+        3,
+        9,
+        false
+      ]
+    },
+    "expected": 8,
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_inventory__buffer_change",
+    "kind": "impact",
+    "probes": [
+      {
+        "module": "rules",
+        "function": "sellable",
+        "args": [
+          12,
+          4
+        ]
+      },
+      {
+        "module": "service",
+        "function": "reserve",
+        "args": [
+          12,
+          4,
+          7,
+          true,
+          100
+        ]
+      },
+      {
+        "module": "service",
+        "function": "stock_label",
+        "args": [
+          12
+        ]
+      }
+    ],
+    "override": {
+      "module": "policy",
+      "name": "SAFETY_STOCK",
+      "value": 5
+    },
+    "before": [
+      5,
+      {
+        "expires": 1000,
+        "status": "partial",
+        "units": 5
+      },
+      "stocked"
+    ],
+    "after": [
+      3,
+      {
+        "expires": 1000,
+        "status": "partial",
+        "units": 3
+      },
+      "stocked"
+    ],
+    "expected": [
+      "reserve",
+      "sellable"
+    ],
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_inventory__direct_calls",
+    "kind": "architecture",
+    "module": "service",
+    "function": "reserve",
+    "expected": [
+      "allocate",
+      "sellable",
+      "valid_quantity"
+    ],
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_cache__resource",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "normalize_resource",
+      "args": [
+        "  North/East Plan  "
+      ]
+    },
+    "expected": "north/east_plan",
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_cache__canonical_key",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "render_cache_key",
+      "args": [
+        " TEAM-A ",
+        " Summary View ",
+        {
+          "z": 2,
+          "a": 1,
+          "trace": "on"
+        }
+      ]
+    },
+    "expected": "render|team-a|summary_view|a=1&z=2|v4",
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_cache__private_entry",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "cache_entry",
+      "args": [
+        " ",
+        " Revenue ",
+        {
+          "debug": 1
+        },
+        null,
+        true,
+        100
+      ]
+    },
+    "expected": {
+      "expires": 130,
+      "key": "render|public|revenue||v4",
+      "store": true
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_cache__negative_ttl",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "cache_ttl",
+      "args": [
+        -1,
+        false
+      ]
+    },
+    "expected": 0,
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_cache__public_lifetime",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "cache_entry",
+      "args": [
+        "ACME",
+        "Monthly Sales",
+        {
+          "b": 2,
+          "a": 1
+        },
+        5000,
+        false,
+        10
+      ]
+    },
+    "expected": {
+      "expires": 3610,
+      "key": "render|acme|monthly_sales|a=1&b=2|v4",
+      "store": true
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_cache__do_not_store",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "cache_entry",
+      "args": [
+        "ACME",
+        "Daily",
+        {},
+        0,
+        true,
+        50
+      ]
+    },
+    "expected": {
+      "expires": 50,
+      "key": "render|acme|daily||v4",
+      "store": false
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_cache__schema_change",
+    "kind": "impact",
+    "probes": [
+      {
+        "module": "service",
+        "function": "render_cache_key",
+        "args": [
+          "ACME",
+          "Daily",
+          {}
+        ]
+      },
+      {
+        "module": "service",
+        "function": "cache_entry",
+        "args": [
+          "ACME",
+          "Daily",
+          {},
+          60,
+          false,
+          10
+        ]
+      },
+      {
+        "module": "service",
+        "function": "cache_partition",
+        "args": [
+          "ACME"
+        ]
+      }
+    ],
+    "override": {
+      "module": "policy",
+      "name": "SCHEMA_VERSION",
+      "value": 5
+    },
+    "before": [
+      "render|acme|daily||v4",
+      {
+        "expires": 70,
+        "key": "render|acme|daily||v4",
+        "store": true
+      },
+      6
+    ],
+    "after": [
+      "render|acme|daily||v5",
+      {
+        "expires": 70,
+        "key": "render|acme|daily||v5",
+        "store": true
+      },
+      6
+    ],
+    "expected": [
+      "cache_entry",
+      "render_cache_key"
+    ],
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_cache__direct_calls",
+    "kind": "architecture",
+    "module": "service",
+    "function": "render_cache_key",
+    "expected": [
+      "canonical_query",
+      "normalize_resource",
+      "normalize_tenant"
+    ],
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_schedules__rounding",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "round_slot",
+      "args": [
+        541
+      ]
+    },
+    "expected": 570,
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_schedules__busy_buffer",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "first_available",
+      "args": [
+        0,
+        540,
+        30,
+        [
+          [
+            570,
+            600
+          ]
+        ]
+      ]
+    },
+    "expected": 630,
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_schedules__appointment",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "appointment",
+      "args": [
+        2,
+        556,
+        60,
+        [
+          [
+            600,
+            660
+          ]
+        ]
+      ]
+    },
+    "expected": {
+      "day": 2,
+      "end": 750,
+      "start": 690
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_schedules__closing_edge",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "first_available",
+      "args": [
+        4,
+        990,
+        30,
+        []
+      ]
+    },
+    "expected": 990,
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_schedules__weekend",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "appointment",
+      "args": [
+        5,
+        600,
+        30,
+        []
+      ]
+    },
+    "expected": {
+      "day": 5,
+      "end": -1,
+      "start": -1
+    },
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_schedules__too_late",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "first_available",
+      "args": [
+        1,
+        1000,
+        30,
+        []
+      ]
+    },
+    "expected": -1,
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_schedules__buffer_change",
+    "kind": "impact",
+    "probes": [
+      {
+        "module": "rules",
+        "function": "overlaps",
+        "args": [
+          540,
+          570,
+          [
+            [
+              570,
+              600
+            ]
+          ]
+        ]
+      },
+      {
+        "module": "service",
+        "function": "first_available",
+        "args": [
+          0,
+          540,
+          30,
+          [
+            [
+              570,
+              600
+            ]
+          ]
+        ]
+      },
+      {
+        "module": "service",
+        "function": "weekday_label",
+        "args": [
+          0
+        ]
+      }
+    ],
+    "override": {
+      "module": "policy",
+      "name": "BUFFER_MINUTES",
+      "value": 0
+    },
+    "before": [
+      true,
+      630,
+      "mon"
+    ],
+    "after": [
+      false,
+      540,
+      "mon"
+    ],
+    "expected": [
+      "first_available",
+      "overlaps"
+    ],
+    "independent_check_passed": true
+  },
+  {
+    "id": "eval_schedules__direct_calls",
+    "kind": "architecture",
+    "module": "service",
+    "function": "first_available",
+    "expected": [
+      "overlaps",
+      "round_slot",
+      "valid_duration",
+      "working_day"
+    ],
+    "independent_check_passed": true
+  }
+]

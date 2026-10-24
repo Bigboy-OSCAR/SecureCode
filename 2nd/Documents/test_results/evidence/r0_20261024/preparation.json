@@ -1,0 +1,44 @@
+{
+  "dev_shipping": {
+    "graph_seconds": 0.0009379580005770549,
+    "raw_candidate_seconds": 5.587500345427543e-05,
+    "raw_candidates": 46,
+    "scope": "Single warm-filesystem preparation, descriptive only"
+  },
+  "eval_authorization": {
+    "graph_seconds": 0.0007814580021658912,
+    "raw_candidate_seconds": 5.0249997002538294e-05,
+    "raw_candidates": 46,
+    "scope": "Single warm-filesystem preparation, descriptive only"
+  },
+  "eval_cache": {
+    "graph_seconds": 0.0007507909976993687,
+    "raw_candidate_seconds": 4.595799691742286e-05,
+    "raw_candidates": 45,
+    "scope": "Single warm-filesystem preparation, descriptive only"
+  },
+  "eval_inventory": {
+    "graph_seconds": 0.0006669579961453564,
+    "raw_candidate_seconds": 4.579200322041288e-05,
+    "raw_candidates": 44,
+    "scope": "Single warm-filesystem preparation, descriptive only"
+  },
+  "eval_pricing": {
+    "graph_seconds": 0.0006590830016648397,
+    "raw_candidate_seconds": 4.41250012954697e-05,
+    "raw_candidates": 44,
+    "scope": "Single warm-filesystem preparation, descriptive only"
+  },
+  "eval_routing": {
+    "graph_seconds": 0.0006600420019822195,
+    "raw_candidate_seconds": 4.4874999730382115e-05,
+    "raw_candidates": 44,
+    "scope": "Single warm-filesystem preparation, descriptive only"
+  },
+  "eval_schedules": {
+    "graph_seconds": 0.0007592499969177879,
+    "raw_candidate_seconds": 4.5417000364977866e-05,
+    "raw_candidates": 45,
+    "scope": "Single warm-filesystem preparation, descriptive only"
+  }
+}

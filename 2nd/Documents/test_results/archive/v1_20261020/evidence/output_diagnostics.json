@@ -1,0 +1,722 @@
+{
+  "created_at_utc": "2026-10-20T10:05:20.485306+00:00",
+  "status": "snapshot_complete",
+  "script_sha256": "61dc56a7f165527ed08b107552b7872884f0a4c58c8898b3dc139371808514e7",
+  "scope": "Only results_eval_*.jsonl; excludes development and calibration records.",
+  "primary_scoring_modified": false,
+  "supplementary_rule": "Only normally completed, schema-valid wrong answers whose actual and expected values are duplicate-free lists of exactly the same case-sensitive strings are credited after ignoring order. All other strict failures are retained.",
+  "interpretation": "The strict primary score measures answer correctness plus compliance with requested output order. The order-tolerant score is an explicitly post-hoc diagnostic of whether ordering alone explains the failure; it is not a replacement experiment.",
+  "datasets": {
+    "results_eval_budget512.jsonl": {
+      "snapshot_sha256": "f2feddeecac78071c01c68118b3ecefd19c1187f567058288d8ab756f7e94ca3",
+      "snapshot_bytes": 967348,
+      "ignored_incomplete_final_rows": 0,
+      "budgets": [
+        512
+      ],
+      "summary": {
+        "rows": 96,
+        "distinct_tasks": 48,
+        "strict_correct": 12,
+        "strict_accuracy": 0.125,
+        "order_only_failure_count": 5,
+        "order_tolerant_correct": 17,
+        "order_tolerant_accuracy": 0.17708333333333334,
+        "failure_counts_strict": {
+          "json": 2,
+          "schema": 1,
+          "abstain": 4,
+          "limit": 0,
+          "wrong": 77,
+          "selector": 0,
+          "execution": 0,
+          "other": 0
+        },
+        "raw_failure_labels_strict": {
+          "abstained": 4,
+          "invalid_json": 2,
+          "invalid_schema": 1,
+          "wrong_answer": 77
+        },
+        "note": "Order-tolerant values are a post-hoc supplementary diagnostic, not the primary score."
+      },
+      "by_arm": {
+        "R0": {
+          "rows": 48,
+          "distinct_tasks": 48,
+          "strict_correct": 8,
+          "strict_accuracy": 0.16666666666666666,
+          "order_only_failure_count": 2,
+          "order_tolerant_correct": 10,
+          "order_tolerant_accuracy": 0.20833333333333334,
+          "failure_counts_strict": {
+            "json": 1,
+            "schema": 1,
+            "abstain": 0,
+            "limit": 0,
+            "wrong": 38,
+            "selector": 0,
+            "execution": 0,
+            "other": 0
+          },
+          "raw_failure_labels_strict": {
+            "invalid_json": 1,
+            "invalid_schema": 1,
+            "wrong_answer": 38
+          },
+          "note": "Order-tolerant values are a post-hoc supplementary diagnostic, not the primary score."
+        },
+        "RH": {
+          "rows": 48,
+          "distinct_tasks": 48,
+          "strict_correct": 4,
+          "strict_accuracy": 0.08333333333333333,
+          "order_only_failure_count": 3,
+          "order_tolerant_correct": 7,
+          "order_tolerant_accuracy": 0.14583333333333334,
+          "failure_counts_strict": {
+            "json": 1,
+            "schema": 0,
+            "abstain": 4,
+            "limit": 0,
+            "wrong": 39,
+            "selector": 0,
+            "execution": 0,
+            "other": 0
+          },
+          "raw_failure_labels_strict": {
+            "abstained": 4,
+            "invalid_json": 1,
+            "wrong_answer": 39
+          },
+          "note": "Order-tolerant values are a post-hoc supplementary diagnostic, not the primary score."
+        }
+      }
+    },
+    "results_eval_main.jsonl": {
+      "snapshot_sha256": "2c619e280d34a8c04f5865fc35caf4902e93cb4710a59ae6cc5cdcca9f6497d9",
+      "snapshot_bytes": 8108830,
+      "ignored_incomplete_final_rows": 0,
+      "budgets": [
+        1024
+      ],
+      "summary": {
+        "rows": 720,
+        "distinct_tasks": 48,
+        "strict_correct": 150,
+        "strict_accuracy": 0.20833333333333334,
+        "order_only_failure_count": 21,
+        "order_tolerant_correct": 171,
+        "order_tolerant_accuracy": 0.2375,
+        "failure_counts_strict": {
+          "json": 27,
+          "schema": 3,
+          "abstain": 15,
+          "limit": 0,
+          "wrong": 525,
+          "selector": 0,
+          "execution": 0,
+          "other": 0
+        },
+        "raw_failure_labels_strict": {
+          "abstained": 15,
+          "invalid_json": 27,
+          "invalid_schema": 3,
+          "wrong_answer": 525
+        },
+        "note": "Order-tolerant values are a post-hoc supplementary diagnostic, not the primary score."
+      },
+      "by_arm": {
+        "A": {
+          "rows": 144,
+          "distinct_tasks": 48,
+          "strict_correct": 24,
+          "strict_accuracy": 0.16666666666666666,
+          "order_only_failure_count": 0,
+          "order_tolerant_correct": 24,
+          "order_tolerant_accuracy": 0.16666666666666666,
+          "failure_counts_strict": {
+            "json": 6,
+            "schema": 0,
+            "abstain": 3,
+            "limit": 0,
+            "wrong": 111,
+            "selector": 0,
+            "execution": 0,
+            "other": 0
+          },
+          "raw_failure_labels_strict": {
+            "abstained": 3,
+            "invalid_json": 6,
+            "wrong_answer": 111
+          },
+          "note": "Order-tolerant values are a post-hoc supplementary diagnostic, not the primary score."
+        },
+        "B": {
+          "rows": 144,
+          "distinct_tasks": 48,
+          "strict_correct": 36,
+          "strict_accuracy": 0.25,
+          "order_only_failure_count": 3,
+          "order_tolerant_correct": 39,
+          "order_tolerant_accuracy": 0.2708333333333333,
+          "failure_counts_strict": {
+            "json": 9,
+            "schema": 3,
+            "abstain": 3,
+            "limit": 0,
+            "wrong": 93,
+            "selector": 0,
+            "execution": 0,
+            "other": 0
+          },
+          "raw_failure_labels_strict": {
+            "abstained": 3,
+            "invalid_json": 9,
+            "invalid_schema": 3,
+            "wrong_answer": 93
+          },
+          "note": "Order-tolerant values are a post-hoc supplementary diagnostic, not the primary score."
+        },
+        "R0": {
+          "rows": 144,
+          "distinct_tasks": 48,
+          "strict_correct": 36,
+          "strict_accuracy": 0.25,
+          "order_only_failure_count": 0,
+          "order_tolerant_correct": 36,
+          "order_tolerant_accuracy": 0.25,
+          "failure_counts_strict": {
+            "json": 6,
+            "schema": 0,
+            "abstain": 0,
+            "limit": 0,
+            "wrong": 102,
+            "selector": 0,
+            "execution": 0,
+            "other": 0
+          },
+          "raw_failure_labels_strict": {
+            "invalid_json": 6,
+            "wrong_answer": 102
+          },
+          "note": "Order-tolerant values are a post-hoc supplementary diagnostic, not the primary score."
+        },
+        "RF": {
+          "rows": 144,
+          "distinct_tasks": 48,
+          "strict_correct": 27,
+          "strict_accuracy": 0.1875,
+          "order_only_failure_count": 9,
+          "order_tolerant_correct": 36,
+          "order_tolerant_accuracy": 0.25,
+          "failure_counts_strict": {
+            "json": 3,
+            "schema": 0,
+            "abstain": 3,
+            "limit": 0,
+            "wrong": 111,
+            "selector": 0,
+            "execution": 0,
+            "other": 0
+          },
+          "raw_failure_labels_strict": {
+            "abstained": 3,
+            "invalid_json": 3,
+            "wrong_answer": 111
+          },
+          "note": "Order-tolerant values are a post-hoc supplementary diagnostic, not the primary score."
+        },
+        "RH": {
+          "rows": 144,
+          "distinct_tasks": 48,
+          "strict_correct": 27,
+          "strict_accuracy": 0.1875,
+          "order_only_failure_count": 9,
+          "order_tolerant_correct": 36,
+          "order_tolerant_accuracy": 0.25,
+          "failure_counts_strict": {
+            "json": 3,
+            "schema": 0,
+            "abstain": 6,
+            "limit": 0,
+            "wrong": 108,
+            "selector": 0,
+            "execution": 0,
+            "other": 0
+          },
+          "raw_failure_labels_strict": {
+            "abstained": 6,
+            "invalid_json": 3,
+            "wrong_answer": 108
+          },
+          "note": "Order-tolerant values are a post-hoc supplementary diagnostic, not the primary score."
+        }
+      }
+    }
+  },
+  "order_only_failures": [
+    {
+      "result_file": "results_eval_budget512.jsonl",
+      "task_id": "eval_schedules__buffer_change",
+      "category": "change_impact",
+      "arm": "RH",
+      "repeat_zero_based": 0,
+      "budget": 512,
+      "actual": [
+        "overlaps",
+        "first_available"
+      ],
+      "expected": [
+        "first_available",
+        "overlaps"
+      ],
+      "answer_call_id": "a77595501a491f8e"
+    },
+    {
+      "result_file": "results_eval_budget512.jsonl",
+      "task_id": "eval_cache__direct_calls",
+      "category": "architecture",
+      "arm": "R0",
+      "repeat_zero_based": 0,
+      "budget": 512,
+      "actual": [
+        "normalize_resource",
+        "normalize_tenant",
+        "canonical_query"
+      ],
+      "expected": [
+        "canonical_query",
+        "normalize_resource",
+        "normalize_tenant"
+      ],
+      "answer_call_id": "3b5c2b883c4ee911"
+    },
+    {
+      "result_file": "results_eval_budget512.jsonl",
+      "task_id": "eval_cache__schema_change",
+      "category": "change_impact",
+      "arm": "RH",
+      "repeat_zero_based": 0,
+      "budget": 512,
+      "actual": [
+        "render_cache_key",
+        "cache_entry"
+      ],
+      "expected": [
+        "cache_entry",
+        "render_cache_key"
+      ],
+      "answer_call_id": "3144d93fd9131fcd"
+    },
+    {
+      "result_file": "results_eval_budget512.jsonl",
+      "task_id": "eval_inventory__buffer_change",
+      "category": "change_impact",
+      "arm": "R0",
+      "repeat_zero_based": 0,
+      "budget": 512,
+      "actual": [
+        "sellable",
+        "reserve"
+      ],
+      "expected": [
+        "reserve",
+        "sellable"
+      ],
+      "answer_call_id": "117a69ae49ad5296"
+    },
+    {
+      "result_file": "results_eval_budget512.jsonl",
+      "task_id": "eval_cache__direct_calls",
+      "category": "architecture",
+      "arm": "RH",
+      "repeat_zero_based": 0,
+      "budget": 512,
+      "actual": [
+        "normalize_resource",
+        "normalize_tenant",
+        "canonical_query"
+      ],
+      "expected": [
+        "canonical_query",
+        "normalize_resource",
+        "normalize_tenant"
+      ],
+      "answer_call_id": "09c6dfbe629dc2be"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_pricing__tax_change",
+      "category": "change_impact",
+      "arm": "RH",
+      "repeat_zero_based": 0,
+      "budget": 1024,
+      "actual": [
+        "sales_tax",
+        "checkout_total"
+      ],
+      "expected": [
+        "checkout_total",
+        "sales_tax"
+      ],
+      "answer_call_id": "152ba9e335eb7999"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_pricing__tax_change",
+      "category": "change_impact",
+      "arm": "RH",
+      "repeat_zero_based": 1,
+      "budget": 1024,
+      "actual": [
+        "sales_tax",
+        "checkout_total"
+      ],
+      "expected": [
+        "checkout_total",
+        "sales_tax"
+      ],
+      "answer_call_id": "e93207a13cf2b105"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_inventory__buffer_change",
+      "category": "change_impact",
+      "arm": "RH",
+      "repeat_zero_based": 1,
+      "budget": 1024,
+      "actual": [
+        "sellable",
+        "reserve"
+      ],
+      "expected": [
+        "reserve",
+        "sellable"
+      ],
+      "answer_call_id": "5bb1daa55a3ae5be"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_cache__direct_calls",
+      "category": "architecture",
+      "arm": "B",
+      "repeat_zero_based": 2,
+      "budget": 1024,
+      "actual": [
+        "normalize_resource",
+        "normalize_tenant",
+        "canonical_query"
+      ],
+      "expected": [
+        "canonical_query",
+        "normalize_resource",
+        "normalize_tenant"
+      ],
+      "answer_call_id": "0a8a125f17b05d24"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_schedules__buffer_change",
+      "category": "change_impact",
+      "arm": "RH",
+      "repeat_zero_based": 2,
+      "budget": 1024,
+      "actual": [
+        "overlaps",
+        "first_available"
+      ],
+      "expected": [
+        "first_available",
+        "overlaps"
+      ],
+      "answer_call_id": "40d26edbc6040ec3"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_schedules__buffer_change",
+      "category": "change_impact",
+      "arm": "RF",
+      "repeat_zero_based": 2,
+      "budget": 1024,
+      "actual": [
+        "overlaps",
+        "first_available"
+      ],
+      "expected": [
+        "first_available",
+        "overlaps"
+      ],
+      "answer_call_id": "2bc5ffcfeb9f035a"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_schedules__buffer_change",
+      "category": "change_impact",
+      "arm": "RH",
+      "repeat_zero_based": 0,
+      "budget": 1024,
+      "actual": [
+        "overlaps",
+        "first_available"
+      ],
+      "expected": [
+        "first_available",
+        "overlaps"
+      ],
+      "answer_call_id": "a2ba02c620fa7787"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_inventory__buffer_change",
+      "category": "change_impact",
+      "arm": "RF",
+      "repeat_zero_based": 1,
+      "budget": 1024,
+      "actual": [
+        "sellable",
+        "reserve"
+      ],
+      "expected": [
+        "reserve",
+        "sellable"
+      ],
+      "answer_call_id": "f42a2a6763e2e23b"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_pricing__tax_change",
+      "category": "change_impact",
+      "arm": "RF",
+      "repeat_zero_based": 0,
+      "budget": 1024,
+      "actual": [
+        "sales_tax",
+        "checkout_total"
+      ],
+      "expected": [
+        "checkout_total",
+        "sales_tax"
+      ],
+      "answer_call_id": "107e7a1ccf2fab51"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_inventory__buffer_change",
+      "category": "change_impact",
+      "arm": "RF",
+      "repeat_zero_based": 2,
+      "budget": 1024,
+      "actual": [
+        "sellable",
+        "reserve"
+      ],
+      "expected": [
+        "reserve",
+        "sellable"
+      ],
+      "answer_call_id": "8416f78191bae172"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_schedules__buffer_change",
+      "category": "change_impact",
+      "arm": "RH",
+      "repeat_zero_based": 1,
+      "budget": 1024,
+      "actual": [
+        "overlaps",
+        "first_available"
+      ],
+      "expected": [
+        "first_available",
+        "overlaps"
+      ],
+      "answer_call_id": "1386748648259724"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_pricing__tax_change",
+      "category": "change_impact",
+      "arm": "RF",
+      "repeat_zero_based": 2,
+      "budget": 1024,
+      "actual": [
+        "sales_tax",
+        "checkout_total"
+      ],
+      "expected": [
+        "checkout_total",
+        "sales_tax"
+      ],
+      "answer_call_id": "09ef0120f6376a38"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_cache__direct_calls",
+      "category": "architecture",
+      "arm": "B",
+      "repeat_zero_based": 1,
+      "budget": 1024,
+      "actual": [
+        "normalize_resource",
+        "normalize_tenant",
+        "canonical_query"
+      ],
+      "expected": [
+        "canonical_query",
+        "normalize_resource",
+        "normalize_tenant"
+      ],
+      "answer_call_id": "3818492cd5212e14"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_inventory__buffer_change",
+      "category": "change_impact",
+      "arm": "RH",
+      "repeat_zero_based": 0,
+      "budget": 1024,
+      "actual": [
+        "sellable",
+        "reserve"
+      ],
+      "expected": [
+        "reserve",
+        "sellable"
+      ],
+      "answer_call_id": "465a73643f18a1db"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_schedules__buffer_change",
+      "category": "change_impact",
+      "arm": "RF",
+      "repeat_zero_based": 0,
+      "budget": 1024,
+      "actual": [
+        "overlaps",
+        "first_available"
+      ],
+      "expected": [
+        "first_available",
+        "overlaps"
+      ],
+      "answer_call_id": "f60a95e6e3e8a576"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_inventory__buffer_change",
+      "category": "change_impact",
+      "arm": "RH",
+      "repeat_zero_based": 2,
+      "budget": 1024,
+      "actual": [
+        "sellable",
+        "reserve"
+      ],
+      "expected": [
+        "reserve",
+        "sellable"
+      ],
+      "answer_call_id": "5d58ef7139d3fac6"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_schedules__buffer_change",
+      "category": "change_impact",
+      "arm": "RF",
+      "repeat_zero_based": 1,
+      "budget": 1024,
+      "actual": [
+        "overlaps",
+        "first_available"
+      ],
+      "expected": [
+        "first_available",
+        "overlaps"
+      ],
+      "answer_call_id": "fb4722ebe286cd65"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_inventory__buffer_change",
+      "category": "change_impact",
+      "arm": "RF",
+      "repeat_zero_based": 0,
+      "budget": 1024,
+      "actual": [
+        "sellable",
+        "reserve"
+      ],
+      "expected": [
+        "reserve",
+        "sellable"
+      ],
+      "answer_call_id": "a0629631f661e61a"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_pricing__tax_change",
+      "category": "change_impact",
+      "arm": "RH",
+      "repeat_zero_based": 2,
+      "budget": 1024,
+      "actual": [
+        "sales_tax",
+        "checkout_total"
+      ],
+      "expected": [
+        "checkout_total",
+        "sales_tax"
+      ],
+      "answer_call_id": "55266971ef3c84ea"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_pricing__tax_change",
+      "category": "change_impact",
+      "arm": "RF",
+      "repeat_zero_based": 1,
+      "budget": 1024,
+      "actual": [
+        "sales_tax",
+        "checkout_total"
+      ],
+      "expected": [
+        "checkout_total",
+        "sales_tax"
+      ],
+      "answer_call_id": "0bdac0f55e4c53d1"
+    },
+    {
+      "result_file": "results_eval_main.jsonl",
+      "task_id": "eval_cache__direct_calls",
+      "category": "architecture",
+      "arm": "B",
+      "repeat_zero_based": 0,
+      "budget": 1024,
+      "actual": [
+        "normalize_resource",
+        "normalize_tenant",
+        "canonical_query"
+      ],
+      "expected": [
+        "canonical_query",
+        "normalize_resource",
+        "normalize_tenant"
+      ],
+      "answer_call_id": "94c498a0ff9e887e"
+    }
+  ],
+  "totals_for_audit_only": {
+    "rows": 816,
+    "order_only_failure_count": 26,
+    "warning": "Files may use different budgets/repetition counts. Do not use this pooled total to rank arms."
+  },
+  "limitations": [
+    "A snapshot can be incomplete while evaluation is running; rerun after completion.",
+    "Repeated rows are repeated measurements, not independent questions.",
+    "No recomputation, model calls, prompt edits, or primary-score changes are performed."
+  ]
+}

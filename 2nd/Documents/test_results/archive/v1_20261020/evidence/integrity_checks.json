@@ -1,0 +1,102 @@
+{
+  "created_at_utc": "2026-10-20T10:05:21.874291+00:00",
+  "status": "passed",
+  "checks_passed": 9,
+  "checks_total": 9,
+  "integrity_script_sha256": "2f23d6d76389f883e3016b42a89ece61f49daa3d5359409c3a854d36664b3012",
+  "experiment_sha256_at_audit": "b8f664facdff58c7b410f704216611e5a4e5bbd239ac394a9bb4e5f29f9234cb",
+  "checks": [
+    {
+      "name": "dataset_counts_and_categories",
+      "passed": true,
+      "detail": {
+        "development_tasks": 8,
+        "evaluation_tasks": 48,
+        "projects": 7
+      }
+    },
+    {
+      "name": "source_hashes_and_resolvable_gold_uris",
+      "passed": true,
+      "detail": {
+        "referenced_uri_occurrences": 459,
+        "source_hashes_verified": 7
+      }
+    },
+    {
+      "name": "gold_reexecution",
+      "passed": true,
+      "detail": {
+        "execution_values_recomputed": 42,
+        "policy_interventions_recomputed": 7,
+        "direct_call_sets_recomputed": 7,
+        "note": "Fresh Python execution; uses corpus execution helper, no model calls."
+      }
+    },
+    {
+      "name": "dependency_graph_and_B_limits",
+      "passed": true,
+      "detail": {
+        "known_dependency_sets": 3,
+        "B_depth_fixture": 2,
+        "B_function_cap": 8
+      }
+    },
+    {
+      "name": "strict_JSON_grading",
+      "passed": true,
+      "detail": {
+        "positive_cases": 4,
+        "negative_cases": 14,
+        "strict_type_and_list_order": true,
+        "presentation_wrapper": "One complete outer JSON code fence accepted; inner value unchanged."
+      }
+    },
+    {
+      "name": "packing_limits_and_no_partial_fragments",
+      "passed": true,
+      "detail": {
+        "whole_node_skipping": true,
+        "deduplicates_fully_seen_raw_nodes": true,
+        "unit_tokenizer": "character-count fake; not a substitute for model tokenization"
+      }
+    },
+    {
+      "name": "raw_atomic_candidate_coverage",
+      "passed": true,
+      "detail": {
+        "projects_with_atomic_source_access": 7
+      }
+    },
+    {
+      "name": "asset_provenance_and_question_separation",
+      "passed": true,
+      "detail": {
+        "completed_assets_audited": 7,
+        "expected_assets": 7,
+        "build_prompts_audited": 141,
+        "scope": "File boundaries, URI provenance, exact-question absence; not a semantic non-leakage proof."
+      }
+    },
+    {
+      "name": "saved_context_and_result_accounting",
+      "passed": true,
+      "detail": {
+        "saved_result_rows_audited": 856,
+        "files": {
+          "results_dev_main.jsonl": 40,
+          "results_eval_budget512.jsonl": 96,
+          "results_eval_main.jsonl": 720
+        },
+        "token_note": "Checks recorded Qwen token counts; no server/tokenizer re-call."
+      }
+    }
+  ],
+  "limitations": [
+    "Offline audit; no model/server calls and no retokenization of recorded contexts.",
+    "Build/evaluation may be active; asset and result counts describe this snapshot.",
+    "No semantic accuracy certification of generated summaries.",
+    "Only the current top-level-function and static from-import synthetic corpus is covered.",
+    "Raw source/provenance coverage does not prove that summaries preserve required facts."
+  ]
+}

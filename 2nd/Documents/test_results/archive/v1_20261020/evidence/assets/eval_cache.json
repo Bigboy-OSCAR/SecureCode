@@ -1,0 +1,1699 @@
+{
+  "project": "eval_cache",
+  "nodes": {
+    "memory://symbol/audit.py::AUDIT_VERSION": {
+      "id": "memory://symbol/audit.py::AUDIT_VERSION",
+      "path": "audit.py",
+      "name": "AUDIT_VERSION",
+      "source": "AUDIT_VERSION = 2",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::MAX_RECENT_EVENTS": {
+      "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+      "path": "audit.py",
+      "name": "MAX_RECENT_EVENTS",
+      "source": "MAX_RECENT_EVENTS = 20",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::REDACTION_MARKER": {
+      "id": "memory://symbol/audit.py::REDACTION_MARKER",
+      "path": "audit.py",
+      "name": "REDACTION_MARKER",
+      "source": "REDACTION_MARKER = \"***\"",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::DEFAULT_ACTOR": {
+      "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+      "path": "audit.py",
+      "name": "DEFAULT_ACTOR",
+      "source": "DEFAULT_ACTOR = \"system\"",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::audit_key": {
+      "id": "memory://symbol/audit.py::audit_key",
+      "path": "audit.py",
+      "name": "audit_key",
+      "source": "def audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+      "imports": "",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "AUDIT_VERSION",
+        "action",
+        "actor",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::recent_events": {
+      "id": "memory://symbol/audit.py::recent_events",
+      "path": "audit.py",
+      "name": "recent_events",
+      "source": "def recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+      "imports": "",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "MAX_RECENT_EVENTS",
+        "events"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::redact_identifier": {
+      "id": "memory://symbol/audit.py::redact_identifier",
+      "path": "audit.py",
+      "name": "redact_identifier",
+      "source": "def redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+      "imports": "",
+      "start": 12,
+      "end": 13,
+      "refs": [
+        "REDACTION_MARKER",
+        "identifier",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::event_record": {
+      "id": "memory://symbol/audit.py::event_record",
+      "path": "audit.py",
+      "name": "event_record",
+      "source": "def event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+      "imports": "",
+      "start": 15,
+      "end": 16,
+      "refs": [
+        "AUDIT_VERSION",
+        "DEFAULT_ACTOR",
+        "action",
+        "actor"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/policy.py::CACHE_NAMESPACE": {
+      "id": "memory://symbol/policy.py::CACHE_NAMESPACE",
+      "path": "policy.py",
+      "name": "CACHE_NAMESPACE",
+      "source": "CACHE_NAMESPACE = \"render\"",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::SCHEMA_VERSION": {
+      "id": "memory://symbol/policy.py::SCHEMA_VERSION",
+      "path": "policy.py",
+      "name": "SCHEMA_VERSION",
+      "source": "SCHEMA_VERSION = 4",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::DEFAULT_TTL": {
+      "id": "memory://symbol/policy.py::DEFAULT_TTL",
+      "path": "policy.py",
+      "name": "DEFAULT_TTL",
+      "source": "DEFAULT_TTL = 300",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::PRIVATE_TTL": {
+      "id": "memory://symbol/policy.py::PRIVATE_TTL",
+      "path": "policy.py",
+      "name": "PRIVATE_TTL",
+      "source": "PRIVATE_TTL = 30",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::MAX_TTL": {
+      "id": "memory://symbol/policy.py::MAX_TTL",
+      "path": "policy.py",
+      "name": "MAX_TTL",
+      "source": "MAX_TTL = 3600",
+      "imports": "",
+      "start": 5,
+      "end": 5,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::ANONYMOUS_TENANT": {
+      "id": "memory://symbol/policy.py::ANONYMOUS_TENANT",
+      "path": "policy.py",
+      "name": "ANONYMOUS_TENANT",
+      "source": "ANONYMOUS_TENANT = \"public\"",
+      "imports": "",
+      "start": 6,
+      "end": 6,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::KEY_SEPARATOR": {
+      "id": "memory://symbol/policy.py::KEY_SEPARATOR",
+      "path": "policy.py",
+      "name": "KEY_SEPARATOR",
+      "source": "KEY_SEPARATOR = \"|\"",
+      "imports": "",
+      "start": 7,
+      "end": 7,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS": {
+      "id": "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+      "path": "policy.py",
+      "name": "EXCLUDED_QUERY_KEYS",
+      "source": "EXCLUDED_QUERY_KEYS = (\"trace\", \"debug\")",
+      "imports": "",
+      "start": 8,
+      "end": 8,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::DISPLAY_PREFIX": {
+      "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+      "path": "presentation.py",
+      "name": "DISPLAY_PREFIX",
+      "source": "DISPLAY_PREFIX = \"render\"",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::DISPLAY_WIDTH": {
+      "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+      "path": "presentation.py",
+      "name": "DISPLAY_WIDTH",
+      "source": "DISPLAY_WIDTH = 12",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::UNKNOWN_LABEL": {
+      "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+      "path": "presentation.py",
+      "name": "UNKNOWN_LABEL",
+      "source": "UNKNOWN_LABEL = \"unknown\"",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::MAX_LABEL_LENGTH": {
+      "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+      "path": "presentation.py",
+      "name": "MAX_LABEL_LENGTH",
+      "source": "MAX_LABEL_LENGTH = 48",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::normalize_label": {
+      "id": "memory://symbol/presentation.py::normalize_label",
+      "path": "presentation.py",
+      "name": "normalize_label",
+      "source": "def normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+      "imports": "",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "MAX_LABEL_LENGTH",
+        "label"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::display_reference": {
+      "id": "memory://symbol/presentation.py::display_reference",
+      "path": "presentation.py",
+      "name": "display_reference",
+      "source": "def display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+      "imports": "",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "DISPLAY_PREFIX",
+        "DISPLAY_WIDTH",
+        "reference",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::status_label": {
+      "id": "memory://symbol/presentation.py::status_label",
+      "path": "presentation.py",
+      "name": "status_label",
+      "source": "def status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+      "imports": "",
+      "start": 12,
+      "end": 13,
+      "refs": [
+        "UNKNOWN_LABEL",
+        "code"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::summarize_count": {
+      "id": "memory://symbol/presentation.py::summarize_count",
+      "path": "presentation.py",
+      "name": "summarize_count",
+      "source": "def summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+      "imports": "",
+      "start": 15,
+      "end": 16,
+      "refs": [
+        "DISPLAY_PREFIX",
+        "len",
+        "values"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::normalize_tenant": {
+      "id": "memory://symbol/rules.py::normalize_tenant",
+      "path": "rules.py",
+      "name": "normalize_tenant",
+      "source": "def normalize_tenant(tenant):\n    return tenant.strip().lower() or ANONYMOUS_TENANT",
+      "imports": "from policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS",
+      "start": 3,
+      "end": 4,
+      "refs": [
+        "ANONYMOUS_TENANT",
+        "tenant"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::ANONYMOUS_TENANT"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::normalize_resource": {
+      "id": "memory://symbol/rules.py::normalize_resource",
+      "path": "rules.py",
+      "name": "normalize_resource",
+      "source": "def normalize_resource(resource):\n    return resource.strip().replace(\" \", \"_\").lower()",
+      "imports": "from policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "resource"
+      ],
+      "deps": [],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::canonical_query": {
+      "id": "memory://symbol/rules.py::canonical_query",
+      "path": "rules.py",
+      "name": "canonical_query",
+      "source": "def canonical_query(query):\n    return \"&\".join(str(key) + \"=\" + str(query[key]) for key in sorted(query) if key not in EXCLUDED_QUERY_KEYS)",
+      "imports": "from policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "EXCLUDED_QUERY_KEYS",
+        "key",
+        "query",
+        "sorted",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::cache_ttl": {
+      "id": "memory://symbol/rules.py::cache_ttl",
+      "path": "rules.py",
+      "name": "cache_ttl",
+      "source": "def cache_ttl(requested, private):\n    ceiling = PRIVATE_TTL if private else MAX_TTL\n    return min(max(DEFAULT_TTL if requested is None else requested, 0), ceiling)",
+      "imports": "from policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS",
+      "start": 12,
+      "end": 14,
+      "refs": [
+        "DEFAULT_TTL",
+        "MAX_TTL",
+        "PRIVATE_TTL",
+        "ceiling",
+        "max",
+        "min",
+        "private",
+        "requested"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::DEFAULT_TTL",
+        "memory://symbol/policy.py::MAX_TTL",
+        "memory://symbol/policy.py::PRIVATE_TTL"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::render_cache_key": {
+      "id": "memory://symbol/service.py::render_cache_key",
+      "path": "service.py",
+      "name": "render_cache_key",
+      "source": "def render_cache_key(tenant, resource, query):\n    return KEY_SEPARATOR.join((CACHE_NAMESPACE, normalize_tenant(tenant), normalize_resource(resource), canonical_query(query), \"v\" + str(SCHEMA_VERSION)))",
+      "imports": "from policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl",
+      "start": 4,
+      "end": 5,
+      "refs": [
+        "CACHE_NAMESPACE",
+        "KEY_SEPARATOR",
+        "SCHEMA_VERSION",
+        "canonical_query",
+        "normalize_resource",
+        "normalize_tenant",
+        "query",
+        "resource",
+        "str",
+        "tenant"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::CACHE_NAMESPACE",
+        "memory://symbol/policy.py::KEY_SEPARATOR",
+        "memory://symbol/policy.py::SCHEMA_VERSION",
+        "memory://symbol/rules.py::canonical_query",
+        "memory://symbol/rules.py::normalize_resource",
+        "memory://symbol/rules.py::normalize_tenant"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::cache_entry": {
+      "id": "memory://symbol/service.py::cache_entry",
+      "path": "service.py",
+      "name": "cache_entry",
+      "source": "def cache_entry(tenant, resource, query, requested_ttl, private, now):\n    ttl = cache_ttl(requested_ttl, private)\n    return {\"key\": render_cache_key(tenant, resource, query), \"expires\": now + ttl, \"store\": ttl > 0}",
+      "imports": "from policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl",
+      "start": 7,
+      "end": 9,
+      "refs": [
+        "cache_ttl",
+        "now",
+        "private",
+        "query",
+        "render_cache_key",
+        "requested_ttl",
+        "resource",
+        "tenant",
+        "ttl"
+      ],
+      "deps": [
+        "memory://symbol/rules.py::cache_ttl",
+        "memory://symbol/service.py::render_cache_key"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::cache_partition": {
+      "id": "memory://symbol/service.py::cache_partition",
+      "path": "service.py",
+      "name": "cache_partition",
+      "source": "def cache_partition(tenant):\n    return sum(ord(char) for char in normalize_tenant(tenant)) % 16",
+      "imports": "from policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl",
+      "start": 11,
+      "end": 12,
+      "refs": [
+        "char",
+        "normalize_tenant",
+        "ord",
+        "sum",
+        "tenant"
+      ],
+      "deps": [
+        "memory://symbol/rules.py::normalize_tenant"
+      ],
+      "kind": "function"
+    }
+  },
+  "raw": [
+    {
+      "id": "memory://symbol/audit.py::AUDIT_VERSION",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::MAX_RECENT_EVENTS lines 2-2\n\nMAX_RECENT_EVENTS = 20",
+      "source_uris": [
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::REDACTION_MARKER",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::REDACTION_MARKER lines 3-3\n\nREDACTION_MARKER = \"***\"",
+      "source_uris": [
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::DEFAULT_ACTOR lines 4-4\n\nDEFAULT_ACTOR = \"system\"",
+      "source_uris": [
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::audit_key",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::audit_key lines 6-7\n\ndef audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action\n\n### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::audit_key",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::audit_key lines 6-7\n\ndef audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::recent_events",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::recent_events lines 9-10\n\ndef recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]\n\n### memory://symbol/audit.py::MAX_RECENT_EVENTS lines 2-2\n\nMAX_RECENT_EVENTS = 20",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::recent_events",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::recent_events lines 9-10\n\ndef recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::redact_identifier",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::redact_identifier lines 12-13\n\ndef redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]\n\n### memory://symbol/audit.py::REDACTION_MARKER lines 3-3\n\nREDACTION_MARKER = \"***\"",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::redact_identifier",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::redact_identifier lines 12-13\n\ndef redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::event_record",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::event_record lines 15-16\n\ndef event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}\n\n### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2\n\n### memory://symbol/audit.py::DEFAULT_ACTOR lines 4-4\n\nDEFAULT_ACTOR = \"system\"",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::event_record",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::event_record lines 15-16\n\ndef event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/policy.py::CACHE_NAMESPACE",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::CACHE_NAMESPACE lines 1-1\n\nCACHE_NAMESPACE = \"render\"",
+      "source_uris": [
+        "memory://symbol/policy.py::CACHE_NAMESPACE"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::SCHEMA_VERSION",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::SCHEMA_VERSION lines 2-2\n\nSCHEMA_VERSION = 4",
+      "source_uris": [
+        "memory://symbol/policy.py::SCHEMA_VERSION"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::DEFAULT_TTL",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::DEFAULT_TTL lines 3-3\n\nDEFAULT_TTL = 300",
+      "source_uris": [
+        "memory://symbol/policy.py::DEFAULT_TTL"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::PRIVATE_TTL",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::PRIVATE_TTL lines 4-4\n\nPRIVATE_TTL = 30",
+      "source_uris": [
+        "memory://symbol/policy.py::PRIVATE_TTL"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::MAX_TTL",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::MAX_TTL lines 5-5\n\nMAX_TTL = 3600",
+      "source_uris": [
+        "memory://symbol/policy.py::MAX_TTL"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::ANONYMOUS_TENANT",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::ANONYMOUS_TENANT lines 6-6\n\nANONYMOUS_TENANT = \"public\"",
+      "source_uris": [
+        "memory://symbol/policy.py::ANONYMOUS_TENANT"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::KEY_SEPARATOR",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::KEY_SEPARATOR lines 7-7\n\nKEY_SEPARATOR = \"|\"",
+      "source_uris": [
+        "memory://symbol/policy.py::KEY_SEPARATOR"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::EXCLUDED_QUERY_KEYS lines 8-8\n\nEXCLUDED_QUERY_KEYS = (\"trace\", \"debug\")",
+      "source_uris": [
+        "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"render\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::DISPLAY_WIDTH lines 2-2\n\nDISPLAY_WIDTH = 12",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::UNKNOWN_LABEL lines 3-3\n\nUNKNOWN_LABEL = \"unknown\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::MAX_LABEL_LENGTH lines 4-4\n\nMAX_LABEL_LENGTH = 48",
+      "source_uris": [
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::normalize_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::normalize_label lines 6-7\n\ndef normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]\n\n### memory://symbol/presentation.py::MAX_LABEL_LENGTH lines 4-4\n\nMAX_LABEL_LENGTH = 48",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::normalize_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::normalize_label lines 6-7\n\ndef normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::display_reference",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::display_reference lines 9-10\n\ndef display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"render\"\n\n### memory://symbol/presentation.py::DISPLAY_WIDTH lines 2-2\n\nDISPLAY_WIDTH = 12",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::display_reference",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::display_reference lines 9-10\n\ndef display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::status_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::status_label lines 12-13\n\ndef status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)\n\n### memory://symbol/presentation.py::UNKNOWN_LABEL lines 3-3\n\nUNKNOWN_LABEL = \"unknown\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::status_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::status_label lines 12-13\n\ndef status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::summarize_count",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::summarize_count lines 15-16\n\ndef summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"render\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::summarize_count",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::summarize_count lines 15-16\n\ndef summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::normalize_tenant",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::normalize_tenant lines 3-4\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef normalize_tenant(tenant):\n    return tenant.strip().lower() or ANONYMOUS_TENANT\n\n### memory://symbol/policy.py::ANONYMOUS_TENANT lines 6-6\n\nANONYMOUS_TENANT = \"public\"",
+      "source_uris": [
+        "memory://symbol/rules.py::normalize_tenant",
+        "memory://symbol/policy.py::ANONYMOUS_TENANT"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::normalize_tenant",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::normalize_tenant lines 3-4\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef normalize_tenant(tenant):\n    return tenant.strip().lower() or ANONYMOUS_TENANT",
+      "source_uris": [
+        "memory://symbol/rules.py::normalize_tenant"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::normalize_resource",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::normalize_resource lines 6-7\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef normalize_resource(resource):\n    return resource.strip().replace(\" \", \"_\").lower()",
+      "source_uris": [
+        "memory://symbol/rules.py::normalize_resource"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "memory://symbol/rules.py::canonical_query",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::canonical_query lines 9-10\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef canonical_query(query):\n    return \"&\".join(str(key) + \"=\" + str(query[key]) for key in sorted(query) if key not in EXCLUDED_QUERY_KEYS)\n\n### memory://symbol/policy.py::EXCLUDED_QUERY_KEYS lines 8-8\n\nEXCLUDED_QUERY_KEYS = (\"trace\", \"debug\")",
+      "source_uris": [
+        "memory://symbol/rules.py::canonical_query",
+        "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::canonical_query",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::canonical_query lines 9-10\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef canonical_query(query):\n    return \"&\".join(str(key) + \"=\" + str(query[key]) for key in sorted(query) if key not in EXCLUDED_QUERY_KEYS)",
+      "source_uris": [
+        "memory://symbol/rules.py::canonical_query"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::cache_ttl",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::cache_ttl lines 12-14\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef cache_ttl(requested, private):\n    ceiling = PRIVATE_TTL if private else MAX_TTL\n    return min(max(DEFAULT_TTL if requested is None else requested, 0), ceiling)\n\n### memory://symbol/policy.py::DEFAULT_TTL lines 3-3\n\nDEFAULT_TTL = 300\n\n### memory://symbol/policy.py::MAX_TTL lines 5-5\n\nMAX_TTL = 3600\n\n### memory://symbol/policy.py::PRIVATE_TTL lines 4-4\n\nPRIVATE_TTL = 30",
+      "source_uris": [
+        "memory://symbol/rules.py::cache_ttl",
+        "memory://symbol/policy.py::DEFAULT_TTL",
+        "memory://symbol/policy.py::MAX_TTL",
+        "memory://symbol/policy.py::PRIVATE_TTL"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::cache_ttl",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::cache_ttl lines 12-14\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef cache_ttl(requested, private):\n    ceiling = PRIVATE_TTL if private else MAX_TTL\n    return min(max(DEFAULT_TTL if requested is None else requested, 0), ceiling)",
+      "source_uris": [
+        "memory://symbol/rules.py::cache_ttl"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::render_cache_key",
+      "level": 0,
+      "text": "### memory://symbol/service.py::render_cache_key lines 4-5\nfrom policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl\ndef render_cache_key(tenant, resource, query):\n    return KEY_SEPARATOR.join((CACHE_NAMESPACE, normalize_tenant(tenant), normalize_resource(resource), canonical_query(query), \"v\" + str(SCHEMA_VERSION)))\n\n### memory://symbol/policy.py::CACHE_NAMESPACE lines 1-1\n\nCACHE_NAMESPACE = \"render\"\n\n### memory://symbol/policy.py::KEY_SEPARATOR lines 7-7\n\nKEY_SEPARATOR = \"|\"\n\n### memory://symbol/policy.py::SCHEMA_VERSION lines 2-2\n\nSCHEMA_VERSION = 4\n\n### memory://symbol/rules.py::canonical_query lines 9-10\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef canonical_query(query):\n    return \"&\".join(str(key) + \"=\" + str(query[key]) for key in sorted(query) if key not in EXCLUDED_QUERY_KEYS)\n\n### memory://symbol/rules.py::normalize_resource lines 6-7\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef normalize_resource(resource):\n    return resource.strip().replace(\" \", \"_\").lower()\n\n### memory://symbol/rules.py::normalize_tenant lines 3-4\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef normalize_tenant(tenant):\n    return tenant.strip().lower() or ANONYMOUS_TENANT\n\n### memory://symbol/policy.py::EXCLUDED_QUERY_KEYS lines 8-8\n\nEXCLUDED_QUERY_KEYS = (\"trace\", \"debug\")\n\n### memory://symbol/policy.py::ANONYMOUS_TENANT lines 6-6\n\nANONYMOUS_TENANT = \"public\"",
+      "source_uris": [
+        "memory://symbol/service.py::render_cache_key",
+        "memory://symbol/policy.py::CACHE_NAMESPACE",
+        "memory://symbol/policy.py::KEY_SEPARATOR",
+        "memory://symbol/policy.py::SCHEMA_VERSION",
+        "memory://symbol/rules.py::canonical_query",
+        "memory://symbol/rules.py::normalize_resource",
+        "memory://symbol/rules.py::normalize_tenant",
+        "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+        "memory://symbol/policy.py::ANONYMOUS_TENANT"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::render_cache_key",
+      "level": 0,
+      "text": "### memory://symbol/service.py::render_cache_key lines 4-5\nfrom policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl\ndef render_cache_key(tenant, resource, query):\n    return KEY_SEPARATOR.join((CACHE_NAMESPACE, normalize_tenant(tenant), normalize_resource(resource), canonical_query(query), \"v\" + str(SCHEMA_VERSION)))",
+      "source_uris": [
+        "memory://symbol/service.py::render_cache_key"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::cache_entry",
+      "level": 0,
+      "text": "### memory://symbol/service.py::cache_entry lines 7-9\nfrom policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl\ndef cache_entry(tenant, resource, query, requested_ttl, private, now):\n    ttl = cache_ttl(requested_ttl, private)\n    return {\"key\": render_cache_key(tenant, resource, query), \"expires\": now + ttl, \"store\": ttl > 0}\n\n### memory://symbol/rules.py::cache_ttl lines 12-14\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef cache_ttl(requested, private):\n    ceiling = PRIVATE_TTL if private else MAX_TTL\n    return min(max(DEFAULT_TTL if requested is None else requested, 0), ceiling)\n\n### memory://symbol/service.py::render_cache_key lines 4-5\nfrom policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl\ndef render_cache_key(tenant, resource, query):\n    return KEY_SEPARATOR.join((CACHE_NAMESPACE, normalize_tenant(tenant), normalize_resource(resource), canonical_query(query), \"v\" + str(SCHEMA_VERSION)))\n\n### memory://symbol/policy.py::DEFAULT_TTL lines 3-3\n\nDEFAULT_TTL = 300\n\n### memory://symbol/policy.py::MAX_TTL lines 5-5\n\nMAX_TTL = 3600\n\n### memory://symbol/policy.py::PRIVATE_TTL lines 4-4\n\nPRIVATE_TTL = 30\n\n### memory://symbol/policy.py::CACHE_NAMESPACE lines 1-1\n\nCACHE_NAMESPACE = \"render\"\n\n### memory://symbol/policy.py::KEY_SEPARATOR lines 7-7\n\nKEY_SEPARATOR = \"|\"\n\n### memory://symbol/policy.py::SCHEMA_VERSION lines 2-2\n\nSCHEMA_VERSION = 4\n\n### memory://symbol/rules.py::canonical_query lines 9-10\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef canonical_query(query):\n    return \"&\".join(str(key) + \"=\" + str(query[key]) for key in sorted(query) if key not in EXCLUDED_QUERY_KEYS)\n\n### memory://symbol/rules.py::normalize_resource lines 6-7\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef normalize_resource(resource):\n    return resource.strip().replace(\" \", \"_\").lower()\n\n### memory://symbol/rules.py::normalize_tenant lines 3-4\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef normalize_tenant(tenant):\n    return tenant.strip().lower() or ANONYMOUS_TENANT\n\n### memory://symbol/policy.py::EXCLUDED_QUERY_KEYS lines 8-8\n\nEXCLUDED_QUERY_KEYS = (\"trace\", \"debug\")\n\n### memory://symbol/policy.py::ANONYMOUS_TENANT lines 6-6\n\nANONYMOUS_TENANT = \"public\"",
+      "source_uris": [
+        "memory://symbol/service.py::cache_entry",
+        "memory://symbol/rules.py::cache_ttl",
+        "memory://symbol/service.py::render_cache_key",
+        "memory://symbol/policy.py::DEFAULT_TTL",
+        "memory://symbol/policy.py::MAX_TTL",
+        "memory://symbol/policy.py::PRIVATE_TTL",
+        "memory://symbol/policy.py::CACHE_NAMESPACE",
+        "memory://symbol/policy.py::KEY_SEPARATOR",
+        "memory://symbol/policy.py::SCHEMA_VERSION",
+        "memory://symbol/rules.py::canonical_query",
+        "memory://symbol/rules.py::normalize_resource",
+        "memory://symbol/rules.py::normalize_tenant",
+        "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+        "memory://symbol/policy.py::ANONYMOUS_TENANT"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::cache_entry",
+      "level": 0,
+      "text": "### memory://symbol/service.py::cache_entry lines 7-9\nfrom policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl\ndef cache_entry(tenant, resource, query, requested_ttl, private, now):\n    ttl = cache_ttl(requested_ttl, private)\n    return {\"key\": render_cache_key(tenant, resource, query), \"expires\": now + ttl, \"store\": ttl > 0}",
+      "source_uris": [
+        "memory://symbol/service.py::cache_entry"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::cache_partition",
+      "level": 0,
+      "text": "### memory://symbol/service.py::cache_partition lines 11-12\nfrom policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl\ndef cache_partition(tenant):\n    return sum(ord(char) for char in normalize_tenant(tenant)) % 16\n\n### memory://symbol/rules.py::normalize_tenant lines 3-4\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef normalize_tenant(tenant):\n    return tenant.strip().lower() or ANONYMOUS_TENANT\n\n### memory://symbol/policy.py::ANONYMOUS_TENANT lines 6-6\n\nANONYMOUS_TENANT = \"public\"",
+      "source_uris": [
+        "memory://symbol/service.py::cache_partition",
+        "memory://symbol/rules.py::normalize_tenant",
+        "memory://symbol/policy.py::ANONYMOUS_TENANT"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::cache_partition",
+      "level": 0,
+      "text": "### memory://symbol/service.py::cache_partition lines 11-12\nfrom policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl\ndef cache_partition(tenant):\n    return sum(ord(char) for char in normalize_tenant(tenant)) % 16",
+      "source_uris": [
+        "memory://symbol/service.py::cache_partition"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    }
+  ],
+  "summaries": [
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::audit_key",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::audit_key\nThe `audit_key` function constructs a string key for auditing purposes. It takes two parameters: `actor` and `action`. The function returns a string formatted as `AUDIT_VERSION:actor:action`, where `actor` is stripped of leading and trailing whitespace and converted to lowercase. The constant `AUDIT_VERSION` is set to 2.",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "children": [
+        "memory://symbol/audit.py::audit_key"
+      ],
+      "call_id": "2d0f89e036ab08a9"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::recent_events",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::recent_events\nThe `recent_events` function takes a list of events and returns the last `MAX_RECENT_EVENTS` elements. It uses the constant `MAX_RECENT_EVENTS` which is set to 20. The function does not perform any string operations or calls other functions.",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "children": [
+        "memory://symbol/audit.py::recent_events"
+      ],
+      "call_id": "d77f2a500e04b0f1"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::redact_identifier",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::redact_identifier\nThe `redact_identifier` function takes an `identifier` as input and returns a string where the last four characters of the `identifier` are preserved, prefixed by the `REDACTION_MARKER` \"***\". The function uses the `str` function to convert the `identifier` to a string and then slices the last four characters. The `REDACTION_MARKER` is a constant defined as \"***\".",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "children": [
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "call_id": "522f0570149632a9"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::event_record",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::event_record\nThe `event_record` function in `audit.py` creates a dictionary representing an audit event. It takes two parameters: `action` (required) and `actor` (optional, defaults to \"system\"). The function returns a dictionary with keys \"actor\", \"action\", and \"version\". The \"actor\" key uses the provided `actor` value if it exists, otherwise it uses the constant `DEFAULT_ACTOR`. The \"version\" key always uses the constant `AUDIT_VERSION`, which is set to 2.",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "children": [
+        "memory://symbol/audit.py::event_record"
+      ],
+      "call_id": "86a948eca4b28a05"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::normalize_label",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::normalize_label\nThe `normalize_label` function in `presentation.py` processes a label string by stripping leading and trailing whitespace, converting it to lowercase, replacing spaces with hyphens, and truncating it to a maximum length of 48 characters.",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::normalize_label"
+      ],
+      "call_id": "67b9ae8b3bf96c4a"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::display_reference",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::display_reference\nThe `display_reference` function formats a reference number by prefixing it with \"render:\" and padding it with zeros to a width of 12 characters. It uses constants `DISPLAY_PREFIX` and `DISPLAY_WIDTH` for the prefix and width, respectively.",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::display_reference"
+      ],
+      "call_id": "4f476adb129906d8"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::status_label",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::status_label\nThe `status_label` function maps an integer code to a corresponding status label. It uses a dictionary to look up the label based on the code. If the code is not found, it returns the `UNKNOWN_LABEL`. The `UNKNOWN_LABEL` is defined as \"unknown\".",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::status_label"
+      ],
+      "call_id": "39520f0f609758e6"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::summarize_count\nThe `summarize_count` function takes a list of values as input and returns a dictionary with a key \"domain\" set to the constant `DISPLAY_PREFIX` and a key \"count\" set to the length of the input list. The `DISPLAY_PREFIX` constant is defined as the string \"render\".",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "call_id": "f2b9a24c6dfc7ef4"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::normalize_tenant",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::normalize_tenant\nThe `normalize_tenant` function in `rules.py` takes a `tenant` string as input. It strips any leading or trailing whitespace, converts the string to lowercase, and checks if the result is empty. If the result is empty, it returns the constant `ANONYMOUS_TENANT` from `policy.py`, which is set to \"public\". The function uses the `strip()` and `lower()` string methods.",
+      "source_uris": [
+        "memory://symbol/rules.py::normalize_tenant",
+        "memory://symbol/policy.py::ANONYMOUS_TENANT"
+      ],
+      "children": [
+        "memory://symbol/rules.py::normalize_tenant"
+      ],
+      "call_id": "b376eff73dae8b49"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::normalize_resource",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::normalize_resource\nThe `normalize_resource` function in `rules.py` normalizes a resource string by stripping leading/trailing whitespace, replacing spaces with underscores, and converting all characters to lowercase. It uses the `strip()` method for whitespace removal, `replace(\" \", \"_\")` to replace spaces, and `lower()` to convert to lowercase. No external dependencies or constants are used.",
+      "source_uris": [
+        "memory://symbol/rules.py::normalize_resource"
+      ],
+      "children": [
+        "memory://symbol/rules.py::normalize_resource"
+      ],
+      "call_id": "65e96dfaa122425d"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::canonical_query",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::canonical_query\nThe `canonical_query` function in `rules.py` takes a dictionary `query` as input and returns a string. It constructs this string by joining key-value pairs from the dictionary, sorted by key, into a URL-encoded format. The function excludes certain keys, specified in `EXCLUDED_QUERY_KEYS` from `policy.py`, from the output.",
+      "source_uris": [
+        "memory://symbol/rules.py::canonical_query",
+        "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS"
+      ],
+      "children": [
+        "memory://symbol/rules.py::canonical_query"
+      ],
+      "call_id": "00cce4f612523b48"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::cache_ttl",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::cache_ttl\nThe `cache_ttl` function calculates a cache time-to-live (TTL) based on the requested TTL and whether the cache is private. It uses constants `DEFAULT_TTL`, `MAX_TTL`, and `PRIVATE_TTL` from the `policy` module. The function ensures the TTL is within the valid range, defaulting to `DEFAULT_TTL` if `requested` is `None`, and clamping it to `MAX_TTL` if `private` is `False` or `PRIVATE_TTL` if `private` is `True`.",
+      "source_uris": [
+        "memory://symbol/rules.py::cache_ttl",
+        "memory://symbol/policy.py::DEFAULT_TTL",
+        "memory://symbol/policy.py::MAX_TTL",
+        "memory://symbol/policy.py::PRIVATE_TTL"
+      ],
+      "children": [
+        "memory://symbol/rules.py::cache_ttl"
+      ],
+      "call_id": "2c95d5e92737c253"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::render_cache_key",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::render_cache_key\nThe `render_cache_key` function constructs a cache key by joining several components with a separator. It uses constants from `policy.py` and functions from `rules.py`. The key components are:\n- `CACHE_NAMESPACE` (\"render\")\n- `normalize_tenant(tenant)`\n- `normalize_resource(resource)`\n- `canonical_query(query)`\n- Schema version (\"v4\")\n\nThe `canonical_query` function sorts and joins query parameters, excluding certain keys. The `normalize_resource` and `normalize_tenant` functions clean and format resource and tenant strings, respectively.",
+      "source_uris": [
+        "memory://symbol/service.py::render_cache_key",
+        "memory://symbol/policy.py::CACHE_NAMESPACE",
+        "memory://symbol/policy.py::KEY_SEPARATOR",
+        "memory://symbol/policy.py::SCHEMA_VERSION",
+        "memory://symbol/rules.py::canonical_query",
+        "memory://symbol/rules.py::normalize_resource",
+        "memory://symbol/rules.py::normalize_tenant",
+        "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+        "memory://symbol/policy.py::ANONYMOUS_TENANT"
+      ],
+      "children": [
+        "memory://symbol/service.py::render_cache_key"
+      ],
+      "call_id": "2070fb40f43a8720"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::cache_entry",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::cache_entry\nThe `cache_entry` function generates a cache entry with a key, expiration time, and storage flag. It uses `render_cache_key` to create the key and `cache_ttl` to determine the expiration time based on the requested TTL and privacy status. The `cache_ttl` function calculates the TTL using constants from `policy.py`. The `render_cache_key` function normalizes the tenant, resource, and query, and constructs the key using a separator. The `canonical_query` function sorts and joins query parameters, excluding certain keys. The `normalize_resource` and `normalize_tenant` functions clean and standardize resource and tenant names.",
+      "source_uris": [
+        "memory://symbol/service.py::cache_entry",
+        "memory://symbol/rules.py::cache_ttl",
+        "memory://symbol/service.py::render_cache_key",
+        "memory://symbol/policy.py::DEFAULT_TTL",
+        "memory://symbol/policy.py::MAX_TTL",
+        "memory://symbol/policy.py::PRIVATE_TTL",
+        "memory://symbol/policy.py::CACHE_NAMESPACE",
+        "memory://symbol/policy.py::KEY_SEPARATOR",
+        "memory://symbol/policy.py::SCHEMA_VERSION",
+        "memory://symbol/rules.py::canonical_query",
+        "memory://symbol/rules.py::normalize_resource",
+        "memory://symbol/rules.py::normalize_tenant",
+        "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+        "memory://symbol/policy.py::ANONYMOUS_TENANT"
+      ],
+      "children": [
+        "memory://symbol/service.py::cache_entry"
+      ],
+      "call_id": "1e56a2fa421035f6"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::cache_partition",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::cache_partition\nThe `cache_partition` function calculates a partition for a given tenant by summing the ASCII values of each character in the normalized tenant name and then taking the modulus with 16. The normalization is done by the `normalize_tenant` function, which strips and converts the tenant to lowercase, defaulting to \"public\" if the input is empty.",
+      "source_uris": [
+        "memory://symbol/service.py::cache_partition",
+        "memory://symbol/rules.py::normalize_tenant",
+        "memory://symbol/policy.py::ANONYMOUS_TENANT"
+      ],
+      "children": [
+        "memory://symbol/service.py::cache_partition"
+      ],
+      "call_id": "96bc06653798ec44"
+    },
+    {
+      "id": "summary:level2:audit.py",
+      "level": 2,
+      "path": "audit.py",
+      "text": "### summary:level2:audit.py\nThe `audit.py` module contains functions for constructing audit keys, managing recent events, redacting identifiers, and recording events. The `audit_key` function creates a string key for auditing, `recent_events` returns the last 20 events from a list, `redact_identifier` masks all but the last four characters of an identifier, and `event_record` creates a dictionary representing an audit event with a specified action and optional actor. Constants like `AUDIT_VERSION`, `MAX_RECENT_EVENTS`, and `REDACTION_MARKER` are used to maintain consistency and control the behavior of these functions.",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "memory://symbol/audit.py::REDACTION_MARKER",
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/audit.py::audit_key",
+        "summary:leaf:memory://symbol/audit.py::recent_events",
+        "summary:leaf:memory://symbol/audit.py::redact_identifier",
+        "summary:leaf:memory://symbol/audit.py::event_record"
+      ],
+      "call_id": "e9bac9a44ab4025b"
+    },
+    {
+      "id": "summary:level2:presentation.py",
+      "level": 2,
+      "path": "presentation.py",
+      "text": "### summary:level2:presentation.py\nThe `presentation.py` module contains functions for normalizing labels, displaying references, mapping status codes, and summarizing counts. The `normalize_label` function processes a label string by stripping whitespace, converting to lowercase, replacing spaces with hyphens, and truncating to 48 characters. The `display_reference` function formats a reference number by prefixing with \"render:\" and padding to 12 characters using constants `DISPLAY_PREFIX` and `DISPLAY_WIDTH`. The `status_label` function maps integer codes to status labels using a dictionary, returning \"unknown\" for unrecognized codes. The `summarize_count` function takes a list and returns a dictionary with the count of items, using the constant `DISPLAY_PREFIX` for the domain key.",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/presentation.py::normalize_label",
+        "summary:leaf:memory://symbol/presentation.py::display_reference",
+        "summary:leaf:memory://symbol/presentation.py::status_label",
+        "summary:leaf:memory://symbol/presentation.py::summarize_count"
+      ],
+      "call_id": "c3ce3a5705d0af38"
+    },
+    {
+      "id": "summary:level2:rules.py",
+      "level": 2,
+      "path": "rules.py",
+      "text": "### summary:level2:rules.py\nThe `rules.py` module contains functions to normalize tenant and resource strings, construct canonical queries, and calculate cache TTLs. The `normalize_tenant` function strips and lowercases the tenant string, returning \"public\" if empty. The `normalize_resource` function strips, replaces spaces with underscores, and lowercases the resource string. The `canonical_query` function constructs a URL-encoded string from a query dictionary, excluding certain keys. The `cache_ttl` function calculates a TTL based on requested TTL and cache privacy, using constants for default, maximum, and private TTLs.",
+      "source_uris": [
+        "memory://symbol/policy.py::ANONYMOUS_TENANT",
+        "memory://symbol/policy.py::DEFAULT_TTL",
+        "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+        "memory://symbol/policy.py::MAX_TTL",
+        "memory://symbol/policy.py::PRIVATE_TTL",
+        "memory://symbol/rules.py::cache_ttl",
+        "memory://symbol/rules.py::canonical_query",
+        "memory://symbol/rules.py::normalize_resource",
+        "memory://symbol/rules.py::normalize_tenant"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/rules.py::normalize_tenant",
+        "summary:leaf:memory://symbol/rules.py::normalize_resource",
+        "summary:leaf:memory://symbol/rules.py::canonical_query",
+        "summary:leaf:memory://symbol/rules.py::cache_ttl"
+      ],
+      "call_id": "4d60f36b851392f2"
+    },
+    {
+      "id": "summary:level2:service.py",
+      "level": 2,
+      "path": "service.py",
+      "text": "### summary:level2:service.py\nThe `service.py` module contains functions to manage cache keys, entries, and partitions. The `render_cache_key` function constructs a cache key by combining normalized tenant, resource, and query components, sorted and joined with a separator. The `cache_entry` function uses `render_cache_key` to create a cache entry with a key, expiration time, and storage flag. The `cache_partition` function calculates a partition for a tenant based on the sum of ASCII values of its normalized name, modulo 16. The `normalize_tenant` and `normalize_resource` functions clean and format tenant and resource strings, respectively. The `canonical_query` function sorts and joins query parameters, excluding certain keys.",
+      "source_uris": [
+        "memory://symbol/policy.py::ANONYMOUS_TENANT",
+        "memory://symbol/policy.py::CACHE_NAMESPACE",
+        "memory://symbol/policy.py::DEFAULT_TTL",
+        "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+        "memory://symbol/policy.py::KEY_SEPARATOR",
+        "memory://symbol/policy.py::MAX_TTL",
+        "memory://symbol/policy.py::PRIVATE_TTL",
+        "memory://symbol/policy.py::SCHEMA_VERSION",
+        "memory://symbol/rules.py::cache_ttl",
+        "memory://symbol/rules.py::canonical_query",
+        "memory://symbol/rules.py::normalize_resource",
+        "memory://symbol/rules.py::normalize_tenant",
+        "memory://symbol/service.py::cache_entry",
+        "memory://symbol/service.py::cache_partition",
+        "memory://symbol/service.py::render_cache_key"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/service.py::render_cache_key",
+        "summary:leaf:memory://symbol/service.py::cache_entry",
+        "summary:leaf:memory://symbol/service.py::cache_partition"
+      ],
+      "call_id": "8907cb46a8413b73"
+    },
+    {
+      "id": "summary:level3:project",
+      "level": 3,
+      "path": "project",
+      "text": "### summary:level3:project\nThe `audit.py` module handles audit-related tasks such as creating keys, managing recent events, redacting identifiers, and recording events. The `presentation.py` module normalizes labels, displays references, maps status codes, and summarizes counts. The `rules.py` module normalizes tenant and resource strings, constructs canonical queries, and calculates cache TTLs. The `service.py` module manages cache keys, entries, and partitions, using functions like `render_cache_key`, `cache_entry`, and `cache_partition`. Each module uses constants for consistency and control, and functions are designed to handle specific tasks efficiently.",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "memory://symbol/audit.py::REDACTION_MARKER",
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/policy.py::ANONYMOUS_TENANT",
+        "memory://symbol/policy.py::CACHE_NAMESPACE",
+        "memory://symbol/policy.py::DEFAULT_TTL",
+        "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+        "memory://symbol/policy.py::KEY_SEPARATOR",
+        "memory://symbol/policy.py::MAX_TTL",
+        "memory://symbol/policy.py::PRIVATE_TTL",
+        "memory://symbol/policy.py::SCHEMA_VERSION",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/rules.py::cache_ttl",
+        "memory://symbol/rules.py::canonical_query",
+        "memory://symbol/rules.py::normalize_resource",
+        "memory://symbol/rules.py::normalize_tenant",
+        "memory://symbol/service.py::cache_entry",
+        "memory://symbol/service.py::cache_partition",
+        "memory://symbol/service.py::render_cache_key"
+      ],
+      "children": [
+        "summary:level2:audit.py",
+        "summary:level2:presentation.py",
+        "summary:level2:rules.py",
+        "summary:level2:service.py"
+      ],
+      "call_id": "85643ae79dfeb6c4"
+    }
+  ],
+  "index": {
+    "version": 1,
+    "root": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/dataset/projects/eval_cache",
+    "files": [
+      {
+        "path": "audit.py",
+        "symbols": [
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "audit_key",
+            "qualname": "audit_key",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/audit.py::audit_key"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "recent_events",
+            "qualname": "recent_events",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/audit.py::recent_events"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "redact_identifier",
+            "qualname": "redact_identifier",
+            "start_line": 12,
+            "end_line": 13,
+            "uri": "memory://symbol/audit.py::redact_identifier"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "event_record",
+            "qualname": "event_record",
+            "start_line": 15,
+            "end_line": 16,
+            "uri": "memory://symbol/audit.py::event_record"
+          }
+        ]
+      },
+      {
+        "path": "policy.py",
+        "symbols": []
+      },
+      {
+        "path": "presentation.py",
+        "symbols": [
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "normalize_label",
+            "qualname": "normalize_label",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/presentation.py::normalize_label"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "display_reference",
+            "qualname": "display_reference",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/presentation.py::display_reference"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "status_label",
+            "qualname": "status_label",
+            "start_line": 12,
+            "end_line": 13,
+            "uri": "memory://symbol/presentation.py::status_label"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "summarize_count",
+            "qualname": "summarize_count",
+            "start_line": 15,
+            "end_line": 16,
+            "uri": "memory://symbol/presentation.py::summarize_count"
+          }
+        ]
+      },
+      {
+        "path": "rules.py",
+        "symbols": [
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "normalize_tenant",
+            "qualname": "normalize_tenant",
+            "start_line": 3,
+            "end_line": 4,
+            "uri": "memory://symbol/rules.py::normalize_tenant"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "normalize_resource",
+            "qualname": "normalize_resource",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/rules.py::normalize_resource"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "canonical_query",
+            "qualname": "canonical_query",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/rules.py::canonical_query"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "cache_ttl",
+            "qualname": "cache_ttl",
+            "start_line": 12,
+            "end_line": 14,
+            "uri": "memory://symbol/rules.py::cache_ttl"
+          }
+        ]
+      },
+      {
+        "path": "service.py",
+        "symbols": [
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "render_cache_key",
+            "qualname": "render_cache_key",
+            "start_line": 4,
+            "end_line": 5,
+            "uri": "memory://symbol/service.py::render_cache_key"
+          },
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "cache_entry",
+            "qualname": "cache_entry",
+            "start_line": 7,
+            "end_line": 9,
+            "uri": "memory://symbol/service.py::cache_entry"
+          },
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "cache_partition",
+            "qualname": "cache_partition",
+            "start_line": 11,
+            "end_line": 12,
+            "uri": "memory://symbol/service.py::cache_partition"
+          }
+        ]
+      }
+    ],
+    "symbols": [
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "audit_key",
+        "qualname": "audit_key",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/audit.py::audit_key"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "recent_events",
+        "qualname": "recent_events",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/audit.py::recent_events"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "redact_identifier",
+        "qualname": "redact_identifier",
+        "start_line": 12,
+        "end_line": 13,
+        "uri": "memory://symbol/audit.py::redact_identifier"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "event_record",
+        "qualname": "event_record",
+        "start_line": 15,
+        "end_line": 16,
+        "uri": "memory://symbol/audit.py::event_record"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "normalize_label",
+        "qualname": "normalize_label",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/presentation.py::normalize_label"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "display_reference",
+        "qualname": "display_reference",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/presentation.py::display_reference"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "status_label",
+        "qualname": "status_label",
+        "start_line": 12,
+        "end_line": 13,
+        "uri": "memory://symbol/presentation.py::status_label"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "summarize_count",
+        "qualname": "summarize_count",
+        "start_line": 15,
+        "end_line": 16,
+        "uri": "memory://symbol/presentation.py::summarize_count"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "normalize_tenant",
+        "qualname": "normalize_tenant",
+        "start_line": 3,
+        "end_line": 4,
+        "uri": "memory://symbol/rules.py::normalize_tenant"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "normalize_resource",
+        "qualname": "normalize_resource",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/rules.py::normalize_resource"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "canonical_query",
+        "qualname": "canonical_query",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/rules.py::canonical_query"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "cache_ttl",
+        "qualname": "cache_ttl",
+        "start_line": 12,
+        "end_line": 14,
+        "uri": "memory://symbol/rules.py::cache_ttl"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "render_cache_key",
+        "qualname": "render_cache_key",
+        "start_line": 4,
+        "end_line": 5,
+        "uri": "memory://symbol/service.py::render_cache_key"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "cache_entry",
+        "qualname": "cache_entry",
+        "start_line": 7,
+        "end_line": 9,
+        "uri": "memory://symbol/service.py::cache_entry"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "cache_partition",
+        "qualname": "cache_partition",
+        "start_line": 11,
+        "end_line": 12,
+        "uri": "memory://symbol/service.py::cache_partition"
+      }
+    ]
+  },
+  "build_seconds": 99.49617737499648,
+  "build_input_tokens": 6114,
+  "build_output_tokens": 1859,
+  "build_model_seconds": 99.47675807897758,
+  "build_call_ids": [
+    "2d0f89e036ab08a9",
+    "d77f2a500e04b0f1",
+    "522f0570149632a9",
+    "86a948eca4b28a05",
+    "67b9ae8b3bf96c4a",
+    "4f476adb129906d8",
+    "39520f0f609758e6",
+    "f2b9a24c6dfc7ef4",
+    "b376eff73dae8b49",
+    "65e96dfaa122425d",
+    "00cce4f612523b48",
+    "2c95d5e92737c253",
+    "2070fb40f43a8720",
+    "1e56a2fa421035f6",
+    "96bc06653798ec44",
+    "e9bac9a44ab4025b",
+    "c3ce3a5705d0af38",
+    "4d60f36b851392f2",
+    "8907cb46a8413b73",
+    "85643ae79dfeb6c4"
+  ],
+  "source_sha256": {
+    "audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+    "policy.py": "b903d3fb3e1a8699df42d6d942815d95d924ff0cfc9004137c7a5aba42107b35",
+    "presentation.py": "1b9eed863be9040cd83248fcce7f59e972da731f11d92a2c19bd3ddd93d3e164",
+    "rules.py": "7b5f69f2f74095a686701927647af1e18e89bdf38de28a42c70b9c751cc1d3c2",
+    "service.py": "e104b71da7f0bfd25b45cc4aea4548660aaa5d61b588d279a98feb931355baeb"
+  }
+}

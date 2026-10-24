@@ -1,0 +1,1672 @@
+{
+  "project": "eval_inventory",
+  "nodes": {
+    "memory://symbol/audit.py::AUDIT_VERSION": {
+      "id": "memory://symbol/audit.py::AUDIT_VERSION",
+      "path": "audit.py",
+      "name": "AUDIT_VERSION",
+      "source": "AUDIT_VERSION = 2",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::MAX_RECENT_EVENTS": {
+      "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+      "path": "audit.py",
+      "name": "MAX_RECENT_EVENTS",
+      "source": "MAX_RECENT_EVENTS = 20",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::REDACTION_MARKER": {
+      "id": "memory://symbol/audit.py::REDACTION_MARKER",
+      "path": "audit.py",
+      "name": "REDACTION_MARKER",
+      "source": "REDACTION_MARKER = \"***\"",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::DEFAULT_ACTOR": {
+      "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+      "path": "audit.py",
+      "name": "DEFAULT_ACTOR",
+      "source": "DEFAULT_ACTOR = \"system\"",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::audit_key": {
+      "id": "memory://symbol/audit.py::audit_key",
+      "path": "audit.py",
+      "name": "audit_key",
+      "source": "def audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+      "imports": "",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "AUDIT_VERSION",
+        "action",
+        "actor",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::recent_events": {
+      "id": "memory://symbol/audit.py::recent_events",
+      "path": "audit.py",
+      "name": "recent_events",
+      "source": "def recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+      "imports": "",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "MAX_RECENT_EVENTS",
+        "events"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::redact_identifier": {
+      "id": "memory://symbol/audit.py::redact_identifier",
+      "path": "audit.py",
+      "name": "redact_identifier",
+      "source": "def redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+      "imports": "",
+      "start": 12,
+      "end": 13,
+      "refs": [
+        "REDACTION_MARKER",
+        "identifier",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::event_record": {
+      "id": "memory://symbol/audit.py::event_record",
+      "path": "audit.py",
+      "name": "event_record",
+      "source": "def event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+      "imports": "",
+      "start": 15,
+      "end": 16,
+      "refs": [
+        "AUDIT_VERSION",
+        "DEFAULT_ACTOR",
+        "action",
+        "actor"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/policy.py::SAFETY_STOCK": {
+      "id": "memory://symbol/policy.py::SAFETY_STOCK",
+      "path": "policy.py",
+      "name": "SAFETY_STOCK",
+      "source": "SAFETY_STOCK = 3",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::MAX_PER_ORDER": {
+      "id": "memory://symbol/policy.py::MAX_PER_ORDER",
+      "path": "policy.py",
+      "name": "MAX_PER_ORDER",
+      "source": "MAX_PER_ORDER = 12",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::MIN_ORDER": {
+      "id": "memory://symbol/policy.py::MIN_ORDER",
+      "path": "policy.py",
+      "name": "MIN_ORDER",
+      "source": "MIN_ORDER = 1",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::BACKORDER_LIMIT": {
+      "id": "memory://symbol/policy.py::BACKORDER_LIMIT",
+      "path": "policy.py",
+      "name": "BACKORDER_LIMIT",
+      "source": "BACKORDER_LIMIT = 5",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::RESERVATION_TTL": {
+      "id": "memory://symbol/policy.py::RESERVATION_TTL",
+      "path": "policy.py",
+      "name": "RESERVATION_TTL",
+      "source": "RESERVATION_TTL = 900",
+      "imports": "",
+      "start": 5,
+      "end": 5,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::ACCEPTED": {
+      "id": "memory://symbol/policy.py::ACCEPTED",
+      "path": "policy.py",
+      "name": "ACCEPTED",
+      "source": "ACCEPTED = \"reserved\"",
+      "imports": "",
+      "start": 6,
+      "end": 6,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::PARTIAL": {
+      "id": "memory://symbol/policy.py::PARTIAL",
+      "path": "policy.py",
+      "name": "PARTIAL",
+      "source": "PARTIAL = \"partial\"",
+      "imports": "",
+      "start": 7,
+      "end": 7,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::DENIED": {
+      "id": "memory://symbol/policy.py::DENIED",
+      "path": "policy.py",
+      "name": "DENIED",
+      "source": "DENIED = \"denied\"",
+      "imports": "",
+      "start": 8,
+      "end": 8,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::DISPLAY_PREFIX": {
+      "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+      "path": "presentation.py",
+      "name": "DISPLAY_PREFIX",
+      "source": "DISPLAY_PREFIX = \"warehouse\"",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::DISPLAY_WIDTH": {
+      "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+      "path": "presentation.py",
+      "name": "DISPLAY_WIDTH",
+      "source": "DISPLAY_WIDTH = 12",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::UNKNOWN_LABEL": {
+      "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+      "path": "presentation.py",
+      "name": "UNKNOWN_LABEL",
+      "source": "UNKNOWN_LABEL = \"unknown\"",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::MAX_LABEL_LENGTH": {
+      "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+      "path": "presentation.py",
+      "name": "MAX_LABEL_LENGTH",
+      "source": "MAX_LABEL_LENGTH = 48",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::normalize_label": {
+      "id": "memory://symbol/presentation.py::normalize_label",
+      "path": "presentation.py",
+      "name": "normalize_label",
+      "source": "def normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+      "imports": "",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "MAX_LABEL_LENGTH",
+        "label"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::display_reference": {
+      "id": "memory://symbol/presentation.py::display_reference",
+      "path": "presentation.py",
+      "name": "display_reference",
+      "source": "def display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+      "imports": "",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "DISPLAY_PREFIX",
+        "DISPLAY_WIDTH",
+        "reference",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::status_label": {
+      "id": "memory://symbol/presentation.py::status_label",
+      "path": "presentation.py",
+      "name": "status_label",
+      "source": "def status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+      "imports": "",
+      "start": 12,
+      "end": 13,
+      "refs": [
+        "UNKNOWN_LABEL",
+        "code"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::summarize_count": {
+      "id": "memory://symbol/presentation.py::summarize_count",
+      "path": "presentation.py",
+      "name": "summarize_count",
+      "source": "def summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+      "imports": "",
+      "start": 15,
+      "end": 16,
+      "refs": [
+        "DISPLAY_PREFIX",
+        "len",
+        "values"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::sellable": {
+      "id": "memory://symbol/rules.py::sellable",
+      "path": "rules.py",
+      "name": "sellable",
+      "source": "def sellable(on_hand, held):\n    return max(on_hand - held - SAFETY_STOCK, 0)",
+      "imports": "from policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT",
+      "start": 3,
+      "end": 4,
+      "refs": [
+        "SAFETY_STOCK",
+        "held",
+        "max",
+        "on_hand"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::SAFETY_STOCK"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::valid_quantity": {
+      "id": "memory://symbol/rules.py::valid_quantity",
+      "path": "rules.py",
+      "name": "valid_quantity",
+      "source": "def valid_quantity(quantity):\n    return MIN_ORDER <= quantity <= MAX_PER_ORDER",
+      "imports": "from policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "MAX_PER_ORDER",
+        "MIN_ORDER",
+        "quantity"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::MAX_PER_ORDER",
+        "memory://symbol/policy.py::MIN_ORDER"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::allocate": {
+      "id": "memory://symbol/rules.py::allocate",
+      "path": "rules.py",
+      "name": "allocate",
+      "source": "def allocate(available, requested, allow_partial):\n    if available >= requested:\n        return requested\n    return available if allow_partial else 0",
+      "imports": "from policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT",
+      "start": 9,
+      "end": 12,
+      "refs": [
+        "allow_partial",
+        "available",
+        "requested"
+      ],
+      "deps": [],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::can_backorder": {
+      "id": "memory://symbol/rules.py::can_backorder",
+      "path": "rules.py",
+      "name": "can_backorder",
+      "source": "def can_backorder(shortfall):\n    return 0 < shortfall <= BACKORDER_LIMIT",
+      "imports": "from policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT",
+      "start": 14,
+      "end": 15,
+      "refs": [
+        "BACKORDER_LIMIT",
+        "shortfall"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::BACKORDER_LIMIT"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::reserve": {
+      "id": "memory://symbol/service.py::reserve",
+      "path": "service.py",
+      "name": "reserve",
+      "source": "def reserve(on_hand, held, requested, allow_partial, now):\n    if not valid_quantity(requested):\n        return {\"status\": DENIED, \"units\": 0, \"expires\": now}\n    units = allocate(sellable(on_hand, held), requested, allow_partial)\n    status = ACCEPTED if units == requested else PARTIAL if units else DENIED\n    return {\"status\": status, \"units\": units, \"expires\": now + RESERVATION_TTL if units else now}",
+      "imports": "from policy import RESERVATION_TTL, ACCEPTED, PARTIAL, DENIED\nfrom rules import sellable, valid_quantity, allocate",
+      "start": 4,
+      "end": 9,
+      "refs": [
+        "ACCEPTED",
+        "DENIED",
+        "PARTIAL",
+        "RESERVATION_TTL",
+        "allocate",
+        "allow_partial",
+        "held",
+        "now",
+        "on_hand",
+        "requested",
+        "sellable",
+        "status",
+        "units",
+        "valid_quantity"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::ACCEPTED",
+        "memory://symbol/policy.py::DENIED",
+        "memory://symbol/policy.py::PARTIAL",
+        "memory://symbol/policy.py::RESERVATION_TTL",
+        "memory://symbol/rules.py::allocate",
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/rules.py::valid_quantity"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::remaining_after": {
+      "id": "memory://symbol/service.py::remaining_after",
+      "path": "service.py",
+      "name": "remaining_after",
+      "source": "def remaining_after(on_hand, held, requested, allow_partial):\n    reservation = reserve(on_hand, held, requested, allow_partial, 0)\n    return sellable(on_hand, held + reservation[\"units\"])",
+      "imports": "from policy import RESERVATION_TTL, ACCEPTED, PARTIAL, DENIED\nfrom rules import sellable, valid_quantity, allocate",
+      "start": 11,
+      "end": 13,
+      "refs": [
+        "allow_partial",
+        "held",
+        "on_hand",
+        "requested",
+        "reservation",
+        "reserve",
+        "sellable"
+      ],
+      "deps": [
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/service.py::reserve"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::stock_label": {
+      "id": "memory://symbol/service.py::stock_label",
+      "path": "service.py",
+      "name": "stock_label",
+      "source": "def stock_label(on_hand):\n    return \"empty\" if on_hand <= 0 else \"stocked\"",
+      "imports": "from policy import RESERVATION_TTL, ACCEPTED, PARTIAL, DENIED\nfrom rules import sellable, valid_quantity, allocate",
+      "start": 15,
+      "end": 16,
+      "refs": [
+        "on_hand"
+      ],
+      "deps": [],
+      "kind": "function"
+    }
+  },
+  "raw": [
+    {
+      "id": "memory://symbol/audit.py::AUDIT_VERSION",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::MAX_RECENT_EVENTS lines 2-2\n\nMAX_RECENT_EVENTS = 20",
+      "source_uris": [
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::REDACTION_MARKER",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::REDACTION_MARKER lines 3-3\n\nREDACTION_MARKER = \"***\"",
+      "source_uris": [
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::DEFAULT_ACTOR lines 4-4\n\nDEFAULT_ACTOR = \"system\"",
+      "source_uris": [
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::audit_key",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::audit_key lines 6-7\n\ndef audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action\n\n### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::audit_key",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::audit_key lines 6-7\n\ndef audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::recent_events",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::recent_events lines 9-10\n\ndef recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]\n\n### memory://symbol/audit.py::MAX_RECENT_EVENTS lines 2-2\n\nMAX_RECENT_EVENTS = 20",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::recent_events",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::recent_events lines 9-10\n\ndef recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::redact_identifier",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::redact_identifier lines 12-13\n\ndef redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]\n\n### memory://symbol/audit.py::REDACTION_MARKER lines 3-3\n\nREDACTION_MARKER = \"***\"",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::redact_identifier",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::redact_identifier lines 12-13\n\ndef redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::event_record",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::event_record lines 15-16\n\ndef event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}\n\n### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2\n\n### memory://symbol/audit.py::DEFAULT_ACTOR lines 4-4\n\nDEFAULT_ACTOR = \"system\"",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::event_record",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::event_record lines 15-16\n\ndef event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/policy.py::SAFETY_STOCK",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::SAFETY_STOCK lines 1-1\n\nSAFETY_STOCK = 3",
+      "source_uris": [
+        "memory://symbol/policy.py::SAFETY_STOCK"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::MAX_PER_ORDER",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::MAX_PER_ORDER lines 2-2\n\nMAX_PER_ORDER = 12",
+      "source_uris": [
+        "memory://symbol/policy.py::MAX_PER_ORDER"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::MIN_ORDER",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::MIN_ORDER lines 3-3\n\nMIN_ORDER = 1",
+      "source_uris": [
+        "memory://symbol/policy.py::MIN_ORDER"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::BACKORDER_LIMIT",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::BACKORDER_LIMIT lines 4-4\n\nBACKORDER_LIMIT = 5",
+      "source_uris": [
+        "memory://symbol/policy.py::BACKORDER_LIMIT"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::RESERVATION_TTL",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::RESERVATION_TTL lines 5-5\n\nRESERVATION_TTL = 900",
+      "source_uris": [
+        "memory://symbol/policy.py::RESERVATION_TTL"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::ACCEPTED",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::ACCEPTED lines 6-6\n\nACCEPTED = \"reserved\"",
+      "source_uris": [
+        "memory://symbol/policy.py::ACCEPTED"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::PARTIAL",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::PARTIAL lines 7-7\n\nPARTIAL = \"partial\"",
+      "source_uris": [
+        "memory://symbol/policy.py::PARTIAL"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::DENIED",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::DENIED lines 8-8\n\nDENIED = \"denied\"",
+      "source_uris": [
+        "memory://symbol/policy.py::DENIED"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"warehouse\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::DISPLAY_WIDTH lines 2-2\n\nDISPLAY_WIDTH = 12",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::UNKNOWN_LABEL lines 3-3\n\nUNKNOWN_LABEL = \"unknown\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::MAX_LABEL_LENGTH lines 4-4\n\nMAX_LABEL_LENGTH = 48",
+      "source_uris": [
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::normalize_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::normalize_label lines 6-7\n\ndef normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]\n\n### memory://symbol/presentation.py::MAX_LABEL_LENGTH lines 4-4\n\nMAX_LABEL_LENGTH = 48",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::normalize_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::normalize_label lines 6-7\n\ndef normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::display_reference",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::display_reference lines 9-10\n\ndef display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"warehouse\"\n\n### memory://symbol/presentation.py::DISPLAY_WIDTH lines 2-2\n\nDISPLAY_WIDTH = 12",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::display_reference",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::display_reference lines 9-10\n\ndef display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::status_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::status_label lines 12-13\n\ndef status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)\n\n### memory://symbol/presentation.py::UNKNOWN_LABEL lines 3-3\n\nUNKNOWN_LABEL = \"unknown\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::status_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::status_label lines 12-13\n\ndef status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::summarize_count",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::summarize_count lines 15-16\n\ndef summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"warehouse\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::summarize_count",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::summarize_count lines 15-16\n\ndef summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::sellable",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::sellable lines 3-4\nfrom policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT\ndef sellable(on_hand, held):\n    return max(on_hand - held - SAFETY_STOCK, 0)\n\n### memory://symbol/policy.py::SAFETY_STOCK lines 1-1\n\nSAFETY_STOCK = 3",
+      "source_uris": [
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/policy.py::SAFETY_STOCK"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::sellable",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::sellable lines 3-4\nfrom policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT\ndef sellable(on_hand, held):\n    return max(on_hand - held - SAFETY_STOCK, 0)",
+      "source_uris": [
+        "memory://symbol/rules.py::sellable"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::valid_quantity",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::valid_quantity lines 6-7\nfrom policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT\ndef valid_quantity(quantity):\n    return MIN_ORDER <= quantity <= MAX_PER_ORDER\n\n### memory://symbol/policy.py::MAX_PER_ORDER lines 2-2\n\nMAX_PER_ORDER = 12\n\n### memory://symbol/policy.py::MIN_ORDER lines 3-3\n\nMIN_ORDER = 1",
+      "source_uris": [
+        "memory://symbol/rules.py::valid_quantity",
+        "memory://symbol/policy.py::MAX_PER_ORDER",
+        "memory://symbol/policy.py::MIN_ORDER"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::valid_quantity",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::valid_quantity lines 6-7\nfrom policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT\ndef valid_quantity(quantity):\n    return MIN_ORDER <= quantity <= MAX_PER_ORDER",
+      "source_uris": [
+        "memory://symbol/rules.py::valid_quantity"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::allocate",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::allocate lines 9-12\nfrom policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT\ndef allocate(available, requested, allow_partial):\n    if available >= requested:\n        return requested\n    return available if allow_partial else 0",
+      "source_uris": [
+        "memory://symbol/rules.py::allocate"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "memory://symbol/rules.py::can_backorder",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::can_backorder lines 14-15\nfrom policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT\ndef can_backorder(shortfall):\n    return 0 < shortfall <= BACKORDER_LIMIT\n\n### memory://symbol/policy.py::BACKORDER_LIMIT lines 4-4\n\nBACKORDER_LIMIT = 5",
+      "source_uris": [
+        "memory://symbol/rules.py::can_backorder",
+        "memory://symbol/policy.py::BACKORDER_LIMIT"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::can_backorder",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::can_backorder lines 14-15\nfrom policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT\ndef can_backorder(shortfall):\n    return 0 < shortfall <= BACKORDER_LIMIT",
+      "source_uris": [
+        "memory://symbol/rules.py::can_backorder"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::reserve",
+      "level": 0,
+      "text": "### memory://symbol/service.py::reserve lines 4-9\nfrom policy import RESERVATION_TTL, ACCEPTED, PARTIAL, DENIED\nfrom rules import sellable, valid_quantity, allocate\ndef reserve(on_hand, held, requested, allow_partial, now):\n    if not valid_quantity(requested):\n        return {\"status\": DENIED, \"units\": 0, \"expires\": now}\n    units = allocate(sellable(on_hand, held), requested, allow_partial)\n    status = ACCEPTED if units == requested else PARTIAL if units else DENIED\n    return {\"status\": status, \"units\": units, \"expires\": now + RESERVATION_TTL if units else now}\n\n### memory://symbol/policy.py::ACCEPTED lines 6-6\n\nACCEPTED = \"reserved\"\n\n### memory://symbol/policy.py::DENIED lines 8-8\n\nDENIED = \"denied\"\n\n### memory://symbol/policy.py::PARTIAL lines 7-7\n\nPARTIAL = \"partial\"\n\n### memory://symbol/policy.py::RESERVATION_TTL lines 5-5\n\nRESERVATION_TTL = 900\n\n### memory://symbol/rules.py::allocate lines 9-12\nfrom policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT\ndef allocate(available, requested, allow_partial):\n    if available >= requested:\n        return requested\n    return available if allow_partial else 0\n\n### memory://symbol/rules.py::sellable lines 3-4\nfrom policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT\ndef sellable(on_hand, held):\n    return max(on_hand - held - SAFETY_STOCK, 0)\n\n### memory://symbol/rules.py::valid_quantity lines 6-7\nfrom policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT\ndef valid_quantity(quantity):\n    return MIN_ORDER <= quantity <= MAX_PER_ORDER\n\n### memory://symbol/policy.py::SAFETY_STOCK lines 1-1\n\nSAFETY_STOCK = 3\n\n### memory://symbol/policy.py::MAX_PER_ORDER lines 2-2\n\nMAX_PER_ORDER = 12\n\n### memory://symbol/policy.py::MIN_ORDER lines 3-3\n\nMIN_ORDER = 1",
+      "source_uris": [
+        "memory://symbol/service.py::reserve",
+        "memory://symbol/policy.py::ACCEPTED",
+        "memory://symbol/policy.py::DENIED",
+        "memory://symbol/policy.py::PARTIAL",
+        "memory://symbol/policy.py::RESERVATION_TTL",
+        "memory://symbol/rules.py::allocate",
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/rules.py::valid_quantity",
+        "memory://symbol/policy.py::SAFETY_STOCK",
+        "memory://symbol/policy.py::MAX_PER_ORDER",
+        "memory://symbol/policy.py::MIN_ORDER"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::reserve",
+      "level": 0,
+      "text": "### memory://symbol/service.py::reserve lines 4-9\nfrom policy import RESERVATION_TTL, ACCEPTED, PARTIAL, DENIED\nfrom rules import sellable, valid_quantity, allocate\ndef reserve(on_hand, held, requested, allow_partial, now):\n    if not valid_quantity(requested):\n        return {\"status\": DENIED, \"units\": 0, \"expires\": now}\n    units = allocate(sellable(on_hand, held), requested, allow_partial)\n    status = ACCEPTED if units == requested else PARTIAL if units else DENIED\n    return {\"status\": status, \"units\": units, \"expires\": now + RESERVATION_TTL if units else now}",
+      "source_uris": [
+        "memory://symbol/service.py::reserve"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::remaining_after",
+      "level": 0,
+      "text": "### memory://symbol/service.py::remaining_after lines 11-13\nfrom policy import RESERVATION_TTL, ACCEPTED, PARTIAL, DENIED\nfrom rules import sellable, valid_quantity, allocate\ndef remaining_after(on_hand, held, requested, allow_partial):\n    reservation = reserve(on_hand, held, requested, allow_partial, 0)\n    return sellable(on_hand, held + reservation[\"units\"])\n\n### memory://symbol/rules.py::sellable lines 3-4\nfrom policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT\ndef sellable(on_hand, held):\n    return max(on_hand - held - SAFETY_STOCK, 0)\n\n### memory://symbol/service.py::reserve lines 4-9\nfrom policy import RESERVATION_TTL, ACCEPTED, PARTIAL, DENIED\nfrom rules import sellable, valid_quantity, allocate\ndef reserve(on_hand, held, requested, allow_partial, now):\n    if not valid_quantity(requested):\n        return {\"status\": DENIED, \"units\": 0, \"expires\": now}\n    units = allocate(sellable(on_hand, held), requested, allow_partial)\n    status = ACCEPTED if units == requested else PARTIAL if units else DENIED\n    return {\"status\": status, \"units\": units, \"expires\": now + RESERVATION_TTL if units else now}\n\n### memory://symbol/policy.py::SAFETY_STOCK lines 1-1\n\nSAFETY_STOCK = 3\n\n### memory://symbol/policy.py::ACCEPTED lines 6-6\n\nACCEPTED = \"reserved\"\n\n### memory://symbol/policy.py::DENIED lines 8-8\n\nDENIED = \"denied\"\n\n### memory://symbol/policy.py::PARTIAL lines 7-7\n\nPARTIAL = \"partial\"\n\n### memory://symbol/policy.py::RESERVATION_TTL lines 5-5\n\nRESERVATION_TTL = 900\n\n### memory://symbol/rules.py::allocate lines 9-12\nfrom policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT\ndef allocate(available, requested, allow_partial):\n    if available >= requested:\n        return requested\n    return available if allow_partial else 0\n\n### memory://symbol/rules.py::valid_quantity lines 6-7\nfrom policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT\ndef valid_quantity(quantity):\n    return MIN_ORDER <= quantity <= MAX_PER_ORDER\n\n### memory://symbol/policy.py::MAX_PER_ORDER lines 2-2\n\nMAX_PER_ORDER = 12\n\n### memory://symbol/policy.py::MIN_ORDER lines 3-3\n\nMIN_ORDER = 1",
+      "source_uris": [
+        "memory://symbol/service.py::remaining_after",
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/service.py::reserve",
+        "memory://symbol/policy.py::SAFETY_STOCK",
+        "memory://symbol/policy.py::ACCEPTED",
+        "memory://symbol/policy.py::DENIED",
+        "memory://symbol/policy.py::PARTIAL",
+        "memory://symbol/policy.py::RESERVATION_TTL",
+        "memory://symbol/rules.py::allocate",
+        "memory://symbol/rules.py::valid_quantity",
+        "memory://symbol/policy.py::MAX_PER_ORDER",
+        "memory://symbol/policy.py::MIN_ORDER"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::remaining_after",
+      "level": 0,
+      "text": "### memory://symbol/service.py::remaining_after lines 11-13\nfrom policy import RESERVATION_TTL, ACCEPTED, PARTIAL, DENIED\nfrom rules import sellable, valid_quantity, allocate\ndef remaining_after(on_hand, held, requested, allow_partial):\n    reservation = reserve(on_hand, held, requested, allow_partial, 0)\n    return sellable(on_hand, held + reservation[\"units\"])",
+      "source_uris": [
+        "memory://symbol/service.py::remaining_after"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::stock_label",
+      "level": 0,
+      "text": "### memory://symbol/service.py::stock_label lines 15-16\nfrom policy import RESERVATION_TTL, ACCEPTED, PARTIAL, DENIED\nfrom rules import sellable, valid_quantity, allocate\ndef stock_label(on_hand):\n    return \"empty\" if on_hand <= 0 else \"stocked\"",
+      "source_uris": [
+        "memory://symbol/service.py::stock_label"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    }
+  ],
+  "summaries": [
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::audit_key",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::audit_key\nThe `audit_key` function constructs a string key for auditing purposes. It takes two parameters: `actor` and `action`. The function returns a string formatted as `AUDIT_VERSION:actor:action`, where `actor` is stripped of leading and trailing whitespace and converted to lowercase. The constant `AUDIT_VERSION` is set to 2.",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "children": [
+        "memory://symbol/audit.py::audit_key"
+      ],
+      "call_id": "e4dd666ebe7d4f31"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::recent_events",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::recent_events\nThe `recent_events` function takes a list of events and returns the last `MAX_RECENT_EVENTS` elements. It uses the constant `MAX_RECENT_EVENTS` which is set to 20. The function does not perform any string operations or calls other functions.",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "children": [
+        "memory://symbol/audit.py::recent_events"
+      ],
+      "call_id": "01c7a5bac1d12b9e"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::redact_identifier",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::redact_identifier\nThe `redact_identifier` function takes an `identifier` as input and returns a string where the last four characters of the `identifier` are preserved, prefixed by the `REDACTION_MARKER` \"***\". The function uses the `str` function to convert the `identifier` to a string and then slices the last four characters. The `REDACTION_MARKER` is a constant defined as \"***\".",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "children": [
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "call_id": "e2cbe59dd4d58497"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::event_record",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::event_record\nThe `event_record` function in `audit.py` creates a dictionary representing an audit event. It takes two parameters: `action` (required) and `actor` (optional, defaults to \"system\"). The function returns a dictionary with keys \"actor\", \"action\", and \"version\". The \"actor\" key uses the provided `actor` value if it exists, otherwise it uses the constant `DEFAULT_ACTOR`. The \"version\" key always uses the constant `AUDIT_VERSION`, which is set to 2.",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "children": [
+        "memory://symbol/audit.py::event_record"
+      ],
+      "call_id": "d246527212b10f79"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::normalize_label",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::normalize_label\nThe `normalize_label` function in `presentation.py` processes a label string by stripping leading and trailing whitespace, converting it to lowercase, replacing spaces with hyphens, and truncating it to a maximum length of 48 characters.",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::normalize_label"
+      ],
+      "call_id": "551542d2a7dacd2c"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::display_reference",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::display_reference\nThe `display_reference` function formats a reference number by prefixing it with \"warehouse:\" and padding it with zeros to a width of 12 characters. It uses constants `DISPLAY_PREFIX` and `DISPLAY_WIDTH` for the prefix and width, respectively.",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::display_reference"
+      ],
+      "call_id": "f25494ad9ea5b836"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::status_label",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::status_label\nThe `status_label` function maps an integer code to a corresponding status label. It uses a dictionary to look up the label based on the code. If the code is not found, it returns the `UNKNOWN_LABEL`. The `UNKNOWN_LABEL` is defined as \"unknown\".",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::status_label"
+      ],
+      "call_id": "5dd102410d956683"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::summarize_count\nThe `summarize_count` function takes a list of values as input and returns a dictionary with a key \"domain\" set to the constant `DISPLAY_PREFIX` (which is \"warehouse\") and a key \"count\" set to the length of the input list.",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "call_id": "ce1571a362e6107f"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::sellable",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::sellable\nThe `sellable` function calculates the number of items that can be sold based on the current stock and held items, minus a safety stock. It returns the maximum of the calculated value and zero. Dependencies: `SAFETY_STOCK` from `policy.py`.",
+      "source_uris": [
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/policy.py::SAFETY_STOCK"
+      ],
+      "children": [
+        "memory://symbol/rules.py::sellable"
+      ],
+      "call_id": "b6bab7bda7f3e2a9"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::valid_quantity",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::valid_quantity\nThe `valid_quantity` function checks if a given `quantity` is within the valid range defined by `MIN_ORDER` and `MAX_PER_ORDER`. It returns `True` if the quantity is between 1 and 12, inclusive. The function uses constants from the `policy` module to determine the valid range.",
+      "source_uris": [
+        "memory://symbol/rules.py::valid_quantity",
+        "memory://symbol/policy.py::MAX_PER_ORDER",
+        "memory://symbol/policy.py::MIN_ORDER"
+      ],
+      "children": [
+        "memory://symbol/rules.py::valid_quantity"
+      ],
+      "call_id": "746a71d350411739"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::allocate",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::allocate\nThe `allocate` function in `rules.py` determines how much of a requested amount can be allocated based on available stock and order policies. It takes three parameters: `available` (stock available), `requested` (stock requested), and `allow_partial` (a boolean indicating whether partial allocations are allowed). If the available stock is greater than or equal to the requested amount, it returns the requested amount. Otherwise, it returns the available amount if partial allocations are allowed, or 0 if they are not. The function uses constants from the `policy` module, including `SAFETY_STOCK`, `MAX_PER_ORDER`, `MIN_ORDER`, and `BACKORDER_LIMIT`.",
+      "source_uris": [
+        "memory://symbol/rules.py::allocate"
+      ],
+      "children": [
+        "memory://symbol/rules.py::allocate"
+      ],
+      "call_id": "4d462ccbdc6b6e37"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::can_backorder",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::can_backorder\nThe `can_backorder` function checks if a given `shortfall` is within the allowable backorder limit. It returns `True` if the shortfall is greater than 0 and less than or equal to `BACKORDER_LIMIT`, which is set to 5.",
+      "source_uris": [
+        "memory://symbol/rules.py::can_backorder",
+        "memory://symbol/policy.py::BACKORDER_LIMIT"
+      ],
+      "children": [
+        "memory://symbol/rules.py::can_backorder"
+      ],
+      "call_id": "623a6838ce338334"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::reserve",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::reserve\nThe `reserve` function in `service.py` manages inventory reservations. It checks if the requested quantity is valid using `valid_quantity`. If valid, it calculates the number of units to allocate using `allocate`, considering the available stock and whether partial allocations are allowed. The function returns a dictionary with the reservation status, allocated units, and expiration time. The status can be \"accepted\", \"partial\", or \"denied\". The `allocate` function in `rules.py` determines how many units can be allocated based on available stock and whether partial allocations are allowed. The `sellable` function calculates the number of units that can be sold by subtracting held units and safety stock from on-hand stock. Constants like `RESERVATION_TTL`, `SAFETY_STOCK`, `MAX_PER_ORDER`, and `MIN_ORDER` define limits and thresholds used in the calculations.",
+      "source_uris": [
+        "memory://symbol/service.py::reserve",
+        "memory://symbol/policy.py::ACCEPTED",
+        "memory://symbol/policy.py::DENIED",
+        "memory://symbol/policy.py::PARTIAL",
+        "memory://symbol/policy.py::RESERVATION_TTL",
+        "memory://symbol/rules.py::allocate",
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/rules.py::valid_quantity",
+        "memory://symbol/policy.py::SAFETY_STOCK",
+        "memory://symbol/policy.py::MAX_PER_ORDER",
+        "memory://symbol/policy.py::MIN_ORDER"
+      ],
+      "children": [
+        "memory://symbol/service.py::reserve"
+      ],
+      "call_id": "d8f995b7796ed786"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::remaining_after",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::remaining_after\nThe `remaining_after` function calculates the remaining sellable units after a reservation. It calls `reserve` to get the reservation status and units, then updates the held units and checks sellability again. The `reserve` function checks if the requested quantity is valid, allocates units based on availability and partial allowance, and returns the reservation status and units. The `allocate` function ensures the requested quantity does not exceed available units, respecting partial allocation. Constants define safety stock, reservation TTL, and order limits.",
+      "source_uris": [
+        "memory://symbol/service.py::remaining_after",
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/service.py::reserve",
+        "memory://symbol/policy.py::SAFETY_STOCK",
+        "memory://symbol/policy.py::ACCEPTED",
+        "memory://symbol/policy.py::DENIED",
+        "memory://symbol/policy.py::PARTIAL",
+        "memory://symbol/policy.py::RESERVATION_TTL",
+        "memory://symbol/rules.py::allocate",
+        "memory://symbol/rules.py::valid_quantity",
+        "memory://symbol/policy.py::MAX_PER_ORDER",
+        "memory://symbol/policy.py::MIN_ORDER"
+      ],
+      "children": [
+        "memory://symbol/service.py::remaining_after"
+      ],
+      "call_id": "50da2de4fc13cc93"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::stock_label",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::stock_label\nThe `stock_label` function checks if the `on_hand` quantity is less than or equal to zero. If true, it returns \"empty\"; otherwise, it returns \"stocked\". No external dependencies or string operations are used.",
+      "source_uris": [
+        "memory://symbol/service.py::stock_label"
+      ],
+      "children": [
+        "memory://symbol/service.py::stock_label"
+      ],
+      "call_id": "f87eb33aeff2a29f"
+    },
+    {
+      "id": "summary:level2:audit.py",
+      "level": 2,
+      "path": "audit.py",
+      "text": "### summary:level2:audit.py\nThe `audit.py` module contains functions for constructing audit keys, managing recent events, redacting identifiers, and recording events. The `audit_key` function creates a string key for auditing, `recent_events` returns the last 20 events from a list, `redact_identifier` masks all but the last four characters of an identifier, and `event_record` creates a dictionary representing an audit event with a specified action and optional actor. Constants like `AUDIT_VERSION`, `MAX_RECENT_EVENTS`, and `REDACTION_MARKER` are used to maintain consistency and control the behavior of these functions.",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "memory://symbol/audit.py::REDACTION_MARKER",
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/audit.py::audit_key",
+        "summary:leaf:memory://symbol/audit.py::recent_events",
+        "summary:leaf:memory://symbol/audit.py::redact_identifier",
+        "summary:leaf:memory://symbol/audit.py::event_record"
+      ],
+      "call_id": "7d26b200780f1db8"
+    },
+    {
+      "id": "summary:level2:presentation.py",
+      "level": 2,
+      "path": "presentation.py",
+      "text": "### summary:level2:presentation.py\nThe `presentation.py` module contains functions for normalizing labels, displaying references, mapping status codes, and summarizing counts. Each function has distinct policies and uses specific constants or dictionaries. The `normalize_label` function processes strings, `display_reference` formats numbers, `status_label` maps codes to labels, and `summarize_count` aggregates list lengths.",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/presentation.py::normalize_label",
+        "summary:leaf:memory://symbol/presentation.py::display_reference",
+        "summary:leaf:memory://symbol/presentation.py::status_label",
+        "summary:leaf:memory://symbol/presentation.py::summarize_count"
+      ],
+      "call_id": "6d9fdbfed8b9cf0b"
+    },
+    {
+      "id": "summary:level2:rules.py",
+      "level": 2,
+      "path": "rules.py",
+      "text": "### summary:level2:rules.py\nThe `rules.py` module contains functions to manage inventory and order policies. The `sellable` function calculates the number of items that can be sold, considering safety stock. The `valid_quantity` function checks if an order quantity is within the allowed range. The `allocate` function determines how much of a requested amount can be allocated based on available stock and order policies, with options for partial allocations. The `can_backorder` function checks if a shortfall can be backordered within the allowed limit.",
+      "source_uris": [
+        "memory://symbol/policy.py::BACKORDER_LIMIT",
+        "memory://symbol/policy.py::MAX_PER_ORDER",
+        "memory://symbol/policy.py::MIN_ORDER",
+        "memory://symbol/policy.py::SAFETY_STOCK",
+        "memory://symbol/rules.py::allocate",
+        "memory://symbol/rules.py::can_backorder",
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/rules.py::valid_quantity"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/rules.py::sellable",
+        "summary:leaf:memory://symbol/rules.py::valid_quantity",
+        "summary:leaf:memory://symbol/rules.py::allocate",
+        "summary:leaf:memory://symbol/rules.py::can_backorder"
+      ],
+      "call_id": "d4627f690435adeb"
+    },
+    {
+      "id": "summary:level2:service.py",
+      "level": 2,
+      "path": "service.py",
+      "text": "### summary:level2:service.py\nThe `service.py` module manages inventory reservations and calculates remaining sellable units. The `reserve` function checks validity, allocates units, and returns reservation status. The `remaining_after` function updates held units and recalculates sellability. The `stock_label` function indicates stock status. Constants define limits and thresholds.",
+      "source_uris": [
+        "memory://symbol/policy.py::ACCEPTED",
+        "memory://symbol/policy.py::DENIED",
+        "memory://symbol/policy.py::MAX_PER_ORDER",
+        "memory://symbol/policy.py::MIN_ORDER",
+        "memory://symbol/policy.py::PARTIAL",
+        "memory://symbol/policy.py::RESERVATION_TTL",
+        "memory://symbol/policy.py::SAFETY_STOCK",
+        "memory://symbol/rules.py::allocate",
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/rules.py::valid_quantity",
+        "memory://symbol/service.py::remaining_after",
+        "memory://symbol/service.py::reserve",
+        "memory://symbol/service.py::stock_label"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/service.py::reserve",
+        "summary:leaf:memory://symbol/service.py::remaining_after",
+        "summary:leaf:memory://symbol/service.py::stock_label"
+      ],
+      "call_id": "78243ac3254c82ca"
+    },
+    {
+      "id": "summary:level3:project",
+      "level": 3,
+      "path": "project",
+      "text": "### summary:level3:project\nThe `audit.py` module handles audit-related tasks like creating keys, managing recent events, redacting identifiers, and recording events. The `presentation.py` module normalizes labels, displays references, maps status codes, and summarizes counts. The `rules.py` module manages inventory and order policies, including calculating sellable items, validating quantities, allocating stock, and checking backorder limits. The `service.py` module handles inventory reservations, updating sellable units, and indicating stock status. Each module uses specific constants and functions to maintain consistency and control.",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "memory://symbol/audit.py::REDACTION_MARKER",
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/policy.py::ACCEPTED",
+        "memory://symbol/policy.py::BACKORDER_LIMIT",
+        "memory://symbol/policy.py::DENIED",
+        "memory://symbol/policy.py::MAX_PER_ORDER",
+        "memory://symbol/policy.py::MIN_ORDER",
+        "memory://symbol/policy.py::PARTIAL",
+        "memory://symbol/policy.py::RESERVATION_TTL",
+        "memory://symbol/policy.py::SAFETY_STOCK",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/rules.py::allocate",
+        "memory://symbol/rules.py::can_backorder",
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/rules.py::valid_quantity",
+        "memory://symbol/service.py::remaining_after",
+        "memory://symbol/service.py::reserve",
+        "memory://symbol/service.py::stock_label"
+      ],
+      "children": [
+        "summary:level2:audit.py",
+        "summary:level2:presentation.py",
+        "summary:level2:rules.py",
+        "summary:level2:service.py"
+      ],
+      "call_id": "338db924ba90d281"
+    }
+  ],
+  "index": {
+    "version": 1,
+    "root": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/dataset/projects/eval_inventory",
+    "files": [
+      {
+        "path": "audit.py",
+        "symbols": [
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "audit_key",
+            "qualname": "audit_key",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/audit.py::audit_key"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "recent_events",
+            "qualname": "recent_events",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/audit.py::recent_events"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "redact_identifier",
+            "qualname": "redact_identifier",
+            "start_line": 12,
+            "end_line": 13,
+            "uri": "memory://symbol/audit.py::redact_identifier"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "event_record",
+            "qualname": "event_record",
+            "start_line": 15,
+            "end_line": 16,
+            "uri": "memory://symbol/audit.py::event_record"
+          }
+        ]
+      },
+      {
+        "path": "policy.py",
+        "symbols": []
+      },
+      {
+        "path": "presentation.py",
+        "symbols": [
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "normalize_label",
+            "qualname": "normalize_label",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/presentation.py::normalize_label"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "display_reference",
+            "qualname": "display_reference",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/presentation.py::display_reference"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "status_label",
+            "qualname": "status_label",
+            "start_line": 12,
+            "end_line": 13,
+            "uri": "memory://symbol/presentation.py::status_label"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "summarize_count",
+            "qualname": "summarize_count",
+            "start_line": 15,
+            "end_line": 16,
+            "uri": "memory://symbol/presentation.py::summarize_count"
+          }
+        ]
+      },
+      {
+        "path": "rules.py",
+        "symbols": [
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "sellable",
+            "qualname": "sellable",
+            "start_line": 3,
+            "end_line": 4,
+            "uri": "memory://symbol/rules.py::sellable"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "valid_quantity",
+            "qualname": "valid_quantity",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/rules.py::valid_quantity"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "allocate",
+            "qualname": "allocate",
+            "start_line": 9,
+            "end_line": 12,
+            "uri": "memory://symbol/rules.py::allocate"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "can_backorder",
+            "qualname": "can_backorder",
+            "start_line": 14,
+            "end_line": 15,
+            "uri": "memory://symbol/rules.py::can_backorder"
+          }
+        ]
+      },
+      {
+        "path": "service.py",
+        "symbols": [
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "reserve",
+            "qualname": "reserve",
+            "start_line": 4,
+            "end_line": 9,
+            "uri": "memory://symbol/service.py::reserve"
+          },
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "remaining_after",
+            "qualname": "remaining_after",
+            "start_line": 11,
+            "end_line": 13,
+            "uri": "memory://symbol/service.py::remaining_after"
+          },
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "stock_label",
+            "qualname": "stock_label",
+            "start_line": 15,
+            "end_line": 16,
+            "uri": "memory://symbol/service.py::stock_label"
+          }
+        ]
+      }
+    ],
+    "symbols": [
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "audit_key",
+        "qualname": "audit_key",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/audit.py::audit_key"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "recent_events",
+        "qualname": "recent_events",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/audit.py::recent_events"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "redact_identifier",
+        "qualname": "redact_identifier",
+        "start_line": 12,
+        "end_line": 13,
+        "uri": "memory://symbol/audit.py::redact_identifier"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "event_record",
+        "qualname": "event_record",
+        "start_line": 15,
+        "end_line": 16,
+        "uri": "memory://symbol/audit.py::event_record"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "normalize_label",
+        "qualname": "normalize_label",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/presentation.py::normalize_label"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "display_reference",
+        "qualname": "display_reference",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/presentation.py::display_reference"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "status_label",
+        "qualname": "status_label",
+        "start_line": 12,
+        "end_line": 13,
+        "uri": "memory://symbol/presentation.py::status_label"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "summarize_count",
+        "qualname": "summarize_count",
+        "start_line": 15,
+        "end_line": 16,
+        "uri": "memory://symbol/presentation.py::summarize_count"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "sellable",
+        "qualname": "sellable",
+        "start_line": 3,
+        "end_line": 4,
+        "uri": "memory://symbol/rules.py::sellable"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "valid_quantity",
+        "qualname": "valid_quantity",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/rules.py::valid_quantity"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "allocate",
+        "qualname": "allocate",
+        "start_line": 9,
+        "end_line": 12,
+        "uri": "memory://symbol/rules.py::allocate"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "can_backorder",
+        "qualname": "can_backorder",
+        "start_line": 14,
+        "end_line": 15,
+        "uri": "memory://symbol/rules.py::can_backorder"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "reserve",
+        "qualname": "reserve",
+        "start_line": 4,
+        "end_line": 9,
+        "uri": "memory://symbol/service.py::reserve"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "remaining_after",
+        "qualname": "remaining_after",
+        "start_line": 11,
+        "end_line": 13,
+        "uri": "memory://symbol/service.py::remaining_after"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "stock_label",
+        "qualname": "stock_label",
+        "start_line": 15,
+        "end_line": 16,
+        "uri": "memory://symbol/service.py::stock_label"
+      }
+    ]
+  },
+  "build_seconds": 89.30902800000331,
+  "build_input_tokens": 5642,
+  "build_output_tokens": 1644,
+  "build_model_seconds": 89.28877666697372,
+  "build_call_ids": [
+    "e4dd666ebe7d4f31",
+    "01c7a5bac1d12b9e",
+    "e2cbe59dd4d58497",
+    "d246527212b10f79",
+    "551542d2a7dacd2c",
+    "f25494ad9ea5b836",
+    "5dd102410d956683",
+    "ce1571a362e6107f",
+    "b6bab7bda7f3e2a9",
+    "746a71d350411739",
+    "4d462ccbdc6b6e37",
+    "623a6838ce338334",
+    "d8f995b7796ed786",
+    "50da2de4fc13cc93",
+    "f87eb33aeff2a29f",
+    "7d26b200780f1db8",
+    "6d9fdbfed8b9cf0b",
+    "d4627f690435adeb",
+    "78243ac3254c82ca",
+    "338db924ba90d281"
+  ],
+  "source_sha256": {
+    "audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+    "policy.py": "a90fcdae9e90cff3ac6f197c750c565f3997aac8244226da3ddac89efd860aea",
+    "presentation.py": "42b00ba82a833855929a5e2bfa194f7dc916ee72d4c52cc12eaaea2fdeaa6c29",
+    "rules.py": "713c73e112288e6e08b74cb77cb1bf76f662d33b93b50160bbe7592fd1e82342",
+    "service.py": "7b573a3b41a132b4258b9b68bdacb66320b3b3e86332c23e225e1d616b01aa8b"
+  }
+}

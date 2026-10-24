@@ -1,0 +1,5559 @@
+{
+  "dev_shipping": {
+    "index": {
+      "version": 1,
+      "root": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/ab_20261024/projects/dev_shipping",
+      "files": [
+        {
+          "path": "audit.py",
+          "symbols": [
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "audit_key",
+              "qualname": "audit_key",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/audit.py::audit_key"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "recent_events",
+              "qualname": "recent_events",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/audit.py::recent_events"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "redact_identifier",
+              "qualname": "redact_identifier",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/audit.py::redact_identifier"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "event_record",
+              "qualname": "event_record",
+              "start_line": 15,
+              "end_line": 16,
+              "uri": "memory://symbol/audit.py::event_record"
+            }
+          ]
+        },
+        {
+          "path": "policy.py",
+          "symbols": []
+        },
+        {
+          "path": "presentation.py",
+          "symbols": [
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "normalize_label",
+              "qualname": "normalize_label",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/presentation.py::normalize_label"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "display_reference",
+              "qualname": "display_reference",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/presentation.py::display_reference"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "status_label",
+              "qualname": "status_label",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/presentation.py::status_label"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "summarize_count",
+              "qualname": "summarize_count",
+              "start_line": 15,
+              "end_line": 16,
+              "uri": "memory://symbol/presentation.py::summarize_count"
+            }
+          ]
+        },
+        {
+          "path": "rules.py",
+          "symbols": [
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "weight_steps",
+              "qualname": "weight_steps",
+              "start_line": 3,
+              "end_line": 4,
+              "uri": "memory://symbol/rules.py::weight_steps"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "weight_charge",
+              "qualname": "weight_charge",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/rules.py::weight_charge"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "free_shipping",
+              "qualname": "free_shipping",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/rules.py::free_shipping"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "allowed_weight",
+              "qualname": "allowed_weight",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/rules.py::allowed_weight"
+            }
+          ]
+        },
+        {
+          "path": "service.py",
+          "symbols": [
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "shipping_quote",
+              "qualname": "shipping_quote",
+              "start_line": 4,
+              "end_line": 10,
+              "uri": "memory://symbol/service.py::shipping_quote"
+            },
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "parcel_total",
+              "qualname": "parcel_total",
+              "start_line": 12,
+              "end_line": 14,
+              "uri": "memory://symbol/service.py::parcel_total"
+            },
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "tracking_key",
+              "qualname": "tracking_key",
+              "start_line": 16,
+              "end_line": 17,
+              "uri": "memory://symbol/service.py::tracking_key"
+            }
+          ]
+        }
+      ],
+      "symbols": [
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "audit_key",
+          "qualname": "audit_key",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/audit.py::audit_key"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "recent_events",
+          "qualname": "recent_events",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/audit.py::recent_events"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "redact_identifier",
+          "qualname": "redact_identifier",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/audit.py::redact_identifier"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "event_record",
+          "qualname": "event_record",
+          "start_line": 15,
+          "end_line": 16,
+          "uri": "memory://symbol/audit.py::event_record"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "normalize_label",
+          "qualname": "normalize_label",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/presentation.py::normalize_label"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "display_reference",
+          "qualname": "display_reference",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/presentation.py::display_reference"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "status_label",
+          "qualname": "status_label",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/presentation.py::status_label"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "summarize_count",
+          "qualname": "summarize_count",
+          "start_line": 15,
+          "end_line": 16,
+          "uri": "memory://symbol/presentation.py::summarize_count"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "weight_steps",
+          "qualname": "weight_steps",
+          "start_line": 3,
+          "end_line": 4,
+          "uri": "memory://symbol/rules.py::weight_steps"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "weight_charge",
+          "qualname": "weight_charge",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/rules.py::weight_charge"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "free_shipping",
+          "qualname": "free_shipping",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/rules.py::free_shipping"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "allowed_weight",
+          "qualname": "allowed_weight",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/rules.py::allowed_weight"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "shipping_quote",
+          "qualname": "shipping_quote",
+          "start_line": 4,
+          "end_line": 10,
+          "uri": "memory://symbol/service.py::shipping_quote"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "parcel_total",
+          "qualname": "parcel_total",
+          "start_line": 12,
+          "end_line": 14,
+          "uri": "memory://symbol/service.py::parcel_total"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "tracking_key",
+          "qualname": "tracking_key",
+          "start_line": 16,
+          "end_line": 17,
+          "uri": "memory://symbol/service.py::tracking_key"
+        }
+      ]
+    },
+    "nodes": {
+      "memory://symbol/audit.py::AUDIT_VERSION": {
+        "id": "memory://symbol/audit.py::AUDIT_VERSION",
+        "path": "audit.py",
+        "name": "AUDIT_VERSION",
+        "source": "AUDIT_VERSION = 2",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::MAX_RECENT_EVENTS": {
+        "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "path": "audit.py",
+        "name": "MAX_RECENT_EVENTS",
+        "source": "MAX_RECENT_EVENTS = 20",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::REDACTION_MARKER": {
+        "id": "memory://symbol/audit.py::REDACTION_MARKER",
+        "path": "audit.py",
+        "name": "REDACTION_MARKER",
+        "source": "REDACTION_MARKER = \"***\"",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::DEFAULT_ACTOR": {
+        "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "path": "audit.py",
+        "name": "DEFAULT_ACTOR",
+        "source": "DEFAULT_ACTOR = \"system\"",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::audit_key": {
+        "id": "memory://symbol/audit.py::audit_key",
+        "path": "audit.py",
+        "name": "audit_key",
+        "source": "def audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+        "imports": "",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "AUDIT_VERSION",
+          "action",
+          "actor",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::AUDIT_VERSION"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::recent_events": {
+        "id": "memory://symbol/audit.py::recent_events",
+        "path": "audit.py",
+        "name": "recent_events",
+        "source": "def recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+        "imports": "",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "MAX_RECENT_EVENTS",
+          "events"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::redact_identifier": {
+        "id": "memory://symbol/audit.py::redact_identifier",
+        "path": "audit.py",
+        "name": "redact_identifier",
+        "source": "def redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+        "imports": "",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "REDACTION_MARKER",
+          "identifier",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::REDACTION_MARKER"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::event_record": {
+        "id": "memory://symbol/audit.py::event_record",
+        "path": "audit.py",
+        "name": "event_record",
+        "source": "def event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+        "imports": "",
+        "start": 15,
+        "end": 16,
+        "refs": [
+          "AUDIT_VERSION",
+          "DEFAULT_ACTOR",
+          "action",
+          "actor"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::AUDIT_VERSION",
+          "memory://symbol/audit.py::DEFAULT_ACTOR"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/policy.py::BASE_CENTS": {
+        "id": "memory://symbol/policy.py::BASE_CENTS",
+        "path": "policy.py",
+        "name": "BASE_CENTS",
+        "source": "BASE_CENTS = 350",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::STEP_GRAMS": {
+        "id": "memory://symbol/policy.py::STEP_GRAMS",
+        "path": "policy.py",
+        "name": "STEP_GRAMS",
+        "source": "STEP_GRAMS = 500",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::STEP_CENTS": {
+        "id": "memory://symbol/policy.py::STEP_CENTS",
+        "path": "policy.py",
+        "name": "STEP_CENTS",
+        "source": "STEP_CENTS = 90",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::FREE_FROM_CENTS": {
+        "id": "memory://symbol/policy.py::FREE_FROM_CENTS",
+        "path": "policy.py",
+        "name": "FREE_FROM_CENTS",
+        "source": "FREE_FROM_CENTS = 8000",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::REMOTE_SURCHARGE": {
+        "id": "memory://symbol/policy.py::REMOTE_SURCHARGE",
+        "path": "policy.py",
+        "name": "REMOTE_SURCHARGE",
+        "source": "REMOTE_SURCHARGE = 240",
+        "imports": "",
+        "start": 5,
+        "end": 5,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::MAX_GRAMS": {
+        "id": "memory://symbol/policy.py::MAX_GRAMS",
+        "path": "policy.py",
+        "name": "MAX_GRAMS",
+        "source": "MAX_GRAMS = 20000",
+        "imports": "",
+        "start": 6,
+        "end": 6,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::MIN_GRAMS": {
+        "id": "memory://symbol/policy.py::MIN_GRAMS",
+        "path": "policy.py",
+        "name": "MIN_GRAMS",
+        "source": "MIN_GRAMS = 1",
+        "imports": "",
+        "start": 7,
+        "end": 7,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::TRACKING_PREFIX": {
+        "id": "memory://symbol/policy.py::TRACKING_PREFIX",
+        "path": "policy.py",
+        "name": "TRACKING_PREFIX",
+        "source": "TRACKING_PREFIX = \"parcel\"",
+        "imports": "",
+        "start": 8,
+        "end": 8,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::DISPLAY_PREFIX": {
+        "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "path": "presentation.py",
+        "name": "DISPLAY_PREFIX",
+        "source": "DISPLAY_PREFIX = \"parcel\"",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::DISPLAY_WIDTH": {
+        "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "path": "presentation.py",
+        "name": "DISPLAY_WIDTH",
+        "source": "DISPLAY_WIDTH = 12",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::UNKNOWN_LABEL": {
+        "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "path": "presentation.py",
+        "name": "UNKNOWN_LABEL",
+        "source": "UNKNOWN_LABEL = \"unknown\"",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::MAX_LABEL_LENGTH": {
+        "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "path": "presentation.py",
+        "name": "MAX_LABEL_LENGTH",
+        "source": "MAX_LABEL_LENGTH = 48",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::normalize_label": {
+        "id": "memory://symbol/presentation.py::normalize_label",
+        "path": "presentation.py",
+        "name": "normalize_label",
+        "source": "def normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+        "imports": "",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "MAX_LABEL_LENGTH",
+          "label"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::display_reference": {
+        "id": "memory://symbol/presentation.py::display_reference",
+        "path": "presentation.py",
+        "name": "display_reference",
+        "source": "def display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+        "imports": "",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "DISPLAY_PREFIX",
+          "DISPLAY_WIDTH",
+          "reference",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::DISPLAY_PREFIX",
+          "memory://symbol/presentation.py::DISPLAY_WIDTH"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::status_label": {
+        "id": "memory://symbol/presentation.py::status_label",
+        "path": "presentation.py",
+        "name": "status_label",
+        "source": "def status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+        "imports": "",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "UNKNOWN_LABEL",
+          "code"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::UNKNOWN_LABEL"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::summarize_count": {
+        "id": "memory://symbol/presentation.py::summarize_count",
+        "path": "presentation.py",
+        "name": "summarize_count",
+        "source": "def summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+        "imports": "",
+        "start": 15,
+        "end": 16,
+        "refs": [
+          "DISPLAY_PREFIX",
+          "len",
+          "values"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::DISPLAY_PREFIX"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::weight_steps": {
+        "id": "memory://symbol/rules.py::weight_steps",
+        "path": "rules.py",
+        "name": "weight_steps",
+        "source": "def weight_steps(grams):\n    return (max(grams, MIN_GRAMS) + STEP_GRAMS - 1) // STEP_GRAMS",
+        "imports": "from policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS",
+        "start": 3,
+        "end": 4,
+        "refs": [
+          "MIN_GRAMS",
+          "STEP_GRAMS",
+          "grams",
+          "max"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::MIN_GRAMS",
+          "memory://symbol/policy.py::STEP_GRAMS"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::weight_charge": {
+        "id": "memory://symbol/rules.py::weight_charge",
+        "path": "rules.py",
+        "name": "weight_charge",
+        "source": "def weight_charge(grams):\n    return weight_steps(grams) * STEP_CENTS",
+        "imports": "from policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "STEP_CENTS",
+          "grams",
+          "weight_steps"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::STEP_CENTS",
+          "memory://symbol/rules.py::weight_steps"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::free_shipping": {
+        "id": "memory://symbol/rules.py::free_shipping",
+        "path": "rules.py",
+        "name": "free_shipping",
+        "source": "def free_shipping(order_cents):\n    return order_cents >= FREE_FROM_CENTS",
+        "imports": "from policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "FREE_FROM_CENTS",
+          "order_cents"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::FREE_FROM_CENTS"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::allowed_weight": {
+        "id": "memory://symbol/rules.py::allowed_weight",
+        "path": "rules.py",
+        "name": "allowed_weight",
+        "source": "def allowed_weight(grams):\n    return MIN_GRAMS <= grams <= MAX_GRAMS",
+        "imports": "from policy import STEP_GRAMS, STEP_CENTS, FREE_FROM_CENTS, MAX_GRAMS, MIN_GRAMS",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "MAX_GRAMS",
+          "MIN_GRAMS",
+          "grams"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::MAX_GRAMS",
+          "memory://symbol/policy.py::MIN_GRAMS"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::shipping_quote": {
+        "id": "memory://symbol/service.py::shipping_quote",
+        "path": "service.py",
+        "name": "shipping_quote",
+        "source": "def shipping_quote(order_cents, grams, remote):\n    if not allowed_weight(grams):\n        return {\"status\": \"rejected\", \"cents\": 0}\n    charge = 0 if free_shipping(order_cents) else BASE_CENTS + weight_charge(grams)\n    if remote:\n        charge += REMOTE_SURCHARGE\n    return {\"status\": \"accepted\", \"cents\": charge}",
+        "imports": "from policy import BASE_CENTS, REMOTE_SURCHARGE, TRACKING_PREFIX\nfrom rules import weight_charge, free_shipping, allowed_weight",
+        "start": 4,
+        "end": 10,
+        "refs": [
+          "BASE_CENTS",
+          "REMOTE_SURCHARGE",
+          "allowed_weight",
+          "charge",
+          "free_shipping",
+          "grams",
+          "order_cents",
+          "remote",
+          "weight_charge"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::BASE_CENTS",
+          "memory://symbol/policy.py::REMOTE_SURCHARGE",
+          "memory://symbol/rules.py::allowed_weight",
+          "memory://symbol/rules.py::free_shipping",
+          "memory://symbol/rules.py::weight_charge"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::parcel_total": {
+        "id": "memory://symbol/service.py::parcel_total",
+        "path": "service.py",
+        "name": "parcel_total",
+        "source": "def parcel_total(order_cents, grams, remote):\n    quote = shipping_quote(order_cents, grams, remote)\n    return order_cents + quote[\"cents\"] if quote[\"status\"] == \"accepted\" else -1",
+        "imports": "from policy import BASE_CENTS, REMOTE_SURCHARGE, TRACKING_PREFIX\nfrom rules import weight_charge, free_shipping, allowed_weight",
+        "start": 12,
+        "end": 14,
+        "refs": [
+          "grams",
+          "order_cents",
+          "quote",
+          "remote",
+          "shipping_quote"
+        ],
+        "deps": [
+          "memory://symbol/service.py::shipping_quote"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::tracking_key": {
+        "id": "memory://symbol/service.py::tracking_key",
+        "path": "service.py",
+        "name": "tracking_key",
+        "source": "def tracking_key(order_id):\n    return TRACKING_PREFIX + \":\" + order_id.strip().upper()",
+        "imports": "from policy import BASE_CENTS, REMOTE_SURCHARGE, TRACKING_PREFIX\nfrom rules import weight_charge, free_shipping, allowed_weight",
+        "start": 16,
+        "end": 17,
+        "refs": [
+          "TRACKING_PREFIX",
+          "order_id"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::TRACKING_PREFIX"
+        ],
+        "kind": "function"
+      }
+    }
+  },
+  "eval_authorization": {
+    "index": {
+      "version": 1,
+      "root": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/ab_20261024/projects/eval_authorization",
+      "files": [
+        {
+          "path": "audit.py",
+          "symbols": [
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "audit_key",
+              "qualname": "audit_key",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/audit.py::audit_key"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "recent_events",
+              "qualname": "recent_events",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/audit.py::recent_events"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "redact_identifier",
+              "qualname": "redact_identifier",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/audit.py::redact_identifier"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "event_record",
+              "qualname": "event_record",
+              "start_line": 15,
+              "end_line": 16,
+              "uri": "memory://symbol/audit.py::event_record"
+            }
+          ]
+        },
+        {
+          "path": "policy.py",
+          "symbols": []
+        },
+        {
+          "path": "presentation.py",
+          "symbols": [
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "normalize_label",
+              "qualname": "normalize_label",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/presentation.py::normalize_label"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "display_reference",
+              "qualname": "display_reference",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/presentation.py::display_reference"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "status_label",
+              "qualname": "status_label",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/presentation.py::status_label"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "summarize_count",
+              "qualname": "summarize_count",
+              "start_line": 15,
+              "end_line": 16,
+              "uri": "memory://symbol/presentation.py::summarize_count"
+            }
+          ]
+        },
+        {
+          "path": "rules.py",
+          "symbols": [
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "normalized_scopes",
+              "qualname": "normalized_scopes",
+              "start_line": 3,
+              "end_line": 4,
+              "uri": "memory://symbol/rules.py::normalized_scopes"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "session_valid",
+              "qualname": "session_valid",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/rules.py::session_valid"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "required_scope",
+              "qualname": "required_scope",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/rules.py::required_scope"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "role_allows",
+              "qualname": "role_allows",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/rules.py::role_allows"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "scope_allows",
+              "qualname": "scope_allows",
+              "start_line": 15,
+              "end_line": 17,
+              "uri": "memory://symbol/rules.py::scope_allows"
+            }
+          ]
+        },
+        {
+          "path": "service.py",
+          "symbols": [
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "authorize",
+              "qualname": "authorize",
+              "start_line": 4,
+              "end_line": 8,
+              "uri": "memory://symbol/service.py::authorize"
+            },
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "can_edit_own",
+              "qualname": "can_edit_own",
+              "start_line": 10,
+              "end_line": 11,
+              "uri": "memory://symbol/service.py::can_edit_own"
+            },
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "user_key",
+              "qualname": "user_key",
+              "start_line": 13,
+              "end_line": 14,
+              "uri": "memory://symbol/service.py::user_key"
+            }
+          ]
+        }
+      ],
+      "symbols": [
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "audit_key",
+          "qualname": "audit_key",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/audit.py::audit_key"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "recent_events",
+          "qualname": "recent_events",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/audit.py::recent_events"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "redact_identifier",
+          "qualname": "redact_identifier",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/audit.py::redact_identifier"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "event_record",
+          "qualname": "event_record",
+          "start_line": 15,
+          "end_line": 16,
+          "uri": "memory://symbol/audit.py::event_record"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "normalize_label",
+          "qualname": "normalize_label",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/presentation.py::normalize_label"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "display_reference",
+          "qualname": "display_reference",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/presentation.py::display_reference"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "status_label",
+          "qualname": "status_label",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/presentation.py::status_label"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "summarize_count",
+          "qualname": "summarize_count",
+          "start_line": 15,
+          "end_line": 16,
+          "uri": "memory://symbol/presentation.py::summarize_count"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "normalized_scopes",
+          "qualname": "normalized_scopes",
+          "start_line": 3,
+          "end_line": 4,
+          "uri": "memory://symbol/rules.py::normalized_scopes"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "session_valid",
+          "qualname": "session_valid",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/rules.py::session_valid"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "required_scope",
+          "qualname": "required_scope",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/rules.py::required_scope"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "role_allows",
+          "qualname": "role_allows",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/rules.py::role_allows"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "scope_allows",
+          "qualname": "scope_allows",
+          "start_line": 15,
+          "end_line": 17,
+          "uri": "memory://symbol/rules.py::scope_allows"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "authorize",
+          "qualname": "authorize",
+          "start_line": 4,
+          "end_line": 8,
+          "uri": "memory://symbol/service.py::authorize"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "can_edit_own",
+          "qualname": "can_edit_own",
+          "start_line": 10,
+          "end_line": 11,
+          "uri": "memory://symbol/service.py::can_edit_own"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "user_key",
+          "qualname": "user_key",
+          "start_line": 13,
+          "end_line": 14,
+          "uri": "memory://symbol/service.py::user_key"
+        }
+      ]
+    },
+    "nodes": {
+      "memory://symbol/audit.py::AUDIT_VERSION": {
+        "id": "memory://symbol/audit.py::AUDIT_VERSION",
+        "path": "audit.py",
+        "name": "AUDIT_VERSION",
+        "source": "AUDIT_VERSION = 2",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::MAX_RECENT_EVENTS": {
+        "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "path": "audit.py",
+        "name": "MAX_RECENT_EVENTS",
+        "source": "MAX_RECENT_EVENTS = 20",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::REDACTION_MARKER": {
+        "id": "memory://symbol/audit.py::REDACTION_MARKER",
+        "path": "audit.py",
+        "name": "REDACTION_MARKER",
+        "source": "REDACTION_MARKER = \"***\"",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::DEFAULT_ACTOR": {
+        "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "path": "audit.py",
+        "name": "DEFAULT_ACTOR",
+        "source": "DEFAULT_ACTOR = \"system\"",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::audit_key": {
+        "id": "memory://symbol/audit.py::audit_key",
+        "path": "audit.py",
+        "name": "audit_key",
+        "source": "def audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+        "imports": "",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "AUDIT_VERSION",
+          "action",
+          "actor",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::AUDIT_VERSION"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::recent_events": {
+        "id": "memory://symbol/audit.py::recent_events",
+        "path": "audit.py",
+        "name": "recent_events",
+        "source": "def recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+        "imports": "",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "MAX_RECENT_EVENTS",
+          "events"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::redact_identifier": {
+        "id": "memory://symbol/audit.py::redact_identifier",
+        "path": "audit.py",
+        "name": "redact_identifier",
+        "source": "def redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+        "imports": "",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "REDACTION_MARKER",
+          "identifier",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::REDACTION_MARKER"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::event_record": {
+        "id": "memory://symbol/audit.py::event_record",
+        "path": "audit.py",
+        "name": "event_record",
+        "source": "def event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+        "imports": "",
+        "start": 15,
+        "end": 16,
+        "refs": [
+          "AUDIT_VERSION",
+          "DEFAULT_ACTOR",
+          "action",
+          "actor"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::AUDIT_VERSION",
+          "memory://symbol/audit.py::DEFAULT_ACTOR"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/policy.py::ADMIN_ROLE": {
+        "id": "memory://symbol/policy.py::ADMIN_ROLE",
+        "path": "policy.py",
+        "name": "ADMIN_ROLE",
+        "source": "ADMIN_ROLE = \"admin\"",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::READ_ACTION": {
+        "id": "memory://symbol/policy.py::READ_ACTION",
+        "path": "policy.py",
+        "name": "READ_ACTION",
+        "source": "READ_ACTION = \"read\"",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::WRITE_ACTION": {
+        "id": "memory://symbol/policy.py::WRITE_ACTION",
+        "path": "policy.py",
+        "name": "WRITE_ACTION",
+        "source": "WRITE_ACTION = \"write\"",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::WRITE_SCOPE": {
+        "id": "memory://symbol/policy.py::WRITE_SCOPE",
+        "path": "policy.py",
+        "name": "WRITE_SCOPE",
+        "source": "WRITE_SCOPE = \"document:write\"",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::READ_SCOPE": {
+        "id": "memory://symbol/policy.py::READ_SCOPE",
+        "path": "policy.py",
+        "name": "READ_SCOPE",
+        "source": "READ_SCOPE = \"document:read\"",
+        "imports": "",
+        "start": 5,
+        "end": 5,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::MAX_SESSION_AGE": {
+        "id": "memory://symbol/policy.py::MAX_SESSION_AGE",
+        "path": "policy.py",
+        "name": "MAX_SESSION_AGE",
+        "source": "MAX_SESSION_AGE = 3600",
+        "imports": "",
+        "start": 6,
+        "end": 6,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::ALLOW_REASON": {
+        "id": "memory://symbol/policy.py::ALLOW_REASON",
+        "path": "policy.py",
+        "name": "ALLOW_REASON",
+        "source": "ALLOW_REASON = \"allowed\"",
+        "imports": "",
+        "start": 7,
+        "end": 7,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::DENY_REASON": {
+        "id": "memory://symbol/policy.py::DENY_REASON",
+        "path": "policy.py",
+        "name": "DENY_REASON",
+        "source": "DENY_REASON = \"denied\"",
+        "imports": "",
+        "start": 8,
+        "end": 8,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::DISPLAY_PREFIX": {
+        "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "path": "presentation.py",
+        "name": "DISPLAY_PREFIX",
+        "source": "DISPLAY_PREFIX = \"document\"",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::DISPLAY_WIDTH": {
+        "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "path": "presentation.py",
+        "name": "DISPLAY_WIDTH",
+        "source": "DISPLAY_WIDTH = 12",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::UNKNOWN_LABEL": {
+        "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "path": "presentation.py",
+        "name": "UNKNOWN_LABEL",
+        "source": "UNKNOWN_LABEL = \"unknown\"",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::MAX_LABEL_LENGTH": {
+        "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "path": "presentation.py",
+        "name": "MAX_LABEL_LENGTH",
+        "source": "MAX_LABEL_LENGTH = 48",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::normalize_label": {
+        "id": "memory://symbol/presentation.py::normalize_label",
+        "path": "presentation.py",
+        "name": "normalize_label",
+        "source": "def normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+        "imports": "",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "MAX_LABEL_LENGTH",
+          "label"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::display_reference": {
+        "id": "memory://symbol/presentation.py::display_reference",
+        "path": "presentation.py",
+        "name": "display_reference",
+        "source": "def display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+        "imports": "",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "DISPLAY_PREFIX",
+          "DISPLAY_WIDTH",
+          "reference",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::DISPLAY_PREFIX",
+          "memory://symbol/presentation.py::DISPLAY_WIDTH"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::status_label": {
+        "id": "memory://symbol/presentation.py::status_label",
+        "path": "presentation.py",
+        "name": "status_label",
+        "source": "def status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+        "imports": "",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "UNKNOWN_LABEL",
+          "code"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::UNKNOWN_LABEL"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::summarize_count": {
+        "id": "memory://symbol/presentation.py::summarize_count",
+        "path": "presentation.py",
+        "name": "summarize_count",
+        "source": "def summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+        "imports": "",
+        "start": 15,
+        "end": 16,
+        "refs": [
+          "DISPLAY_PREFIX",
+          "len",
+          "values"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::DISPLAY_PREFIX"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::normalized_scopes": {
+        "id": "memory://symbol/rules.py::normalized_scopes",
+        "path": "rules.py",
+        "name": "normalized_scopes",
+        "source": "def normalized_scopes(scopes):\n    return sorted(set(scope.strip().lower() for scope in scopes))",
+        "imports": "from policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE",
+        "start": 3,
+        "end": 4,
+        "refs": [
+          "scope",
+          "scopes",
+          "set",
+          "sorted"
+        ],
+        "deps": [],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::session_valid": {
+        "id": "memory://symbol/rules.py::session_valid",
+        "path": "rules.py",
+        "name": "session_valid",
+        "source": "def session_valid(created_at, now, revoked):\n    return not revoked and 0 <= now - created_at < MAX_SESSION_AGE",
+        "imports": "from policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "MAX_SESSION_AGE",
+          "created_at",
+          "now",
+          "revoked"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::MAX_SESSION_AGE"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::required_scope": {
+        "id": "memory://symbol/rules.py::required_scope",
+        "path": "rules.py",
+        "name": "required_scope",
+        "source": "def required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")",
+        "imports": "from policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "READ_ACTION",
+          "READ_SCOPE",
+          "WRITE_ACTION",
+          "WRITE_SCOPE",
+          "action"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::READ_ACTION",
+          "memory://symbol/policy.py::READ_SCOPE",
+          "memory://symbol/policy.py::WRITE_ACTION",
+          "memory://symbol/policy.py::WRITE_SCOPE"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::role_allows": {
+        "id": "memory://symbol/rules.py::role_allows",
+        "path": "rules.py",
+        "name": "role_allows",
+        "source": "def role_allows(role, owner, user):\n    return role == ADMIN_ROLE or owner == user",
+        "imports": "from policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "ADMIN_ROLE",
+          "owner",
+          "role",
+          "user"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::ADMIN_ROLE"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::scope_allows": {
+        "id": "memory://symbol/rules.py::scope_allows",
+        "path": "rules.py",
+        "name": "scope_allows",
+        "source": "def scope_allows(scopes, action):\n    required = required_scope(action)\n    return bool(required) and required in normalized_scopes(scopes)",
+        "imports": "from policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE",
+        "start": 15,
+        "end": 17,
+        "refs": [
+          "action",
+          "bool",
+          "normalized_scopes",
+          "required",
+          "required_scope",
+          "scopes"
+        ],
+        "deps": [
+          "memory://symbol/rules.py::normalized_scopes",
+          "memory://symbol/rules.py::required_scope"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::authorize": {
+        "id": "memory://symbol/service.py::authorize",
+        "path": "service.py",
+        "name": "authorize",
+        "source": "def authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}",
+        "imports": "from policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows",
+        "start": 4,
+        "end": 8,
+        "refs": [
+          "ALLOW_REASON",
+          "DENY_REASON",
+          "action",
+          "created_at",
+          "granted",
+          "now",
+          "owner",
+          "revoked",
+          "role",
+          "role_allows",
+          "scope_allows",
+          "scopes",
+          "session_valid",
+          "user"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::ALLOW_REASON",
+          "memory://symbol/policy.py::DENY_REASON",
+          "memory://symbol/rules.py::role_allows",
+          "memory://symbol/rules.py::scope_allows",
+          "memory://symbol/rules.py::session_valid"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::can_edit_own": {
+        "id": "memory://symbol/service.py::can_edit_own",
+        "path": "service.py",
+        "name": "can_edit_own",
+        "source": "def can_edit_own(user, scopes, created_at, now):\n    return authorize(user, user, \"member\", scopes, \"write\", created_at, now, False)[\"allowed\"]",
+        "imports": "from policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows",
+        "start": 10,
+        "end": 11,
+        "refs": [
+          "authorize",
+          "created_at",
+          "now",
+          "scopes",
+          "user"
+        ],
+        "deps": [
+          "memory://symbol/service.py::authorize"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::user_key": {
+        "id": "memory://symbol/service.py::user_key",
+        "path": "service.py",
+        "name": "user_key",
+        "source": "def user_key(user):\n    return \"account:\" + user.strip().lower()",
+        "imports": "from policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows",
+        "start": 13,
+        "end": 14,
+        "refs": [
+          "user"
+        ],
+        "deps": [],
+        "kind": "function"
+      }
+    }
+  },
+  "eval_cache": {
+    "index": {
+      "version": 1,
+      "root": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/ab_20261024/projects/eval_cache",
+      "files": [
+        {
+          "path": "audit.py",
+          "symbols": [
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "audit_key",
+              "qualname": "audit_key",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/audit.py::audit_key"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "recent_events",
+              "qualname": "recent_events",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/audit.py::recent_events"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "redact_identifier",
+              "qualname": "redact_identifier",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/audit.py::redact_identifier"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "event_record",
+              "qualname": "event_record",
+              "start_line": 15,
+              "end_line": 16,
+              "uri": "memory://symbol/audit.py::event_record"
+            }
+          ]
+        },
+        {
+          "path": "policy.py",
+          "symbols": []
+        },
+        {
+          "path": "presentation.py",
+          "symbols": [
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "normalize_label",
+              "qualname": "normalize_label",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/presentation.py::normalize_label"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "display_reference",
+              "qualname": "display_reference",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/presentation.py::display_reference"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "status_label",
+              "qualname": "status_label",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/presentation.py::status_label"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "summarize_count",
+              "qualname": "summarize_count",
+              "start_line": 15,
+              "end_line": 16,
+              "uri": "memory://symbol/presentation.py::summarize_count"
+            }
+          ]
+        },
+        {
+          "path": "rules.py",
+          "symbols": [
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "normalize_tenant",
+              "qualname": "normalize_tenant",
+              "start_line": 3,
+              "end_line": 4,
+              "uri": "memory://symbol/rules.py::normalize_tenant"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "normalize_resource",
+              "qualname": "normalize_resource",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/rules.py::normalize_resource"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "canonical_query",
+              "qualname": "canonical_query",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/rules.py::canonical_query"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "cache_ttl",
+              "qualname": "cache_ttl",
+              "start_line": 12,
+              "end_line": 14,
+              "uri": "memory://symbol/rules.py::cache_ttl"
+            }
+          ]
+        },
+        {
+          "path": "service.py",
+          "symbols": [
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "render_cache_key",
+              "qualname": "render_cache_key",
+              "start_line": 4,
+              "end_line": 5,
+              "uri": "memory://symbol/service.py::render_cache_key"
+            },
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "cache_entry",
+              "qualname": "cache_entry",
+              "start_line": 7,
+              "end_line": 9,
+              "uri": "memory://symbol/service.py::cache_entry"
+            },
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "cache_partition",
+              "qualname": "cache_partition",
+              "start_line": 11,
+              "end_line": 12,
+              "uri": "memory://symbol/service.py::cache_partition"
+            }
+          ]
+        }
+      ],
+      "symbols": [
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "audit_key",
+          "qualname": "audit_key",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/audit.py::audit_key"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "recent_events",
+          "qualname": "recent_events",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/audit.py::recent_events"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "redact_identifier",
+          "qualname": "redact_identifier",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/audit.py::redact_identifier"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "event_record",
+          "qualname": "event_record",
+          "start_line": 15,
+          "end_line": 16,
+          "uri": "memory://symbol/audit.py::event_record"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "normalize_label",
+          "qualname": "normalize_label",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/presentation.py::normalize_label"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "display_reference",
+          "qualname": "display_reference",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/presentation.py::display_reference"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "status_label",
+          "qualname": "status_label",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/presentation.py::status_label"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "summarize_count",
+          "qualname": "summarize_count",
+          "start_line": 15,
+          "end_line": 16,
+          "uri": "memory://symbol/presentation.py::summarize_count"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "normalize_tenant",
+          "qualname": "normalize_tenant",
+          "start_line": 3,
+          "end_line": 4,
+          "uri": "memory://symbol/rules.py::normalize_tenant"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "normalize_resource",
+          "qualname": "normalize_resource",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/rules.py::normalize_resource"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "canonical_query",
+          "qualname": "canonical_query",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/rules.py::canonical_query"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "cache_ttl",
+          "qualname": "cache_ttl",
+          "start_line": 12,
+          "end_line": 14,
+          "uri": "memory://symbol/rules.py::cache_ttl"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "render_cache_key",
+          "qualname": "render_cache_key",
+          "start_line": 4,
+          "end_line": 5,
+          "uri": "memory://symbol/service.py::render_cache_key"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "cache_entry",
+          "qualname": "cache_entry",
+          "start_line": 7,
+          "end_line": 9,
+          "uri": "memory://symbol/service.py::cache_entry"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "cache_partition",
+          "qualname": "cache_partition",
+          "start_line": 11,
+          "end_line": 12,
+          "uri": "memory://symbol/service.py::cache_partition"
+        }
+      ]
+    },
+    "nodes": {
+      "memory://symbol/audit.py::AUDIT_VERSION": {
+        "id": "memory://symbol/audit.py::AUDIT_VERSION",
+        "path": "audit.py",
+        "name": "AUDIT_VERSION",
+        "source": "AUDIT_VERSION = 2",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::MAX_RECENT_EVENTS": {
+        "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "path": "audit.py",
+        "name": "MAX_RECENT_EVENTS",
+        "source": "MAX_RECENT_EVENTS = 20",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::REDACTION_MARKER": {
+        "id": "memory://symbol/audit.py::REDACTION_MARKER",
+        "path": "audit.py",
+        "name": "REDACTION_MARKER",
+        "source": "REDACTION_MARKER = \"***\"",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::DEFAULT_ACTOR": {
+        "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "path": "audit.py",
+        "name": "DEFAULT_ACTOR",
+        "source": "DEFAULT_ACTOR = \"system\"",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::audit_key": {
+        "id": "memory://symbol/audit.py::audit_key",
+        "path": "audit.py",
+        "name": "audit_key",
+        "source": "def audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+        "imports": "",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "AUDIT_VERSION",
+          "action",
+          "actor",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::AUDIT_VERSION"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::recent_events": {
+        "id": "memory://symbol/audit.py::recent_events",
+        "path": "audit.py",
+        "name": "recent_events",
+        "source": "def recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+        "imports": "",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "MAX_RECENT_EVENTS",
+          "events"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::redact_identifier": {
+        "id": "memory://symbol/audit.py::redact_identifier",
+        "path": "audit.py",
+        "name": "redact_identifier",
+        "source": "def redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+        "imports": "",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "REDACTION_MARKER",
+          "identifier",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::REDACTION_MARKER"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::event_record": {
+        "id": "memory://symbol/audit.py::event_record",
+        "path": "audit.py",
+        "name": "event_record",
+        "source": "def event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+        "imports": "",
+        "start": 15,
+        "end": 16,
+        "refs": [
+          "AUDIT_VERSION",
+          "DEFAULT_ACTOR",
+          "action",
+          "actor"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::AUDIT_VERSION",
+          "memory://symbol/audit.py::DEFAULT_ACTOR"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/policy.py::CACHE_NAMESPACE": {
+        "id": "memory://symbol/policy.py::CACHE_NAMESPACE",
+        "path": "policy.py",
+        "name": "CACHE_NAMESPACE",
+        "source": "CACHE_NAMESPACE = \"render\"",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::SCHEMA_VERSION": {
+        "id": "memory://symbol/policy.py::SCHEMA_VERSION",
+        "path": "policy.py",
+        "name": "SCHEMA_VERSION",
+        "source": "SCHEMA_VERSION = 4",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::DEFAULT_TTL": {
+        "id": "memory://symbol/policy.py::DEFAULT_TTL",
+        "path": "policy.py",
+        "name": "DEFAULT_TTL",
+        "source": "DEFAULT_TTL = 300",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::PRIVATE_TTL": {
+        "id": "memory://symbol/policy.py::PRIVATE_TTL",
+        "path": "policy.py",
+        "name": "PRIVATE_TTL",
+        "source": "PRIVATE_TTL = 30",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::MAX_TTL": {
+        "id": "memory://symbol/policy.py::MAX_TTL",
+        "path": "policy.py",
+        "name": "MAX_TTL",
+        "source": "MAX_TTL = 3600",
+        "imports": "",
+        "start": 5,
+        "end": 5,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::ANONYMOUS_TENANT": {
+        "id": "memory://symbol/policy.py::ANONYMOUS_TENANT",
+        "path": "policy.py",
+        "name": "ANONYMOUS_TENANT",
+        "source": "ANONYMOUS_TENANT = \"public\"",
+        "imports": "",
+        "start": 6,
+        "end": 6,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::KEY_SEPARATOR": {
+        "id": "memory://symbol/policy.py::KEY_SEPARATOR",
+        "path": "policy.py",
+        "name": "KEY_SEPARATOR",
+        "source": "KEY_SEPARATOR = \"|\"",
+        "imports": "",
+        "start": 7,
+        "end": 7,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS": {
+        "id": "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+        "path": "policy.py",
+        "name": "EXCLUDED_QUERY_KEYS",
+        "source": "EXCLUDED_QUERY_KEYS = (\"trace\", \"debug\")",
+        "imports": "",
+        "start": 8,
+        "end": 8,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::DISPLAY_PREFIX": {
+        "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "path": "presentation.py",
+        "name": "DISPLAY_PREFIX",
+        "source": "DISPLAY_PREFIX = \"render\"",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::DISPLAY_WIDTH": {
+        "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "path": "presentation.py",
+        "name": "DISPLAY_WIDTH",
+        "source": "DISPLAY_WIDTH = 12",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::UNKNOWN_LABEL": {
+        "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "path": "presentation.py",
+        "name": "UNKNOWN_LABEL",
+        "source": "UNKNOWN_LABEL = \"unknown\"",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::MAX_LABEL_LENGTH": {
+        "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "path": "presentation.py",
+        "name": "MAX_LABEL_LENGTH",
+        "source": "MAX_LABEL_LENGTH = 48",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::normalize_label": {
+        "id": "memory://symbol/presentation.py::normalize_label",
+        "path": "presentation.py",
+        "name": "normalize_label",
+        "source": "def normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+        "imports": "",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "MAX_LABEL_LENGTH",
+          "label"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::display_reference": {
+        "id": "memory://symbol/presentation.py::display_reference",
+        "path": "presentation.py",
+        "name": "display_reference",
+        "source": "def display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+        "imports": "",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "DISPLAY_PREFIX",
+          "DISPLAY_WIDTH",
+          "reference",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::DISPLAY_PREFIX",
+          "memory://symbol/presentation.py::DISPLAY_WIDTH"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::status_label": {
+        "id": "memory://symbol/presentation.py::status_label",
+        "path": "presentation.py",
+        "name": "status_label",
+        "source": "def status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+        "imports": "",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "UNKNOWN_LABEL",
+          "code"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::UNKNOWN_LABEL"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::summarize_count": {
+        "id": "memory://symbol/presentation.py::summarize_count",
+        "path": "presentation.py",
+        "name": "summarize_count",
+        "source": "def summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+        "imports": "",
+        "start": 15,
+        "end": 16,
+        "refs": [
+          "DISPLAY_PREFIX",
+          "len",
+          "values"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::DISPLAY_PREFIX"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::normalize_tenant": {
+        "id": "memory://symbol/rules.py::normalize_tenant",
+        "path": "rules.py",
+        "name": "normalize_tenant",
+        "source": "def normalize_tenant(tenant):\n    return tenant.strip().lower() or ANONYMOUS_TENANT",
+        "imports": "from policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS",
+        "start": 3,
+        "end": 4,
+        "refs": [
+          "ANONYMOUS_TENANT",
+          "tenant"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::ANONYMOUS_TENANT"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::normalize_resource": {
+        "id": "memory://symbol/rules.py::normalize_resource",
+        "path": "rules.py",
+        "name": "normalize_resource",
+        "source": "def normalize_resource(resource):\n    return resource.strip().replace(\" \", \"_\").lower()",
+        "imports": "from policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "resource"
+        ],
+        "deps": [],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::canonical_query": {
+        "id": "memory://symbol/rules.py::canonical_query",
+        "path": "rules.py",
+        "name": "canonical_query",
+        "source": "def canonical_query(query):\n    return \"&\".join(str(key) + \"=\" + str(query[key]) for key in sorted(query) if key not in EXCLUDED_QUERY_KEYS)",
+        "imports": "from policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "EXCLUDED_QUERY_KEYS",
+          "key",
+          "query",
+          "sorted",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::cache_ttl": {
+        "id": "memory://symbol/rules.py::cache_ttl",
+        "path": "rules.py",
+        "name": "cache_ttl",
+        "source": "def cache_ttl(requested, private):\n    ceiling = PRIVATE_TTL if private else MAX_TTL\n    return min(max(DEFAULT_TTL if requested is None else requested, 0), ceiling)",
+        "imports": "from policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS",
+        "start": 12,
+        "end": 14,
+        "refs": [
+          "DEFAULT_TTL",
+          "MAX_TTL",
+          "PRIVATE_TTL",
+          "ceiling",
+          "max",
+          "min",
+          "private",
+          "requested"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::DEFAULT_TTL",
+          "memory://symbol/policy.py::MAX_TTL",
+          "memory://symbol/policy.py::PRIVATE_TTL"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::render_cache_key": {
+        "id": "memory://symbol/service.py::render_cache_key",
+        "path": "service.py",
+        "name": "render_cache_key",
+        "source": "def render_cache_key(tenant, resource, query):\n    return KEY_SEPARATOR.join((CACHE_NAMESPACE, normalize_tenant(tenant), normalize_resource(resource), canonical_query(query), \"v\" + str(SCHEMA_VERSION)))",
+        "imports": "from policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl",
+        "start": 4,
+        "end": 5,
+        "refs": [
+          "CACHE_NAMESPACE",
+          "KEY_SEPARATOR",
+          "SCHEMA_VERSION",
+          "canonical_query",
+          "normalize_resource",
+          "normalize_tenant",
+          "query",
+          "resource",
+          "str",
+          "tenant"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::CACHE_NAMESPACE",
+          "memory://symbol/policy.py::KEY_SEPARATOR",
+          "memory://symbol/policy.py::SCHEMA_VERSION",
+          "memory://symbol/rules.py::canonical_query",
+          "memory://symbol/rules.py::normalize_resource",
+          "memory://symbol/rules.py::normalize_tenant"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::cache_entry": {
+        "id": "memory://symbol/service.py::cache_entry",
+        "path": "service.py",
+        "name": "cache_entry",
+        "source": "def cache_entry(tenant, resource, query, requested_ttl, private, now):\n    ttl = cache_ttl(requested_ttl, private)\n    return {\"key\": render_cache_key(tenant, resource, query), \"expires\": now + ttl, \"store\": ttl > 0}",
+        "imports": "from policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl",
+        "start": 7,
+        "end": 9,
+        "refs": [
+          "cache_ttl",
+          "now",
+          "private",
+          "query",
+          "render_cache_key",
+          "requested_ttl",
+          "resource",
+          "tenant",
+          "ttl"
+        ],
+        "deps": [
+          "memory://symbol/rules.py::cache_ttl",
+          "memory://symbol/service.py::render_cache_key"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::cache_partition": {
+        "id": "memory://symbol/service.py::cache_partition",
+        "path": "service.py",
+        "name": "cache_partition",
+        "source": "def cache_partition(tenant):\n    return sum(ord(char) for char in normalize_tenant(tenant)) % 16",
+        "imports": "from policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl",
+        "start": 11,
+        "end": 12,
+        "refs": [
+          "char",
+          "normalize_tenant",
+          "ord",
+          "sum",
+          "tenant"
+        ],
+        "deps": [
+          "memory://symbol/rules.py::normalize_tenant"
+        ],
+        "kind": "function"
+      }
+    }
+  },
+  "eval_inventory": {
+    "index": {
+      "version": 1,
+      "root": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/ab_20261024/projects/eval_inventory",
+      "files": [
+        {
+          "path": "audit.py",
+          "symbols": [
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "audit_key",
+              "qualname": "audit_key",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/audit.py::audit_key"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "recent_events",
+              "qualname": "recent_events",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/audit.py::recent_events"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "redact_identifier",
+              "qualname": "redact_identifier",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/audit.py::redact_identifier"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "event_record",
+              "qualname": "event_record",
+              "start_line": 15,
+              "end_line": 16,
+              "uri": "memory://symbol/audit.py::event_record"
+            }
+          ]
+        },
+        {
+          "path": "policy.py",
+          "symbols": []
+        },
+        {
+          "path": "presentation.py",
+          "symbols": [
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "normalize_label",
+              "qualname": "normalize_label",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/presentation.py::normalize_label"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "display_reference",
+              "qualname": "display_reference",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/presentation.py::display_reference"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "status_label",
+              "qualname": "status_label",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/presentation.py::status_label"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "summarize_count",
+              "qualname": "summarize_count",
+              "start_line": 15,
+              "end_line": 16,
+              "uri": "memory://symbol/presentation.py::summarize_count"
+            }
+          ]
+        },
+        {
+          "path": "rules.py",
+          "symbols": [
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "sellable",
+              "qualname": "sellable",
+              "start_line": 3,
+              "end_line": 4,
+              "uri": "memory://symbol/rules.py::sellable"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "valid_quantity",
+              "qualname": "valid_quantity",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/rules.py::valid_quantity"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "allocate",
+              "qualname": "allocate",
+              "start_line": 9,
+              "end_line": 12,
+              "uri": "memory://symbol/rules.py::allocate"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "can_backorder",
+              "qualname": "can_backorder",
+              "start_line": 14,
+              "end_line": 15,
+              "uri": "memory://symbol/rules.py::can_backorder"
+            }
+          ]
+        },
+        {
+          "path": "service.py",
+          "symbols": [
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "reserve",
+              "qualname": "reserve",
+              "start_line": 4,
+              "end_line": 9,
+              "uri": "memory://symbol/service.py::reserve"
+            },
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "remaining_after",
+              "qualname": "remaining_after",
+              "start_line": 11,
+              "end_line": 13,
+              "uri": "memory://symbol/service.py::remaining_after"
+            },
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "stock_label",
+              "qualname": "stock_label",
+              "start_line": 15,
+              "end_line": 16,
+              "uri": "memory://symbol/service.py::stock_label"
+            }
+          ]
+        }
+      ],
+      "symbols": [
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "audit_key",
+          "qualname": "audit_key",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/audit.py::audit_key"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "recent_events",
+          "qualname": "recent_events",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/audit.py::recent_events"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "redact_identifier",
+          "qualname": "redact_identifier",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/audit.py::redact_identifier"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "event_record",
+          "qualname": "event_record",
+          "start_line": 15,
+          "end_line": 16,
+          "uri": "memory://symbol/audit.py::event_record"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "normalize_label",
+          "qualname": "normalize_label",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/presentation.py::normalize_label"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "display_reference",
+          "qualname": "display_reference",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/presentation.py::display_reference"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "status_label",
+          "qualname": "status_label",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/presentation.py::status_label"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "summarize_count",
+          "qualname": "summarize_count",
+          "start_line": 15,
+          "end_line": 16,
+          "uri": "memory://symbol/presentation.py::summarize_count"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "sellable",
+          "qualname": "sellable",
+          "start_line": 3,
+          "end_line": 4,
+          "uri": "memory://symbol/rules.py::sellable"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "valid_quantity",
+          "qualname": "valid_quantity",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/rules.py::valid_quantity"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "allocate",
+          "qualname": "allocate",
+          "start_line": 9,
+          "end_line": 12,
+          "uri": "memory://symbol/rules.py::allocate"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "can_backorder",
+          "qualname": "can_backorder",
+          "start_line": 14,
+          "end_line": 15,
+          "uri": "memory://symbol/rules.py::can_backorder"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "reserve",
+          "qualname": "reserve",
+          "start_line": 4,
+          "end_line": 9,
+          "uri": "memory://symbol/service.py::reserve"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "remaining_after",
+          "qualname": "remaining_after",
+          "start_line": 11,
+          "end_line": 13,
+          "uri": "memory://symbol/service.py::remaining_after"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "stock_label",
+          "qualname": "stock_label",
+          "start_line": 15,
+          "end_line": 16,
+          "uri": "memory://symbol/service.py::stock_label"
+        }
+      ]
+    },
+    "nodes": {
+      "memory://symbol/audit.py::AUDIT_VERSION": {
+        "id": "memory://symbol/audit.py::AUDIT_VERSION",
+        "path": "audit.py",
+        "name": "AUDIT_VERSION",
+        "source": "AUDIT_VERSION = 2",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::MAX_RECENT_EVENTS": {
+        "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "path": "audit.py",
+        "name": "MAX_RECENT_EVENTS",
+        "source": "MAX_RECENT_EVENTS = 20",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::REDACTION_MARKER": {
+        "id": "memory://symbol/audit.py::REDACTION_MARKER",
+        "path": "audit.py",
+        "name": "REDACTION_MARKER",
+        "source": "REDACTION_MARKER = \"***\"",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::DEFAULT_ACTOR": {
+        "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "path": "audit.py",
+        "name": "DEFAULT_ACTOR",
+        "source": "DEFAULT_ACTOR = \"system\"",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::audit_key": {
+        "id": "memory://symbol/audit.py::audit_key",
+        "path": "audit.py",
+        "name": "audit_key",
+        "source": "def audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+        "imports": "",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "AUDIT_VERSION",
+          "action",
+          "actor",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::AUDIT_VERSION"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::recent_events": {
+        "id": "memory://symbol/audit.py::recent_events",
+        "path": "audit.py",
+        "name": "recent_events",
+        "source": "def recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+        "imports": "",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "MAX_RECENT_EVENTS",
+          "events"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::redact_identifier": {
+        "id": "memory://symbol/audit.py::redact_identifier",
+        "path": "audit.py",
+        "name": "redact_identifier",
+        "source": "def redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+        "imports": "",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "REDACTION_MARKER",
+          "identifier",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::REDACTION_MARKER"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::event_record": {
+        "id": "memory://symbol/audit.py::event_record",
+        "path": "audit.py",
+        "name": "event_record",
+        "source": "def event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+        "imports": "",
+        "start": 15,
+        "end": 16,
+        "refs": [
+          "AUDIT_VERSION",
+          "DEFAULT_ACTOR",
+          "action",
+          "actor"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::AUDIT_VERSION",
+          "memory://symbol/audit.py::DEFAULT_ACTOR"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/policy.py::SAFETY_STOCK": {
+        "id": "memory://symbol/policy.py::SAFETY_STOCK",
+        "path": "policy.py",
+        "name": "SAFETY_STOCK",
+        "source": "SAFETY_STOCK = 3",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::MAX_PER_ORDER": {
+        "id": "memory://symbol/policy.py::MAX_PER_ORDER",
+        "path": "policy.py",
+        "name": "MAX_PER_ORDER",
+        "source": "MAX_PER_ORDER = 12",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::MIN_ORDER": {
+        "id": "memory://symbol/policy.py::MIN_ORDER",
+        "path": "policy.py",
+        "name": "MIN_ORDER",
+        "source": "MIN_ORDER = 1",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::BACKORDER_LIMIT": {
+        "id": "memory://symbol/policy.py::BACKORDER_LIMIT",
+        "path": "policy.py",
+        "name": "BACKORDER_LIMIT",
+        "source": "BACKORDER_LIMIT = 5",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::RESERVATION_TTL": {
+        "id": "memory://symbol/policy.py::RESERVATION_TTL",
+        "path": "policy.py",
+        "name": "RESERVATION_TTL",
+        "source": "RESERVATION_TTL = 900",
+        "imports": "",
+        "start": 5,
+        "end": 5,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::ACCEPTED": {
+        "id": "memory://symbol/policy.py::ACCEPTED",
+        "path": "policy.py",
+        "name": "ACCEPTED",
+        "source": "ACCEPTED = \"reserved\"",
+        "imports": "",
+        "start": 6,
+        "end": 6,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::PARTIAL": {
+        "id": "memory://symbol/policy.py::PARTIAL",
+        "path": "policy.py",
+        "name": "PARTIAL",
+        "source": "PARTIAL = \"partial\"",
+        "imports": "",
+        "start": 7,
+        "end": 7,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::DENIED": {
+        "id": "memory://symbol/policy.py::DENIED",
+        "path": "policy.py",
+        "name": "DENIED",
+        "source": "DENIED = \"denied\"",
+        "imports": "",
+        "start": 8,
+        "end": 8,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::DISPLAY_PREFIX": {
+        "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "path": "presentation.py",
+        "name": "DISPLAY_PREFIX",
+        "source": "DISPLAY_PREFIX = \"warehouse\"",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::DISPLAY_WIDTH": {
+        "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "path": "presentation.py",
+        "name": "DISPLAY_WIDTH",
+        "source": "DISPLAY_WIDTH = 12",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::UNKNOWN_LABEL": {
+        "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "path": "presentation.py",
+        "name": "UNKNOWN_LABEL",
+        "source": "UNKNOWN_LABEL = \"unknown\"",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::MAX_LABEL_LENGTH": {
+        "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "path": "presentation.py",
+        "name": "MAX_LABEL_LENGTH",
+        "source": "MAX_LABEL_LENGTH = 48",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::normalize_label": {
+        "id": "memory://symbol/presentation.py::normalize_label",
+        "path": "presentation.py",
+        "name": "normalize_label",
+        "source": "def normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+        "imports": "",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "MAX_LABEL_LENGTH",
+          "label"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::display_reference": {
+        "id": "memory://symbol/presentation.py::display_reference",
+        "path": "presentation.py",
+        "name": "display_reference",
+        "source": "def display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+        "imports": "",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "DISPLAY_PREFIX",
+          "DISPLAY_WIDTH",
+          "reference",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::DISPLAY_PREFIX",
+          "memory://symbol/presentation.py::DISPLAY_WIDTH"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::status_label": {
+        "id": "memory://symbol/presentation.py::status_label",
+        "path": "presentation.py",
+        "name": "status_label",
+        "source": "def status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+        "imports": "",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "UNKNOWN_LABEL",
+          "code"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::UNKNOWN_LABEL"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::summarize_count": {
+        "id": "memory://symbol/presentation.py::summarize_count",
+        "path": "presentation.py",
+        "name": "summarize_count",
+        "source": "def summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+        "imports": "",
+        "start": 15,
+        "end": 16,
+        "refs": [
+          "DISPLAY_PREFIX",
+          "len",
+          "values"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::DISPLAY_PREFIX"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::sellable": {
+        "id": "memory://symbol/rules.py::sellable",
+        "path": "rules.py",
+        "name": "sellable",
+        "source": "def sellable(on_hand, held):\n    return max(on_hand - held - SAFETY_STOCK, 0)",
+        "imports": "from policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT",
+        "start": 3,
+        "end": 4,
+        "refs": [
+          "SAFETY_STOCK",
+          "held",
+          "max",
+          "on_hand"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::SAFETY_STOCK"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::valid_quantity": {
+        "id": "memory://symbol/rules.py::valid_quantity",
+        "path": "rules.py",
+        "name": "valid_quantity",
+        "source": "def valid_quantity(quantity):\n    return MIN_ORDER <= quantity <= MAX_PER_ORDER",
+        "imports": "from policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "MAX_PER_ORDER",
+          "MIN_ORDER",
+          "quantity"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::MAX_PER_ORDER",
+          "memory://symbol/policy.py::MIN_ORDER"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::allocate": {
+        "id": "memory://symbol/rules.py::allocate",
+        "path": "rules.py",
+        "name": "allocate",
+        "source": "def allocate(available, requested, allow_partial):\n    if available >= requested:\n        return requested\n    return available if allow_partial else 0",
+        "imports": "from policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT",
+        "start": 9,
+        "end": 12,
+        "refs": [
+          "allow_partial",
+          "available",
+          "requested"
+        ],
+        "deps": [],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::can_backorder": {
+        "id": "memory://symbol/rules.py::can_backorder",
+        "path": "rules.py",
+        "name": "can_backorder",
+        "source": "def can_backorder(shortfall):\n    return 0 < shortfall <= BACKORDER_LIMIT",
+        "imports": "from policy import SAFETY_STOCK, MAX_PER_ORDER, MIN_ORDER, BACKORDER_LIMIT",
+        "start": 14,
+        "end": 15,
+        "refs": [
+          "BACKORDER_LIMIT",
+          "shortfall"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::BACKORDER_LIMIT"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::reserve": {
+        "id": "memory://symbol/service.py::reserve",
+        "path": "service.py",
+        "name": "reserve",
+        "source": "def reserve(on_hand, held, requested, allow_partial, now):\n    if not valid_quantity(requested):\n        return {\"status\": DENIED, \"units\": 0, \"expires\": now}\n    units = allocate(sellable(on_hand, held), requested, allow_partial)\n    status = ACCEPTED if units == requested else PARTIAL if units else DENIED\n    return {\"status\": status, \"units\": units, \"expires\": now + RESERVATION_TTL if units else now}",
+        "imports": "from policy import RESERVATION_TTL, ACCEPTED, PARTIAL, DENIED\nfrom rules import sellable, valid_quantity, allocate",
+        "start": 4,
+        "end": 9,
+        "refs": [
+          "ACCEPTED",
+          "DENIED",
+          "PARTIAL",
+          "RESERVATION_TTL",
+          "allocate",
+          "allow_partial",
+          "held",
+          "now",
+          "on_hand",
+          "requested",
+          "sellable",
+          "status",
+          "units",
+          "valid_quantity"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::ACCEPTED",
+          "memory://symbol/policy.py::DENIED",
+          "memory://symbol/policy.py::PARTIAL",
+          "memory://symbol/policy.py::RESERVATION_TTL",
+          "memory://symbol/rules.py::allocate",
+          "memory://symbol/rules.py::sellable",
+          "memory://symbol/rules.py::valid_quantity"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::remaining_after": {
+        "id": "memory://symbol/service.py::remaining_after",
+        "path": "service.py",
+        "name": "remaining_after",
+        "source": "def remaining_after(on_hand, held, requested, allow_partial):\n    reservation = reserve(on_hand, held, requested, allow_partial, 0)\n    return sellable(on_hand, held + reservation[\"units\"])",
+        "imports": "from policy import RESERVATION_TTL, ACCEPTED, PARTIAL, DENIED\nfrom rules import sellable, valid_quantity, allocate",
+        "start": 11,
+        "end": 13,
+        "refs": [
+          "allow_partial",
+          "held",
+          "on_hand",
+          "requested",
+          "reservation",
+          "reserve",
+          "sellable"
+        ],
+        "deps": [
+          "memory://symbol/rules.py::sellable",
+          "memory://symbol/service.py::reserve"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::stock_label": {
+        "id": "memory://symbol/service.py::stock_label",
+        "path": "service.py",
+        "name": "stock_label",
+        "source": "def stock_label(on_hand):\n    return \"empty\" if on_hand <= 0 else \"stocked\"",
+        "imports": "from policy import RESERVATION_TTL, ACCEPTED, PARTIAL, DENIED\nfrom rules import sellable, valid_quantity, allocate",
+        "start": 15,
+        "end": 16,
+        "refs": [
+          "on_hand"
+        ],
+        "deps": [],
+        "kind": "function"
+      }
+    }
+  },
+  "eval_pricing": {
+    "index": {
+      "version": 1,
+      "root": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/ab_20261024/projects/eval_pricing",
+      "files": [
+        {
+          "path": "audit.py",
+          "symbols": [
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "audit_key",
+              "qualname": "audit_key",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/audit.py::audit_key"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "recent_events",
+              "qualname": "recent_events",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/audit.py::recent_events"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "redact_identifier",
+              "qualname": "redact_identifier",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/audit.py::redact_identifier"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "event_record",
+              "qualname": "event_record",
+              "start_line": 15,
+              "end_line": 16,
+              "uri": "memory://symbol/audit.py::event_record"
+            }
+          ]
+        },
+        {
+          "path": "policy.py",
+          "symbols": []
+        },
+        {
+          "path": "presentation.py",
+          "symbols": [
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "normalize_label",
+              "qualname": "normalize_label",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/presentation.py::normalize_label"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "display_reference",
+              "qualname": "display_reference",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/presentation.py::display_reference"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "status_label",
+              "qualname": "status_label",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/presentation.py::status_label"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "summarize_count",
+              "qualname": "summarize_count",
+              "start_line": 15,
+              "end_line": 16,
+              "uri": "memory://symbol/presentation.py::summarize_count"
+            }
+          ]
+        },
+        {
+          "path": "rules.py",
+          "symbols": [
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "line_subtotal",
+              "qualname": "line_subtotal",
+              "start_line": 3,
+              "end_line": 6,
+              "uri": "memory://symbol/rules.py::line_subtotal"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "member_discount",
+              "qualname": "member_discount",
+              "start_line": 8,
+              "end_line": 9,
+              "uri": "memory://symbol/rules.py::member_discount"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "sales_tax",
+              "qualname": "sales_tax",
+              "start_line": 11,
+              "end_line": 12,
+              "uri": "memory://symbol/rules.py::sales_tax"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "refundable",
+              "qualname": "refundable",
+              "start_line": 14,
+              "end_line": 15,
+              "uri": "memory://symbol/rules.py::refundable"
+            }
+          ]
+        },
+        {
+          "path": "service.py",
+          "symbols": [
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "checkout_total",
+              "qualname": "checkout_total",
+              "start_line": 4,
+              "end_line": 10,
+              "uri": "memory://symbol/service.py::checkout_total"
+            },
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "order_receipt",
+              "qualname": "order_receipt",
+              "start_line": 12,
+              "end_line": 14,
+              "uri": "memory://symbol/service.py::order_receipt"
+            },
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "reward_points",
+              "qualname": "reward_points",
+              "start_line": 16,
+              "end_line": 17,
+              "uri": "memory://symbol/service.py::reward_points"
+            }
+          ]
+        }
+      ],
+      "symbols": [
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "audit_key",
+          "qualname": "audit_key",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/audit.py::audit_key"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "recent_events",
+          "qualname": "recent_events",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/audit.py::recent_events"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "redact_identifier",
+          "qualname": "redact_identifier",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/audit.py::redact_identifier"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "event_record",
+          "qualname": "event_record",
+          "start_line": 15,
+          "end_line": 16,
+          "uri": "memory://symbol/audit.py::event_record"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "normalize_label",
+          "qualname": "normalize_label",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/presentation.py::normalize_label"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "display_reference",
+          "qualname": "display_reference",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/presentation.py::display_reference"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "status_label",
+          "qualname": "status_label",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/presentation.py::status_label"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "summarize_count",
+          "qualname": "summarize_count",
+          "start_line": 15,
+          "end_line": 16,
+          "uri": "memory://symbol/presentation.py::summarize_count"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "line_subtotal",
+          "qualname": "line_subtotal",
+          "start_line": 3,
+          "end_line": 6,
+          "uri": "memory://symbol/rules.py::line_subtotal"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "member_discount",
+          "qualname": "member_discount",
+          "start_line": 8,
+          "end_line": 9,
+          "uri": "memory://symbol/rules.py::member_discount"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "sales_tax",
+          "qualname": "sales_tax",
+          "start_line": 11,
+          "end_line": 12,
+          "uri": "memory://symbol/rules.py::sales_tax"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "refundable",
+          "qualname": "refundable",
+          "start_line": 14,
+          "end_line": 15,
+          "uri": "memory://symbol/rules.py::refundable"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "checkout_total",
+          "qualname": "checkout_total",
+          "start_line": 4,
+          "end_line": 10,
+          "uri": "memory://symbol/service.py::checkout_total"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "order_receipt",
+          "qualname": "order_receipt",
+          "start_line": 12,
+          "end_line": 14,
+          "uri": "memory://symbol/service.py::order_receipt"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "reward_points",
+          "qualname": "reward_points",
+          "start_line": 16,
+          "end_line": 17,
+          "uri": "memory://symbol/service.py::reward_points"
+        }
+      ]
+    },
+    "nodes": {
+      "memory://symbol/audit.py::AUDIT_VERSION": {
+        "id": "memory://symbol/audit.py::AUDIT_VERSION",
+        "path": "audit.py",
+        "name": "AUDIT_VERSION",
+        "source": "AUDIT_VERSION = 2",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::MAX_RECENT_EVENTS": {
+        "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "path": "audit.py",
+        "name": "MAX_RECENT_EVENTS",
+        "source": "MAX_RECENT_EVENTS = 20",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::REDACTION_MARKER": {
+        "id": "memory://symbol/audit.py::REDACTION_MARKER",
+        "path": "audit.py",
+        "name": "REDACTION_MARKER",
+        "source": "REDACTION_MARKER = \"***\"",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::DEFAULT_ACTOR": {
+        "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "path": "audit.py",
+        "name": "DEFAULT_ACTOR",
+        "source": "DEFAULT_ACTOR = \"system\"",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::audit_key": {
+        "id": "memory://symbol/audit.py::audit_key",
+        "path": "audit.py",
+        "name": "audit_key",
+        "source": "def audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+        "imports": "",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "AUDIT_VERSION",
+          "action",
+          "actor",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::AUDIT_VERSION"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::recent_events": {
+        "id": "memory://symbol/audit.py::recent_events",
+        "path": "audit.py",
+        "name": "recent_events",
+        "source": "def recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+        "imports": "",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "MAX_RECENT_EVENTS",
+          "events"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::redact_identifier": {
+        "id": "memory://symbol/audit.py::redact_identifier",
+        "path": "audit.py",
+        "name": "redact_identifier",
+        "source": "def redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+        "imports": "",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "REDACTION_MARKER",
+          "identifier",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::REDACTION_MARKER"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::event_record": {
+        "id": "memory://symbol/audit.py::event_record",
+        "path": "audit.py",
+        "name": "event_record",
+        "source": "def event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+        "imports": "",
+        "start": 15,
+        "end": 16,
+        "refs": [
+          "AUDIT_VERSION",
+          "DEFAULT_ACTOR",
+          "action",
+          "actor"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::AUDIT_VERSION",
+          "memory://symbol/audit.py::DEFAULT_ACTOR"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/policy.py::MEMBER_BPS": {
+        "id": "memory://symbol/policy.py::MEMBER_BPS",
+        "path": "policy.py",
+        "name": "MEMBER_BPS",
+        "source": "MEMBER_BPS = 750",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::TAX_BPS": {
+        "id": "memory://symbol/policy.py::TAX_BPS",
+        "path": "policy.py",
+        "name": "TAX_BPS",
+        "source": "TAX_BPS = 825",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::DELIVERY_CENTS": {
+        "id": "memory://symbol/policy.py::DELIVERY_CENTS",
+        "path": "policy.py",
+        "name": "DELIVERY_CENTS",
+        "source": "DELIVERY_CENTS = 499",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::FREE_DELIVERY_CENTS": {
+        "id": "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+        "path": "policy.py",
+        "name": "FREE_DELIVERY_CENTS",
+        "source": "FREE_DELIVERY_CENTS = 6000",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::DISCOUNT_CAP_CENTS": {
+        "id": "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+        "path": "policy.py",
+        "name": "DISCOUNT_CAP_CENTS",
+        "source": "DISCOUNT_CAP_CENTS = 900",
+        "imports": "",
+        "start": 5,
+        "end": 5,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::MIN_QUANTITY": {
+        "id": "memory://symbol/policy.py::MIN_QUANTITY",
+        "path": "policy.py",
+        "name": "MIN_QUANTITY",
+        "source": "MIN_QUANTITY = 1",
+        "imports": "",
+        "start": 6,
+        "end": 6,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::MAX_QUANTITY": {
+        "id": "memory://symbol/policy.py::MAX_QUANTITY",
+        "path": "policy.py",
+        "name": "MAX_QUANTITY",
+        "source": "MAX_QUANTITY = 20",
+        "imports": "",
+        "start": 7,
+        "end": 7,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::CURRENCY": {
+        "id": "memory://symbol/policy.py::CURRENCY",
+        "path": "policy.py",
+        "name": "CURRENCY",
+        "source": "CURRENCY = \"USD\"",
+        "imports": "",
+        "start": 8,
+        "end": 8,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::DISPLAY_PREFIX": {
+        "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "path": "presentation.py",
+        "name": "DISPLAY_PREFIX",
+        "source": "DISPLAY_PREFIX = \"retail\"",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::DISPLAY_WIDTH": {
+        "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "path": "presentation.py",
+        "name": "DISPLAY_WIDTH",
+        "source": "DISPLAY_WIDTH = 12",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::UNKNOWN_LABEL": {
+        "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "path": "presentation.py",
+        "name": "UNKNOWN_LABEL",
+        "source": "UNKNOWN_LABEL = \"unknown\"",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::MAX_LABEL_LENGTH": {
+        "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "path": "presentation.py",
+        "name": "MAX_LABEL_LENGTH",
+        "source": "MAX_LABEL_LENGTH = 48",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::normalize_label": {
+        "id": "memory://symbol/presentation.py::normalize_label",
+        "path": "presentation.py",
+        "name": "normalize_label",
+        "source": "def normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+        "imports": "",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "MAX_LABEL_LENGTH",
+          "label"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::display_reference": {
+        "id": "memory://symbol/presentation.py::display_reference",
+        "path": "presentation.py",
+        "name": "display_reference",
+        "source": "def display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+        "imports": "",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "DISPLAY_PREFIX",
+          "DISPLAY_WIDTH",
+          "reference",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::DISPLAY_PREFIX",
+          "memory://symbol/presentation.py::DISPLAY_WIDTH"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::status_label": {
+        "id": "memory://symbol/presentation.py::status_label",
+        "path": "presentation.py",
+        "name": "status_label",
+        "source": "def status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+        "imports": "",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "UNKNOWN_LABEL",
+          "code"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::UNKNOWN_LABEL"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::summarize_count": {
+        "id": "memory://symbol/presentation.py::summarize_count",
+        "path": "presentation.py",
+        "name": "summarize_count",
+        "source": "def summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+        "imports": "",
+        "start": 15,
+        "end": 16,
+        "refs": [
+          "DISPLAY_PREFIX",
+          "len",
+          "values"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::DISPLAY_PREFIX"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::line_subtotal": {
+        "id": "memory://symbol/rules.py::line_subtotal",
+        "path": "rules.py",
+        "name": "line_subtotal",
+        "source": "def line_subtotal(unit_cents, quantity):\n    if unit_cents < 0 or not MIN_QUANTITY <= quantity <= MAX_QUANTITY:\n        return -1\n    return unit_cents * quantity",
+        "imports": "from policy import MEMBER_BPS, TAX_BPS, DISCOUNT_CAP_CENTS, MIN_QUANTITY, MAX_QUANTITY",
+        "start": 3,
+        "end": 6,
+        "refs": [
+          "MAX_QUANTITY",
+          "MIN_QUANTITY",
+          "quantity",
+          "unit_cents"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::MAX_QUANTITY",
+          "memory://symbol/policy.py::MIN_QUANTITY"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::member_discount": {
+        "id": "memory://symbol/rules.py::member_discount",
+        "path": "rules.py",
+        "name": "member_discount",
+        "source": "def member_discount(subtotal, member):\n    return min(subtotal * MEMBER_BPS // 10000, DISCOUNT_CAP_CENTS) if member else 0",
+        "imports": "from policy import MEMBER_BPS, TAX_BPS, DISCOUNT_CAP_CENTS, MIN_QUANTITY, MAX_QUANTITY",
+        "start": 8,
+        "end": 9,
+        "refs": [
+          "DISCOUNT_CAP_CENTS",
+          "MEMBER_BPS",
+          "member",
+          "min",
+          "subtotal"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+          "memory://symbol/policy.py::MEMBER_BPS"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::sales_tax": {
+        "id": "memory://symbol/rules.py::sales_tax",
+        "path": "rules.py",
+        "name": "sales_tax",
+        "source": "def sales_tax(net_cents):\n    return (net_cents * TAX_BPS + 5000) // 10000",
+        "imports": "from policy import MEMBER_BPS, TAX_BPS, DISCOUNT_CAP_CENTS, MIN_QUANTITY, MAX_QUANTITY",
+        "start": 11,
+        "end": 12,
+        "refs": [
+          "TAX_BPS",
+          "net_cents"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::TAX_BPS"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::refundable": {
+        "id": "memory://symbol/rules.py::refundable",
+        "path": "rules.py",
+        "name": "refundable",
+        "source": "def refundable(net_cents, returned_units, total_units):\n    return net_cents * min(returned_units, total_units) // total_units",
+        "imports": "from policy import MEMBER_BPS, TAX_BPS, DISCOUNT_CAP_CENTS, MIN_QUANTITY, MAX_QUANTITY",
+        "start": 14,
+        "end": 15,
+        "refs": [
+          "min",
+          "net_cents",
+          "returned_units",
+          "total_units"
+        ],
+        "deps": [],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::checkout_total": {
+        "id": "memory://symbol/service.py::checkout_total",
+        "path": "service.py",
+        "name": "checkout_total",
+        "source": "def checkout_total(unit_cents, quantity, member):\n    subtotal = line_subtotal(unit_cents, quantity)\n    if subtotal < 0:\n        return -1\n    net = subtotal - member_discount(subtotal, member)\n    delivery = 0 if net >= FREE_DELIVERY_CENTS else DELIVERY_CENTS\n    return net + sales_tax(net) + delivery",
+        "imports": "from policy import DELIVERY_CENTS, FREE_DELIVERY_CENTS, CURRENCY\nfrom rules import line_subtotal, member_discount, sales_tax",
+        "start": 4,
+        "end": 10,
+        "refs": [
+          "DELIVERY_CENTS",
+          "FREE_DELIVERY_CENTS",
+          "delivery",
+          "line_subtotal",
+          "member",
+          "member_discount",
+          "net",
+          "quantity",
+          "sales_tax",
+          "subtotal",
+          "unit_cents"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::DELIVERY_CENTS",
+          "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+          "memory://symbol/rules.py::line_subtotal",
+          "memory://symbol/rules.py::member_discount",
+          "memory://symbol/rules.py::sales_tax"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::order_receipt": {
+        "id": "memory://symbol/service.py::order_receipt",
+        "path": "service.py",
+        "name": "order_receipt",
+        "source": "def order_receipt(unit_cents, quantity, member):\n    total = checkout_total(unit_cents, quantity, member)\n    return {\"currency\": CURRENCY, \"total\": total, \"accepted\": total >= 0}",
+        "imports": "from policy import DELIVERY_CENTS, FREE_DELIVERY_CENTS, CURRENCY\nfrom rules import line_subtotal, member_discount, sales_tax",
+        "start": 12,
+        "end": 14,
+        "refs": [
+          "CURRENCY",
+          "checkout_total",
+          "member",
+          "quantity",
+          "total",
+          "unit_cents"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::CURRENCY",
+          "memory://symbol/service.py::checkout_total"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::reward_points": {
+        "id": "memory://symbol/service.py::reward_points",
+        "path": "service.py",
+        "name": "reward_points",
+        "source": "def reward_points(total_cents):\n    return max(total_cents, 0) // 100",
+        "imports": "from policy import DELIVERY_CENTS, FREE_DELIVERY_CENTS, CURRENCY\nfrom rules import line_subtotal, member_discount, sales_tax",
+        "start": 16,
+        "end": 17,
+        "refs": [
+          "max",
+          "total_cents"
+        ],
+        "deps": [],
+        "kind": "function"
+      }
+    }
+  },
+  "eval_routing": {
+    "index": {
+      "version": 1,
+      "root": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/ab_20261024/projects/eval_routing",
+      "files": [
+        {
+          "path": "audit.py",
+          "symbols": [
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "audit_key",
+              "qualname": "audit_key",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/audit.py::audit_key"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "recent_events",
+              "qualname": "recent_events",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/audit.py::recent_events"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "redact_identifier",
+              "qualname": "redact_identifier",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/audit.py::redact_identifier"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "event_record",
+              "qualname": "event_record",
+              "start_line": 15,
+              "end_line": 16,
+              "uri": "memory://symbol/audit.py::event_record"
+            }
+          ]
+        },
+        {
+          "path": "policy.py",
+          "symbols": []
+        },
+        {
+          "path": "presentation.py",
+          "symbols": [
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "normalize_label",
+              "qualname": "normalize_label",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/presentation.py::normalize_label"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "display_reference",
+              "qualname": "display_reference",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/presentation.py::display_reference"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "status_label",
+              "qualname": "status_label",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/presentation.py::status_label"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "summarize_count",
+              "qualname": "summarize_count",
+              "start_line": 15,
+              "end_line": 16,
+              "uri": "memory://symbol/presentation.py::summarize_count"
+            }
+          ]
+        },
+        {
+          "path": "rules.py",
+          "symbols": [
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "normalize_path",
+              "qualname": "normalize_path",
+              "start_line": 3,
+              "end_line": 5,
+              "uri": "memory://symbol/rules.py::normalize_path"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "bucket",
+              "qualname": "bucket",
+              "start_line": 7,
+              "end_line": 8,
+              "uri": "memory://symbol/rules.py::bucket"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "use_canary",
+              "qualname": "use_canary",
+              "start_line": 10,
+              "end_line": 11,
+              "uri": "memory://symbol/rules.py::use_canary"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "healthy",
+              "qualname": "healthy",
+              "start_line": 13,
+              "end_line": 14,
+              "uri": "memory://symbol/rules.py::healthy"
+            }
+          ]
+        },
+        {
+          "path": "service.py",
+          "symbols": [
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "route_request",
+              "qualname": "route_request",
+              "start_line": 4,
+              "end_line": 14,
+              "uri": "memory://symbol/service.py::route_request"
+            },
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "retry_destination",
+              "qualname": "retry_destination",
+              "start_line": 16,
+              "end_line": 19,
+              "uri": "memory://symbol/service.py::retry_destination"
+            },
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "route_tag",
+              "qualname": "route_tag",
+              "start_line": 21,
+              "end_line": 22,
+              "uri": "memory://symbol/service.py::route_tag"
+            }
+          ]
+        }
+      ],
+      "symbols": [
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "audit_key",
+          "qualname": "audit_key",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/audit.py::audit_key"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "recent_events",
+          "qualname": "recent_events",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/audit.py::recent_events"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "redact_identifier",
+          "qualname": "redact_identifier",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/audit.py::redact_identifier"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "event_record",
+          "qualname": "event_record",
+          "start_line": 15,
+          "end_line": 16,
+          "uri": "memory://symbol/audit.py::event_record"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "normalize_label",
+          "qualname": "normalize_label",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/presentation.py::normalize_label"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "display_reference",
+          "qualname": "display_reference",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/presentation.py::display_reference"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "status_label",
+          "qualname": "status_label",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/presentation.py::status_label"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "summarize_count",
+          "qualname": "summarize_count",
+          "start_line": 15,
+          "end_line": 16,
+          "uri": "memory://symbol/presentation.py::summarize_count"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "normalize_path",
+          "qualname": "normalize_path",
+          "start_line": 3,
+          "end_line": 5,
+          "uri": "memory://symbol/rules.py::normalize_path"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "bucket",
+          "qualname": "bucket",
+          "start_line": 7,
+          "end_line": 8,
+          "uri": "memory://symbol/rules.py::bucket"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "use_canary",
+          "qualname": "use_canary",
+          "start_line": 10,
+          "end_line": 11,
+          "uri": "memory://symbol/rules.py::use_canary"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "healthy",
+          "qualname": "healthy",
+          "start_line": 13,
+          "end_line": 14,
+          "uri": "memory://symbol/rules.py::healthy"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "route_request",
+          "qualname": "route_request",
+          "start_line": 4,
+          "end_line": 14,
+          "uri": "memory://symbol/service.py::route_request"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "retry_destination",
+          "qualname": "retry_destination",
+          "start_line": 16,
+          "end_line": 19,
+          "uri": "memory://symbol/service.py::retry_destination"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "route_tag",
+          "qualname": "route_tag",
+          "start_line": 21,
+          "end_line": 22,
+          "uri": "memory://symbol/service.py::route_tag"
+        }
+      ]
+    },
+    "nodes": {
+      "memory://symbol/audit.py::AUDIT_VERSION": {
+        "id": "memory://symbol/audit.py::AUDIT_VERSION",
+        "path": "audit.py",
+        "name": "AUDIT_VERSION",
+        "source": "AUDIT_VERSION = 2",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::MAX_RECENT_EVENTS": {
+        "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "path": "audit.py",
+        "name": "MAX_RECENT_EVENTS",
+        "source": "MAX_RECENT_EVENTS = 20",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::REDACTION_MARKER": {
+        "id": "memory://symbol/audit.py::REDACTION_MARKER",
+        "path": "audit.py",
+        "name": "REDACTION_MARKER",
+        "source": "REDACTION_MARKER = \"***\"",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::DEFAULT_ACTOR": {
+        "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "path": "audit.py",
+        "name": "DEFAULT_ACTOR",
+        "source": "DEFAULT_ACTOR = \"system\"",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::audit_key": {
+        "id": "memory://symbol/audit.py::audit_key",
+        "path": "audit.py",
+        "name": "audit_key",
+        "source": "def audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+        "imports": "",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "AUDIT_VERSION",
+          "action",
+          "actor",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::AUDIT_VERSION"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::recent_events": {
+        "id": "memory://symbol/audit.py::recent_events",
+        "path": "audit.py",
+        "name": "recent_events",
+        "source": "def recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+        "imports": "",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "MAX_RECENT_EVENTS",
+          "events"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::redact_identifier": {
+        "id": "memory://symbol/audit.py::redact_identifier",
+        "path": "audit.py",
+        "name": "redact_identifier",
+        "source": "def redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+        "imports": "",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "REDACTION_MARKER",
+          "identifier",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::REDACTION_MARKER"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::event_record": {
+        "id": "memory://symbol/audit.py::event_record",
+        "path": "audit.py",
+        "name": "event_record",
+        "source": "def event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+        "imports": "",
+        "start": 15,
+        "end": 16,
+        "refs": [
+          "AUDIT_VERSION",
+          "DEFAULT_ACTOR",
+          "action",
+          "actor"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::AUDIT_VERSION",
+          "memory://symbol/audit.py::DEFAULT_ACTOR"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/policy.py::PRIMARY_REGION": {
+        "id": "memory://symbol/policy.py::PRIMARY_REGION",
+        "path": "policy.py",
+        "name": "PRIMARY_REGION",
+        "source": "PRIMARY_REGION = \"east\"",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::SECONDARY_REGION": {
+        "id": "memory://symbol/policy.py::SECONDARY_REGION",
+        "path": "policy.py",
+        "name": "SECONDARY_REGION",
+        "source": "SECONDARY_REGION = \"west\"",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::CANARY_PERCENT": {
+        "id": "memory://symbol/policy.py::CANARY_PERCENT",
+        "path": "policy.py",
+        "name": "CANARY_PERCENT",
+        "source": "CANARY_PERCENT = 20",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::MAX_LATENCY_MS": {
+        "id": "memory://symbol/policy.py::MAX_LATENCY_MS",
+        "path": "policy.py",
+        "name": "MAX_LATENCY_MS",
+        "source": "MAX_LATENCY_MS = 150",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::DEFAULT_PATH": {
+        "id": "memory://symbol/policy.py::DEFAULT_PATH",
+        "path": "policy.py",
+        "name": "DEFAULT_PATH",
+        "source": "DEFAULT_PATH = \"/\"",
+        "imports": "",
+        "start": 5,
+        "end": 5,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::RETRY_LIMIT": {
+        "id": "memory://symbol/policy.py::RETRY_LIMIT",
+        "path": "policy.py",
+        "name": "RETRY_LIMIT",
+        "source": "RETRY_LIMIT = 2",
+        "imports": "",
+        "start": 6,
+        "end": 6,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::UNAVAILABLE": {
+        "id": "memory://symbol/policy.py::UNAVAILABLE",
+        "path": "policy.py",
+        "name": "UNAVAILABLE",
+        "source": "UNAVAILABLE = \"unavailable\"",
+        "imports": "",
+        "start": 7,
+        "end": 7,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::CANARY_SUFFIX": {
+        "id": "memory://symbol/policy.py::CANARY_SUFFIX",
+        "path": "policy.py",
+        "name": "CANARY_SUFFIX",
+        "source": "CANARY_SUFFIX = \"-canary\"",
+        "imports": "",
+        "start": 8,
+        "end": 8,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::DISPLAY_PREFIX": {
+        "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "path": "presentation.py",
+        "name": "DISPLAY_PREFIX",
+        "source": "DISPLAY_PREFIX = \"service\"",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::DISPLAY_WIDTH": {
+        "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "path": "presentation.py",
+        "name": "DISPLAY_WIDTH",
+        "source": "DISPLAY_WIDTH = 12",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::UNKNOWN_LABEL": {
+        "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "path": "presentation.py",
+        "name": "UNKNOWN_LABEL",
+        "source": "UNKNOWN_LABEL = \"unknown\"",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::MAX_LABEL_LENGTH": {
+        "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "path": "presentation.py",
+        "name": "MAX_LABEL_LENGTH",
+        "source": "MAX_LABEL_LENGTH = 48",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::normalize_label": {
+        "id": "memory://symbol/presentation.py::normalize_label",
+        "path": "presentation.py",
+        "name": "normalize_label",
+        "source": "def normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+        "imports": "",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "MAX_LABEL_LENGTH",
+          "label"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::display_reference": {
+        "id": "memory://symbol/presentation.py::display_reference",
+        "path": "presentation.py",
+        "name": "display_reference",
+        "source": "def display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+        "imports": "",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "DISPLAY_PREFIX",
+          "DISPLAY_WIDTH",
+          "reference",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::DISPLAY_PREFIX",
+          "memory://symbol/presentation.py::DISPLAY_WIDTH"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::status_label": {
+        "id": "memory://symbol/presentation.py::status_label",
+        "path": "presentation.py",
+        "name": "status_label",
+        "source": "def status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+        "imports": "",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "UNKNOWN_LABEL",
+          "code"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::UNKNOWN_LABEL"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::summarize_count": {
+        "id": "memory://symbol/presentation.py::summarize_count",
+        "path": "presentation.py",
+        "name": "summarize_count",
+        "source": "def summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+        "imports": "",
+        "start": 15,
+        "end": 16,
+        "refs": [
+          "DISPLAY_PREFIX",
+          "len",
+          "values"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::DISPLAY_PREFIX"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::normalize_path": {
+        "id": "memory://symbol/rules.py::normalize_path",
+        "path": "rules.py",
+        "name": "normalize_path",
+        "source": "def normalize_path(path):\n    cleaned = \"/\" + path.strip().lstrip(\"/\")\n    return cleaned.rstrip(\"/\") or DEFAULT_PATH",
+        "imports": "from policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH",
+        "start": 3,
+        "end": 5,
+        "refs": [
+          "DEFAULT_PATH",
+          "cleaned",
+          "path"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::DEFAULT_PATH"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::bucket": {
+        "id": "memory://symbol/rules.py::bucket",
+        "path": "rules.py",
+        "name": "bucket",
+        "source": "def bucket(user_id):\n    return sum(ord(char) for char in user_id) % 100",
+        "imports": "from policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH",
+        "start": 7,
+        "end": 8,
+        "refs": [
+          "char",
+          "ord",
+          "sum",
+          "user_id"
+        ],
+        "deps": [],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::use_canary": {
+        "id": "memory://symbol/rules.py::use_canary",
+        "path": "rules.py",
+        "name": "use_canary",
+        "source": "def use_canary(user_id):\n    return bucket(user_id) < CANARY_PERCENT",
+        "imports": "from policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH",
+        "start": 10,
+        "end": 11,
+        "refs": [
+          "CANARY_PERCENT",
+          "bucket",
+          "user_id"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::CANARY_PERCENT",
+          "memory://symbol/rules.py::bucket"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::healthy": {
+        "id": "memory://symbol/rules.py::healthy",
+        "path": "rules.py",
+        "name": "healthy",
+        "source": "def healthy(status):\n    return status[\"up\"] and status[\"latency_ms\"] <= MAX_LATENCY_MS",
+        "imports": "from policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH",
+        "start": 13,
+        "end": 14,
+        "refs": [
+          "MAX_LATENCY_MS",
+          "status"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::MAX_LATENCY_MS"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::route_request": {
+        "id": "memory://symbol/service.py::route_request",
+        "path": "service.py",
+        "name": "route_request",
+        "source": "def route_request(user_id, path, statuses):\n    chosen = UNAVAILABLE\n    for region in (PRIMARY_REGION, SECONDARY_REGION):\n        if healthy(statuses[region]):\n            chosen = region\n            break\n    if chosen == UNAVAILABLE:\n        return UNAVAILABLE\n    if use_canary(user_id):\n        chosen += CANARY_SUFFIX\n    return chosen + \":\" + normalize_path(path)",
+        "imports": "from policy import PRIMARY_REGION, SECONDARY_REGION, UNAVAILABLE, CANARY_SUFFIX, RETRY_LIMIT\nfrom rules import normalize_path, use_canary, healthy",
+        "start": 4,
+        "end": 14,
+        "refs": [
+          "CANARY_SUFFIX",
+          "PRIMARY_REGION",
+          "SECONDARY_REGION",
+          "UNAVAILABLE",
+          "chosen",
+          "healthy",
+          "normalize_path",
+          "path",
+          "region",
+          "statuses",
+          "use_canary",
+          "user_id"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::CANARY_SUFFIX",
+          "memory://symbol/policy.py::PRIMARY_REGION",
+          "memory://symbol/policy.py::SECONDARY_REGION",
+          "memory://symbol/policy.py::UNAVAILABLE",
+          "memory://symbol/rules.py::healthy",
+          "memory://symbol/rules.py::normalize_path",
+          "memory://symbol/rules.py::use_canary"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::retry_destination": {
+        "id": "memory://symbol/service.py::retry_destination",
+        "path": "service.py",
+        "name": "retry_destination",
+        "source": "def retry_destination(user_id, path, statuses, attempt):\n    if attempt > RETRY_LIMIT:\n        return \"exhausted\"\n    return route_request(user_id, path, statuses)",
+        "imports": "from policy import PRIMARY_REGION, SECONDARY_REGION, UNAVAILABLE, CANARY_SUFFIX, RETRY_LIMIT\nfrom rules import normalize_path, use_canary, healthy",
+        "start": 16,
+        "end": 19,
+        "refs": [
+          "RETRY_LIMIT",
+          "attempt",
+          "path",
+          "route_request",
+          "statuses",
+          "user_id"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::RETRY_LIMIT",
+          "memory://symbol/service.py::route_request"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::route_tag": {
+        "id": "memory://symbol/service.py::route_tag",
+        "path": "service.py",
+        "name": "route_tag",
+        "source": "def route_tag(region):\n    return \"route:\" + region.upper()",
+        "imports": "from policy import PRIMARY_REGION, SECONDARY_REGION, UNAVAILABLE, CANARY_SUFFIX, RETRY_LIMIT\nfrom rules import normalize_path, use_canary, healthy",
+        "start": 21,
+        "end": 22,
+        "refs": [
+          "region"
+        ],
+        "deps": [],
+        "kind": "function"
+      }
+    }
+  },
+  "eval_schedules": {
+    "index": {
+      "version": 1,
+      "root": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/ab_20261024/projects/eval_schedules",
+      "files": [
+        {
+          "path": "audit.py",
+          "symbols": [
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "audit_key",
+              "qualname": "audit_key",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/audit.py::audit_key"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "recent_events",
+              "qualname": "recent_events",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/audit.py::recent_events"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "redact_identifier",
+              "qualname": "redact_identifier",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/audit.py::redact_identifier"
+            },
+            {
+              "path": "audit.py",
+              "kind": "function",
+              "name": "event_record",
+              "qualname": "event_record",
+              "start_line": 15,
+              "end_line": 16,
+              "uri": "memory://symbol/audit.py::event_record"
+            }
+          ]
+        },
+        {
+          "path": "policy.py",
+          "symbols": []
+        },
+        {
+          "path": "presentation.py",
+          "symbols": [
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "normalize_label",
+              "qualname": "normalize_label",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/presentation.py::normalize_label"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "display_reference",
+              "qualname": "display_reference",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/presentation.py::display_reference"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "status_label",
+              "qualname": "status_label",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/presentation.py::status_label"
+            },
+            {
+              "path": "presentation.py",
+              "kind": "function",
+              "name": "summarize_count",
+              "qualname": "summarize_count",
+              "start_line": 15,
+              "end_line": 16,
+              "uri": "memory://symbol/presentation.py::summarize_count"
+            }
+          ]
+        },
+        {
+          "path": "rules.py",
+          "symbols": [
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "round_slot",
+              "qualname": "round_slot",
+              "start_line": 3,
+              "end_line": 4,
+              "uri": "memory://symbol/rules.py::round_slot"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "working_day",
+              "qualname": "working_day",
+              "start_line": 6,
+              "end_line": 7,
+              "uri": "memory://symbol/rules.py::working_day"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "valid_duration",
+              "qualname": "valid_duration",
+              "start_line": 9,
+              "end_line": 10,
+              "uri": "memory://symbol/rules.py::valid_duration"
+            },
+            {
+              "path": "rules.py",
+              "kind": "function",
+              "name": "overlaps",
+              "qualname": "overlaps",
+              "start_line": 12,
+              "end_line": 13,
+              "uri": "memory://symbol/rules.py::overlaps"
+            }
+          ]
+        },
+        {
+          "path": "service.py",
+          "symbols": [
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "first_available",
+              "qualname": "first_available",
+              "start_line": 4,
+              "end_line": 12,
+              "uri": "memory://symbol/service.py::first_available"
+            },
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "appointment",
+              "qualname": "appointment",
+              "start_line": 14,
+              "end_line": 16,
+              "uri": "memory://symbol/service.py::appointment"
+            },
+            {
+              "path": "service.py",
+              "kind": "function",
+              "name": "weekday_label",
+              "qualname": "weekday_label",
+              "start_line": 18,
+              "end_line": 19,
+              "uri": "memory://symbol/service.py::weekday_label"
+            }
+          ]
+        }
+      ],
+      "symbols": [
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "audit_key",
+          "qualname": "audit_key",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/audit.py::audit_key"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "recent_events",
+          "qualname": "recent_events",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/audit.py::recent_events"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "redact_identifier",
+          "qualname": "redact_identifier",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/audit.py::redact_identifier"
+        },
+        {
+          "path": "audit.py",
+          "kind": "function",
+          "name": "event_record",
+          "qualname": "event_record",
+          "start_line": 15,
+          "end_line": 16,
+          "uri": "memory://symbol/audit.py::event_record"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "normalize_label",
+          "qualname": "normalize_label",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/presentation.py::normalize_label"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "display_reference",
+          "qualname": "display_reference",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/presentation.py::display_reference"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "status_label",
+          "qualname": "status_label",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/presentation.py::status_label"
+        },
+        {
+          "path": "presentation.py",
+          "kind": "function",
+          "name": "summarize_count",
+          "qualname": "summarize_count",
+          "start_line": 15,
+          "end_line": 16,
+          "uri": "memory://symbol/presentation.py::summarize_count"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "round_slot",
+          "qualname": "round_slot",
+          "start_line": 3,
+          "end_line": 4,
+          "uri": "memory://symbol/rules.py::round_slot"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "working_day",
+          "qualname": "working_day",
+          "start_line": 6,
+          "end_line": 7,
+          "uri": "memory://symbol/rules.py::working_day"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "valid_duration",
+          "qualname": "valid_duration",
+          "start_line": 9,
+          "end_line": 10,
+          "uri": "memory://symbol/rules.py::valid_duration"
+        },
+        {
+          "path": "rules.py",
+          "kind": "function",
+          "name": "overlaps",
+          "qualname": "overlaps",
+          "start_line": 12,
+          "end_line": 13,
+          "uri": "memory://symbol/rules.py::overlaps"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "first_available",
+          "qualname": "first_available",
+          "start_line": 4,
+          "end_line": 12,
+          "uri": "memory://symbol/service.py::first_available"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "appointment",
+          "qualname": "appointment",
+          "start_line": 14,
+          "end_line": 16,
+          "uri": "memory://symbol/service.py::appointment"
+        },
+        {
+          "path": "service.py",
+          "kind": "function",
+          "name": "weekday_label",
+          "qualname": "weekday_label",
+          "start_line": 18,
+          "end_line": 19,
+          "uri": "memory://symbol/service.py::weekday_label"
+        }
+      ]
+    },
+    "nodes": {
+      "memory://symbol/audit.py::AUDIT_VERSION": {
+        "id": "memory://symbol/audit.py::AUDIT_VERSION",
+        "path": "audit.py",
+        "name": "AUDIT_VERSION",
+        "source": "AUDIT_VERSION = 2",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::MAX_RECENT_EVENTS": {
+        "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "path": "audit.py",
+        "name": "MAX_RECENT_EVENTS",
+        "source": "MAX_RECENT_EVENTS = 20",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::REDACTION_MARKER": {
+        "id": "memory://symbol/audit.py::REDACTION_MARKER",
+        "path": "audit.py",
+        "name": "REDACTION_MARKER",
+        "source": "REDACTION_MARKER = \"***\"",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::DEFAULT_ACTOR": {
+        "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "path": "audit.py",
+        "name": "DEFAULT_ACTOR",
+        "source": "DEFAULT_ACTOR = \"system\"",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/audit.py::audit_key": {
+        "id": "memory://symbol/audit.py::audit_key",
+        "path": "audit.py",
+        "name": "audit_key",
+        "source": "def audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+        "imports": "",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "AUDIT_VERSION",
+          "action",
+          "actor",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::AUDIT_VERSION"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::recent_events": {
+        "id": "memory://symbol/audit.py::recent_events",
+        "path": "audit.py",
+        "name": "recent_events",
+        "source": "def recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+        "imports": "",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "MAX_RECENT_EVENTS",
+          "events"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::redact_identifier": {
+        "id": "memory://symbol/audit.py::redact_identifier",
+        "path": "audit.py",
+        "name": "redact_identifier",
+        "source": "def redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+        "imports": "",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "REDACTION_MARKER",
+          "identifier",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::REDACTION_MARKER"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/audit.py::event_record": {
+        "id": "memory://symbol/audit.py::event_record",
+        "path": "audit.py",
+        "name": "event_record",
+        "source": "def event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+        "imports": "",
+        "start": 15,
+        "end": 16,
+        "refs": [
+          "AUDIT_VERSION",
+          "DEFAULT_ACTOR",
+          "action",
+          "actor"
+        ],
+        "deps": [
+          "memory://symbol/audit.py::AUDIT_VERSION",
+          "memory://symbol/audit.py::DEFAULT_ACTOR"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/policy.py::OPEN_MINUTE": {
+        "id": "memory://symbol/policy.py::OPEN_MINUTE",
+        "path": "policy.py",
+        "name": "OPEN_MINUTE",
+        "source": "OPEN_MINUTE = 540",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::CLOSE_MINUTE": {
+        "id": "memory://symbol/policy.py::CLOSE_MINUTE",
+        "path": "policy.py",
+        "name": "CLOSE_MINUTE",
+        "source": "CLOSE_MINUTE = 1020",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::SLOT_MINUTES": {
+        "id": "memory://symbol/policy.py::SLOT_MINUTES",
+        "path": "policy.py",
+        "name": "SLOT_MINUTES",
+        "source": "SLOT_MINUTES = 30",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::BUFFER_MINUTES": {
+        "id": "memory://symbol/policy.py::BUFFER_MINUTES",
+        "path": "policy.py",
+        "name": "BUFFER_MINUTES",
+        "source": "BUFFER_MINUTES = 10",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::WORK_DAYS": {
+        "id": "memory://symbol/policy.py::WORK_DAYS",
+        "path": "policy.py",
+        "name": "WORK_DAYS",
+        "source": "WORK_DAYS = (0, 1, 2, 3, 4)",
+        "imports": "",
+        "start": 5,
+        "end": 5,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::MAX_DURATION": {
+        "id": "memory://symbol/policy.py::MAX_DURATION",
+        "path": "policy.py",
+        "name": "MAX_DURATION",
+        "source": "MAX_DURATION = 180",
+        "imports": "",
+        "start": 6,
+        "end": 6,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::MIN_DURATION": {
+        "id": "memory://symbol/policy.py::MIN_DURATION",
+        "path": "policy.py",
+        "name": "MIN_DURATION",
+        "source": "MIN_DURATION = 1",
+        "imports": "",
+        "start": 7,
+        "end": 7,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/policy.py::UNAVAILABLE": {
+        "id": "memory://symbol/policy.py::UNAVAILABLE",
+        "path": "policy.py",
+        "name": "UNAVAILABLE",
+        "source": "UNAVAILABLE = -1",
+        "imports": "",
+        "start": 8,
+        "end": 8,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::DISPLAY_PREFIX": {
+        "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "path": "presentation.py",
+        "name": "DISPLAY_PREFIX",
+        "source": "DISPLAY_PREFIX = \"appointment\"",
+        "imports": "",
+        "start": 1,
+        "end": 1,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::DISPLAY_WIDTH": {
+        "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "path": "presentation.py",
+        "name": "DISPLAY_WIDTH",
+        "source": "DISPLAY_WIDTH = 12",
+        "imports": "",
+        "start": 2,
+        "end": 2,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::UNKNOWN_LABEL": {
+        "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "path": "presentation.py",
+        "name": "UNKNOWN_LABEL",
+        "source": "UNKNOWN_LABEL = \"unknown\"",
+        "imports": "",
+        "start": 3,
+        "end": 3,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::MAX_LABEL_LENGTH": {
+        "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "path": "presentation.py",
+        "name": "MAX_LABEL_LENGTH",
+        "source": "MAX_LABEL_LENGTH = 48",
+        "imports": "",
+        "start": 4,
+        "end": 4,
+        "refs": [],
+        "deps": [],
+        "kind": "constant"
+      },
+      "memory://symbol/presentation.py::normalize_label": {
+        "id": "memory://symbol/presentation.py::normalize_label",
+        "path": "presentation.py",
+        "name": "normalize_label",
+        "source": "def normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+        "imports": "",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "MAX_LABEL_LENGTH",
+          "label"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::display_reference": {
+        "id": "memory://symbol/presentation.py::display_reference",
+        "path": "presentation.py",
+        "name": "display_reference",
+        "source": "def display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+        "imports": "",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "DISPLAY_PREFIX",
+          "DISPLAY_WIDTH",
+          "reference",
+          "str"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::DISPLAY_PREFIX",
+          "memory://symbol/presentation.py::DISPLAY_WIDTH"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::status_label": {
+        "id": "memory://symbol/presentation.py::status_label",
+        "path": "presentation.py",
+        "name": "status_label",
+        "source": "def status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+        "imports": "",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "UNKNOWN_LABEL",
+          "code"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::UNKNOWN_LABEL"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/presentation.py::summarize_count": {
+        "id": "memory://symbol/presentation.py::summarize_count",
+        "path": "presentation.py",
+        "name": "summarize_count",
+        "source": "def summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+        "imports": "",
+        "start": 15,
+        "end": 16,
+        "refs": [
+          "DISPLAY_PREFIX",
+          "len",
+          "values"
+        ],
+        "deps": [
+          "memory://symbol/presentation.py::DISPLAY_PREFIX"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::round_slot": {
+        "id": "memory://symbol/rules.py::round_slot",
+        "path": "rules.py",
+        "name": "round_slot",
+        "source": "def round_slot(minute):\n    return ((minute + SLOT_MINUTES - 1) // SLOT_MINUTES) * SLOT_MINUTES",
+        "imports": "from policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION",
+        "start": 3,
+        "end": 4,
+        "refs": [
+          "SLOT_MINUTES",
+          "minute"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::SLOT_MINUTES"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::working_day": {
+        "id": "memory://symbol/rules.py::working_day",
+        "path": "rules.py",
+        "name": "working_day",
+        "source": "def working_day(day):\n    return day % 7 in WORK_DAYS",
+        "imports": "from policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION",
+        "start": 6,
+        "end": 7,
+        "refs": [
+          "WORK_DAYS",
+          "day"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::WORK_DAYS"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::valid_duration": {
+        "id": "memory://symbol/rules.py::valid_duration",
+        "path": "rules.py",
+        "name": "valid_duration",
+        "source": "def valid_duration(duration):\n    return MIN_DURATION <= duration <= MAX_DURATION",
+        "imports": "from policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION",
+        "start": 9,
+        "end": 10,
+        "refs": [
+          "MAX_DURATION",
+          "MIN_DURATION",
+          "duration"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::MAX_DURATION",
+          "memory://symbol/policy.py::MIN_DURATION"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/rules.py::overlaps": {
+        "id": "memory://symbol/rules.py::overlaps",
+        "path": "rules.py",
+        "name": "overlaps",
+        "source": "def overlaps(start, end, busy):\n    return any(start < busy_end + BUFFER_MINUTES and end > busy_start - BUFFER_MINUTES for busy_start, busy_end in busy)",
+        "imports": "from policy import SLOT_MINUTES, BUFFER_MINUTES, WORK_DAYS, MIN_DURATION, MAX_DURATION",
+        "start": 12,
+        "end": 13,
+        "refs": [
+          "BUFFER_MINUTES",
+          "any",
+          "busy",
+          "busy_end",
+          "busy_start",
+          "end",
+          "start"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::BUFFER_MINUTES"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::first_available": {
+        "id": "memory://symbol/service.py::first_available",
+        "path": "service.py",
+        "name": "first_available",
+        "source": "def first_available(day, earliest, duration, busy):\n    if not working_day(day) or not valid_duration(duration):\n        return UNAVAILABLE\n    start = round_slot(max(earliest, OPEN_MINUTE))\n    while start + duration <= CLOSE_MINUTE:\n        if not overlaps(start, start + duration, busy):\n            return start\n        start += SLOT_MINUTES\n    return UNAVAILABLE",
+        "imports": "from policy import OPEN_MINUTE, CLOSE_MINUTE, SLOT_MINUTES, UNAVAILABLE\nfrom rules import round_slot, working_day, valid_duration, overlaps",
+        "start": 4,
+        "end": 12,
+        "refs": [
+          "CLOSE_MINUTE",
+          "OPEN_MINUTE",
+          "SLOT_MINUTES",
+          "UNAVAILABLE",
+          "busy",
+          "day",
+          "duration",
+          "earliest",
+          "max",
+          "overlaps",
+          "round_slot",
+          "start",
+          "valid_duration",
+          "working_day"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::CLOSE_MINUTE",
+          "memory://symbol/policy.py::OPEN_MINUTE",
+          "memory://symbol/policy.py::SLOT_MINUTES",
+          "memory://symbol/policy.py::UNAVAILABLE",
+          "memory://symbol/rules.py::overlaps",
+          "memory://symbol/rules.py::round_slot",
+          "memory://symbol/rules.py::valid_duration",
+          "memory://symbol/rules.py::working_day"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::appointment": {
+        "id": "memory://symbol/service.py::appointment",
+        "path": "service.py",
+        "name": "appointment",
+        "source": "def appointment(day, earliest, duration, busy):\n    start = first_available(day, earliest, duration, busy)\n    return {\"day\": day, \"start\": start, \"end\": start + duration if start >= 0 else UNAVAILABLE}",
+        "imports": "from policy import OPEN_MINUTE, CLOSE_MINUTE, SLOT_MINUTES, UNAVAILABLE\nfrom rules import round_slot, working_day, valid_duration, overlaps",
+        "start": 14,
+        "end": 16,
+        "refs": [
+          "UNAVAILABLE",
+          "busy",
+          "day",
+          "duration",
+          "earliest",
+          "first_available",
+          "start"
+        ],
+        "deps": [
+          "memory://symbol/policy.py::UNAVAILABLE",
+          "memory://symbol/service.py::first_available"
+        ],
+        "kind": "function"
+      },
+      "memory://symbol/service.py::weekday_label": {
+        "id": "memory://symbol/service.py::weekday_label",
+        "path": "service.py",
+        "name": "weekday_label",
+        "source": "def weekday_label(day):\n    return (\"mon\", \"tue\", \"wed\", \"thu\", \"fri\", \"sat\", \"sun\")[day % 7]",
+        "imports": "from policy import OPEN_MINUTE, CLOSE_MINUTE, SLOT_MINUTES, UNAVAILABLE\nfrom rules import round_slot, working_day, valid_duration, overlaps",
+        "start": 18,
+        "end": 19,
+        "refs": [
+          "day"
+        ],
+        "deps": [],
+        "kind": "function"
+      }
+    }
+  }
+}

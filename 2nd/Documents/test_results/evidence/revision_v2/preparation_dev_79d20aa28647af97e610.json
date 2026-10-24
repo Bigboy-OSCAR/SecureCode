@@ -1,0 +1,9 @@
+{
+  "recorded_at_utc": "2026-10-20T10:44:38.169724+00:00",
+  "session_id": "79d20aa28647af97e610",
+  "document_vector_build_seconds": {
+    "dev_shipping": 0.0021143749909242615
+  },
+  "summary_source": "unchanged v1 summaries; no new summary model calls",
+  "runtime_fingerprint_sha256": "4bc7b3bf9c1b65479e39a29ce9d5c7724fe9b9fad6f3c15f9a6ca3c7cb8bb0e0"
+}

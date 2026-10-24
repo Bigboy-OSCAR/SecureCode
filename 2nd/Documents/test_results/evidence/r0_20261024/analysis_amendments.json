@@ -1,0 +1,32 @@
+[
+  {
+    "recorded_at_utc": "2026-10-24T09:45:30.160775+00:00",
+    "file": "2nd/experiments/symbol_raptor/report_r0.py",
+    "sha256": "cb5d4b84041c508e5efbe92c2d38f0d09fc3a84d7d0fa01eff3d1dfd862fe172",
+    "reason": "Keep original two examples; add a third counterexample only if neither original example illustrates R0 loss. Add source-coverage observations supported by actual records. No retrieval, grading, statistics or evaluation protocol changes."
+  },
+  {
+    "recorded_at_utc": "2026-10-24T09:49:39.404762+00:00",
+    "file": "2nd/experiments/symbol_raptor/analyze_r0.py",
+    "sha256": "62777277d4a3557cc99e0c331bd5618ee923c1681f3b2184b92487ea29081166",
+    "reason": "Rename top-level question count field to unique_questions to avoid being overwritten by per-question detail list; no metric formula changes."
+  },
+  {
+    "recorded_at_utc": "2026-10-24T09:49:39.404883+00:00",
+    "file": "2nd/experiments/symbol_raptor/report_r0.py",
+    "sha256": "231b037551f1b72cfceec76e550d005f2d32310151cd1105441fcd2b3f0fcab7",
+    "reason": "Clarify that original packing has no minimum score threshold and replace unexplained symbol terminology; no experiment changes."
+  },
+  {
+    "recorded_at_utc": "2026-10-24T09:55:55.634305+00:00",
+    "file": "2nd/experiments/symbol_raptor/report_r0.py",
+    "sha256": "5e4537379882253e94a432bd8cc945d25d785dc3df5619902e0af4646d27dde6",
+    "reason": "Add prose interpreting existing category differences and intervals; calculations and example population unchanged."
+  },
+  {
+    "recorded_at_utc": "2026-10-24T10:01:24.797138+00:00",
+    "file": "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/report_r0.py",
+    "sha256": "7c45656fcea92166d13227896117fb5e49d0c6ff9f5462147e864ba4202c7077",
+    "reason": "After verified results, explain complete designated source coverage and interval/test differences; clarify example headings and Markdown spacing. No result, grading or metric changes."
+  }
+]

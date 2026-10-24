@@ -1,0 +1,6 @@
+{
+  "observed_at_utc": "2026-10-24T09:37:17.981217+00:00",
+  "pid": 64572,
+  "command": "64572 00:23 /opt/homebrew/bin/llama-server -m /Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf --host 127.0.0.1 --port 8766 --ctx-size 8192 --parallel 1 --no-warmup --cache-ram 0 --no-cache-prompt\n",
+  "hardware": "Apple M3 Pro\n38654705664\n"
+}

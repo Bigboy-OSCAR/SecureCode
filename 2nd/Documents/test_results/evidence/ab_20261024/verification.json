@@ -1,0 +1,145 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-24T09:05:14.385528+00:00",
+  "checks": [
+    {
+      "check": "frozen_source_code_tasks_and_gold",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "complete_ordered_576_evaluation_records",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "development_records_separate",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "96_unique_questions_six_projects",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "equal_orders_per_project_repeat",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unique_model_call_ids",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no_shared_selectors_or_answers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "exact_call_logs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no_transport_errors",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "model_prompt_cache_disabled",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "fixed_generation_parameters",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "call_time_nonoverlap",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "query_time_nonoverlap",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "physical_query_time_matches_utc",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "independent_typed_grading",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "gold_matches_frozen_tasks",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "gold_executed_before_measurement",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "exact_prompts_selected_uris_and_reconstructed_contexts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "reference_source_coverage_recomputed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "offline_tokenization_and_packing",
+      "passed": true,
+      "detail": {
+        "distinct_strings": 603,
+        "tokenizer": {
+          "binary": "/opt/homebrew/Cellar/llama.cpp/8680/bin/llama-tokenize",
+          "binary_sha256": "a6364e9a027fa6e76b66f6e61b6af397dc63128f7072be6c1589e80830e349d5",
+          "command": [
+            "/opt/homebrew/bin/llama-tokenize",
+            "-m",
+            "/Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf",
+            "--no-bos",
+            "--no-escape",
+            "--ids",
+            "--log-disable",
+            "--stdin"
+          ],
+          "separator_token": 151643,
+          "standalone_crosschecks": 13,
+          "all_standalone_crosschecks_passed": true
+        }
+      }
+    },
+    {
+      "check": "independent_primary_statistics",
+      "passed": true,
+      "detail": {
+        "numeric_values_checked": 594
+      }
+    }
+  ],
+  "count": 21,
+  "records": 576,
+  "calls": 1186,
+  "generation_limit_calls": 0,
+  "source_hashes": {
+    "verify_ab.py": "6b19e48a866f4ecfb19e917beebfc525b5372e3a0611fb10320de84bfc4e06a2",
+    "summary.json": "cf9702187494589838c5714c48da0b0b70037393d878bbb9cff92c2de276c9d9",
+    "results.jsonl": "1acee63a5fdb5c69b1aaeb884a4de6b94f1e1be1f3fa6d5037acc445cad03069"
+  },
+  "limits": [
+    "Local consistency and reproducibility review, not external certification.",
+    "Context reconstruction reuses the implementation; answer grading and reported primary statistics are independently implemented."
+  ]
+}

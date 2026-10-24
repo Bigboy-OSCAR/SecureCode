@@ -1,0 +1,1358 @@
+[
+  {
+    "id": "eval_pricing__v2_refund_capped_units",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "refundable",
+      "args": [
+        101,
+        4,
+        3
+      ]
+    },
+    "expected": 101,
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_pricing__v2_two_nonmember_items",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "checkout_total",
+      "args": [
+        3001,
+        2,
+        false
+      ]
+    },
+    "expected": 6497,
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_pricing__v2_five_member_receipt",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "order_receipt",
+      "args": [
+        1499,
+        5,
+        true
+      ]
+    },
+    "expected": {
+      "accepted": true,
+      "currency": "USD",
+      "total": 7505
+    },
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_pricing__v2_free_delivery_exact_edge",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "checkout_total",
+      "args": [
+        3000,
+        2,
+        false
+      ]
+    },
+    "expected": 6495,
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_pricing__v2_large_member_order",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "checkout_total",
+      "args": [
+        25000,
+        2,
+        true
+      ]
+    },
+    "expected": 53151,
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_pricing__v2_negative_unit_price",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "order_receipt",
+      "args": [
+        -1,
+        2,
+        true
+      ]
+    },
+    "expected": {
+      "accepted": false,
+      "currency": "USD",
+      "total": -1
+    },
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_pricing__v2_delivery_threshold_intervention",
+    "kind": "impact",
+    "probes": [
+      {
+        "module": "service",
+        "function": "checkout_total",
+        "args": [
+          6100,
+          1,
+          false
+        ]
+      },
+      {
+        "module": "service",
+        "function": "order_receipt",
+        "args": [
+          6100,
+          1,
+          false
+        ]
+      },
+      {
+        "module": "rules",
+        "function": "member_discount",
+        "args": [
+          6100,
+          true
+        ]
+      }
+    ],
+    "override": {
+      "module": "policy",
+      "name": "FREE_DELIVERY_CENTS",
+      "value": 7000
+    },
+    "before": [
+      6603,
+      {
+        "accepted": true,
+        "currency": "USD",
+        "total": 6603
+      },
+      457
+    ],
+    "after": [
+      7102,
+      {
+        "accepted": true,
+        "currency": "USD",
+        "total": 7102
+      },
+      457
+    ],
+    "expected": [
+      "checkout_total",
+      "order_receipt"
+    ],
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_pricing__v2_receipt_transitive_calls",
+    "kind": "architecture",
+    "module": "service",
+    "function": "order_receipt",
+    "mode": "transitive",
+    "reachable_uris": [
+      "memory://symbol/rules.py::line_subtotal",
+      "memory://symbol/rules.py::member_discount",
+      "memory://symbol/rules.py::sales_tax",
+      "memory://symbol/service.py::checkout_total"
+    ],
+    "expected": [
+      "checkout_total",
+      "line_subtotal",
+      "member_discount",
+      "sales_tax"
+    ],
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_authorization__v2_empty_and_duplicate_scopes",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "normalized_scopes",
+      "args": [
+        [
+          " X:Y ",
+          "x:y",
+          " DOCUMENT:READ",
+          ""
+        ]
+      ]
+    },
+    "expected": [
+      "",
+      "document:read",
+      "x:y"
+    ],
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_authorization__v2_nonowner_read",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "authorize",
+      "args": [
+        "a9",
+        "b2",
+        "member",
+        [
+          "document:read"
+        ],
+        "read",
+        1000,
+        1001,
+        false
+      ]
+    },
+    "expected": {
+      "allowed": false,
+      "reason": "denied"
+    },
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_authorization__v2_duplicate_write_permission",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "can_edit_own",
+      "args": [
+        "k8",
+        [
+          " DOCUMENT:WRITE ",
+          "document:write"
+        ],
+        50,
+        1849
+      ]
+    },
+    "expected": true,
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_authorization__v2_last_valid_session_second",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "can_edit_own",
+      "args": [
+        "owner",
+        [
+          "document:write"
+        ],
+        200,
+        3799
+      ]
+    },
+    "expected": true,
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_authorization__v2_revoked_admin",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "authorize",
+      "args": [
+        "root",
+        "b2",
+        "admin",
+        [
+          "document:write"
+        ],
+        "write",
+        0,
+        10,
+        true
+      ]
+    },
+    "expected": {
+      "allowed": false,
+      "reason": "session"
+    },
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_authorization__v2_owner_case_mismatch",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "authorize",
+      "args": [
+        "U9",
+        "u9",
+        "member",
+        [
+          "document:read"
+        ],
+        "read",
+        1000,
+        1100,
+        false
+      ]
+    },
+    "expected": {
+      "allowed": false,
+      "reason": "denied"
+    },
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_authorization__v2_write_scope_intervention",
+    "kind": "impact",
+    "probes": [
+      {
+        "module": "rules",
+        "function": "scope_allows",
+        "args": [
+          [
+            "document:write"
+          ],
+          "write"
+        ]
+      },
+      {
+        "module": "service",
+        "function": "can_edit_own",
+        "args": [
+          "v2",
+          [
+            "document:write"
+          ],
+          0,
+          123
+        ]
+      },
+      {
+        "module": "service",
+        "function": "user_key",
+        "args": [
+          " V2 "
+        ]
+      }
+    ],
+    "override": {
+      "module": "policy",
+      "name": "WRITE_SCOPE",
+      "value": "document:modify"
+    },
+    "before": [
+      true,
+      true,
+      "account:v2"
+    ],
+    "after": [
+      false,
+      false,
+      "account:v2"
+    ],
+    "expected": [
+      "can_edit_own",
+      "scope_allows"
+    ],
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_authorization__v2_own_edit_transitive_calls",
+    "kind": "architecture",
+    "module": "service",
+    "function": "can_edit_own",
+    "mode": "transitive",
+    "reachable_uris": [
+      "memory://symbol/rules.py::normalized_scopes",
+      "memory://symbol/rules.py::required_scope",
+      "memory://symbol/rules.py::role_allows",
+      "memory://symbol/rules.py::scope_allows",
+      "memory://symbol/rules.py::session_valid",
+      "memory://symbol/service.py::authorize"
+    ],
+    "expected": [
+      "authorize",
+      "normalized_scopes",
+      "required_scope",
+      "role_allows",
+      "scope_allows",
+      "session_valid"
+    ],
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_routing__v2_bucket_near_wrap",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "bucket",
+      "args": [
+        "c"
+      ]
+    },
+    "expected": 99,
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_routing__v2_empty_path",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "route_request",
+      "args": [
+        "e",
+        "",
+        {
+          "east": {
+            "up": true,
+            "latency_ms": 150
+          },
+          "west": {
+            "up": true,
+            "latency_ms": 151
+          }
+        }
+      ]
+    },
+    "expected": "east-canary:/",
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_routing__v2_last_retry_fallback",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "retry_destination",
+      "args": [
+        "az",
+        "/x//",
+        {
+          "east": {
+            "up": false,
+            "latency_ms": 0
+          },
+          "west": {
+            "up": true,
+            "latency_ms": 150
+          }
+        },
+        2
+      ]
+    },
+    "expected": "west-canary:/x",
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_routing__v2_canary_exact_threshold",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "use_canary",
+      "args": [
+        "x"
+      ]
+    },
+    "expected": false,
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_routing__v2_priority_not_fastest",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "route_request",
+      "args": [
+        "Z",
+        " /v2// ",
+        {
+          "east": {
+            "up": true,
+            "latency_ms": 149
+          },
+          "west": {
+            "up": true,
+            "latency_ms": 1
+          }
+        }
+      ]
+    },
+    "expected": "east:/v2",
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_routing__v2_retry_without_backend",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "retry_destination",
+      "args": [
+        "xy",
+        "/status",
+        {
+          "east": {
+            "up": false,
+            "latency_ms": 0
+          },
+          "west": {
+            "up": false,
+            "latency_ms": 0
+          }
+        },
+        1
+      ]
+    },
+    "expected": "unavailable",
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_routing__v2_latency_intervention",
+    "kind": "impact",
+    "probes": [
+      {
+        "module": "rules",
+        "function": "healthy",
+        "args": [
+          {
+            "up": true,
+            "latency_ms": 155
+          }
+        ]
+      },
+      {
+        "module": "service",
+        "function": "route_request",
+        "args": [
+          "m",
+          "/api",
+          {
+            "east": {
+              "up": true,
+              "latency_ms": 155
+            },
+            "west": {
+              "up": true,
+              "latency_ms": 80
+            }
+          }
+        ]
+      },
+      {
+        "module": "rules",
+        "function": "normalize_path",
+        "args": [
+          " /items// "
+        ]
+      }
+    ],
+    "override": {
+      "module": "policy",
+      "name": "MAX_LATENCY_MS",
+      "value": 160
+    },
+    "before": [
+      false,
+      "west-canary:/api",
+      "/items"
+    ],
+    "after": [
+      true,
+      "east-canary:/api",
+      "/items"
+    ],
+    "expected": [
+      "healthy",
+      "route_request"
+    ],
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_routing__v2_retry_transitive_calls",
+    "kind": "architecture",
+    "module": "service",
+    "function": "retry_destination",
+    "mode": "transitive",
+    "reachable_uris": [
+      "memory://symbol/rules.py::bucket",
+      "memory://symbol/rules.py::healthy",
+      "memory://symbol/rules.py::normalize_path",
+      "memory://symbol/rules.py::use_canary",
+      "memory://symbol/service.py::route_request"
+    ],
+    "expected": [
+      "bucket",
+      "healthy",
+      "normalize_path",
+      "route_request",
+      "use_canary"
+    ],
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_inventory__v2_allocate_exact_available",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "allocate",
+      "args": [
+        6,
+        6,
+        false
+      ]
+    },
+    "expected": 6,
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_inventory__v2_maximum_valid_reservation",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "reserve",
+      "args": [
+        18,
+        2,
+        12,
+        false,
+        75
+      ]
+    },
+    "expected": {
+      "expires": 975,
+      "status": "reserved",
+      "units": 12
+    },
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_inventory__v2_partial_depletes_available",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "remaining_after",
+      "args": [
+        9,
+        1,
+        8,
+        true
+      ]
+    },
+    "expected": 0,
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_inventory__v2_zero_units",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "reserve",
+      "args": [
+        9,
+        1,
+        0,
+        true,
+        99
+      ]
+    },
+    "expected": {
+      "expires": 99,
+      "status": "denied",
+      "units": 0
+    },
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_inventory__v2_enough_stock",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "reserve",
+      "args": [
+        25,
+        10,
+        11,
+        false,
+        500
+      ]
+    },
+    "expected": {
+      "expires": 1400,
+      "status": "reserved",
+      "units": 11
+    },
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_inventory__v2_below_safety_reserve",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "reserve",
+      "args": [
+        4,
+        2,
+        3,
+        true,
+        0
+      ]
+    },
+    "expected": {
+      "expires": 0,
+      "status": "denied",
+      "units": 0
+    },
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_inventory__v2_order_cap_intervention",
+    "kind": "impact",
+    "probes": [
+      {
+        "module": "rules",
+        "function": "valid_quantity",
+        "args": [
+          5
+        ]
+      },
+      {
+        "module": "service",
+        "function": "reserve",
+        "args": [
+          15,
+          1,
+          5,
+          false,
+          300
+        ]
+      },
+      {
+        "module": "service",
+        "function": "stock_label",
+        "args": [
+          15
+        ]
+      }
+    ],
+    "override": {
+      "module": "policy",
+      "name": "MAX_PER_ORDER",
+      "value": 4
+    },
+    "before": [
+      true,
+      {
+        "expires": 1200,
+        "status": "reserved",
+        "units": 5
+      },
+      "stocked"
+    ],
+    "after": [
+      false,
+      {
+        "expires": 300,
+        "status": "denied",
+        "units": 0
+      },
+      "stocked"
+    ],
+    "expected": [
+      "reserve",
+      "valid_quantity"
+    ],
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_inventory__v2_remaining_transitive_calls",
+    "kind": "architecture",
+    "module": "service",
+    "function": "remaining_after",
+    "mode": "transitive",
+    "reachable_uris": [
+      "memory://symbol/rules.py::allocate",
+      "memory://symbol/rules.py::sellable",
+      "memory://symbol/rules.py::valid_quantity",
+      "memory://symbol/service.py::reserve"
+    ],
+    "expected": [
+      "allocate",
+      "reserve",
+      "sellable",
+      "valid_quantity"
+    ],
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_cache__v2_short_private_ttl",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "cache_ttl",
+      "args": [
+        17,
+        true
+      ]
+    },
+    "expected": 17,
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_cache__v2_new_query_key",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "render_cache_key",
+      "args": [
+        " Org-B ",
+        "Audit Log",
+        {
+          "n": 0,
+          "sort": "desc",
+          "debug": "yes"
+        }
+      ]
+    },
+    "expected": "render|org-b|audit_log|n=0&sort=desc|v4",
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_cache__v2_private_lifetime_clamp",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "cache_entry",
+      "args": [
+        " TEN-9 ",
+        "Live View",
+        {
+          "z": 9,
+          "a": 2
+        },
+        45,
+        true,
+        1000
+      ]
+    },
+    "expected": {
+      "expires": 1030,
+      "key": "render|ten-9|live_view|a=2&z=9|v4",
+      "store": true
+    },
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_cache__v2_private_ttl_exact_edge",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "cache_entry",
+      "args": [
+        "edge",
+        "One",
+        {},
+        30,
+        true,
+        7
+      ]
+    },
+    "expected": {
+      "expires": 37,
+      "key": "render|edge|one||v4",
+      "store": true
+    },
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_cache__v2_default_public_lifetime",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "cache_entry",
+      "args": [
+        " ",
+        " Weekly View ",
+        {
+          "page": 3,
+          "trace": "hidden"
+        },
+        null,
+        false,
+        120
+      ]
+    },
+    "expected": {
+      "expires": 420,
+      "key": "render|public|weekly_view|page=3|v4",
+      "store": true
+    },
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_cache__v2_negative_private_lifetime",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "cache_entry",
+      "args": [
+        "TEAM",
+        "Chart",
+        {
+          "q": "ok"
+        },
+        -10,
+        true,
+        77
+      ]
+    },
+    "expected": {
+      "expires": 77,
+      "key": "render|team|chart|q=ok|v4",
+      "store": false
+    },
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_cache__v2_private_cap_intervention",
+    "kind": "impact",
+    "probes": [
+      {
+        "module": "rules",
+        "function": "cache_ttl",
+        "args": [
+          25,
+          true
+        ]
+      },
+      {
+        "module": "service",
+        "function": "cache_entry",
+        "args": [
+          "x2",
+          "Result",
+          {},
+          25,
+          true,
+          5
+        ]
+      },
+      {
+        "module": "service",
+        "function": "render_cache_key",
+        "args": [
+          "x2",
+          "Result",
+          {}
+        ]
+      }
+    ],
+    "override": {
+      "module": "policy",
+      "name": "PRIVATE_TTL",
+      "value": 10
+    },
+    "before": [
+      25,
+      {
+        "expires": 30,
+        "key": "render|x2|result||v4",
+        "store": true
+      },
+      "render|x2|result||v4"
+    ],
+    "after": [
+      10,
+      {
+        "expires": 15,
+        "key": "render|x2|result||v4",
+        "store": true
+      },
+      "render|x2|result||v4"
+    ],
+    "expected": [
+      "cache_entry",
+      "cache_ttl"
+    ],
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_cache__v2_entry_transitive_calls",
+    "kind": "architecture",
+    "module": "service",
+    "function": "cache_entry",
+    "mode": "transitive",
+    "reachable_uris": [
+      "memory://symbol/rules.py::cache_ttl",
+      "memory://symbol/rules.py::canonical_query",
+      "memory://symbol/rules.py::normalize_resource",
+      "memory://symbol/rules.py::normalize_tenant",
+      "memory://symbol/service.py::render_cache_key"
+    ],
+    "expected": [
+      "cache_ttl",
+      "canonical_query",
+      "normalize_resource",
+      "normalize_tenant",
+      "render_cache_key"
+    ],
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_schedules__v2_buffer_exact_separation",
+    "kind": "execution",
+    "call": {
+      "module": "rules",
+      "function": "overlaps",
+      "args": [
+        600,
+        630,
+        [
+          [
+            640,
+            670
+          ]
+        ]
+      ]
+    },
+    "expected": false,
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_schedules__v2_two_busy_intervals",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "first_available",
+      "args": [
+        3,
+        545,
+        45,
+        [
+          [
+            570,
+            615
+          ],
+          [
+            660,
+            690
+          ]
+        ]
+      ]
+    },
+    "expected": 720,
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_schedules__v2_wrapped_workday",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "appointment",
+      "args": [
+        8,
+        515,
+        90,
+        [
+          [
+            540,
+            600
+          ],
+          [
+            690,
+            720
+          ]
+        ]
+      ]
+    },
+    "expected": {
+      "day": 8,
+      "end": 840,
+      "start": 750
+    },
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_schedules__v2_max_duration_closing_edge",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "first_available",
+      "args": [
+        0,
+        840,
+        180,
+        []
+      ]
+    },
+    "expected": 840,
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_schedules__v2_next_week_opening",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "appointment",
+      "args": [
+        7,
+        530,
+        20,
+        []
+      ]
+    },
+    "expected": {
+      "day": 7,
+      "end": 560,
+      "start": 540
+    },
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_schedules__v2_overlong_duration",
+    "kind": "execution",
+    "call": {
+      "module": "service",
+      "function": "first_available",
+      "args": [
+        3,
+        560,
+        181,
+        []
+      ]
+    },
+    "expected": -1,
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_schedules__v2_slot_size_intervention",
+    "kind": "impact",
+    "probes": [
+      {
+        "module": "rules",
+        "function": "round_slot",
+        "args": [
+          571
+        ]
+      },
+      {
+        "module": "service",
+        "function": "appointment",
+        "args": [
+          1,
+          571,
+          30,
+          []
+        ]
+      },
+      {
+        "module": "service",
+        "function": "weekday_label",
+        "args": [
+          8
+        ]
+      }
+    ],
+    "override": {
+      "module": "policy",
+      "name": "SLOT_MINUTES",
+      "value": 15
+    },
+    "before": [
+      600,
+      {
+        "day": 1,
+        "end": 630,
+        "start": 600
+      },
+      "tue"
+    ],
+    "after": [
+      585,
+      {
+        "day": 1,
+        "end": 615,
+        "start": 585
+      },
+      "tue"
+    ],
+    "expected": [
+      "appointment",
+      "round_slot"
+    ],
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  },
+  {
+    "id": "eval_schedules__v2_appointment_transitive_calls",
+    "kind": "architecture",
+    "module": "service",
+    "function": "appointment",
+    "mode": "transitive",
+    "reachable_uris": [
+      "memory://symbol/rules.py::overlaps",
+      "memory://symbol/rules.py::round_slot",
+      "memory://symbol/rules.py::valid_duration",
+      "memory://symbol/rules.py::working_day",
+      "memory://symbol/service.py::first_available"
+    ],
+    "expected": [
+      "first_available",
+      "overlaps",
+      "round_slot",
+      "valid_duration",
+      "working_day"
+    ],
+    "independent_check_passed": true,
+    "question_is_new": true,
+    "all_executable_inputs_are_new": true,
+    "novelty_scope": "Exact question and project/function/argument tuple novelty, not independent source logic."
+  }
+]

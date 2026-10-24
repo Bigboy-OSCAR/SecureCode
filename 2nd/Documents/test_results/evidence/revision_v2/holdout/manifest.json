@@ -1,0 +1,88 @@
+{
+  "schema_version": 2,
+  "dataset_name": "additional_questions_on_seen_projects_v2",
+  "source_dataset": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/dataset",
+  "source_manifest_sha256": "d6dca65c8693976968e1cd2fd98ad17feae8e505b61bda1fdec9141fbc458ccc",
+  "source_eval_tasks_sha256": "857883a571e5a781d237609578dbd909953efb16da837dea58030aa5339b072b",
+  "source_gold_sha256": "b439763a361b95aca0bcc0c9747a25188fd3021d84d0cbed6c0bc1a2a2e7b963",
+  "generator_sha256": "267e4412e063f4d2f2e7e3417257ee418ac8d2acceb8d55d20d3c7b120fd45e5",
+  "source_hashes": {
+    "eval_pricing": {
+      "audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+      "policy.py": "21b1323726325adf5a7b82cb91f58e7abdc26d77480dc7b607502a705addb312",
+      "presentation.py": "c2698e79e084b757546adce76f45a3ad559bc8ead5616162a7aa155e2953fb38",
+      "rules.py": "74c3d4f20e54e46962b0c97acf1b12309ad4ab82a78207eebafe5d5889e9b44b",
+      "service.py": "c7c90407e85b3a976009a0baf8ffcc19002247c3728b684d4b3f4dd25fd91a2c"
+    },
+    "eval_authorization": {
+      "audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+      "policy.py": "d79ab9ec78b1a6cd03d384b32a5b79b3f8eb5b5b95815d44d0d2a6064d9c295f",
+      "presentation.py": "8414911630f3200a92919ffae9bab8ba6e703e82396ddf83c5e608793d7d81e2",
+      "rules.py": "46240886758ebd522e5976fc2f5a1c102ee4a909fc3d02b51cee4a3d67c78404",
+      "service.py": "4c416c5a9bf93a2b0e91155f19d15c745626835000ab65cbf458f95c1fb09ede"
+    },
+    "eval_routing": {
+      "audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+      "policy.py": "731ee0887392944eebfcc51e11d8ce719e9c0b069557ab50fa062e035f31d330",
+      "presentation.py": "32334ba69d17cbe8b65d4c54ec9cff261e925e93e0eaa35a60ed2c71e22bea9d",
+      "rules.py": "74affeb72b5ed642da170c93ba0c918ad6e3944643fa9bbdd88ff4215c885683",
+      "service.py": "042cf30fe6e63431c047e6e5e7051bb3e7f1452891bb15da5d203d07b1013c29"
+    },
+    "eval_inventory": {
+      "audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+      "policy.py": "a90fcdae9e90cff3ac6f197c750c565f3997aac8244226da3ddac89efd860aea",
+      "presentation.py": "42b00ba82a833855929a5e2bfa194f7dc916ee72d4c52cc12eaaea2fdeaa6c29",
+      "rules.py": "713c73e112288e6e08b74cb77cb1bf76f662d33b93b50160bbe7592fd1e82342",
+      "service.py": "7b573a3b41a132b4258b9b68bdacb66320b3b3e86332c23e225e1d616b01aa8b"
+    },
+    "eval_cache": {
+      "audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+      "policy.py": "b903d3fb3e1a8699df42d6d942815d95d924ff0cfc9004137c7a5aba42107b35",
+      "presentation.py": "1b9eed863be9040cd83248fcce7f59e972da731f11d92a2c19bd3ddd93d3e164",
+      "rules.py": "7b5f69f2f74095a686701927647af1e18e89bdf38de28a42c70b9c751cc1d3c2",
+      "service.py": "e104b71da7f0bfd25b45cc4aea4548660aaa5d61b588d279a98feb931355baeb"
+    },
+    "eval_schedules": {
+      "audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+      "policy.py": "62915bdaa654f4a5f66c091437a0d417ca5c8b5bfa2e05eae30830cdc6ce1150",
+      "presentation.py": "fac5c58d65a71251b19480a86fdb1a03fd8e9e1785cc937fe855706f277350ed",
+      "rules.py": "d7da8cb453232890a42b0013ddc107cde2448b137d0a93e2965abefc8692593c",
+      "service.py": "0f8be208721bb92bb38e341a60f6c613d2b00dd91b8260de237739f677f2c014"
+    }
+  },
+  "project_count": 6,
+  "task_count": 48,
+  "category_distribution_per_project": {
+    "single_function": 1,
+    "cross_file": 2,
+    "boundary": 1,
+    "semantic": 2,
+    "change_impact": 1,
+    "architecture": 1
+  },
+  "executed_question_count": 36,
+  "impact_question_count": 6,
+  "architecture_question_count": 6,
+  "new_executable_call_tuples": 54,
+  "new_policy_interventions": 6,
+  "new_architecture_specifications": 6,
+  "question_content_sha256": "256404556325d926a572571da225ee713b287ef4651b395addaeaf82609b63b4",
+  "validation": {
+    "all_gold_values_checked_against_independent_expected": true,
+    "all_source_uris_resolve": true,
+    "exact_old_question_duplicates": 0,
+    "exact_old_executable_input_duplicates": 0,
+    "exact_new_executable_input_duplicates": 0,
+    "original_sources_unchanged": true
+  },
+  "architecture_scope_change": "Six original direct-call questions are replaced by transitive-call questions from different starting functions.",
+  "design_scope": [
+    "The six source projects, algorithms, constants and question families were already seen in the first evaluation.",
+    "This evaluates new fixed inputs and paraphrases on the same code, not unseen-project or production generalization.",
+    "The designer knew the earlier experiment results. The generator does not read model answers or tune from new answers.",
+    "Existing and additional questions must be reported separately; their 96 questions are not 96 independent project samples.",
+    "Required URI lists conservatively include possible dependencies, not a branch-minimal set of necessary facts.",
+    "Architecture tasks use transitive static call reachability; impact tasks use explicit fixed-input fresh-load intervention.",
+    "Questions and gold remain outside retrievable project sources. Freeze this output before any new evaluation model call."
+  ]
+}

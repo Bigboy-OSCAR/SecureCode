@@ -1,0 +1,770 @@
+{
+  "config": {
+    "version": "2.0",
+    "arms": [
+      "A",
+      "RH",
+      "C"
+    ],
+    "evidence_cap": 1024,
+    "new_question_repeats": 3,
+    "old_question_repeats": 1,
+    "temperature": 0,
+    "seed": 1,
+    "order_seed": 20261021,
+    "answer_max_tokens": 128,
+    "selector_max_tokens": 96,
+    "ctx_size": 8192,
+    "model_prompt_cache": false,
+    "token_count_cache": "cleared at every query; ordinary memoization allowed within a query",
+    "schedule": "randomized task-repeat blocks; six arm permutations balanced within each repeat",
+    "C": "RH's identical selected items, same order; remove duplicate raw symbol/import payloads and shorten headers; preserve every unique source and summary body exactly; do not refill freed capacity",
+    "reader": "unchanged v1 answer_prompt and chat wrapper",
+    "primary_speed_contrast": "C minus RH, new questions",
+    "quality_contrasts": [
+      "C minus A",
+      "C minus RH"
+    ],
+    "inference": "six project clusters; exploratory intervals, no claim of independent new repositories",
+    "timing": "physical query wall time including tokenizer, selectors, packing, compaction, answer HTTP and small audit-log overhead; no shared selector",
+    "known_test_reuse": "original 48 questions are a separate exploratory regression set; not held out"
+  },
+  "code_sha256": "86fbbf165c2ad44c21fe0a0554b6624e86961246c9abb9aceed547f1a8d606be",
+  "v1_code_sha256": "b8f664facdff58c7b410f704216611e5a4e5bbd239ac394a9bb4e5f29f9234cb",
+  "task_sha256": "857883a571e5a781d237609578dbd909953efb16da837dea58030aa5339b072b",
+  "protocol_sha256": "52e133d47d313b74aa24438d7d5508cbdd22dde7c5b85e60dc69aa798310436d",
+  "asset_sha256": {
+    "dev_shipping.json": "fca07d41c3098d1acbcf8b47469a042635bd5b234f15a6287417360204015614",
+    "eval_authorization.json": "c0be4504632825f57a906749ef275544e73bcc94c916a464b3f97e24aa265d37",
+    "eval_cache.json": "89974521ee89b4c1c94aebbcfec2c246b4bab84c47b8c4359f3c0e2924d206d3",
+    "eval_inventory.json": "3d0c0771dc09926916d0c3d2fbd91dfa1bfce1cb9df3c440ef38802b5a1dbcdb",
+    "eval_pricing.json": "3c587dc77dce8ad63974f24863e554d720bf8cb43a617ef6be2e5265607c75e7",
+    "eval_routing.json": "24e3f453825d2e01d29039ed1e051ff97791056c69d9f4c4b69ab99b304468c5",
+    "eval_schedules.json": "c17b6d3841841b4c6736694e1385ce7b2ecadcf2ce7bd3d88b5c8e5f6ea6703a"
+  },
+  "runtime_fingerprint_sha256": "4bc7b3bf9c1b65479e39a29ce9d5c7724fe9b9fad6f3c15f9a6ca3c7cb8bb0e0",
+  "environment_sha256": "7d757341d315fc006dc13ada353f0906b0bcb8afef3bec153f064616998f3e76",
+  "schedule": [
+    {
+      "task_id": "eval_authorization__own_write",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__own_write",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__own_write",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__safety_buffer",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__safety_buffer",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__safety_buffer",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__fallback",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__fallback",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__fallback",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__direct_calls",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__direct_calls",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__direct_calls",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__member_order",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__member_order",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__member_order",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__no_backend",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__no_backend",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__no_backend",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__path",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__path",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__path",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__unknown_action",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__unknown_action",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__unknown_action",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__order_limit",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__order_limit",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__order_limit",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__resource",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__resource",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__resource",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__too_late",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__too_late",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__too_late",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__busy_buffer",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__busy_buffer",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__busy_buffer",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__normalize",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__normalize",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__normalize",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__appointment",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__appointment",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__appointment",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__session_change",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__session_change",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__session_change",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__direct_calls",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__direct_calls",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__direct_calls",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__all_or_nothing",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__all_or_nothing",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__all_or_nothing",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__tax_change",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__tax_change",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__tax_change",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__remaining",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__remaining",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__remaining",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__negative_ttl",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__negative_ttl",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__negative_ttl",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__rounding",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__rounding",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__rounding",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__direct_calls",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__direct_calls",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__direct_calls",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__allocation",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__allocation",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__allocation",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__direct_calls",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__direct_calls",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__direct_calls",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__receipt",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__receipt",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__receipt",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__future_session",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__future_session",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__future_session",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__direct_calls",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__direct_calls",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__direct_calls",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__quantity_cap",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__quantity_cap",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__quantity_cap",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__latency_edge",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__latency_edge",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__latency_edge",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__buffer_change",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_inventory__buffer_change",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__buffer_change",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__closing_edge",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__closing_edge",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__closing_edge",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__partial",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_inventory__partial",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_inventory__partial",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__public_lifetime",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__public_lifetime",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__public_lifetime",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__private_entry",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__private_entry",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__private_entry",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__do_not_store",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__do_not_store",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__do_not_store",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__weekend",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__weekend",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_schedules__weekend",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__direct_calls",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__direct_calls",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__direct_calls",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__admin_without_scope",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_authorization__admin_without_scope",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__admin_without_scope",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__buffer_change",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_schedules__buffer_change",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_schedules__buffer_change",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__refund",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__refund",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__refund",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__discount_delivery",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__discount_delivery",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__discount_delivery",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__retry_exhausted",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__retry_exhausted",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__retry_exhausted",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_pricing__invalid_receipt",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_pricing__invalid_receipt",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_pricing__invalid_receipt",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__schema_change",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__schema_change",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_cache__schema_change",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__canary_change",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__canary_change",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_routing__canary_change",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__preferred",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_routing__preferred",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_routing__preferred",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__expiry",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_authorization__expiry",
+      "repeat": 0,
+      "arm": "C"
+    },
+    {
+      "task_id": "eval_authorization__expiry",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__canonical_key",
+      "repeat": 0,
+      "arm": "RH"
+    },
+    {
+      "task_id": "eval_cache__canonical_key",
+      "repeat": 0,
+      "arm": "A"
+    },
+    {
+      "task_id": "eval_cache__canonical_key",
+      "repeat": 0,
+      "arm": "C"
+    }
+  ],
+  "split": "old"
+}

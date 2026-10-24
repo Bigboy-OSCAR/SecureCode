@@ -1,0 +1,1442 @@
+[
+  {
+    "task_id": "eval_pricing__refund",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_maximum_valid_reservation",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_latency_intervention",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_enough_stock",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__remaining",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_overlong_duration",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__canary_change",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__safety_buffer",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__appointment",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__weekend",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__do_not_store",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__private_entry",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__partial",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_priority_not_fastest",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_duplicate_write_permission",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_negative_private_lifetime",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_write_scope_intervention",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__discount_delivery",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__buffer_change",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_max_duration_closing_edge",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_empty_path",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_partial_depletes_available",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_private_cap_intervention",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_entry_transitive_calls",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_appointment_transitive_calls",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_five_member_receipt",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_large_member_order",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__admin_without_scope",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_negative_unit_price",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__negative_ttl",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_buffer_exact_separation",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_slot_size_intervention",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__retry_exhausted",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__session_change",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__direct_calls",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__no_backend",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_retry_without_backend",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_revoked_admin",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__direct_calls",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__preferred",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_owner_case_mismatch",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_canary_exact_threshold",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__schema_change",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__future_session",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_receipt_transitive_calls",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_below_safety_reserve",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__tax_change",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__unknown_action",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_remaining_transitive_calls",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__too_late",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__busy_buffer",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_new_query_key",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__direct_calls",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_allocate_exact_available",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__latency_edge",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__closing_edge",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_two_nonmember_items",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_bucket_near_wrap",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__direct_calls",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_next_week_opening",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__public_lifetime",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_refund_capped_units",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__quantity_cap",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__rounding",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_wrapped_workday",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_order_cap_intervention",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_default_public_lifetime",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__order_limit",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__canonical_key",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_two_busy_intervals",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__normalize",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__own_write",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__direct_calls",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_last_valid_session_second",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_short_private_ttl",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__member_order",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__fallback",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_private_ttl_exact_edge",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__buffer_change",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__direct_calls",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_retry_transitive_calls",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__expiry",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__invalid_receipt",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__allocation",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__resource",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_last_retry_fallback",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_zero_units",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__receipt",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__path",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_nonowner_read",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__all_or_nothing",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_private_lifetime_clamp",
+    "repeat": 0,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__receipt",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_private_cap_intervention",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__quantity_cap",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__normalize",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_retry_without_backend",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__direct_calls",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_negative_unit_price",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__resource",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_refund_capped_units",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__invalid_receipt",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_last_retry_fallback",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_zero_units",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_private_lifetime_clamp",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__retry_exhausted",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_overlong_duration",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_five_member_receipt",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__fallback",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_remaining_transitive_calls",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_two_busy_intervals",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__direct_calls",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__partial",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_retry_transitive_calls",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__unknown_action",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__session_change",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__allocation",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__buffer_change",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_entry_transitive_calls",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__expiry",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_default_public_lifetime",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__latency_edge",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_allocate_exact_available",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__all_or_nothing",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_enough_stock",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_owner_case_mismatch",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_private_ttl_exact_edge",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__buffer_change",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_negative_private_lifetime",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_next_week_opening",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_maximum_valid_reservation",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__canary_change",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__admin_without_scope",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__appointment",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__rounding",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__busy_buffer",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__schema_change",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__no_backend",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__refund",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_order_cap_intervention",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_last_valid_session_second",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__closing_edge",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__member_order",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__too_late",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__direct_calls",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_new_query_key",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__remaining",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_large_member_order",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_priority_not_fastest",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__canonical_key",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_max_duration_closing_edge",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__direct_calls",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_two_nonmember_items",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_receipt_transitive_calls",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_short_private_ttl",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__safety_buffer",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_slot_size_intervention",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_wrapped_workday",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_below_safety_reserve",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__preferred",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__order_limit",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__tax_change",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__private_entry",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__direct_calls",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_empty_path",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__own_write",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_canary_exact_threshold",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__negative_ttl",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_partial_depletes_available",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__weekend",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_buffer_exact_separation",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__path",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__do_not_store",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_bucket_near_wrap",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_nonowner_read",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_write_scope_intervention",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_duplicate_write_permission",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__discount_delivery",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_latency_intervention",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__direct_calls",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_revoked_admin",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__public_lifetime",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__future_session",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_appointment_transitive_calls",
+    "repeat": 1,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__resource",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__safety_buffer",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_negative_unit_price",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__direct_calls",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_retry_without_backend",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__unknown_action",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__own_write",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_duplicate_write_permission",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_buffer_exact_separation",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_enough_stock",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__no_backend",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_two_nonmember_items",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__invalid_receipt",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_zero_units",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__rounding",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__member_order",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__schema_change",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__receipt",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__admin_without_scope",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__fallback",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_receipt_transitive_calls",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__latency_edge",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_revoked_admin",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__quantity_cap",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__discount_delivery",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__private_entry",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__negative_ttl",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_write_scope_intervention",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_remaining_transitive_calls",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_latency_intervention",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__remaining",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__busy_buffer",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_below_safety_reserve",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_empty_path",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__partial",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_two_busy_intervals",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_negative_private_lifetime",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_refund_capped_units",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_priority_not_fastest",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_last_retry_fallback",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_wrapped_workday",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__tax_change",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__session_change",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_five_member_receipt",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_maximum_valid_reservation",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__allocation",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__appointment",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_private_lifetime_clamp",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_private_cap_intervention",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_entry_transitive_calls",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__retry_exhausted",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_bucket_near_wrap",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__future_session",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__do_not_store",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_private_ttl_exact_edge",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_overlong_duration",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__normalize",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__direct_calls",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__canary_change",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__buffer_change",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__direct_calls",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__buffer_change",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__too_late",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__public_lifetime",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_nonowner_read",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_canary_exact_threshold",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_short_private_ttl",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__order_limit",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__v2_retry_transitive_calls",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_new_query_key",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__preferred",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_routing__path",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__direct_calls",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_allocate_exact_available",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__v2_default_public_lifetime",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__direct_calls",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__weekend",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__direct_calls",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__closing_edge",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_large_member_order",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_order_cap_intervention",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_owner_case_mismatch",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_appointment_transitive_calls",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_max_duration_closing_edge",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__all_or_nothing",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_inventory__v2_partial_depletes_available",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_cache__canonical_key",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__expiry",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_pricing__refund",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_next_week_opening",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_authorization__v2_last_valid_session_second",
+    "repeat": 2,
+    "arm": "R0"
+  },
+  {
+    "task_id": "eval_schedules__v2_slot_size_intervention",
+    "repeat": 2,
+    "arm": "R0"
+  }
+]

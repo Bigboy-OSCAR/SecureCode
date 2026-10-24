@@ -1,0 +1,156 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-24T09:59:47.544600+00:00",
+  "count": 23,
+  "checks": [
+    {
+      "check": "frozen_source_code_tasks_gold_and_AB_inputs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "complete_ordered_288_R0_answers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "same_96_questions_three_repeats",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "development_eight_answers_separate",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "one_real_answer_per_query_no_selector",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "exact_call_logs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "same_model_binary_server_fingerprint",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no_transport_errors",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "model_prompt_cache_disabled",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "fixed_generation_parameters",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "call_time_nonoverlap",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "query_time_nonoverlap",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "physical_query_time_and_phases",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "independent_typed_grading",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "gold_matches_frozen_tasks",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all_96_gold_answers_reexecuted_before_measurement",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "independent_graph_and_raw_candidate_reconstruction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "independent_TFIDF_ranking_and_exact_prompts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_coverage_and_per_query_token_calls",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "independent_offline_tokenization_and_packing",
+      "passed": true,
+      "detail": {
+        "distinct_strings": 2234,
+        "tokenizer": {
+          "binary": "/opt/homebrew/Cellar/llama.cpp/8680/bin/llama-tokenize",
+          "binary_sha256": "a6364e9a027fa6e76b66f6e61b6af397dc63128f7072be6c1589e80830e349d5",
+          "command": [
+            "/opt/homebrew/bin/llama-tokenize",
+            "-m",
+            "/Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf",
+            "--no-bos",
+            "--no-escape",
+            "--ids",
+            "--log-disable",
+            "--stdin"
+          ],
+          "separator_token": 151643,
+          "standalone_crosschecks": 13,
+          "all_standalone_crosschecks_passed": true
+        }
+      }
+    },
+    {
+      "check": "server_reported_token_counts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "AB_statistics_preserved_exactly",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "independent_primary_statistics_and_new_contrasts",
+      "passed": true,
+      "detail": {
+        "numeric_values_checked": 1194
+      }
+    }
+  ],
+  "records": 288,
+  "calls": 298,
+  "generation_limit_calls": 0,
+  "source_hashes": {
+    "verify_r0.py": "d15091a8806e527d92ec59065d4ed21c50e17d203e18f7a4db1adcc83fa2aff2",
+    "summary.json": "d7a8dc15b0bad6e95ae37719efb365b207469aef773575279301045886b32783",
+    "results.jsonl": "e28efbda19e475f647ca3e788f3afddff31fa73371137acaf61bc317b95949b3"
+  },
+  "limits": [
+    "Local verification, not independent external certification.",
+    "Code graph, TF-IDF ranking, packing, typed grading and primary statistics independently reconstructed; offline tokenizer uses same model vocabulary.",
+    "R0 measured in separate session; verification does not remove environmental confounding."
+  ]
+}

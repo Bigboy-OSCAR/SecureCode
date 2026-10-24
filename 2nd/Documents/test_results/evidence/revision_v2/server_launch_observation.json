@@ -1,0 +1,10 @@
+{
+  "method": "OS lsof listener check and ps process command inspection by root agent before development/evaluation",
+  "pid": 12953,
+  "listening_address": "127.0.0.1:8766",
+  "process_start_local": "Tue Oct 20 19:39:35 2026",
+  "timezone": "Asia/Seoul",
+  "observed_command": "/opt/homebrew/bin/llama-server -m /Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf --host 127.0.0.1 --port 8766 --ctx-size 8192 --parallel 1 --no-warmup --cache-ram 0 --no-cache-prompt",
+  "server_log": "server.log",
+  "scope": "Locally recorded provenance, not an external trusted timestamp."
+}

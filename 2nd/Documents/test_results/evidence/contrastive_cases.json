@@ -1,0 +1,248 @@
+{
+  "created_at_utc": "2026-10-20T09:46:55.740069+00:00",
+  "rows_available_at_review": 468,
+  "source_results": "results_eval_main.jsonl",
+  "scope": "Three illustrative paired comparisons with different strict correctness. Each uses the same task and repeat. These are explanatory cases, not a representative effect-size estimate.",
+  "evaluation_inputs_modified": false,
+  "model_calls_made": false,
+  "cases": [
+    {
+      "task_id": "eval_authorization__own_write",
+      "question": "What does authorize('u1','u1','member',[' DOCUMENT:WRITE '],'write',100,200,False) return?",
+      "repeat_zero_based": 1,
+      "comparison": "A versus RH",
+      "gold": {
+        "allowed": true,
+        "reason": "allowed"
+      },
+      "observations": {
+        "A": {
+          "arm": "A",
+          "correct": false,
+          "observed_answer": {
+            "allowed": true,
+            "reason": "ALLOW_REASON"
+          },
+          "raw_model_output": "```json\n{\"answer\": {\"allowed\": true, \"reason\": \"ALLOW_REASON\"}}\n```",
+          "failure": "wrong_answer",
+          "answer_call_id": "c19ee02546996df8",
+          "context_tokens": 100,
+          "specified_raw_reference_recall": 0.07142857142857142,
+          "raw_chosen_ids": [
+            "native:0"
+          ],
+          "summary_chosen_ids": [],
+          "context_sha256": "ad21d291f261b13b59263f6c3380ffb6ace3ebcb73d1e01390f6818240b2d636",
+          "actual_context": "### primary symbol: memory://symbol/service.py::authorize\n```python\ndef authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}\n```"
+        },
+        "RH": {
+          "arm": "RH",
+          "correct": true,
+          "observed_answer": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "raw_model_output": "```json\n{\"answer\": {\"allowed\": true, \"reason\": \"allowed\"}}\n```",
+          "failure": null,
+          "answer_call_id": "aa551f7d9e585fd9",
+          "context_tokens": 1004,
+          "specified_raw_reference_recall": 1.0,
+          "raw_chosen_ids": [
+            "memory://symbol/policy.py::WRITE_SCOPE",
+            "memory://symbol/policy.py::WRITE_ACTION",
+            "atomic:memory://symbol/service.py::can_edit_own",
+            "memory://symbol/rules.py::required_scope",
+            "memory://symbol/service.py::can_edit_own",
+            "memory://symbol/presentation.py::DISPLAY_PREFIX"
+          ],
+          "summary_chosen_ids": [
+            "summary:leaf:memory://symbol/rules.py::required_scope"
+          ],
+          "context_sha256": "66c75d929f60c28d863cb62d42f9365bb72102165de21b62ef12840187a0cd67",
+          "actual_context": "### memory://symbol/policy.py::WRITE_SCOPE lines 4-4\n\nWRITE_SCOPE = \"document:write\"\n\n### memory://symbol/policy.py::WRITE_ACTION lines 3-3\n\nWRITE_ACTION = \"write\"\n\n### memory://symbol/service.py::can_edit_own lines 10-11\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef can_edit_own(user, scopes, created_at, now):\n    return authorize(user, user, \"member\", scopes, \"write\", created_at, now, False)[\"allowed\"]\n\n### memory://symbol/rules.py::required_scope lines 9-10\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")\n\n### memory://symbol/policy.py::READ_ACTION lines 2-2\n\nREAD_ACTION = \"read\"\n\n### memory://symbol/policy.py::READ_SCOPE lines 5-5\n\nREAD_SCOPE = \"document:read\"\n\n### memory://symbol/policy.py::WRITE_ACTION lines 3-3\n\nWRITE_ACTION = \"write\"\n\n### memory://symbol/policy.py::WRITE_SCOPE lines 4-4\n\nWRITE_SCOPE = \"document:write\"\n\n### memory://symbol/service.py::can_edit_own lines 10-11\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef can_edit_own(user, scopes, created_at, now):\n    return authorize(user, user, \"member\", scopes, \"write\", created_at, now, False)[\"allowed\"]\n\n### memory://symbol/service.py::authorize lines 4-8\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}\n\n### memory://symbol/policy.py::ALLOW_REASON lines 7-7\n\nALLOW_REASON = \"allowed\"\n\n### memory://symbol/policy.py::DENY_REASON lines 8-8\n\nDENY_REASON = \"denied\"\n\n### memory://symbol/rules.py::role_allows lines 12-13\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef role_allows(role, owner, user):\n    return role == ADMIN_ROLE or owner == user\n\n### memory://symbol/rules.py::scope_allows lines 15-17\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef scope_allows(scopes, action):\n    required = required_scope(action)\n    return bool(required) and required in normalized_scopes(scopes)\n\n### memory://symbol/rules.py::session_valid lines 6-7\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef session_valid(created_at, now, revoked):\n    return not revoked and 0 <= now - created_at < MAX_SESSION_AGE\n\n### memory://symbol/policy.py::ADMIN_ROLE lines 1-1\n\nADMIN_ROLE = \"admin\"\n\n### memory://symbol/rules.py::normalized_scopes lines 3-4\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef normalized_scopes(scopes):\n    return sorted(set(scope.strip().lower() for scope in scopes))\n\n### memory://symbol/rules.py::required_scope lines 9-10\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")\n\n### memory://symbol/policy.py::MAX_SESSION_AGE lines 6-6\n\nMAX_SESSION_AGE = 3600\n\n### summary:leaf:memory://symbol/rules.py::required_scope\nThe `required_scope` function in `rules.py` determines the required scope for a given action based on predefined constants from `policy.py`. It returns the scope for `READ_ACTION` as `\"document:read\"` and for `WRITE_ACTION` as `\"document:write\"`. For any other action, it returns an empty string.\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"document\""
+        }
+      },
+      "direction": "A_wrong_RH_correct",
+      "raw_fact": "authorize returns ALLOW_REASON when permission succeeds. policy.py defines ALLOW_REASON = \"allowed\". For this own-document write request, the source permits the action.",
+      "source_files": [
+        "dataset/projects/eval_authorization/service.py",
+        "dataset/projects/eval_authorization/policy.py",
+        "dataset/projects/eval_authorization/rules.py"
+      ],
+      "direct_observation": "A packed only authorize itself: its context refers to ALLOW_REASON but lacks the literal definition and cross-file helpers. A answered the constant identifier as the reason. RH packed the original ALLOW_REASON = \"allowed\" definition, authorize, session and permission functions, and one required_scope leaf summary; it returned the correct literal.",
+      "summary_quote": "It returns the scope for READ_ACTION as \"document:read\" and for WRITE_ACTION as \"document:write\".",
+      "possible_explanation": "Access to the missing policy literal and cross-file source is a plausible explanation for this corrected answer.",
+      "causal_caution": "This A-versus-RH contrast changes retrieval and source expansion as well as summary availability. The decisive literal is present as original code in RH. It is not evidence that summary text caused the gain.",
+      "additional_control": {
+        "arm": "R0",
+        "correct": true,
+        "observed_answer": {
+          "allowed": true,
+          "reason": "allowed"
+        },
+        "raw_model_output": "```json\n{\"answer\": {\"allowed\": true, \"reason\": \"allowed\"}}\n```",
+        "failure": null,
+        "answer_call_id": "f363260ffebe10e4",
+        "context_tokens": 1022,
+        "specified_raw_reference_recall": 1.0,
+        "raw_chosen_ids": [
+          "memory://symbol/policy.py::WRITE_SCOPE",
+          "memory://symbol/policy.py::WRITE_ACTION",
+          "atomic:memory://symbol/service.py::can_edit_own",
+          "memory://symbol/rules.py::required_scope",
+          "memory://symbol/service.py::can_edit_own",
+          "memory://symbol/presentation.py::DISPLAY_PREFIX",
+          "memory://symbol/presentation.py::summarize_count",
+          "atomic:memory://symbol/presentation.py::normalize_label"
+        ],
+        "summary_chosen_ids": [],
+        "context_sha256": "60ce6cd843c860b9761d29caaf51978c597a077db37c6928898dc74ee0e1b97f",
+        "actual_context": "### memory://symbol/policy.py::WRITE_SCOPE lines 4-4\n\nWRITE_SCOPE = \"document:write\"\n\n### memory://symbol/policy.py::WRITE_ACTION lines 3-3\n\nWRITE_ACTION = \"write\"\n\n### memory://symbol/service.py::can_edit_own lines 10-11\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef can_edit_own(user, scopes, created_at, now):\n    return authorize(user, user, \"member\", scopes, \"write\", created_at, now, False)[\"allowed\"]\n\n### memory://symbol/rules.py::required_scope lines 9-10\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")\n\n### memory://symbol/policy.py::READ_ACTION lines 2-2\n\nREAD_ACTION = \"read\"\n\n### memory://symbol/policy.py::READ_SCOPE lines 5-5\n\nREAD_SCOPE = \"document:read\"\n\n### memory://symbol/policy.py::WRITE_ACTION lines 3-3\n\nWRITE_ACTION = \"write\"\n\n### memory://symbol/policy.py::WRITE_SCOPE lines 4-4\n\nWRITE_SCOPE = \"document:write\"\n\n### memory://symbol/service.py::can_edit_own lines 10-11\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef can_edit_own(user, scopes, created_at, now):\n    return authorize(user, user, \"member\", scopes, \"write\", created_at, now, False)[\"allowed\"]\n\n### memory://symbol/service.py::authorize lines 4-8\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}\n\n### memory://symbol/policy.py::ALLOW_REASON lines 7-7\n\nALLOW_REASON = \"allowed\"\n\n### memory://symbol/policy.py::DENY_REASON lines 8-8\n\nDENY_REASON = \"denied\"\n\n### memory://symbol/rules.py::role_allows lines 12-13\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef role_allows(role, owner, user):\n    return role == ADMIN_ROLE or owner == user\n\n### memory://symbol/rules.py::scope_allows lines 15-17\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef scope_allows(scopes, action):\n    required = required_scope(action)\n    return bool(required) and required in normalized_scopes(scopes)\n\n### memory://symbol/rules.py::session_valid lines 6-7\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef session_valid(created_at, now, revoked):\n    return not revoked and 0 <= now - created_at < MAX_SESSION_AGE\n\n### memory://symbol/policy.py::ADMIN_ROLE lines 1-1\n\nADMIN_ROLE = \"admin\"\n\n### memory://symbol/rules.py::normalized_scopes lines 3-4\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef normalized_scopes(scopes):\n    return sorted(set(scope.strip().lower() for scope in scopes))\n\n### memory://symbol/rules.py::required_scope lines 9-10\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")\n\n### memory://symbol/policy.py::MAX_SESSION_AGE lines 6-6\n\nMAX_SESSION_AGE = 3600\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"document\"\n\n### memory://symbol/presentation.py::summarize_count lines 15-16\n\ndef summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"document\"\n\n### memory://symbol/presentation.py::normalize_label lines 6-7\n\ndef normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]"
+      },
+      "control_interpretation": "The same-task, same-repeat R0 condition also answers correctly without summaries. This directly prevents attributing this particular A-to-RH gain uniquely to RAPTOR-style summaries."
+    },
+    {
+      "task_id": "eval_pricing__direct_calls",
+      "question": "List the project-defined functions directly called by checkout_total. Ignore builtins, and return a sorted list of function names.",
+      "repeat_zero_based": 1,
+      "comparison": "R0 versus RH",
+      "gold": [
+        "line_subtotal",
+        "member_discount",
+        "sales_tax"
+      ],
+      "observations": {
+        "R0": {
+          "arm": "R0",
+          "correct": true,
+          "observed_answer": [
+            "line_subtotal",
+            "member_discount",
+            "sales_tax"
+          ],
+          "raw_model_output": "```json\n{\"answer\": [\"line_subtotal\", \"member_discount\", \"sales_tax\"]}\n```",
+          "failure": null,
+          "answer_call_id": "b66c961452807226",
+          "context_tokens": 1023,
+          "specified_raw_reference_recall": 1.0,
+          "raw_chosen_ids": [
+            "atomic:memory://symbol/service.py::checkout_total",
+            "atomic:memory://symbol/service.py::order_receipt",
+            "memory://symbol/service.py::order_receipt",
+            "memory://symbol/rules.py::refundable",
+            "memory://symbol/service.py::reward_points"
+          ],
+          "summary_chosen_ids": [],
+          "context_sha256": "1c4e91b20550034408c9459cacf48d99707de8aa49437b9688403320a83b4c67",
+          "actual_context": "### memory://symbol/service.py::checkout_total lines 4-10\nfrom policy import DELIVERY_CENTS, FREE_DELIVERY_CENTS, CURRENCY\nfrom rules import line_subtotal, member_discount, sales_tax\ndef checkout_total(unit_cents, quantity, member):\n    subtotal = line_subtotal(unit_cents, quantity)\n    if subtotal < 0:\n        return -1\n    net = subtotal - member_discount(subtotal, member)\n    delivery = 0 if net >= FREE_DELIVERY_CENTS else DELIVERY_CENTS\n    return net + sales_tax(net) + delivery\n\n### memory://symbol/service.py::order_receipt lines 12-14\nfrom policy import DELIVERY_CENTS, FREE_DELIVERY_CENTS, CURRENCY\nfrom rules import line_subtotal, member_discount, sales_tax\ndef order_receipt(unit_cents, quantity, member):\n    total = checkout_total(unit_cents, quantity, member)\n    return {\"currency\": CURRENCY, \"total\": total, \"accepted\": total >= 0}\n\n### memory://symbol/service.py::order_receipt lines 12-14\nfrom policy import DELIVERY_CENTS, FREE_DELIVERY_CENTS, CURRENCY\nfrom rules import line_subtotal, member_discount, sales_tax\ndef order_receipt(unit_cents, quantity, member):\n    total = checkout_total(unit_cents, quantity, member)\n    return {\"currency\": CURRENCY, \"total\": total, \"accepted\": total >= 0}\n\n### memory://symbol/policy.py::CURRENCY lines 8-8\n\nCURRENCY = \"USD\"\n\n### memory://symbol/service.py::checkout_total lines 4-10\nfrom policy import DELIVERY_CENTS, FREE_DELIVERY_CENTS, CURRENCY\nfrom rules import line_subtotal, member_discount, sales_tax\ndef checkout_total(unit_cents, quantity, member):\n    subtotal = line_subtotal(unit_cents, quantity)\n    if subtotal < 0:\n        return -1\n    net = subtotal - member_discount(subtotal, member)\n    delivery = 0 if net >= FREE_DELIVERY_CENTS else DELIVERY_CENTS\n    return net + sales_tax(net) + delivery\n\n### memory://symbol/policy.py::DELIVERY_CENTS lines 3-3\n\nDELIVERY_CENTS = 499\n\n### memory://symbol/policy.py::FREE_DELIVERY_CENTS lines 4-4\n\nFREE_DELIVERY_CENTS = 6000\n\n### memory://symbol/rules.py::line_subtotal lines 3-6\nfrom policy import MEMBER_BPS, TAX_BPS, DISCOUNT_CAP_CENTS, MIN_QUANTITY, MAX_QUANTITY\ndef line_subtotal(unit_cents, quantity):\n    if unit_cents < 0 or not MIN_QUANTITY <= quantity <= MAX_QUANTITY:\n        return -1\n    return unit_cents * quantity\n\n### memory://symbol/rules.py::member_discount lines 8-9\nfrom policy import MEMBER_BPS, TAX_BPS, DISCOUNT_CAP_CENTS, MIN_QUANTITY, MAX_QUANTITY\ndef member_discount(subtotal, member):\n    return min(subtotal * MEMBER_BPS // 10000, DISCOUNT_CAP_CENTS) if member else 0\n\n### memory://symbol/rules.py::sales_tax lines 11-12\nfrom policy import MEMBER_BPS, TAX_BPS, DISCOUNT_CAP_CENTS, MIN_QUANTITY, MAX_QUANTITY\ndef sales_tax(net_cents):\n    return (net_cents * TAX_BPS + 5000) // 10000\n\n### memory://symbol/policy.py::MAX_QUANTITY lines 7-7\n\nMAX_QUANTITY = 20\n\n### memory://symbol/policy.py::MIN_QUANTITY lines 6-6\n\nMIN_QUANTITY = 1\n\n### memory://symbol/policy.py::DISCOUNT_CAP_CENTS lines 5-5\n\nDISCOUNT_CAP_CENTS = 900\n\n### memory://symbol/policy.py::MEMBER_BPS lines 1-1\n\nMEMBER_BPS = 750\n\n### memory://symbol/policy.py::TAX_BPS lines 2-2\n\nTAX_BPS = 825\n\n### memory://symbol/rules.py::refundable lines 14-15\nfrom policy import MEMBER_BPS, TAX_BPS, DISCOUNT_CAP_CENTS, MIN_QUANTITY, MAX_QUANTITY\ndef refundable(net_cents, returned_units, total_units):\n    return net_cents * min(returned_units, total_units) // total_units\n\n### memory://symbol/service.py::reward_points lines 16-17\nfrom policy import DELIVERY_CENTS, FREE_DELIVERY_CENTS, CURRENCY\nfrom rules import line_subtotal, member_discount, sales_tax\ndef reward_points(total_cents):\n    return max(total_cents, 0) // 100"
+        },
+        "RH": {
+          "arm": "RH",
+          "correct": false,
+          "observed_answer": [
+            "checkout_total"
+          ],
+          "raw_model_output": "```json\n{\"answer\": [\"checkout_total\"]}\n```",
+          "failure": "wrong_answer",
+          "answer_call_id": "b2bf860c759546db",
+          "context_tokens": 1024,
+          "specified_raw_reference_recall": 0.0,
+          "raw_chosen_ids": [],
+          "summary_chosen_ids": [
+            "summary:leaf:memory://symbol/presentation.py::summarize_count",
+            "summary:leaf:memory://symbol/service.py::checkout_total",
+            "summary:level2:service.py",
+            "summary:leaf:memory://symbol/audit.py::recent_events",
+            "summary:level2:rules.py",
+            "summary:leaf:memory://symbol/service.py::order_receipt",
+            "summary:level2:presentation.py",
+            "summary:leaf:memory://symbol/audit.py::redact_identifier",
+            "summary:level2:audit.py"
+          ],
+          "context_sha256": "4d19210a2d278fc78132e7724f72233357e284659505a8b752f8dcb0dd494010",
+          "actual_context": "### summary:leaf:memory://symbol/presentation.py::summarize_count\nThe `summarize_count` function takes a list of values as input and returns a dictionary with a key \"domain\" set to the constant `DISPLAY_PREFIX` (which is \"retail\") and a key \"count\" set to the length of the input list.\n\n### summary:leaf:memory://symbol/service.py::checkout_total\nThe `checkout_total` function calculates the total cost of a purchase, including subtotal, discounts, taxes, and delivery fees. It uses helper functions from `rules.py` for subtotal and discounts, and constants from `policy.py` for delivery and tax rates. The function checks for valid input quantities and applies member discounts if applicable. Delivery fees are added if the net total is below a free delivery threshold.\n\n### summary:level2:service.py\nThe `service.py` module contains functions for calculating the total cost of a purchase and generating an order receipt. The `checkout_total` function computes the net total by applying subtotal, discounts, taxes, and delivery fees. It checks for valid input quantities and applies member discounts if applicable. Delivery fees are added if the net total is below a free delivery threshold. The `order_receipt` function uses similar calculations to determine the total cost and returns a dictionary with the currency and total cost, indicating if the total is valid. The `reward_points` function calculates the number of reward points earned based on the total purchase amount in cents.\n\n### summary:leaf:memory://symbol/audit.py::recent_events\nThe `recent_events` function takes a list of events and returns the last `MAX_RECENT_EVENTS` elements. It uses the constant `MAX_RECENT_EVENTS` which is set to 20. The function does not perform any string operations or calls other functions.\n\n### summary:level2:rules.py\nThe `rules.py` module contains functions to calculate various financial aspects of a purchase order, including line subtotal, member discount, sales tax, and refundable amount. Each function has specific input requirements and uses constants defined in the `policy.py` module. The `line_subtotal` function calculates the subtotal for a line item, applying validation for unit price and quantity. The `member_discount` function applies a 7.5% discount to the subtotal for members, capped at 900 cents. The `sales_tax` function calculates the sales tax at a rate of 8.25% on the net amount. The `refundable` function computes the refund amount based on the net cents, returned units, and total units.\n\n### summary:leaf:memory://symbol/service.py::order_receipt\nThe `order_receipt` function calculates the total cost of an order, including subtotal, discounts, taxes, and delivery fees. It uses helper functions from `rules.py` for subtotal, discount, and tax calculations. The `checkout_total` function determines the net total after applying discounts and checks for valid quantities. It adds delivery fees if the net total is below a free delivery threshold. The function returns a dictionary with the currency and total cost, indicating if the total is valid. Constants define currency, delivery fees, discounts, and tax rates.\n\n### summary:level2:presentation.py\nThe `presentation.py` module contains functions for normalizing labels, displaying references, mapping status codes, and summarizing counts. The `normalize_label` function processes strings by stripping whitespace, converting to lowercase, replacing spaces with hyphens, and truncating to 48 characters. The `display_reference` function formats reference numbers with a \"retail:\" prefix and pads to 12 characters. The `status_label` function maps integer codes to status labels, defaulting to \"unknown\" if the code is not found. The `summarize_count` function returns a dictionary summarizing the count of items in a list, prefixed with \"retail\".\n\n### summary:leaf:memory://symbol/audit.py::redact_identifier\nThe `redact_identifier` function takes an `identifier` as input and returns a string where the last four characters of the `identifier` are preserved, prefixed by the `REDACTION_MARKER` \"***\". The function uses the `str` function to convert the `identifier` to a string and then slices the last four characters. The `REDACTION_MARKER` is a constant defined as \"***\".\n\n### summary:level2:audit.py\nThe `audit.py` module contains functions for constructing audit keys, managing recent events, redacting identifiers, and recording events. The `audit_key` function creates a string key for auditing, `recent_events` returns the last 20 events from a list, `redact_identifier` masks all but the last four characters of an identifier, and `event_record` creates a dictionary representing an audit event with a specified action and optional actor. Constants like `AUDIT_VERSION`, `MAX_RECENT_EVENTS`, and `REDACTION_MARKER` are used to maintain consistency and control the behavior of these functions."
+        }
+      },
+      "direction": "R0_correct_RH_wrong",
+      "raw_fact": "checkout_total directly invokes line_subtotal(unit_cents, quantity), member_discount(subtotal, member), and sales_tax(net). It does not directly call itself.",
+      "source_files": [
+        "dataset/projects/eval_pricing/service.py"
+      ],
+      "direct_observation": "R0 includes the original checkout_total body and returns all three correct names. RH uses its entire 1024-token context for summaries and includes no raw node. Its checkout_total leaf describes subtotal and discount helpers in general language, and higher-level summaries describe several functions without retaining the exact direct-call relation. RH returns [\"checkout_total\"].",
+      "summary_quote": "It uses helper functions from rules.py for subtotal and discounts, and constants from policy.py for delivery and tax rates.",
+      "possible_explanation": "The hybrid ranking/packing displaced the precise call-site evidence with broad summaries, leaving weaker support for the exact direct-call question.",
+      "causal_caution": "Names such as line_subtotal and sales_tax do occur in the rules summary; the specific caller-to-callee relation is what is less explicit. The output could also reflect misunderstanding of the question. This observational pair does not prove a unique causal chain or that all hierarchical summaries would behave this way."
+    },
+    {
+      "task_id": "eval_authorization__expiry",
+      "question": "What does can_edit_own('u1',['document:write'],100,3700) return?",
+      "repeat_zero_based": 0,
+      "comparison": "R0 versus RH",
+      "gold": false,
+      "observations": {
+        "R0": {
+          "arm": "R0",
+          "correct": true,
+          "observed_answer": false,
+          "raw_model_output": "```json\n{\"answer\": false}\n```",
+          "failure": null,
+          "answer_call_id": "ccf2a227fdff4dc3",
+          "context_tokens": 1022,
+          "specified_raw_reference_recall": 1.0,
+          "raw_chosen_ids": [
+            "atomic:memory://symbol/service.py::can_edit_own",
+            "memory://symbol/service.py::can_edit_own",
+            "memory://symbol/policy.py::WRITE_SCOPE",
+            "memory://symbol/policy.py::WRITE_ACTION",
+            "memory://symbol/rules.py::required_scope",
+            "memory://symbol/presentation.py::DISPLAY_PREFIX",
+            "memory://symbol/presentation.py::summarize_count",
+            "atomic:memory://symbol/presentation.py::normalize_label"
+          ],
+          "summary_chosen_ids": [],
+          "context_sha256": "e4072742ca116e3d89cb3122b6a8f81e169b1d069c534049d82c0bdbbf4d083e",
+          "actual_context": "### memory://symbol/service.py::can_edit_own lines 10-11\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef can_edit_own(user, scopes, created_at, now):\n    return authorize(user, user, \"member\", scopes, \"write\", created_at, now, False)[\"allowed\"]\n\n### memory://symbol/service.py::can_edit_own lines 10-11\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef can_edit_own(user, scopes, created_at, now):\n    return authorize(user, user, \"member\", scopes, \"write\", created_at, now, False)[\"allowed\"]\n\n### memory://symbol/service.py::authorize lines 4-8\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}\n\n### memory://symbol/policy.py::ALLOW_REASON lines 7-7\n\nALLOW_REASON = \"allowed\"\n\n### memory://symbol/policy.py::DENY_REASON lines 8-8\n\nDENY_REASON = \"denied\"\n\n### memory://symbol/rules.py::role_allows lines 12-13\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef role_allows(role, owner, user):\n    return role == ADMIN_ROLE or owner == user\n\n### memory://symbol/rules.py::scope_allows lines 15-17\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef scope_allows(scopes, action):\n    required = required_scope(action)\n    return bool(required) and required in normalized_scopes(scopes)\n\n### memory://symbol/rules.py::session_valid lines 6-7\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef session_valid(created_at, now, revoked):\n    return not revoked and 0 <= now - created_at < MAX_SESSION_AGE\n\n### memory://symbol/policy.py::ADMIN_ROLE lines 1-1\n\nADMIN_ROLE = \"admin\"\n\n### memory://symbol/rules.py::normalized_scopes lines 3-4\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef normalized_scopes(scopes):\n    return sorted(set(scope.strip().lower() for scope in scopes))\n\n### memory://symbol/rules.py::required_scope lines 9-10\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")\n\n### memory://symbol/policy.py::MAX_SESSION_AGE lines 6-6\n\nMAX_SESSION_AGE = 3600\n\n### memory://symbol/policy.py::WRITE_SCOPE lines 4-4\n\nWRITE_SCOPE = \"document:write\"\n\n### memory://symbol/policy.py::WRITE_ACTION lines 3-3\n\nWRITE_ACTION = \"write\"\n\n### memory://symbol/rules.py::required_scope lines 9-10\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")\n\n### memory://symbol/policy.py::READ_ACTION lines 2-2\n\nREAD_ACTION = \"read\"\n\n### memory://symbol/policy.py::READ_SCOPE lines 5-5\n\nREAD_SCOPE = \"document:read\"\n\n### memory://symbol/policy.py::WRITE_ACTION lines 3-3\n\nWRITE_ACTION = \"write\"\n\n### memory://symbol/policy.py::WRITE_SCOPE lines 4-4\n\nWRITE_SCOPE = \"document:write\"\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"document\"\n\n### memory://symbol/presentation.py::summarize_count lines 15-16\n\ndef summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"document\"\n\n### memory://symbol/presentation.py::normalize_label lines 6-7\n\ndef normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]"
+        },
+        "RH": {
+          "arm": "RH",
+          "correct": false,
+          "observed_answer": true,
+          "raw_model_output": "```json\n{\"answer\": true}\n```",
+          "failure": "wrong_answer",
+          "answer_call_id": "926041e85bb0f1f6",
+          "context_tokens": 1012,
+          "specified_raw_reference_recall": 1.0,
+          "raw_chosen_ids": [
+            "atomic:memory://symbol/service.py::can_edit_own",
+            "memory://symbol/service.py::can_edit_own",
+            "memory://symbol/policy.py::WRITE_SCOPE",
+            "memory://symbol/policy.py::WRITE_ACTION"
+          ],
+          "summary_chosen_ids": [
+            "summary:leaf:memory://symbol/service.py::can_edit_own",
+            "summary:level2:service.py"
+          ],
+          "context_sha256": "c98fbfd011312af7524829ab98be8b685e4454ac316e908f226b6aeb1cb9b539",
+          "actual_context": "### memory://symbol/service.py::can_edit_own lines 10-11\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef can_edit_own(user, scopes, created_at, now):\n    return authorize(user, user, \"member\", scopes, \"write\", created_at, now, False)[\"allowed\"]\n\n### summary:leaf:memory://symbol/service.py::can_edit_own\nThe `can_edit_own` function checks if a user can edit their own content. It calls `authorize` with the user as both the owner and the requester, the role \"member\", and the action \"write\". The `authorize` function validates the session, checks if the user has the required role or is the owner, and if the action is allowed by the scope. It returns a dictionary with `allowed` and `reason` keys. Constants include `ALLOW_REASON`, `DENY_REASON`, `ADMIN_ROLE`, `READ_ACTION`, `WRITE_ACTION`, `WRITE_SCOPE`, `READ_SCOPE`, and `MAX_SESSION_AGE`.\n\n### memory://symbol/service.py::can_edit_own lines 10-11\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef can_edit_own(user, scopes, created_at, now):\n    return authorize(user, user, \"member\", scopes, \"write\", created_at, now, False)[\"allowed\"]\n\n### memory://symbol/service.py::authorize lines 4-8\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}\n\n### memory://symbol/policy.py::ALLOW_REASON lines 7-7\n\nALLOW_REASON = \"allowed\"\n\n### memory://symbol/policy.py::DENY_REASON lines 8-8\n\nDENY_REASON = \"denied\"\n\n### memory://symbol/rules.py::role_allows lines 12-13\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef role_allows(role, owner, user):\n    return role == ADMIN_ROLE or owner == user\n\n### memory://symbol/rules.py::scope_allows lines 15-17\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef scope_allows(scopes, action):\n    required = required_scope(action)\n    return bool(required) and required in normalized_scopes(scopes)\n\n### memory://symbol/rules.py::session_valid lines 6-7\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef session_valid(created_at, now, revoked):\n    return not revoked and 0 <= now - created_at < MAX_SESSION_AGE\n\n### memory://symbol/policy.py::ADMIN_ROLE lines 1-1\n\nADMIN_ROLE = \"admin\"\n\n### memory://symbol/rules.py::normalized_scopes lines 3-4\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef normalized_scopes(scopes):\n    return sorted(set(scope.strip().lower() for scope in scopes))\n\n### memory://symbol/rules.py::required_scope lines 9-10\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")\n\n### memory://symbol/policy.py::MAX_SESSION_AGE lines 6-6\n\nMAX_SESSION_AGE = 3600\n\n### memory://symbol/policy.py::WRITE_SCOPE lines 4-4\n\nWRITE_SCOPE = \"document:write\"\n\n### summary:level2:service.py\nThe `service.py` module contains functions to manage user authorization and permissions. The `authorize` function checks if a user is allowed to perform an action based on their role, ownership, and scope. The `can_edit_own` function specifically checks if a user can edit their own content by calling `authorize` with the appropriate parameters. Constants like `ALLOW_REASON`, `DENY_REASON`, `ADMIN_ROLE`, and `WRITE_ACTION` are used to define the outcomes and conditions. The `user_key` function generates a unique key for a user by formatting their name.\n\n### memory://symbol/policy.py::WRITE_ACTION lines 3-3\n\nWRITE_ACTION = \"write\""
+        }
+      },
+      "direction": "R0_correct_RH_wrong",
+      "raw_fact": "session_valid requires 0 <= now-created_at < MAX_SESSION_AGE. MAX_SESSION_AGE = 3600. With created_at=100 and now=3700, age=3600 fails the strict upper bound, so can_edit_own returns false.",
+      "source_files": [
+        "dataset/projects/eval_authorization/rules.py",
+        "dataset/projects/eval_authorization/policy.py",
+        "dataset/projects/eval_authorization/service.py"
+      ],
+      "direct_observation": "Both contexts contain the exact strict comparison and MAX_SESSION_AGE = 3600, and both have 100% specified raw reference recall. R0 answers false; RH answers true. RH additionally places can_edit_own and service summaries among the original code.",
+      "summary_quote": "The authorize function validates the session, checks if the user has the required role or is the owner, and if the action is allowed by the scope.",
+      "possible_explanation": "This is a downstream answering difference under changed context composition, despite available exact boundary evidence. It illustrates that adding summaries does not guarantee better use of already retrieved source.",
+      "causal_caution": "The selected summary is nonspecific about the expiry boundary, but it does not explicitly state an incorrect inclusive boundary. Do not claim that the summary changed < to <=. Ordering, distraction, interpretation, or other reader behavior cannot be isolated without an intervention experiment."
+    }
+  ],
+  "limitations": [
+    "Actual selected context and raw model output are preserved for inspection.",
+    "Effects of source access, ranking, summaries, and reader behavior must not be conflated.",
+    "No counterfactual deletion, corrected-summary substitution, or re-run was performed.",
+    "These case selections are post-hoc; use final aggregate statistics for superiority claims."
+  ]
+}

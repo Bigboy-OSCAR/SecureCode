@@ -1,0 +1,792 @@
+{
+  "status": "PASS",
+  "verified_at_utc": "2026-10-24T09:36:45.600077+00:00",
+  "questions": 96,
+  "records": [
+    {
+      "task_id": "eval_pricing__refund",
+      "kind": "execution",
+      "actual": 667,
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__member_order",
+      "kind": "execution",
+      "actual": 6505,
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__receipt",
+      "kind": "execution",
+      "actual": {
+        "accepted": true,
+        "currency": "USD",
+        "total": 12016
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__quantity_cap",
+      "kind": "execution",
+      "actual": -1,
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__discount_delivery",
+      "kind": "execution",
+      "actual": 6507,
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__invalid_receipt",
+      "kind": "execution",
+      "actual": {
+        "accepted": false,
+        "currency": "USD",
+        "total": -1
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__tax_change",
+      "kind": "impact",
+      "actual": [
+        "checkout_total",
+        "sales_tax"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__direct_calls",
+      "kind": "architecture",
+      "actual": [
+        "line_subtotal",
+        "member_discount",
+        "sales_tax"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__normalize",
+      "kind": "execution",
+      "actual": [
+        "document:read",
+        "document:write"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__own_write",
+      "kind": "execution",
+      "actual": {
+        "allowed": true,
+        "reason": "allowed"
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__admin_without_scope",
+      "kind": "execution",
+      "actual": {
+        "allowed": false,
+        "reason": "denied"
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__expiry",
+      "kind": "execution",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__unknown_action",
+      "kind": "execution",
+      "actual": {
+        "allowed": false,
+        "reason": "denied"
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__future_session",
+      "kind": "execution",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__session_change",
+      "kind": "impact",
+      "actual": [
+        "can_edit_own",
+        "session_valid"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__direct_calls",
+      "kind": "architecture",
+      "actual": [
+        "role_allows",
+        "scope_allows",
+        "session_valid"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__path",
+      "kind": "execution",
+      "actual": "/orders",
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__preferred",
+      "kind": "execution",
+      "actual": "east:/orders",
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__fallback",
+      "kind": "execution",
+      "actual": "west-canary:/health",
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__latency_edge",
+      "kind": "execution",
+      "actual": true,
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__no_backend",
+      "kind": "execution",
+      "actual": "unavailable",
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__retry_exhausted",
+      "kind": "execution",
+      "actual": "exhausted",
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__canary_change",
+      "kind": "impact",
+      "actual": [
+        "route_request",
+        "use_canary"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__direct_calls",
+      "kind": "architecture",
+      "actual": [
+        "healthy",
+        "normalize_path",
+        "use_canary"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__allocation",
+      "kind": "execution",
+      "actual": 0,
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__partial",
+      "kind": "execution",
+      "actual": {
+        "expires": 1000,
+        "status": "partial",
+        "units": 5
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__remaining",
+      "kind": "execution",
+      "actual": 9,
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__order_limit",
+      "kind": "execution",
+      "actual": {
+        "expires": 50,
+        "status": "denied",
+        "units": 0
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__safety_buffer",
+      "kind": "execution",
+      "actual": {
+        "expires": 200,
+        "status": "denied",
+        "units": 0
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__all_or_nothing",
+      "kind": "execution",
+      "actual": 8,
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__buffer_change",
+      "kind": "impact",
+      "actual": [
+        "reserve",
+        "sellable"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__direct_calls",
+      "kind": "architecture",
+      "actual": [
+        "allocate",
+        "sellable",
+        "valid_quantity"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__resource",
+      "kind": "execution",
+      "actual": "north/east_plan",
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__canonical_key",
+      "kind": "execution",
+      "actual": "render|team-a|summary_view|a=1&z=2|v4",
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__private_entry",
+      "kind": "execution",
+      "actual": {
+        "expires": 130,
+        "key": "render|public|revenue||v4",
+        "store": true
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__negative_ttl",
+      "kind": "execution",
+      "actual": 0,
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__public_lifetime",
+      "kind": "execution",
+      "actual": {
+        "expires": 3610,
+        "key": "render|acme|monthly_sales|a=1&b=2|v4",
+        "store": true
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__do_not_store",
+      "kind": "execution",
+      "actual": {
+        "expires": 50,
+        "key": "render|acme|daily||v4",
+        "store": false
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__schema_change",
+      "kind": "impact",
+      "actual": [
+        "cache_entry",
+        "render_cache_key"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__direct_calls",
+      "kind": "architecture",
+      "actual": [
+        "canonical_query",
+        "normalize_resource",
+        "normalize_tenant"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__rounding",
+      "kind": "execution",
+      "actual": 570,
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__busy_buffer",
+      "kind": "execution",
+      "actual": 630,
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__appointment",
+      "kind": "execution",
+      "actual": {
+        "day": 2,
+        "end": 750,
+        "start": 690
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__closing_edge",
+      "kind": "execution",
+      "actual": 990,
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__weekend",
+      "kind": "execution",
+      "actual": {
+        "day": 5,
+        "end": -1,
+        "start": -1
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__too_late",
+      "kind": "execution",
+      "actual": -1,
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__buffer_change",
+      "kind": "impact",
+      "actual": [
+        "first_available",
+        "overlaps"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__direct_calls",
+      "kind": "architecture",
+      "actual": [
+        "overlaps",
+        "round_slot",
+        "valid_duration",
+        "working_day"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__v2_refund_capped_units",
+      "kind": "execution",
+      "actual": 101,
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__v2_two_nonmember_items",
+      "kind": "execution",
+      "actual": 6497,
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__v2_five_member_receipt",
+      "kind": "execution",
+      "actual": {
+        "accepted": true,
+        "currency": "USD",
+        "total": 7505
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+      "kind": "execution",
+      "actual": 6495,
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__v2_large_member_order",
+      "kind": "execution",
+      "actual": 53151,
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__v2_negative_unit_price",
+      "kind": "execution",
+      "actual": {
+        "accepted": false,
+        "currency": "USD",
+        "total": -1
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+      "kind": "impact",
+      "actual": [
+        "checkout_total",
+        "order_receipt"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_pricing__v2_receipt_transitive_calls",
+      "kind": "architecture",
+      "actual": [
+        "checkout_total",
+        "line_subtotal",
+        "member_discount",
+        "sales_tax"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+      "kind": "execution",
+      "actual": [
+        "",
+        "document:read",
+        "x:y"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__v2_nonowner_read",
+      "kind": "execution",
+      "actual": {
+        "allowed": false,
+        "reason": "denied"
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__v2_duplicate_write_permission",
+      "kind": "execution",
+      "actual": true,
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__v2_last_valid_session_second",
+      "kind": "execution",
+      "actual": true,
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__v2_revoked_admin",
+      "kind": "execution",
+      "actual": {
+        "allowed": false,
+        "reason": "session"
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__v2_owner_case_mismatch",
+      "kind": "execution",
+      "actual": {
+        "allowed": false,
+        "reason": "denied"
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__v2_write_scope_intervention",
+      "kind": "impact",
+      "actual": [
+        "can_edit_own",
+        "scope_allows"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+      "kind": "architecture",
+      "actual": [
+        "authorize",
+        "normalized_scopes",
+        "required_scope",
+        "role_allows",
+        "scope_allows",
+        "session_valid"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__v2_bucket_near_wrap",
+      "kind": "execution",
+      "actual": 99,
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__v2_empty_path",
+      "kind": "execution",
+      "actual": "east-canary:/",
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__v2_last_retry_fallback",
+      "kind": "execution",
+      "actual": "west-canary:/x",
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__v2_canary_exact_threshold",
+      "kind": "execution",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__v2_priority_not_fastest",
+      "kind": "execution",
+      "actual": "east:/v2",
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__v2_retry_without_backend",
+      "kind": "execution",
+      "actual": "unavailable",
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__v2_latency_intervention",
+      "kind": "impact",
+      "actual": [
+        "healthy",
+        "route_request"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_routing__v2_retry_transitive_calls",
+      "kind": "architecture",
+      "actual": [
+        "bucket",
+        "healthy",
+        "normalize_path",
+        "route_request",
+        "use_canary"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__v2_allocate_exact_available",
+      "kind": "execution",
+      "actual": 6,
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__v2_maximum_valid_reservation",
+      "kind": "execution",
+      "actual": {
+        "expires": 975,
+        "status": "reserved",
+        "units": 12
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__v2_partial_depletes_available",
+      "kind": "execution",
+      "actual": 0,
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__v2_zero_units",
+      "kind": "execution",
+      "actual": {
+        "expires": 99,
+        "status": "denied",
+        "units": 0
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__v2_enough_stock",
+      "kind": "execution",
+      "actual": {
+        "expires": 1400,
+        "status": "reserved",
+        "units": 11
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__v2_below_safety_reserve",
+      "kind": "execution",
+      "actual": {
+        "expires": 0,
+        "status": "denied",
+        "units": 0
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__v2_order_cap_intervention",
+      "kind": "impact",
+      "actual": [
+        "reserve",
+        "valid_quantity"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_inventory__v2_remaining_transitive_calls",
+      "kind": "architecture",
+      "actual": [
+        "allocate",
+        "reserve",
+        "sellable",
+        "valid_quantity"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__v2_short_private_ttl",
+      "kind": "execution",
+      "actual": 17,
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__v2_new_query_key",
+      "kind": "execution",
+      "actual": "render|org-b|audit_log|n=0&sort=desc|v4",
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__v2_private_lifetime_clamp",
+      "kind": "execution",
+      "actual": {
+        "expires": 1030,
+        "key": "render|ten-9|live_view|a=2&z=9|v4",
+        "store": true
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__v2_private_ttl_exact_edge",
+      "kind": "execution",
+      "actual": {
+        "expires": 37,
+        "key": "render|edge|one||v4",
+        "store": true
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__v2_default_public_lifetime",
+      "kind": "execution",
+      "actual": {
+        "expires": 420,
+        "key": "render|public|weekly_view|page=3|v4",
+        "store": true
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__v2_negative_private_lifetime",
+      "kind": "execution",
+      "actual": {
+        "expires": 77,
+        "key": "render|team|chart|q=ok|v4",
+        "store": false
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__v2_private_cap_intervention",
+      "kind": "impact",
+      "actual": [
+        "cache_entry",
+        "cache_ttl"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_cache__v2_entry_transitive_calls",
+      "kind": "architecture",
+      "actual": [
+        "cache_ttl",
+        "canonical_query",
+        "normalize_resource",
+        "normalize_tenant",
+        "render_cache_key"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__v2_buffer_exact_separation",
+      "kind": "execution",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__v2_two_busy_intervals",
+      "kind": "execution",
+      "actual": 720,
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__v2_wrapped_workday",
+      "kind": "execution",
+      "actual": {
+        "day": 8,
+        "end": 840,
+        "start": 750
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__v2_max_duration_closing_edge",
+      "kind": "execution",
+      "actual": 840,
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__v2_next_week_opening",
+      "kind": "execution",
+      "actual": {
+        "day": 7,
+        "end": 560,
+        "start": 540
+      },
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__v2_overlong_duration",
+      "kind": "execution",
+      "actual": -1,
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__v2_slot_size_intervention",
+      "kind": "impact",
+      "actual": [
+        "appointment",
+        "round_slot"
+      ],
+      "passed": true
+    },
+    {
+      "task_id": "eval_schedules__v2_appointment_transitive_calls",
+      "kind": "architecture",
+      "actual": [
+        "first_available",
+        "overlaps",
+        "round_slot",
+        "valid_duration",
+        "working_day"
+      ],
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,1776 @@
+{
+  "project": "eval_authorization",
+  "nodes": {
+    "memory://symbol/audit.py::AUDIT_VERSION": {
+      "id": "memory://symbol/audit.py::AUDIT_VERSION",
+      "path": "audit.py",
+      "name": "AUDIT_VERSION",
+      "source": "AUDIT_VERSION = 2",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::MAX_RECENT_EVENTS": {
+      "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+      "path": "audit.py",
+      "name": "MAX_RECENT_EVENTS",
+      "source": "MAX_RECENT_EVENTS = 20",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::REDACTION_MARKER": {
+      "id": "memory://symbol/audit.py::REDACTION_MARKER",
+      "path": "audit.py",
+      "name": "REDACTION_MARKER",
+      "source": "REDACTION_MARKER = \"***\"",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::DEFAULT_ACTOR": {
+      "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+      "path": "audit.py",
+      "name": "DEFAULT_ACTOR",
+      "source": "DEFAULT_ACTOR = \"system\"",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::audit_key": {
+      "id": "memory://symbol/audit.py::audit_key",
+      "path": "audit.py",
+      "name": "audit_key",
+      "source": "def audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+      "imports": "",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "AUDIT_VERSION",
+        "action",
+        "actor",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::recent_events": {
+      "id": "memory://symbol/audit.py::recent_events",
+      "path": "audit.py",
+      "name": "recent_events",
+      "source": "def recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+      "imports": "",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "MAX_RECENT_EVENTS",
+        "events"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::redact_identifier": {
+      "id": "memory://symbol/audit.py::redact_identifier",
+      "path": "audit.py",
+      "name": "redact_identifier",
+      "source": "def redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+      "imports": "",
+      "start": 12,
+      "end": 13,
+      "refs": [
+        "REDACTION_MARKER",
+        "identifier",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::event_record": {
+      "id": "memory://symbol/audit.py::event_record",
+      "path": "audit.py",
+      "name": "event_record",
+      "source": "def event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+      "imports": "",
+      "start": 15,
+      "end": 16,
+      "refs": [
+        "AUDIT_VERSION",
+        "DEFAULT_ACTOR",
+        "action",
+        "actor"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/policy.py::ADMIN_ROLE": {
+      "id": "memory://symbol/policy.py::ADMIN_ROLE",
+      "path": "policy.py",
+      "name": "ADMIN_ROLE",
+      "source": "ADMIN_ROLE = \"admin\"",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::READ_ACTION": {
+      "id": "memory://symbol/policy.py::READ_ACTION",
+      "path": "policy.py",
+      "name": "READ_ACTION",
+      "source": "READ_ACTION = \"read\"",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::WRITE_ACTION": {
+      "id": "memory://symbol/policy.py::WRITE_ACTION",
+      "path": "policy.py",
+      "name": "WRITE_ACTION",
+      "source": "WRITE_ACTION = \"write\"",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::WRITE_SCOPE": {
+      "id": "memory://symbol/policy.py::WRITE_SCOPE",
+      "path": "policy.py",
+      "name": "WRITE_SCOPE",
+      "source": "WRITE_SCOPE = \"document:write\"",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::READ_SCOPE": {
+      "id": "memory://symbol/policy.py::READ_SCOPE",
+      "path": "policy.py",
+      "name": "READ_SCOPE",
+      "source": "READ_SCOPE = \"document:read\"",
+      "imports": "",
+      "start": 5,
+      "end": 5,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::MAX_SESSION_AGE": {
+      "id": "memory://symbol/policy.py::MAX_SESSION_AGE",
+      "path": "policy.py",
+      "name": "MAX_SESSION_AGE",
+      "source": "MAX_SESSION_AGE = 3600",
+      "imports": "",
+      "start": 6,
+      "end": 6,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::ALLOW_REASON": {
+      "id": "memory://symbol/policy.py::ALLOW_REASON",
+      "path": "policy.py",
+      "name": "ALLOW_REASON",
+      "source": "ALLOW_REASON = \"allowed\"",
+      "imports": "",
+      "start": 7,
+      "end": 7,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::DENY_REASON": {
+      "id": "memory://symbol/policy.py::DENY_REASON",
+      "path": "policy.py",
+      "name": "DENY_REASON",
+      "source": "DENY_REASON = \"denied\"",
+      "imports": "",
+      "start": 8,
+      "end": 8,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::DISPLAY_PREFIX": {
+      "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+      "path": "presentation.py",
+      "name": "DISPLAY_PREFIX",
+      "source": "DISPLAY_PREFIX = \"document\"",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::DISPLAY_WIDTH": {
+      "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+      "path": "presentation.py",
+      "name": "DISPLAY_WIDTH",
+      "source": "DISPLAY_WIDTH = 12",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::UNKNOWN_LABEL": {
+      "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+      "path": "presentation.py",
+      "name": "UNKNOWN_LABEL",
+      "source": "UNKNOWN_LABEL = \"unknown\"",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::MAX_LABEL_LENGTH": {
+      "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+      "path": "presentation.py",
+      "name": "MAX_LABEL_LENGTH",
+      "source": "MAX_LABEL_LENGTH = 48",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::normalize_label": {
+      "id": "memory://symbol/presentation.py::normalize_label",
+      "path": "presentation.py",
+      "name": "normalize_label",
+      "source": "def normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+      "imports": "",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "MAX_LABEL_LENGTH",
+        "label"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::display_reference": {
+      "id": "memory://symbol/presentation.py::display_reference",
+      "path": "presentation.py",
+      "name": "display_reference",
+      "source": "def display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+      "imports": "",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "DISPLAY_PREFIX",
+        "DISPLAY_WIDTH",
+        "reference",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::status_label": {
+      "id": "memory://symbol/presentation.py::status_label",
+      "path": "presentation.py",
+      "name": "status_label",
+      "source": "def status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+      "imports": "",
+      "start": 12,
+      "end": 13,
+      "refs": [
+        "UNKNOWN_LABEL",
+        "code"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::summarize_count": {
+      "id": "memory://symbol/presentation.py::summarize_count",
+      "path": "presentation.py",
+      "name": "summarize_count",
+      "source": "def summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+      "imports": "",
+      "start": 15,
+      "end": 16,
+      "refs": [
+        "DISPLAY_PREFIX",
+        "len",
+        "values"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::normalized_scopes": {
+      "id": "memory://symbol/rules.py::normalized_scopes",
+      "path": "rules.py",
+      "name": "normalized_scopes",
+      "source": "def normalized_scopes(scopes):\n    return sorted(set(scope.strip().lower() for scope in scopes))",
+      "imports": "from policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE",
+      "start": 3,
+      "end": 4,
+      "refs": [
+        "scope",
+        "scopes",
+        "set",
+        "sorted"
+      ],
+      "deps": [],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::session_valid": {
+      "id": "memory://symbol/rules.py::session_valid",
+      "path": "rules.py",
+      "name": "session_valid",
+      "source": "def session_valid(created_at, now, revoked):\n    return not revoked and 0 <= now - created_at < MAX_SESSION_AGE",
+      "imports": "from policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "MAX_SESSION_AGE",
+        "created_at",
+        "now",
+        "revoked"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::MAX_SESSION_AGE"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::required_scope": {
+      "id": "memory://symbol/rules.py::required_scope",
+      "path": "rules.py",
+      "name": "required_scope",
+      "source": "def required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")",
+      "imports": "from policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "READ_ACTION",
+        "READ_SCOPE",
+        "WRITE_ACTION",
+        "WRITE_SCOPE",
+        "action"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::READ_ACTION",
+        "memory://symbol/policy.py::READ_SCOPE",
+        "memory://symbol/policy.py::WRITE_ACTION",
+        "memory://symbol/policy.py::WRITE_SCOPE"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::role_allows": {
+      "id": "memory://symbol/rules.py::role_allows",
+      "path": "rules.py",
+      "name": "role_allows",
+      "source": "def role_allows(role, owner, user):\n    return role == ADMIN_ROLE or owner == user",
+      "imports": "from policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE",
+      "start": 12,
+      "end": 13,
+      "refs": [
+        "ADMIN_ROLE",
+        "owner",
+        "role",
+        "user"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::ADMIN_ROLE"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::scope_allows": {
+      "id": "memory://symbol/rules.py::scope_allows",
+      "path": "rules.py",
+      "name": "scope_allows",
+      "source": "def scope_allows(scopes, action):\n    required = required_scope(action)\n    return bool(required) and required in normalized_scopes(scopes)",
+      "imports": "from policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE",
+      "start": 15,
+      "end": 17,
+      "refs": [
+        "action",
+        "bool",
+        "normalized_scopes",
+        "required",
+        "required_scope",
+        "scopes"
+      ],
+      "deps": [
+        "memory://symbol/rules.py::normalized_scopes",
+        "memory://symbol/rules.py::required_scope"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::authorize": {
+      "id": "memory://symbol/service.py::authorize",
+      "path": "service.py",
+      "name": "authorize",
+      "source": "def authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}",
+      "imports": "from policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows",
+      "start": 4,
+      "end": 8,
+      "refs": [
+        "ALLOW_REASON",
+        "DENY_REASON",
+        "action",
+        "created_at",
+        "granted",
+        "now",
+        "owner",
+        "revoked",
+        "role",
+        "role_allows",
+        "scope_allows",
+        "scopes",
+        "session_valid",
+        "user"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::ALLOW_REASON",
+        "memory://symbol/policy.py::DENY_REASON",
+        "memory://symbol/rules.py::role_allows",
+        "memory://symbol/rules.py::scope_allows",
+        "memory://symbol/rules.py::session_valid"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::can_edit_own": {
+      "id": "memory://symbol/service.py::can_edit_own",
+      "path": "service.py",
+      "name": "can_edit_own",
+      "source": "def can_edit_own(user, scopes, created_at, now):\n    return authorize(user, user, \"member\", scopes, \"write\", created_at, now, False)[\"allowed\"]",
+      "imports": "from policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows",
+      "start": 10,
+      "end": 11,
+      "refs": [
+        "authorize",
+        "created_at",
+        "now",
+        "scopes",
+        "user"
+      ],
+      "deps": [
+        "memory://symbol/service.py::authorize"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::user_key": {
+      "id": "memory://symbol/service.py::user_key",
+      "path": "service.py",
+      "name": "user_key",
+      "source": "def user_key(user):\n    return \"account:\" + user.strip().lower()",
+      "imports": "from policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows",
+      "start": 13,
+      "end": 14,
+      "refs": [
+        "user"
+      ],
+      "deps": [],
+      "kind": "function"
+    }
+  },
+  "raw": [
+    {
+      "id": "memory://symbol/audit.py::AUDIT_VERSION",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::MAX_RECENT_EVENTS lines 2-2\n\nMAX_RECENT_EVENTS = 20",
+      "source_uris": [
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::REDACTION_MARKER",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::REDACTION_MARKER lines 3-3\n\nREDACTION_MARKER = \"***\"",
+      "source_uris": [
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::DEFAULT_ACTOR lines 4-4\n\nDEFAULT_ACTOR = \"system\"",
+      "source_uris": [
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::audit_key",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::audit_key lines 6-7\n\ndef audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action\n\n### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::audit_key",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::audit_key lines 6-7\n\ndef audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::recent_events",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::recent_events lines 9-10\n\ndef recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]\n\n### memory://symbol/audit.py::MAX_RECENT_EVENTS lines 2-2\n\nMAX_RECENT_EVENTS = 20",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::recent_events",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::recent_events lines 9-10\n\ndef recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::redact_identifier",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::redact_identifier lines 12-13\n\ndef redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]\n\n### memory://symbol/audit.py::REDACTION_MARKER lines 3-3\n\nREDACTION_MARKER = \"***\"",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::redact_identifier",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::redact_identifier lines 12-13\n\ndef redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::event_record",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::event_record lines 15-16\n\ndef event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}\n\n### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2\n\n### memory://symbol/audit.py::DEFAULT_ACTOR lines 4-4\n\nDEFAULT_ACTOR = \"system\"",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::event_record",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::event_record lines 15-16\n\ndef event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/policy.py::ADMIN_ROLE",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::ADMIN_ROLE lines 1-1\n\nADMIN_ROLE = \"admin\"",
+      "source_uris": [
+        "memory://symbol/policy.py::ADMIN_ROLE"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::READ_ACTION",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::READ_ACTION lines 2-2\n\nREAD_ACTION = \"read\"",
+      "source_uris": [
+        "memory://symbol/policy.py::READ_ACTION"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::WRITE_ACTION",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::WRITE_ACTION lines 3-3\n\nWRITE_ACTION = \"write\"",
+      "source_uris": [
+        "memory://symbol/policy.py::WRITE_ACTION"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::WRITE_SCOPE",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::WRITE_SCOPE lines 4-4\n\nWRITE_SCOPE = \"document:write\"",
+      "source_uris": [
+        "memory://symbol/policy.py::WRITE_SCOPE"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::READ_SCOPE",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::READ_SCOPE lines 5-5\n\nREAD_SCOPE = \"document:read\"",
+      "source_uris": [
+        "memory://symbol/policy.py::READ_SCOPE"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::MAX_SESSION_AGE",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::MAX_SESSION_AGE lines 6-6\n\nMAX_SESSION_AGE = 3600",
+      "source_uris": [
+        "memory://symbol/policy.py::MAX_SESSION_AGE"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::ALLOW_REASON",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::ALLOW_REASON lines 7-7\n\nALLOW_REASON = \"allowed\"",
+      "source_uris": [
+        "memory://symbol/policy.py::ALLOW_REASON"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::DENY_REASON",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::DENY_REASON lines 8-8\n\nDENY_REASON = \"denied\"",
+      "source_uris": [
+        "memory://symbol/policy.py::DENY_REASON"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"document\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::DISPLAY_WIDTH lines 2-2\n\nDISPLAY_WIDTH = 12",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::UNKNOWN_LABEL lines 3-3\n\nUNKNOWN_LABEL = \"unknown\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::MAX_LABEL_LENGTH lines 4-4\n\nMAX_LABEL_LENGTH = 48",
+      "source_uris": [
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::normalize_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::normalize_label lines 6-7\n\ndef normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]\n\n### memory://symbol/presentation.py::MAX_LABEL_LENGTH lines 4-4\n\nMAX_LABEL_LENGTH = 48",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::normalize_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::normalize_label lines 6-7\n\ndef normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::display_reference",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::display_reference lines 9-10\n\ndef display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"document\"\n\n### memory://symbol/presentation.py::DISPLAY_WIDTH lines 2-2\n\nDISPLAY_WIDTH = 12",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::display_reference",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::display_reference lines 9-10\n\ndef display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::status_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::status_label lines 12-13\n\ndef status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)\n\n### memory://symbol/presentation.py::UNKNOWN_LABEL lines 3-3\n\nUNKNOWN_LABEL = \"unknown\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::status_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::status_label lines 12-13\n\ndef status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::summarize_count",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::summarize_count lines 15-16\n\ndef summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"document\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::summarize_count",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::summarize_count lines 15-16\n\ndef summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::normalized_scopes",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::normalized_scopes lines 3-4\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef normalized_scopes(scopes):\n    return sorted(set(scope.strip().lower() for scope in scopes))",
+      "source_uris": [
+        "memory://symbol/rules.py::normalized_scopes"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "memory://symbol/rules.py::session_valid",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::session_valid lines 6-7\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef session_valid(created_at, now, revoked):\n    return not revoked and 0 <= now - created_at < MAX_SESSION_AGE\n\n### memory://symbol/policy.py::MAX_SESSION_AGE lines 6-6\n\nMAX_SESSION_AGE = 3600",
+      "source_uris": [
+        "memory://symbol/rules.py::session_valid",
+        "memory://symbol/policy.py::MAX_SESSION_AGE"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::session_valid",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::session_valid lines 6-7\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef session_valid(created_at, now, revoked):\n    return not revoked and 0 <= now - created_at < MAX_SESSION_AGE",
+      "source_uris": [
+        "memory://symbol/rules.py::session_valid"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::required_scope",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::required_scope lines 9-10\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")\n\n### memory://symbol/policy.py::READ_ACTION lines 2-2\n\nREAD_ACTION = \"read\"\n\n### memory://symbol/policy.py::READ_SCOPE lines 5-5\n\nREAD_SCOPE = \"document:read\"\n\n### memory://symbol/policy.py::WRITE_ACTION lines 3-3\n\nWRITE_ACTION = \"write\"\n\n### memory://symbol/policy.py::WRITE_SCOPE lines 4-4\n\nWRITE_SCOPE = \"document:write\"",
+      "source_uris": [
+        "memory://symbol/rules.py::required_scope",
+        "memory://symbol/policy.py::READ_ACTION",
+        "memory://symbol/policy.py::READ_SCOPE",
+        "memory://symbol/policy.py::WRITE_ACTION",
+        "memory://symbol/policy.py::WRITE_SCOPE"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::required_scope",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::required_scope lines 9-10\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")",
+      "source_uris": [
+        "memory://symbol/rules.py::required_scope"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::role_allows",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::role_allows lines 12-13\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef role_allows(role, owner, user):\n    return role == ADMIN_ROLE or owner == user\n\n### memory://symbol/policy.py::ADMIN_ROLE lines 1-1\n\nADMIN_ROLE = \"admin\"",
+      "source_uris": [
+        "memory://symbol/rules.py::role_allows",
+        "memory://symbol/policy.py::ADMIN_ROLE"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::role_allows",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::role_allows lines 12-13\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef role_allows(role, owner, user):\n    return role == ADMIN_ROLE or owner == user",
+      "source_uris": [
+        "memory://symbol/rules.py::role_allows"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::scope_allows",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::scope_allows lines 15-17\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef scope_allows(scopes, action):\n    required = required_scope(action)\n    return bool(required) and required in normalized_scopes(scopes)\n\n### memory://symbol/rules.py::normalized_scopes lines 3-4\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef normalized_scopes(scopes):\n    return sorted(set(scope.strip().lower() for scope in scopes))\n\n### memory://symbol/rules.py::required_scope lines 9-10\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")\n\n### memory://symbol/policy.py::READ_ACTION lines 2-2\n\nREAD_ACTION = \"read\"\n\n### memory://symbol/policy.py::READ_SCOPE lines 5-5\n\nREAD_SCOPE = \"document:read\"\n\n### memory://symbol/policy.py::WRITE_ACTION lines 3-3\n\nWRITE_ACTION = \"write\"\n\n### memory://symbol/policy.py::WRITE_SCOPE lines 4-4\n\nWRITE_SCOPE = \"document:write\"",
+      "source_uris": [
+        "memory://symbol/rules.py::scope_allows",
+        "memory://symbol/rules.py::normalized_scopes",
+        "memory://symbol/rules.py::required_scope",
+        "memory://symbol/policy.py::READ_ACTION",
+        "memory://symbol/policy.py::READ_SCOPE",
+        "memory://symbol/policy.py::WRITE_ACTION",
+        "memory://symbol/policy.py::WRITE_SCOPE"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::scope_allows",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::scope_allows lines 15-17\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef scope_allows(scopes, action):\n    required = required_scope(action)\n    return bool(required) and required in normalized_scopes(scopes)",
+      "source_uris": [
+        "memory://symbol/rules.py::scope_allows"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::authorize",
+      "level": 0,
+      "text": "### memory://symbol/service.py::authorize lines 4-8\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}\n\n### memory://symbol/policy.py::ALLOW_REASON lines 7-7\n\nALLOW_REASON = \"allowed\"\n\n### memory://symbol/policy.py::DENY_REASON lines 8-8\n\nDENY_REASON = \"denied\"\n\n### memory://symbol/rules.py::role_allows lines 12-13\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef role_allows(role, owner, user):\n    return role == ADMIN_ROLE or owner == user\n\n### memory://symbol/rules.py::scope_allows lines 15-17\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef scope_allows(scopes, action):\n    required = required_scope(action)\n    return bool(required) and required in normalized_scopes(scopes)\n\n### memory://symbol/rules.py::session_valid lines 6-7\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef session_valid(created_at, now, revoked):\n    return not revoked and 0 <= now - created_at < MAX_SESSION_AGE\n\n### memory://symbol/policy.py::ADMIN_ROLE lines 1-1\n\nADMIN_ROLE = \"admin\"\n\n### memory://symbol/rules.py::normalized_scopes lines 3-4\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef normalized_scopes(scopes):\n    return sorted(set(scope.strip().lower() for scope in scopes))\n\n### memory://symbol/rules.py::required_scope lines 9-10\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")\n\n### memory://symbol/policy.py::MAX_SESSION_AGE lines 6-6\n\nMAX_SESSION_AGE = 3600\n\n### memory://symbol/policy.py::READ_ACTION lines 2-2\n\nREAD_ACTION = \"read\"\n\n### memory://symbol/policy.py::READ_SCOPE lines 5-5\n\nREAD_SCOPE = \"document:read\"\n\n### memory://symbol/policy.py::WRITE_ACTION lines 3-3\n\nWRITE_ACTION = \"write\"\n\n### memory://symbol/policy.py::WRITE_SCOPE lines 4-4\n\nWRITE_SCOPE = \"document:write\"",
+      "source_uris": [
+        "memory://symbol/service.py::authorize",
+        "memory://symbol/policy.py::ALLOW_REASON",
+        "memory://symbol/policy.py::DENY_REASON",
+        "memory://symbol/rules.py::role_allows",
+        "memory://symbol/rules.py::scope_allows",
+        "memory://symbol/rules.py::session_valid",
+        "memory://symbol/policy.py::ADMIN_ROLE",
+        "memory://symbol/rules.py::normalized_scopes",
+        "memory://symbol/rules.py::required_scope",
+        "memory://symbol/policy.py::MAX_SESSION_AGE",
+        "memory://symbol/policy.py::READ_ACTION",
+        "memory://symbol/policy.py::READ_SCOPE",
+        "memory://symbol/policy.py::WRITE_ACTION",
+        "memory://symbol/policy.py::WRITE_SCOPE"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::authorize",
+      "level": 0,
+      "text": "### memory://symbol/service.py::authorize lines 4-8\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}",
+      "source_uris": [
+        "memory://symbol/service.py::authorize"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::can_edit_own",
+      "level": 0,
+      "text": "### memory://symbol/service.py::can_edit_own lines 10-11\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef can_edit_own(user, scopes, created_at, now):\n    return authorize(user, user, \"member\", scopes, \"write\", created_at, now, False)[\"allowed\"]\n\n### memory://symbol/service.py::authorize lines 4-8\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}\n\n### memory://symbol/policy.py::ALLOW_REASON lines 7-7\n\nALLOW_REASON = \"allowed\"\n\n### memory://symbol/policy.py::DENY_REASON lines 8-8\n\nDENY_REASON = \"denied\"\n\n### memory://symbol/rules.py::role_allows lines 12-13\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef role_allows(role, owner, user):\n    return role == ADMIN_ROLE or owner == user\n\n### memory://symbol/rules.py::scope_allows lines 15-17\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef scope_allows(scopes, action):\n    required = required_scope(action)\n    return bool(required) and required in normalized_scopes(scopes)\n\n### memory://symbol/rules.py::session_valid lines 6-7\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef session_valid(created_at, now, revoked):\n    return not revoked and 0 <= now - created_at < MAX_SESSION_AGE\n\n### memory://symbol/policy.py::ADMIN_ROLE lines 1-1\n\nADMIN_ROLE = \"admin\"\n\n### memory://symbol/rules.py::normalized_scopes lines 3-4\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef normalized_scopes(scopes):\n    return sorted(set(scope.strip().lower() for scope in scopes))\n\n### memory://symbol/rules.py::required_scope lines 9-10\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")\n\n### memory://symbol/policy.py::MAX_SESSION_AGE lines 6-6\n\nMAX_SESSION_AGE = 3600",
+      "source_uris": [
+        "memory://symbol/service.py::can_edit_own",
+        "memory://symbol/service.py::authorize",
+        "memory://symbol/policy.py::ALLOW_REASON",
+        "memory://symbol/policy.py::DENY_REASON",
+        "memory://symbol/rules.py::role_allows",
+        "memory://symbol/rules.py::scope_allows",
+        "memory://symbol/rules.py::session_valid",
+        "memory://symbol/policy.py::ADMIN_ROLE",
+        "memory://symbol/rules.py::normalized_scopes",
+        "memory://symbol/rules.py::required_scope",
+        "memory://symbol/policy.py::MAX_SESSION_AGE"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::can_edit_own",
+      "level": 0,
+      "text": "### memory://symbol/service.py::can_edit_own lines 10-11\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef can_edit_own(user, scopes, created_at, now):\n    return authorize(user, user, \"member\", scopes, \"write\", created_at, now, False)[\"allowed\"]",
+      "source_uris": [
+        "memory://symbol/service.py::can_edit_own"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::user_key",
+      "level": 0,
+      "text": "### memory://symbol/service.py::user_key lines 13-14\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef user_key(user):\n    return \"account:\" + user.strip().lower()",
+      "source_uris": [
+        "memory://symbol/service.py::user_key"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    }
+  ],
+  "summaries": [
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::audit_key",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::audit_key\nThe `audit_key` function constructs a string key for auditing purposes. It takes two parameters: `actor` and `action`. The function returns a string formatted as `AUDIT_VERSION:actor:action`, where `actor` is stripped of leading and trailing whitespace and converted to lowercase. The constant `AUDIT_VERSION` is set to 2.",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "children": [
+        "memory://symbol/audit.py::audit_key"
+      ],
+      "call_id": "8b73e65e54737a34"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::recent_events",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::recent_events\nThe `recent_events` function takes a list of events and returns the last `MAX_RECENT_EVENTS` elements. It uses the constant `MAX_RECENT_EVENTS` which is set to 20. The function does not perform any string operations or calls other functions.",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "children": [
+        "memory://symbol/audit.py::recent_events"
+      ],
+      "call_id": "e011f82d499de87d"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::redact_identifier",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::redact_identifier\nThe `redact_identifier` function takes an `identifier` as input and returns a string where the last four characters of the `identifier` are preserved, prefixed by the `REDACTION_MARKER` \"***\". The function uses the `str` function to convert the `identifier` to a string and then slices the last four characters. The `REDACTION_MARKER` is a constant defined as \"***\".",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "children": [
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "call_id": "41990a2593d9aa13"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::event_record",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::event_record\nThe `event_record` function in `audit.py` creates a dictionary representing an audit event. It takes two parameters: `action` (required) and `actor` (optional, defaults to \"system\"). The function returns a dictionary with keys \"actor\", \"action\", and \"version\". The \"actor\" key uses the provided `actor` value if it exists, otherwise it uses the constant `DEFAULT_ACTOR`. The \"version\" key always uses the constant `AUDIT_VERSION`, which is set to 2.",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "children": [
+        "memory://symbol/audit.py::event_record"
+      ],
+      "call_id": "5d59cc0c5f29de77"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::normalize_label",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::normalize_label\nThe `normalize_label` function in `presentation.py` processes a label string by stripping leading and trailing whitespace, converting it to lowercase, replacing spaces with hyphens, and truncating it to a maximum length of 48 characters.",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::normalize_label"
+      ],
+      "call_id": "832406c8b2c0a29f"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::display_reference",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::display_reference\nThe `display_reference` function formats a reference number by prefixing it with \"document:\" and padding it with zeros to a width of 12 characters. It uses constants `DISPLAY_PREFIX` and `DISPLAY_WIDTH` for the prefix and width, respectively.",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::display_reference"
+      ],
+      "call_id": "6c5c954438f6a126"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::status_label",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::status_label\nThe `status_label` function maps an integer code to a corresponding status label. It uses a dictionary to look up the label based on the code. If the code is not found, it returns the `UNKNOWN_LABEL`. The `UNKNOWN_LABEL` is defined as \"unknown\".",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::status_label"
+      ],
+      "call_id": "91d416526f20c735"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::summarize_count\nThe `summarize_count` function takes a list of values as input and returns a dictionary with a key \"domain\" set to the constant `DISPLAY_PREFIX` (which is \"document\") and a key \"count\" set to the length of the input list.",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "call_id": "93465adb502259fd"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::normalized_scopes",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::normalized_scopes\nThe `normalized_scopes` function in `rules.py` takes a list of scopes as input. It strips any leading or trailing whitespace from each scope, converts them to lowercase, removes duplicates by converting the list to a set, and then sorts the resulting set. The function returns the sorted list of normalized scopes.",
+      "source_uris": [
+        "memory://symbol/rules.py::normalized_scopes"
+      ],
+      "children": [
+        "memory://symbol/rules.py::normalized_scopes"
+      ],
+      "call_id": "c6bdab70b0d16d6d"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::session_valid",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::session_valid\nThe `session_valid` function checks if a session is valid based on its creation time, the current time, and whether it has been revoked. It returns `True` if the session is not revoked and its age is within the `MAX_SESSION_AGE` limit (3600 seconds). The function uses constants from the `policy` module, including `MAX_SESSION_AGE`.",
+      "source_uris": [
+        "memory://symbol/rules.py::session_valid",
+        "memory://symbol/policy.py::MAX_SESSION_AGE"
+      ],
+      "children": [
+        "memory://symbol/rules.py::session_valid"
+      ],
+      "call_id": "5258697d93ad388a"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::required_scope",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::required_scope\nThe `required_scope` function in `rules.py` determines the required scope for a given action based on predefined constants from `policy.py`. It returns the scope for `READ_ACTION` as `\"document:read\"` and for `WRITE_ACTION` as `\"document:write\"`. For any other action, it returns an empty string.",
+      "source_uris": [
+        "memory://symbol/rules.py::required_scope",
+        "memory://symbol/policy.py::READ_ACTION",
+        "memory://symbol/policy.py::READ_SCOPE",
+        "memory://symbol/policy.py::WRITE_ACTION",
+        "memory://symbol/policy.py::WRITE_SCOPE"
+      ],
+      "children": [
+        "memory://symbol/rules.py::required_scope"
+      ],
+      "call_id": "972cfb2bde02ef08"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::role_allows",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::role_allows\nThe `role_allows` function checks if a user has permission based on their role and ownership. It returns `True` if the user is an admin or if the user is the owner of the resource. The function takes three parameters: `role`, `owner`, and `user`. It uses a constant `ADMIN_ROLE` defined in the `policy.py` module. No string operations or external calls are made.",
+      "source_uris": [
+        "memory://symbol/rules.py::role_allows",
+        "memory://symbol/policy.py::ADMIN_ROLE"
+      ],
+      "children": [
+        "memory://symbol/rules.py::role_allows"
+      ],
+      "call_id": "226265051ae55e99"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::scope_allows",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::scope_allows\nThe `scope_allows` function checks if a given action is allowed based on the provided scopes. It uses helper functions `required_scope` and `normalized_scopes`. The `required_scope` function maps actions to their corresponding required scopes. The `normalized_scopes` function normalizes the input scopes by removing duplicates and converting them to lowercase. The `scope_allows` function returns `True` if the required scope for the action is present in the normalized scopes.",
+      "source_uris": [
+        "memory://symbol/rules.py::scope_allows",
+        "memory://symbol/rules.py::normalized_scopes",
+        "memory://symbol/rules.py::required_scope",
+        "memory://symbol/policy.py::READ_ACTION",
+        "memory://symbol/policy.py::READ_SCOPE",
+        "memory://symbol/policy.py::WRITE_ACTION",
+        "memory://symbol/policy.py::WRITE_SCOPE"
+      ],
+      "children": [
+        "memory://symbol/rules.py::scope_allows"
+      ],
+      "call_id": "3cdebef32441e982"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::authorize",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::authorize\nThe `authorize` function checks if a user is allowed to perform an action based on their role, ownership, and scope. It uses helper functions from the `rules` module to validate the session, role permissions, and scope permissions. The function returns a dictionary indicating whether the action is allowed and the reason for the decision.",
+      "source_uris": [
+        "memory://symbol/service.py::authorize",
+        "memory://symbol/policy.py::ALLOW_REASON",
+        "memory://symbol/policy.py::DENY_REASON",
+        "memory://symbol/rules.py::role_allows",
+        "memory://symbol/rules.py::scope_allows",
+        "memory://symbol/rules.py::session_valid",
+        "memory://symbol/policy.py::ADMIN_ROLE",
+        "memory://symbol/rules.py::normalized_scopes",
+        "memory://symbol/rules.py::required_scope",
+        "memory://symbol/policy.py::MAX_SESSION_AGE",
+        "memory://symbol/policy.py::READ_ACTION",
+        "memory://symbol/policy.py::READ_SCOPE",
+        "memory://symbol/policy.py::WRITE_ACTION",
+        "memory://symbol/policy.py::WRITE_SCOPE"
+      ],
+      "children": [
+        "memory://symbol/service.py::authorize"
+      ],
+      "call_id": "434d347b212610ae"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::can_edit_own",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::can_edit_own\nThe `can_edit_own` function checks if a user can edit their own content. It calls `authorize` with the user as both the owner and the requester, the role \"member\", and the action \"write\". The `authorize` function validates the session, checks if the user has the required role or is the owner, and if the action is allowed by the scope. It returns a dictionary with `allowed` and `reason` keys. Constants include `ALLOW_REASON`, `DENY_REASON`, `ADMIN_ROLE`, `READ_ACTION`, `WRITE_ACTION`, `WRITE_SCOPE`, `READ_SCOPE`, and `MAX_SESSION_AGE`.",
+      "source_uris": [
+        "memory://symbol/service.py::can_edit_own",
+        "memory://symbol/service.py::authorize",
+        "memory://symbol/policy.py::ALLOW_REASON",
+        "memory://symbol/policy.py::DENY_REASON",
+        "memory://symbol/rules.py::role_allows",
+        "memory://symbol/rules.py::scope_allows",
+        "memory://symbol/rules.py::session_valid",
+        "memory://symbol/policy.py::ADMIN_ROLE",
+        "memory://symbol/rules.py::normalized_scopes",
+        "memory://symbol/rules.py::required_scope",
+        "memory://symbol/policy.py::MAX_SESSION_AGE"
+      ],
+      "children": [
+        "memory://symbol/service.py::can_edit_own"
+      ],
+      "call_id": "068247bb72289a8f"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::user_key",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::user_key\nThe `user_key` function takes a `user` string, strips any leading/trailing whitespace, converts it to lowercase, and prepends \"account:\" to form a unique key. It uses no external dependencies or formulas.",
+      "source_uris": [
+        "memory://symbol/service.py::user_key"
+      ],
+      "children": [
+        "memory://symbol/service.py::user_key"
+      ],
+      "call_id": "140a5af5ff199df2"
+    },
+    {
+      "id": "summary:level2:audit.py",
+      "level": 2,
+      "path": "audit.py",
+      "text": "### summary:level2:audit.py\nThe `audit.py` module contains functions for constructing audit keys, managing recent events, redacting identifiers, and recording events. The `audit_key` function creates a string key for auditing, `recent_events` returns the last 20 events from a list, `redact_identifier` masks all but the last four characters of an identifier, and `event_record` creates a dictionary representing an audit event with a specified action and optional actor. Constants like `AUDIT_VERSION`, `MAX_RECENT_EVENTS`, and `REDACTION_MARKER` are used to maintain consistency and control the behavior of these functions.",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "memory://symbol/audit.py::REDACTION_MARKER",
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/audit.py::audit_key",
+        "summary:leaf:memory://symbol/audit.py::recent_events",
+        "summary:leaf:memory://symbol/audit.py::redact_identifier",
+        "summary:leaf:memory://symbol/audit.py::event_record"
+      ],
+      "call_id": "ce59bdb5ec2062b9"
+    },
+    {
+      "id": "summary:level2:presentation.py",
+      "level": 2,
+      "path": "presentation.py",
+      "text": "### summary:level2:presentation.py\nThe `presentation.py` module contains functions for processing and formatting strings and data. The `normalize_label` function cleans and standardizes label strings. The `display_reference` function formats reference numbers with a prefix and padding. The `status_label` function maps integer codes to status labels, using a dictionary and a default value. The `summarize_count` function aggregates a list into a dictionary with a domain and count.",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/presentation.py::normalize_label",
+        "summary:leaf:memory://symbol/presentation.py::display_reference",
+        "summary:leaf:memory://symbol/presentation.py::status_label",
+        "summary:leaf:memory://symbol/presentation.py::summarize_count"
+      ],
+      "call_id": "f247248e6e4827d0"
+    },
+    {
+      "id": "summary:level2:rules.py",
+      "level": 2,
+      "path": "rules.py",
+      "text": "### summary:level2:rules.py\nThe `rules.py` module contains several functions to validate user permissions and session validity. The `normalized_scopes` function normalizes a list of scopes by removing duplicates and sorting them. The `session_valid` function checks if a session is valid based on its creation time and whether it has been revoked. The `required_scope` function determines the required scope for a given action. The `role_allows` function checks if a user has permission based on their role and ownership. The `scope_allows` function checks if a given action is allowed based on the provided scopes.",
+      "source_uris": [
+        "memory://symbol/policy.py::ADMIN_ROLE",
+        "memory://symbol/policy.py::MAX_SESSION_AGE",
+        "memory://symbol/policy.py::READ_ACTION",
+        "memory://symbol/policy.py::READ_SCOPE",
+        "memory://symbol/policy.py::WRITE_ACTION",
+        "memory://symbol/policy.py::WRITE_SCOPE",
+        "memory://symbol/rules.py::normalized_scopes",
+        "memory://symbol/rules.py::required_scope",
+        "memory://symbol/rules.py::role_allows",
+        "memory://symbol/rules.py::scope_allows",
+        "memory://symbol/rules.py::session_valid"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/rules.py::normalized_scopes",
+        "summary:leaf:memory://symbol/rules.py::session_valid",
+        "summary:leaf:memory://symbol/rules.py::required_scope",
+        "summary:leaf:memory://symbol/rules.py::role_allows",
+        "summary:leaf:memory://symbol/rules.py::scope_allows"
+      ],
+      "call_id": "208b1b9dd958be66"
+    },
+    {
+      "id": "summary:level2:service.py",
+      "level": 2,
+      "path": "service.py",
+      "text": "### summary:level2:service.py\nThe `service.py` module contains functions to manage user authorization and permissions. The `authorize` function checks if a user is allowed to perform an action based on their role, ownership, and scope. The `can_edit_own` function specifically checks if a user can edit their own content by calling `authorize` with the appropriate parameters. Constants like `ALLOW_REASON`, `DENY_REASON`, `ADMIN_ROLE`, and `WRITE_ACTION` are used to define the outcomes and conditions. The `user_key` function generates a unique key for a user by formatting their name.",
+      "source_uris": [
+        "memory://symbol/policy.py::ADMIN_ROLE",
+        "memory://symbol/policy.py::ALLOW_REASON",
+        "memory://symbol/policy.py::DENY_REASON",
+        "memory://symbol/policy.py::MAX_SESSION_AGE",
+        "memory://symbol/policy.py::READ_ACTION",
+        "memory://symbol/policy.py::READ_SCOPE",
+        "memory://symbol/policy.py::WRITE_ACTION",
+        "memory://symbol/policy.py::WRITE_SCOPE",
+        "memory://symbol/rules.py::normalized_scopes",
+        "memory://symbol/rules.py::required_scope",
+        "memory://symbol/rules.py::role_allows",
+        "memory://symbol/rules.py::scope_allows",
+        "memory://symbol/rules.py::session_valid",
+        "memory://symbol/service.py::authorize",
+        "memory://symbol/service.py::can_edit_own",
+        "memory://symbol/service.py::user_key"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/service.py::authorize",
+        "summary:leaf:memory://symbol/service.py::can_edit_own",
+        "summary:leaf:memory://symbol/service.py::user_key"
+      ],
+      "call_id": "c31bacdb5b0dd80f"
+    },
+    {
+      "id": "summary:level3:project",
+      "level": 3,
+      "path": "project",
+      "text": "### summary:level3:project\nThe `audit.py` module handles audit-related tasks such as creating keys, managing recent events, redacting identifiers, and recording events. The `presentation.py` module processes and formats strings and data, including normalizing labels, displaying references, mapping status codes, and summarizing counts. The `rules.py` module validates user permissions and session validity, normalizing scopes, checking session validity, determining required scopes, and verifying role-based permissions. The `service.py` module manages user authorization, checking if users can perform actions based on their roles, ownership, and scopes, and includes constants for authorization outcomes and conditions.",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "memory://symbol/audit.py::REDACTION_MARKER",
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/policy.py::ADMIN_ROLE",
+        "memory://symbol/policy.py::ALLOW_REASON",
+        "memory://symbol/policy.py::DENY_REASON",
+        "memory://symbol/policy.py::MAX_SESSION_AGE",
+        "memory://symbol/policy.py::READ_ACTION",
+        "memory://symbol/policy.py::READ_SCOPE",
+        "memory://symbol/policy.py::WRITE_ACTION",
+        "memory://symbol/policy.py::WRITE_SCOPE",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/rules.py::normalized_scopes",
+        "memory://symbol/rules.py::required_scope",
+        "memory://symbol/rules.py::role_allows",
+        "memory://symbol/rules.py::scope_allows",
+        "memory://symbol/rules.py::session_valid",
+        "memory://symbol/service.py::authorize",
+        "memory://symbol/service.py::can_edit_own",
+        "memory://symbol/service.py::user_key"
+      ],
+      "children": [
+        "summary:level2:audit.py",
+        "summary:level2:presentation.py",
+        "summary:level2:rules.py",
+        "summary:level2:service.py"
+      ],
+      "call_id": "7bf8110a32edcd69"
+    }
+  ],
+  "index": {
+    "version": 1,
+    "root": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/dataset/projects/eval_authorization",
+    "files": [
+      {
+        "path": "audit.py",
+        "symbols": [
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "audit_key",
+            "qualname": "audit_key",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/audit.py::audit_key"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "recent_events",
+            "qualname": "recent_events",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/audit.py::recent_events"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "redact_identifier",
+            "qualname": "redact_identifier",
+            "start_line": 12,
+            "end_line": 13,
+            "uri": "memory://symbol/audit.py::redact_identifier"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "event_record",
+            "qualname": "event_record",
+            "start_line": 15,
+            "end_line": 16,
+            "uri": "memory://symbol/audit.py::event_record"
+          }
+        ]
+      },
+      {
+        "path": "policy.py",
+        "symbols": []
+      },
+      {
+        "path": "presentation.py",
+        "symbols": [
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "normalize_label",
+            "qualname": "normalize_label",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/presentation.py::normalize_label"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "display_reference",
+            "qualname": "display_reference",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/presentation.py::display_reference"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "status_label",
+            "qualname": "status_label",
+            "start_line": 12,
+            "end_line": 13,
+            "uri": "memory://symbol/presentation.py::status_label"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "summarize_count",
+            "qualname": "summarize_count",
+            "start_line": 15,
+            "end_line": 16,
+            "uri": "memory://symbol/presentation.py::summarize_count"
+          }
+        ]
+      },
+      {
+        "path": "rules.py",
+        "symbols": [
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "normalized_scopes",
+            "qualname": "normalized_scopes",
+            "start_line": 3,
+            "end_line": 4,
+            "uri": "memory://symbol/rules.py::normalized_scopes"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "session_valid",
+            "qualname": "session_valid",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/rules.py::session_valid"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "required_scope",
+            "qualname": "required_scope",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/rules.py::required_scope"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "role_allows",
+            "qualname": "role_allows",
+            "start_line": 12,
+            "end_line": 13,
+            "uri": "memory://symbol/rules.py::role_allows"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "scope_allows",
+            "qualname": "scope_allows",
+            "start_line": 15,
+            "end_line": 17,
+            "uri": "memory://symbol/rules.py::scope_allows"
+          }
+        ]
+      },
+      {
+        "path": "service.py",
+        "symbols": [
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "authorize",
+            "qualname": "authorize",
+            "start_line": 4,
+            "end_line": 8,
+            "uri": "memory://symbol/service.py::authorize"
+          },
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "can_edit_own",
+            "qualname": "can_edit_own",
+            "start_line": 10,
+            "end_line": 11,
+            "uri": "memory://symbol/service.py::can_edit_own"
+          },
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "user_key",
+            "qualname": "user_key",
+            "start_line": 13,
+            "end_line": 14,
+            "uri": "memory://symbol/service.py::user_key"
+          }
+        ]
+      }
+    ],
+    "symbols": [
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "audit_key",
+        "qualname": "audit_key",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/audit.py::audit_key"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "recent_events",
+        "qualname": "recent_events",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/audit.py::recent_events"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "redact_identifier",
+        "qualname": "redact_identifier",
+        "start_line": 12,
+        "end_line": 13,
+        "uri": "memory://symbol/audit.py::redact_identifier"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "event_record",
+        "qualname": "event_record",
+        "start_line": 15,
+        "end_line": 16,
+        "uri": "memory://symbol/audit.py::event_record"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "normalize_label",
+        "qualname": "normalize_label",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/presentation.py::normalize_label"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "display_reference",
+        "qualname": "display_reference",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/presentation.py::display_reference"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "status_label",
+        "qualname": "status_label",
+        "start_line": 12,
+        "end_line": 13,
+        "uri": "memory://symbol/presentation.py::status_label"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "summarize_count",
+        "qualname": "summarize_count",
+        "start_line": 15,
+        "end_line": 16,
+        "uri": "memory://symbol/presentation.py::summarize_count"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "normalized_scopes",
+        "qualname": "normalized_scopes",
+        "start_line": 3,
+        "end_line": 4,
+        "uri": "memory://symbol/rules.py::normalized_scopes"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "session_valid",
+        "qualname": "session_valid",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/rules.py::session_valid"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "required_scope",
+        "qualname": "required_scope",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/rules.py::required_scope"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "role_allows",
+        "qualname": "role_allows",
+        "start_line": 12,
+        "end_line": 13,
+        "uri": "memory://symbol/rules.py::role_allows"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "scope_allows",
+        "qualname": "scope_allows",
+        "start_line": 15,
+        "end_line": 17,
+        "uri": "memory://symbol/rules.py::scope_allows"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "authorize",
+        "qualname": "authorize",
+        "start_line": 4,
+        "end_line": 8,
+        "uri": "memory://symbol/service.py::authorize"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "can_edit_own",
+        "qualname": "can_edit_own",
+        "start_line": 10,
+        "end_line": 11,
+        "uri": "memory://symbol/service.py::can_edit_own"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "user_key",
+        "qualname": "user_key",
+        "start_line": 13,
+        "end_line": 14,
+        "uri": "memory://symbol/service.py::user_key"
+      }
+    ]
+  },
+  "build_seconds": 95.71921345801093,
+  "build_input_tokens": 6371,
+  "build_output_tokens": 1726,
+  "build_model_seconds": 95.69863520699437,
+  "build_call_ids": [
+    "8b73e65e54737a34",
+    "e011f82d499de87d",
+    "41990a2593d9aa13",
+    "5d59cc0c5f29de77",
+    "832406c8b2c0a29f",
+    "6c5c954438f6a126",
+    "91d416526f20c735",
+    "93465adb502259fd",
+    "c6bdab70b0d16d6d",
+    "5258697d93ad388a",
+    "972cfb2bde02ef08",
+    "226265051ae55e99",
+    "3cdebef32441e982",
+    "434d347b212610ae",
+    "068247bb72289a8f",
+    "140a5af5ff199df2",
+    "ce59bdb5ec2062b9",
+    "f247248e6e4827d0",
+    "208b1b9dd958be66",
+    "c31bacdb5b0dd80f",
+    "7bf8110a32edcd69"
+  ],
+  "source_sha256": {
+    "audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+    "policy.py": "d79ab9ec78b1a6cd03d384b32a5b79b3f8eb5b5b95815d44d0d2a6064d9c295f",
+    "presentation.py": "8414911630f3200a92919ffae9bab8ba6e703e82396ddf83c5e608793d7d81e2",
+    "rules.py": "46240886758ebd522e5976fc2f5a1c102ee4a909fc3d02b51cee4a3d67c78404",
+    "service.py": "4c416c5a9bf93a2b0e91155f19d15c745626835000ab65cbf458f95c1fb09ede"
+  }
+}

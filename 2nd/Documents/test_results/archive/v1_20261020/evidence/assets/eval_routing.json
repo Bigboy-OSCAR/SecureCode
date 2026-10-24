@@ -1,0 +1,1676 @@
+{
+  "project": "eval_routing",
+  "nodes": {
+    "memory://symbol/audit.py::AUDIT_VERSION": {
+      "id": "memory://symbol/audit.py::AUDIT_VERSION",
+      "path": "audit.py",
+      "name": "AUDIT_VERSION",
+      "source": "AUDIT_VERSION = 2",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::MAX_RECENT_EVENTS": {
+      "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+      "path": "audit.py",
+      "name": "MAX_RECENT_EVENTS",
+      "source": "MAX_RECENT_EVENTS = 20",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::REDACTION_MARKER": {
+      "id": "memory://symbol/audit.py::REDACTION_MARKER",
+      "path": "audit.py",
+      "name": "REDACTION_MARKER",
+      "source": "REDACTION_MARKER = \"***\"",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::DEFAULT_ACTOR": {
+      "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+      "path": "audit.py",
+      "name": "DEFAULT_ACTOR",
+      "source": "DEFAULT_ACTOR = \"system\"",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/audit.py::audit_key": {
+      "id": "memory://symbol/audit.py::audit_key",
+      "path": "audit.py",
+      "name": "audit_key",
+      "source": "def audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+      "imports": "",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "AUDIT_VERSION",
+        "action",
+        "actor",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::recent_events": {
+      "id": "memory://symbol/audit.py::recent_events",
+      "path": "audit.py",
+      "name": "recent_events",
+      "source": "def recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+      "imports": "",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "MAX_RECENT_EVENTS",
+        "events"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::redact_identifier": {
+      "id": "memory://symbol/audit.py::redact_identifier",
+      "path": "audit.py",
+      "name": "redact_identifier",
+      "source": "def redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+      "imports": "",
+      "start": 12,
+      "end": 13,
+      "refs": [
+        "REDACTION_MARKER",
+        "identifier",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/audit.py::event_record": {
+      "id": "memory://symbol/audit.py::event_record",
+      "path": "audit.py",
+      "name": "event_record",
+      "source": "def event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+      "imports": "",
+      "start": 15,
+      "end": 16,
+      "refs": [
+        "AUDIT_VERSION",
+        "DEFAULT_ACTOR",
+        "action",
+        "actor"
+      ],
+      "deps": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/policy.py::PRIMARY_REGION": {
+      "id": "memory://symbol/policy.py::PRIMARY_REGION",
+      "path": "policy.py",
+      "name": "PRIMARY_REGION",
+      "source": "PRIMARY_REGION = \"east\"",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::SECONDARY_REGION": {
+      "id": "memory://symbol/policy.py::SECONDARY_REGION",
+      "path": "policy.py",
+      "name": "SECONDARY_REGION",
+      "source": "SECONDARY_REGION = \"west\"",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::CANARY_PERCENT": {
+      "id": "memory://symbol/policy.py::CANARY_PERCENT",
+      "path": "policy.py",
+      "name": "CANARY_PERCENT",
+      "source": "CANARY_PERCENT = 20",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::MAX_LATENCY_MS": {
+      "id": "memory://symbol/policy.py::MAX_LATENCY_MS",
+      "path": "policy.py",
+      "name": "MAX_LATENCY_MS",
+      "source": "MAX_LATENCY_MS = 150",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::DEFAULT_PATH": {
+      "id": "memory://symbol/policy.py::DEFAULT_PATH",
+      "path": "policy.py",
+      "name": "DEFAULT_PATH",
+      "source": "DEFAULT_PATH = \"/\"",
+      "imports": "",
+      "start": 5,
+      "end": 5,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::RETRY_LIMIT": {
+      "id": "memory://symbol/policy.py::RETRY_LIMIT",
+      "path": "policy.py",
+      "name": "RETRY_LIMIT",
+      "source": "RETRY_LIMIT = 2",
+      "imports": "",
+      "start": 6,
+      "end": 6,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::UNAVAILABLE": {
+      "id": "memory://symbol/policy.py::UNAVAILABLE",
+      "path": "policy.py",
+      "name": "UNAVAILABLE",
+      "source": "UNAVAILABLE = \"unavailable\"",
+      "imports": "",
+      "start": 7,
+      "end": 7,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/policy.py::CANARY_SUFFIX": {
+      "id": "memory://symbol/policy.py::CANARY_SUFFIX",
+      "path": "policy.py",
+      "name": "CANARY_SUFFIX",
+      "source": "CANARY_SUFFIX = \"-canary\"",
+      "imports": "",
+      "start": 8,
+      "end": 8,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::DISPLAY_PREFIX": {
+      "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+      "path": "presentation.py",
+      "name": "DISPLAY_PREFIX",
+      "source": "DISPLAY_PREFIX = \"service\"",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::DISPLAY_WIDTH": {
+      "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+      "path": "presentation.py",
+      "name": "DISPLAY_WIDTH",
+      "source": "DISPLAY_WIDTH = 12",
+      "imports": "",
+      "start": 2,
+      "end": 2,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::UNKNOWN_LABEL": {
+      "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+      "path": "presentation.py",
+      "name": "UNKNOWN_LABEL",
+      "source": "UNKNOWN_LABEL = \"unknown\"",
+      "imports": "",
+      "start": 3,
+      "end": 3,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::MAX_LABEL_LENGTH": {
+      "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+      "path": "presentation.py",
+      "name": "MAX_LABEL_LENGTH",
+      "source": "MAX_LABEL_LENGTH = 48",
+      "imports": "",
+      "start": 4,
+      "end": 4,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/presentation.py::normalize_label": {
+      "id": "memory://symbol/presentation.py::normalize_label",
+      "path": "presentation.py",
+      "name": "normalize_label",
+      "source": "def normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+      "imports": "",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "MAX_LABEL_LENGTH",
+        "label"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::display_reference": {
+      "id": "memory://symbol/presentation.py::display_reference",
+      "path": "presentation.py",
+      "name": "display_reference",
+      "source": "def display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+      "imports": "",
+      "start": 9,
+      "end": 10,
+      "refs": [
+        "DISPLAY_PREFIX",
+        "DISPLAY_WIDTH",
+        "reference",
+        "str"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::status_label": {
+      "id": "memory://symbol/presentation.py::status_label",
+      "path": "presentation.py",
+      "name": "status_label",
+      "source": "def status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+      "imports": "",
+      "start": 12,
+      "end": 13,
+      "refs": [
+        "UNKNOWN_LABEL",
+        "code"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/presentation.py::summarize_count": {
+      "id": "memory://symbol/presentation.py::summarize_count",
+      "path": "presentation.py",
+      "name": "summarize_count",
+      "source": "def summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+      "imports": "",
+      "start": 15,
+      "end": 16,
+      "refs": [
+        "DISPLAY_PREFIX",
+        "len",
+        "values"
+      ],
+      "deps": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::normalize_path": {
+      "id": "memory://symbol/rules.py::normalize_path",
+      "path": "rules.py",
+      "name": "normalize_path",
+      "source": "def normalize_path(path):\n    cleaned = \"/\" + path.strip().lstrip(\"/\")\n    return cleaned.rstrip(\"/\") or DEFAULT_PATH",
+      "imports": "from policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH",
+      "start": 3,
+      "end": 5,
+      "refs": [
+        "DEFAULT_PATH",
+        "cleaned",
+        "path"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::DEFAULT_PATH"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::bucket": {
+      "id": "memory://symbol/rules.py::bucket",
+      "path": "rules.py",
+      "name": "bucket",
+      "source": "def bucket(user_id):\n    return sum(ord(char) for char in user_id) % 100",
+      "imports": "from policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH",
+      "start": 7,
+      "end": 8,
+      "refs": [
+        "char",
+        "ord",
+        "sum",
+        "user_id"
+      ],
+      "deps": [],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::use_canary": {
+      "id": "memory://symbol/rules.py::use_canary",
+      "path": "rules.py",
+      "name": "use_canary",
+      "source": "def use_canary(user_id):\n    return bucket(user_id) < CANARY_PERCENT",
+      "imports": "from policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH",
+      "start": 10,
+      "end": 11,
+      "refs": [
+        "CANARY_PERCENT",
+        "bucket",
+        "user_id"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::CANARY_PERCENT",
+        "memory://symbol/rules.py::bucket"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/rules.py::healthy": {
+      "id": "memory://symbol/rules.py::healthy",
+      "path": "rules.py",
+      "name": "healthy",
+      "source": "def healthy(status):\n    return status[\"up\"] and status[\"latency_ms\"] <= MAX_LATENCY_MS",
+      "imports": "from policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH",
+      "start": 13,
+      "end": 14,
+      "refs": [
+        "MAX_LATENCY_MS",
+        "status"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::MAX_LATENCY_MS"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::route_request": {
+      "id": "memory://symbol/service.py::route_request",
+      "path": "service.py",
+      "name": "route_request",
+      "source": "def route_request(user_id, path, statuses):\n    chosen = UNAVAILABLE\n    for region in (PRIMARY_REGION, SECONDARY_REGION):\n        if healthy(statuses[region]):\n            chosen = region\n            break\n    if chosen == UNAVAILABLE:\n        return UNAVAILABLE\n    if use_canary(user_id):\n        chosen += CANARY_SUFFIX\n    return chosen + \":\" + normalize_path(path)",
+      "imports": "from policy import PRIMARY_REGION, SECONDARY_REGION, UNAVAILABLE, CANARY_SUFFIX, RETRY_LIMIT\nfrom rules import normalize_path, use_canary, healthy",
+      "start": 4,
+      "end": 14,
+      "refs": [
+        "CANARY_SUFFIX",
+        "PRIMARY_REGION",
+        "SECONDARY_REGION",
+        "UNAVAILABLE",
+        "chosen",
+        "healthy",
+        "normalize_path",
+        "path",
+        "region",
+        "statuses",
+        "use_canary",
+        "user_id"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::CANARY_SUFFIX",
+        "memory://symbol/policy.py::PRIMARY_REGION",
+        "memory://symbol/policy.py::SECONDARY_REGION",
+        "memory://symbol/policy.py::UNAVAILABLE",
+        "memory://symbol/rules.py::healthy",
+        "memory://symbol/rules.py::normalize_path",
+        "memory://symbol/rules.py::use_canary"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::retry_destination": {
+      "id": "memory://symbol/service.py::retry_destination",
+      "path": "service.py",
+      "name": "retry_destination",
+      "source": "def retry_destination(user_id, path, statuses, attempt):\n    if attempt > RETRY_LIMIT:\n        return \"exhausted\"\n    return route_request(user_id, path, statuses)",
+      "imports": "from policy import PRIMARY_REGION, SECONDARY_REGION, UNAVAILABLE, CANARY_SUFFIX, RETRY_LIMIT\nfrom rules import normalize_path, use_canary, healthy",
+      "start": 16,
+      "end": 19,
+      "refs": [
+        "RETRY_LIMIT",
+        "attempt",
+        "path",
+        "route_request",
+        "statuses",
+        "user_id"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::RETRY_LIMIT",
+        "memory://symbol/service.py::route_request"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::route_tag": {
+      "id": "memory://symbol/service.py::route_tag",
+      "path": "service.py",
+      "name": "route_tag",
+      "source": "def route_tag(region):\n    return \"route:\" + region.upper()",
+      "imports": "from policy import PRIMARY_REGION, SECONDARY_REGION, UNAVAILABLE, CANARY_SUFFIX, RETRY_LIMIT\nfrom rules import normalize_path, use_canary, healthy",
+      "start": 21,
+      "end": 22,
+      "refs": [
+        "region"
+      ],
+      "deps": [],
+      "kind": "function"
+    }
+  },
+  "raw": [
+    {
+      "id": "memory://symbol/audit.py::AUDIT_VERSION",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::MAX_RECENT_EVENTS lines 2-2\n\nMAX_RECENT_EVENTS = 20",
+      "source_uris": [
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::REDACTION_MARKER",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::REDACTION_MARKER lines 3-3\n\nREDACTION_MARKER = \"***\"",
+      "source_uris": [
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::DEFAULT_ACTOR",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::DEFAULT_ACTOR lines 4-4\n\nDEFAULT_ACTOR = \"system\"",
+      "source_uris": [
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "path": "audit.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/audit.py::audit_key",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::audit_key lines 6-7\n\ndef audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action\n\n### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::audit_key",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::audit_key lines 6-7\n\ndef audit_key(actor, action):\n    return str(AUDIT_VERSION) + \":\" + actor.strip().lower() + \":\" + action",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::recent_events",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::recent_events lines 9-10\n\ndef recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]\n\n### memory://symbol/audit.py::MAX_RECENT_EVENTS lines 2-2\n\nMAX_RECENT_EVENTS = 20",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::recent_events",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::recent_events lines 9-10\n\ndef recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::redact_identifier",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::redact_identifier lines 12-13\n\ndef redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]\n\n### memory://symbol/audit.py::REDACTION_MARKER lines 3-3\n\nREDACTION_MARKER = \"***\"",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::redact_identifier",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::redact_identifier lines 12-13\n\ndef redact_identifier(identifier):\n    return REDACTION_MARKER + str(identifier)[-4:]",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/audit.py::event_record",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::event_record lines 15-16\n\ndef event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}\n\n### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2\n\n### memory://symbol/audit.py::DEFAULT_ACTOR lines 4-4\n\nDEFAULT_ACTOR = \"system\"",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "path": "audit.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/audit.py::event_record",
+      "level": 0,
+      "text": "### memory://symbol/audit.py::event_record lines 15-16\n\ndef event_record(action, actor=None):\n    return {\"actor\": actor or DEFAULT_ACTOR, \"action\": action, \"version\": AUDIT_VERSION}",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record"
+      ],
+      "path": "audit.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/policy.py::PRIMARY_REGION",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::PRIMARY_REGION lines 1-1\n\nPRIMARY_REGION = \"east\"",
+      "source_uris": [
+        "memory://symbol/policy.py::PRIMARY_REGION"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::SECONDARY_REGION",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::SECONDARY_REGION lines 2-2\n\nSECONDARY_REGION = \"west\"",
+      "source_uris": [
+        "memory://symbol/policy.py::SECONDARY_REGION"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::CANARY_PERCENT",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::CANARY_PERCENT lines 3-3\n\nCANARY_PERCENT = 20",
+      "source_uris": [
+        "memory://symbol/policy.py::CANARY_PERCENT"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::MAX_LATENCY_MS",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::MAX_LATENCY_MS lines 4-4\n\nMAX_LATENCY_MS = 150",
+      "source_uris": [
+        "memory://symbol/policy.py::MAX_LATENCY_MS"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::DEFAULT_PATH",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::DEFAULT_PATH lines 5-5\n\nDEFAULT_PATH = \"/\"",
+      "source_uris": [
+        "memory://symbol/policy.py::DEFAULT_PATH"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::RETRY_LIMIT",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::RETRY_LIMIT lines 6-6\n\nRETRY_LIMIT = 2",
+      "source_uris": [
+        "memory://symbol/policy.py::RETRY_LIMIT"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::UNAVAILABLE",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::UNAVAILABLE lines 7-7\n\nUNAVAILABLE = \"unavailable\"",
+      "source_uris": [
+        "memory://symbol/policy.py::UNAVAILABLE"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/policy.py::CANARY_SUFFIX",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::CANARY_SUFFIX lines 8-8\n\nCANARY_SUFFIX = \"-canary\"",
+      "source_uris": [
+        "memory://symbol/policy.py::CANARY_SUFFIX"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"service\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::DISPLAY_WIDTH lines 2-2\n\nDISPLAY_WIDTH = 12",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::UNKNOWN_LABEL",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::UNKNOWN_LABEL lines 3-3\n\nUNKNOWN_LABEL = \"unknown\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::MAX_LABEL_LENGTH lines 4-4\n\nMAX_LABEL_LENGTH = 48",
+      "source_uris": [
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "path": "presentation.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/presentation.py::normalize_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::normalize_label lines 6-7\n\ndef normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]\n\n### memory://symbol/presentation.py::MAX_LABEL_LENGTH lines 4-4\n\nMAX_LABEL_LENGTH = 48",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::normalize_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::normalize_label lines 6-7\n\ndef normalize_label(label):\n    return label.strip().lower().replace(\" \", \"-\")[:MAX_LABEL_LENGTH]",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::display_reference",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::display_reference lines 9-10\n\ndef display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"service\"\n\n### memory://symbol/presentation.py::DISPLAY_WIDTH lines 2-2\n\nDISPLAY_WIDTH = 12",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::display_reference",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::display_reference lines 9-10\n\ndef display_reference(reference):\n    return DISPLAY_PREFIX + \":\" + str(reference).zfill(DISPLAY_WIDTH)",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::status_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::status_label lines 12-13\n\ndef status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)\n\n### memory://symbol/presentation.py::UNKNOWN_LABEL lines 3-3\n\nUNKNOWN_LABEL = \"unknown\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::status_label",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::status_label lines 12-13\n\ndef status_label(code):\n    return {0: \"pending\", 1: \"ready\", 2: \"closed\"}.get(code, UNKNOWN_LABEL)",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/presentation.py::summarize_count",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::summarize_count lines 15-16\n\ndef summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}\n\n### memory://symbol/presentation.py::DISPLAY_PREFIX lines 1-1\n\nDISPLAY_PREFIX = \"service\"",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "path": "presentation.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/presentation.py::summarize_count",
+      "level": 0,
+      "text": "### memory://symbol/presentation.py::summarize_count lines 15-16\n\ndef summarize_count(values):\n    return {\"domain\": DISPLAY_PREFIX, \"count\": len(values)}",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "path": "presentation.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::normalize_path",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::normalize_path lines 3-5\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef normalize_path(path):\n    cleaned = \"/\" + path.strip().lstrip(\"/\")\n    return cleaned.rstrip(\"/\") or DEFAULT_PATH\n\n### memory://symbol/policy.py::DEFAULT_PATH lines 5-5\n\nDEFAULT_PATH = \"/\"",
+      "source_uris": [
+        "memory://symbol/rules.py::normalize_path",
+        "memory://symbol/policy.py::DEFAULT_PATH"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::normalize_path",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::normalize_path lines 3-5\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef normalize_path(path):\n    cleaned = \"/\" + path.strip().lstrip(\"/\")\n    return cleaned.rstrip(\"/\") or DEFAULT_PATH",
+      "source_uris": [
+        "memory://symbol/rules.py::normalize_path"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::bucket",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::bucket lines 7-8\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef bucket(user_id):\n    return sum(ord(char) for char in user_id) % 100",
+      "source_uris": [
+        "memory://symbol/rules.py::bucket"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "memory://symbol/rules.py::use_canary",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::use_canary lines 10-11\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef use_canary(user_id):\n    return bucket(user_id) < CANARY_PERCENT\n\n### memory://symbol/policy.py::CANARY_PERCENT lines 3-3\n\nCANARY_PERCENT = 20\n\n### memory://symbol/rules.py::bucket lines 7-8\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef bucket(user_id):\n    return sum(ord(char) for char in user_id) % 100",
+      "source_uris": [
+        "memory://symbol/rules.py::use_canary",
+        "memory://symbol/policy.py::CANARY_PERCENT",
+        "memory://symbol/rules.py::bucket"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::use_canary",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::use_canary lines 10-11\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef use_canary(user_id):\n    return bucket(user_id) < CANARY_PERCENT",
+      "source_uris": [
+        "memory://symbol/rules.py::use_canary"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/rules.py::healthy",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::healthy lines 13-14\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef healthy(status):\n    return status[\"up\"] and status[\"latency_ms\"] <= MAX_LATENCY_MS\n\n### memory://symbol/policy.py::MAX_LATENCY_MS lines 4-4\n\nMAX_LATENCY_MS = 150",
+      "source_uris": [
+        "memory://symbol/rules.py::healthy",
+        "memory://symbol/policy.py::MAX_LATENCY_MS"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::healthy",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::healthy lines 13-14\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef healthy(status):\n    return status[\"up\"] and status[\"latency_ms\"] <= MAX_LATENCY_MS",
+      "source_uris": [
+        "memory://symbol/rules.py::healthy"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::route_request",
+      "level": 0,
+      "text": "### memory://symbol/service.py::route_request lines 4-14\nfrom policy import PRIMARY_REGION, SECONDARY_REGION, UNAVAILABLE, CANARY_SUFFIX, RETRY_LIMIT\nfrom rules import normalize_path, use_canary, healthy\ndef route_request(user_id, path, statuses):\n    chosen = UNAVAILABLE\n    for region in (PRIMARY_REGION, SECONDARY_REGION):\n        if healthy(statuses[region]):\n            chosen = region\n            break\n    if chosen == UNAVAILABLE:\n        return UNAVAILABLE\n    if use_canary(user_id):\n        chosen += CANARY_SUFFIX\n    return chosen + \":\" + normalize_path(path)\n\n### memory://symbol/policy.py::CANARY_SUFFIX lines 8-8\n\nCANARY_SUFFIX = \"-canary\"\n\n### memory://symbol/policy.py::PRIMARY_REGION lines 1-1\n\nPRIMARY_REGION = \"east\"\n\n### memory://symbol/policy.py::SECONDARY_REGION lines 2-2\n\nSECONDARY_REGION = \"west\"\n\n### memory://symbol/policy.py::UNAVAILABLE lines 7-7\n\nUNAVAILABLE = \"unavailable\"\n\n### memory://symbol/rules.py::healthy lines 13-14\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef healthy(status):\n    return status[\"up\"] and status[\"latency_ms\"] <= MAX_LATENCY_MS\n\n### memory://symbol/rules.py::normalize_path lines 3-5\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef normalize_path(path):\n    cleaned = \"/\" + path.strip().lstrip(\"/\")\n    return cleaned.rstrip(\"/\") or DEFAULT_PATH\n\n### memory://symbol/rules.py::use_canary lines 10-11\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef use_canary(user_id):\n    return bucket(user_id) < CANARY_PERCENT\n\n### memory://symbol/policy.py::MAX_LATENCY_MS lines 4-4\n\nMAX_LATENCY_MS = 150\n\n### memory://symbol/policy.py::DEFAULT_PATH lines 5-5\n\nDEFAULT_PATH = \"/\"\n\n### memory://symbol/policy.py::CANARY_PERCENT lines 3-3\n\nCANARY_PERCENT = 20\n\n### memory://symbol/rules.py::bucket lines 7-8\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef bucket(user_id):\n    return sum(ord(char) for char in user_id) % 100",
+      "source_uris": [
+        "memory://symbol/service.py::route_request",
+        "memory://symbol/policy.py::CANARY_SUFFIX",
+        "memory://symbol/policy.py::PRIMARY_REGION",
+        "memory://symbol/policy.py::SECONDARY_REGION",
+        "memory://symbol/policy.py::UNAVAILABLE",
+        "memory://symbol/rules.py::healthy",
+        "memory://symbol/rules.py::normalize_path",
+        "memory://symbol/rules.py::use_canary",
+        "memory://symbol/policy.py::MAX_LATENCY_MS",
+        "memory://symbol/policy.py::DEFAULT_PATH",
+        "memory://symbol/policy.py::CANARY_PERCENT",
+        "memory://symbol/rules.py::bucket"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::route_request",
+      "level": 0,
+      "text": "### memory://symbol/service.py::route_request lines 4-14\nfrom policy import PRIMARY_REGION, SECONDARY_REGION, UNAVAILABLE, CANARY_SUFFIX, RETRY_LIMIT\nfrom rules import normalize_path, use_canary, healthy\ndef route_request(user_id, path, statuses):\n    chosen = UNAVAILABLE\n    for region in (PRIMARY_REGION, SECONDARY_REGION):\n        if healthy(statuses[region]):\n            chosen = region\n            break\n    if chosen == UNAVAILABLE:\n        return UNAVAILABLE\n    if use_canary(user_id):\n        chosen += CANARY_SUFFIX\n    return chosen + \":\" + normalize_path(path)",
+      "source_uris": [
+        "memory://symbol/service.py::route_request"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::retry_destination",
+      "level": 0,
+      "text": "### memory://symbol/service.py::retry_destination lines 16-19\nfrom policy import PRIMARY_REGION, SECONDARY_REGION, UNAVAILABLE, CANARY_SUFFIX, RETRY_LIMIT\nfrom rules import normalize_path, use_canary, healthy\ndef retry_destination(user_id, path, statuses, attempt):\n    if attempt > RETRY_LIMIT:\n        return \"exhausted\"\n    return route_request(user_id, path, statuses)\n\n### memory://symbol/policy.py::RETRY_LIMIT lines 6-6\n\nRETRY_LIMIT = 2\n\n### memory://symbol/service.py::route_request lines 4-14\nfrom policy import PRIMARY_REGION, SECONDARY_REGION, UNAVAILABLE, CANARY_SUFFIX, RETRY_LIMIT\nfrom rules import normalize_path, use_canary, healthy\ndef route_request(user_id, path, statuses):\n    chosen = UNAVAILABLE\n    for region in (PRIMARY_REGION, SECONDARY_REGION):\n        if healthy(statuses[region]):\n            chosen = region\n            break\n    if chosen == UNAVAILABLE:\n        return UNAVAILABLE\n    if use_canary(user_id):\n        chosen += CANARY_SUFFIX\n    return chosen + \":\" + normalize_path(path)\n\n### memory://symbol/policy.py::CANARY_SUFFIX lines 8-8\n\nCANARY_SUFFIX = \"-canary\"\n\n### memory://symbol/policy.py::PRIMARY_REGION lines 1-1\n\nPRIMARY_REGION = \"east\"\n\n### memory://symbol/policy.py::SECONDARY_REGION lines 2-2\n\nSECONDARY_REGION = \"west\"\n\n### memory://symbol/policy.py::UNAVAILABLE lines 7-7\n\nUNAVAILABLE = \"unavailable\"\n\n### memory://symbol/rules.py::healthy lines 13-14\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef healthy(status):\n    return status[\"up\"] and status[\"latency_ms\"] <= MAX_LATENCY_MS\n\n### memory://symbol/rules.py::normalize_path lines 3-5\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef normalize_path(path):\n    cleaned = \"/\" + path.strip().lstrip(\"/\")\n    return cleaned.rstrip(\"/\") or DEFAULT_PATH\n\n### memory://symbol/rules.py::use_canary lines 10-11\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef use_canary(user_id):\n    return bucket(user_id) < CANARY_PERCENT\n\n### memory://symbol/policy.py::MAX_LATENCY_MS lines 4-4\n\nMAX_LATENCY_MS = 150\n\n### memory://symbol/policy.py::DEFAULT_PATH lines 5-5\n\nDEFAULT_PATH = \"/\"\n\n### memory://symbol/policy.py::CANARY_PERCENT lines 3-3\n\nCANARY_PERCENT = 20\n\n### memory://symbol/rules.py::bucket lines 7-8\nfrom policy import CANARY_PERCENT, MAX_LATENCY_MS, DEFAULT_PATH\ndef bucket(user_id):\n    return sum(ord(char) for char in user_id) % 100",
+      "source_uris": [
+        "memory://symbol/service.py::retry_destination",
+        "memory://symbol/policy.py::RETRY_LIMIT",
+        "memory://symbol/service.py::route_request",
+        "memory://symbol/policy.py::CANARY_SUFFIX",
+        "memory://symbol/policy.py::PRIMARY_REGION",
+        "memory://symbol/policy.py::SECONDARY_REGION",
+        "memory://symbol/policy.py::UNAVAILABLE",
+        "memory://symbol/rules.py::healthy",
+        "memory://symbol/rules.py::normalize_path",
+        "memory://symbol/rules.py::use_canary",
+        "memory://symbol/policy.py::MAX_LATENCY_MS",
+        "memory://symbol/policy.py::DEFAULT_PATH",
+        "memory://symbol/policy.py::CANARY_PERCENT",
+        "memory://symbol/rules.py::bucket"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::retry_destination",
+      "level": 0,
+      "text": "### memory://symbol/service.py::retry_destination lines 16-19\nfrom policy import PRIMARY_REGION, SECONDARY_REGION, UNAVAILABLE, CANARY_SUFFIX, RETRY_LIMIT\nfrom rules import normalize_path, use_canary, healthy\ndef retry_destination(user_id, path, statuses, attempt):\n    if attempt > RETRY_LIMIT:\n        return \"exhausted\"\n    return route_request(user_id, path, statuses)",
+      "source_uris": [
+        "memory://symbol/service.py::retry_destination"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::route_tag",
+      "level": 0,
+      "text": "### memory://symbol/service.py::route_tag lines 21-22\nfrom policy import PRIMARY_REGION, SECONDARY_REGION, UNAVAILABLE, CANARY_SUFFIX, RETRY_LIMIT\nfrom rules import normalize_path, use_canary, healthy\ndef route_tag(region):\n    return \"route:\" + region.upper()",
+      "source_uris": [
+        "memory://symbol/service.py::route_tag"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    }
+  ],
+  "summaries": [
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::audit_key",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::audit_key\nThe `audit_key` function constructs a string key for auditing purposes. It takes two parameters: `actor` and `action`. The function returns a string formatted as `AUDIT_VERSION:actor:action`, where `actor` is stripped of leading and trailing whitespace and converted to lowercase. The constant `AUDIT_VERSION` is set to 2.",
+      "source_uris": [
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::AUDIT_VERSION"
+      ],
+      "children": [
+        "memory://symbol/audit.py::audit_key"
+      ],
+      "call_id": "51f7205657d018aa"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::recent_events",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::recent_events\nThe `recent_events` function takes a list of events and returns the last `MAX_RECENT_EVENTS` elements. It uses the constant `MAX_RECENT_EVENTS` which is set to 20. The function does not perform any string operations or calls other functions.",
+      "source_uris": [
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS"
+      ],
+      "children": [
+        "memory://symbol/audit.py::recent_events"
+      ],
+      "call_id": "ec6c8cd4e3b98004"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::redact_identifier",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::redact_identifier\nThe `redact_identifier` function takes an `identifier` as input and returns a string where the last four characters of the `identifier` are preserved, prefixed by the `REDACTION_MARKER` \"***\". The function uses the `str` function to convert the `identifier` to a string and then slices the last four characters. The `REDACTION_MARKER` is a constant defined as \"***\".",
+      "source_uris": [
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/audit.py::REDACTION_MARKER"
+      ],
+      "children": [
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "call_id": "beccda4bff6c4bbe"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/audit.py::event_record",
+      "level": 1,
+      "path": "audit.py",
+      "text": "### summary:leaf:memory://symbol/audit.py::event_record\nThe `event_record` function in `audit.py` creates a dictionary representing an audit event. It takes two parameters: `action` (required) and `actor` (optional, defaults to \"system\"). The function returns a dictionary with keys \"actor\", \"action\", and \"version\". The \"actor\" key uses the provided `actor` value if it exists, otherwise it uses the constant `DEFAULT_ACTOR`. The \"version\" key always uses the constant `AUDIT_VERSION`, which is set to 2.",
+      "source_uris": [
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR"
+      ],
+      "children": [
+        "memory://symbol/audit.py::event_record"
+      ],
+      "call_id": "7ca0e7d01f290946"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::normalize_label",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::normalize_label\nThe `normalize_label` function in `presentation.py` processes a label string by stripping leading and trailing whitespace, converting it to lowercase, replacing spaces with hyphens, and truncating it to a maximum length of 48 characters.",
+      "source_uris": [
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::normalize_label"
+      ],
+      "call_id": "2a1e5bac46187897"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::display_reference",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::display_reference\nThe `display_reference` function formats a reference number by prefixing it with \"service:\" and padding it with zeros to a width of 12 characters. It uses constants `DISPLAY_PREFIX` and `DISPLAY_WIDTH` for the prefix and width, respectively.",
+      "source_uris": [
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::display_reference"
+      ],
+      "call_id": "ea517894ec047012"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::status_label",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::status_label\nThe `status_label` function maps an integer code to a corresponding status label. It uses a dictionary to look up the label based on the code. If the code is not found, it returns the `UNKNOWN_LABEL`. The `UNKNOWN_LABEL` is defined as \"unknown\".",
+      "source_uris": [
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::status_label"
+      ],
+      "call_id": "2ca375487b3491ed"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+      "level": 1,
+      "path": "presentation.py",
+      "text": "### summary:leaf:memory://symbol/presentation.py::summarize_count\nThe `summarize_count` function takes a list of values as input and returns a dictionary with a key \"domain\" set to the constant `DISPLAY_PREFIX` (which is \"service\") and a key \"count\" set to the length of the input list.",
+      "source_uris": [
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX"
+      ],
+      "children": [
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "call_id": "f755173f2da10954"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::normalize_path",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::normalize_path\nThe `normalize_path` function in `rules.py` takes a `path` as input, strips leading and trailing slashes, prepends a leading slash, and returns the cleaned path or a default path if the result is empty. Dependencies: `policy.py` for `DEFAULT_PATH`.",
+      "source_uris": [
+        "memory://symbol/rules.py::normalize_path",
+        "memory://symbol/policy.py::DEFAULT_PATH"
+      ],
+      "children": [
+        "memory://symbol/rules.py::normalize_path"
+      ],
+      "call_id": "1720f31e330cd39d"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::bucket",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::bucket\nThe `bucket` function calculates a hash value for a given `user_id` by summing the ASCII values of its characters and then taking the modulus with 100. This hash value is used to determine a bucket for the user. The function does not have any string operations other than summing ASCII values. It does not call any external functions or constants from other modules.",
+      "source_uris": [
+        "memory://symbol/rules.py::bucket"
+      ],
+      "children": [
+        "memory://symbol/rules.py::bucket"
+      ],
+      "call_id": "85cf61a977ad2945"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::use_canary",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::use_canary\nThe `use_canary` function determines if a user should be included in a canary release. It uses the `bucket` function to calculate a value based on the user's ID. If this value is less than `CANARY_PERCENT` (20), the user is included in the canary. The `bucket` function sums the ASCII values of the characters in the user ID and takes the modulo 100 of this sum.",
+      "source_uris": [
+        "memory://symbol/rules.py::use_canary",
+        "memory://symbol/policy.py::CANARY_PERCENT",
+        "memory://symbol/rules.py::bucket"
+      ],
+      "children": [
+        "memory://symbol/rules.py::use_canary"
+      ],
+      "call_id": "8838f99f1896e4e6"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::healthy",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::healthy\nThe `healthy` function checks if a service is up and its latency is within the allowed limit. It returns `True` if both conditions are met, otherwise `False`. The function uses a constant `MAX_LATENCY_MS` from the `policy` module, which is set to 150 milliseconds.",
+      "source_uris": [
+        "memory://symbol/rules.py::healthy",
+        "memory://symbol/policy.py::MAX_LATENCY_MS"
+      ],
+      "children": [
+        "memory://symbol/rules.py::healthy"
+      ],
+      "call_id": "44eaed01bb3085d3"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::route_request",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::route_request\nThe `route_request` function routes a request to a region based on health checks and user-specific canary routing. It first checks the `PRIMARY_REGION` and then the `SECONDARY_REGION` for health. If both are unavailable, it returns `UNAVAILABLE`. If a region is healthy, it checks if the user should be routed to the canary version. The final route is constructed by appending the chosen region and normalized path.",
+      "source_uris": [
+        "memory://symbol/service.py::route_request",
+        "memory://symbol/policy.py::CANARY_SUFFIX",
+        "memory://symbol/policy.py::PRIMARY_REGION",
+        "memory://symbol/policy.py::SECONDARY_REGION",
+        "memory://symbol/policy.py::UNAVAILABLE",
+        "memory://symbol/rules.py::healthy",
+        "memory://symbol/rules.py::normalize_path",
+        "memory://symbol/rules.py::use_canary",
+        "memory://symbol/policy.py::MAX_LATENCY_MS",
+        "memory://symbol/policy.py::DEFAULT_PATH",
+        "memory://symbol/policy.py::CANARY_PERCENT",
+        "memory://symbol/rules.py::bucket"
+      ],
+      "children": [
+        "memory://symbol/service.py::route_request"
+      ],
+      "call_id": "cfcac114541572b2"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::retry_destination",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::retry_destination\nThe `retry_destination` function attempts to route a request to a region, retrying up to a limit. It calls `route_request` to make the actual routing decision. `route_request` checks both primary and secondary regions for health, selects the first healthy region, and appends a canary suffix if applicable. It normalizes the path before appending it to the chosen region. Constants define regions, health criteria, and path normalization rules.",
+      "source_uris": [
+        "memory://symbol/service.py::retry_destination",
+        "memory://symbol/policy.py::RETRY_LIMIT",
+        "memory://symbol/service.py::route_request",
+        "memory://symbol/policy.py::CANARY_SUFFIX",
+        "memory://symbol/policy.py::PRIMARY_REGION",
+        "memory://symbol/policy.py::SECONDARY_REGION",
+        "memory://symbol/policy.py::UNAVAILABLE",
+        "memory://symbol/rules.py::healthy",
+        "memory://symbol/rules.py::normalize_path",
+        "memory://symbol/rules.py::use_canary",
+        "memory://symbol/policy.py::MAX_LATENCY_MS",
+        "memory://symbol/policy.py::DEFAULT_PATH",
+        "memory://symbol/policy.py::CANARY_PERCENT",
+        "memory://symbol/rules.py::bucket"
+      ],
+      "children": [
+        "memory://symbol/service.py::retry_destination"
+      ],
+      "call_id": "068577d5f01229f8"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::route_tag",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::route_tag\nThe `route_tag` function in `service.py` takes a `region` string as input and returns a formatted string with the region in uppercase, prefixed by \"route:\". It uses constants from `policy.py` for region names and other values. No string operations or calls are performed within this function.",
+      "source_uris": [
+        "memory://symbol/service.py::route_tag"
+      ],
+      "children": [
+        "memory://symbol/service.py::route_tag"
+      ],
+      "call_id": "7504e8c2df363b8a"
+    },
+    {
+      "id": "summary:level2:audit.py",
+      "level": 2,
+      "path": "audit.py",
+      "text": "### summary:level2:audit.py\nThe `audit.py` module contains functions for constructing audit keys, managing recent events, redacting identifiers, and recording events. The `audit_key` function creates a string key for auditing, `recent_events` returns the last 20 events from a list, `redact_identifier` masks all but the last four characters of an identifier, and `event_record` creates a dictionary representing an audit event with a specified action and optional actor. Constants like `AUDIT_VERSION`, `MAX_RECENT_EVENTS`, and `REDACTION_MARKER` are used to maintain consistency and control the behavior of these functions.",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "memory://symbol/audit.py::REDACTION_MARKER",
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::redact_identifier"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/audit.py::audit_key",
+        "summary:leaf:memory://symbol/audit.py::recent_events",
+        "summary:leaf:memory://symbol/audit.py::redact_identifier",
+        "summary:leaf:memory://symbol/audit.py::event_record"
+      ],
+      "call_id": "467b2ad6eb00ee3f"
+    },
+    {
+      "id": "summary:level2:presentation.py",
+      "level": 2,
+      "path": "presentation.py",
+      "text": "### summary:level2:presentation.py\nThe `presentation.py` module contains functions for normalizing labels, displaying references, mapping status codes, and summarizing counts. Each function has distinct policies and uses specific constants or dictionaries. The `normalize_label` function processes strings, `display_reference` formats numbers, `status_label` maps codes to labels, and `summarize_count` aggregates list lengths.",
+      "source_uris": [
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::summarize_count"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/presentation.py::normalize_label",
+        "summary:leaf:memory://symbol/presentation.py::display_reference",
+        "summary:leaf:memory://symbol/presentation.py::status_label",
+        "summary:leaf:memory://symbol/presentation.py::summarize_count"
+      ],
+      "call_id": "4bd778eebaa0453d"
+    },
+    {
+      "id": "summary:level2:rules.py",
+      "level": 2,
+      "path": "rules.py",
+      "text": "### summary:level2:rules.py\nThe `rules.py` module contains functions to normalize paths, calculate user buckets, determine canary releases, and check service health. The `normalize_path` function cleans paths, using a default if necessary. The `bucket` function calculates a hash value for a user ID based on ASCII values. The `use_canary` function uses the `bucket` to decide if a user is in a canary release, targeting 20% of users. The `healthy` function checks if a service is up and responsive within a 150ms limit.",
+      "source_uris": [
+        "memory://symbol/policy.py::CANARY_PERCENT",
+        "memory://symbol/policy.py::DEFAULT_PATH",
+        "memory://symbol/policy.py::MAX_LATENCY_MS",
+        "memory://symbol/rules.py::bucket",
+        "memory://symbol/rules.py::healthy",
+        "memory://symbol/rules.py::normalize_path",
+        "memory://symbol/rules.py::use_canary"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/rules.py::normalize_path",
+        "summary:leaf:memory://symbol/rules.py::bucket",
+        "summary:leaf:memory://symbol/rules.py::use_canary",
+        "summary:leaf:memory://symbol/rules.py::healthy"
+      ],
+      "call_id": "87aab54a852dd2f0"
+    },
+    {
+      "id": "summary:level2:service.py",
+      "level": 2,
+      "path": "service.py",
+      "text": "### summary:level2:service.py\nThe `service.py` module contains functions to route requests to regions based on health checks and user-specific canary routing. The `route_request` function checks the `PRIMARY_REGION` and `SECONDARY_REGION` for health, routing to the first healthy region and appending a canary suffix if applicable. The `retry_destination` function attempts to route a request, retrying up to a limit and using `route_request` for the actual routing decision. The `route_tag` function formats a region string for display, using constants from `policy.py`.",
+      "source_uris": [
+        "memory://symbol/policy.py::CANARY_PERCENT",
+        "memory://symbol/policy.py::CANARY_SUFFIX",
+        "memory://symbol/policy.py::DEFAULT_PATH",
+        "memory://symbol/policy.py::MAX_LATENCY_MS",
+        "memory://symbol/policy.py::PRIMARY_REGION",
+        "memory://symbol/policy.py::RETRY_LIMIT",
+        "memory://symbol/policy.py::SECONDARY_REGION",
+        "memory://symbol/policy.py::UNAVAILABLE",
+        "memory://symbol/rules.py::bucket",
+        "memory://symbol/rules.py::healthy",
+        "memory://symbol/rules.py::normalize_path",
+        "memory://symbol/rules.py::use_canary",
+        "memory://symbol/service.py::retry_destination",
+        "memory://symbol/service.py::route_request",
+        "memory://symbol/service.py::route_tag"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/service.py::route_request",
+        "summary:leaf:memory://symbol/service.py::retry_destination",
+        "summary:leaf:memory://symbol/service.py::route_tag"
+      ],
+      "call_id": "674beebda26a018b"
+    },
+    {
+      "id": "summary:level3:project",
+      "level": 3,
+      "path": "project",
+      "text": "### summary:level3:project\nThe `audit.py` module handles audit-related tasks like creating keys, managing recent events, redacting identifiers, and recording events. The `presentation.py` module deals with formatting and summarizing data, including normalizing labels, displaying references, mapping status codes, and summarizing counts. The `rules.py` module includes functions for path normalization, user bucketing, canary release determination, and service health checks. The `service.py` module routes requests based on health checks and user-specific canary routing, with functions to retry destinations and format region tags. Each module uses specific constants and functions to maintain consistency and control their behavior.",
+      "source_uris": [
+        "memory://symbol/audit.py::AUDIT_VERSION",
+        "memory://symbol/audit.py::DEFAULT_ACTOR",
+        "memory://symbol/audit.py::MAX_RECENT_EVENTS",
+        "memory://symbol/audit.py::REDACTION_MARKER",
+        "memory://symbol/audit.py::audit_key",
+        "memory://symbol/audit.py::event_record",
+        "memory://symbol/audit.py::recent_events",
+        "memory://symbol/audit.py::redact_identifier",
+        "memory://symbol/policy.py::CANARY_PERCENT",
+        "memory://symbol/policy.py::CANARY_SUFFIX",
+        "memory://symbol/policy.py::DEFAULT_PATH",
+        "memory://symbol/policy.py::MAX_LATENCY_MS",
+        "memory://symbol/policy.py::PRIMARY_REGION",
+        "memory://symbol/policy.py::RETRY_LIMIT",
+        "memory://symbol/policy.py::SECONDARY_REGION",
+        "memory://symbol/policy.py::UNAVAILABLE",
+        "memory://symbol/presentation.py::DISPLAY_PREFIX",
+        "memory://symbol/presentation.py::DISPLAY_WIDTH",
+        "memory://symbol/presentation.py::MAX_LABEL_LENGTH",
+        "memory://symbol/presentation.py::UNKNOWN_LABEL",
+        "memory://symbol/presentation.py::display_reference",
+        "memory://symbol/presentation.py::normalize_label",
+        "memory://symbol/presentation.py::status_label",
+        "memory://symbol/presentation.py::summarize_count",
+        "memory://symbol/rules.py::bucket",
+        "memory://symbol/rules.py::healthy",
+        "memory://symbol/rules.py::normalize_path",
+        "memory://symbol/rules.py::use_canary",
+        "memory://symbol/service.py::retry_destination",
+        "memory://symbol/service.py::route_request",
+        "memory://symbol/service.py::route_tag"
+      ],
+      "children": [
+        "summary:level2:audit.py",
+        "summary:level2:presentation.py",
+        "summary:level2:rules.py",
+        "summary:level2:service.py"
+      ],
+      "call_id": "68ea81ea76cab36f"
+    }
+  ],
+  "index": {
+    "version": 1,
+    "root": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/dataset/projects/eval_routing",
+    "files": [
+      {
+        "path": "audit.py",
+        "symbols": [
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "audit_key",
+            "qualname": "audit_key",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/audit.py::audit_key"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "recent_events",
+            "qualname": "recent_events",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/audit.py::recent_events"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "redact_identifier",
+            "qualname": "redact_identifier",
+            "start_line": 12,
+            "end_line": 13,
+            "uri": "memory://symbol/audit.py::redact_identifier"
+          },
+          {
+            "path": "audit.py",
+            "kind": "function",
+            "name": "event_record",
+            "qualname": "event_record",
+            "start_line": 15,
+            "end_line": 16,
+            "uri": "memory://symbol/audit.py::event_record"
+          }
+        ]
+      },
+      {
+        "path": "policy.py",
+        "symbols": []
+      },
+      {
+        "path": "presentation.py",
+        "symbols": [
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "normalize_label",
+            "qualname": "normalize_label",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/presentation.py::normalize_label"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "display_reference",
+            "qualname": "display_reference",
+            "start_line": 9,
+            "end_line": 10,
+            "uri": "memory://symbol/presentation.py::display_reference"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "status_label",
+            "qualname": "status_label",
+            "start_line": 12,
+            "end_line": 13,
+            "uri": "memory://symbol/presentation.py::status_label"
+          },
+          {
+            "path": "presentation.py",
+            "kind": "function",
+            "name": "summarize_count",
+            "qualname": "summarize_count",
+            "start_line": 15,
+            "end_line": 16,
+            "uri": "memory://symbol/presentation.py::summarize_count"
+          }
+        ]
+      },
+      {
+        "path": "rules.py",
+        "symbols": [
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "normalize_path",
+            "qualname": "normalize_path",
+            "start_line": 3,
+            "end_line": 5,
+            "uri": "memory://symbol/rules.py::normalize_path"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "bucket",
+            "qualname": "bucket",
+            "start_line": 7,
+            "end_line": 8,
+            "uri": "memory://symbol/rules.py::bucket"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "use_canary",
+            "qualname": "use_canary",
+            "start_line": 10,
+            "end_line": 11,
+            "uri": "memory://symbol/rules.py::use_canary"
+          },
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "healthy",
+            "qualname": "healthy",
+            "start_line": 13,
+            "end_line": 14,
+            "uri": "memory://symbol/rules.py::healthy"
+          }
+        ]
+      },
+      {
+        "path": "service.py",
+        "symbols": [
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "route_request",
+            "qualname": "route_request",
+            "start_line": 4,
+            "end_line": 14,
+            "uri": "memory://symbol/service.py::route_request"
+          },
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "retry_destination",
+            "qualname": "retry_destination",
+            "start_line": 16,
+            "end_line": 19,
+            "uri": "memory://symbol/service.py::retry_destination"
+          },
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "route_tag",
+            "qualname": "route_tag",
+            "start_line": 21,
+            "end_line": 22,
+            "uri": "memory://symbol/service.py::route_tag"
+          }
+        ]
+      }
+    ],
+    "symbols": [
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "audit_key",
+        "qualname": "audit_key",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/audit.py::audit_key"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "recent_events",
+        "qualname": "recent_events",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/audit.py::recent_events"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "redact_identifier",
+        "qualname": "redact_identifier",
+        "start_line": 12,
+        "end_line": 13,
+        "uri": "memory://symbol/audit.py::redact_identifier"
+      },
+      {
+        "path": "audit.py",
+        "kind": "function",
+        "name": "event_record",
+        "qualname": "event_record",
+        "start_line": 15,
+        "end_line": 16,
+        "uri": "memory://symbol/audit.py::event_record"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "normalize_label",
+        "qualname": "normalize_label",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/presentation.py::normalize_label"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "display_reference",
+        "qualname": "display_reference",
+        "start_line": 9,
+        "end_line": 10,
+        "uri": "memory://symbol/presentation.py::display_reference"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "status_label",
+        "qualname": "status_label",
+        "start_line": 12,
+        "end_line": 13,
+        "uri": "memory://symbol/presentation.py::status_label"
+      },
+      {
+        "path": "presentation.py",
+        "kind": "function",
+        "name": "summarize_count",
+        "qualname": "summarize_count",
+        "start_line": 15,
+        "end_line": 16,
+        "uri": "memory://symbol/presentation.py::summarize_count"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "normalize_path",
+        "qualname": "normalize_path",
+        "start_line": 3,
+        "end_line": 5,
+        "uri": "memory://symbol/rules.py::normalize_path"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "bucket",
+        "qualname": "bucket",
+        "start_line": 7,
+        "end_line": 8,
+        "uri": "memory://symbol/rules.py::bucket"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "use_canary",
+        "qualname": "use_canary",
+        "start_line": 10,
+        "end_line": 11,
+        "uri": "memory://symbol/rules.py::use_canary"
+      },
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "healthy",
+        "qualname": "healthy",
+        "start_line": 13,
+        "end_line": 14,
+        "uri": "memory://symbol/rules.py::healthy"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "route_request",
+        "qualname": "route_request",
+        "start_line": 4,
+        "end_line": 14,
+        "uri": "memory://symbol/service.py::route_request"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "retry_destination",
+        "qualname": "retry_destination",
+        "start_line": 16,
+        "end_line": 19,
+        "uri": "memory://symbol/service.py::retry_destination"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "route_tag",
+        "qualname": "route_tag",
+        "start_line": 21,
+        "end_line": 22,
+        "uri": "memory://symbol/service.py::route_tag"
+      }
+    ]
+  },
+  "build_seconds": 87.14135337498737,
+  "build_input_tokens": 5681,
+  "build_output_tokens": 1610,
+  "build_model_seconds": 87.12054045900004,
+  "build_call_ids": [
+    "51f7205657d018aa",
+    "ec6c8cd4e3b98004",
+    "beccda4bff6c4bbe",
+    "7ca0e7d01f290946",
+    "2a1e5bac46187897",
+    "ea517894ec047012",
+    "2ca375487b3491ed",
+    "f755173f2da10954",
+    "1720f31e330cd39d",
+    "85cf61a977ad2945",
+    "8838f99f1896e4e6",
+    "44eaed01bb3085d3",
+    "cfcac114541572b2",
+    "068577d5f01229f8",
+    "7504e8c2df363b8a",
+    "467b2ad6eb00ee3f",
+    "4bd778eebaa0453d",
+    "87aab54a852dd2f0",
+    "674beebda26a018b",
+    "68ea81ea76cab36f"
+  ],
+  "source_sha256": {
+    "audit.py": "94a6997b483bf598ea32c489cc76c80aa451d7d802f347639d67bb55bce2129d",
+    "policy.py": "731ee0887392944eebfcc51e11d8ce719e9c0b069557ab50fa062e035f31d330",
+    "presentation.py": "32334ba69d17cbe8b65d4c54ec9cff261e925e93e0eaa35a60ed2c71e22bea9d",
+    "rules.py": "74affeb72b5ed642da170c93ba0c918ad6e3944643fa9bbdd88ff4215c885683",
+    "service.py": "042cf30fe6e63431c047e6e5e7051bb3e7f1452891bb15da5d203d07b1013c29"
+  }
+}

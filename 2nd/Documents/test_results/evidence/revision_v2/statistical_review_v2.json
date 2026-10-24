@@ -1,0 +1,934 @@
+{
+  "status": "PASS",
+  "created_at_utc": "2026-10-20T11:23:42.631501+00:00",
+  "implementation": {
+    "imports_experiment_or_analysis_code": false,
+    "model_calls": 0,
+    "numpy_version": "2.3.5",
+    "python_version": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "strict_grading": "Reparse saved answer text; recursive exact JSON type/key/list-order equality; independently validate selector URI.",
+    "bootstrap": "NumPy 6-dimensional index tensor enumerates all 46,656 ordered six-project cluster samples.",
+    "accuracy": "Mean three-repeat binary score per question, then equal-weight eight-question project means.",
+    "latency": "Median three measured times per question, then arithmetic mean across 48 questions.",
+    "request_p95": "NumPy percentile on all individual requests; linear interpolation.",
+    "signflip": "All 64 signed project-level mean score deltas; two-sided absolute statistic.",
+    "adjustment": "Holm stepdown for C-A and C-RH quality comparisons only."
+  },
+  "by_split": {
+    "new": {
+      "rows": 432,
+      "unique_questions": 48,
+      "projects": 6,
+      "repeats": 3,
+      "metrics_by_arm": {
+        "A": {
+          "correct": 27,
+          "total": 144,
+          "accuracy": 0.1875,
+          "unique_questions": 48,
+          "order_only_count": 0,
+          "order_tolerant_accuracy": 0.1875,
+          "mean_query_seconds": 2.3780212091663393,
+          "request_mean_seconds": 2.379895151576117,
+          "request_p50_seconds": 2.2640076459938427,
+          "request_p95_seconds": 3.1689015829935667,
+          "question_median_p95_seconds": 3.148919120848586,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 105,
+            "abstained": 9,
+            "invalid_json": 3
+          },
+          "mean_context_tokens": 100.79166666666667,
+          "mean_selected_context_tokens": 100.79166666666667,
+          "mean_input_tokens": 417.1666666666667,
+          "mean_output_tokens": 26.5625,
+          "mean_tokenize_seconds": 0.008572085798227312,
+          "mean_compaction_seconds": 0.0,
+          "raw_evidence_recall": 0.2290912501850002,
+          "all_raw_evidence": 0.08333333333333333,
+          "mean_prefill_seconds": 1.3253502430555555,
+          "mean_decode_seconds": 1.03691925,
+          "mean_other_seconds": 0.017625658520561454,
+          "by_category": {
+            "architecture": {
+              "correct": 0,
+              "total": 18,
+              "accuracy": 0.0,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 0,
+              "total": 18,
+              "accuracy": 0.0,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 3,
+              "total": 36,
+              "accuracy": 0.08333333333333333,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 0,
+              "total": 36,
+              "accuracy": 0.0,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 18,
+              "total": 18,
+              "accuracy": 1.0,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 9,
+              "total": 24,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            }
+          }
+        },
+        "RH": {
+          "correct": 30,
+          "total": 144,
+          "accuracy": 0.20833333333333334,
+          "unique_questions": 48,
+          "order_only_count": 0,
+          "order_tolerant_accuracy": 0.20833333333333334,
+          "mean_query_seconds": 4.393546560770119,
+          "request_mean_seconds": 4.398423639742861,
+          "request_p50_seconds": 4.324512458500976,
+          "request_p95_seconds": 5.215827998198074,
+          "question_median_p95_seconds": 5.199323098252353,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 105,
+            "invalid_json": 6,
+            "abstained": 3
+          },
+          "mean_context_tokens": 1014.5208333333334,
+          "mean_selected_context_tokens": 1014.5208333333334,
+          "mean_input_tokens": 1164.6041666666667,
+          "mean_output_tokens": 19.479166666666668,
+          "mean_tokenize_seconds": 0.16556946410744583,
+          "mean_compaction_seconds": 0.0,
+          "raw_evidence_recall": 0.5400305423742924,
+          "all_raw_evidence": 0.4375,
+          "mean_prefill_seconds": 3.4424825416666667,
+          "mean_decode_seconds": 0.7850262638888889,
+          "mean_other_seconds": 0.1709148341873049,
+          "by_category": {
+            "architecture": {
+              "correct": 3,
+              "total": 18,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 3,
+              "total": 36,
+              "accuracy": 0.08333333333333333,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 0,
+              "total": 36,
+              "accuracy": 0.0,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 12,
+              "total": 18,
+              "accuracy": 0.6666666666666666,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 9,
+              "total": 24,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            }
+          }
+        },
+        "C": {
+          "correct": 33,
+          "total": 144,
+          "accuracy": 0.22916666666666666,
+          "unique_questions": 48,
+          "order_only_count": 3,
+          "order_tolerant_accuracy": 0.25,
+          "mean_query_seconds": 3.8180470789163032,
+          "request_mean_seconds": 3.822178361415657,
+          "request_p50_seconds": 3.9536866874987027,
+          "request_p95_seconds": 5.115024347358121,
+          "question_median_p95_seconds": 5.040702828856592,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 102,
+            "invalid_json": 3,
+            "abstained": 6
+          },
+          "mean_context_tokens": 817.3333333333334,
+          "mean_selected_context_tokens": 1014.5208333333334,
+          "mean_input_tokens": 967.4166666666666,
+          "mean_output_tokens": 19.583333333333332,
+          "mean_tokenize_seconds": 0.1661917920348262,
+          "mean_compaction_seconds": 0.0020954354717509383,
+          "raw_evidence_recall": 0.5400305423742924,
+          "all_raw_evidence": 0.4375,
+          "mean_prefill_seconds": 2.8619938125,
+          "mean_decode_seconds": 0.7888484375,
+          "mean_other_seconds": 0.17133611141565686,
+          "by_category": {
+            "architecture": {
+              "correct": 3,
+              "total": 18,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 3,
+              "total": 18,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 6,
+              "total": 36,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 0,
+              "total": 36,
+              "accuracy": 0.0,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 15,
+              "total": 18,
+              "accuracy": 0.8333333333333334,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 9,
+              "total": 24,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            }
+          }
+        }
+      },
+      "comparisons": {
+        "C-RH": {
+          "higher": "C",
+          "base": "RH",
+          "delta_pp": 2.083333333333333,
+          "ci95_pp": [
+            -4.166666666666666,
+            8.333333333333332
+          ],
+          "win": 2,
+          "loss": 1,
+          "tie": 45,
+          "latency_delta_seconds": -0.5754994818538157,
+          "latency_ci95_seconds": [
+            -0.6401713238319648,
+            -0.5097626330216372
+          ],
+          "latency_ratio": 0.8690125451287035,
+          "latency_reduction_pct": 13.098745487129648,
+          "latency_reduction_ci95_pct": [
+            11.10321846036303,
+            15.070978016486647
+          ],
+          "both_success_n": 9,
+          "both_success_latency_ratio": 0.7964532705055449,
+          "project_deltas_pp": {
+            "eval_authorization": -12.5,
+            "eval_cache": 0.0,
+            "eval_inventory": 12.5,
+            "eval_pricing": 12.5,
+            "eval_routing": 0.0,
+            "eval_schedules": 0.0
+          },
+          "unadjusted_project_signflip_p": 1.0,
+          "bootstrap_resamples": 46656,
+          "cluster_count": 6,
+          "holm_p_two_quality_comparisons": 1.0
+        },
+        "C-A": {
+          "higher": "C",
+          "base": "A",
+          "delta_pp": 4.166666666666666,
+          "ci95_pp": [
+            -6.25,
+            14.583333333333334
+          ],
+          "win": 5,
+          "loss": 3,
+          "tie": 40,
+          "latency_delta_seconds": 1.440025869749964,
+          "latency_ci95_seconds": [
+            1.385564706605995,
+            1.4909826163754283
+          ],
+          "latency_ratio": 1.60555636097745,
+          "latency_reduction_pct": -60.555636097744994,
+          "latency_reduction_ci95_pct": [
+            -65.96479494577841,
+            -54.684000191014825
+          ],
+          "both_success_n": 6,
+          "both_success_latency_ratio": 1.639506334650982,
+          "project_deltas_pp": {
+            "eval_authorization": -12.5,
+            "eval_cache": 0.0,
+            "eval_inventory": 12.5,
+            "eval_pricing": 25.0,
+            "eval_routing": 12.5,
+            "eval_schedules": -12.5
+          },
+          "unadjusted_project_signflip_p": 0.75,
+          "bootstrap_resamples": 46656,
+          "cluster_count": 6,
+          "holm_p_two_quality_comparisons": 1.0
+        },
+        "RH-A": {
+          "higher": "RH",
+          "base": "A",
+          "delta_pp": 2.083333333333333,
+          "ci95_pp": [
+            -4.166666666666666,
+            8.333333333333332
+          ],
+          "win": 4,
+          "loss": 3,
+          "tie": 41,
+          "latency_delta_seconds": 2.0155253516037797,
+          "latency_ci95_seconds": [
+            1.9513964348931645,
+            2.0765303534368895
+          ],
+          "latency_ratio": 1.8475640771557125,
+          "latency_reduction_pct": -84.75640771557124,
+          "latency_reduction_ci95_pct": [
+            -92.93038221751215,
+            -74.90657090522504
+          ],
+          "both_success_n": 6,
+          "both_success_latency_ratio": 2.1120771203347486,
+          "project_deltas_pp": {
+            "eval_authorization": 0.0,
+            "eval_cache": 0.0,
+            "eval_inventory": 0.0,
+            "eval_pricing": 12.5,
+            "eval_routing": 12.5,
+            "eval_schedules": -12.5
+          },
+          "unadjusted_project_signflip_p": 1.0,
+          "bootstrap_resamples": 46656,
+          "cluster_count": 6
+        }
+      }
+    },
+    "old": {
+      "rows": 144,
+      "unique_questions": 48,
+      "projects": 6,
+      "repeats": 1,
+      "metrics_by_arm": {
+        "A": {
+          "correct": 8,
+          "total": 48,
+          "accuracy": 0.16666666666666666,
+          "unique_questions": 48,
+          "order_only_count": 0,
+          "order_tolerant_accuracy": 0.16666666666666666,
+          "mean_query_seconds": 2.3202881674984988,
+          "request_mean_seconds": 2.3202881674984988,
+          "request_p50_seconds": 2.194570000494423,
+          "request_p95_seconds": 3.456937891651614,
+          "question_median_p95_seconds": 3.456937891651614,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 37,
+            "abstained": 1,
+            "invalid_json": 2
+          },
+          "mean_context_tokens": 93.33333333333333,
+          "mean_selected_context_tokens": 93.33333333333333,
+          "mean_input_tokens": 401.1041666666667,
+          "mean_output_tokens": 26.479166666666668,
+          "mean_tokenize_seconds": 0.008078062479701961,
+          "mean_compaction_seconds": 0.0,
+          "raw_evidence_recall": 0.3462607126669626,
+          "all_raw_evidence": 0.20833333333333334,
+          "mean_prefill_seconds": 1.2697977291666669,
+          "mean_decode_seconds": 1.0335024375,
+          "mean_other_seconds": 0.016988000831832217,
+          "by_category": {
+            "architecture": {
+              "correct": 2,
+              "total": 6,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 2,
+              "total": 6,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 0,
+              "total": 6,
+              "accuracy": 0.0,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 0,
+              "total": 12,
+              "accuracy": 0.0,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 2,
+              "total": 12,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 2,
+              "total": 6,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 2,
+              "total": 8,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 3,
+              "total": 8,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 0,
+              "total": 8,
+              "accuracy": 0.0,
+              "unique_questions": 8
+            }
+          }
+        },
+        "RH": {
+          "correct": 9,
+          "total": 48,
+          "accuracy": 0.1875,
+          "unique_questions": 48,
+          "order_only_count": 3,
+          "order_tolerant_accuracy": 0.25,
+          "mean_query_seconds": 4.284299051249339,
+          "request_mean_seconds": 4.284299051249339,
+          "request_p50_seconds": 4.146800375005114,
+          "request_p95_seconds": 5.194938685656962,
+          "question_median_p95_seconds": 5.194938685656962,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 36,
+            "abstained": 2,
+            "invalid_json": 1
+          },
+          "mean_context_tokens": 1013.5,
+          "mean_selected_context_tokens": 1013.5,
+          "mean_input_tokens": 1160.0416666666667,
+          "mean_output_tokens": 17.229166666666668,
+          "mean_tokenize_seconds": 0.16437082253924018,
+          "mean_compaction_seconds": 0.0,
+          "raw_evidence_recall": 0.5689664502164503,
+          "all_raw_evidence": 0.5,
+          "mean_prefill_seconds": 3.4237683958333336,
+          "mean_decode_seconds": 0.6906958541666667,
+          "mean_other_seconds": 0.16983480124933914,
+          "by_category": {
+            "architecture": {
+              "correct": 0,
+              "total": 6,
+              "accuracy": 0.0,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 1,
+              "total": 6,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 0,
+              "total": 6,
+              "accuracy": 0.0,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 2,
+              "total": 12,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 3,
+              "total": 12,
+              "accuracy": 0.25,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 3,
+              "total": 6,
+              "accuracy": 0.5,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 4,
+              "total": 8,
+              "accuracy": 0.5,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 0,
+              "total": 8,
+              "accuracy": 0.0,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 0,
+              "total": 8,
+              "accuracy": 0.0,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 3,
+              "total": 8,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            }
+          }
+        },
+        "C": {
+          "correct": 10,
+          "total": 48,
+          "accuracy": 0.20833333333333334,
+          "unique_questions": 48,
+          "order_only_count": 2,
+          "order_tolerant_accuracy": 0.25,
+          "mean_query_seconds": 3.694187775124192,
+          "request_mean_seconds": 3.694187775124192,
+          "request_p50_seconds": 3.850253958502435,
+          "request_p95_seconds": 5.0225717035020345,
+          "question_median_p95_seconds": 5.0225717035020345,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "invalid_json": 2,
+            "wrong_answer": 35,
+            "abstained": 1
+          },
+          "mean_context_tokens": 800.0,
+          "mean_selected_context_tokens": 1013.5,
+          "mean_input_tokens": 946.5208333333334,
+          "mean_output_tokens": 18.020833333333332,
+          "mean_tokenize_seconds": 0.16351057033868224,
+          "mean_compaction_seconds": 0.0020505858747128514,
+          "raw_evidence_recall": 0.5689664502164503,
+          "all_raw_evidence": 0.5,
+          "mean_prefill_seconds": 2.802748020833333,
+          "mean_decode_seconds": 0.7230310416666667,
+          "mean_other_seconds": 0.16840871262419185,
+          "by_category": {
+            "architecture": {
+              "correct": 0,
+              "total": 6,
+              "accuracy": 0.0,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 1,
+              "total": 6,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 1,
+              "total": 6,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 2,
+              "total": 12,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 3,
+              "total": 12,
+              "accuracy": 0.25,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 3,
+              "total": 6,
+              "accuracy": 0.5,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 4,
+              "total": 8,
+              "accuracy": 0.5,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 0,
+              "total": 8,
+              "accuracy": 0.0,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 3,
+              "total": 8,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            }
+          }
+        }
+      },
+      "comparisons": {
+        "C-RH": {
+          "higher": "C",
+          "base": "RH",
+          "delta_pp": 2.083333333333333,
+          "ci95_pp": [
+            0.0,
+            6.25
+          ],
+          "win": 1,
+          "loss": 0,
+          "tie": 47,
+          "latency_delta_seconds": -0.590111276125147,
+          "latency_ci95_seconds": [
+            -0.6718533049367275,
+            -0.5049258151899871
+          ],
+          "latency_ratio": 0.8622618848343312,
+          "latency_reduction_pct": 13.77381151656688,
+          "latency_reduction_ci95_pct": [
+            11.89268726289663,
+            15.80327805718924
+          ],
+          "both_success_n": 9,
+          "both_success_latency_ratio": 0.8032302209031535,
+          "project_deltas_pp": {
+            "eval_authorization": 0.0,
+            "eval_cache": 0.0,
+            "eval_inventory": 12.5,
+            "eval_pricing": 0.0,
+            "eval_routing": 0.0,
+            "eval_schedules": 0.0
+          },
+          "unadjusted_project_signflip_p": 1.0,
+          "bootstrap_resamples": 46656,
+          "cluster_count": 6,
+          "holm_p_two_quality_comparisons": 1.0
+        },
+        "C-A": {
+          "higher": "C",
+          "base": "A",
+          "delta_pp": 4.166666666666666,
+          "ci95_pp": [
+            -4.166666666666666,
+            14.583333333333334
+          ],
+          "win": 5,
+          "loss": 3,
+          "tie": 40,
+          "latency_delta_seconds": 1.373899607625693,
+          "latency_ci95_seconds": [
+            1.310591810794297,
+            1.4424857700205393
+          ],
+          "latency_ratio": 1.592124558867571,
+          "latency_reduction_pct": -59.2124558867571,
+          "latency_reduction_ci95_pct": [
+            -63.5146305523401,
+            -52.61727498531095
+          ],
+          "both_success_n": 5,
+          "both_success_latency_ratio": 1.6289418404907667,
+          "project_deltas_pp": {
+            "eval_authorization": 25.0,
+            "eval_cache": 0.0,
+            "eval_inventory": 0.0,
+            "eval_pricing": -12.5,
+            "eval_routing": 0.0,
+            "eval_schedules": 12.5
+          },
+          "unadjusted_project_signflip_p": 0.75,
+          "bootstrap_resamples": 46656,
+          "cluster_count": 6,
+          "holm_p_two_quality_comparisons": 1.0
+        },
+        "RH-A": {
+          "higher": "RH",
+          "base": "A",
+          "delta_pp": 2.083333333333333,
+          "ci95_pp": [
+            -8.333333333333332,
+            12.5
+          ],
+          "win": 4,
+          "loss": 3,
+          "tie": 41,
+          "latency_delta_seconds": 1.96401088375084,
+          "latency_ci95_seconds": [
+            1.891384781293406,
+            2.0268049628123963
+          ],
+          "latency_ratio": 1.8464512775877484,
+          "latency_reduction_pct": -84.64512775877483,
+          "latency_reduction_ci95_pct": [
+            -92.39960396869844,
+            -76.02764603135437
+          ],
+          "both_success_n": 5,
+          "both_success_latency_ratio": 2.0677425753591696,
+          "project_deltas_pp": {
+            "eval_authorization": 25.0,
+            "eval_cache": 0.0,
+            "eval_inventory": -12.5,
+            "eval_pricing": -12.5,
+            "eval_routing": 0.0,
+            "eval_schedules": 12.5
+          },
+          "unadjusted_project_signflip_p": 1.0,
+          "bootstrap_resamples": 46656,
+          "cluster_count": 6
+        }
+      }
+    }
+  },
+  "timing_validation": {
+    "query_rows_including_development": 600,
+    "model_calls_including_warmups": 803,
+    "query_overlap_count": 0,
+    "model_call_overlap_count": 0,
+    "model_calls_outside_parent_query": [],
+    "minimum_interquery_gap_seconds": 0.000157,
+    "maximum_query_UTC_minus_perf_clock_discrepancy_seconds": 0.0013639579917237299,
+    "query_overlap_details": [],
+    "scope": "Recorded UTC intervals are local provenance; comparisons do not certify unrelated OS/GPU load."
+  },
+  "interpretation_limits": [
+    "Six already known synthetic projects; questions and projects are not independent repository validation.",
+    "Strict primary score includes requested output order; order-only scoring is a secondary diagnostic.",
+    "Quality intervals/sign flips are exploratory; nonsignificance is not accuracy equivalence or noninferiority.",
+    "Latency intervals reflect six-project task mix variation, not independent hardware-session uncertainty.",
+    "Request stage means sum to request mean time, not mean of per-question median time."
+  ],
+  "source_sha256": {
+    "revision_v2/results_new.jsonl": "60138e011dd992aef4944daf8916b30455be67cfafae6cdf6ef0f3a4b3d46e44",
+    "revision_v2/results_old.jsonl": "df7d1cbdd97d8d2cb2c64df7696ac7c3e86ac6e49d5db7cb5e413f32011a5131",
+    "revision_v2/results_dev.jsonl": "18e3cbe148b43b86b7a520951c18e1075e303a78a395e324860c62429ea84901",
+    "revision_v2/model_calls.jsonl": "f70caa3f622786a75f3c8d33b705a650614ccbd5472fc03a7b7fd4ac5ffd92bb",
+    "revision_v2/holdout/eval_tasks.json": "06a9efc888fff9dd99681f38bffdfd5c32c878ae8850af5ed801d8024a2226ef",
+    "dataset/eval_tasks.json": "857883a571e5a781d237609578dbd909953efb16da837dea58030aa5339b072b",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/statistical_review_v2.py": "f217d0c5ff7a16b913f72dd7ca44a31d7e336c7dd42f1e9c675ea774a39e80f3"
+  },
+  "comparison_to_analysis": {
+    "checked_scalar_values": 618,
+    "mismatches": [],
+    "summary_sha256": "47cafa8bdbf6033d473b76dfb01d12d69b30af93e96dc9bd76053567dfa10e80",
+    "analysis_code_sha256": "e4fd7c4ef7c9f3c3734d526569d9e1322ae49e08062c2b12492f53c49ee69ae5"
+  }
+}
