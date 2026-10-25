@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "completed_at_utc": "2026-10-25T04:37:34.583793+00:00",
+  "completed_at_utc": "2026-10-25T06:06:43.909213+00:00",
   "checks": [
     {
       "name": "new_and_previous_experiment_inputs_unchanged",
@@ -73,11 +73,11 @@
       "name": "local_report_links_resolve",
       "passed": true,
       "detail": {
-        "links": 43
+        "links": 48
       }
     }
   ],
-  "report_sha256": "67b5fa3b0d6c6bcc253bd50779d81d18a97b0ad5747040baefe6c24e56d30af3",
+  "report_sha256": "9a92d95608ab890f7516184dcc36d55853a3ea501a8ca3a5e3c7a0a9dfa2b4c1",
   "numeric_fields": 194,
   "model_calls_main": 3088,
   "model_calls_example": 6,

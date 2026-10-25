@@ -7,6 +7,7 @@ sys.dont_write_bytecode=True
 import experiment_raptor_large as exp
 import reorganize_report
 import clarify_report_context
+import add_index_build_section
 
 NAMES={'A':'현재 색인(A)','B':'파일 간 확장(B)','R0':'원문 검색(R0)',
        'RF':'함수 요약(RF)','RH':'계층 요약(RH)','C':'계층 요약 정리(C)','FULL':'파일 전체'}
@@ -392,12 +393,16 @@ def main():
     text,content_map=reorganize_report.reorganize(text)
     exp.v1.dump(out/reorganize_report.REVISION/'content_map.json',content_map)
     text=clarify_report_context.clarify(text)
+    section_path=out/add_index_build_section.REVISION/'section.md'
+    text=add_index_build_section.insert(text,section_path.read_text())
     exp.REPORT.write_text(text)
     exp.v1.dump(manifest,{'generated_at_utc':exp.audit.now(),'report_sha256':exp.v1.sha(exp.REPORT),'report_digest':exp.audit.digest(text),
         'summary_sha256':exp.v1.sha(out/'summary.json'),'verification_sha256':exp.v1.sha(out/'verification.json'),
-        'generator_sha256':exp.v1.sha(__file__),'editorial_revision':clarify_report_context.REVISION,
+        'generator_sha256':exp.v1.sha(__file__),'editorial_revision':add_index_build_section.REVISION,
         'layout_generator_sha256':exp.v1.sha(reorganize_report.__file__),
         'reader_context_generator_sha256':exp.v1.sha(clarify_report_context.__file__),
+        'index_build_chapter_sha256':exp.v1.sha(section_path),
+        'index_build_inserter_sha256':exp.v1.sha(add_index_build_section.__file__),
         'mechanism_revision':REVISION,
         'mechanism_facts_sha256':exp.v1.sha(out/REVISION/'mechanism_facts.json')})
     print('Updated report:',exp.REPORT,'characters:',len(text))

@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "completed_at_utc": "2026-10-25T06:07:05.010667+00:00",
+  "report_sha256": "9a92d95608ab890f7516184dcc36d55853a3ea501a8ca3a5e3c7a0a9dfa2b4c1",
+  "before_report_sha256": "67b5fa3b0d6c6bcc253bd50779d81d18a97b0ad5747040baefe6c24e56d30af3",
+  "section_sha256": "c8702424e52cc936f65e24aa76d022a4fcffa5b73b80234fd6de290c4f056617",
+  "new_benchmark_model_calls": 0,
+  "checks": [
+    {
+      "name": "previous_report_restored_byte_for_byte_after_removing_new_chapter_and_reversing_renumbering",
+      "passed": true,
+      "detail": "67b5fa3b0d6c6bcc253bd50779d81d18a97b0ad5747040baefe6c24e56d30af3"
+    },
+    {
+      "name": "current_report_reproducible_from_previous_report_and_new_chapter",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "unique_anchors",
+      "passed": true,
+      "detail": 12
+    },
+    {
+      "name": "internal_links_resolve",
+      "passed": true,
+      "detail": 16
+    },
+    {
+      "name": "section_references_resolve",
+      "passed": true,
+      "detail": [
+        "1",
+        "1.2",
+        "2.4",
+        "3.1",
+        "3.2",
+        "3.3",
+        "3.4",
+        "4",
+        "4.1",
+        "5",
+        "5.5",
+        "7"
+      ]
+    },
+    {
+      "name": "previous_evidence_and_editorial_archives_unchanged",
+      "passed": true,
+      "detail": 20
+    },
+    {
+      "name": "code_blocks_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "new_chapter_has_actor_roles_seven_steps_per_method_build_and_query_separation",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "review": "Independent source audit found no required corrections; actual builder, proposed UI integration, disk storage, memory preparation and query-time C compaction are distinguished.",
+  "implementation_sources": {
+    "1st/symbol_test/symbol_bench/indexer.py": "cbd1334a7c9e040ad30081bf1e29c355d0cdc6247366417918549b9b4a4c909a",
+    "2nd/experiments/symbol_raptor/experiment.py": "b8f664facdff58c7b410f704216611e5a4e5bbd239ac394a9bb4e5f29f9234cb",
+    "2nd/experiments/symbol_raptor/experiment_large.py": "c5f3aa33c6a9c539dd3e3f7d323b029cf1ad39b3d5ddc292053829512b81c09e",
+    "2nd/experiments/symbol_raptor/experiment_raptor_large.py": "1e6b190b5eeb8141aec9f4f282ad95a04538db5825e3a67d10440c437a1668eb",
+    "2nd/experiments/symbol_raptor/experiment_v2.py": "86fbbf165c2ad44c21fe0a0554b6624e86961246c9abb9aceed547f1a8d606be"
+  }
+}

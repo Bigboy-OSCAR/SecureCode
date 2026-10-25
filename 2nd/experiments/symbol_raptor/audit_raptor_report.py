@@ -65,7 +65,7 @@ def main():
             assert n==columns,('table column mismatch',line,n,columns)
         else:columns=None
     check('balanced_fences_and_table_columns',not inside)
-    check('required_explanations_and_latest_results_present',all(s in report for s in ['### 1.6 RF','### 1.7 RH','### 1.8 C','### 1.10 RAPTOR','### 3.1 큰 파일','사전 요약 생성 비용','최대 호출 입력의 평균','0.09375']))
+    check('required_explanations_and_latest_results_present',all(s in report for s in ['### 1.6 RF','### 1.7 RH','### 1.8 C','### 1.10 RAPTOR','## 2. UI에서','### 4.1 큰 파일','사전 요약 생성 비용','최대 호출 입력의 평균','0.09375']))
     check('markdown_has_no_image_embeds',not re.search(r'!\[',report))
     links=[]
     for target in re.findall(r'\[[^\]]*\]\(([^)]+)\)','\n'.join(plain)):

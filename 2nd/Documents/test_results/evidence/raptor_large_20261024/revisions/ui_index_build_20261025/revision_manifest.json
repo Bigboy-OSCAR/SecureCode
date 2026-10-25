@@ -1,0 +1,30 @@
+{
+  "saved_at_utc": "2026-10-25T06:07:42.243945+00:00",
+  "editorial_revision": "revisions/ui_index_build_20261025",
+  "new_benchmark_model_calls": 0,
+  "report_sha256": "9a92d95608ab890f7516184dcc36d55853a3ea501a8ca3a5e3c7a0a9dfa2b4c1",
+  "files": {
+    "03_현재색인_A와_파일간확장_B_재실험_비교보고서.md": "67b5fa3b0d6c6bcc253bd50779d81d18a97b0ad5747040baefe6c24e56d30af3",
+    "audit_raptor_report.py": "abd56bfde7a972509aad12c7882898c3424b418d0d56f9568877d5727f360b61",
+    "completion_audit.json": "4520f3711d612e577e859e83cca8874062186e2e6116542c703fa7f2b3c13b76",
+    "completion_audit_after.json": "95ee3fa667e710fd7d5e169d1df5c0b103f2733e0c8fff4a56042916907b9192",
+    "deliverable_manifest.json": "db6723028ce654d97cb58c4fbacdf1ad094ab1618edc5e1633b64a0ee0e3765a",
+    "final_source_manifest.json": "3eba51ce7025d04ed8cd6380980d5cbb125484c2109fb5d46b3e843be67108eb",
+    "report_after.md": "9a92d95608ab890f7516184dcc36d55853a3ea501a8ca3a5e3c7a0a9dfa2b4c1",
+    "report_manifest.json": "36a9c94cf8ae2aa881ed4eefb379ed37e722f971018260eea86600d1fbe57108",
+    "report_manifest_after.json": "be2a450720a066b3957d4aafe26fda8b844d30c2903f7613fcab98806e63d157",
+    "report_raptor_large.py": "6d1f4cd105de5f72b85a9aa71c3e8ec08e768f89eb565763c3e8671a7b80f092",
+    "reproduce.txt": "f520bf8c0c4ccc8e566905b0be26cd37e37aad734dda4e9fbc7739220b812394",
+    "reproduce_after.txt": "b00e4e7c8ea2acdae6830e429a415b97e8937a2d0aca00a486ead89d092b5268",
+    "review.md": "16df37ecdc2edfb77f36d681310c64029b5f4d313e441f7ee26e79389535cda9",
+    "revision_scope.json": "021e1c293e40feff8c642ae420e09aacbc797ae35e74009f6e24a1467d878ac1",
+    "section.md": "c8702424e52cc936f65e24aa76d022a4fcffa5b73b80234fd6de290c4f056617",
+    "source_snapshot/add_index_build_section.py": "dd3c634422b2246ee4670409373b6374a6a1b3abef2ee9a69d80bf34052eae67",
+    "source_snapshot/audit_raptor_report.py": "bc95000de8a0804c7b3af53294ec29cdb1c1152cb6d7b8c8e04d68b493e739d8",
+    "source_snapshot/clarify_report_context.py": "c33af1c3ed0a4a5664c453afc2180546c47d7975d6ee309fbc46fc6bbf77c411",
+    "source_snapshot/reorganize_report.py": "21c37ae604b9fa19266499e502777aeba2a03426aa0957821e0fa5e6b2c3db82",
+    "source_snapshot/report_raptor_large.py": "838541ef74c27140f6a9175c6fe06fd6bbc1515bcb6cf228c41f3e31cd0c5168",
+    "verification.json": "5d8a221dd6a9013b2ebc0576de028ad4cebbe2bbd634cc73b2ebe9a29f70d047",
+    "work_status.json": "1d5e23d3217d1e317eb6ee83ef8438e412986760ec03d558a4048fab90c82caa"
+  }
+}

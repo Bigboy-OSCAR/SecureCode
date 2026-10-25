@@ -1,0 +1,43 @@
+{
+  "created_at_utc": "2026-10-25T06:00:25.825982+00:00",
+  "request": "UI 버튼으로 현재 프로젝트 색인을 만들 때 주체·과정·산출물을 설명하는 별도 절 추가",
+  "new_benchmark_model_calls": 0,
+  "before": {
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md": {
+      "snapshot": "03_현재색인_A와_파일간확장_B_재실험_비교보고서.md",
+      "sha256": "67b5fa3b0d6c6bcc253bd50779d81d18a97b0ad5747040baefe6c24e56d30af3"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/report_manifest.json": {
+      "snapshot": "report_manifest.json",
+      "sha256": "36a9c94cf8ae2aa881ed4eefb379ed37e722f971018260eea86600d1fbe57108"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/completion_audit.json": {
+      "snapshot": "completion_audit.json",
+      "sha256": "4520f3711d612e577e859e83cca8874062186e2e6116542c703fa7f2b3c13b76"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/deliverable_manifest.json": {
+      "snapshot": "deliverable_manifest.json",
+      "sha256": "db6723028ce654d97cb58c4fbacdf1ad094ab1618edc5e1633b64a0ee0e3765a"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/final_source_manifest.json": {
+      "snapshot": "final_source_manifest.json",
+      "sha256": "3eba51ce7025d04ed8cd6380980d5cbb125484c2109fb5d46b3e843be67108eb"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/work_status.json": {
+      "snapshot": "work_status.json",
+      "sha256": "1d5e23d3217d1e317eb6ee83ef8438e412986760ec03d558a4048fab90c82caa"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/reproduce.txt": {
+      "snapshot": "reproduce.txt",
+      "sha256": "f520bf8c0c4ccc8e566905b0be26cd37e37aad734dda4e9fbc7739220b812394"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/report_raptor_large.py": {
+      "snapshot": "report_raptor_large.py",
+      "sha256": "6d1f4cd105de5f72b85a9aa71c3e8ec08e768f89eb565763c3e8671a7b80f092"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/audit_raptor_report.py": {
+      "snapshot": "audit_raptor_report.py",
+      "sha256": "abd56bfde7a972509aad12c7882898c3424b418d0d56f9568877d5727f360b61"
+    }
+  }
+}

@@ -27,14 +27,22 @@ source_snapshot에 실행 시점의 소스를 보존했다.
 
 2026-10-25 생성 방식·정답률 해석 보강 기록: 변경 전후 문서·생성기·기존 완료 기록은 revisions/methods_and_interpretation_20261025에 보존했다. 이 리비전의 verify_report_mechanisms.py는 당시 절 번호와 문서 배열을 확인하는 역사적 검증이며, 아래 최신 문서 재구성 검증으로 대체된다. 원자료와 사후 분석 자체는 변경하지 않았다.
 
-2026-10-25 문서 재구성 — 현재 보고서 재현:
+2026-10-25 문서 재구성 — 당시 버전의 재현 절차:
 1. 보존한 summary.json, verification.json, methods_and_interpretation_20261025/mechanism_facts.json을 사용한다.
 2. report_raptor_large.py 실행: 검증된 결과로 내용을 조립한 뒤 reorganize_report.py로 현재 구조를 적용한다.
 3. verify_report_reorganization.py 실행: 기존 38개 표의 828개 데이터 셀, 코드·JSON 예제 14개, 원문 604개 비공백 행의 이동·통합, 링크와 측정 기록 불변을 확인한다.
 4. audit_raptor_report.py 실행: 기존 수치 재계산, 입력 자료, 예제, 표·링크를 점검한다.
 이 과정에는 모델 서버나 새 LLM 호출이 필요 없다. 정리 전후 문서, 내용 대조표, 문서 검증, 현재 보고서 생성·검증 소스는 revisions/report_reorganization_20261025에 보존했다. 당시의 완료 메타데이터도 같은 폴더에 변경 전 상태로 남겼다.
 
-2026-10-25 독자 맥락 보완 — 최신 편집 재현:
+2026-10-25 독자 맥락 보완 — 당시 버전의 편집 절차:
 report_raptor_large.py는 reorganize_report.py 이후 clarify_report_context.py를 적용한다.
 검증은 verify_report_reorganization.py --output 2nd/Documents/test_results/evidence/raptor_large_20261024/revisions/reader_context_20261025/preservation_check.json 후 audit_raptor_report.py를 실행한다. --output을 지정해 이전 편집의 검증 기록을 보존한다.
 이번 독자 관점 검토는 실제 독자 대상 이해도 시험이 아니다. 검토 내용·전후 문서·보존 확인과 생성 소스는 revisions/reader_context_20261025에 보관했다. 새 벤치마크 모델 호출은 없다.
+
+2026-10-25 UI 색인 생성 과정 추가 — 최신 보고서 재현:
+report_raptor_large.py는 기존 결과 조립 → reorganize_report.py → clarify_report_context.py → add_index_build_section.py 순서로 보고서를 만든다.
+추가 문장은 revisions/ui_index_build_20261025/section.md에 보존했다. 새 2절을 삽입하고 기존 2~6절과 문서 안의 참조 번호를 3~7절로 이동한다.
+현재 보고서는 report_raptor_large.py를 실행한 뒤 audit_raptor_report.py로 수치·예제·링크를 검증한다. 모델 서버나 새 모델 호출은 필요 없다.
+이번 보존 검증은 add_index_build_section.previous_document(현재 보고서, section.md)로 새 절·목차를 제거하고 번호를 되돌린 결과가 변경 전 보고서와 바이트 단위로 같음을 확인했다. 결과와 코드 근거 해시는 이 리비전의 verification.json에 있다.
+앞선 verify_report_reorganization.py 및 verify_report_mechanisms.py는 당시 절 번호에 맞춘 역사적 검증이다. 새 절 번호를 사용하는 현재 문서에 직접 실행하거나 이전 검증 기록을 덮어쓰지 않는다.
+새 절은 실제 Python 실험 구축 코드와 제품 UI 연결 제안을 구분한다. UI 구현이나 새 실험은 수행하지 않았다.
