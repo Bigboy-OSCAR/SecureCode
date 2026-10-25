@@ -1,0 +1,318 @@
+{
+  "project": "example",
+  "nodes": {
+    "memory://symbol/policy.py::SAFETY_STOCK": {
+      "id": "memory://symbol/policy.py::SAFETY_STOCK",
+      "path": "policy.py",
+      "name": "SAFETY_STOCK",
+      "source": "SAFETY_STOCK = 3",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/rules.py::sellable": {
+      "id": "memory://symbol/rules.py::sellable",
+      "path": "rules.py",
+      "name": "sellable",
+      "source": "def sellable(on_hand, held):\n    return max(0, on_hand - held - SAFETY_STOCK)",
+      "imports": "from policy import SAFETY_STOCK",
+      "start": 3,
+      "end": 4,
+      "refs": [
+        "SAFETY_STOCK",
+        "held",
+        "max",
+        "on_hand"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::SAFETY_STOCK"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::remaining": {
+      "id": "memory://symbol/service.py::remaining",
+      "path": "service.py",
+      "name": "remaining",
+      "source": "def remaining(on_hand, held):\n    return sellable(on_hand, held)",
+      "imports": "from rules import sellable",
+      "start": 3,
+      "end": 4,
+      "refs": [
+        "held",
+        "on_hand",
+        "sellable"
+      ],
+      "deps": [
+        "memory://symbol/rules.py::sellable"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::label": {
+      "id": "memory://symbol/service.py::label",
+      "path": "service.py",
+      "name": "label",
+      "source": "def label(on_hand):\n    return 'empty' if on_hand <= 0 else 'stocked'",
+      "imports": "from rules import sellable",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "on_hand"
+      ],
+      "deps": [],
+      "kind": "function"
+    }
+  },
+  "raw": [
+    {
+      "id": "memory://symbol/policy.py::SAFETY_STOCK",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::SAFETY_STOCK lines 1-1\n\nSAFETY_STOCK = 3",
+      "source_uris": [
+        "memory://symbol/policy.py::SAFETY_STOCK"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/rules.py::sellable",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::sellable lines 3-4\nfrom policy import SAFETY_STOCK\ndef sellable(on_hand, held):\n    return max(0, on_hand - held - SAFETY_STOCK)\n\n### memory://symbol/policy.py::SAFETY_STOCK lines 1-1\n\nSAFETY_STOCK = 3",
+      "source_uris": [
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/policy.py::SAFETY_STOCK"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::sellable",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::sellable lines 3-4\nfrom policy import SAFETY_STOCK\ndef sellable(on_hand, held):\n    return max(0, on_hand - held - SAFETY_STOCK)",
+      "source_uris": [
+        "memory://symbol/rules.py::sellable"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::remaining",
+      "level": 0,
+      "text": "### memory://symbol/service.py::remaining lines 3-4\nfrom rules import sellable\ndef remaining(on_hand, held):\n    return sellable(on_hand, held)\n\n### memory://symbol/rules.py::sellable lines 3-4\nfrom policy import SAFETY_STOCK\ndef sellable(on_hand, held):\n    return max(0, on_hand - held - SAFETY_STOCK)\n\n### memory://symbol/policy.py::SAFETY_STOCK lines 1-1\n\nSAFETY_STOCK = 3",
+      "source_uris": [
+        "memory://symbol/service.py::remaining",
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/policy.py::SAFETY_STOCK"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::remaining",
+      "level": 0,
+      "text": "### memory://symbol/service.py::remaining lines 3-4\nfrom rules import sellable\ndef remaining(on_hand, held):\n    return sellable(on_hand, held)",
+      "source_uris": [
+        "memory://symbol/service.py::remaining"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::label",
+      "level": 0,
+      "text": "### memory://symbol/service.py::label lines 6-7\nfrom rules import sellable\ndef label(on_hand):\n    return 'empty' if on_hand <= 0 else 'stocked'",
+      "source_uris": [
+        "memory://symbol/service.py::label"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    }
+  ],
+  "summaries": [
+    {
+      "id": "summary:leaf:memory://symbol/rules.py::sellable",
+      "level": 1,
+      "path": "rules.py",
+      "text": "### summary:leaf:memory://symbol/rules.py::sellable\nThe `sellable` function calculates the number of items that can be sold by subtracting the held items and a safety stock from the on-hand inventory. It returns the maximum of 0 or the result. The `SAFETY_STOCK` constant is defined in the `policy.py` file and has a value of 3.",
+      "source_uris": [
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/policy.py::SAFETY_STOCK"
+      ],
+      "children": [
+        "memory://symbol/rules.py::sellable"
+      ],
+      "call_id": "e44dca4bb203714db117"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::remaining",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::remaining\nThe `remaining` function calculates the number of items that can be sold by subtracting the number of items held from the number of items on hand and subtracting a safety stock. It uses the `sellable` function from the `rules` module, which in turn uses the `SAFETY_STOCK` constant from the `policy` module. The `sellable` function ensures the result is not negative by using the `max` function.",
+      "source_uris": [
+        "memory://symbol/service.py::remaining",
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/policy.py::SAFETY_STOCK"
+      ],
+      "children": [
+        "memory://symbol/service.py::remaining"
+      ],
+      "call_id": "c61194c10272ad088d82"
+    },
+    {
+      "id": "summary:leaf:memory://symbol/service.py::label",
+      "level": 1,
+      "path": "service.py",
+      "text": "### summary:leaf:memory://symbol/service.py::label\nThe `label` function checks if `on_hand` is less than or equal to 0. If true, it returns 'empty'; otherwise, it returns 'stocked'.",
+      "source_uris": [
+        "memory://symbol/service.py::label"
+      ],
+      "children": [
+        "memory://symbol/service.py::label"
+      ],
+      "call_id": "1289fe808b9e36e35d5d"
+    },
+    {
+      "id": "summary:level2:rules.py",
+      "level": 2,
+      "path": "rules.py",
+      "text": "### summary:level2:rules.py\nThe `sellable` function determines how many items can be sold by subtracting held items and a safety stock from the on-hand inventory. It returns the maximum of 0 or the result. The `SAFETY_STOCK` constant, with a value of 3, is defined in the `policy.py` file.",
+      "source_uris": [
+        "memory://symbol/policy.py::SAFETY_STOCK",
+        "memory://symbol/rules.py::sellable"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/rules.py::sellable"
+      ],
+      "call_id": "a1edaa6544fe959698f3"
+    },
+    {
+      "id": "summary:level2:service.py",
+      "level": 2,
+      "path": "service.py",
+      "text": "### summary:level2:service.py\nThe `remaining` function calculates the number of items that can be sold by subtracting the number of items held from the number of items on hand and subtracting a safety stock. It uses the `sellable` function from the `rules` module, which in turn uses the `SAFETY_STOCK` constant from the `policy` module. The `sellable` function ensures the result is not negative by using the `max` function. The `label` function checks if `on_hand` is less than or equal to 0 and returns 'empty' or 'stocked' accordingly.",
+      "source_uris": [
+        "memory://symbol/policy.py::SAFETY_STOCK",
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/service.py::label",
+        "memory://symbol/service.py::remaining"
+      ],
+      "children": [
+        "summary:leaf:memory://symbol/service.py::remaining",
+        "summary:leaf:memory://symbol/service.py::label"
+      ],
+      "call_id": "7b9de804f9e422d19a1f"
+    },
+    {
+      "id": "summary:level3:project",
+      "level": 3,
+      "path": "project",
+      "text": "### summary:level3:project\nThe `service.py` module contains functions to manage inventory and determine the number of items that can be sold. The `remaining` function calculates the number of items available for sale by subtracting the number of items held from the on-hand inventory and applying a safety stock. It uses the `sellable` function from the `rules.py` module, which ensures the result is not negative. The `label` function checks if the inventory is empty and returns 'empty' or 'stocked'. The `SAFETY_STOCK` constant, with a value of 3, is defined in the `policy.py` file.",
+      "source_uris": [
+        "memory://symbol/policy.py::SAFETY_STOCK",
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/service.py::label",
+        "memory://symbol/service.py::remaining"
+      ],
+      "children": [
+        "summary:level2:rules.py",
+        "summary:level2:service.py"
+      ],
+      "call_id": "991f73ed0f335bb93b96"
+    }
+  ],
+  "index": {
+    "version": 1,
+    "root": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/index_example/dataset/projects/example",
+    "files": [
+      {
+        "path": "policy.py",
+        "symbols": []
+      },
+      {
+        "path": "rules.py",
+        "symbols": [
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "sellable",
+            "qualname": "sellable",
+            "start_line": 3,
+            "end_line": 4,
+            "uri": "memory://symbol/rules.py::sellable"
+          }
+        ]
+      },
+      {
+        "path": "service.py",
+        "symbols": [
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "remaining",
+            "qualname": "remaining",
+            "start_line": 3,
+            "end_line": 4,
+            "uri": "memory://symbol/service.py::remaining"
+          },
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "label",
+            "qualname": "label",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/service.py::label"
+          }
+        ]
+      }
+    ],
+    "symbols": [
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "sellable",
+        "qualname": "sellable",
+        "start_line": 3,
+        "end_line": 4,
+        "uri": "memory://symbol/rules.py::sellable"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "remaining",
+        "qualname": "remaining",
+        "start_line": 3,
+        "end_line": 4,
+        "uri": "memory://symbol/service.py::remaining"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "label",
+        "qualname": "label",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/service.py::label"
+      }
+    ]
+  },
+  "build_seconds": 24.94427741698746,
+  "build_input_tokens": 1205,
+  "build_output_tokens": 510,
+  "build_model_seconds": 24.936690250993706,
+  "build_call_ids": [
+    "e44dca4bb203714db117",
+    "c61194c10272ad088d82",
+    "1289fe808b9e36e35d5d",
+    "a1edaa6544fe959698f3",
+    "7b9de804f9e422d19a1f",
+    "991f73ed0f335bb93b96"
+  ],
+  "source_sha256": {
+    "policy.py": "7feee3d1c5ac60f634e09b89eb12c18b069f301ffd23d84b9a4897ff3f6a4de9",
+    "rules.py": "6036441ef3cf2c33abbd76cfa7c502e9134bfa4d7a2b4c2d5e38ba196f8a9674",
+    "service.py": "bde251ddfaca18c244617f7965decbac699b589364000c94f2dc9655085fa2f7"
+  }
+}

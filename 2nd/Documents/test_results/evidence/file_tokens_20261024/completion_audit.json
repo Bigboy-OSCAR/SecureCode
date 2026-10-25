@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-24T10:42:29.993343+00:00",
+  "report_path": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md",
+  "report_sha256": "705f9c5ae51863eaa9eede42fb72fa88ff3149c7aaa5fffe4af3e856a651418c",
+  "original_evaluation_inputs_unchanged": true,
+  "prior_report_archived_and_hash_verified": true,
+  "definition_and_full_file_difference_in_section_1": true,
+  "full_file_comparison_in_section_3": true,
+  "whole_file_token_weighting_independently_recomputed": 168.57291666666666,
+  "existing_request_token_counts_reproduced": 864,
+  "new_model_answers_generated": 0,
+  "numeric_aggregation_checks": 144,
+  "markdown_tables": 17,
+  "mermaid_flowcharts": 1,
+  "local_links_checked": 16,
+  "source_hashes": {
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/analyze_file_tokens.py": "60371acc939ea76f7bc69b180c800b76b3a8e470cdcbb12781660a3298d3c838",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/report_r0.py": "8d481a0f175f1a60d62957bcdc1460b3b517a43361115e6f98b7782cce05ca73",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/audit_v2.py": "bb10ae56108fb131077597552cb83909fc909b68518bf9afc0563868e35bbca6"
+  },
+  "token_summary_sha256": "3353326db2f0e56ecb18df38c64df0075be5567316d21fd660e0dbc2500e264d",
+  "report_manifest_sha256": "1dac0e1c62dbb43a377adc062aed1e29b603046e4501cfff681e3c2f0b73327e"
+}

@@ -1,0 +1,11 @@
+{
+  "completed_at_utc": "2026-10-24T16:47:32.478996+00:00",
+  "this_process_started_utc": "2026-10-24T13:43:53.554065+00:00",
+  "assets_sha256": "5b8206e07d1454c1c0e3b21867c56379ab904e762a0289ca255c2ff152c4bbfe",
+  "nodes_sha256": "d26811d4849cd3a7d88a70bf214d5e17ddfa1b93f4d6287a86ef968d0794b0ab",
+  "calls": 2198,
+  "model_wall_seconds": 11015.48431900196,
+  "input_tokens": 691923,
+  "output_tokens": 211821,
+  "output_limit_calls": 15
+}

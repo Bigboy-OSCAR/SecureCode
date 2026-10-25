@@ -1,0 +1,9 @@
+{
+  "checked_at_utc": "2026-10-24T18:20:58.945048+00:00",
+  "pid": 24876,
+  "owned_session": 21970,
+  "verified_command": "/opt/homebrew/bin/llama-server -m /Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf --host 127.0.0.1 --port 8766 --ctx-size 8192 --parallel 1 --no-warmup --cache-ram 0 --no-cache-prompt",
+  "process_start_utc": "2026-10-24T13:43:41+00:00",
+  "signal": "SIGTERM",
+  "stopped": true
+}

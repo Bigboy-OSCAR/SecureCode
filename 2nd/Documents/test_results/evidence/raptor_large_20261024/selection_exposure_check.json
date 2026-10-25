@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-24T18:20:22.625099+00:00",
+  "method": "Independent stack traversal from each selected item through summary children, using actual call stop fields.",
+  "actual_eval_answers": 864,
+  "affected_answer_calls": {
+    "RF": 0,
+    "RH": 0,
+    "C": 0
+  },
+  "results_sha256": "5bb60af318f07ea954d66eec103460ee52563076ebbda6a491ce9ec1d72203e2",
+  "assets_sha256": "5b8206e07d1454c1c0e3b21867c56379ab904e762a0289ca255c2ff152c4bbfe"
+}

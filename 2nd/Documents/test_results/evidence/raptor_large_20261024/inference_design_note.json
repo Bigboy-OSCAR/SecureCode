@@ -1,0 +1,8 @@
+{
+  "recorded_at_utc": "2026-10-24T14:07:00.599726+00:00",
+  "before_evaluation": true,
+  "project_clusters": 6,
+  "two_sided_minimum_signflip_p": 0.03125,
+  "holm_three_minimum_p": 0.09375,
+  "interpretation": "Three-comparison Holm cannot cross alpha .05 with only six project clusters. Report exploratory effect estimates and uncertainty, not proof of equivalence or absence of benefit. Protocol unchanged."
+}

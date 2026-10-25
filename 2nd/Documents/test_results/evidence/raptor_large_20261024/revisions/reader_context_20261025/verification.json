@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "completed_at_utc": "2026-10-25T04:38:21.053292+00:00",
+  "before_sha256": "61bc59ba6efef8ed70de01b44bbde4dca8e4c3de26d800ab030db7dc8a2277c0",
+  "report_sha256": "67b5fa3b0d6c6bcc253bd50779d81d18a97b0ad5747040baefe6c24e56d30af3",
+  "checks": [
+    {
+      "name": "all_previous_body_nonempty_lines_preserved_in_order",
+      "passed": true,
+      "count": 700
+    },
+    {
+      "name": "all_previous_tables_preserved",
+      "passed": true,
+      "count": 45
+    },
+    {
+      "name": "previous_measurement_and_revision_artifacts_unchanged",
+      "passed": true,
+      "count": 16
+    },
+    {
+      "name": "original_38_tables_828_cells_14_code_blocks_preserved",
+      "passed": true
+    },
+    {
+      "name": "numerical_audit_current",
+      "passed": true
+    }
+  ],
+  "review": "Two editorial perspectives reviewed the before/after context. No human reader comprehension trial was conducted.",
+  "new_benchmark_model_calls": 0
+}

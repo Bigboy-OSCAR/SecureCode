@@ -1,0 +1,351 @@
+{
+  "status": "VERIFIED",
+  "recorded_at_utc": "2026-10-24T13:24:23.927758+00:00",
+  "limit_definition": "stop_type == limit or stopped_limit == true. The response may report stop_type=limit without the legacy stopped_limit flag.",
+  "limited_calls": 21,
+  "by_arm": {
+    "FULL": 21
+  },
+  "by_purpose": {
+    "answer": 21
+  },
+  "unique_questions": 7,
+  "calls": [
+    {
+      "call_id": "c037dea4c3d851d441ef",
+      "meta": {
+        "task_id": "eval_cache__v2_entry_transitive_calls",
+        "repeat": 0,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4272,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "833a8e436a8e51810c88",
+      "meta": {
+        "task_id": "eval_schedules__v2_appointment_transitive_calls",
+        "repeat": 0,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4257,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "16af3089d7fcc06050f2",
+      "meta": {
+        "task_id": "eval_authorization__direct_calls",
+        "repeat": 0,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4256,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "99f466c999e226eec8b6",
+      "meta": {
+        "task_id": "eval_pricing__v2_receipt_transitive_calls",
+        "repeat": 0,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4288,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "2ddd9c119b08dbd94f05",
+      "meta": {
+        "task_id": "eval_inventory__v2_remaining_transitive_calls",
+        "repeat": 0,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4257,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "995929a3c239584d0a3b",
+      "meta": {
+        "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+        "repeat": 0,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4276,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "cc1ca705c13ff2dc4fd3",
+      "meta": {
+        "task_id": "eval_routing__v2_retry_transitive_calls",
+        "repeat": 0,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4279,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "4dc9c2b3542c91167a31",
+      "meta": {
+        "task_id": "eval_inventory__v2_remaining_transitive_calls",
+        "repeat": 1,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4257,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "82c0fa612974b50551fe",
+      "meta": {
+        "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+        "repeat": 1,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4276,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "08e63b8f50643cea8496",
+      "meta": {
+        "task_id": "eval_routing__v2_retry_transitive_calls",
+        "repeat": 1,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4279,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "c9d9bd828399c6d1d28b",
+      "meta": {
+        "task_id": "eval_cache__v2_entry_transitive_calls",
+        "repeat": 1,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4272,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "a980730062aca5956823",
+      "meta": {
+        "task_id": "eval_authorization__direct_calls",
+        "repeat": 1,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4256,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "45548714c488afbba580",
+      "meta": {
+        "task_id": "eval_pricing__v2_receipt_transitive_calls",
+        "repeat": 1,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4288,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "2962b7175c22ca548845",
+      "meta": {
+        "task_id": "eval_schedules__v2_appointment_transitive_calls",
+        "repeat": 1,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4257,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "1e171454e869ca1c5b0c",
+      "meta": {
+        "task_id": "eval_pricing__v2_receipt_transitive_calls",
+        "repeat": 2,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4288,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "88cf2768ac312750581b",
+      "meta": {
+        "task_id": "eval_inventory__v2_remaining_transitive_calls",
+        "repeat": 2,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4257,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "03fb18644b3f46d6ddf3",
+      "meta": {
+        "task_id": "eval_cache__v2_entry_transitive_calls",
+        "repeat": 2,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4272,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "b0475c93160af67dacec",
+      "meta": {
+        "task_id": "eval_authorization__direct_calls",
+        "repeat": 2,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4256,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "cc6a2a1f6f1e395f0694",
+      "meta": {
+        "task_id": "eval_routing__v2_retry_transitive_calls",
+        "repeat": 2,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4279,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "a3e5071caefbc5a24185",
+      "meta": {
+        "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+        "repeat": 2,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4276,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    },
+    {
+      "call_id": "f69509c8eda8657125ee",
+      "meta": {
+        "task_id": "eval_schedules__v2_appointment_transitive_calls",
+        "repeat": 2,
+        "arm": "FULL",
+        "dev": false,
+        "session_id": "796b6f0158bdf251dcb5"
+      },
+      "stop_type": "limit",
+      "stopped_limit": false,
+      "truncated": false,
+      "input_tokens": 4257,
+      "output_tokens": 128,
+      "max_output_tokens": 128
+    }
+  ]
+}

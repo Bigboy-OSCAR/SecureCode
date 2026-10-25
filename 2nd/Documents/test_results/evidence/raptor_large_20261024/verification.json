@@ -1,0 +1,111 @@
+{
+  "status": "PASS",
+  "completed_at_utc": "2026-10-24T18:14:21.569729+00:00",
+  "checks": [
+    {
+      "name": "frozen_source_protocol_and_historical_data",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "864_fresh_answers_in_frozen_order",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "96_exact_questions_three_repeats",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "24_development_answers_separate",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "six_orders_balanced_each_repeat",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same_model_and_server_configuration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "unique_actual_model_calls",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fixed_parameters_and_no_input_truncation_or_transport_errors",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "limit_detection_uses_both_server_fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sequential_calls_and_physical_query_times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "summaries_frozen_before_development_and_evaluation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent_typed_json_grading",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_96_gold_answers_reexecuted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete_question_blind_summary_hierarchy_exact_prompts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent_tfidf_order_prompts_and_compaction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent_offline_tokenization_and_1024_token_packing",
+      "passed": true,
+      "detail": {
+        "distinct_strings": 66096
+      }
+    },
+    {
+      "name": "actual_server_token_counts_match_offline",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_288_RH_C_pairs_same_selected_payload",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent_statistics",
+      "passed": true,
+      "detail": {
+        "numeric_fields": 2253
+      }
+    }
+  ],
+  "fresh_eval_answers": 864,
+  "dev_answers": 24,
+  "model_calls": 3088,
+  "numeric_fields": 2253,
+  "summary_sha256": "4fe4ab8ead23de69ecde243fd6b187fd7be42d8409b9b78ad600b8c7d23e83ce",
+  "results_sha256": "5bb60af318f07ea954d66eec103460ee52563076ebbda6a491ce9ec1d72203e2"
+}

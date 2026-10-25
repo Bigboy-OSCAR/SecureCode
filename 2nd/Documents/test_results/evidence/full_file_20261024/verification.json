@@ -1,0 +1,141 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-24T10:57:13.071845+00:00",
+  "count": 20,
+  "checks": [
+    {
+      "name": "frozen_inputs_code_and_prior_results",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "288_ordered_fresh_actual_answers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same_96_questions_three_repeats",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "development_separate",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same_model_binary_and_settings",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual_calls_no_reused_answers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "matching_request_response_logs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fixed_parameters_and_no_cache",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no_transport_errors",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "call_time_nonoverlap",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "query_time_consistency",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent_exact_grading",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "gold_reexecuted_and_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent_source_graph",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "exact_entire_file_sent_no_truncation_or_extra_files",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same_prompts_file_mapping_and_source_coverage",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual_tokens_match_prior_count_only_reference",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "offline_tokens_equal_actual_server_requests",
+      "passed": true,
+      "detail": {
+        "strings": 118,
+        "tokenizer": {
+          "binary": "/opt/homebrew/Cellar/llama.cpp/8680/bin/llama-tokenize",
+          "binary_sha256": "a6364e9a027fa6e76b66f6e61b6af397dc63128f7072be6c1589e80830e349d5",
+          "command": [
+            "/opt/homebrew/bin/llama-tokenize",
+            "-m",
+            "/Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf",
+            "--no-bos",
+            "--no-escape",
+            "--ids",
+            "--log-disable",
+            "--stdin"
+          ],
+          "separator_token": 151643,
+          "standalone_crosschecks": 14,
+          "all_standalone_crosschecks_passed": true
+        }
+      }
+    },
+    {
+      "name": "prior_AB_R0_results_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent_statistics_and_input_accounting",
+      "passed": true,
+      "detail": {
+        "numeric_fields": 1911
+      }
+    }
+  ],
+  "actual_eval_answers": 288,
+  "model_calls": 298,
+  "generation_limit_calls": 0,
+  "source_hashes": {
+    "verify_full.py": "2e150ec5768b460c0416f02eb586355d2dfbc49af602fdf5bc49e9e67933badc",
+    "results.jsonl": "375256d7d799b8a78ec0fd16710a2dd7aa538f49441b1d3757f58b3ee1874484",
+    "summary.json": "c5b01e97794578c1ec3987b5e835e6825dacfc62a67cb2cb603c493f269c9012"
+  },
+  "limits": [
+    "Whole-file reader receives target file path in advance; no file discovery measured.",
+    "Separate execution session; timing not a controlled causal contrast.",
+    "Local consistency review, not external certification."
+  ]
+}

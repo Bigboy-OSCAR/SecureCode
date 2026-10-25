@@ -1,0 +1,15 @@
+{
+  "saved_at_utc": "2026-10-25T02:13:31.378099+00:00",
+  "editorial_revision": "revisions/methods_and_interpretation_20261025",
+  "files": {
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/revisions/methods_and_interpretation_20261025/source_snapshot/report_raptor_large.py": "0d25dce196c09866b4614c237e205fedcb31c6257ac72a4f6a37bba8cf2b5f5a",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/revisions/methods_and_interpretation_20261025/source_snapshot/analyze_report_mechanisms.py": "0861bcb0727f6dbdd97c641998a1cb3200cfdd0ec1239130f7fb50f4c01bae5a",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/revisions/methods_and_interpretation_20261025/source_snapshot/verify_report_mechanisms.py": "15f2385192c08fd6e6c01d09a0792b45e1a04b73dcee60213cd3be40a1b5640b",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/revisions/methods_and_interpretation_20261025/source_snapshot/audit_raptor_report.py": "0563ebb04a4e08c5a04186ccad6d680f485547da7c81f9d6911f8eccdc90c269"
+  },
+  "previous_manifest": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/revisions/methods_and_interpretation_20261025/final_source_manifest.json",
+  "previous_manifest_sha256": "5f3398e57bcf05c946fc4db8dba140bc6127de9a3e5c6fad68ffc5fa26f43c86",
+  "report_manifest_sha256": "5b0ee4e497d57c7b949105a5d7a8e17e24a1beb01a43fc3cc17f8c8aae69812b",
+  "completion_audit_sha256": "d6341dba1b3ea38e652fe9dc07bac3f87b0fa82b81d8b983f88883228c2c2b76",
+  "revision_verification_sha256": "5d9edffe4684182874d2c24aedd98818cb46a0449b03508e32883cc7f2cf1358"
+}

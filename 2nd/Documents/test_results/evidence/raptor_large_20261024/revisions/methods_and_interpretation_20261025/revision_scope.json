@@ -1,0 +1,16 @@
+{
+  "created_at_utc": "2026-10-25T02:03:22.755608+00:00",
+  "objective": "Explain construction and summarization for A/B/R0/RF/RH/C/FULL, separating parsing/rules/LLM, and add evidence-grounded per-method accuracy hypotheses to report 03.",
+  "new_model_runs": false,
+  "analysis_type": "Post-hoc analysis of preserved actual records; no causal ablation or new accuracy experiment.",
+  "before_hashes": {
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md": "8a03e6077e519a91584e4541bdffbbaeb875d24e441d287ac927849fd52a76b9",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/report_raptor_large.py": "afecba2098260909773d8537e8fc63d63448b69077c9c7a567e14db4d8f68caf",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/report_manifest.json": "8cc4ca4c2b15c77ab12c824ef8cd566a382434a2dd37277df1fc89572d7136ae",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/completion_audit.json": "03d32e5b7e2aba84d7c832349289020463221bfadfea4a1b89c82a7e30409c82",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/final_source_manifest.json": "5f3398e57bcf05c946fc4db8dba140bc6127de9a3e5c6fad68ffc5fa26f43c86",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/deliverable_manifest.json": "137bde06ba89a671f9e549c2a4e6fe4a4c3aa25548bc5acd1af1f5d125fd1d6b",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/work_status.json": "ef8b08aeaeea97fea280e32036ce1a3079494b15a7da995f6d3901b2c850ba4e",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/reproduce.txt": "1410bbd9cc910b33ad6cd069aeddda11c70af5edaa4c7fea4d6267002435097f"
+  }
+}

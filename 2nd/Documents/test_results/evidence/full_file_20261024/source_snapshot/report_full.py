@@ -1,0 +1,316 @@
+"""Explain actual index artifacts and report four genuinely executed reader arms."""
+from __future__ import annotations
+import argparse
+import json
+from pathlib import Path
+import sys
+sys.dont_write_bytecode=True
+import experiment_full as exp
+from report_ab import CATEGORIES,PROJECTS,pct,ncorrect
+from report_r0 import table
+
+LABELS={'A':'현재 색인(A)','B':'파일 간 확장(B)','R0':'원문 검색(R0)','FULL':'파일 하나 전체'}
+ARMS=['A','B','R0','FULL']
+
+
+def index_explanation(out):
+    ex=exp.read(out/'index_example/generated.json')
+    uid='memory://symbol/service.py::remaining'
+    pretty=lambda obj:json.dumps(obj,ensure_ascii=False,indent=2)
+    entry=next(s for s in ex['symbol_index']['symbols'] if s['uri']==uid)
+    nodes=ex['nodes']
+    b_keys=[uid,'memory://symbol/rules.py::sellable','memory://symbol/policy.py::SAFETY_STOCK']
+    b_excerpt={key:{k:nodes[key][k] for k in ['source','imports','deps']} for key in b_keys}
+    raw=[next(item for item in ex['raw'] if item['id']==key) for key in ['atomic:'+uid,uid]]
+    r_excerpt=[{k:item[k] for k in ['id','source_uris']} for item in raw]
+    weights={k:round(ex['document_vectors']['atomic:'+uid][k],4) for k in ['remaining','sellable','held']}
+    return f'''## 1. 같은 원본 파일로 A·B·R0의 색인을 비교하면
+
+색인은 **질문을 받았을 때 어떤 코드를 꺼낼지 찾기 위해 미리 준비하는 자료**다. 색인에 저장한 내용 전체가 LLM에 전달되는 것은 아니다. 아래에서는 **원본 파일 → 저장하는 자료 → 질문이 들어왔을 때 꺼내는 코드** 순서로 살펴본다.
+
+### 먼저, 원본 파일은 이렇게 생겼다
+
+설명을 위해 아래 세 파일을 만들었다. 실제 실험 구현으로 색인과 검색 후보를 생성했으며, 이 작은 예제는 뒤의 평가용 96문제와 별개다.
+
+`service.py` — 잔여 수량을 묻는 함수와, 질문에 관계없는 표시 함수가 함께 있다.
+
+```python
+{ex['sources']['service.py'].rstrip()}
+```
+
+`rules.py` — 실제 수량 계산은 다른 파일에 있다.
+
+```python
+{ex['sources']['rules.py'].rstrip()}
+```
+
+`policy.py` — 계산에 필요한 안전재고 값이다.
+
+```python
+{ex['sources']['policy.py'].rstrip()}
+```
+
+질문은 **“`remaining(9, 1)`의 반환값은?”**이다. 계산식은 `max(0, 9 - 1 - 3)`이므로 정답은 `5`다. 아래 A·B 설명에서는 AI가 출발 함수로 `remaining`을 골랐다고 가정한다. 예제의 LLM 답변을 만든 것은 아니며, 실제 정답률은 3절의 별도 실험에서 측정했다.
+
+### A: 함수의 이름과 위치를 저장한 뒤, 필요한 부분만 읽는다
+
+A의 `symbol_index`는 **코드 본문을 복사한 저장소가 아니라 함수 등의 위치를 적은 주소록**이다. `remaining`에 해당하는 실제 항목은 다음과 같다.
+
+```json
+{pretty(entry)}
+```
+
+`path`는 파일, `start_line`·`end_line`은 그 함수가 있는 줄, `uri`는 함수를 구분하는 주소다. 여기에 `return sellable(...)` 같은 **함수 본문은 저장하지 않는다.** `label`과 `rules.py`의 `sellable`도 각각 같은 형식의 항목을 가진다. `SAFETY_STOCK` 같은 상수는 이 기본 함수 색인에 들어가지 않고, 원문을 읽으며 같은 파일의 참조 상수를 모으는 단계에서 처리한다.
+
+질문이 오면 후보 함수들의 이름·위치를 LLM에 보여 주어 하나를 고르게 한다. `remaining`을 고르면 `service.py`의 3~4줄을 읽고, 같은 파일에서 연결된 함수·상수를 찾는다. 이 예제에서 답변용으로 꺼내는 코드 본문은 아래 두 줄이다. 실제 입력에는 식별용 제목과 코드 표시도 붙는다.
+
+```python
+{nodes[uid]['source']}
+```
+
+질문에 무관한 `label`은 제외된다. `sellable`은 색인에 위치가 있어도 **다른 파일에 있으므로 A의 확장 규칙으로 따라가지 않는다.** 이 예제에서는 실제 계산식과 안전재고 값이 답변 자료에 들어가지 않는다. A가 파일 전체보다 적은 컨텍스트를 쓰는 이유와, 그 과정에서 근거가 빠질 수 있는 이유를 함께 보여 준다.
+
+### B: A의 주소록에, 다른 파일로 이어지는 참조와 원문을 추가한다
+
+B도 출발 함수를 고를 때 A와 같은 `symbol_index`를 사용한다. 여기에 코드 분석으로 만든 `nodes` 자료를 추가한다. 다음은 **실제 생성한 객체의 핵심 필드만 발췌**한 것이다.
+
+```json
+{pretty(b_excerpt)}
+```
+
+`source`에는 해당 함수·상수의 원문, `imports`에는 그 파일의 import문, `deps`에는 참조 대상의 주소가 들어 있다. 즉 B는 주소만 더 갖는 것이 아니라 **원문과 파일 간 연결 정보도 사전에 준비**한다. `remaining → sellable → SAFETY_STOCK`이라는 연결을 프로그램이 따라갈 수 있게 된다.
+
+질문이 오면 `remaining`에서 시작해 두 차례 확장하여 세 코드의 원문을 수집한다. `service.py`나 `rules.py`를 통째로 가져오는 것이 아니므로, 이 예제에서는 무관한 `label`을 넣지 않는다. 실제 입력에는 각 조각의 제목과 import문도 붙는다.
+
+### R0: 원문 조각과 관련 코드 묶음을 검색 후보로 저장한다
+
+R0의 끝 글자는 숫자 `0`이다. R0은 LLM에게 출발 함수 하나를 고르게 하지 않는다. B와 같은 종류의 참조 정보를 이용해 **질문이 오기 전에 원문 후보를 만들고**, 질문과 후보에 등장하는 단어를 비교해 검색한다.
+
+`remaining`에서는 다음 두 후보가 만들어진다. 아래는 실제 후보 객체에서 `id`와 `source_uris`만 발췌한 것이다. `source_uris`는 그 후보에 어떤 원문이 담겼는지 나타낸다.
+
+```json
+{pretty(r_excerpt)}
+```
+
+첫 후보는 `remaining` 하나의 원문이고, 두 번째는 관련 함수·상수까지 묶은 원문이다. **각 후보에는 `text` 필드로 실제 원문도 저장된다.** 예를 들어 첫 후보의 `text`는 다음과 같다.
+
+```text
+{raw[0]['text']}
+```
+
+두 번째 후보의 `text`에는 이 내용에 `sellable`과 `SAFETY_STOCK`의 원문이 이어 붙는다. 실제 구현은 참조 연결을 최대 3단계 따라 묶으며, `label` 등 다른 코드의 후보도 함께 만든다. 전체 프로젝트를 하나의 큰 파일로 저장하는 방식은 아니다.
+
+또한 검색 시작 전에 후보마다 단어의 가중치를 계산해 **메모리에 보관**한다. `remaining` 단일 후보의 계산 결과 중 일부는 아래와 같다. 소수 넷째 자리로 반올림했다.
+
+```json
+{pretty(weights)}
+```
+
+이 값은 코드에 나타난 단어의 빈도와 희소성으로 계산한 **TF-IDF 가중치**다. 의미를 학습한 임베딩 모델의 출력은 아니다. 질문에도 같은 계산을 적용해 단어 구성이 비슷한 후보부터 정렬한다. 이 예제에서는 `remaining` 단일 원문이 먼저, 관련 코드 묶음이 다음으로 검색됐다.
+
+검색 결과는 높은 순서대로 1,024토큰 안에 담는다. 이미 들어간 코드만 반복하는 후보는 건너뛰지만, 일부만 겹치는 묶음은 코드가 중복될 수 있다. 최소 점수 기준이 없어 공간이 남으면 관련성이 낮은 후보도 들어갈 수 있다. 따라서 **R0도 파일 전체 대신 원문을 고르지만, 항상 가장 적은 양만 보내는 방식은 아니다.**
+
+### 파일 전체 방식까지 나란히 비교하면
+
+| 방식 | 미리 준비하는 자료 | 이 질문에서 답변에 넣는 코드의 범위 |
+|---|---|---|
+| A | 함수 이름·파일·줄 위치의 주소록 | 선택 함수와 같은 파일의 관련 코드; 이 예제에서는 `remaining` |
+| B | A의 주소록 + 함수·상수 원문 + 파일 간 참조 | `remaining`, `sellable`, `SAFETY_STOCK` |
+| R0 | 원문 단일 후보·참조 묶음 + 단어 가중치 | 검색된 후보를 길이 안에서 조합; 중복·관련성이 낮은 코드가 포함될 수도 있음 |
+| 파일 하나 전체 | 파일 경로만 제공; 함수 검색용 색인은 사용하지 않음 | `service.py`를 처음부터 끝까지 전달: `label`도 포함하지만 다른 파일의 정의는 없음 |
+
+**색인이 차지하는 저장 공간과 LLM에 보내는 토큰은 다르다.** A·B는 후보 목록을 보여 주는 ‘함수 선택’ 호출과 원문을 읽는 ‘답변’ 호출이 따로 있다. R0과 파일 전체 방식은 답변 호출만 있다. 여러 호출의 입력 합계는 총 처리량이고, 컨텍스트 윈도우 점유는 **각 호출의 입력**을 기준으로 봐야 한다.
+
+네 방식의 답변용 코드 상한은 동일하게 1,024토큰이며, 모델의 전체 컨텍스트는 8,192토큰이다. 세 색인 방식 모두 RAPTOR 요약을 사용하지 않는다. 위 예제의 전체 색인·원문 후보·검색 순위는 [실제 생성 자료](evidence/full_file_20261024/index_example/generated.json)에서 확인할 수 있다.
+'''
+
+
+def build(out):
+    s,v=exp.read(out/'summary.json'),exp.read(out/'verification.json')
+    assert s['status']=='COMPLETE' and v['status']=='PASS'
+    assert v['source_hashes']['summary.json']==exp.original.sha(out/'summary.json')
+    population=s['by_population']['all96'];ms=population['metrics'];tokens=population['token_metrics'];cs=population['comparisons']
+    f=ms['FULL'];tf=tokens['FULL']
+    stable=all(m['different_output_questions']==0 for m in ms.values())
+    overview=(f"파일 하나 전체를 실제 LLM에 넣어 답하게 한 결과는 **{ncorrect(f)}/96문제 정답({pct(f['accuracy'])}), 대표 응답 시간 {f['mean_query_seconds']:.2f}초**였다. "
+              f"기존 A는 {ncorrect(ms['A'])}개, B는 {ncorrect(ms['B'])}개, R0은 {ncorrect(ms['R0'])}개를 맞혔다. 아래 표는 네 방식 모두 실제 답변 생성 기록에 근거한다.")
+    metric_rows=[]
+    for label,fn in [
+        ('정답 수 / 96문제',ncorrect),('정답률',lambda m:pct(m['accuracy'])),
+        ('대표 응답 시간',lambda m:f"{m['mean_query_seconds']:.2f}초"),('느린 요청의 시간: p95',lambda m:f"{m['request_p95_seconds']:.2f}초"),
+        ('LLM에 전달한 코드 자료 평균',lambda m:f"{m['mean_context_tokens']:.1f}토큰"),
+        ('질문당 전체 입력 평균',lambda m:f"{m['mean_input_tokens']:.1f}토큰"),
+        ('지정 원문 근거의 평균 포함률',lambda m:pct(m['raw_evidence_recall'])),
+        ('지정 원문 근거를 모두 포함한 비율',lambda m:pct(m['all_raw_evidence']))]:
+        metric_rows.append([label,*[fn(ms[a]) for a in ARMS]])
+    metric_rows.append(['실제 평가 답변 수',*['288회' for _ in ARMS]])
+    metric_rows.append(['질문당 LLM 호출 수','2회','2회','1회','1회'])
+    metric_table=table(['지표',*[LABELS[a] for a in ARMS]],metric_rows)
+    compare_rows=[]
+    for arm in ['A','B','R0']:
+        c=cs[f'FULL-{arm}'];t=tokens[arm]
+        compare_rows.append([LABELS[arm],f"{-c['delta_pp']:+.1f}%p",f"{-c['latency_delta_seconds']:+.2f}초",
+            f"{t['code_change_vs_full_pct']:+.1f}%",f"{t['total_input_change_vs_full_pct']:+.1f}%"])
+    compare_table=table(['파일 전체와 비교한 방식','정답률 차이','관측 시간 차이','코드 토큰 증감','총 입력 토큰 증감'],compare_rows)
+    token_rows=[]
+    for arm in ARMS:
+        t=tokens[arm]
+        token_rows.append([LABELS[arm],f"{t['selector_input_tokens']:.1f}",f"{t['answer_input_tokens']:.1f}",f"{t['total_input_tokens']:.1f}",
+                           f"{t['peak_call_input_tokens']:.1f}",f"{t['input_window_pct']:.2f}%"])
+    token_table=table(['방식','함수 선택 입력','최종 답변 입력','누적 입력','가장 큰 한 호출 입력','8,192토큰 중 입력 점유'],token_rows)
+    intervals=[]
+    for arm in ['A','B','R0']:
+        c=cs[f'FULL-{arm}']
+        intervals.append([f"파일 전체 − {arm}",f"{c['delta_pp']:+.1f}%p",f"{c['ci95_pp'][0]:+.1f} ~ {c['ci95_pp'][1]:+.1f}%p",
+                          f"{c['win']} / {c['loss']} / {c['tie']}",f"{c['holm_p_three_new_quality_contrasts']:.3f}"])
+    interval_table=table(['비교','정답률 차이','탐색적 95% 추정 구간','파일 전체 승 / 패 / 동률','보정 p값'],intervals)
+    category_table=table(['질문 종류','문제 수',*[a if a!='FULL' else '파일 전체' for a in ARMS]],[
+        [label,ms['A']['by_category'][key]['unique_questions'],*[f"{ms[a]['by_category'][key]['question_equivalent_correct']:g}" for a in ARMS]] for key,label in CATEGORIES.items()])
+    project_table=table(['프로젝트 주제',*[a if a!='FULL' else '파일 전체' for a in ARMS]],[
+        [label,*[f"{ms[a]['by_project'][key]['question_equivalent_correct']:g} / 16" for a in ARMS]] for key,label in PROJECTS.items()])
+    subset_table=table(['문제 집합',*[a if a!='FULL' else '파일 전체' for a in ARMS]],[
+        [label,*[f"{ncorrect(s['by_population'][key]['metrics'][a])} / 48" for a in ARMS]] for key,label in [('original48','기존 48문제'),('additional48','추가 48문제')]])
+    stage_table=table(['단계: 요청당 평균',*[a if a!='FULL' else '파일 전체' for a in ARMS]],[
+        ['출발 함수 선택',f"{ms['A']['mean_select_seconds']:.3f}초",f"{ms['B']['mean_select_seconds']:.3f}초",'없음','없음'],
+        ['원문 준비·길이 확인',*[f"{ms[a]['mean_packing_seconds']+ms[a].get('mean_retrieval_seconds',0)+ms[a]['mean_expansion_seconds']:.3f}초" for a in ARMS]],
+        ['LLM의 최종 답변 처리',*[f"{ms[a]['mean_answer_seconds']:.3f}초" for a in ARMS]],
+    ])
+    qmap={q['task_id']:q for q in s['questions']}
+    examples=[]
+    for tid,title,explanation in [
+        ('eval_inventory__v2_partial_depletes_available','재고 계산',
+         '재고 9개에서 이미 잡힌 1개와 안전재고 3개를 빼면 판매 가능량은 5개다. 8개를 요청해도 부분 예약은 5개만 되므로 남는 수량은 0개다.'),
+        ('eval_authorization__v2_duplicate_write_permission','권한 계산',
+         '공백과 대문자를 정리하면 유효한 쓰기 권한이 남는다. 세션 경과 시간도 1,799초로 제한 3,600초보다 짧으므로 true다.')]:
+        q=qmap[tid];show=lambda value:'`'+json.dumps(value,ensure_ascii=False)+'`'
+        examples.append(f"### {title}\n\n질문: `{q['question']}`  \n정답: {show(q['expected'])}\n\n"+table(['항목',*[a if a!='FULL' else '파일 전체' for a in ARMS]],[
+            ['실제 답변',*[show(q['arms'][a]['answer']) for a in ARMS]],
+            ['코드 자료 토큰',*[q['arms'][a]['context_tokens'] for a in ARMS]],
+            ['정답 여부',*['정답' if q['arms'][a]['score']==1 else '오답' if q['arms'][a]['score']==0 else '반복별 차이' for a in ARMS]],
+        ])+f"\n\n{explanation} 파일 전체 방식에서는 `{q['provided_file']}` 전체를 보냈다. 다른 파일에 정의된 함수·상수가 자동으로 따라오는 것은 아니다. "
+        f"이 표는 첫 번째 반복의 실제 출력이며, 실패 원인의 기여도를 분리한 실험은 아니다. 기록 식별자: `{tid}`.")
+    actual_files=[r['context_tokens'] for r in exp.audited.rows(out/'results.jsonl')]
+    ta=tokens['A']
+    stable_note=('각 문제·방식의 최종 답은 세 반복 모두 같았다. 정답 수는 서로 다른 96문제를 기준으로 표시한다.' if stable else
+        '반복별 출력 차이가 있어 정답률은 문제별 세 번의 성공률 평균이며, 정답 수는 그 비율을 96문제로 환산했다.')
+    best=max(ARMS,key=lambda a:ms[a]['accuracy'])
+    text=f'''# 현재 색인(A)·파일 간 확장(B)·원문 검색(R0)·파일 전체 입력: 실제 실험 비교
+
+**질문: 코드 일부를 골라 보내는 방식은 파일 하나를 통째로 보내는 것보다 컨텍스트를 아끼면서 더 잘 답하는가?**  
+실험일: 2026년 10월 24일 · 동일한 96문제 × 방식별 3회 · 네 방식 모두 RAPTOR 요약 없음
+
+{overview}
+
+{index_explanation(out)}
+
+## 2. 파일 전체 방식도 실제로 어떻게 실험했나?
+
+기존 A·B·R0의 **864개 실제 답변**을 보존하고, 파일 전체 방식에서 **96문제 × 3회 = 288개 답변을 새로 생성**했다. 합계는 **1,152개 실제 평가 답변**이다. 토큰만 계산했던 이전 비교는 이 실제 실행 결과로 대체했다.
+
+| 항목 | 실제 조건 |
+|---|---|
+| 질문·원본 코드 | 기존과 같은 6개 합성 Python 프로젝트, 각 5파일·16문제 |
+| 파일 전체 입력 | 질문 대상 함수가 정의된 파일을 처음부터 끝까지 그대로 전달. 81문제는 `service.py`, 15문제는 `rules.py` |
+| 파일 선택 조건 | 파일 경로를 미리 제공. 파일을 찾는 과정은 평가하지 않음 |
+| 모델·장비 | Qwen2.5-Coder-7B-Instruct Q5_K_M · Apple M3 Pro · 메모리 36 GiB |
+| 공통 설정 | 같은 질문·답변 지시문, temperature 0, seed 1, 답변 최대 128토큰 |
+| 길이 제한 | 답변용 코드 최대 1,024토큰, 전체 문맥 8,192토큰. 파일 전체도 모두 상한 안에 들어가 자르지 않음 |
+| 실행·캐시 | 방식별 각 질문 3회. 같은 질문·반복 순서, 모델 입력 계산 재사용 끔 |
+| 정답 확인 | 코드 실행·호출 관계로 96개 기준 답 재확인. JSON 값·자료형·요구한 목록 순서까지 일치해야 정답 |
+
+개발용 8문제는 실행 확인에만 사용하고 평가 점수에서 제외했다. {stable_note}
+
+**비교의 범위:** 파일 전체 방식은 관련 파일을 이미 알고 시작하는 조건이다. 반면 A·B는 후보에서 출발 함수를 고르는 비용과 오류도 포함한다. 또한 B·R0은 여러 파일의 원문을 모으므로 제공하는 정보 범위가 다르다. 이 실험은 그런 차이를 포함한 구현 전체의 비교다.
+
+**시간의 한계:** A·B는 같은 세션에서 교차 실행했고, R0과 이번 파일 전체 방식은 각각 별도 세션에서 측정했다. 모델·실행 파일·설정은 같지만 장비 부하·열 상태까지 통제하지는 못했다. 시간 차이는 관측값이며 방식만의 순수한 속도 효과로 확정하지 않는다.
+
+## 3. 네 방식을 실제로 실행한 결과
+
+{metric_table}
+
+대표 응답 시간은 문제마다 3회 중앙값을 구한 뒤 96문제에 걸쳐 평균했다. 검색 또는 제공된 파일 읽기 시작부터 최종 답변까지 측정하며, 토큰 계산과 작은 호출 로그 기록도 포함한다. 모델 시작·사전 색인 준비·채점은 제외한다. **p95**는 각 방식의 288요청 중 약 95%가 끝나는 시간이다.
+
+근거 포함률은 문제별로 미리 지정한 코드 목록 중 실제 전달한 원문의 비율이다. 목록을 다 포함해도 답을 맞힌다는 뜻은 아니다. 파일 전체는 한 파일의 모든 코드를 포함하지만 다른 파일의 정의는 포함하지 않는다.
+
+### 파일 하나 전체를 기준으로 무엇이 달라졌나?
+
+아래는 **각 색인 방식 − 파일 전체 방식**의 차이다. 시간은 양수일수록 더 오래 걸렸고, 토큰 증감률은 음수일수록 덜 보냈다는 뜻이다.
+
+{compare_table}
+
+A가 전달한 코드 자료는 평균 **{ta['code_tokens']:.1f}토큰**, 파일 전체는 **{tf['code_tokens']:.1f}토큰**이었다. A는 코드 자료를 **{-ta['code_change_vs_full_pct']:.1f}% 줄였지만**, 함수 선택 호출을 포함한 총 입력은 **{ta['total_input_change_vs_full_pct']:.1f}% 많았다.** 이번 기준 파일은 {min(actual_files)}~{max(actual_files)}토큰으로 작은 편이므로, 이 비율을 큰 실제 파일에 그대로 적용하지 않는다.
+
+### 컨텍스트 점유와 누적 입력을 구분하면
+
+아래 토큰은 모두 **실제 LLM 요청에 들어간 입력**이다. 함수 선택 입력과 최종 답변 입력에는 각각 질문·지시문·대화 형식이 포함되어 있다. 출력 토큰은 포함하지 않는다.
+
+{token_table}
+
+‘가장 큰 한 호출 입력’은 질문별로 두 호출 중 큰 값을 고른 뒤 평균한 것이다. R0과 파일 전체는 한 호출만 있다. A의 이 값은 파일 전체보다 **{-ta['peak_input_change_vs_full_pct']:.1f}% 작았다.** 따라서 이번 자료에서는 **한 번에 차지하는 컨텍스트를 줄이는 목적과, 여러 호출의 총 입력량을 줄이는 목적의 결과가 달랐다.** 출력 공간은 답변 최대 128토큰, 함수 선택 최대 96토큰을 별도로 확보했다.
+
+모든 평균은 같은 96문제를 같은 비중으로 계산했다. 토큰 증감률은 각 방식의 입력 합계를 파일 전체 방식의 입력 합계와 비교했다. B·R0은 여러 파일의 원문과 식별용 제목을 포함하므로 파일 하나보다 토큰 수가 커질 수 있다.
+
+### 정답률 차이는 얼마나 확실한가?
+
+이번에는 **파일 전체 − 비교 방식**으로 방향을 맞췄다. `%p`는 두 정답률의 단순 차이다.
+
+{interval_table}
+
+6개 프로젝트를 묶음으로 다시 뽑는 46,656가지 조합으로 추정 구간을 계산했다. 1,152답변을 독립된 1,152문제로 취급하지 않았다. 새 세 비교의 프로젝트 단위 검정에는 Holm 보정을 적용했다. 구간이 0을 포함하거나 보정 p값이 0.05보다 크면 해당 방법으로 우위를 확정하지 않는다. 프로젝트 수가 적어 이 통계는 탐색적이며, 작은 합성 자료 밖으로 일반화하는 근거는 부족하다.
+
+## 4. 어떤 질문에서 차이가 났나?
+
+각 칸은 서로 다른 문제의 정답 수다.
+
+{category_table}
+
+{project_table}
+
+{subset_table}
+
+질문 종류별 문제 수가 작고 두 문제 집합이 같은 프로젝트를 공유한다. 이 표는 차이가 어디에 모였는지 보여 주는 보조 분석이다.
+
+## 5. 시간은 어느 단계에 들었나?
+
+{stage_table}
+
+단계별 시간은 288요청 전체 평균이므로 3절의 ‘문제별 중앙값의 평균’과 합계가 정확히 같을 필요는 없다. 파일 전체 방식은 제공된 파일을 읽고 한 번 답한다. A·B는 출발 함수 선택 호출이 추가되며, R0은 그 호출이 없지만 더 많은 원문을 답변 모델에 보낸다. 별도 세션이라는 시간 비교의 한계는 여기에도 적용된다.
+
+## 6. 같은 질문에서 실제 답변은 어떻게 달랐나?
+
+이전 보고서의 두 사례를 유지해 새 파일 전체 결과를 나란히 붙였다. 전체 성능을 대표하도록 뽑은 사례는 아니다.
+
+{(chr(10)*2).join(examples)}
+
+## 7. 목적에 따른 판단
+
+**컨텍스트를 적게 쓰는 것이 우선이면 A의 효과를 ‘한 호출 입력’으로 평가해야 한다.** 이번에는 파일 전체보다 코드 자료 {-ta['code_change_vs_full_pct']:.1f}%, 질문별 가장 큰 호출 입력 {-ta['peak_input_change_vs_full_pct']:.1f}%를 줄였지만 누적 입력은 {ta['total_input_change_vs_full_pct']:.1f}% 늘었다. 함수 선택 호출의 비용이 작은 파일에서는 상대적으로 크게 작용했다.
+
+관측 정답률이 가장 높은 방식은 **{LABELS[best]}**였다. 그러나 토큰 수가 적거나 원문을 더 많이 가져온다는 사실만으로 정답을 보장하지 않는다. 실제 정답률·원문 범위·호출 수·응답 시간과 불확실성을 함께 봐야 한다.
+
+평가는 영어 질문, 비슷한 구조의 소규모 합성 Python 프로젝트 6개, 한 모델·한 장비에 한정된다. 파일 전체 방식은 관련 파일을 미리 알려준 조건이고, 세 색인 방식과 파일 전체 방식의 입력 정보가 같지 않다. 실제 저장소·큰 파일·복잡한 import·한국어 질문·보안 취약점 탐지에 대한 우위는 입증하지 않았다.
+
+## 확인 자료와 재현
+
+파일 전체 288회가 실제 생성된 요청·응답인지, 입력이 파일 원문과 정확히 같은지, 캐시·시간·토큰·정답·집계가 일치하는지 **{v['count']}개 점검을 통과**했다. A·B·R0의 기존 수치는 그대로 유지했다. 로컬 기록 검증이며 외부 인증은 아니다.
+
+| 확인할 자료 | 링크 |
+|---|---|
+| 네 방식의 통합 결과·질문별 답변 | [통합 집계](evidence/full_file_20261024/summary.json) |
+| 파일 전체 실제 288회 실행 | [실행 기록](evidence/full_file_20261024/results.jsonl) · [실제 모델 호출 로그](evidence/full_file_20261024/model_calls.jsonl) |
+| 계획·정답·환경·검증 | [실험 계획](evidence/full_file_20261024/protocol.json) · [정답 재확인](evidence/full_file_20261024/gold_recheck.json) · [환경](evidence/full_file_20261024/environment.json) · [검증](evidence/full_file_20261024/verification.json) |
+| 1절 예제의 실제 파일과 생성된 색인 | [service.py](evidence/full_file_20261024/index_example/project/service.py) · [rules.py](evidence/full_file_20261024/index_example/project/rules.py) · [policy.py](evidence/full_file_20261024/index_example/project/policy.py) · [생성 자료](evidence/full_file_20261024/index_example/generated.json) |
+| 보존한 기존 실행 | [A·B 576회](evidence/ab_20261024/results.jsonl) · [R0 288회](evidence/r0_20261024/results.jsonl) |
+| 재현 안내 | [실행·검증·보고서 생성 방법](evidence/full_file_20261024/reproduce.txt) |
+| 이번 수정 전 보고서 | [보관본](evidence/full_file_20261024/history/report_before_full_file_run.md) |
+'''
+    exp.r0.REPORT.write_text(text)
+    exp.original.dump(out/'report_manifest.json',{'created_at_utc':exp.audited.now(),'report':str(exp.r0.REPORT),
+        'report_sha256':exp.original.sha(exp.r0.REPORT),'summary_sha256':exp.original.sha(out/'summary.json'),
+        'verification_sha256':exp.original.sha(out/'verification.json'),'example_sha256':exp.original.sha(out/'index_example/generated.json'),
+        'generator_sha256':exp.original.sha(__file__)})
+    print(json.dumps({'report':str(exp.r0.REPORT),'characters':len(text)},ensure_ascii=False))
+
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser();p.add_argument('--out',type=Path,default=exp.DEFAULT_OUT);build(p.parse_args().out)

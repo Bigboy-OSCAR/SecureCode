@@ -1,0 +1,29 @@
+{
+  "completed_at_utc": "2026-10-25T04:27:18.365848+00:00",
+  "new_model_calls": 0,
+  "report_sha256": "61bc59ba6efef8ed70de01b44bbde4dca8e4c3de26d800ab030db7dc8a2277c0",
+  "files": {
+    "03_현재색인_A와_파일간확장_B_재실험_비교보고서.md": "53a1af06219a268e1325fb9f532068c081cb7ff085b5dfcdcbf3f3e8997f43b1",
+    "before_audit_raptor_report.py": "0563ebb04a4e08c5a04186ccad6d680f485547da7c81f9d6911f8eccdc90c269",
+    "before_report_raptor_large.py": "0d25dce196c09866b4614c237e205fedcb31c6257ac72a4f6a37bba8cf2b5f5a",
+    "before_verify_report_mechanisms.py": "15f2385192c08fd6e6c01d09a0792b45e1a04b73dcee60213cd3be40a1b5640b",
+    "completion_audit.json": "d6341dba1b3ea38e652fe9dc07bac3f87b0fa82b81d8b983f88883228c2c2b76",
+    "completion_audit_after.json": "d1a26b2954538181f4882a7d8c80060b5f76ec599152039685f5af3fe65a7e5c",
+    "content_map.json": "d8ec4f8cd0e65bc2b79e2fcab381a2bd3eda151c0c44ce2a668b6a42aa490fe5",
+    "deliverable_manifest.json": "c4fa55e69a42114be6a110e8efc1d167aeac3d2adec1a51185c505d99d17128e",
+    "draft.md": "61bc59ba6efef8ed70de01b44bbde4dca8e4c3de26d800ab030db7dc8a2277c0",
+    "final_source_manifest.json": "1c37c0ce8b14eed17265e63e19d81ae8849314340091061ca08b23a50e3aeab4",
+    "report_after.md": "61bc59ba6efef8ed70de01b44bbde4dca8e4c3de26d800ab030db7dc8a2277c0",
+    "report_manifest.json": "5b0ee4e497d57c7b949105a5d7a8e17e24a1beb01a43fc3cc17f8c8aae69812b",
+    "report_manifest_after.json": "ccc2a6c87be90e85bdb6c39dd77cbb064748d22ebbdbbc5370ae131d36cdc001",
+    "reproduce.txt": "e215cfd07211b430cc8a76fbedcd90cfde672cc63607dd58da4e1afb4113b64c",
+    "reproduce_after.txt": "6d1b2e0f9bf375f8c57a16f6c72310f1eba949ddc6106dc0504267365dbf96b3",
+    "revision_scope.json": "26052b8b97ebca34b25bbc44f062da7066bc1aa078416f0f7bba344a6c4f52f6",
+    "source_snapshot/audit_raptor_report.py": "abd56bfde7a972509aad12c7882898c3424b418d0d56f9568877d5727f360b61",
+    "source_snapshot/reorganize_report.py": "21c37ae604b9fa19266499e502777aeba2a03426aa0957821e0fa5e6b2c3db82",
+    "source_snapshot/report_raptor_large.py": "d24ba4cad7ef210d3e1c669d9d9cc0f294cfc65584d875a75d07655b5256610d",
+    "source_snapshot/verify_report_reorganization.py": "69929e3c976d274cfcdbfccf0deed1ecabcc7e3063020e3771349a0cf62c92fc",
+    "verification.json": "aa7642698c2d34c32dff631b189b657ee85a2071851d718416f504150500dbc3",
+    "work_status.json": "a2ae315650e9f745d45bdb164db67a4fa4f0e89bfd286adca9f1e3060aa8ac59"
+  }
+}

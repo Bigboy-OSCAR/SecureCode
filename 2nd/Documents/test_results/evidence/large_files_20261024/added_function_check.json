@@ -1,0 +1,100 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-24T11:23:17.221991+00:00",
+  "scope": "One representative valid-input execution for each of twelve extra-function patterns; these are not measured LLM tasks.",
+  "patterns": [
+    {
+      "pattern": 0,
+      "passed": true,
+      "example_result": "log | x=1"
+    },
+    {
+      "pattern": 1,
+      "passed": true,
+      "example_result": [
+        [
+          "a",
+          "b"
+        ],
+        [
+          "c"
+        ]
+      ]
+    },
+    {
+      "pattern": 2,
+      "passed": true,
+      "example_result": [
+        [
+          "b",
+          2
+        ],
+        [
+          "a",
+          1
+        ]
+      ]
+    },
+    {
+      "pattern": 3,
+      "passed": true,
+      "example_result": "a..."
+    },
+    {
+      "pattern": 4,
+      "passed": true,
+      "example_result": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pattern": 5,
+      "passed": true,
+      "example_result": "a%20b=c%26d"
+    },
+    {
+      "pattern": 6,
+      "passed": true,
+      "example_result": [
+        1.0,
+        1.5,
+        2.5
+      ]
+    },
+    {
+      "pattern": 7,
+      "passed": true,
+      "example_result": "x\n1\n2"
+    },
+    {
+      "pattern": 8,
+      "passed": true,
+      "example_result": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pattern": 9,
+      "passed": true,
+      "example_result": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "pattern": 10,
+      "passed": true,
+      "example_result": {
+        "b": 2,
+        "c": 3
+      }
+    },
+    {
+      "pattern": 11,
+      "passed": true,
+      "example_result": 5
+    }
+  ]
+}

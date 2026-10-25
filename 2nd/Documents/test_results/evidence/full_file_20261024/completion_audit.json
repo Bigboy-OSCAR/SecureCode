@@ -1,0 +1,89 @@
+{
+  "status": "PASS",
+  "completed_at_utc": "2026-10-24T11:02:29.040183+00:00",
+  "report": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md",
+  "report_sha256": "2a630baed990451ce801b1697e2792a9255f4279089d4f18c0dbd5734758d256",
+  "summary_sha256": "c5b01e97794578c1ec3987b5e835e6825dacfc62a67cb2cb603c493f269c9012",
+  "verification_sha256": "793375b028d26cd6f22fc8fb11151826e899b068973624242226c8d0e9653349",
+  "actual_evaluation_answers": 288,
+  "preserved_prior_evaluation_answers": 864,
+  "measurement_verification_checks": 20,
+  "final_checks": [
+    {
+      "name": "frozen_original_inputs_code_and_results_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verified_results_and_report_manifest_match",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "previous_report_preserved_exactly",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "288_actual_full_file_answers_96_questions",
+      "passed": true,
+      "detail": {
+        "correct_across_three_repeats": 51,
+        "model_calls_including_dev_and_warmup": 298
+      }
+    },
+    {
+      "name": "markdown_fences_headings_tables_and_code_valid",
+      "passed": true,
+      "detail": {
+        "code_blocks": 9,
+        "json_blocks": 4,
+        "characters": 14263
+      }
+    },
+    {
+      "name": "all_document_links_resolve",
+      "passed": true,
+      "detail": 16
+    },
+    {
+      "name": "index_explanation_matches_actual_generated_example",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "analysis_and_verification_sources_unchanged_reporting_amendments_recorded",
+      "passed": true,
+      "detail": [
+        {
+          "path": "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/report_full.py",
+          "before_sha256": "7b80f6506fc1c7615aa79f899ee4b7b11ecb7384ff90e85befc1c3f34d10361b",
+          "after_sha256": "7c3b04c02b985a28115ac2e581fefae0fb67318754fd05ecc7e08960dd40f807",
+          "original_snapshot": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/full_file_20261024/source_snapshot/report_full.py",
+          "final_snapshot": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/full_file_20261024/source_snapshot/report_full_final.py",
+          "reason": "Reporting clarity only: explain unequal correct-question sets, statistical limits, token definitions, and observed low accuracy. No experiment, grading, analysis or verification changes."
+        }
+      ]
+    }
+  ],
+  "reporting_only_amendments": [
+    {
+      "path": "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/report_full.py",
+      "before_sha256": "7b80f6506fc1c7615aa79f899ee4b7b11ecb7384ff90e85befc1c3f34d10361b",
+      "after_sha256": "7c3b04c02b985a28115ac2e581fefae0fb67318754fd05ecc7e08960dd40f807",
+      "original_snapshot": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/full_file_20261024/source_snapshot/report_full.py",
+      "final_snapshot": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/full_file_20261024/source_snapshot/report_full_final.py",
+      "reason": "Reporting clarity only: explain unequal correct-question sets, statistical limits, token definitions, and observed low accuracy. No experiment, grading, analysis or verification changes."
+    }
+  ],
+  "model_server_shutdown": {
+    "requested": {
+      "requested_at_utc": "2026-10-24T10:56:38.235515+00:00",
+      "pid": 79435,
+      "command": "/opt/homebrew/bin/llama-server -m /Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf --host 127.0.0.1 --port 8766 --ctx-size 8192 --parallel 1 --no-warmup --cache-ram 0 --no-cache-prompt",
+      "signal": "SIGTERM",
+      "reason": "All 288 answers completed"
+    },
+    "port_8766_listener_check": "No listener returned by lsof after server shutdown"
+  }
+}

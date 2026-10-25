@@ -1,0 +1,12 @@
+{
+  "generated_at_utc": "2026-10-25T04:25:49.585657+00:00",
+  "report_sha256": "61bc59ba6efef8ed70de01b44bbde4dca8e4c3de26d800ab030db7dc8a2277c0",
+  "report_digest": "4f32d8f934e18acd723118f97e156da7ccfdd68a834780e0287d8e16f611b098",
+  "summary_sha256": "4fe4ab8ead23de69ecde243fd6b187fd7be42d8409b9b78ad600b8c7d23e83ce",
+  "verification_sha256": "b997a5e7cd95c89c50e9e82ea9eba05cedd2738b0810fd1980e18c04b0b53dc3",
+  "generator_sha256": "d24ba4cad7ef210d3e1c669d9d9cc0f294cfc65584d875a75d07655b5256610d",
+  "editorial_revision": "revisions/report_reorganization_20261025",
+  "layout_generator_sha256": "21c37ae604b9fa19266499e502777aeba2a03426aa0957821e0fa5e6b2c3db82",
+  "mechanism_revision": "revisions/methods_and_interpretation_20261025",
+  "mechanism_facts_sha256": "733ba9d3ff4370b324eee6d6288c4863cb092b8ca8eea8b10474f4945c9e3104"
+}

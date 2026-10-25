@@ -1,0 +1,110 @@
+{
+  "status": "PASS",
+  "completed_at_utc": "2026-10-25T04:37:34.083376+00:00",
+  "checks": [
+    {
+      "name": "archived_original_matches_verified_editorial_revision",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "current_document_matches_generation_manifest",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_nonempty_original_lines_accounted_for_once",
+      "passed": true,
+      "detail": 604
+    },
+    {
+      "name": "all_moved_content_blocks_present",
+      "passed": true,
+      "detail": 67
+    },
+    {
+      "name": "every_original_code_json_and_summary_example_preserved",
+      "passed": true,
+      "detail": 14
+    },
+    {
+      "name": "every_original_table_data_cell_retained",
+      "passed": true,
+      "detail": {
+        "tables": 38,
+        "cells": 828,
+        "missing": []
+      }
+    },
+    {
+      "name": "seven_method_results_keep_each_value_with_its_correct_method",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_other_result_condition_category_case_and_statistics_tables_unchanged",
+      "passed": true,
+      "detail": 34
+    },
+    {
+      "name": "all_original_evidence_and_paper_links_retained",
+      "passed": true,
+      "detail": {
+        "original_unique_targets": 38
+      }
+    },
+    {
+      "name": "navigation_anchors_unique",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_internal_navigation_links_resolve",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no_stale_section_8_or_9_references",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "markdown_tables_and_code_fences_balanced",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "markdown_has_no_images_or_hidden_sections",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_seven_factual_and_hypothesis_explanations_retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "limits_and_unperformed_experiments_remain_explicit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_existing_measurement_analysis_and_previous_revision_records_unchanged",
+      "passed": true,
+      "detail": 13
+    },
+    {
+      "name": "both_experiment_protocols_still_valid",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "report_sha256": "67b5fa3b0d6c6bcc253bd50779d81d18a97b0ad5747040baefe6c24e56d30af3",
+  "before_sha256": "53a1af06219a268e1325fb9f532068c081cb7ff085b5dfcdcbf3f3e8997f43b1",
+  "new_model_calls": 0,
+  "original_table_count": 38,
+  "original_table_data_cells": 828,
+  "original_code_blocks": 14,
+  "mapped_nonempty_source_lines": 604,
+  "limitations": "The mapping and exact comparisons check content preservation. Consolidated front matter and conclusions were additionally reviewed for meaning; automated checks alone do not prove prose equivalence."
+}

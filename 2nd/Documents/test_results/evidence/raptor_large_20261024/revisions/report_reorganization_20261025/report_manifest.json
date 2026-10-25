@@ -1,0 +1,10 @@
+{
+  "generated_at_utc": "2026-10-25T02:10:39.523311+00:00",
+  "report_sha256": "53a1af06219a268e1325fb9f532068c081cb7ff085b5dfcdcbf3f3e8997f43b1",
+  "report_digest": "d3255882e794740f4f81f5fea6976d15e742194665142d8dcfbd9124c9af2d52",
+  "summary_sha256": "4fe4ab8ead23de69ecde243fd6b187fd7be42d8409b9b78ad600b8c7d23e83ce",
+  "verification_sha256": "b997a5e7cd95c89c50e9e82ea9eba05cedd2738b0810fd1980e18c04b0b53dc3",
+  "generator_sha256": "0d25dce196c09866b4614c237e205fedcb31c6257ac72a4f6a37bba8cf2b5f5a",
+  "editorial_revision": "revisions/methods_and_interpretation_20261025",
+  "mechanism_facts_sha256": "733ba9d3ff4370b324eee6d6288c4863cb092b8ca8eea8b10474f4945c9e3104"
+}

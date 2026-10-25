@@ -1,0 +1,23 @@
+{
+  "completed_at_utc": "2026-10-24T18:22:21.279628+00:00",
+  "report": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md",
+  "report_sha256": "8a03e6077e519a91584e4541bdffbbaeb875d24e441d287ac927849fd52a76b9",
+  "new_eval_answers": 864,
+  "preserved_eval_answers": 1152,
+  "hashes": {
+    "protocol.json": "8a85d589f6f49ee7accd849587b51c5b7c76e7382bb5eb9c7ad746c9bd55fc1d",
+    "assets.json": "5b8206e07d1454c1c0e3b21867c56379ab904e762a0289ca255c2ff152c4bbfe",
+    "build_manifest.json": "d94a739b4147bbbffffe03ab4d54f5e8423a125594198af88f848f79552175d5",
+    "results.jsonl": "5bb60af318f07ea954d66eec103460ee52563076ebbda6a491ce9ec1d72203e2",
+    "results_dev.jsonl": "e391cc895575bc040c0cf21304b6250553ac5c3036d0eee2c21917a0872d4410",
+    "model_calls.jsonl": "9b1c5890ffd60fe69eb41e7af459a2503016ef8b0ded1e97255e6da311ed6ad0",
+    "summary.json": "4fe4ab8ead23de69ecde243fd6b187fd7be42d8409b9b78ad600b8c7d23e83ce",
+    "verification.json": "b997a5e7cd95c89c50e9e82ea9eba05cedd2738b0810fd1980e18c04b0b53dc3",
+    "completion_audit.json": "03d32e5b7e2aba84d7c832349289020463221bfadfea4a1b89c82a7e30409c82",
+    "selection_exposure_check.json": "4b078d0984bb2f2b64a3396eac1ed5f891d5f6037b8dbef1e60936c4c05b1f75",
+    "report_manifest.json": "8cc4ca4c2b15c77ab12c824ef8cd566a382434a2dd37277df1fc89572d7136ae",
+    "final_source_manifest.json": "5f3398e57bcf05c946fc4db8dba140bc6127de9a3e5c6fad68ffc5fa26f43c86",
+    "server_shutdown.json": "178eaa2246f6a56d2dd2aedf9d82b4f0b5f34f3805aee03300035cde65a19f96",
+    "reproduce.txt": "1410bbd9cc910b33ad6cd069aeddda11c70af5edaa4c7fea4d6267002435097f"
+  }
+}

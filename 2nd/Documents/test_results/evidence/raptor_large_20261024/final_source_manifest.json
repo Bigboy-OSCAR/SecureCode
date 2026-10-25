@@ -1,0 +1,16 @@
+{
+  "saved_at_utc": "2026-10-25T04:38:21.053292+00:00",
+  "editorial_revision": "revisions/reader_context_20261025",
+  "files": {
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/revisions/reader_context_20261025/source_snapshot/report_raptor_large.py": "6d1f4cd105de5f72b85a9aa71c3e8ec08e768f89eb565763c3e8671a7b80f092",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/revisions/reader_context_20261025/source_snapshot/reorganize_report.py": "21c37ae604b9fa19266499e502777aeba2a03426aa0957821e0fa5e6b2c3db82",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/revisions/reader_context_20261025/source_snapshot/clarify_report_context.py": "c33af1c3ed0a4a5664c453afc2180546c47d7975d6ee309fbc46fc6bbf77c411",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/revisions/reader_context_20261025/source_snapshot/verify_report_reorganization.py": "cbd2d5e5f23ac8fd7d322012b6023714aa91fb2e22183d11db41fc7a6ce536e3",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/revisions/reader_context_20261025/source_snapshot/audit_raptor_report.py": "abd56bfde7a972509aad12c7882898c3424b418d0d56f9568877d5727f360b61"
+  },
+  "previous_manifest": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/revisions/reader_context_20261025/final_source_manifest.json",
+  "previous_manifest_sha256": "864fd01526cad042660f8591a36ab0a3495969589ca983e3630668a24b5915a9",
+  "report_manifest_sha256": "36a9c94cf8ae2aa881ed4eefb379ed37e722f971018260eea86600d1fbe57108",
+  "completion_audit_sha256": "4520f3711d612e577e859e83cca8874062186e2e6116542c703fa7f2b3c13b76",
+  "revision_verification_sha256": "94c6185e65abb1c48ed6926da059e864350b4e8a251a0e3fde2b36689d21ab12"
+}

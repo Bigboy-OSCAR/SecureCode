@@ -1,0 +1,30 @@
+{
+  "updated_at_utc": "2026-10-24T18:22:21.279628+00:00",
+  "state": "complete",
+  "owned_server_pid": 24876,
+  "server_session": 21970,
+  "build_session": 36132,
+  "continuation_session": 71804,
+  "build_summary_calls": 2198,
+  "fresh_evaluation_target": 864,
+  "report_written": true,
+  "remaining": [],
+  "notes": [
+    "RF summarises function-kind bundles once; raw_atomic candidates remain raw only. No measurement code changed.",
+    "Summary output-limited bodies retained under preregistered rule; 15 across all seven projects, 13 in evaluation projects.",
+    "No intermediate batching was needed; hierarchy is three stages.",
+    "Example has six actual summaries; RF 417, RH 754, C 658 context tokens.",
+    "Example remaining leaf omits 3; rules and project summary retain 3.",
+    "Report 03 updated with actual examples, seven-arm results, matched questions and preparation costs.",
+    "Independent verification PASS (19 checks); final report audit PASS (14 checks, 194 numeric fields, 37 local links).",
+    "No selected answer evidence contains an output-limited preparation summary or its ancestors."
+  ],
+  "fresh_evaluation_completed": 864,
+  "repeat": "all_three_complete",
+  "independent_verification": "PASS",
+  "report_audit": "PASS",
+  "completed_at_utc": "2026-10-24T18:22:21.279628+00:00",
+  "report_sha256": "8a03e6077e519a91584e4541bdffbbaeb875d24e441d287ac927849fd52a76b9",
+  "server_stopped": true,
+  "codex_file_open_status": "queued"
+}

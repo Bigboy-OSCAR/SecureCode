@@ -1,0 +1,152 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-24T13:22:22.739878+00:00",
+  "count": 22,
+  "checks": [
+    {
+      "name": "frozen_inputs_code_and_historical_results",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "1152_ordered_fresh_answers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "96_same_questions_three_repeats_four_arms",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "development_separate",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "balanced_interleaved_orders",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same_model_binary_settings",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "1778_actual_unique_calls",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no_shared_inference_exact_logs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fixed_parameters_no_cache_no_transport_errors",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no_context_truncation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "call_time_nonoverlap",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "physical_query_times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent_typed_grading",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_96_gold_answers_reexecuted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent_graph_raw_candidates_original_semantics_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "exact_full_files_and_unchanged_prompts_no_gold_in_retrieval",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "retrieval_reconstruction_and_source_coverage",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent_offline_tokens_and_greedy_packing",
+      "passed": true,
+      "detail": {
+        "distinct_strings": 30258,
+        "tokenizer": {
+          "binary": "/opt/homebrew/Cellar/llama.cpp/8680/bin/llama-tokenize",
+          "binary_sha256": "a6364e9a027fa6e76b66f6e61b6af397dc63128f7072be6c1589e80830e349d5",
+          "command": [
+            "/opt/homebrew/bin/llama-tokenize",
+            "-m",
+            "/Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf",
+            "--no-bos",
+            "--no-escape",
+            "--ids",
+            "--log-disable",
+            "--stdin"
+          ],
+          "separator_token": 151643,
+          "standalone_crosschecks": 13,
+          "all_standalone_crosschecks_passed": true
+        }
+      }
+    },
+    {
+      "name": "server_token_counts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent_primary_metrics_tokens_and_six_contrasts",
+      "passed": true,
+      "detail": {
+        "numeric_fields": 1314
+      }
+    },
+    {
+      "name": "historical_small_results_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "small_to_large_descriptive_differences",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "evaluation_answers": 1152,
+  "model_calls": 1778,
+  "generation_limit_calls": 21,
+  "source_hashes": {
+    "verify_large.py": "affebb5117ef339b7ef0e2307c068b9b854589bc7ddb8805e24ccf77c8a37b34",
+    "results.jsonl": "5430136ce3a0f6dc65a64a5bbffca1d2d3934624ffae38a74eb391d19930ab1f",
+    "summary.json": "911c9455ab8a603a63b371b7baf95c2214ce6ead712a7d260af9704efcbcae15"
+  },
+  "limits": [
+    "Local consistency verification, not external certification.",
+    "Synthetic distractor growth; original functions remain short.",
+    "Large arms interleaved, historical small measured earlier.",
+    "FULL knows defining file; retrieval arms have 1024-token selected-code caps."
+  ]
+}

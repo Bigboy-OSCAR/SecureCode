@@ -1,0 +1,58 @@
+{
+  "dev_shipping": {
+    "index_seconds": 0.021492250001756474,
+    "graph_seconds": 0.019085249994532205,
+    "raw_seconds": 0.00032579200342297554,
+    "symbols": 308,
+    "raw_candidates": 339,
+    "scope": "One warm-filesystem build; not cold-start benchmarking"
+  },
+  "eval_authorization": {
+    "index_seconds": 0.020239666002453305,
+    "graph_seconds": 0.020026291997055523,
+    "raw_seconds": 0.0003312089975224808,
+    "symbols": 309,
+    "raw_candidates": 339,
+    "scope": "One warm-filesystem build; not cold-start benchmarking"
+  },
+  "eval_cache": {
+    "index_seconds": 0.020240999991074204,
+    "graph_seconds": 0.019829790995572694,
+    "raw_seconds": 0.0003182090003974736,
+    "symbols": 308,
+    "raw_candidates": 338,
+    "scope": "One warm-filesystem build; not cold-start benchmarking"
+  },
+  "eval_inventory": {
+    "index_seconds": 0.021968125001876615,
+    "graph_seconds": 0.03546141700644512,
+    "raw_seconds": 0.0003030420048162341,
+    "symbols": 308,
+    "raw_candidates": 337,
+    "scope": "One warm-filesystem build; not cold-start benchmarking"
+  },
+  "eval_pricing": {
+    "index_seconds": 0.019309666997287422,
+    "graph_seconds": 0.019976333001977764,
+    "raw_seconds": 0.00031504199432674795,
+    "symbols": 307,
+    "raw_candidates": 336,
+    "scope": "One warm-filesystem build; not cold-start benchmarking"
+  },
+  "eval_routing": {
+    "index_seconds": 0.02033300000766758,
+    "graph_seconds": 0.02090287501050625,
+    "raw_seconds": 0.0003207499976269901,
+    "symbols": 309,
+    "raw_candidates": 338,
+    "scope": "One warm-filesystem build; not cold-start benchmarking"
+  },
+  "eval_schedules": {
+    "index_seconds": 0.019010042000445537,
+    "graph_seconds": 0.019748708000406623,
+    "raw_seconds": 0.0003148749965475872,
+    "symbols": 307,
+    "raw_candidates": 337,
+    "scope": "One warm-filesystem build; not cold-start benchmarking"
+  }
+}

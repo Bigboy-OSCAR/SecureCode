@@ -1,0 +1,423 @@
+{
+  "scope": "Illustration only; not part of the 96 evaluation questions. A/B seed explicitly fixed for showing retrieval, no LLM answer or selector is simulated.",
+  "sources": {
+    "service.py": "from rules import sellable\n\ndef remaining(on_hand, held):\n    return sellable(on_hand, held)\n\ndef label(on_hand):\n    return 'empty' if on_hand <= 0 else 'stocked'\n",
+    "rules.py": "from policy import SAFETY_STOCK\n\ndef sellable(on_hand, held):\n    return max(0, on_hand - held - SAFETY_STOCK)\n",
+    "policy.py": "SAFETY_STOCK = 3\n"
+  },
+  "question": "What does remaining(9,1) return?",
+  "expected": 5,
+  "expected_verified_by_execution": true,
+  "symbol_index": {
+    "version": 1,
+    "root": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/full_file_20261024/index_example/project",
+    "files": [
+      {
+        "path": "policy.py",
+        "symbols": []
+      },
+      {
+        "path": "rules.py",
+        "symbols": [
+          {
+            "path": "rules.py",
+            "kind": "function",
+            "name": "sellable",
+            "qualname": "sellable",
+            "start_line": 3,
+            "end_line": 4,
+            "uri": "memory://symbol/rules.py::sellable"
+          }
+        ]
+      },
+      {
+        "path": "service.py",
+        "symbols": [
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "remaining",
+            "qualname": "remaining",
+            "start_line": 3,
+            "end_line": 4,
+            "uri": "memory://symbol/service.py::remaining"
+          },
+          {
+            "path": "service.py",
+            "kind": "function",
+            "name": "label",
+            "qualname": "label",
+            "start_line": 6,
+            "end_line": 7,
+            "uri": "memory://symbol/service.py::label"
+          }
+        ]
+      }
+    ],
+    "symbols": [
+      {
+        "path": "rules.py",
+        "kind": "function",
+        "name": "sellable",
+        "qualname": "sellable",
+        "start_line": 3,
+        "end_line": 4,
+        "uri": "memory://symbol/rules.py::sellable"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "remaining",
+        "qualname": "remaining",
+        "start_line": 3,
+        "end_line": 4,
+        "uri": "memory://symbol/service.py::remaining"
+      },
+      {
+        "path": "service.py",
+        "kind": "function",
+        "name": "label",
+        "qualname": "label",
+        "start_line": 6,
+        "end_line": 7,
+        "uri": "memory://symbol/service.py::label"
+      }
+    ]
+  },
+  "nodes": {
+    "memory://symbol/policy.py::SAFETY_STOCK": {
+      "id": "memory://symbol/policy.py::SAFETY_STOCK",
+      "path": "policy.py",
+      "name": "SAFETY_STOCK",
+      "source": "SAFETY_STOCK = 3",
+      "imports": "",
+      "start": 1,
+      "end": 1,
+      "refs": [],
+      "deps": [],
+      "kind": "constant"
+    },
+    "memory://symbol/rules.py::sellable": {
+      "id": "memory://symbol/rules.py::sellable",
+      "path": "rules.py",
+      "name": "sellable",
+      "source": "def sellable(on_hand, held):\n    return max(0, on_hand - held - SAFETY_STOCK)",
+      "imports": "from policy import SAFETY_STOCK",
+      "start": 3,
+      "end": 4,
+      "refs": [
+        "SAFETY_STOCK",
+        "held",
+        "max",
+        "on_hand"
+      ],
+      "deps": [
+        "memory://symbol/policy.py::SAFETY_STOCK"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::remaining": {
+      "id": "memory://symbol/service.py::remaining",
+      "path": "service.py",
+      "name": "remaining",
+      "source": "def remaining(on_hand, held):\n    return sellable(on_hand, held)",
+      "imports": "from rules import sellable",
+      "start": 3,
+      "end": 4,
+      "refs": [
+        "held",
+        "on_hand",
+        "sellable"
+      ],
+      "deps": [
+        "memory://symbol/rules.py::sellable"
+      ],
+      "kind": "function"
+    },
+    "memory://symbol/service.py::label": {
+      "id": "memory://symbol/service.py::label",
+      "path": "service.py",
+      "name": "label",
+      "source": "def label(on_hand):\n    return 'empty' if on_hand <= 0 else 'stocked'",
+      "imports": "from rules import sellable",
+      "start": 6,
+      "end": 7,
+      "refs": [
+        "on_hand"
+      ],
+      "deps": [],
+      "kind": "function"
+    }
+  },
+  "raw": [
+    {
+      "id": "memory://symbol/policy.py::SAFETY_STOCK",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::SAFETY_STOCK lines 1-1\n\nSAFETY_STOCK = 3",
+      "source_uris": [
+        "memory://symbol/policy.py::SAFETY_STOCK"
+      ],
+      "path": "policy.py",
+      "kind": "constant"
+    },
+    {
+      "id": "memory://symbol/rules.py::sellable",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::sellable lines 3-4\nfrom policy import SAFETY_STOCK\ndef sellable(on_hand, held):\n    return max(0, on_hand - held - SAFETY_STOCK)\n\n### memory://symbol/policy.py::SAFETY_STOCK lines 1-1\n\nSAFETY_STOCK = 3",
+      "source_uris": [
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/policy.py::SAFETY_STOCK"
+      ],
+      "path": "rules.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::sellable",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::sellable lines 3-4\nfrom policy import SAFETY_STOCK\ndef sellable(on_hand, held):\n    return max(0, on_hand - held - SAFETY_STOCK)",
+      "source_uris": [
+        "memory://symbol/rules.py::sellable"
+      ],
+      "path": "rules.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::remaining",
+      "level": 0,
+      "text": "### memory://symbol/service.py::remaining lines 3-4\nfrom rules import sellable\ndef remaining(on_hand, held):\n    return sellable(on_hand, held)\n\n### memory://symbol/rules.py::sellable lines 3-4\nfrom policy import SAFETY_STOCK\ndef sellable(on_hand, held):\n    return max(0, on_hand - held - SAFETY_STOCK)\n\n### memory://symbol/policy.py::SAFETY_STOCK lines 1-1\n\nSAFETY_STOCK = 3",
+      "source_uris": [
+        "memory://symbol/service.py::remaining",
+        "memory://symbol/rules.py::sellable",
+        "memory://symbol/policy.py::SAFETY_STOCK"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    },
+    {
+      "id": "atomic:memory://symbol/service.py::remaining",
+      "level": 0,
+      "text": "### memory://symbol/service.py::remaining lines 3-4\nfrom rules import sellable\ndef remaining(on_hand, held):\n    return sellable(on_hand, held)",
+      "source_uris": [
+        "memory://symbol/service.py::remaining"
+      ],
+      "path": "service.py",
+      "kind": "raw_atomic"
+    },
+    {
+      "id": "memory://symbol/service.py::label",
+      "level": 0,
+      "text": "### memory://symbol/service.py::label lines 6-7\nfrom rules import sellable\ndef label(on_hand):\n    return 'empty' if on_hand <= 0 else 'stocked'",
+      "source_uris": [
+        "memory://symbol/service.py::label"
+      ],
+      "path": "service.py",
+      "kind": "function"
+    }
+  ],
+  "idf": {
+    "safety_stock": 1.336472236621213,
+    "safety": 1.336472236621213,
+    "py": 1.0,
+    "policy": 1.336472236621213,
+    "lines": 1.0,
+    "symbol": 1.0,
+    "stock": 1.336472236621213,
+    "memory": 1.0,
+    "max": 1.5596157879354227,
+    "sellable": 1.1541506798272583,
+    "held": 1.336472236621213,
+    "def": 1.1541506798272583,
+    "on": 1.1541506798272583,
+    "import": 1.1541506798272583,
+    "on_hand": 1.1541506798272583,
+    "return": 1.1541506798272583,
+    "hand": 1.1541506798272583,
+    "from": 1.1541506798272583,
+    "rules": 1.1541506798272583,
+    "service": 1.5596157879354227,
+    "remaining": 1.8472978603872037,
+    "stocked": 2.252762968495368,
+    "else": 2.252762968495368,
+    "empty": 2.252762968495368,
+    "label": 2.252762968495368,
+    "if": 2.252762968495368
+  },
+  "document_vectors": {
+    "memory://symbol/policy.py::SAFETY_STOCK": {
+      "memory": 0.21745528810686665,
+      "symbol": 0.21745528810686665,
+      "policy": 0.29062295526129434,
+      "py": 0.21745528810686665,
+      "safety_stock": 0.4920674373066596,
+      "safety": 0.4920674373066596,
+      "stock": 0.4920674373066596,
+      "lines": 0.21745528810686665
+    },
+    "memory://symbol/rules.py::sellable": {
+      "memory": 0.19346943687972612,
+      "symbol": 0.19346943687972612,
+      "rules": 0.1318803732270262,
+      "py": 0.19346943687972612,
+      "sellable": 0.22329288210053275,
+      "lines": 0.19346943687972612,
+      "from": 0.1318803732270262,
+      "policy": 0.2585665310244942,
+      "import": 0.1318803732270262,
+      "safety_stock": 0.36441950353898156,
+      "safety": 0.36441950353898156,
+      "stock": 0.36441950353898156,
+      "def": 0.1318803732270262,
+      "on_hand": 0.22329288210053275,
+      "on": 0.22329288210053275,
+      "hand": 0.22329288210053275,
+      "held": 0.2585665310244942,
+      "return": 0.1318803732270262,
+      "max": 0.17821131659730136
+    },
+    "atomic:memory://symbol/rules.py::sellable": {
+      "memory": 0.14053110732954305,
+      "symbol": 0.14053110732954305,
+      "rules": 0.1621940730612695,
+      "py": 0.14053110732954305,
+      "sellable": 0.27461843750722226,
+      "lines": 0.14053110732954305,
+      "from": 0.1621940730612695,
+      "policy": 0.18781592332757013,
+      "import": 0.1621940730612695,
+      "safety_stock": 0.31800000104633824,
+      "safety": 0.31800000104633824,
+      "stock": 0.31800000104633824,
+      "def": 0.1621940730612695,
+      "on_hand": 0.27461843750722226,
+      "on": 0.27461843750722226,
+      "hand": 0.27461843750722226,
+      "held": 0.31800000104633824,
+      "return": 0.1621940730612695,
+      "max": 0.21917453368720272
+    },
+    "memory://symbol/service.py::remaining": {
+      "memory": 0.18585343360216355,
+      "symbol": 0.18585343360216355,
+      "service": 0.13811981891705327,
+      "py": 0.18585343360216355,
+      "remaining": 0.2769937796523605,
+      "lines": 0.18585343360216355,
+      "from": 0.17305956226608976,
+      "rules": 0.17305956226608976,
+      "import": 0.17305956226608976,
+      "sellable": 0.2439073592154415,
+      "def": 0.17305956226608976,
+      "on_hand": 0.2439073592154415,
+      "on": 0.2439073592154415,
+      "hand": 0.2439073592154415,
+      "held": 0.28243748376756445,
+      "return": 0.17305956226608976,
+      "policy": 0.20039783738208783,
+      "safety_stock": 0.28243748376756445,
+      "safety": 0.28243748376756445,
+      "stock": 0.28243748376756445,
+      "max": 0.13811981891705327
+    },
+    "atomic:memory://symbol/service.py::remaining": {
+      "memory": 0.15202072461808724,
+      "symbol": 0.15202072461808724,
+      "service": 0.23709392220775205,
+      "py": 0.15202072461808724,
+      "remaining": 0.47548239028873684,
+      "lines": 0.15202072461808724,
+      "from": 0.17545482266579782,
+      "rules": 0.17545482266579782,
+      "import": 0.17545482266579782,
+      "sellable": 0.2970708383122408,
+      "def": 0.17545482266579782,
+      "on_hand": 0.2970708383122408,
+      "on": 0.2970708383122408,
+      "hand": 0.2970708383122408,
+      "held": 0.3439992148802634,
+      "return": 0.17545482266579782
+    },
+    "memory://symbol/service.py::label": {
+      "memory": 0.12832203695274078,
+      "symbol": 0.12832203695274078,
+      "service": 0.20013307477152723,
+      "py": 0.12832203695274078,
+      "label": 0.4894535188097726,
+      "lines": 0.12832203695274078,
+      "from": 0.14810296618582433,
+      "rules": 0.14810296618582433,
+      "import": 0.14810296618582433,
+      "sellable": 0.14810296618582433,
+      "def": 0.14810296618582433,
+      "on_hand": 0.2507601196300934,
+      "on": 0.2507601196300934,
+      "hand": 0.2507601196300934,
+      "return": 0.14810296618582433,
+      "empty": 0.28907913288902864,
+      "if": 0.28907913288902864,
+      "else": 0.28907913288902864,
+      "stocked": 0.28907913288902864
+    }
+  },
+  "ranking": [
+    {
+      "id": "atomic:memory://symbol/service.py::remaining",
+      "score": 0.2299109412334376
+    },
+    {
+      "id": "memory://symbol/service.py::remaining",
+      "score": 0.15132855070930934
+    },
+    {
+      "id": "atomic:memory://symbol/rules.py::sellable",
+      "score": 0.03981879618604979
+    },
+    {
+      "id": "memory://symbol/service.py::label",
+      "score": 0.036359416307863726
+    },
+    {
+      "id": "memory://symbol/rules.py::sellable",
+      "score": 0.03237675460855728
+    },
+    {
+      "id": "memory://symbol/policy.py::SAFETY_STOCK",
+      "score": 0.0
+    }
+  ],
+  "A_ordered_items": [
+    {
+      "id": "native:0",
+      "level": 0,
+      "text": "### primary symbol: memory://symbol/service.py::remaining\n```python\ndef remaining(on_hand, held):\n    return sellable(on_hand, held)\n```",
+      "source_uris": [
+        "memory://symbol/service.py::remaining"
+      ]
+    }
+  ],
+  "B_ordered_items": [
+    {
+      "id": "memory://symbol/service.py::remaining",
+      "level": 0,
+      "text": "### memory://symbol/service.py::remaining lines 3-4\nfrom rules import sellable\ndef remaining(on_hand, held):\n    return sellable(on_hand, held)",
+      "source_uris": [
+        "memory://symbol/service.py::remaining"
+      ]
+    },
+    {
+      "id": "memory://symbol/rules.py::sellable",
+      "level": 0,
+      "text": "### memory://symbol/rules.py::sellable lines 3-4\nfrom policy import SAFETY_STOCK\ndef sellable(on_hand, held):\n    return max(0, on_hand - held - SAFETY_STOCK)",
+      "source_uris": [
+        "memory://symbol/rules.py::sellable"
+      ]
+    },
+    {
+      "id": "memory://symbol/policy.py::SAFETY_STOCK",
+      "level": 0,
+      "text": "### memory://symbol/policy.py::SAFETY_STOCK lines 1-1\n\nSAFETY_STOCK = 3",
+      "source_uris": [
+        "memory://symbol/policy.py::SAFETY_STOCK"
+      ]
+    }
+  ]
+}

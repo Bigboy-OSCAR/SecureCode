@@ -1,0 +1,2977 @@
+{
+  "created_at_utc": "2026-10-25T02:04:15.425993+00:00",
+  "analysis_type": "Post-hoc inspection; no new model generation or causal ablation.",
+  "questions": 96,
+  "actual_existing_answers": 2016,
+  "repeats_identical_for_report_diagnostics": true,
+  "arms": {
+    "A": {
+      "correct": 17,
+      "accuracy_pct": 17.708333333333332,
+      "raw_inclusion_pct": 28.767598142598143,
+      "all_raw_questions": 14,
+      "correct_with_all_raw": 7,
+      "wrong_with_all_raw": 7,
+      "selector_valid": 96,
+      "selector_matches_designated_target": 68,
+      "failures_by_question": {
+        "wrong_answer": 72,
+        "invalid_json": 3,
+        "abstained": 4
+      },
+      "output_limit_questions": 0,
+      "leaf_selections_one_repeat": 0,
+      "auxiliary_leaf_selections_one_repeat": 0,
+      "auxiliary_leaf_selection_pct": 0,
+      "questions_with_auxiliary_summary": 0,
+      "questions_with_file_summary": 0,
+      "questions_with_project_summary": 0
+    },
+    "B": {
+      "correct": 20,
+      "accuracy_pct": 20.833333333333332,
+      "raw_inclusion_pct": 72.35352754884003,
+      "all_raw_questions": 47,
+      "correct_with_all_raw": 16,
+      "wrong_with_all_raw": 31,
+      "selector_valid": 96,
+      "selector_matches_designated_target": 68,
+      "failures_by_question": {
+        "wrong_answer": 66,
+        "invalid_json": 5,
+        "invalid_schema": 2,
+        "abstained": 3
+      },
+      "output_limit_questions": 0,
+      "leaf_selections_one_repeat": 0,
+      "auxiliary_leaf_selections_one_repeat": 0,
+      "auxiliary_leaf_selection_pct": 0,
+      "questions_with_auxiliary_summary": 0,
+      "questions_with_file_summary": 0,
+      "questions_with_project_summary": 0
+    },
+    "R0": {
+      "correct": 25,
+      "accuracy_pct": 26.041666666666668,
+      "raw_inclusion_pct": 99.01751893939394,
+      "all_raw_questions": 94,
+      "correct_with_all_raw": 25,
+      "wrong_with_all_raw": 69,
+      "selector_valid": null,
+      "selector_matches_designated_target": null,
+      "failures_by_question": {
+        "wrong_answer": 67,
+        "invalid_json": 4
+      },
+      "output_limit_questions": 0,
+      "leaf_selections_one_repeat": 0,
+      "auxiliary_leaf_selections_one_repeat": 0,
+      "auxiliary_leaf_selection_pct": 0,
+      "questions_with_auxiliary_summary": 0,
+      "questions_with_file_summary": 0,
+      "questions_with_project_summary": 0
+    },
+    "RF": {
+      "correct": 15,
+      "accuracy_pct": 15.625,
+      "raw_inclusion_pct": 53.13216297591297,
+      "all_raw_questions": 44,
+      "correct_with_all_raw": 8,
+      "wrong_with_all_raw": 36,
+      "selector_valid": null,
+      "selector_matches_designated_target": null,
+      "failures_by_question": {
+        "wrong_answer": 75,
+        "invalid_json": 3,
+        "abstained": 2,
+        "execution_or_limit": 1
+      },
+      "output_limit_questions": 1,
+      "leaf_selections_one_repeat": 481,
+      "auxiliary_leaf_selections_one_repeat": 299,
+      "auxiliary_leaf_selection_pct": 62.16216216216216,
+      "questions_with_auxiliary_summary": 53,
+      "questions_with_file_summary": 0,
+      "questions_with_project_summary": 0
+    },
+    "RH": {
+      "correct": 16,
+      "accuracy_pct": 16.666666666666668,
+      "raw_inclusion_pct": 53.30577408702408,
+      "all_raw_questions": 44,
+      "correct_with_all_raw": 9,
+      "wrong_with_all_raw": 35,
+      "selector_valid": null,
+      "selector_matches_designated_target": null,
+      "failures_by_question": {
+        "wrong_answer": 74,
+        "invalid_json": 3,
+        "abstained": 2,
+        "execution_or_limit": 1
+      },
+      "output_limit_questions": 1,
+      "leaf_selections_one_repeat": 473,
+      "auxiliary_leaf_selections_one_repeat": 293,
+      "auxiliary_leaf_selection_pct": 61.94503171247357,
+      "questions_with_auxiliary_summary": 50,
+      "questions_with_file_summary": 8,
+      "questions_with_project_summary": 0
+    },
+    "C": {
+      "correct": 16,
+      "accuracy_pct": 16.666666666666668,
+      "raw_inclusion_pct": 53.30577408702408,
+      "all_raw_questions": 44,
+      "correct_with_all_raw": 10,
+      "wrong_with_all_raw": 34,
+      "selector_valid": null,
+      "selector_matches_designated_target": null,
+      "failures_by_question": {
+        "wrong_answer": 73,
+        "invalid_json": 4,
+        "abstained": 3
+      },
+      "output_limit_questions": 0,
+      "leaf_selections_one_repeat": 473,
+      "auxiliary_leaf_selections_one_repeat": 293,
+      "auxiliary_leaf_selection_pct": 61.94503171247357,
+      "questions_with_auxiliary_summary": 50,
+      "questions_with_file_summary": 8,
+      "questions_with_project_summary": 0
+    },
+    "FULL": {
+      "correct": 15,
+      "accuracy_pct": 15.625,
+      "raw_inclusion_pct": 30.582233160358157,
+      "all_raw_questions": 14,
+      "correct_with_all_raw": 7,
+      "wrong_with_all_raw": 7,
+      "selector_valid": null,
+      "selector_matches_designated_target": null,
+      "failures_by_question": {
+        "wrong_answer": 66,
+        "invalid_json": 8,
+        "execution_or_limit": 7
+      },
+      "output_limit_questions": 7,
+      "leaf_selections_one_repeat": 0,
+      "auxiliary_leaf_selections_one_repeat": 0,
+      "auxiliary_leaf_selection_pct": 0,
+      "questions_with_auxiliary_summary": 0,
+      "questions_with_file_summary": 0,
+      "questions_with_project_summary": 0
+    }
+  },
+  "pairs": {
+    "A->B": {
+      "wins": [
+        "eval_authorization__expiry",
+        "eval_authorization__direct_calls",
+        "eval_routing__direct_calls",
+        "eval_schedules__direct_calls",
+        "eval_pricing__v2_receipt_transitive_calls",
+        "eval_routing__v2_canary_exact_threshold",
+        "eval_routing__v2_retry_without_backend",
+        "eval_routing__v2_latency_intervention",
+        "eval_inventory__v2_remaining_transitive_calls"
+      ],
+      "losses": [
+        "eval_routing__retry_exhausted",
+        "eval_cache__negative_ttl",
+        "eval_authorization__v2_duplicate_write_permission",
+        "eval_authorization__v2_last_valid_session_second",
+        "eval_cache__v2_short_private_ttl",
+        "eval_schedules__v2_max_duration_closing_edge"
+      ],
+      "ties": 81
+    },
+    "R0->RF": {
+      "wins": [],
+      "losses": [
+        "eval_pricing__direct_calls",
+        "eval_authorization__expiry",
+        "eval_authorization__direct_calls",
+        "eval_inventory__direct_calls",
+        "eval_pricing__v2_negative_unit_price",
+        "eval_routing__v2_canary_exact_threshold",
+        "eval_routing__v2_retry_without_backend",
+        "eval_inventory__v2_order_cap_intervention",
+        "eval_cache__v2_private_cap_intervention",
+        "eval_schedules__v2_slot_size_intervention"
+      ],
+      "ties": 86
+    },
+    "RF->RH": {
+      "wins": [
+        "eval_cache__canonical_key"
+      ],
+      "losses": [],
+      "ties": 95
+    },
+    "RH->C": {
+      "wins": [
+        "eval_schedules__rounding",
+        "eval_inventory__v2_partial_depletes_available"
+      ],
+      "losses": [
+        "eval_authorization__own_write",
+        "eval_authorization__v2_last_valid_session_second"
+      ],
+      "ties": 92
+    }
+  },
+  "AB_same_selected_function_questions": 96,
+  "B_expansion_diagnostic": {
+    "target_matches": 68,
+    "missing_required_before_packing": 23,
+    "required_lost_during_packing": 0,
+    "eight_function_cap_reached": 0,
+    "missing_source_distance_occurrences": {
+      "3": 66,
+      "unreachable_from_primary": 4,
+      "4": 8
+    }
+  },
+  "lexical_diagnostic": {
+    "term": "function",
+    "idf_fitted_on": "raw candidates only",
+    "questions_containing_term": 24,
+    "projects": {
+      "eval_authorization": {
+        "raw_candidates": 339,
+        "leaf_summaries": 309,
+        "function_document_frequency_raw": 0,
+        "function_document_frequency_leaf": 309,
+        "function_idf": 6.8289456176102075,
+        "unseen_word_idf": 6.8289456176102075
+      },
+      "eval_cache": {
+        "raw_candidates": 338,
+        "leaf_summaries": 308,
+        "function_document_frequency_raw": 0,
+        "function_document_frequency_leaf": 308,
+        "function_idf": 6.82600010738045,
+        "unseen_word_idf": 6.82600010738045
+      },
+      "eval_inventory": {
+        "raw_candidates": 337,
+        "leaf_summaries": 308,
+        "function_document_frequency_raw": 0,
+        "function_document_frequency_leaf": 308,
+        "function_idf": 6.823045895483019,
+        "unseen_word_idf": 6.823045895483019
+      },
+      "eval_pricing": {
+        "raw_candidates": 336,
+        "leaf_summaries": 307,
+        "function_document_frequency_raw": 0,
+        "function_document_frequency_leaf": 307,
+        "function_idf": 6.820082930352362,
+        "unseen_word_idf": 6.820082930352362
+      },
+      "eval_routing": {
+        "raw_candidates": 338,
+        "leaf_summaries": 309,
+        "function_document_frequency_raw": 0,
+        "function_document_frequency_leaf": 309,
+        "function_idf": 6.82600010738045,
+        "unseen_word_idf": 6.82600010738045
+      },
+      "eval_schedules": {
+        "raw_candidates": 337,
+        "leaf_summaries": 307,
+        "function_document_frequency_raw": 0,
+        "function_document_frequency_leaf": 307,
+        "function_idf": 6.823045895483019,
+        "unseen_word_idf": 6.823045895483019
+      }
+    }
+  },
+  "cases": {
+    "eval_authorization__expiry": {
+      "question": "What does can_edit_own('u1',['document:write'],100,3700) return?",
+      "expected": false,
+      "arms": {
+        "A": {
+          "correct": false,
+          "parsed_answer": true,
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 0.5,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "native:0",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::authorize"
+              ]
+            },
+            {
+              "id": "native:1",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            }
+          ]
+        },
+        "B": {
+          "correct": true,
+          "parsed_answer": false,
+          "failure": null,
+          "raw_evidence_recall": 0.75,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::authorize",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::authorize"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::role_allows",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::role_allows"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::scope_allows",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::scope_allows"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::session_valid",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::session_valid"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::ALLOW_REASON",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::ALLOW_REASON"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::DENY_REASON",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::DENY_REASON"
+              ]
+            }
+          ]
+        },
+        "R0": {
+          "correct": true,
+          "parsed_answer": false,
+          "failure": null,
+          "raw_evidence_recall": 1.0,
+          "all_raw_evidence": true,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.348341388618134,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::WRITE_SCOPE",
+              "level": 0,
+              "score": 0.1925091210943867,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.18164336310935553,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::READ_SCOPE",
+              "level": 0,
+              "score": 0.11786468270955487,
+              "source_uris": [
+                "memory://symbol/policy.py::READ_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::required_scope",
+              "level": 0,
+              "score": 0.11458169808557195,
+              "source_uris": [
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::READ_ACTION",
+                "memory://symbol/policy.py::READ_SCOPE",
+                "memory://symbol/policy.py::WRITE_ACTION",
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::aux_rules_009_flat_cells",
+              "level": 0,
+              "score": 0.09338652361712053,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_009_flat_cells"
+              ]
+            }
+          ]
+        },
+        "RF": {
+          "correct": false,
+          "parsed_answer": true,
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 1.0,
+          "all_raw_evidence": true,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.348341388618134,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::can_edit_own",
+              "level": 1,
+              "score": 0.2512023066789099,
+              "source_uris": [
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/policy.py::MAX_SESSION_AGE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::WRITE_SCOPE",
+              "level": 0,
+              "score": 0.1925091210943867,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.18164336310935553,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::READ_SCOPE",
+              "level": 0,
+              "score": 0.11786468270955487,
+              "source_uris": [
+                "memory://symbol/policy.py::READ_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::aux_rules_009_flat_cells",
+              "level": 0,
+              "score": 0.09338652361712053,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_009_flat_cells"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::WRITE_ACTION",
+              "level": 0,
+              "score": 0.08165893768141617,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_ACTION"
+              ]
+            }
+          ]
+        },
+        "RH": {
+          "correct": false,
+          "parsed_answer": true,
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 1.0,
+          "all_raw_evidence": true,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.348341388618134,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::can_edit_own",
+              "level": 1,
+              "score": 0.2512023066789099,
+              "source_uris": [
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/policy.py::MAX_SESSION_AGE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::WRITE_SCOPE",
+              "level": 0,
+              "score": 0.1925091210943867,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.18164336310935553,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::READ_SCOPE",
+              "level": 0,
+              "score": 0.11786468270955487,
+              "source_uris": [
+                "memory://symbol/policy.py::READ_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::aux_rules_009_flat_cells",
+              "level": 0,
+              "score": 0.09338652361712053,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_009_flat_cells"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::WRITE_ACTION",
+              "level": 0,
+              "score": 0.08165893768141617,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_ACTION"
+              ]
+            }
+          ]
+        },
+        "C": {
+          "correct": false,
+          "parsed_answer": "allowed",
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 1.0,
+          "all_raw_evidence": true,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.348341388618134,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::can_edit_own",
+              "level": 1,
+              "score": 0.2512023066789099,
+              "source_uris": [
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/policy.py::MAX_SESSION_AGE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::WRITE_SCOPE",
+              "level": 0,
+              "score": 0.1925091210943867,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.18164336310935553,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::READ_SCOPE",
+              "level": 0,
+              "score": 0.11786468270955487,
+              "source_uris": [
+                "memory://symbol/policy.py::READ_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::aux_rules_009_flat_cells",
+              "level": 0,
+              "score": 0.09338652361712053,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_009_flat_cells"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::WRITE_ACTION",
+              "level": 0,
+              "score": 0.08165893768141617,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_ACTION"
+              ]
+            }
+          ]
+        },
+        "FULL": {
+          "correct": false,
+          "parsed_answer": true,
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 0.5,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "file://service.py",
+              "level": 0,
+              "score": null,
+              "source_uris": [
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/service.py::aux_service_000_event_text",
+                "memory://symbol/service.py::aux_service_001_batches",
+                "memory://symbol/service.py::aux_service_002_histogram",
+                "memory://symbol/service.py::aux_service_003_trimmed_text",
+                "memory://symbol/service.py::aux_service_004_unique_items",
+                "memory://symbol/service.py::aux_service_005_encoded_pair",
+                "memory://symbol/service.py::aux_service_006_moving_average",
+                "memory://symbol/service.py::aux_service_007_table_rows",
+                "memory://symbol/service.py::aux_service_008_missing_fields",
+                "memory://symbol/service.py::aux_service_009_flat_cells",
+                "memory://symbol/service.py::aux_service_010_merged_fields",
+                "memory://symbol/service.py::aux_service_011_byte_count",
+                "memory://symbol/service.py::aux_service_012_event_text",
+                "memory://symbol/service.py::aux_service_013_batches",
+                "memory://symbol/service.py::aux_service_014_histogram",
+                "memory://symbol/service.py::aux_service_015_trimmed_text",
+                "memory://symbol/service.py::aux_service_016_unique_items",
+                "memory://symbol/service.py::aux_service_017_encoded_pair",
+                "memory://symbol/service.py::aux_service_018_moving_average",
+                "memory://symbol/service.py::aux_service_019_table_rows",
+                "memory://symbol/service.py::aux_service_020_missing_fields",
+                "memory://symbol/service.py::aux_service_021_flat_cells",
+                "memory://symbol/service.py::aux_service_022_merged_fields",
+                "memory://symbol/service.py::aux_service_023_byte_count",
+                "memory://symbol/service.py::aux_service_024_event_text",
+                "memory://symbol/service.py::aux_service_025_batches",
+                "memory://symbol/service.py::aux_service_026_histogram",
+                "memory://symbol/service.py::aux_service_027_trimmed_text",
+                "memory://symbol/service.py::aux_service_028_unique_items",
+                "memory://symbol/service.py::aux_service_029_encoded_pair",
+                "memory://symbol/service.py::aux_service_030_moving_average",
+                "memory://symbol/service.py::aux_service_031_table_rows",
+                "memory://symbol/service.py::aux_service_032_missing_fields",
+                "memory://symbol/service.py::aux_service_033_flat_cells",
+                "memory://symbol/service.py::aux_service_034_merged_fields",
+                "memory://symbol/service.py::aux_service_035_byte_count",
+                "memory://symbol/service.py::aux_service_036_event_text",
+                "memory://symbol/service.py::aux_service_037_batches",
+                "memory://symbol/service.py::aux_service_038_histogram",
+                "memory://symbol/service.py::aux_service_039_trimmed_text",
+                "memory://symbol/service.py::aux_service_040_unique_items",
+                "memory://symbol/service.py::aux_service_041_encoded_pair",
+                "memory://symbol/service.py::aux_service_042_moving_average",
+                "memory://symbol/service.py::aux_service_043_table_rows",
+                "memory://symbol/service.py::aux_service_044_missing_fields",
+                "memory://symbol/service.py::aux_service_045_flat_cells",
+                "memory://symbol/service.py::aux_service_046_merged_fields",
+                "memory://symbol/service.py::aux_service_047_byte_count",
+                "memory://symbol/service.py::aux_service_048_event_text",
+                "memory://symbol/service.py::aux_service_049_batches",
+                "memory://symbol/service.py::aux_service_050_histogram",
+                "memory://symbol/service.py::aux_service_051_trimmed_text",
+                "memory://symbol/service.py::aux_service_052_unique_items",
+                "memory://symbol/service.py::aux_service_053_encoded_pair",
+                "memory://symbol/service.py::aux_service_054_moving_average",
+                "memory://symbol/service.py::aux_service_055_table_rows",
+                "memory://symbol/service.py::aux_service_056_missing_fields",
+                "memory://symbol/service.py::aux_service_057_flat_cells",
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::user_key"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "eval_pricing__v2_negative_unit_price": {
+      "question": "A member orders 2 units whose unit price is minus 1 cent. Return the retail receipt object containing currency, total, and accepted.",
+      "expected": {
+        "accepted": false,
+        "currency": "USD",
+        "total": -1
+      },
+      "arms": {
+        "A": {
+          "correct": false,
+          "parsed_answer": null,
+          "failure": "abstained",
+          "raw_evidence_recall": 0.07692307692307693,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "native:0",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::member_discount"
+              ]
+            }
+          ]
+        },
+        "B": {
+          "correct": false,
+          "parsed_answer": null,
+          "failure": "abstained",
+          "raw_evidence_recall": 0.23076923076923078,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "memory://symbol/rules.py::member_discount",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::member_discount"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::DISCOUNT_CAP_CENTS"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::MEMBER_BPS",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::MEMBER_BPS"
+              ]
+            }
+          ]
+        },
+        "R0": {
+          "correct": true,
+          "parsed_answer": {
+            "currency": "USD",
+            "total": -1,
+            "accepted": false
+          },
+          "failure": null,
+          "raw_evidence_recall": 1.0,
+          "all_raw_evidence": true,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::order_receipt",
+              "level": 0,
+              "score": 0.2637485327470916,
+              "source_uris": [
+                "memory://symbol/service.py::order_receipt"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::order_receipt",
+              "level": 0,
+              "score": 0.16617643158816855,
+              "source_uris": [
+                "memory://symbol/service.py::order_receipt",
+                "memory://symbol/policy.py::CURRENCY",
+                "memory://symbol/service.py::checkout_total",
+                "memory://symbol/policy.py::DELIVERY_CENTS",
+                "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+                "memory://symbol/rules.py::line_subtotal",
+                "memory://symbol/rules.py::member_discount",
+                "memory://symbol/rules.py::sales_tax",
+                "memory://symbol/policy.py::MAX_QUANTITY",
+                "memory://symbol/policy.py::MIN_QUANTITY",
+                "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+                "memory://symbol/policy.py::MEMBER_BPS",
+                "memory://symbol/policy.py::TAX_BPS"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::refundable",
+              "level": 0,
+              "score": 0.1595305695127676,
+              "source_uris": [
+                "memory://symbol/rules.py::refundable"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+              "level": 0,
+              "score": 0.07760611034624618,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::aux_service_011_byte_count",
+              "level": 0,
+              "score": 0.055878424714435215,
+              "source_uris": [
+                "memory://symbol/service.py::aux_service_011_byte_count"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/presentation.py::normalize_label",
+              "level": 0,
+              "score": 0.002411538479435874,
+              "source_uris": [
+                "memory://symbol/presentation.py::normalize_label"
+              ]
+            }
+          ]
+        },
+        "RF": {
+          "correct": false,
+          "parsed_answer": null,
+          "failure": "invalid_json",
+          "raw_evidence_recall": 0.07692307692307693,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::order_receipt",
+              "level": 0,
+              "score": 0.2637485327470916,
+              "source_uris": [
+                "memory://symbol/service.py::order_receipt"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::refundable",
+              "level": 1,
+              "score": 0.2538894355006633,
+              "source_uris": [
+                "memory://symbol/rules.py::refundable"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::line_subtotal",
+              "level": 1,
+              "score": 0.233090066849578,
+              "source_uris": [
+                "memory://symbol/policy.py::MAX_QUANTITY",
+                "memory://symbol/policy.py::MIN_QUANTITY",
+                "memory://symbol/rules.py::line_subtotal"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::order_receipt",
+              "level": 1,
+              "score": 0.20581991099244018,
+              "source_uris": [
+                "memory://symbol/policy.py::CURRENCY",
+                "memory://symbol/policy.py::DELIVERY_CENTS",
+                "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+                "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+                "memory://symbol/policy.py::MAX_QUANTITY",
+                "memory://symbol/policy.py::MEMBER_BPS",
+                "memory://symbol/policy.py::MIN_QUANTITY",
+                "memory://symbol/policy.py::TAX_BPS",
+                "memory://symbol/rules.py::line_subtotal",
+                "memory://symbol/rules.py::member_discount",
+                "memory://symbol/rules.py::sales_tax",
+                "memory://symbol/service.py::checkout_total",
+                "memory://symbol/service.py::order_receipt"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+              "level": 1,
+              "score": 0.17189749416504393,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX",
+                "memory://symbol/presentation.py::summarize_count"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/policy.py::aux_policy_016_unique_items",
+              "level": 1,
+              "score": 0.16838680365057704,
+              "source_uris": [
+                "memory://symbol/policy.py::aux_policy_016_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/policy.py::aux_policy_028_unique_items",
+              "level": 1,
+              "score": 0.16838680365057704,
+              "source_uris": [
+                "memory://symbol/policy.py::aux_policy_028_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/policy.py::aux_policy_040_unique_items",
+              "level": 1,
+              "score": 0.16838680365057704,
+              "source_uris": [
+                "memory://symbol/policy.py::aux_policy_040_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::member_discount",
+              "level": 1,
+              "score": 0.16166477941757731,
+              "source_uris": [
+                "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+                "memory://symbol/policy.py::MEMBER_BPS",
+                "memory://symbol/rules.py::member_discount"
+              ]
+            }
+          ]
+        },
+        "RH": {
+          "correct": false,
+          "parsed_answer": null,
+          "failure": "invalid_json",
+          "raw_evidence_recall": 0.07692307692307693,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::order_receipt",
+              "level": 0,
+              "score": 0.2637485327470916,
+              "source_uris": [
+                "memory://symbol/service.py::order_receipt"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::refundable",
+              "level": 1,
+              "score": 0.2538894355006633,
+              "source_uris": [
+                "memory://symbol/rules.py::refundable"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::line_subtotal",
+              "level": 1,
+              "score": 0.233090066849578,
+              "source_uris": [
+                "memory://symbol/policy.py::MAX_QUANTITY",
+                "memory://symbol/policy.py::MIN_QUANTITY",
+                "memory://symbol/rules.py::line_subtotal"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::order_receipt",
+              "level": 1,
+              "score": 0.20581991099244018,
+              "source_uris": [
+                "memory://symbol/policy.py::CURRENCY",
+                "memory://symbol/policy.py::DELIVERY_CENTS",
+                "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+                "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+                "memory://symbol/policy.py::MAX_QUANTITY",
+                "memory://symbol/policy.py::MEMBER_BPS",
+                "memory://symbol/policy.py::MIN_QUANTITY",
+                "memory://symbol/policy.py::TAX_BPS",
+                "memory://symbol/rules.py::line_subtotal",
+                "memory://symbol/rules.py::member_discount",
+                "memory://symbol/rules.py::sales_tax",
+                "memory://symbol/service.py::checkout_total",
+                "memory://symbol/service.py::order_receipt"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+              "level": 1,
+              "score": 0.17189749416504393,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX",
+                "memory://symbol/presentation.py::summarize_count"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/policy.py::aux_policy_016_unique_items",
+              "level": 1,
+              "score": 0.16838680365057704,
+              "source_uris": [
+                "memory://symbol/policy.py::aux_policy_016_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/policy.py::aux_policy_028_unique_items",
+              "level": 1,
+              "score": 0.16838680365057704,
+              "source_uris": [
+                "memory://symbol/policy.py::aux_policy_028_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/policy.py::aux_policy_040_unique_items",
+              "level": 1,
+              "score": 0.16838680365057704,
+              "source_uris": [
+                "memory://symbol/policy.py::aux_policy_040_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::member_discount",
+              "level": 1,
+              "score": 0.16166477941757731,
+              "source_uris": [
+                "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+                "memory://symbol/policy.py::MEMBER_BPS",
+                "memory://symbol/rules.py::member_discount"
+              ]
+            }
+          ]
+        },
+        "C": {
+          "correct": false,
+          "parsed_answer": null,
+          "failure": "invalid_json",
+          "raw_evidence_recall": 0.07692307692307693,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::order_receipt",
+              "level": 0,
+              "score": 0.2637485327470916,
+              "source_uris": [
+                "memory://symbol/service.py::order_receipt"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::refundable",
+              "level": 1,
+              "score": 0.2538894355006633,
+              "source_uris": [
+                "memory://symbol/rules.py::refundable"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::line_subtotal",
+              "level": 1,
+              "score": 0.233090066849578,
+              "source_uris": [
+                "memory://symbol/policy.py::MAX_QUANTITY",
+                "memory://symbol/policy.py::MIN_QUANTITY",
+                "memory://symbol/rules.py::line_subtotal"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::order_receipt",
+              "level": 1,
+              "score": 0.20581991099244018,
+              "source_uris": [
+                "memory://symbol/policy.py::CURRENCY",
+                "memory://symbol/policy.py::DELIVERY_CENTS",
+                "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+                "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+                "memory://symbol/policy.py::MAX_QUANTITY",
+                "memory://symbol/policy.py::MEMBER_BPS",
+                "memory://symbol/policy.py::MIN_QUANTITY",
+                "memory://symbol/policy.py::TAX_BPS",
+                "memory://symbol/rules.py::line_subtotal",
+                "memory://symbol/rules.py::member_discount",
+                "memory://symbol/rules.py::sales_tax",
+                "memory://symbol/service.py::checkout_total",
+                "memory://symbol/service.py::order_receipt"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+              "level": 1,
+              "score": 0.17189749416504393,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX",
+                "memory://symbol/presentation.py::summarize_count"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/policy.py::aux_policy_016_unique_items",
+              "level": 1,
+              "score": 0.16838680365057704,
+              "source_uris": [
+                "memory://symbol/policy.py::aux_policy_016_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/policy.py::aux_policy_028_unique_items",
+              "level": 1,
+              "score": 0.16838680365057704,
+              "source_uris": [
+                "memory://symbol/policy.py::aux_policy_028_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/policy.py::aux_policy_040_unique_items",
+              "level": 1,
+              "score": 0.16838680365057704,
+              "source_uris": [
+                "memory://symbol/policy.py::aux_policy_040_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::member_discount",
+              "level": 1,
+              "score": 0.16166477941757731,
+              "source_uris": [
+                "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+                "memory://symbol/policy.py::MEMBER_BPS",
+                "memory://symbol/rules.py::member_discount"
+              ]
+            }
+          ]
+        },
+        "FULL": {
+          "correct": false,
+          "parsed_answer": null,
+          "failure": "invalid_json",
+          "raw_evidence_recall": 0.15384615384615385,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "file://service.py",
+              "level": 0,
+              "score": null,
+              "source_uris": [
+                "memory://symbol/service.py::aux_service_000_event_text",
+                "memory://symbol/service.py::aux_service_001_batches",
+                "memory://symbol/service.py::aux_service_002_histogram",
+                "memory://symbol/service.py::aux_service_003_trimmed_text",
+                "memory://symbol/service.py::aux_service_004_unique_items",
+                "memory://symbol/service.py::aux_service_005_encoded_pair",
+                "memory://symbol/service.py::aux_service_006_moving_average",
+                "memory://symbol/service.py::aux_service_007_table_rows",
+                "memory://symbol/service.py::aux_service_008_missing_fields",
+                "memory://symbol/service.py::aux_service_009_flat_cells",
+                "memory://symbol/service.py::aux_service_010_merged_fields",
+                "memory://symbol/service.py::aux_service_011_byte_count",
+                "memory://symbol/service.py::aux_service_012_event_text",
+                "memory://symbol/service.py::aux_service_013_batches",
+                "memory://symbol/service.py::aux_service_014_histogram",
+                "memory://symbol/service.py::aux_service_015_trimmed_text",
+                "memory://symbol/service.py::aux_service_016_unique_items",
+                "memory://symbol/service.py::aux_service_017_encoded_pair",
+                "memory://symbol/service.py::aux_service_018_moving_average",
+                "memory://symbol/service.py::aux_service_019_table_rows",
+                "memory://symbol/service.py::aux_service_020_missing_fields",
+                "memory://symbol/service.py::aux_service_021_flat_cells",
+                "memory://symbol/service.py::aux_service_022_merged_fields",
+                "memory://symbol/service.py::aux_service_023_byte_count",
+                "memory://symbol/service.py::aux_service_024_event_text",
+                "memory://symbol/service.py::aux_service_025_batches",
+                "memory://symbol/service.py::aux_service_026_histogram",
+                "memory://symbol/service.py::aux_service_027_trimmed_text",
+                "memory://symbol/service.py::aux_service_028_unique_items",
+                "memory://symbol/service.py::aux_service_029_encoded_pair",
+                "memory://symbol/service.py::aux_service_030_moving_average",
+                "memory://symbol/service.py::aux_service_031_table_rows",
+                "memory://symbol/service.py::aux_service_032_missing_fields",
+                "memory://symbol/service.py::aux_service_033_flat_cells",
+                "memory://symbol/service.py::aux_service_034_merged_fields",
+                "memory://symbol/service.py::aux_service_035_byte_count",
+                "memory://symbol/service.py::aux_service_036_event_text",
+                "memory://symbol/service.py::aux_service_037_batches",
+                "memory://symbol/service.py::aux_service_038_histogram",
+                "memory://symbol/service.py::aux_service_039_trimmed_text",
+                "memory://symbol/service.py::aux_service_040_unique_items",
+                "memory://symbol/service.py::aux_service_041_encoded_pair",
+                "memory://symbol/service.py::aux_service_042_moving_average",
+                "memory://symbol/service.py::aux_service_043_table_rows",
+                "memory://symbol/service.py::aux_service_044_missing_fields",
+                "memory://symbol/service.py::aux_service_045_flat_cells",
+                "memory://symbol/service.py::aux_service_046_merged_fields",
+                "memory://symbol/service.py::aux_service_047_byte_count",
+                "memory://symbol/service.py::aux_service_048_event_text",
+                "memory://symbol/service.py::aux_service_049_batches",
+                "memory://symbol/service.py::aux_service_050_histogram",
+                "memory://symbol/service.py::aux_service_051_trimmed_text",
+                "memory://symbol/service.py::aux_service_052_unique_items",
+                "memory://symbol/service.py::aux_service_053_encoded_pair",
+                "memory://symbol/service.py::aux_service_054_moving_average",
+                "memory://symbol/service.py::aux_service_055_table_rows",
+                "memory://symbol/service.py::aux_service_056_missing_fields",
+                "memory://symbol/service.py::aux_service_057_flat_cells",
+                "memory://symbol/service.py::checkout_total",
+                "memory://symbol/service.py::order_receipt",
+                "memory://symbol/service.py::reward_points"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "eval_cache__canonical_key": {
+      "question": "What does render_cache_key(' TEAM-A ',' Summary View ',{'z':2,'a':1,'trace':'on'}) return?",
+      "expected": "render|team-a|summary_view|a=1&z=2|v4",
+      "arms": {
+        "A": {
+          "correct": false,
+          "parsed_answer": "null",
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 0.1111111111111111,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "native:0",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            }
+          ]
+        },
+        "B": {
+          "correct": false,
+          "parsed_answer": "render|public|summary_view|a=1&z=2|v4",
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 1.0,
+          "all_raw_evidence": true,
+          "chosen": [
+            {
+              "id": "memory://symbol/service.py::render_cache_key",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::canonical_query",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::canonical_query"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::normalize_resource",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::normalize_resource"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::normalize_tenant",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::normalize_tenant"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::CACHE_NAMESPACE",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::CACHE_NAMESPACE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::KEY_SEPARATOR",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::KEY_SEPARATOR"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::SCHEMA_VERSION",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::SCHEMA_VERSION"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::ANONYMOUS_TENANT",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::ANONYMOUS_TENANT"
+              ]
+            }
+          ]
+        },
+        "R0": {
+          "correct": false,
+          "parsed_answer": "render|public|team-a|summary_view|v4",
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 1.0,
+          "all_raw_evidence": true,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::render_cache_key",
+              "level": 0,
+              "score": 0.22348252660426546,
+              "source_uris": [
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::render_cache_key",
+              "level": 0,
+              "score": 0.16648807914517694,
+              "source_uris": [
+                "memory://symbol/service.py::render_cache_key",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::ANONYMOUS_TENANT"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/service.py::cache_entry",
+              "level": 0,
+              "score": 0.12839686079705184,
+              "source_uris": [
+                "memory://symbol/service.py::cache_entry"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+              "level": 0,
+              "score": 0.06386116749704776,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::aux_service_000_event_text",
+              "level": 0,
+              "score": 0.044118629495817165,
+              "source_uris": [
+                "memory://symbol/service.py::aux_service_000_event_text"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/service.py::cache_partition",
+              "level": 0,
+              "score": 0.042558009921242264,
+              "source_uris": [
+                "memory://symbol/service.py::cache_partition"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::summarize_count",
+              "level": 0,
+              "score": 0.04176082466002379,
+              "source_uris": [
+                "memory://symbol/presentation.py::summarize_count",
+                "memory://symbol/presentation.py::DISPLAY_PREFIX"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/rules.py::cache_ttl",
+              "level": 0,
+              "score": 0.02677692780168526,
+              "source_uris": [
+                "memory://symbol/rules.py::cache_ttl"
+              ]
+            }
+          ]
+        },
+        "RF": {
+          "correct": false,
+          "parsed_answer": "render|public|team-a|summary_view|v4",
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 1.0,
+          "all_raw_evidence": true,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::render_cache_key",
+              "level": 0,
+              "score": 0.22348252660426546,
+              "source_uris": [
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::cache_entry",
+              "level": 1,
+              "score": 0.1806284447215876,
+              "source_uris": [
+                "memory://symbol/policy.py::ANONYMOUS_TENANT",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::DEFAULT_TTL",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::MAX_TTL",
+                "memory://symbol/policy.py::PRIVATE_TTL",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::cache_ttl",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/service.py::cache_entry",
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::render_cache_key",
+              "level": 1,
+              "score": 0.17885540834817712,
+              "source_uris": [
+                "memory://symbol/policy.py::ANONYMOUS_TENANT",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::render_cache_key",
+              "level": 0,
+              "score": 0.16648807914517694,
+              "source_uris": [
+                "memory://symbol/service.py::render_cache_key",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::ANONYMOUS_TENANT"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/service.py::cache_entry",
+              "level": 0,
+              "score": 0.12839686079705184,
+              "source_uris": [
+                "memory://symbol/service.py::cache_entry"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/presentation.py::status_label",
+              "level": 1,
+              "score": 0.1030183837424192,
+              "source_uris": [
+                "memory://symbol/presentation.py::UNKNOWN_LABEL",
+                "memory://symbol/presentation.py::status_label"
+              ]
+            }
+          ]
+        },
+        "RH": {
+          "correct": true,
+          "parsed_answer": "render|team-a|summary_view|a=1&z=2|v4",
+          "failure": null,
+          "raw_evidence_recall": 1.0,
+          "all_raw_evidence": true,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::render_cache_key",
+              "level": 0,
+              "score": 0.22348252660426546,
+              "source_uris": [
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::cache_entry",
+              "level": 1,
+              "score": 0.1806284447215876,
+              "source_uris": [
+                "memory://symbol/policy.py::ANONYMOUS_TENANT",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::DEFAULT_TTL",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::MAX_TTL",
+                "memory://symbol/policy.py::PRIVATE_TTL",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::cache_ttl",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/service.py::cache_entry",
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::render_cache_key",
+              "level": 1,
+              "score": 0.17885540834817712,
+              "source_uris": [
+                "memory://symbol/policy.py::ANONYMOUS_TENANT",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::render_cache_key",
+              "level": 0,
+              "score": 0.16648807914517694,
+              "source_uris": [
+                "memory://symbol/service.py::render_cache_key",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::ANONYMOUS_TENANT"
+              ]
+            },
+            {
+              "id": "summary:level2:service.py",
+              "level": 2,
+              "score": 0.142326712501879,
+              "source_uris": [
+                "memory://symbol/policy.py::ANONYMOUS_TENANT",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::DEFAULT_TTL",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::MAX_TTL",
+                "memory://symbol/policy.py::PRIVATE_TTL",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::cache_ttl",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/service.py::aux_service_000_event_text",
+                "memory://symbol/service.py::aux_service_001_batches",
+                "memory://symbol/service.py::aux_service_002_histogram",
+                "memory://symbol/service.py::aux_service_003_trimmed_text",
+                "memory://symbol/service.py::aux_service_004_unique_items",
+                "memory://symbol/service.py::aux_service_005_encoded_pair",
+                "memory://symbol/service.py::aux_service_006_moving_average",
+                "memory://symbol/service.py::aux_service_007_table_rows",
+                "memory://symbol/service.py::aux_service_008_missing_fields",
+                "memory://symbol/service.py::aux_service_009_flat_cells",
+                "memory://symbol/service.py::aux_service_010_merged_fields",
+                "memory://symbol/service.py::aux_service_011_byte_count",
+                "memory://symbol/service.py::aux_service_012_event_text",
+                "memory://symbol/service.py::aux_service_013_batches",
+                "memory://symbol/service.py::aux_service_014_histogram",
+                "memory://symbol/service.py::aux_service_015_trimmed_text",
+                "memory://symbol/service.py::aux_service_016_unique_items",
+                "memory://symbol/service.py::aux_service_017_encoded_pair",
+                "memory://symbol/service.py::aux_service_018_moving_average",
+                "memory://symbol/service.py::aux_service_019_table_rows",
+                "memory://symbol/service.py::aux_service_020_missing_fields",
+                "memory://symbol/service.py::aux_service_021_flat_cells",
+                "memory://symbol/service.py::aux_service_022_merged_fields",
+                "memory://symbol/service.py::aux_service_023_byte_count",
+                "memory://symbol/service.py::aux_service_024_event_text",
+                "memory://symbol/service.py::aux_service_025_batches",
+                "memory://symbol/service.py::aux_service_026_histogram",
+                "memory://symbol/service.py::aux_service_027_trimmed_text",
+                "memory://symbol/service.py::aux_service_028_unique_items",
+                "memory://symbol/service.py::aux_service_029_encoded_pair",
+                "memory://symbol/service.py::aux_service_030_moving_average",
+                "memory://symbol/service.py::aux_service_031_table_rows",
+                "memory://symbol/service.py::aux_service_032_missing_fields",
+                "memory://symbol/service.py::aux_service_033_flat_cells",
+                "memory://symbol/service.py::aux_service_034_merged_fields",
+                "memory://symbol/service.py::aux_service_035_byte_count",
+                "memory://symbol/service.py::aux_service_036_event_text",
+                "memory://symbol/service.py::aux_service_037_batches",
+                "memory://symbol/service.py::aux_service_038_histogram",
+                "memory://symbol/service.py::aux_service_039_trimmed_text",
+                "memory://symbol/service.py::aux_service_040_unique_items",
+                "memory://symbol/service.py::aux_service_041_encoded_pair",
+                "memory://symbol/service.py::aux_service_042_moving_average",
+                "memory://symbol/service.py::aux_service_043_table_rows",
+                "memory://symbol/service.py::aux_service_044_missing_fields",
+                "memory://symbol/service.py::aux_service_045_flat_cells",
+                "memory://symbol/service.py::aux_service_046_merged_fields",
+                "memory://symbol/service.py::aux_service_047_byte_count",
+                "memory://symbol/service.py::aux_service_048_event_text",
+                "memory://symbol/service.py::aux_service_049_batches",
+                "memory://symbol/service.py::aux_service_050_histogram",
+                "memory://symbol/service.py::aux_service_051_trimmed_text",
+                "memory://symbol/service.py::aux_service_052_unique_items",
+                "memory://symbol/service.py::aux_service_053_encoded_pair",
+                "memory://symbol/service.py::aux_service_054_moving_average",
+                "memory://symbol/service.py::aux_service_055_table_rows",
+                "memory://symbol/service.py::aux_service_056_missing_fields",
+                "memory://symbol/service.py::aux_service_057_flat_cells",
+                "memory://symbol/service.py::cache_entry",
+                "memory://symbol/service.py::cache_partition",
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+              "level": 0,
+              "score": 0.06386116749704776,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX"
+              ]
+            }
+          ]
+        },
+        "C": {
+          "correct": true,
+          "parsed_answer": "render|team-a|summary_view|a=1&z=2|v4",
+          "failure": null,
+          "raw_evidence_recall": 1.0,
+          "all_raw_evidence": true,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::render_cache_key",
+              "level": 0,
+              "score": 0.22348252660426546,
+              "source_uris": [
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::cache_entry",
+              "level": 1,
+              "score": 0.1806284447215876,
+              "source_uris": [
+                "memory://symbol/policy.py::ANONYMOUS_TENANT",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::DEFAULT_TTL",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::MAX_TTL",
+                "memory://symbol/policy.py::PRIVATE_TTL",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::cache_ttl",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/service.py::cache_entry",
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::render_cache_key",
+              "level": 1,
+              "score": 0.17885540834817712,
+              "source_uris": [
+                "memory://symbol/policy.py::ANONYMOUS_TENANT",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::render_cache_key",
+              "level": 0,
+              "score": 0.16648807914517694,
+              "source_uris": [
+                "memory://symbol/service.py::render_cache_key",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::ANONYMOUS_TENANT"
+              ]
+            },
+            {
+              "id": "summary:level2:service.py",
+              "level": 2,
+              "score": 0.142326712501879,
+              "source_uris": [
+                "memory://symbol/policy.py::ANONYMOUS_TENANT",
+                "memory://symbol/policy.py::CACHE_NAMESPACE",
+                "memory://symbol/policy.py::DEFAULT_TTL",
+                "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+                "memory://symbol/policy.py::KEY_SEPARATOR",
+                "memory://symbol/policy.py::MAX_TTL",
+                "memory://symbol/policy.py::PRIVATE_TTL",
+                "memory://symbol/policy.py::SCHEMA_VERSION",
+                "memory://symbol/rules.py::cache_ttl",
+                "memory://symbol/rules.py::canonical_query",
+                "memory://symbol/rules.py::normalize_resource",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/service.py::aux_service_000_event_text",
+                "memory://symbol/service.py::aux_service_001_batches",
+                "memory://symbol/service.py::aux_service_002_histogram",
+                "memory://symbol/service.py::aux_service_003_trimmed_text",
+                "memory://symbol/service.py::aux_service_004_unique_items",
+                "memory://symbol/service.py::aux_service_005_encoded_pair",
+                "memory://symbol/service.py::aux_service_006_moving_average",
+                "memory://symbol/service.py::aux_service_007_table_rows",
+                "memory://symbol/service.py::aux_service_008_missing_fields",
+                "memory://symbol/service.py::aux_service_009_flat_cells",
+                "memory://symbol/service.py::aux_service_010_merged_fields",
+                "memory://symbol/service.py::aux_service_011_byte_count",
+                "memory://symbol/service.py::aux_service_012_event_text",
+                "memory://symbol/service.py::aux_service_013_batches",
+                "memory://symbol/service.py::aux_service_014_histogram",
+                "memory://symbol/service.py::aux_service_015_trimmed_text",
+                "memory://symbol/service.py::aux_service_016_unique_items",
+                "memory://symbol/service.py::aux_service_017_encoded_pair",
+                "memory://symbol/service.py::aux_service_018_moving_average",
+                "memory://symbol/service.py::aux_service_019_table_rows",
+                "memory://symbol/service.py::aux_service_020_missing_fields",
+                "memory://symbol/service.py::aux_service_021_flat_cells",
+                "memory://symbol/service.py::aux_service_022_merged_fields",
+                "memory://symbol/service.py::aux_service_023_byte_count",
+                "memory://symbol/service.py::aux_service_024_event_text",
+                "memory://symbol/service.py::aux_service_025_batches",
+                "memory://symbol/service.py::aux_service_026_histogram",
+                "memory://symbol/service.py::aux_service_027_trimmed_text",
+                "memory://symbol/service.py::aux_service_028_unique_items",
+                "memory://symbol/service.py::aux_service_029_encoded_pair",
+                "memory://symbol/service.py::aux_service_030_moving_average",
+                "memory://symbol/service.py::aux_service_031_table_rows",
+                "memory://symbol/service.py::aux_service_032_missing_fields",
+                "memory://symbol/service.py::aux_service_033_flat_cells",
+                "memory://symbol/service.py::aux_service_034_merged_fields",
+                "memory://symbol/service.py::aux_service_035_byte_count",
+                "memory://symbol/service.py::aux_service_036_event_text",
+                "memory://symbol/service.py::aux_service_037_batches",
+                "memory://symbol/service.py::aux_service_038_histogram",
+                "memory://symbol/service.py::aux_service_039_trimmed_text",
+                "memory://symbol/service.py::aux_service_040_unique_items",
+                "memory://symbol/service.py::aux_service_041_encoded_pair",
+                "memory://symbol/service.py::aux_service_042_moving_average",
+                "memory://symbol/service.py::aux_service_043_table_rows",
+                "memory://symbol/service.py::aux_service_044_missing_fields",
+                "memory://symbol/service.py::aux_service_045_flat_cells",
+                "memory://symbol/service.py::aux_service_046_merged_fields",
+                "memory://symbol/service.py::aux_service_047_byte_count",
+                "memory://symbol/service.py::aux_service_048_event_text",
+                "memory://symbol/service.py::aux_service_049_batches",
+                "memory://symbol/service.py::aux_service_050_histogram",
+                "memory://symbol/service.py::aux_service_051_trimmed_text",
+                "memory://symbol/service.py::aux_service_052_unique_items",
+                "memory://symbol/service.py::aux_service_053_encoded_pair",
+                "memory://symbol/service.py::aux_service_054_moving_average",
+                "memory://symbol/service.py::aux_service_055_table_rows",
+                "memory://symbol/service.py::aux_service_056_missing_fields",
+                "memory://symbol/service.py::aux_service_057_flat_cells",
+                "memory://symbol/service.py::cache_entry",
+                "memory://symbol/service.py::cache_partition",
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+              "level": 0,
+              "score": 0.06386116749704776,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX"
+              ]
+            }
+          ]
+        },
+        "FULL": {
+          "correct": false,
+          "parsed_answer": "TEAM-A | Summary View | a=1 | trace=on | v1",
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 0.1111111111111111,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "file://service.py",
+              "level": 0,
+              "score": null,
+              "source_uris": [
+                "memory://symbol/service.py::aux_service_000_event_text",
+                "memory://symbol/service.py::aux_service_001_batches",
+                "memory://symbol/service.py::aux_service_002_histogram",
+                "memory://symbol/service.py::aux_service_003_trimmed_text",
+                "memory://symbol/service.py::aux_service_004_unique_items",
+                "memory://symbol/service.py::aux_service_005_encoded_pair",
+                "memory://symbol/service.py::aux_service_006_moving_average",
+                "memory://symbol/service.py::aux_service_007_table_rows",
+                "memory://symbol/service.py::aux_service_008_missing_fields",
+                "memory://symbol/service.py::aux_service_009_flat_cells",
+                "memory://symbol/service.py::aux_service_010_merged_fields",
+                "memory://symbol/service.py::aux_service_011_byte_count",
+                "memory://symbol/service.py::aux_service_012_event_text",
+                "memory://symbol/service.py::aux_service_013_batches",
+                "memory://symbol/service.py::aux_service_014_histogram",
+                "memory://symbol/service.py::aux_service_015_trimmed_text",
+                "memory://symbol/service.py::aux_service_016_unique_items",
+                "memory://symbol/service.py::aux_service_017_encoded_pair",
+                "memory://symbol/service.py::aux_service_018_moving_average",
+                "memory://symbol/service.py::aux_service_019_table_rows",
+                "memory://symbol/service.py::aux_service_020_missing_fields",
+                "memory://symbol/service.py::aux_service_021_flat_cells",
+                "memory://symbol/service.py::aux_service_022_merged_fields",
+                "memory://symbol/service.py::aux_service_023_byte_count",
+                "memory://symbol/service.py::aux_service_024_event_text",
+                "memory://symbol/service.py::aux_service_025_batches",
+                "memory://symbol/service.py::aux_service_026_histogram",
+                "memory://symbol/service.py::aux_service_027_trimmed_text",
+                "memory://symbol/service.py::aux_service_028_unique_items",
+                "memory://symbol/service.py::aux_service_029_encoded_pair",
+                "memory://symbol/service.py::aux_service_030_moving_average",
+                "memory://symbol/service.py::aux_service_031_table_rows",
+                "memory://symbol/service.py::aux_service_032_missing_fields",
+                "memory://symbol/service.py::aux_service_033_flat_cells",
+                "memory://symbol/service.py::aux_service_034_merged_fields",
+                "memory://symbol/service.py::aux_service_035_byte_count",
+                "memory://symbol/service.py::aux_service_036_event_text",
+                "memory://symbol/service.py::aux_service_037_batches",
+                "memory://symbol/service.py::aux_service_038_histogram",
+                "memory://symbol/service.py::aux_service_039_trimmed_text",
+                "memory://symbol/service.py::aux_service_040_unique_items",
+                "memory://symbol/service.py::aux_service_041_encoded_pair",
+                "memory://symbol/service.py::aux_service_042_moving_average",
+                "memory://symbol/service.py::aux_service_043_table_rows",
+                "memory://symbol/service.py::aux_service_044_missing_fields",
+                "memory://symbol/service.py::aux_service_045_flat_cells",
+                "memory://symbol/service.py::aux_service_046_merged_fields",
+                "memory://symbol/service.py::aux_service_047_byte_count",
+                "memory://symbol/service.py::aux_service_048_event_text",
+                "memory://symbol/service.py::aux_service_049_batches",
+                "memory://symbol/service.py::aux_service_050_histogram",
+                "memory://symbol/service.py::aux_service_051_trimmed_text",
+                "memory://symbol/service.py::aux_service_052_unique_items",
+                "memory://symbol/service.py::aux_service_053_encoded_pair",
+                "memory://symbol/service.py::aux_service_054_moving_average",
+                "memory://symbol/service.py::aux_service_055_table_rows",
+                "memory://symbol/service.py::aux_service_056_missing_fields",
+                "memory://symbol/service.py::aux_service_057_flat_cells",
+                "memory://symbol/service.py::cache_entry",
+                "memory://symbol/service.py::cache_partition",
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "eval_inventory__v2_order_cap_intervention": {
+      "question": "If policy.MAX_PER_ORDER changes from 12 to 4 before the program is loaded, which exact calls change their return values: valid_quantity(5), reserve(15,1,5,False,300), stock_label(15)? Return a sorted list of changed function names.",
+      "expected": [
+        "reserve",
+        "valid_quantity"
+      ],
+      "arms": {
+        "A": {
+          "correct": false,
+          "parsed_answer": [
+            "valid_quantity"
+          ],
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 0.08333333333333333,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "native:0",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::valid_quantity"
+              ]
+            }
+          ]
+        },
+        "B": {
+          "correct": false,
+          "parsed_answer": [
+            "valid_quantity"
+          ],
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 0.25,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "memory://symbol/rules.py::valid_quantity",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::valid_quantity"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::MAX_PER_ORDER",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::MAX_PER_ORDER"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::MIN_ORDER",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::MIN_ORDER"
+              ]
+            }
+          ]
+        },
+        "R0": {
+          "correct": true,
+          "parsed_answer": [
+            "reserve",
+            "valid_quantity"
+          ],
+          "failure": null,
+          "raw_evidence_recall": 1.0,
+          "all_raw_evidence": true,
+          "chosen": [
+            {
+              "id": "memory://symbol/rules.py::valid_quantity",
+              "level": 0,
+              "score": 0.17731557601940812,
+              "source_uris": [
+                "memory://symbol/rules.py::valid_quantity",
+                "memory://symbol/policy.py::MAX_PER_ORDER",
+                "memory://symbol/policy.py::MIN_ORDER"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::stock_label",
+              "level": 0,
+              "score": 0.15310107505674622,
+              "source_uris": [
+                "memory://symbol/service.py::stock_label"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::reserve",
+              "level": 0,
+              "score": 0.11690520626123893,
+              "source_uris": [
+                "memory://symbol/service.py::reserve",
+                "memory://symbol/policy.py::ACCEPTED",
+                "memory://symbol/policy.py::DENIED",
+                "memory://symbol/policy.py::PARTIAL",
+                "memory://symbol/policy.py::RESERVATION_TTL",
+                "memory://symbol/rules.py::allocate",
+                "memory://symbol/rules.py::sellable",
+                "memory://symbol/rules.py::valid_quantity",
+                "memory://symbol/policy.py::SAFETY_STOCK",
+                "memory://symbol/policy.py::MAX_PER_ORDER",
+                "memory://symbol/policy.py::MIN_ORDER"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::aux_rules_032_missing_fields",
+              "level": 0,
+              "score": 0.09691738262105748,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_032_missing_fields"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::aux_rules_001_batches",
+              "level": 0,
+              "score": 0.08804138966615911,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_001_batches"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::aux_rules_013_batches",
+              "level": 0,
+              "score": 0.08804138966615911,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_013_batches"
+              ]
+            }
+          ]
+        },
+        "RF": {
+          "correct": false,
+          "parsed_answer": [],
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 0.0,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "summary:leaf:memory://symbol/policy.py::aux_policy_006_moving_average",
+              "level": 1,
+              "score": 0.3091460879336548,
+              "source_uris": [
+                "memory://symbol/policy.py::aux_policy_006_moving_average"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+              "level": 1,
+              "score": 0.29266891173183435,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX",
+                "memory://symbol/presentation.py::summarize_count"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::aux_rules_004_unique_items",
+              "level": 1,
+              "score": 0.29075187155060656,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_004_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::aux_rules_016_unique_items",
+              "level": 1,
+              "score": 0.29075187155060656,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_016_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::aux_rules_028_unique_items",
+              "level": 1,
+              "score": 0.29075187155060656,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_028_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::aux_rules_040_unique_items",
+              "level": 1,
+              "score": 0.29075187155060656,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_040_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::aux_rules_052_unique_items",
+              "level": 1,
+              "score": 0.29075187155060656,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_052_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::aux_service_008_missing_fields",
+              "level": 1,
+              "score": 0.2896847819402854,
+              "source_uris": [
+                "memory://symbol/service.py::aux_service_008_missing_fields"
+              ]
+            }
+          ]
+        },
+        "RH": {
+          "correct": false,
+          "parsed_answer": [],
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 0.0,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "summary:leaf:memory://symbol/policy.py::aux_policy_006_moving_average",
+              "level": 1,
+              "score": 0.3091460879336548,
+              "source_uris": [
+                "memory://symbol/policy.py::aux_policy_006_moving_average"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+              "level": 1,
+              "score": 0.29266891173183435,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX",
+                "memory://symbol/presentation.py::summarize_count"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::aux_rules_004_unique_items",
+              "level": 1,
+              "score": 0.29075187155060656,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_004_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::aux_rules_016_unique_items",
+              "level": 1,
+              "score": 0.29075187155060656,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_016_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::aux_rules_028_unique_items",
+              "level": 1,
+              "score": 0.29075187155060656,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_028_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::aux_rules_040_unique_items",
+              "level": 1,
+              "score": 0.29075187155060656,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_040_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::aux_rules_052_unique_items",
+              "level": 1,
+              "score": 0.29075187155060656,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_052_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::aux_service_008_missing_fields",
+              "level": 1,
+              "score": 0.2896847819402854,
+              "source_uris": [
+                "memory://symbol/service.py::aux_service_008_missing_fields"
+              ]
+            }
+          ]
+        },
+        "C": {
+          "correct": false,
+          "parsed_answer": [],
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 0.0,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "summary:leaf:memory://symbol/policy.py::aux_policy_006_moving_average",
+              "level": 1,
+              "score": 0.3091460879336548,
+              "source_uris": [
+                "memory://symbol/policy.py::aux_policy_006_moving_average"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/presentation.py::summarize_count",
+              "level": 1,
+              "score": 0.29266891173183435,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX",
+                "memory://symbol/presentation.py::summarize_count"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::aux_rules_004_unique_items",
+              "level": 1,
+              "score": 0.29075187155060656,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_004_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::aux_rules_016_unique_items",
+              "level": 1,
+              "score": 0.29075187155060656,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_016_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::aux_rules_028_unique_items",
+              "level": 1,
+              "score": 0.29075187155060656,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_028_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::aux_rules_040_unique_items",
+              "level": 1,
+              "score": 0.29075187155060656,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_040_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/rules.py::aux_rules_052_unique_items",
+              "level": 1,
+              "score": 0.29075187155060656,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_052_unique_items"
+              ]
+            },
+            {
+              "id": "summary:leaf:memory://symbol/service.py::aux_service_008_missing_fields",
+              "level": 1,
+              "score": 0.2896847819402854,
+              "source_uris": [
+                "memory://symbol/service.py::aux_service_008_missing_fields"
+              ]
+            }
+          ]
+        },
+        "FULL": {
+          "correct": false,
+          "parsed_answer": [
+            "reserve",
+            "stock_label"
+          ],
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 0.16666666666666666,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "file://service.py",
+              "level": 0,
+              "score": null,
+              "source_uris": [
+                "memory://symbol/service.py::aux_service_000_event_text",
+                "memory://symbol/service.py::aux_service_001_batches",
+                "memory://symbol/service.py::aux_service_002_histogram",
+                "memory://symbol/service.py::aux_service_003_trimmed_text",
+                "memory://symbol/service.py::aux_service_004_unique_items",
+                "memory://symbol/service.py::aux_service_005_encoded_pair",
+                "memory://symbol/service.py::aux_service_006_moving_average",
+                "memory://symbol/service.py::aux_service_007_table_rows",
+                "memory://symbol/service.py::aux_service_008_missing_fields",
+                "memory://symbol/service.py::aux_service_009_flat_cells",
+                "memory://symbol/service.py::aux_service_010_merged_fields",
+                "memory://symbol/service.py::aux_service_011_byte_count",
+                "memory://symbol/service.py::aux_service_012_event_text",
+                "memory://symbol/service.py::aux_service_013_batches",
+                "memory://symbol/service.py::aux_service_014_histogram",
+                "memory://symbol/service.py::aux_service_015_trimmed_text",
+                "memory://symbol/service.py::aux_service_016_unique_items",
+                "memory://symbol/service.py::aux_service_017_encoded_pair",
+                "memory://symbol/service.py::aux_service_018_moving_average",
+                "memory://symbol/service.py::aux_service_019_table_rows",
+                "memory://symbol/service.py::aux_service_020_missing_fields",
+                "memory://symbol/service.py::aux_service_021_flat_cells",
+                "memory://symbol/service.py::aux_service_022_merged_fields",
+                "memory://symbol/service.py::aux_service_023_byte_count",
+                "memory://symbol/service.py::aux_service_024_event_text",
+                "memory://symbol/service.py::aux_service_025_batches",
+                "memory://symbol/service.py::aux_service_026_histogram",
+                "memory://symbol/service.py::aux_service_027_trimmed_text",
+                "memory://symbol/service.py::aux_service_028_unique_items",
+                "memory://symbol/service.py::aux_service_029_encoded_pair",
+                "memory://symbol/service.py::aux_service_030_moving_average",
+                "memory://symbol/service.py::aux_service_031_table_rows",
+                "memory://symbol/service.py::aux_service_032_missing_fields",
+                "memory://symbol/service.py::aux_service_033_flat_cells",
+                "memory://symbol/service.py::aux_service_034_merged_fields",
+                "memory://symbol/service.py::aux_service_035_byte_count",
+                "memory://symbol/service.py::aux_service_036_event_text",
+                "memory://symbol/service.py::aux_service_037_batches",
+                "memory://symbol/service.py::aux_service_038_histogram",
+                "memory://symbol/service.py::aux_service_039_trimmed_text",
+                "memory://symbol/service.py::aux_service_040_unique_items",
+                "memory://symbol/service.py::aux_service_041_encoded_pair",
+                "memory://symbol/service.py::aux_service_042_moving_average",
+                "memory://symbol/service.py::aux_service_043_table_rows",
+                "memory://symbol/service.py::aux_service_044_missing_fields",
+                "memory://symbol/service.py::aux_service_045_flat_cells",
+                "memory://symbol/service.py::aux_service_046_merged_fields",
+                "memory://symbol/service.py::aux_service_047_byte_count",
+                "memory://symbol/service.py::aux_service_048_event_text",
+                "memory://symbol/service.py::aux_service_049_batches",
+                "memory://symbol/service.py::aux_service_050_histogram",
+                "memory://symbol/service.py::aux_service_051_trimmed_text",
+                "memory://symbol/service.py::aux_service_052_unique_items",
+                "memory://symbol/service.py::aux_service_053_encoded_pair",
+                "memory://symbol/service.py::aux_service_054_moving_average",
+                "memory://symbol/service.py::aux_service_055_table_rows",
+                "memory://symbol/service.py::aux_service_056_missing_fields",
+                "memory://symbol/service.py::remaining_after",
+                "memory://symbol/service.py::reserve",
+                "memory://symbol/service.py::stock_label"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "eval_authorization__own_write": {
+      "question": "What does authorize('u1','u1','member',[' DOCUMENT:WRITE '],'write',100,200,False) return?",
+      "expected": {
+        "allowed": true,
+        "reason": "allowed"
+      },
+      "arms": {
+        "A": {
+          "correct": false,
+          "parsed_answer": {
+            "allowed": true,
+            "reason": "ALLOW_REASON"
+          },
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 0.07142857142857142,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "native:0",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::authorize"
+              ]
+            }
+          ]
+        },
+        "B": {
+          "correct": false,
+          "parsed_answer": null,
+          "failure": "invalid_json",
+          "raw_evidence_recall": 0.7142857142857143,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "memory://symbol/service.py::authorize",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::authorize"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::role_allows",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::role_allows"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::scope_allows",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::scope_allows"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::session_valid",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::session_valid"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::normalized_scopes",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::normalized_scopes"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::required_scope",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::required_scope"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::ALLOW_REASON",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::ALLOW_REASON"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::DENY_REASON",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::DENY_REASON"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::ADMIN_ROLE",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::ADMIN_ROLE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::MAX_SESSION_AGE",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            }
+          ]
+        },
+        "R0": {
+          "correct": true,
+          "parsed_answer": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "failure": null,
+          "raw_evidence_recall": 1.0,
+          "all_raw_evidence": true,
+          "chosen": [
+            {
+              "id": "memory://symbol/policy.py::WRITE_SCOPE",
+              "level": 0,
+              "score": 0.23285319439885968,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.1435515344455385,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::required_scope",
+              "level": 0,
+              "score": 0.1367675950505002,
+              "source_uris": [
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::READ_ACTION",
+                "memory://symbol/policy.py::READ_SCOPE",
+                "memory://symbol/policy.py::WRITE_ACTION",
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.12428208117887668,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::aux_rules_009_flat_cells",
+              "level": 0,
+              "score": 0.10265013528011824,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_009_flat_cells"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+              "level": 0,
+              "score": 0.06655467969432532,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_WIDTH"
+              ]
+            }
+          ]
+        },
+        "RF": {
+          "correct": true,
+          "parsed_answer": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "failure": null,
+          "raw_evidence_recall": 1.0,
+          "all_raw_evidence": true,
+          "chosen": [
+            {
+              "id": "memory://symbol/policy.py::WRITE_SCOPE",
+              "level": 0,
+              "score": 0.23285319439885968,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.1435515344455385,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::required_scope",
+              "level": 0,
+              "score": 0.1367675950505002,
+              "source_uris": [
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::READ_ACTION",
+                "memory://symbol/policy.py::READ_SCOPE",
+                "memory://symbol/policy.py::WRITE_ACTION",
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.12428208117887668,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::aux_rules_009_flat_cells",
+              "level": 0,
+              "score": 0.10265013528011824,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_009_flat_cells"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+              "level": 0,
+              "score": 0.06655467969432532,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_WIDTH"
+              ]
+            }
+          ]
+        },
+        "RH": {
+          "correct": true,
+          "parsed_answer": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "failure": null,
+          "raw_evidence_recall": 1.0,
+          "all_raw_evidence": true,
+          "chosen": [
+            {
+              "id": "memory://symbol/policy.py::WRITE_SCOPE",
+              "level": 0,
+              "score": 0.23285319439885968,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.1435515344455385,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::required_scope",
+              "level": 0,
+              "score": 0.1367675950505002,
+              "source_uris": [
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::READ_ACTION",
+                "memory://symbol/policy.py::READ_SCOPE",
+                "memory://symbol/policy.py::WRITE_ACTION",
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.12428208117887668,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::aux_rules_009_flat_cells",
+              "level": 0,
+              "score": 0.10265013528011824,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_009_flat_cells"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+              "level": 0,
+              "score": 0.06655467969432532,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_WIDTH"
+              ]
+            }
+          ]
+        },
+        "C": {
+          "correct": false,
+          "parsed_answer": null,
+          "failure": "invalid_json",
+          "raw_evidence_recall": 1.0,
+          "all_raw_evidence": true,
+          "chosen": [
+            {
+              "id": "memory://symbol/policy.py::WRITE_SCOPE",
+              "level": 0,
+              "score": 0.23285319439885968,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.1435515344455385,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::required_scope",
+              "level": 0,
+              "score": 0.1367675950505002,
+              "source_uris": [
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::READ_ACTION",
+                "memory://symbol/policy.py::READ_SCOPE",
+                "memory://symbol/policy.py::WRITE_ACTION",
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.12428208117887668,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::aux_rules_009_flat_cells",
+              "level": 0,
+              "score": 0.10265013528011824,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_009_flat_cells"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+              "level": 0,
+              "score": 0.06655467969432532,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::DISPLAY_WIDTH",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_WIDTH"
+              ]
+            }
+          ]
+        },
+        "FULL": {
+          "correct": false,
+          "parsed_answer": {
+            "allowed": true,
+            "reason": "ALLOW_REASON"
+          },
+          "failure": "wrong_answer",
+          "raw_evidence_recall": 0.07142857142857142,
+          "all_raw_evidence": false,
+          "chosen": [
+            {
+              "id": "file://service.py",
+              "level": 0,
+              "score": null,
+              "source_uris": [
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/service.py::aux_service_000_event_text",
+                "memory://symbol/service.py::aux_service_001_batches",
+                "memory://symbol/service.py::aux_service_002_histogram",
+                "memory://symbol/service.py::aux_service_003_trimmed_text",
+                "memory://symbol/service.py::aux_service_004_unique_items",
+                "memory://symbol/service.py::aux_service_005_encoded_pair",
+                "memory://symbol/service.py::aux_service_006_moving_average",
+                "memory://symbol/service.py::aux_service_007_table_rows",
+                "memory://symbol/service.py::aux_service_008_missing_fields",
+                "memory://symbol/service.py::aux_service_009_flat_cells",
+                "memory://symbol/service.py::aux_service_010_merged_fields",
+                "memory://symbol/service.py::aux_service_011_byte_count",
+                "memory://symbol/service.py::aux_service_012_event_text",
+                "memory://symbol/service.py::aux_service_013_batches",
+                "memory://symbol/service.py::aux_service_014_histogram",
+                "memory://symbol/service.py::aux_service_015_trimmed_text",
+                "memory://symbol/service.py::aux_service_016_unique_items",
+                "memory://symbol/service.py::aux_service_017_encoded_pair",
+                "memory://symbol/service.py::aux_service_018_moving_average",
+                "memory://symbol/service.py::aux_service_019_table_rows",
+                "memory://symbol/service.py::aux_service_020_missing_fields",
+                "memory://symbol/service.py::aux_service_021_flat_cells",
+                "memory://symbol/service.py::aux_service_022_merged_fields",
+                "memory://symbol/service.py::aux_service_023_byte_count",
+                "memory://symbol/service.py::aux_service_024_event_text",
+                "memory://symbol/service.py::aux_service_025_batches",
+                "memory://symbol/service.py::aux_service_026_histogram",
+                "memory://symbol/service.py::aux_service_027_trimmed_text",
+                "memory://symbol/service.py::aux_service_028_unique_items",
+                "memory://symbol/service.py::aux_service_029_encoded_pair",
+                "memory://symbol/service.py::aux_service_030_moving_average",
+                "memory://symbol/service.py::aux_service_031_table_rows",
+                "memory://symbol/service.py::aux_service_032_missing_fields",
+                "memory://symbol/service.py::aux_service_033_flat_cells",
+                "memory://symbol/service.py::aux_service_034_merged_fields",
+                "memory://symbol/service.py::aux_service_035_byte_count",
+                "memory://symbol/service.py::aux_service_036_event_text",
+                "memory://symbol/service.py::aux_service_037_batches",
+                "memory://symbol/service.py::aux_service_038_histogram",
+                "memory://symbol/service.py::aux_service_039_trimmed_text",
+                "memory://symbol/service.py::aux_service_040_unique_items",
+                "memory://symbol/service.py::aux_service_041_encoded_pair",
+                "memory://symbol/service.py::aux_service_042_moving_average",
+                "memory://symbol/service.py::aux_service_043_table_rows",
+                "memory://symbol/service.py::aux_service_044_missing_fields",
+                "memory://symbol/service.py::aux_service_045_flat_cells",
+                "memory://symbol/service.py::aux_service_046_merged_fields",
+                "memory://symbol/service.py::aux_service_047_byte_count",
+                "memory://symbol/service.py::aux_service_048_event_text",
+                "memory://symbol/service.py::aux_service_049_batches",
+                "memory://symbol/service.py::aux_service_050_histogram",
+                "memory://symbol/service.py::aux_service_051_trimmed_text",
+                "memory://symbol/service.py::aux_service_052_unique_items",
+                "memory://symbol/service.py::aux_service_053_encoded_pair",
+                "memory://symbol/service.py::aux_service_054_moving_average",
+                "memory://symbol/service.py::aux_service_055_table_rows",
+                "memory://symbol/service.py::aux_service_056_missing_fields",
+                "memory://symbol/service.py::aux_service_057_flat_cells",
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::user_key"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "preparation": {
+    "projects": 6,
+    "summary_calls": 1884,
+    "input_tokens": 592202,
+    "output_tokens": 180943,
+    "model_wall_seconds": 9408.51920046487,
+    "output_limit_calls": 13,
+    "by_purpose": {
+      "build_leaf": {
+        "calls": 1848,
+        "input_tokens": 372466,
+        "output_tokens": 174831,
+        "model_wall_seconds": 8434.783146005851
+      },
+      "build_level_2": {
+        "calls": 30,
+        "input_tokens": 213514,
+        "output_tokens": 5428,
+        "model_wall_seconds": 927.0853087089927
+      },
+      "build_level_3": {
+        "calls": 6,
+        "input_tokens": 6222,
+        "output_tokens": 684,
+        "model_wall_seconds": 46.650745750026545
+      }
+    },
+    "levels": {
+      "1": 1848,
+      "2": 30,
+      "3": 6
+    }
+  },
+  "compaction": {
+    "pairs": 288,
+    "same_RH_C_selection": 288,
+    "payload_preserved_calls": 288,
+    "context_reduction_pct": 20.817615220600295,
+    "input_reduction_pct": 18.16547245256689
+  },
+  "source_hashes": {
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/results.jsonl": "5bb60af318f07ea954d66eec103460ee52563076ebbda6a491ce9ec1d72203e2",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/large_files_20261024/results.jsonl": "5430136ce3a0f6dc65a64a5bbffca1d2d3934624ffae38a74eb391d19930ab1f",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/tasks.json": "911eeaa72d45d347e2402ad2d4be345f96052d042ceb50564971cdb22c54ca3e",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/assets.json": "5b8206e07d1454c1c0e3b21867c56379ab904e762a0289ca255c2ff152c4bbfe",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/model_calls.jsonl": "9b1c5890ffd60fe69eb41e7af459a2503016ef8b0ded1e97255e6da311ed6ad0",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/summary.json": "4fe4ab8ead23de69ecde243fd6b187fd7be42d8409b9b78ad600b8c7d23e83ce",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/verification.json": "b997a5e7cd95c89c50e9e82ea9eba05cedd2738b0810fd1980e18c04b0b53dc3",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/analyze_report_mechanisms.py": "0861bcb0727f6dbdd97c641998a1cb3200cfdd0ec1239130f7fb50f4c01bae5a",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/experiment.py": "b8f664facdff58c7b410f704216611e5a4e5bbd239ac394a9bb4e5f29f9234cb",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/experiment_v2.py": "86fbbf165c2ad44c21fe0a0554b6624e86961246c9abb9aceed547f1a8d606be",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/experiment_large.py": "c5f3aa33c6a9c539dd3e3f7d323b029cf1ad39b3d5ddc292053829512b81c09e",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/experiment_ab.py": "8c78a171d55835ac3bc0582195d7bf1327ad94ef8b2ffb843efe70b90394364e",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/experiment_raptor_large.py": "1e6b190b5eeb8141aec9f4f282ad95a04538db5825e3a67d10440c437a1668eb",
+    "/Users/oscar/Desktop/SecureCode/1st/symbol_test/symbol_bench/indexer.py": "cbd1334a7c9e040ad30081bf1e29c355d0cdc6247366417918549b9b4a4c909a",
+    "/Users/oscar/Desktop/SecureCode/1st/symbol_test/symbol_bench/run_benchmark.py": "b5eff2970604e89ac3680a02029eed4e98b04e8d8b953f183cf7793a3f452248"
+  }
+}

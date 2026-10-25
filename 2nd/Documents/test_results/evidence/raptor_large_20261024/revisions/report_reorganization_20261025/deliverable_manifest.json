@@ -1,0 +1,28 @@
+{
+  "completed_at_utc": "2026-10-25T02:13:31.378099+00:00",
+  "report": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md",
+  "report_sha256": "53a1af06219a268e1325fb9f532068c081cb7ff085b5dfcdcbf3f3e8997f43b1",
+  "new_eval_answers": 864,
+  "preserved_eval_answers": 1152,
+  "hashes": {
+    "protocol.json": "8a85d589f6f49ee7accd849587b51c5b7c76e7382bb5eb9c7ad746c9bd55fc1d",
+    "assets.json": "5b8206e07d1454c1c0e3b21867c56379ab904e762a0289ca255c2ff152c4bbfe",
+    "build_manifest.json": "d94a739b4147bbbffffe03ab4d54f5e8423a125594198af88f848f79552175d5",
+    "results.jsonl": "5bb60af318f07ea954d66eec103460ee52563076ebbda6a491ce9ec1d72203e2",
+    "results_dev.jsonl": "e391cc895575bc040c0cf21304b6250553ac5c3036d0eee2c21917a0872d4410",
+    "model_calls.jsonl": "9b1c5890ffd60fe69eb41e7af459a2503016ef8b0ded1e97255e6da311ed6ad0",
+    "summary.json": "4fe4ab8ead23de69ecde243fd6b187fd7be42d8409b9b78ad600b8c7d23e83ce",
+    "verification.json": "b997a5e7cd95c89c50e9e82ea9eba05cedd2738b0810fd1980e18c04b0b53dc3",
+    "completion_audit.json": "d6341dba1b3ea38e652fe9dc07bac3f87b0fa82b81d8b983f88883228c2c2b76",
+    "selection_exposure_check.json": "4b078d0984bb2f2b64a3396eac1ed5f891d5f6037b8dbef1e60936c4c05b1f75",
+    "report_manifest.json": "5b0ee4e497d57c7b949105a5d7a8e17e24a1beb01a43fc3cc17f8c8aae69812b",
+    "final_source_manifest.json": "1c37c0ce8b14eed17265e63e19d81ae8849314340091061ca08b23a50e3aeab4",
+    "server_shutdown.json": "178eaa2246f6a56d2dd2aedf9d82b4f0b5f34f3805aee03300035cde65a19f96",
+    "reproduce.txt": "e215cfd07211b430cc8a76fbedcd90cfde672cc63607dd58da4e1afb4113b64c",
+    "revisions/methods_and_interpretation_20261025/mechanism_facts.json": "733ba9d3ff4370b324eee6d6288c4863cb092b8ca8eea8b10474f4945c9e3104",
+    "revisions/methods_and_interpretation_20261025/verification.json": "5d9edffe4684182874d2c24aedd98818cb46a0449b03508e32883cc7f2cf1358",
+    "revisions/methods_and_interpretation_20261025/revision_manifest.json": "cea3342f8f1fd0e12c7b7ca4833e2768a5159ac67f53117768da126d2226816c"
+  },
+  "editorial_revision": "revisions/methods_and_interpretation_20261025",
+  "this_revision_new_model_calls": 0
+}

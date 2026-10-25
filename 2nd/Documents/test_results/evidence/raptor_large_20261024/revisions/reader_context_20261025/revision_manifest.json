@@ -1,0 +1,28 @@
+{
+  "completed_at_utc": "2026-10-25T04:38:21.053292+00:00",
+  "report_sha256": "67b5fa3b0d6c6bcc253bd50779d81d18a97b0ad5747040baefe6c24e56d30af3",
+  "new_model_calls": 0,
+  "files": {
+    "03_현재색인_A와_파일간확장_B_재실험_비교보고서.md": "61bc59ba6efef8ed70de01b44bbde4dca8e4c3de26d800ab030db7dc8a2277c0",
+    "completion_audit.json": "d1a26b2954538181f4882a7d8c80060b5f76ec599152039685f5af3fe65a7e5c",
+    "completion_audit_after.json": "4520f3711d612e577e859e83cca8874062186e2e6116542c703fa7f2b3c13b76",
+    "deliverable_manifest.json": "b40eded05c890d85fdbd997762a79b6f9aa6efafc542d10ee0bcd6bc391dfba5",
+    "final_source_manifest.json": "864fd01526cad042660f8591a36ab0a3495969589ca983e3630668a24b5915a9",
+    "preservation_check.json": "043487e5f991f8f47c37c25174fe3a54c23009337a31e32e81c2a550f2ade2f6",
+    "reader_review.md": "6a450404d42c84afd3ffb6c58aba1810f6d214fe1c9239ff1f994c177ac90af5",
+    "report_after.md": "67b5fa3b0d6c6bcc253bd50779d81d18a97b0ad5747040baefe6c24e56d30af3",
+    "report_manifest.json": "ccc2a6c87be90e85bdb6c39dd77cbb064748d22ebbdbbc5370ae131d36cdc001",
+    "report_manifest_after.json": "36a9c94cf8ae2aa881ed4eefb379ed37e722f971018260eea86600d1fbe57108",
+    "report_raptor_large.py": "d24ba4cad7ef210d3e1c669d9d9cc0f294cfc65584d875a75d07655b5256610d",
+    "reproduce.txt": "6d1b2e0f9bf375f8c57a16f6c72310f1eba949ddc6106dc0504267365dbf96b3",
+    "reproduce_after.txt": "f520bf8c0c4ccc8e566905b0be26cd37e37aad734dda4e9fbc7739220b812394",
+    "revision_scope.json": "933ff89104794df5001ef028184ffaa3442a2e06287a88ee84911b23396953f2",
+    "source_snapshot/audit_raptor_report.py": "abd56bfde7a972509aad12c7882898c3424b418d0d56f9568877d5727f360b61",
+    "source_snapshot/clarify_report_context.py": "c33af1c3ed0a4a5664c453afc2180546c47d7975d6ee309fbc46fc6bbf77c411",
+    "source_snapshot/reorganize_report.py": "21c37ae604b9fa19266499e502777aeba2a03426aa0957821e0fa5e6b2c3db82",
+    "source_snapshot/report_raptor_large.py": "6d1f4cd105de5f72b85a9aa71c3e8ec08e768f89eb565763c3e8671a7b80f092",
+    "source_snapshot/verify_report_reorganization.py": "cbd2d5e5f23ac8fd7d322012b6023714aa91fb2e22183d11db41fc7a6ce536e3",
+    "verification.json": "94c6185e65abb1c48ed6926da059e864350b4e8a251a0e3fde2b36689d21ab12",
+    "work_status.json": "324081646bd69edab615a0cc9d225db5e34d60cc661c3e05e196c3ee8900ba70"
+  }
+}

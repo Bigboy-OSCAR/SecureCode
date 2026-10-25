@@ -1,0 +1,14 @@
+{
+  "recorded_at_utc": "2026-10-24T11:16:12.561033+00:00",
+  "scope": "Before evaluation inference begins; all six large-arm comparisons, no result-based selection. Report generation may be added after execution; analysis amendments must be recorded.",
+  "source_hashes": {
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/analyze_large.py": "8c8fa23403622b8f0bc4fc8b4bef01b9cb280965af32f3428f216181ef522848",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/verify_large.py": "affebb5117ef339b7ef0e2307c068b9b854589bc7ddb8805e24ccf77c8a37b34",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/analyze_ab.py": "65d230271244d72dd674117973d7777621872eb819873b374b1e240484405851",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/analyze_r0.py": "62777277d4a3557cc99e0c331bd5618ee923c1681f3b2184b92487ea29081166",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/analyze_v2.py": "e4fd7c4ef7c9f3c3734d526569d9e1322ae49e08062c2b12492f53c49ee69ae5",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/analyze.py": "ae04b2ce78b4634e4fca493bd69e325cfed02fdb23b2e8cc9a17959b7d5e3c60",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/verify_ab.py": "6b19e48a866f4ecfb19e917beebfc525b5372e3a0611fb10320de84bfc4e06a2",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/output_diagnostics.py": "61dc56a7f165527ed08b107552b7872884f0a4c58c8898b3dc139371808514e7"
+  }
+}

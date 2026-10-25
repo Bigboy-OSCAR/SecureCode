@@ -1,0 +1,21 @@
+{
+  "created_at_utc": "2026-10-24T10:38:11.835537+00:00",
+  "questions": 96,
+  "observed_records": 864,
+  "baseline": "The entire UTF-8 source file containing the task's target symbol, verbatim, with trailing newline/imports/comments; no added filename/header; no truncation",
+  "baseline_prompt": "Same answer instructions, question and chat wrapper as A/B/R0; file is assumed known and no selector is called",
+  "scope": "Exact token counts only. Whole-file answers, accuracy, output tokens and latency were not measured.",
+  "aggregation": "Each of 96 questions receives equal weight. For actual arms average three repeats per question (counts must be identical). Percent changes are ratios of summed tokens, not averages of question ratios.",
+  "window": "8192 per call; input totals across separate calls are not one context window. Reserved output: answer128, selector96",
+  "model_sha256": "586844eac4d6d6321689f0192c8aa8e69cd8625974a5cc2d925b1a03366e4d16",
+  "input_hashes": {
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/r0_20261024/tasks.json": "911eeaa72d45d347e2402ad2d4be345f96052d042ceb50564971cdb22c54ca3e",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/r0_20261024/assets.json": "93d130d10bcde7e3d8bcebaf89a5e707163e9035090c1f848e4e4cfe5731e58a",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/r0_20261024/results.jsonl": "e28efbda19e475f647ca3e788f3afddff31fa73371137acaf61bc317b95949b3",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/r0_20261024/summary.json": "d7a8dc15b0bad6e95ae37719efb365b207469aef773575279301045886b32783",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/r0_20261024/verification.json": "8726a4a03ba10cd88042ab496d2a7218d5d359df942be0a0b029d995aa39f721",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/ab_20261024/results.jsonl": "1acee63a5fdb5c69b1aaeb884a4de6b94f1e1be1f3fa6d5037acc445cad03069",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/ab_20261024/verification.json": "1f0270f1f4fe9381a2a2013906560c4db9de011797aeff13ae238376021177fc"
+  },
+  "source_code_sha256": "60371acc939ea76f7bc69b180c800b76b3a8e470cdcbb12781660a3298d3c838"
+}

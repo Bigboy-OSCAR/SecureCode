@@ -1,0 +1,109 @@
+{
+  "status": "PASS",
+  "completed_at_utc": "2026-10-24T13:27:47.278147+00:00",
+  "report": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md",
+  "report_sha256": "830ebd00bb6b9ed9192a6465bffcf8f5ad7bd0cf18f43960a165c464c037fea0",
+  "summary_sha256": "911c9455ab8a603a63b371b7baf95c2214ce6ead712a7d260af9704efcbcae15",
+  "verification_sha256": "bb1724d5d85192fccee520bf74c5cbad6e42270f6291e9a67c47a9af30bc583f",
+  "checks": [
+    {
+      "name": "all_frozen_experiment_inputs_and_historical_data_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification_and_publication_hashes_match",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "previous_small_file_report_preserved_exactly",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_actual_answers_and_counts",
+      "passed": true,
+      "detail": {
+        "evaluation_answers": 1152,
+        "model_calls": 1778,
+        "correct_across_three_repeats": {
+          "A": 51,
+          "B": 60,
+          "R0": 75,
+          "FULL": 45
+        }
+      }
+    },
+    {
+      "name": "raw_model_answer_text_identical_across_three_repeats",
+      "passed": true,
+      "detail": 384
+    },
+    {
+      "name": "output_limit_terminations_disclosed_and_scored_as_incorrect",
+      "passed": true,
+      "detail": {
+        "calls": 21,
+        "questions": 7,
+        "arm": "FULL",
+        "monitoring_correction": "Early progress messages checked stopped_limit alone and incorrectly stated no output limits; final review uses stop_type as well. User was explicitly corrected. Original grading already used both fields and included every affected result; no measured data or score changed."
+      }
+    },
+    {
+      "name": "analysis_and_verification_code_unchanged_since_before_inference",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "markdown_tables_headings_and_code_valid",
+      "passed": true,
+      "detail": {
+        "characters": 22261,
+        "code_blocks": 9
+      }
+    },
+    {
+      "name": "all_document_links_resolve",
+      "passed": true,
+      "detail": 29
+    },
+    {
+      "name": "section_one_code_examples_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "reporting_only_amendments_archived",
+      "passed": true,
+      "detail": {
+        "initial_sha256": "07a394409671a994eb30eaa60fdd4531113bc224b4f889f978d55a46beca3fac",
+        "final_sha256": "36b2d8756fddae68089bc6fa11c2c5e7b4230e017891d5c9d776fd93d90e5efb",
+        "changes": [
+          "Disclose twelve repeated helper patterns",
+          "Guard concurrent user edits",
+          "Explain token growth, confidence intervals and context objective",
+          "Disclose actual output limit endings and label historical small-file overview"
+        ],
+        "measurement_analysis_or_grading_changed": false
+      }
+    },
+    {
+      "name": "experiment_model_server_stopped",
+      "passed": true,
+      "detail": {
+        "requested_at_utc": "2026-10-24T13:19:19.850303+00:00",
+        "pid": 87466,
+        "command": "/opt/homebrew/bin/llama-server -m /Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf --host 127.0.0.1 --port 8766 --ctx-size 8192 --parallel 1 --no-warmup --cache-ram 0 --no-cache-prompt",
+        "signal": "SIGTERM",
+        "reason": "All 1152 evaluation answers completed"
+      }
+    }
+  ],
+  "final_check_count": 12,
+  "experiment_verification_checks": 22,
+  "large_evaluation_answers": 1152,
+  "historical_small_evaluation_answers": 1152,
+  "output_limit_calls": 21,
+  "large_report_section_line": 332
+}

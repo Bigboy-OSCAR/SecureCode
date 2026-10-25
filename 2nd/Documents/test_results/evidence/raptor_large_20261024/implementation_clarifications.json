@@ -1,0 +1,24 @@
+{
+  "recorded_at_utc": "2026-10-24T16:52:47.179431+00:00",
+  "measurement_code_changed": false,
+  "scope": "Clarify the original function-kind filter; no changes to generation, retrieval or evaluation.",
+  "RF": "One leaf summary per function-kind raw dependency bundle. Additional raw_atomic candidates remain available as raw code, but receive no separate leaf summary. The protocol phrase both retained refers to raw candidates.",
+  "counts_all_projects": {
+    "functions": 2156,
+    "leaf_summaries": 2156,
+    "file_summaries": 35,
+    "project_summaries": 7,
+    "intermediate_batches": 0
+  },
+  "example": {
+    "raw_candidates": 6,
+    "leaf_summaries": 3,
+    "file_summaries": 2,
+    "project_summaries": 1,
+    "RF_context_tokens": 417,
+    "RH_context_tokens": 754,
+    "C_context_tokens": 658,
+    "remaining_leaf_mentions_numeric_3": false,
+    "rules_and_project_summaries_mention_numeric_3": true
+  }
+}

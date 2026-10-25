@@ -2,6 +2,7 @@
 from __future__ import annotations
 import argparse
 import json
+import os
 from pathlib import Path
 import sys
 sys.dont_write_bytecode = True
@@ -14,10 +15,97 @@ def table(headers, rows):
         "| " + " | ".join(str(v).replace("|", "\\|") for v in row) + " |" for row in rows)
 
 
-def build(out):
+def token_sections(token_out):
+    data = exp.read(token_out / "summary.json")
+    protocol = exp.read(token_out / "protocol.json")
+    assert data["status"] == "PASS"
+    assert data["protocol_sha256"] == exp.original.sha(token_out / "protocol.json")
+    assert data["token_counts_sha256"] == exp.original.sha(token_out / "token_counts.json")
+    for path, digest in protocol["input_hashes"].items():
+        assert exp.original.sha(path) == digest, path
+    all96 = data["by_population"]["all96"]
+    full, ms = all96["whole_file"], all96["arms"]
+    labels = {"whole_file": "파일 하나 전체", "A": "현재 색인(A)", "B": "파일 간 확장(B)", "R0": "원문 검색(R0)"}
+    concepts = '''### 파일 하나를 통째로 넣는 것과 무엇이 다른가?
+
+**A의 목적은 질문에 필요한 코드만 골라 LLM의 컨텍스트 윈도우 사용을 줄이는 것이다.** 컨텍스트 윈도우는 모델이 **한 번의 호출에서** 입력과 생성할 출력을 함께 담을 수 있는 공간이다. 파일 전체를 넣으면 질문과 무관한 함수·주석·상수도 그 공간을 사용한다.
+
+| 방식 | LLM에 전달하는 코드 | 파일 전체 입력과의 차이 |
+|---|---|---|
+| 파일 하나 전체 | 대상 파일의 처음부터 끝까지, import·주석·함수 등을 그대로 전달 | 필요한 부분을 고르지 않음. 다른 파일에 정의된 코드는 포함하지 않음 |
+| 현재 색인(A) | 선택한 함수와 같은 파일의 관련 함수·상수 조각 | 파일의 나머지 부분을 제외해 답변에 넣는 자료를 줄임. 출발 함수 선택에는 이름·위치 등의 후보 목록을 별도 호출로 전달 |
+| 파일 간 확장(B) | 출발 함수와 다른 파일에서 참조한 함수·상수 조각 | 관련 파일을 통째로 넣지는 않지만 여러 파일의 조각이 합쳐져 파일 하나보다 많아질 수 있음 |
+| 원문 검색(R0) | 검색 점수로 선택한 단일 원문·관련 코드 묶음 | 전체 파일 대신 후보 단위로 선택하지만, 여러 파일의 조각과 일부 중복이 함께 들어갈 수 있음 |
+
+세 방식 모두 답변용 코드 자료의 상한은 **1,024토큰**이지만, 상한을 가득 채울 필요는 없다. 실제 모델의 전체 컨텍스트 윈도우는 **8,192토큰**이며 질문·지시문과 출력 공간도 따로 필요하다.
+
+**코드 자료량, 한 번의 호출에 들어가는 전체 입력량, 여러 호출의 누적 입력량은 서로 다르다.** A·B의 함수 선택과 최종 답변은 별도 호출이므로 두 입력을 더한 값이 한 컨텍스트 윈도우를 차지하지는 않는다. 반면 LLM에 보낸 총량을 계산할 때는 두 호출을 모두 더해야 한다. 아래 결과에서 이 세 기준을 나눠 비교한다.
+'''
+    code_rows, calls_rows, window_rows = [], [], []
+    for arm in ["whole_file", "A", "B", "R0"]:
+        m = full if arm == "whole_file" else ms[arm]
+        code_rows.append([labels[arm], f"{m['mean_code_tokens']:.1f}",
+                          "1.00배 (기준)" if arm == "whole_file" else f"{m['code_tokens_ratio_vs_whole_file']:.2f}배",
+                          "기준" if arm == "whole_file" else f"{m['code_tokens_change_vs_whole_file_pct']:+.1f}%"])
+        calls_rows.append([labels[arm], f"{m['mean_selector_input_tokens']:.1f}", f"{m['mean_answer_input_tokens']:.1f}",
+                           f"{m['mean_total_input_tokens']:.1f}", "기준" if arm == "whole_file" else
+                           f"{m['total_input_tokens_change_vs_whole_file_pct']:+.1f}%"])
+        window_rows.append([labels[arm], f"{m['mean_peak_call_input_tokens']:.1f}", f"{m['mean_peak_input_window_pct']:.2f}%",
+                            "기준" if arm == "whole_file" else f"{m['peak_call_input_tokens_change_vs_whole_file_pct']:+.1f}%"])
+    code_table = table(["방식", "코드 자료 평균 토큰", "파일 하나 전체 대비", "증감률"],code_rows)
+    calls_table = table(["방식", "함수 선택 입력", "최종 답변 입력", "질문당 총 입력", "총 입력 증감률"],calls_rows)
+    window_table = table(["방식", "질문별 가장 큰 호출 입력의 평균", "8,192토큰 중 입력 점유율", "전체 파일 기준 대비 증감률"],window_rows)
+    a = ms["A"]
+    results = f'''### 파일 하나를 통째로 넣을 때와 토큰 사용량 비교
+
+**비교 기준:** 각 질문의 대상 함수가 정의된 **파일 하나 전체**를 그대로 넣는 경우다. 96문제 중 81문제는 `service.py`, 15문제는 `rules.py`가 기준이며, 6개 프로젝트의 서로 다른 파일 {data['distinct_baseline_files']}개를 사용했다. 함수가 어느 파일에 있는지 이미 안다고 가정하고, 함수 선택 호출 없이 같은 질문·답변 지시문·대화 형식으로 한 번 입력한다.
+
+파일 원문은 import·주석·마지막 줄바꿈까지 유지하고 추가 파일명 제목 없이 넣었다. 길이를 잘라내지 않았으며 전체 파일도 모두 기존 길이 제한 안에 들어갔다. A·B·R0은 실제 실행에서 전달한 제목·코드 표시·중복을 포함해 계산했다. 같은 모델의 토크나이저로 **원문 전체와 완성된 입력 문장 각각을 직접 계산**했고, 기존 864개 실행 기록의 토큰 수와도 일치함을 확인했다. 전체 파일 방식의 답변·정답률·응답 시간은 새로 측정하지 않았다.
+
+**① 코드 자료만 비교하면 A는 얼마나 줄이는가?**
+
+{code_table}
+
+평균 전체 파일은 **{full['mean_code_tokens']:.1f}토큰**, A가 보낸 코드는 **{a['mean_code_tokens']:.1f}토큰**으로 **{-a['code_tokens_change_vs_whole_file_pct']:.1f}% 감소**했다. 96문제 중 {a['questions_below_whole_file_code_tokens']}문제에서 코드 자료량이 줄었다. B와 R0은 여러 파일의 조각을 함께 전달하므로 이 기준 파일 하나보다 많았다. 파일 전체를 넣지 않는다는 사실만으로 파일 하나보다 항상 적어지는 것은 아니다.
+
+**② 질문·지시문과 함수 선택까지 포함해 LLM에 보낸 총량은?**
+
+아래 값은 입력 토큰만 계산한 질문당 평균이다. ‘최종 답변 입력’은 코드뿐 아니라 질문·지시문·대화 형식을 모두 포함한다. 생성된 답변 토큰은 포함하지 않는다.
+
+{calls_table}
+
+A는 최종 답변 입력을 **{full['mean_answer_input_tokens']:.1f} → {a['mean_answer_input_tokens']:.1f}토큰**으로 **{-a['answer_input_tokens_change_vs_whole_file_pct']:.1f}% 줄였다.** 그러나 출발 함수를 고르는 별도 호출에 평균 **{a['mean_selector_input_tokens']:.1f}토큰**이 더 들어가, 누적 입력은 **{a['mean_total_input_tokens']:.1f}토큰**, 전체 파일 한 번 입력보다 **{a['total_input_tokens_change_vs_whole_file_pct']:.1f}% 많았다.** 이번 자료에서는 ‘답변 컨텍스트 축소’가 ‘총 입력 토큰 절감’으로 이어지지 않았다.
+
+**③ 실제 컨텍스트 윈도우 점유는?**
+
+A·B는 질문마다 두 호출 중 입력이 더 큰 쪽을 고르고, 그 값을 96문제에 걸쳐 평균했다. 전체 파일과 R0은 한 번만 호출하므로 그 입력량을 쓴다. 두 호출의 입력을 합쳐 한 번의 점유량으로 계산하지 않았다.
+
+{window_table}
+
+A의 한 번에 필요한 입력 공간은 이 기준으로 **{-a['peak_call_input_tokens_change_vs_whole_file_pct']:.1f}% 작았다.** 표의 점유율은 입력만의 비율이다. 실행 시에는 각 답변 호출에 출력 최대 128토큰, 함수 선택 호출에 최대 96토큰의 공간도 별도로 확보한다.
+
+모든 평균은 같은 96문제를 동일한 비중으로 계산했다. 실제 방식의 토큰 수는 세 반복에서 같았고, 증감률은 **(방식의 96문제 토큰 합계 ÷ 전체 파일의 96문제 토큰 합계 − 1) × 100**이다.
+
+**해석 범위:** 이 실험의 기준 파일은 {full['min_code_tokens']}~{full['max_code_tokens']}토큰으로 작다. 따라서 A의 절감률을 큰 실제 파일에 그대로 적용할 수 없다. 또한 파일 하나에는 다른 파일의 의존 코드가 빠져 있으므로, B·R0과 제공한 정보량이 같지 않다. 이 표는 입력량 비교이며 전체 파일 방식의 답변 품질이 같거나 더 좋다는 결론은 내리지 않는다.
+'''
+    return concepts, results, data
+
+
+def build(out, token_out=None):
     s, v = exp.read(out / "summary.json"), exp.read(out / "verification.json")
     assert s["status"] == "COMPLETE" and v["status"] == "PASS"
     assert exp.original.sha(out / "summary.json") == v["source_hashes"]["summary.json"]
+    token_concepts, token_results, token_data = (token_sections(token_out) if token_out else ("", "", None))
+    token_prefix = Path(os.path.relpath(token_out.resolve(), exp.REPORT.parent)).as_posix() if token_out else ""
+    token_evidence_row = (f"| 전체 파일 대비 토큰 비교 | [계산 기준]({token_prefix}/protocol.json) · [96문제별 계산·검증 결과]({token_prefix}/summary.json) · [토큰 계산 재현]({token_prefix}/reproduce.txt) |\n" if token_out else "")
+    token_conclusion = ""
+    if token_data:
+        ta = token_data["by_population"]["all96"]["arms"]["A"]
+        token_conclusion = (f"**컨텍스트 사용량을 우선하면 A가 세 방식 중 가장 작았다.** 파일 하나 전체 입력과 비교해 "
+                            f"코드 자료는 {-ta['code_tokens_change_vs_whole_file_pct']:.1f}%, 질문별 가장 큰 호출의 입력은 "
+                            f"{-ta['peak_call_input_tokens_change_vs_whole_file_pct']:.1f}% 줄였다. 다만 함수 선택 호출까지 합친 "
+                            f"총 입력은 {ta['total_input_tokens_change_vs_whole_file_pct']:.1f}% 늘었다. 이번의 작은 파일에서는 "
+                            "한 번의 입력 공간을 아끼는 목적과 전체 처리량을 아끼는 목적의 결과가 달랐다.")
     pop = s["by_population"]["all96"]
     ms, cs, arms = pop["metrics"], pop["comparisons"], ["A", "B", "R0"]
     a, b, r = [ms[k] for k in arms]
@@ -180,6 +268,8 @@ def build(out):
 | 질문당 AI 호출 | 출발 함수 선택 + 답변 | 출발 함수 선택 + 답변 | 답변만 |
 | RAPTOR 요약 | 사용하지 않음 | 사용하지 않음 | 사용하지 않음 |
 
+{token_concepts}
+
 ### R0이 동작하는 과정
 
 1. **사전 준비:** 코드를 함수·상수 단위로 나눈다. 각각의 원문과, 다른 파일을 포함해 참조 연결을 최대 3단계 따라 모은 원문 묶음을 후보로 만든다. 묶음에 코드가 여러 개 있으면 출발 코드 하나만 담은 후보도 함께 둔다.
@@ -248,6 +338,8 @@ A도 함수 하나만 읽는 방식은 아니다. B의 관계 추적은 AI가 �
 
 {coverage_note}
 
+{token_results}
+
 ### 얼마나 더 맞혔고, 차이는 얼마나 확실한가?
 
 {contrast_table}
@@ -298,6 +390,8 @@ R0의 시간 비교는 별도 세션이라는 한계가 있다. 같은 설정을
 
 ## 7. 판단과 한계
 
+{token_conclusion}
+
 {quality_conclusion} 정답률 차이의 크기와 추정 구간, 응답 시간 요구를 함께 봐야 한다. **원문을 더 많이 모으는 것과 정확한 답을 만드는 것은 별개의 문제**다.
 
 전체 정답률은 A {pct(a['accuracy'])}, B {pct(b['accuracy'])}, R0 {pct(r['accuracy'])}였다. 이번 상대 비교만으로 어느 방식이 실사용에 충분히 신뢰할 수 있다고 판단하지 않는다.
@@ -321,17 +415,21 @@ R0의 실행 완전성, 모델·캐시·시간 기록, 정답 재채점, 원문 
 | 원문 선택의 실제 구현 | [R0의 raw_items·Retriever·pack 및 B의 확장](evidence/r0_20261024/source_snapshot/experiment.py) · [A의 확장](evidence/r0_20261024/source_snapshot/indexer.py) |
 | 재현 방법 | [R0 실행·집계·검증 안내](evidence/r0_20261024/reproduce.txt) |
 | R0 반영 전 보고서 | [기존 보고서 보관본](evidence/r0_20261024/history/report_before_R0.md) |
+{token_evidence_row}
 
 사용자가 지정한 기존 Markdown 파일을 갱신했다. A·B 원자료와 갱신 전 보고서는 보존했고, R0의 새 자료는 별도 폴더에 저장했다.
 '''
     exp.REPORT.write_text(content)
-    exp.original.dump(out / "report_manifest.json", {"created_at_utc": exp.audited.now(), "report": str(exp.REPORT),
+    exp.original.dump((token_out or out) / "report_manifest.json", {"created_at_utc": exp.audited.now(), "report": str(exp.REPORT),
         "report_sha256": exp.original.sha(exp.REPORT), "summary_sha256": exp.original.sha(out / "summary.json"),
-        "verification_sha256": exp.original.sha(out / "verification.json"), "generator_sha256": exp.original.sha(__file__)})
+        "verification_sha256": exp.original.sha(out / "verification.json"), "generator_sha256": exp.original.sha(__file__),
+        **({"token_analysis_sha256":exp.original.sha(token_out / "summary.json")} if token_out else {})})
     print(json.dumps({"report": str(exp.REPORT), "characters": len(content)},ensure_ascii=False))
 
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--out", type=Path, default=exp.DEFAULT_OUT)
-    build(p.parse_args().out)
+    p.add_argument("--token-analysis", type=Path)
+    args = p.parse_args()
+    build(args.out, args.token_analysis)

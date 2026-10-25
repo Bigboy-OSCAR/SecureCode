@@ -1,0 +1,4875 @@
+{
+  "status": "PASS",
+  "created_at_utc": "2026-10-24T10:38:14.901602+00:00",
+  "unique_questions": 96,
+  "observed_records_verified": 864,
+  "distinct_strings": 637,
+  "distinct_baseline_files": 12,
+  "baseline_file_counts": {
+    "rules.py": 15,
+    "service.py": 81
+  },
+  "by_population": {
+    "all96": {
+      "whole_file": {
+        "questions": 96,
+        "mean_code_tokens": 168.57291666666666,
+        "mean_answer_input_tokens": 316.6666666666667,
+        "mean_selector_input_tokens": 0,
+        "mean_total_input_tokens": 316.6666666666667,
+        "mean_peak_call_input_tokens": 316.6666666666667,
+        "mean_peak_call_input_with_output_reserve": 444.6666666666667,
+        "min_code_tokens": 104,
+        "max_code_tokens": 199,
+        "mean_peak_input_window_pct": 3.8655598958333335
+      },
+      "arms": {
+        "A": {
+          "questions": 96,
+          "mean_code_tokens": 97.0625,
+          "mean_answer_input_tokens": 246.15625,
+          "mean_selector_input_tokens": 162.97916666666666,
+          "mean_total_input_tokens": 409.1354166666667,
+          "mean_peak_call_input_tokens": 252.57291666666666,
+          "mean_peak_call_input_with_output_reserve": 376.9583333333333,
+          "min_code_tokens": 32,
+          "max_code_tokens": 185,
+          "mean_peak_input_window_pct": 3.0831654866536455,
+          "code_tokens_ratio_vs_whole_file": 0.575789408638695,
+          "code_tokens_change_vs_whole_file_pct": -42.4210591361305,
+          "questions_below_whole_file_code_tokens": 95,
+          "answer_input_tokens_ratio_vs_whole_file": 0.7773355263157894,
+          "answer_input_tokens_change_vs_whole_file_pct": -22.266447368421062,
+          "questions_below_whole_file_answer_input_tokens": 95,
+          "total_input_tokens_ratio_vs_whole_file": 1.2920065789473685,
+          "total_input_tokens_change_vs_whole_file_pct": 29.20065789473685,
+          "questions_below_whole_file_total_input_tokens": 2,
+          "peak_call_input_tokens_ratio_vs_whole_file": 0.7975986842105263,
+          "peak_call_input_tokens_change_vs_whole_file_pct": -20.240131578947373,
+          "questions_below_whole_file_peak_call_input_tokens": 91
+        },
+        "B": {
+          "questions": 96,
+          "mean_code_tokens": 348.4791666666667,
+          "mean_answer_input_tokens": 497.2604166666667,
+          "mean_selector_input_tokens": 162.97916666666666,
+          "mean_total_input_tokens": 660.2395833333334,
+          "mean_peak_call_input_tokens": 498.5,
+          "mean_peak_call_input_with_output_reserve": 626.0833333333334,
+          "min_code_tokens": 51,
+          "max_code_tokens": 672,
+          "mean_peak_input_window_pct": 6.085205078125,
+          "code_tokens_ratio_vs_whole_file": 2.0672310449236857,
+          "code_tokens_change_vs_whole_file_pct": 106.72310449236858,
+          "questions_below_whole_file_code_tokens": 34,
+          "answer_input_tokens_ratio_vs_whole_file": 1.570296052631579,
+          "answer_input_tokens_change_vs_whole_file_pct": 57.029605263157904,
+          "questions_below_whole_file_answer_input_tokens": 34,
+          "total_input_tokens_ratio_vs_whole_file": 2.084967105263158,
+          "total_input_tokens_change_vs_whole_file_pct": 108.4967105263158,
+          "questions_below_whole_file_total_input_tokens": 0,
+          "peak_call_input_tokens_ratio_vs_whole_file": 1.5742105263157893,
+          "peak_call_input_tokens_change_vs_whole_file_pct": 57.42105263157893,
+          "questions_below_whole_file_peak_call_input_tokens": 33
+        },
+        "R0": {
+          "questions": 96,
+          "mean_code_tokens": 1016.1666666666666,
+          "mean_answer_input_tokens": 1164.7395833333333,
+          "mean_selector_input_tokens": 0,
+          "mean_total_input_tokens": 1164.7395833333333,
+          "mean_peak_call_input_tokens": 1164.7395833333333,
+          "mean_peak_call_input_with_output_reserve": 1292.7395833333333,
+          "min_code_tokens": 1002,
+          "max_code_tokens": 1024,
+          "mean_peak_input_window_pct": 14.218012491861979,
+          "code_tokens_ratio_vs_whole_file": 6.028054130878082,
+          "code_tokens_change_vs_whole_file_pct": 502.8054130878082,
+          "questions_below_whole_file_code_tokens": 0,
+          "answer_input_tokens_ratio_vs_whole_file": 3.6781249999999996,
+          "answer_input_tokens_change_vs_whole_file_pct": 267.81249999999994,
+          "questions_below_whole_file_answer_input_tokens": 0,
+          "total_input_tokens_ratio_vs_whole_file": 3.6781249999999996,
+          "total_input_tokens_change_vs_whole_file_pct": 267.81249999999994,
+          "questions_below_whole_file_total_input_tokens": 0,
+          "peak_call_input_tokens_ratio_vs_whole_file": 3.6781249999999996,
+          "peak_call_input_tokens_change_vs_whole_file_pct": 267.81249999999994,
+          "questions_below_whole_file_peak_call_input_tokens": 0
+        }
+      }
+    },
+    "original48": {
+      "whole_file": {
+        "questions": 48,
+        "mean_code_tokens": 168.4375,
+        "mean_answer_input_tokens": 314.7291666666667,
+        "mean_selector_input_tokens": 0,
+        "mean_total_input_tokens": 314.7291666666667,
+        "mean_peak_call_input_tokens": 314.7291666666667,
+        "mean_peak_call_input_with_output_reserve": 442.7291666666667,
+        "min_code_tokens": 104,
+        "max_code_tokens": 199,
+        "mean_peak_input_window_pct": 3.8419087727864585
+      },
+      "arms": {
+        "A": {
+          "questions": 48,
+          "mean_code_tokens": 93.33333333333333,
+          "mean_answer_input_tokens": 240.625,
+          "mean_selector_input_tokens": 160.47916666666666,
+          "mean_total_input_tokens": 401.1041666666667,
+          "mean_peak_call_input_tokens": 245.85416666666666,
+          "mean_peak_call_input_with_output_reserve": 370.4791666666667,
+          "min_code_tokens": 32,
+          "max_code_tokens": 185,
+          "mean_peak_input_window_pct": 3.001149495442708,
+          "code_tokens_ratio_vs_whole_file": 0.5541125541125541,
+          "code_tokens_change_vs_whole_file_pct": -44.58874458874459,
+          "questions_below_whole_file_code_tokens": 47,
+          "answer_input_tokens_ratio_vs_whole_file": 0.7645462368438471,
+          "answer_input_tokens_change_vs_whole_file_pct": -23.545376315615286,
+          "questions_below_whole_file_answer_input_tokens": 47,
+          "total_input_tokens_ratio_vs_whole_file": 1.27444231151122,
+          "total_input_tokens_change_vs_whole_file_pct": 27.444231151122,
+          "questions_below_whole_file_total_input_tokens": 1,
+          "peak_call_input_tokens_ratio_vs_whole_file": 0.7811610511683325,
+          "peak_call_input_tokens_change_vs_whole_file_pct": -21.883894883166754,
+          "questions_below_whole_file_peak_call_input_tokens": 45
+        },
+        "B": {
+          "questions": 48,
+          "mean_code_tokens": 351.125,
+          "mean_answer_input_tokens": 498.1458333333333,
+          "mean_selector_input_tokens": 160.47916666666666,
+          "mean_total_input_tokens": 658.625,
+          "mean_peak_call_input_tokens": 498.3125,
+          "mean_peak_call_input_with_output_reserve": 626.1458333333334,
+          "min_code_tokens": 60,
+          "max_code_tokens": 672,
+          "mean_peak_input_window_pct": 6.082916259765625,
+          "code_tokens_ratio_vs_whole_file": 2.0846011131725417,
+          "code_tokens_change_vs_whole_file_pct": 108.46011131725417,
+          "questions_below_whole_file_code_tokens": 17,
+          "answer_input_tokens_ratio_vs_whole_file": 1.5827761964652147,
+          "answer_input_tokens_change_vs_whole_file_pct": 58.27761964652147,
+          "questions_below_whole_file_answer_input_tokens": 17,
+          "total_input_tokens_ratio_vs_whole_file": 2.0926722711325874,
+          "total_input_tokens_change_vs_whole_file_pct": 109.26722711325874,
+          "questions_below_whole_file_total_input_tokens": 0,
+          "peak_call_input_tokens_ratio_vs_whole_file": 1.583305752300258,
+          "peak_call_input_tokens_change_vs_whole_file_pct": 58.33057523002581,
+          "questions_below_whole_file_peak_call_input_tokens": 17
+        },
+        "R0": {
+          "questions": 48,
+          "mean_code_tokens": 1015.9375,
+          "mean_answer_input_tokens": 1162.6875,
+          "mean_selector_input_tokens": 0,
+          "mean_total_input_tokens": 1162.6875,
+          "mean_peak_call_input_tokens": 1162.6875,
+          "mean_peak_call_input_with_output_reserve": 1290.6875,
+          "min_code_tokens": 1003,
+          "max_code_tokens": 1024,
+          "mean_peak_input_window_pct": 14.192962646484375,
+          "code_tokens_ratio_vs_whole_file": 6.031539888682746,
+          "code_tokens_change_vs_whole_file_pct": 503.15398886827455,
+          "questions_below_whole_file_code_tokens": 0,
+          "answer_input_tokens_ratio_vs_whole_file": 3.694247699741841,
+          "answer_input_tokens_change_vs_whole_file_pct": 269.42476997418413,
+          "questions_below_whole_file_answer_input_tokens": 0,
+          "total_input_tokens_ratio_vs_whole_file": 3.694247699741841,
+          "total_input_tokens_change_vs_whole_file_pct": 269.42476997418413,
+          "questions_below_whole_file_total_input_tokens": 0,
+          "peak_call_input_tokens_ratio_vs_whole_file": 3.694247699741841,
+          "peak_call_input_tokens_change_vs_whole_file_pct": 269.42476997418413,
+          "questions_below_whole_file_peak_call_input_tokens": 0
+        }
+      }
+    },
+    "additional48": {
+      "whole_file": {
+        "questions": 48,
+        "mean_code_tokens": 168.70833333333334,
+        "mean_answer_input_tokens": 318.6041666666667,
+        "mean_selector_input_tokens": 0,
+        "mean_total_input_tokens": 318.6041666666667,
+        "mean_peak_call_input_tokens": 318.6041666666667,
+        "mean_peak_call_input_with_output_reserve": 446.6041666666667,
+        "min_code_tokens": 104,
+        "max_code_tokens": 199,
+        "mean_peak_input_window_pct": 3.8892110188802085
+      },
+      "arms": {
+        "A": {
+          "questions": 48,
+          "mean_code_tokens": 100.79166666666667,
+          "mean_answer_input_tokens": 251.6875,
+          "mean_selector_input_tokens": 165.47916666666666,
+          "mean_total_input_tokens": 417.1666666666667,
+          "mean_peak_call_input_tokens": 259.2916666666667,
+          "mean_peak_call_input_with_output_reserve": 383.4375,
+          "min_code_tokens": 32,
+          "max_code_tokens": 182,
+          "mean_peak_input_window_pct": 3.1651814778645835,
+          "code_tokens_ratio_vs_whole_file": 0.5974314645591504,
+          "code_tokens_change_vs_whole_file_pct": -40.25685354408496,
+          "questions_below_whole_file_code_tokens": 48,
+          "answer_input_tokens_ratio_vs_whole_file": 0.789969266984895,
+          "answer_input_tokens_change_vs_whole_file_pct": -21.0030733015105,
+          "questions_below_whole_file_answer_input_tokens": 48,
+          "total_input_tokens_ratio_vs_whole_file": 1.3093572222585497,
+          "total_input_tokens_change_vs_whole_file_pct": 30.935722225854967,
+          "questions_below_whole_file_total_input_tokens": 1,
+          "peak_call_input_tokens_ratio_vs_whole_file": 0.8138363957366115,
+          "peak_call_input_tokens_change_vs_whole_file_pct": -18.61636042633885,
+          "questions_below_whole_file_peak_call_input_tokens": 46
+        },
+        "B": {
+          "questions": 48,
+          "mean_code_tokens": 345.8333333333333,
+          "mean_answer_input_tokens": 496.375,
+          "mean_selector_input_tokens": 165.47916666666666,
+          "mean_total_input_tokens": 661.8541666666666,
+          "mean_peak_call_input_tokens": 498.6875,
+          "mean_peak_call_input_with_output_reserve": 626.0208333333334,
+          "min_code_tokens": 51,
+          "max_code_tokens": 672,
+          "mean_peak_input_window_pct": 6.087493896484375,
+          "code_tokens_ratio_vs_whole_file": 2.0498888614472706,
+          "code_tokens_change_vs_whole_file_pct": 104.98888614472706,
+          "questions_below_whole_file_code_tokens": 17,
+          "answer_input_tokens_ratio_vs_whole_file": 1.5579676976394428,
+          "answer_input_tokens_change_vs_whole_file_pct": 55.796769763944276,
+          "questions_below_whole_file_answer_input_tokens": 17,
+          "total_input_tokens_ratio_vs_whole_file": 2.077355652913097,
+          "total_input_tokens_change_vs_whole_file_pct": 107.73556529130973,
+          "questions_below_whole_file_total_input_tokens": 0,
+          "peak_call_input_tokens_ratio_vs_whole_file": 1.5652259203557182,
+          "peak_call_input_tokens_change_vs_whole_file_pct": 56.52259203557182,
+          "questions_below_whole_file_peak_call_input_tokens": 16
+        },
+        "R0": {
+          "questions": 48,
+          "mean_code_tokens": 1016.3958333333334,
+          "mean_answer_input_tokens": 1166.7916666666667,
+          "mean_selector_input_tokens": 0,
+          "mean_total_input_tokens": 1166.7916666666667,
+          "mean_peak_call_input_tokens": 1166.7916666666667,
+          "mean_peak_call_input_with_output_reserve": 1294.7916666666667,
+          "min_code_tokens": 1002,
+          "max_code_tokens": 1024,
+          "mean_peak_input_window_pct": 14.243062337239584,
+          "code_tokens_ratio_vs_whole_file": 6.024573968881205,
+          "code_tokens_change_vs_whole_file_pct": 502.45739688812046,
+          "questions_below_whole_file_code_tokens": 0,
+          "answer_input_tokens_ratio_vs_whole_file": 3.6621983914209117,
+          "answer_input_tokens_change_vs_whole_file_pct": 266.2198391420912,
+          "questions_below_whole_file_answer_input_tokens": 0,
+          "total_input_tokens_ratio_vs_whole_file": 3.6621983914209117,
+          "total_input_tokens_change_vs_whole_file_pct": 266.2198391420912,
+          "questions_below_whole_file_total_input_tokens": 0,
+          "peak_call_input_tokens_ratio_vs_whole_file": 3.6621983914209117,
+          "peak_call_input_tokens_change_vs_whole_file_pct": 266.2198391420912,
+          "questions_below_whole_file_peak_call_input_tokens": 0
+        }
+      }
+    }
+  },
+  "files": [
+    {
+      "file": "eval_authorization/rules.py",
+      "sha256": "46240886758ebd522e5976fc2f5a1c102ee4a909fc3d02b51cee4a3d67c78404",
+      "code_tokens": 147,
+      "question_count": 2
+    },
+    {
+      "file": "eval_authorization/service.py",
+      "sha256": "4c416c5a9bf93a2b0e91155f19d15c745626835000ab65cbf458f95c1fb09ede",
+      "code_tokens": 161,
+      "question_count": 14
+    },
+    {
+      "file": "eval_cache/rules.py",
+      "sha256": "7b5f69f2f74095a686701927647af1e18e89bdf38de28a42c70b9c751cc1d3c2",
+      "code_tokens": 143,
+      "question_count": 3
+    },
+    {
+      "file": "eval_cache/service.py",
+      "sha256": "e104b71da7f0bfd25b45cc4aea4548660aaa5d61b588d279a98feb931355baeb",
+      "code_tokens": 156,
+      "question_count": 13
+    },
+    {
+      "file": "eval_inventory/rules.py",
+      "sha256": "713c73e112288e6e08b74cb77cb1bf76f662d33b93b50160bbe7592fd1e82342",
+      "code_tokens": 105,
+      "question_count": 2
+    },
+    {
+      "file": "eval_inventory/service.py",
+      "sha256": "7b573a3b41a132b4258b9b68bdacb66320b3b3e86332c23e225e1d616b01aa8b",
+      "code_tokens": 197,
+      "question_count": 14
+    },
+    {
+      "file": "eval_pricing/rules.py",
+      "sha256": "74c3d4f20e54e46962b0c97acf1b12309ad4ab82a78207eebafe5d5889e9b44b",
+      "code_tokens": 168,
+      "question_count": 2
+    },
+    {
+      "file": "eval_pricing/service.py",
+      "sha256": "c7c90407e85b3a976009a0baf8ffcc19002247c3728b684d4b3f4dd25fd91a2c",
+      "code_tokens": 175,
+      "question_count": 14
+    },
+    {
+      "file": "eval_routing/rules.py",
+      "sha256": "74affeb72b5ed642da170c93ba0c918ad6e3944643fa9bbdd88ff4215c885683",
+      "code_tokens": 104,
+      "question_count": 4
+    },
+    {
+      "file": "eval_routing/service.py",
+      "sha256": "042cf30fe6e63431c047e6e5e7051bb3e7f1452891bb15da5d203d07b1013c29",
+      "code_tokens": 166,
+      "question_count": 12
+    },
+    {
+      "file": "eval_schedules/rules.py",
+      "sha256": "d7da8cb453232890a42b0013ddc107cde2448b137d0a93e2965abefc8692593c",
+      "code_tokens": 115,
+      "question_count": 2
+    },
+    {
+      "file": "eval_schedules/service.py",
+      "sha256": "0f8be208721bb92bb38e341a60f6c613d2b00dd91b8260de237739f677f2c014",
+      "code_tokens": 199,
+      "question_count": 14
+    }
+  ],
+  "questions": [
+    {
+      "task_id": "eval_pricing__refund",
+      "project": "eval_pricing",
+      "category": "single_function",
+      "split": "original48",
+      "baseline_file": "eval_pricing/rules.py",
+      "whole_file": {
+        "code_tokens": 168,
+        "answer_input_tokens": 299,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 299,
+        "peak_call_input_tokens": 299,
+        "peak_call_input_with_output_reserve": 427
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 48,
+          "answer_input_tokens": 180,
+          "selector_input_tokens": 110,
+          "total_input_tokens": 290,
+          "peak_call_input_tokens": 180,
+          "peak_call_input_with_output_reserve": 308,
+          "code_change_vs_whole_file_pct": -71.42857142857143,
+          "total_input_change_vs_whole_file_pct": -3.0100334448160515
+        },
+        "B": {
+          "code_tokens": 72,
+          "answer_input_tokens": 204,
+          "selector_input_tokens": 110,
+          "total_input_tokens": 314,
+          "peak_call_input_tokens": 204,
+          "peak_call_input_with_output_reserve": 332,
+          "code_change_vs_whole_file_pct": -57.14285714285714,
+          "total_input_change_vs_whole_file_pct": 5.0167224080267525
+        },
+        "R0": {
+          "code_tokens": 1015,
+          "answer_input_tokens": 1146,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1146,
+          "peak_call_input_tokens": 1146,
+          "peak_call_input_with_output_reserve": 1274,
+          "code_change_vs_whole_file_pct": 504.1666666666667,
+          "total_input_change_vs_whole_file_pct": 283.27759197324417
+        }
+      }
+    },
+    {
+      "task_id": "eval_pricing__member_order",
+      "project": "eval_pricing",
+      "category": "cross_file",
+      "split": "original48",
+      "baseline_file": "eval_pricing/service.py",
+      "whole_file": {
+        "code_tokens": 175,
+        "answer_input_tokens": 305,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 305,
+        "peak_call_input_tokens": 305,
+        "peak_call_input_with_output_reserve": 433
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 94,
+          "answer_input_tokens": 225,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 334,
+          "peak_call_input_tokens": 225,
+          "peak_call_input_with_output_reserve": 353,
+          "code_change_vs_whole_file_pct": -46.285714285714285,
+          "total_input_change_vs_whole_file_pct": 9.508196721311467
+        },
+        "B": {
+          "code_tokens": 551,
+          "answer_input_tokens": 682,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 791,
+          "peak_call_input_tokens": 682,
+          "peak_call_input_with_output_reserve": 810,
+          "code_change_vs_whole_file_pct": 214.85714285714286,
+          "total_input_change_vs_whole_file_pct": 159.344262295082
+        },
+        "R0": {
+          "code_tokens": 1023,
+          "answer_input_tokens": 1154,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1154,
+          "peak_call_input_tokens": 1154,
+          "peak_call_input_with_output_reserve": 1282,
+          "code_change_vs_whole_file_pct": 484.5714285714286,
+          "total_input_change_vs_whole_file_pct": 278.3606557377049
+        }
+      }
+    },
+    {
+      "task_id": "eval_pricing__receipt",
+      "project": "eval_pricing",
+      "category": "cross_file",
+      "split": "original48",
+      "baseline_file": "eval_pricing/service.py",
+      "whole_file": {
+        "code_tokens": 175,
+        "answer_input_tokens": 305,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 305,
+        "peak_call_input_tokens": 305,
+        "peak_call_input_with_output_reserve": 433
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 159,
+          "answer_input_tokens": 290,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 399,
+          "peak_call_input_tokens": 290,
+          "peak_call_input_with_output_reserve": 418,
+          "code_change_vs_whole_file_pct": -9.142857142857142,
+          "total_input_change_vs_whole_file_pct": 30.819672131147534
+        },
+        "B": {
+          "code_tokens": 530,
+          "answer_input_tokens": 661,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 770,
+          "peak_call_input_tokens": 661,
+          "peak_call_input_with_output_reserve": 789,
+          "code_change_vs_whole_file_pct": 202.85714285714283,
+          "total_input_change_vs_whole_file_pct": 152.45901639344262
+        },
+        "R0": {
+          "code_tokens": 1018,
+          "answer_input_tokens": 1149,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1149,
+          "peak_call_input_tokens": 1149,
+          "peak_call_input_with_output_reserve": 1277,
+          "code_change_vs_whole_file_pct": 481.71428571428567,
+          "total_input_change_vs_whole_file_pct": 276.72131147540983
+        }
+      }
+    },
+    {
+      "task_id": "eval_pricing__quantity_cap",
+      "project": "eval_pricing",
+      "category": "boundary",
+      "split": "original48",
+      "baseline_file": "eval_pricing/service.py",
+      "whole_file": {
+        "code_tokens": 175,
+        "answer_input_tokens": 305,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 305,
+        "peak_call_input_tokens": 305,
+        "peak_call_input_with_output_reserve": 433
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 94,
+          "answer_input_tokens": 225,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 334,
+          "peak_call_input_tokens": 225,
+          "peak_call_input_with_output_reserve": 353,
+          "code_change_vs_whole_file_pct": -46.285714285714285,
+          "total_input_change_vs_whole_file_pct": 9.508196721311467
+        },
+        "B": {
+          "code_tokens": 551,
+          "answer_input_tokens": 682,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 791,
+          "peak_call_input_tokens": 682,
+          "peak_call_input_with_output_reserve": 810,
+          "code_change_vs_whole_file_pct": 214.85714285714286,
+          "total_input_change_vs_whole_file_pct": 159.344262295082
+        },
+        "R0": {
+          "code_tokens": 1023,
+          "answer_input_tokens": 1154,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1154,
+          "peak_call_input_tokens": 1154,
+          "peak_call_input_with_output_reserve": 1282,
+          "code_change_vs_whole_file_pct": 484.5714285714286,
+          "total_input_change_vs_whole_file_pct": 278.3606557377049
+        }
+      }
+    },
+    {
+      "task_id": "eval_pricing__discount_delivery",
+      "project": "eval_pricing",
+      "category": "semantic",
+      "split": "original48",
+      "baseline_file": "eval_pricing/service.py",
+      "whole_file": {
+        "code_tokens": 175,
+        "answer_input_tokens": 325,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 325,
+        "peak_call_input_tokens": 325,
+        "peak_call_input_with_output_reserve": 453
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 94,
+          "answer_input_tokens": 245,
+          "selector_input_tokens": 180,
+          "total_input_tokens": 425,
+          "peak_call_input_tokens": 245,
+          "peak_call_input_with_output_reserve": 373,
+          "code_change_vs_whole_file_pct": -46.285714285714285,
+          "total_input_change_vs_whole_file_pct": 30.76923076923077
+        },
+        "B": {
+          "code_tokens": 551,
+          "answer_input_tokens": 702,
+          "selector_input_tokens": 180,
+          "total_input_tokens": 882,
+          "peak_call_input_tokens": 702,
+          "peak_call_input_with_output_reserve": 830,
+          "code_change_vs_whole_file_pct": 214.85714285714286,
+          "total_input_change_vs_whole_file_pct": 171.3846153846154
+        },
+        "R0": {
+          "code_tokens": 1013,
+          "answer_input_tokens": 1163,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1163,
+          "peak_call_input_tokens": 1163,
+          "peak_call_input_with_output_reserve": 1291,
+          "code_change_vs_whole_file_pct": 478.85714285714283,
+          "total_input_change_vs_whole_file_pct": 257.8461538461538
+        }
+      }
+    },
+    {
+      "task_id": "eval_pricing__invalid_receipt",
+      "project": "eval_pricing",
+      "category": "semantic",
+      "split": "original48",
+      "baseline_file": "eval_pricing/service.py",
+      "whole_file": {
+        "code_tokens": 175,
+        "answer_input_tokens": 318,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 318,
+        "peak_call_input_tokens": 318,
+        "peak_call_input_with_output_reserve": 446
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 159,
+          "answer_input_tokens": 303,
+          "selector_input_tokens": 173,
+          "total_input_tokens": 476,
+          "peak_call_input_tokens": 303,
+          "peak_call_input_with_output_reserve": 431,
+          "code_change_vs_whole_file_pct": -9.142857142857142,
+          "total_input_change_vs_whole_file_pct": 49.68553459119496
+        },
+        "B": {
+          "code_tokens": 530,
+          "answer_input_tokens": 674,
+          "selector_input_tokens": 173,
+          "total_input_tokens": 847,
+          "peak_call_input_tokens": 674,
+          "peak_call_input_with_output_reserve": 802,
+          "code_change_vs_whole_file_pct": 202.85714285714283,
+          "total_input_change_vs_whole_file_pct": 166.35220125786162
+        },
+        "R0": {
+          "code_tokens": 1017,
+          "answer_input_tokens": 1160,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1160,
+          "peak_call_input_tokens": 1160,
+          "peak_call_input_with_output_reserve": 1288,
+          "code_change_vs_whole_file_pct": 481.1428571428571,
+          "total_input_change_vs_whole_file_pct": 264.7798742138365
+        }
+      }
+    },
+    {
+      "task_id": "eval_pricing__tax_change",
+      "project": "eval_pricing",
+      "category": "change_impact",
+      "split": "original48",
+      "baseline_file": "eval_pricing/service.py",
+      "whole_file": {
+        "code_tokens": 175,
+        "answer_input_tokens": 348,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 348,
+        "peak_call_input_tokens": 348,
+        "peak_call_input_with_output_reserve": 476
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 49,
+          "answer_input_tokens": 223,
+          "selector_input_tokens": 203,
+          "total_input_tokens": 426,
+          "peak_call_input_tokens": 223,
+          "peak_call_input_with_output_reserve": 351,
+          "code_change_vs_whole_file_pct": -72.0,
+          "total_input_change_vs_whole_file_pct": 22.413793103448263
+        },
+        "B": {
+          "code_tokens": 101,
+          "answer_input_tokens": 275,
+          "selector_input_tokens": 203,
+          "total_input_tokens": 478,
+          "peak_call_input_tokens": 275,
+          "peak_call_input_with_output_reserve": 403,
+          "code_change_vs_whole_file_pct": -42.285714285714285,
+          "total_input_change_vs_whole_file_pct": 37.356321839080465
+        },
+        "R0": {
+          "code_tokens": 1008,
+          "answer_input_tokens": 1181,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1181,
+          "peak_call_input_tokens": 1181,
+          "peak_call_input_with_output_reserve": 1309,
+          "code_change_vs_whole_file_pct": 476.0,
+          "total_input_change_vs_whole_file_pct": 239.36781609195404
+        }
+      }
+    },
+    {
+      "task_id": "eval_pricing__direct_calls",
+      "project": "eval_pricing",
+      "category": "architecture",
+      "split": "original48",
+      "baseline_file": "eval_pricing/service.py",
+      "whole_file": {
+        "code_tokens": 175,
+        "answer_input_tokens": 312,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 312,
+        "peak_call_input_tokens": 312,
+        "peak_call_input_with_output_reserve": 440
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 94,
+          "answer_input_tokens": 232,
+          "selector_input_tokens": 116,
+          "total_input_tokens": 348,
+          "peak_call_input_tokens": 232,
+          "peak_call_input_with_output_reserve": 360,
+          "code_change_vs_whole_file_pct": -46.285714285714285,
+          "total_input_change_vs_whole_file_pct": 11.538461538461542
+        },
+        "B": {
+          "code_tokens": 551,
+          "answer_input_tokens": 689,
+          "selector_input_tokens": 116,
+          "total_input_tokens": 805,
+          "peak_call_input_tokens": 689,
+          "peak_call_input_with_output_reserve": 817,
+          "code_change_vs_whole_file_pct": 214.85714285714286,
+          "total_input_change_vs_whole_file_pct": 158.01282051282053
+        },
+        "R0": {
+          "code_tokens": 1023,
+          "answer_input_tokens": 1161,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1161,
+          "peak_call_input_tokens": 1161,
+          "peak_call_input_with_output_reserve": 1289,
+          "code_change_vs_whole_file_pct": 484.5714285714286,
+          "total_input_change_vs_whole_file_pct": 272.11538461538464
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__normalize",
+      "project": "eval_authorization",
+      "category": "single_function",
+      "split": "original48",
+      "baseline_file": "eval_authorization/rules.py",
+      "whole_file": {
+        "code_tokens": 147,
+        "answer_input_tokens": 283,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 283,
+        "peak_call_input_tokens": 283,
+        "peak_call_input_with_output_reserve": 411
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 39,
+          "answer_input_tokens": 176,
+          "selector_input_tokens": 117,
+          "total_input_tokens": 293,
+          "peak_call_input_tokens": 176,
+          "peak_call_input_with_output_reserve": 304,
+          "code_change_vs_whole_file_pct": -73.46938775510203,
+          "total_input_change_vs_whole_file_pct": 3.5335689045936425
+        },
+        "B": {
+          "code_tokens": 60,
+          "answer_input_tokens": 196,
+          "selector_input_tokens": 117,
+          "total_input_tokens": 313,
+          "peak_call_input_tokens": 196,
+          "peak_call_input_with_output_reserve": 324,
+          "code_change_vs_whole_file_pct": -59.183673469387756,
+          "total_input_change_vs_whole_file_pct": 10.600706713780927
+        },
+        "R0": {
+          "code_tokens": 1024,
+          "answer_input_tokens": 1161,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1161,
+          "peak_call_input_tokens": 1161,
+          "peak_call_input_with_output_reserve": 1289,
+          "code_change_vs_whole_file_pct": 596.5986394557823,
+          "total_input_change_vs_whole_file_pct": 310.24734982332154
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__own_write",
+      "project": "eval_authorization",
+      "category": "cross_file",
+      "split": "original48",
+      "baseline_file": "eval_authorization/service.py",
+      "whole_file": {
+        "code_tokens": 161,
+        "answer_input_tokens": 304,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 304,
+        "peak_call_input_tokens": 304,
+        "peak_call_input_with_output_reserve": 432
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 100,
+          "answer_input_tokens": 244,
+          "selector_input_tokens": 120,
+          "total_input_tokens": 364,
+          "peak_call_input_tokens": 244,
+          "peak_call_input_with_output_reserve": 372,
+          "code_change_vs_whole_file_pct": -37.88819875776398,
+          "total_input_change_vs_whole_file_pct": 19.736842105263165
+        },
+        "B": {
+          "code_tokens": 541,
+          "answer_input_tokens": 685,
+          "selector_input_tokens": 120,
+          "total_input_tokens": 805,
+          "peak_call_input_tokens": 685,
+          "peak_call_input_with_output_reserve": 813,
+          "code_change_vs_whole_file_pct": 236.0248447204969,
+          "total_input_change_vs_whole_file_pct": 164.8026315789474
+        },
+        "R0": {
+          "code_tokens": 1022,
+          "answer_input_tokens": 1165,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1165,
+          "peak_call_input_tokens": 1165,
+          "peak_call_input_with_output_reserve": 1293,
+          "code_change_vs_whole_file_pct": 534.7826086956521,
+          "total_input_change_vs_whole_file_pct": 283.2236842105263
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__admin_without_scope",
+      "project": "eval_authorization",
+      "category": "cross_file",
+      "split": "original48",
+      "baseline_file": "eval_authorization/service.py",
+      "whole_file": {
+        "code_tokens": 161,
+        "answer_input_tokens": 303,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 303,
+        "peak_call_input_tokens": 303,
+        "peak_call_input_with_output_reserve": 431
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 100,
+          "answer_input_tokens": 243,
+          "selector_input_tokens": 119,
+          "total_input_tokens": 362,
+          "peak_call_input_tokens": 243,
+          "peak_call_input_with_output_reserve": 371,
+          "code_change_vs_whole_file_pct": -37.88819875776398,
+          "total_input_change_vs_whole_file_pct": 19.471947194719476
+        },
+        "B": {
+          "code_tokens": 541,
+          "answer_input_tokens": 684,
+          "selector_input_tokens": 119,
+          "total_input_tokens": 803,
+          "peak_call_input_tokens": 684,
+          "peak_call_input_with_output_reserve": 812,
+          "code_change_vs_whole_file_pct": 236.0248447204969,
+          "total_input_change_vs_whole_file_pct": 165.01650165016503
+        },
+        "R0": {
+          "code_tokens": 1018,
+          "answer_input_tokens": 1161,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1161,
+          "peak_call_input_tokens": 1161,
+          "peak_call_input_with_output_reserve": 1289,
+          "code_change_vs_whole_file_pct": 532.2981366459627,
+          "total_input_change_vs_whole_file_pct": 283.16831683168317
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__expiry",
+      "project": "eval_authorization",
+      "category": "boundary",
+      "split": "original48",
+      "baseline_file": "eval_authorization/service.py",
+      "whole_file": {
+        "code_tokens": 161,
+        "answer_input_tokens": 298,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 298,
+        "peak_call_input_tokens": 298,
+        "peak_call_input_with_output_reserve": 426
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 158,
+          "answer_input_tokens": 296,
+          "selector_input_tokens": 118,
+          "total_input_tokens": 414,
+          "peak_call_input_tokens": 296,
+          "peak_call_input_with_output_reserve": 424,
+          "code_change_vs_whole_file_pct": -1.8633540372670843,
+          "total_input_change_vs_whole_file_pct": 38.92617449664431
+        },
+        "B": {
+          "code_tokens": 447,
+          "answer_input_tokens": 584,
+          "selector_input_tokens": 118,
+          "total_input_tokens": 702,
+          "peak_call_input_tokens": 584,
+          "peak_call_input_with_output_reserve": 712,
+          "code_change_vs_whole_file_pct": 177.63975155279502,
+          "total_input_change_vs_whole_file_pct": 135.5704697986577
+        },
+        "R0": {
+          "code_tokens": 1022,
+          "answer_input_tokens": 1159,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1159,
+          "peak_call_input_tokens": 1159,
+          "peak_call_input_with_output_reserve": 1287,
+          "code_change_vs_whole_file_pct": 534.7826086956521,
+          "total_input_change_vs_whole_file_pct": 288.9261744966443
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__unknown_action",
+      "project": "eval_authorization",
+      "category": "semantic",
+      "split": "original48",
+      "baseline_file": "eval_authorization/service.py",
+      "whole_file": {
+        "code_tokens": 161,
+        "answer_input_tokens": 333,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 333,
+        "peak_call_input_tokens": 333,
+        "peak_call_input_with_output_reserve": 461
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 45,
+          "answer_input_tokens": 218,
+          "selector_input_tokens": 151,
+          "total_input_tokens": 369,
+          "peak_call_input_tokens": 218,
+          "peak_call_input_with_output_reserve": 346,
+          "code_change_vs_whole_file_pct": -72.04968944099379,
+          "total_input_change_vs_whole_file_pct": 10.81081081081081
+        },
+        "B": {
+          "code_tokens": 94,
+          "answer_input_tokens": 267,
+          "selector_input_tokens": 151,
+          "total_input_tokens": 418,
+          "peak_call_input_tokens": 267,
+          "peak_call_input_with_output_reserve": 395,
+          "code_change_vs_whole_file_pct": -41.61490683229814,
+          "total_input_change_vs_whole_file_pct": 25.525525525525516
+        },
+        "R0": {
+          "code_tokens": 1024,
+          "answer_input_tokens": 1196,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1196,
+          "peak_call_input_tokens": 1196,
+          "peak_call_input_with_output_reserve": 1324,
+          "code_change_vs_whole_file_pct": 536.0248447204968,
+          "total_input_change_vs_whole_file_pct": 259.1591591591592
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__future_session",
+      "project": "eval_authorization",
+      "category": "semantic",
+      "split": "original48",
+      "baseline_file": "eval_authorization/service.py",
+      "whole_file": {
+        "code_tokens": 161,
+        "answer_input_tokens": 319,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 319,
+        "peak_call_input_tokens": 319,
+        "peak_call_input_with_output_reserve": 447
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 45,
+          "answer_input_tokens": 204,
+          "selector_input_tokens": 169,
+          "total_input_tokens": 373,
+          "peak_call_input_tokens": 204,
+          "peak_call_input_with_output_reserve": 332,
+          "code_change_vs_whole_file_pct": -72.04968944099379,
+          "total_input_change_vs_whole_file_pct": 16.927899686520377
+        },
+        "B": {
+          "code_tokens": 94,
+          "answer_input_tokens": 253,
+          "selector_input_tokens": 169,
+          "total_input_tokens": 422,
+          "peak_call_input_tokens": 253,
+          "peak_call_input_with_output_reserve": 381,
+          "code_change_vs_whole_file_pct": -41.61490683229814,
+          "total_input_change_vs_whole_file_pct": 32.288401253918494
+        },
+        "R0": {
+          "code_tokens": 1019,
+          "answer_input_tokens": 1177,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1177,
+          "peak_call_input_tokens": 1177,
+          "peak_call_input_with_output_reserve": 1305,
+          "code_change_vs_whole_file_pct": 532.9192546583851,
+          "total_input_change_vs_whole_file_pct": 268.9655172413793
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__session_change",
+      "project": "eval_authorization",
+      "category": "change_impact",
+      "split": "original48",
+      "baseline_file": "eval_authorization/service.py",
+      "whole_file": {
+        "code_tokens": 161,
+        "answer_input_tokens": 348,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 348,
+        "peak_call_input_tokens": 348,
+        "peak_call_input_with_output_reserve": 476
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 45,
+          "answer_input_tokens": 233,
+          "selector_input_tokens": 250,
+          "total_input_tokens": 483,
+          "peak_call_input_tokens": 250,
+          "peak_call_input_with_output_reserve": 361,
+          "code_change_vs_whole_file_pct": -72.04968944099379,
+          "total_input_change_vs_whole_file_pct": 38.793103448275865
+        },
+        "B": {
+          "code_tokens": 94,
+          "answer_input_tokens": 282,
+          "selector_input_tokens": 250,
+          "total_input_tokens": 532,
+          "peak_call_input_tokens": 282,
+          "peak_call_input_with_output_reserve": 410,
+          "code_change_vs_whole_file_pct": -41.61490683229814,
+          "total_input_change_vs_whole_file_pct": 52.87356321839081
+        },
+        "R0": {
+          "code_tokens": 1023,
+          "answer_input_tokens": 1211,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1211,
+          "peak_call_input_tokens": 1211,
+          "peak_call_input_with_output_reserve": 1339,
+          "code_change_vs_whole_file_pct": 535.4037267080745,
+          "total_input_change_vs_whole_file_pct": 247.98850574712645
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__direct_calls",
+      "project": "eval_authorization",
+      "category": "architecture",
+      "split": "original48",
+      "baseline_file": "eval_authorization/service.py",
+      "whole_file": {
+        "code_tokens": 161,
+        "answer_input_tokens": 297,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 297,
+        "peak_call_input_tokens": 297,
+        "peak_call_input_with_output_reserve": 425
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 100,
+          "answer_input_tokens": 237,
+          "selector_input_tokens": 113,
+          "total_input_tokens": 350,
+          "peak_call_input_tokens": 237,
+          "peak_call_input_with_output_reserve": 365,
+          "code_change_vs_whole_file_pct": -37.88819875776398,
+          "total_input_change_vs_whole_file_pct": 17.84511784511784
+        },
+        "B": {
+          "code_tokens": 541,
+          "answer_input_tokens": 678,
+          "selector_input_tokens": 113,
+          "total_input_tokens": 791,
+          "peak_call_input_tokens": 678,
+          "peak_call_input_with_output_reserve": 806,
+          "code_change_vs_whole_file_pct": 236.0248447204969,
+          "total_input_change_vs_whole_file_pct": 166.32996632996634
+        },
+        "R0": {
+          "code_tokens": 1019,
+          "answer_input_tokens": 1155,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1155,
+          "peak_call_input_tokens": 1155,
+          "peak_call_input_with_output_reserve": 1283,
+          "code_change_vs_whole_file_pct": 532.9192546583851,
+          "total_input_change_vs_whole_file_pct": 288.88888888888886
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__path",
+      "project": "eval_routing",
+      "category": "single_function",
+      "split": "original48",
+      "baseline_file": "eval_routing/rules.py",
+      "whole_file": {
+        "code_tokens": 104,
+        "answer_input_tokens": 230,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 230,
+        "peak_call_input_tokens": 230,
+        "peak_call_input_with_output_reserve": 358
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 42,
+          "answer_input_tokens": 169,
+          "selector_input_tokens": 136,
+          "total_input_tokens": 305,
+          "peak_call_input_tokens": 169,
+          "peak_call_input_with_output_reserve": 297,
+          "code_change_vs_whole_file_pct": -59.61538461538461,
+          "total_input_change_vs_whole_file_pct": 32.6086956521739
+        },
+        "B": {
+          "code_tokens": 75,
+          "answer_input_tokens": 202,
+          "selector_input_tokens": 136,
+          "total_input_tokens": 338,
+          "peak_call_input_tokens": 202,
+          "peak_call_input_with_output_reserve": 330,
+          "code_change_vs_whole_file_pct": -27.884615384615387,
+          "total_input_change_vs_whole_file_pct": 46.95652173913043
+        },
+        "R0": {
+          "code_tokens": 1023,
+          "answer_input_tokens": 1150,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1150,
+          "peak_call_input_tokens": 1150,
+          "peak_call_input_with_output_reserve": 1278,
+          "code_change_vs_whole_file_pct": 883.6538461538462,
+          "total_input_change_vs_whole_file_pct": 400.0
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__preferred",
+      "project": "eval_routing",
+      "category": "cross_file",
+      "split": "original48",
+      "baseline_file": "eval_routing/service.py",
+      "whole_file": {
+        "code_tokens": 166,
+        "answer_input_tokens": 328,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 328,
+        "peak_call_input_tokens": 328,
+        "peak_call_input_with_output_reserve": 456
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 98,
+          "answer_input_tokens": 261,
+          "selector_input_tokens": 162,
+          "total_input_tokens": 423,
+          "peak_call_input_tokens": 261,
+          "peak_call_input_with_output_reserve": 389,
+          "code_change_vs_whole_file_pct": -40.963855421686745,
+          "total_input_change_vs_whole_file_pct": 28.963414634146332
+        },
+        "B": {
+          "code_tokens": 509,
+          "answer_input_tokens": 672,
+          "selector_input_tokens": 162,
+          "total_input_tokens": 834,
+          "peak_call_input_tokens": 672,
+          "peak_call_input_with_output_reserve": 800,
+          "code_change_vs_whole_file_pct": 206.6265060240964,
+          "total_input_change_vs_whole_file_pct": 154.2682926829268
+        },
+        "R0": {
+          "code_tokens": 1020,
+          "answer_input_tokens": 1183,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1183,
+          "peak_call_input_tokens": 1183,
+          "peak_call_input_with_output_reserve": 1311,
+          "code_change_vs_whole_file_pct": 514.4578313253012,
+          "total_input_change_vs_whole_file_pct": 260.6707317073171
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__fallback",
+      "project": "eval_routing",
+      "category": "cross_file",
+      "split": "original48",
+      "baseline_file": "eval_routing/service.py",
+      "whole_file": {
+        "code_tokens": 166,
+        "answer_input_tokens": 329,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 329,
+        "peak_call_input_tokens": 329,
+        "peak_call_input_with_output_reserve": 457
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 98,
+          "answer_input_tokens": 262,
+          "selector_input_tokens": 163,
+          "total_input_tokens": 425,
+          "peak_call_input_tokens": 262,
+          "peak_call_input_with_output_reserve": 390,
+          "code_change_vs_whole_file_pct": -40.963855421686745,
+          "total_input_change_vs_whole_file_pct": 29.179331306990886
+        },
+        "B": {
+          "code_tokens": 509,
+          "answer_input_tokens": 673,
+          "selector_input_tokens": 163,
+          "total_input_tokens": 836,
+          "peak_call_input_tokens": 673,
+          "peak_call_input_with_output_reserve": 801,
+          "code_change_vs_whole_file_pct": 206.6265060240964,
+          "total_input_change_vs_whole_file_pct": 154.10334346504558
+        },
+        "R0": {
+          "code_tokens": 1020,
+          "answer_input_tokens": 1184,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1184,
+          "peak_call_input_tokens": 1184,
+          "peak_call_input_with_output_reserve": 1312,
+          "code_change_vs_whole_file_pct": 514.4578313253012,
+          "total_input_change_vs_whole_file_pct": 259.87841945288756
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__latency_edge",
+      "project": "eval_routing",
+      "category": "boundary",
+      "split": "original48",
+      "baseline_file": "eval_routing/rules.py",
+      "whole_file": {
+        "code_tokens": 104,
+        "answer_input_tokens": 235,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 235,
+        "peak_call_input_tokens": 235,
+        "peak_call_input_with_output_reserve": 363
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 39,
+          "answer_input_tokens": 171,
+          "selector_input_tokens": 108,
+          "total_input_tokens": 279,
+          "peak_call_input_tokens": 171,
+          "peak_call_input_with_output_reserve": 299,
+          "code_change_vs_whole_file_pct": -62.5,
+          "total_input_change_vs_whole_file_pct": 18.723404255319153
+        },
+        "B": {
+          "code_tokens": 81,
+          "answer_input_tokens": 213,
+          "selector_input_tokens": 108,
+          "total_input_tokens": 321,
+          "peak_call_input_tokens": 213,
+          "peak_call_input_with_output_reserve": 341,
+          "code_change_vs_whole_file_pct": -22.115384615384613,
+          "total_input_change_vs_whole_file_pct": 36.59574468085107
+        },
+        "R0": {
+          "code_tokens": 1020,
+          "answer_input_tokens": 1151,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1151,
+          "peak_call_input_tokens": 1151,
+          "peak_call_input_with_output_reserve": 1279,
+          "code_change_vs_whole_file_pct": 880.7692307692308,
+          "total_input_change_vs_whole_file_pct": 389.78723404255317
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__no_backend",
+      "project": "eval_routing",
+      "category": "semantic",
+      "split": "original48",
+      "baseline_file": "eval_routing/service.py",
+      "whole_file": {
+        "code_tokens": 166,
+        "answer_input_tokens": 321,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 321,
+        "peak_call_input_tokens": 321,
+        "peak_call_input_with_output_reserve": 449
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 98,
+          "answer_input_tokens": 254,
+          "selector_input_tokens": 134,
+          "total_input_tokens": 388,
+          "peak_call_input_tokens": 254,
+          "peak_call_input_with_output_reserve": 382,
+          "code_change_vs_whole_file_pct": -40.963855421686745,
+          "total_input_change_vs_whole_file_pct": 20.87227414330217
+        },
+        "B": {
+          "code_tokens": 509,
+          "answer_input_tokens": 665,
+          "selector_input_tokens": 134,
+          "total_input_tokens": 799,
+          "peak_call_input_tokens": 665,
+          "peak_call_input_with_output_reserve": 793,
+          "code_change_vs_whole_file_pct": 206.6265060240964,
+          "total_input_change_vs_whole_file_pct": 148.90965732087227
+        },
+        "R0": {
+          "code_tokens": 1008,
+          "answer_input_tokens": 1163,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1163,
+          "peak_call_input_tokens": 1163,
+          "peak_call_input_with_output_reserve": 1291,
+          "code_change_vs_whole_file_pct": 507.2289156626506,
+          "total_input_change_vs_whole_file_pct": 262.30529595015577
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__retry_exhausted",
+      "project": "eval_routing",
+      "category": "semantic",
+      "split": "original48",
+      "baseline_file": "eval_routing/service.py",
+      "whole_file": {
+        "code_tokens": 166,
+        "answer_input_tokens": 324,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 324,
+        "peak_call_input_tokens": 324,
+        "peak_call_input_with_output_reserve": 452
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 156,
+          "answer_input_tokens": 315,
+          "selector_input_tokens": 186,
+          "total_input_tokens": 501,
+          "peak_call_input_tokens": 315,
+          "peak_call_input_with_output_reserve": 443,
+          "code_change_vs_whole_file_pct": -6.024096385542165,
+          "total_input_change_vs_whole_file_pct": 54.629629629629626
+        },
+        "B": {
+          "code_tokens": 496,
+          "answer_input_tokens": 654,
+          "selector_input_tokens": 186,
+          "total_input_tokens": 840,
+          "peak_call_input_tokens": 654,
+          "peak_call_input_with_output_reserve": 782,
+          "code_change_vs_whole_file_pct": 198.79518072289156,
+          "total_input_change_vs_whole_file_pct": 159.25925925925927
+        },
+        "R0": {
+          "code_tokens": 1011,
+          "answer_input_tokens": 1169,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1169,
+          "peak_call_input_tokens": 1169,
+          "peak_call_input_with_output_reserve": 1297,
+          "code_change_vs_whole_file_pct": 509.03614457831327,
+          "total_input_change_vs_whole_file_pct": 260.8024691358024
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__canary_change",
+      "project": "eval_routing",
+      "category": "change_impact",
+      "split": "original48",
+      "baseline_file": "eval_routing/service.py",
+      "whole_file": {
+        "code_tokens": 166,
+        "answer_input_tokens": 363,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 363,
+        "peak_call_input_tokens": 363,
+        "peak_call_input_with_output_reserve": 491
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 78,
+          "answer_input_tokens": 276,
+          "selector_input_tokens": 229,
+          "total_input_tokens": 505,
+          "peak_call_input_tokens": 276,
+          "peak_call_input_with_output_reserve": 404,
+          "code_change_vs_whole_file_pct": -53.012048192771076,
+          "total_input_change_vs_whole_file_pct": 39.11845730027548
+        },
+        "B": {
+          "code_tokens": 127,
+          "answer_input_tokens": 325,
+          "selector_input_tokens": 229,
+          "total_input_tokens": 554,
+          "peak_call_input_tokens": 325,
+          "peak_call_input_with_output_reserve": 453,
+          "code_change_vs_whole_file_pct": -23.493975903614462,
+          "total_input_change_vs_whole_file_pct": 52.61707988980717
+        },
+        "R0": {
+          "code_tokens": 1016,
+          "answer_input_tokens": 1213,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1213,
+          "peak_call_input_tokens": 1213,
+          "peak_call_input_with_output_reserve": 1341,
+          "code_change_vs_whole_file_pct": 512.0481927710844,
+          "total_input_change_vs_whole_file_pct": 234.15977961432506
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__direct_calls",
+      "project": "eval_routing",
+      "category": "architecture",
+      "split": "original48",
+      "baseline_file": "eval_routing/service.py",
+      "whole_file": {
+        "code_tokens": 166,
+        "answer_input_tokens": 303,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 303,
+        "peak_call_input_tokens": 303,
+        "peak_call_input_with_output_reserve": 431
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 132,
+          "answer_input_tokens": 270,
+          "selector_input_tokens": 137,
+          "total_input_tokens": 407,
+          "peak_call_input_tokens": 270,
+          "peak_call_input_with_output_reserve": 398,
+          "code_change_vs_whole_file_pct": -20.481927710843372,
+          "total_input_change_vs_whole_file_pct": 34.323432343234316
+        },
+        "B": {
+          "code_tokens": 194,
+          "answer_input_tokens": 331,
+          "selector_input_tokens": 137,
+          "total_input_tokens": 468,
+          "peak_call_input_tokens": 331,
+          "peak_call_input_with_output_reserve": 459,
+          "code_change_vs_whole_file_pct": 16.867469879518083,
+          "total_input_change_vs_whole_file_pct": 54.45544554455446
+        },
+        "R0": {
+          "code_tokens": 1015,
+          "answer_input_tokens": 1152,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1152,
+          "peak_call_input_tokens": 1152,
+          "peak_call_input_with_output_reserve": 1280,
+          "code_change_vs_whole_file_pct": 511.4457831325301,
+          "total_input_change_vs_whole_file_pct": 280.1980198019802
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__allocation",
+      "project": "eval_inventory",
+      "category": "single_function",
+      "split": "original48",
+      "baseline_file": "eval_inventory/rules.py",
+      "whole_file": {
+        "code_tokens": 105,
+        "answer_input_tokens": 231,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 231,
+        "peak_call_input_tokens": 231,
+        "peak_call_input_with_output_reserve": 359
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 46,
+          "answer_input_tokens": 173,
+          "selector_input_tokens": 103,
+          "total_input_tokens": 276,
+          "peak_call_input_tokens": 173,
+          "peak_call_input_with_output_reserve": 301,
+          "code_change_vs_whole_file_pct": -56.19047619047619,
+          "total_input_change_vs_whole_file_pct": 19.480519480519476
+        },
+        "B": {
+          "code_tokens": 62,
+          "answer_input_tokens": 189,
+          "selector_input_tokens": 103,
+          "total_input_tokens": 292,
+          "peak_call_input_tokens": 189,
+          "peak_call_input_with_output_reserve": 317,
+          "code_change_vs_whole_file_pct": -40.95238095238095,
+          "total_input_change_vs_whole_file_pct": 26.406926406926413
+        },
+        "R0": {
+          "code_tokens": 1022,
+          "answer_input_tokens": 1149,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1149,
+          "peak_call_input_tokens": 1149,
+          "peak_call_input_with_output_reserve": 1277,
+          "code_change_vs_whole_file_pct": 873.3333333333333,
+          "total_input_change_vs_whole_file_pct": 397.4025974025974
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__partial",
+      "project": "eval_inventory",
+      "category": "cross_file",
+      "split": "original48",
+      "baseline_file": "eval_inventory/service.py",
+      "whole_file": {
+        "code_tokens": 197,
+        "answer_input_tokens": 328,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 328,
+        "peak_call_input_tokens": 328,
+        "peak_call_input_with_output_reserve": 456
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 119,
+          "answer_input_tokens": 251,
+          "selector_input_tokens": 108,
+          "total_input_tokens": 359,
+          "peak_call_input_tokens": 251,
+          "peak_call_input_with_output_reserve": 379,
+          "code_change_vs_whole_file_pct": -39.59390862944162,
+          "total_input_change_vs_whole_file_pct": 9.45121951219512
+        },
+        "B": {
+          "code_tokens": 483,
+          "answer_input_tokens": 615,
+          "selector_input_tokens": 108,
+          "total_input_tokens": 723,
+          "peak_call_input_tokens": 615,
+          "peak_call_input_with_output_reserve": 743,
+          "code_change_vs_whole_file_pct": 145.1776649746193,
+          "total_input_change_vs_whole_file_pct": 120.42682926829266
+        },
+        "R0": {
+          "code_tokens": 1010,
+          "answer_input_tokens": 1142,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1142,
+          "peak_call_input_tokens": 1142,
+          "peak_call_input_with_output_reserve": 1270,
+          "code_change_vs_whole_file_pct": 412.69035532994917,
+          "total_input_change_vs_whole_file_pct": 248.1707317073171
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__remaining",
+      "project": "eval_inventory",
+      "category": "cross_file",
+      "split": "original48",
+      "baseline_file": "eval_inventory/service.py",
+      "whole_file": {
+        "code_tokens": 197,
+        "answer_input_tokens": 325,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 325,
+        "peak_call_input_tokens": 325,
+        "peak_call_input_with_output_reserve": 453
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 182,
+          "answer_input_tokens": 311,
+          "selector_input_tokens": 107,
+          "total_input_tokens": 418,
+          "peak_call_input_tokens": 311,
+          "peak_call_input_with_output_reserve": 439,
+          "code_change_vs_whole_file_pct": -7.614213197969544,
+          "total_input_change_vs_whole_file_pct": 28.61538461538462
+        },
+        "B": {
+          "code_tokens": 525,
+          "answer_input_tokens": 654,
+          "selector_input_tokens": 107,
+          "total_input_tokens": 761,
+          "peak_call_input_tokens": 654,
+          "peak_call_input_with_output_reserve": 782,
+          "code_change_vs_whole_file_pct": 166.49746192893403,
+          "total_input_change_vs_whole_file_pct": 134.15384615384616
+        },
+        "R0": {
+          "code_tokens": 1015,
+          "answer_input_tokens": 1144,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1144,
+          "peak_call_input_tokens": 1144,
+          "peak_call_input_with_output_reserve": 1272,
+          "code_change_vs_whole_file_pct": 415.2284263959391,
+          "total_input_change_vs_whole_file_pct": 252.0
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__order_limit",
+      "project": "eval_inventory",
+      "category": "boundary",
+      "split": "original48",
+      "baseline_file": "eval_inventory/service.py",
+      "whole_file": {
+        "code_tokens": 197,
+        "answer_input_tokens": 329,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 329,
+        "peak_call_input_tokens": 329,
+        "peak_call_input_with_output_reserve": 457
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 119,
+          "answer_input_tokens": 252,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 361,
+          "peak_call_input_tokens": 252,
+          "peak_call_input_with_output_reserve": 380,
+          "code_change_vs_whole_file_pct": -39.59390862944162,
+          "total_input_change_vs_whole_file_pct": 9.726443768996962
+        },
+        "B": {
+          "code_tokens": 483,
+          "answer_input_tokens": 616,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 725,
+          "peak_call_input_tokens": 616,
+          "peak_call_input_with_output_reserve": 744,
+          "code_change_vs_whole_file_pct": 145.1776649746193,
+          "total_input_change_vs_whole_file_pct": 120.36474164133737
+        },
+        "R0": {
+          "code_tokens": 1017,
+          "answer_input_tokens": 1150,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1150,
+          "peak_call_input_tokens": 1150,
+          "peak_call_input_with_output_reserve": 1278,
+          "code_change_vs_whole_file_pct": 416.243654822335,
+          "total_input_change_vs_whole_file_pct": 249.54407294832825
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__safety_buffer",
+      "project": "eval_inventory",
+      "category": "semantic",
+      "split": "original48",
+      "baseline_file": "eval_inventory/service.py",
+      "whole_file": {
+        "code_tokens": 197,
+        "answer_input_tokens": 357,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 357,
+        "peak_call_input_tokens": 357,
+        "peak_call_input_with_output_reserve": 485
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 81,
+          "answer_input_tokens": 242,
+          "selector_input_tokens": 140,
+          "total_input_tokens": 382,
+          "peak_call_input_tokens": 242,
+          "peak_call_input_with_output_reserve": 370,
+          "code_change_vs_whole_file_pct": -58.88324873096447,
+          "total_input_change_vs_whole_file_pct": 7.002801120448177
+        },
+        "B": {
+          "code_tokens": 72,
+          "answer_input_tokens": 232,
+          "selector_input_tokens": 140,
+          "total_input_tokens": 372,
+          "peak_call_input_tokens": 232,
+          "peak_call_input_with_output_reserve": 360,
+          "code_change_vs_whole_file_pct": -63.45177664974619,
+          "total_input_change_vs_whole_file_pct": 4.201680672268915
+        },
+        "R0": {
+          "code_tokens": 1023,
+          "answer_input_tokens": 1183,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1183,
+          "peak_call_input_tokens": 1183,
+          "peak_call_input_with_output_reserve": 1311,
+          "code_change_vs_whole_file_pct": 419.2893401015229,
+          "total_input_change_vs_whole_file_pct": 231.37254901960787
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__all_or_nothing",
+      "project": "eval_inventory",
+      "category": "semantic",
+      "split": "original48",
+      "baseline_file": "eval_inventory/service.py",
+      "whole_file": {
+        "code_tokens": 197,
+        "answer_input_tokens": 347,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 347,
+        "peak_call_input_tokens": 347,
+        "peak_call_input_with_output_reserve": 475
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 40,
+          "answer_input_tokens": 191,
+          "selector_input_tokens": 159,
+          "total_input_tokens": 350,
+          "peak_call_input_tokens": 191,
+          "peak_call_input_with_output_reserve": 319,
+          "code_change_vs_whole_file_pct": -79.69543147208122,
+          "total_input_change_vs_whole_file_pct": 0.8645533141210304
+        },
+        "B": {
+          "code_tokens": 81,
+          "answer_input_tokens": 232,
+          "selector_input_tokens": 159,
+          "total_input_tokens": 391,
+          "peak_call_input_tokens": 232,
+          "peak_call_input_with_output_reserve": 360,
+          "code_change_vs_whole_file_pct": -58.88324873096447,
+          "total_input_change_vs_whole_file_pct": 12.680115273775217
+        },
+        "R0": {
+          "code_tokens": 1013,
+          "answer_input_tokens": 1163,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1163,
+          "peak_call_input_tokens": 1163,
+          "peak_call_input_with_output_reserve": 1291,
+          "code_change_vs_whole_file_pct": 414.21319796954316,
+          "total_input_change_vs_whole_file_pct": 235.15850144092218
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__buffer_change",
+      "project": "eval_inventory",
+      "category": "change_impact",
+      "split": "original48",
+      "baseline_file": "eval_inventory/service.py",
+      "whole_file": {
+        "code_tokens": 197,
+        "answer_input_tokens": 366,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 366,
+        "peak_call_input_tokens": 366,
+        "peak_call_input_with_output_reserve": 494
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 40,
+          "answer_input_tokens": 210,
+          "selector_input_tokens": 250,
+          "total_input_tokens": 460,
+          "peak_call_input_tokens": 250,
+          "peak_call_input_with_output_reserve": 346,
+          "code_change_vs_whole_file_pct": -79.69543147208122,
+          "total_input_change_vs_whole_file_pct": 25.683060109289624
+        },
+        "B": {
+          "code_tokens": 81,
+          "answer_input_tokens": 251,
+          "selector_input_tokens": 250,
+          "total_input_tokens": 501,
+          "peak_call_input_tokens": 251,
+          "peak_call_input_with_output_reserve": 379,
+          "code_change_vs_whole_file_pct": -58.88324873096447,
+          "total_input_change_vs_whole_file_pct": 36.88524590163935
+        },
+        "R0": {
+          "code_tokens": 1003,
+          "answer_input_tokens": 1172,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1172,
+          "peak_call_input_tokens": 1172,
+          "peak_call_input_with_output_reserve": 1300,
+          "code_change_vs_whole_file_pct": 409.1370558375634,
+          "total_input_change_vs_whole_file_pct": 220.21857923497268
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__direct_calls",
+      "project": "eval_inventory",
+      "category": "architecture",
+      "split": "original48",
+      "baseline_file": "eval_inventory/service.py",
+      "whole_file": {
+        "code_tokens": 197,
+        "answer_input_tokens": 333,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 333,
+        "peak_call_input_tokens": 333,
+        "peak_call_input_with_output_reserve": 461
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 119,
+          "answer_input_tokens": 256,
+          "selector_input_tokens": 113,
+          "total_input_tokens": 369,
+          "peak_call_input_tokens": 256,
+          "peak_call_input_with_output_reserve": 384,
+          "code_change_vs_whole_file_pct": -39.59390862944162,
+          "total_input_change_vs_whole_file_pct": 10.81081081081081
+        },
+        "B": {
+          "code_tokens": 483,
+          "answer_input_tokens": 620,
+          "selector_input_tokens": 113,
+          "total_input_tokens": 733,
+          "peak_call_input_tokens": 620,
+          "peak_call_input_with_output_reserve": 748,
+          "code_change_vs_whole_file_pct": 145.1776649746193,
+          "total_input_change_vs_whole_file_pct": 120.12012012012012
+        },
+        "R0": {
+          "code_tokens": 1018,
+          "answer_input_tokens": 1155,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1155,
+          "peak_call_input_tokens": 1155,
+          "peak_call_input_with_output_reserve": 1283,
+          "code_change_vs_whole_file_pct": 416.75126903553297,
+          "total_input_change_vs_whole_file_pct": 246.84684684684686
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__resource",
+      "project": "eval_cache",
+      "category": "single_function",
+      "split": "original48",
+      "baseline_file": "eval_cache/rules.py",
+      "whole_file": {
+        "code_tokens": 143,
+        "answer_input_tokens": 270,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 270,
+        "peak_call_input_tokens": 270,
+        "peak_call_input_with_output_reserve": 398
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 34,
+          "answer_input_tokens": 162,
+          "selector_input_tokens": 160,
+          "total_input_tokens": 322,
+          "peak_call_input_tokens": 162,
+          "peak_call_input_with_output_reserve": 290,
+          "code_change_vs_whole_file_pct": -76.22377622377623,
+          "total_input_change_vs_whole_file_pct": 19.259259259259267
+        },
+        "B": {
+          "code_tokens": 60,
+          "answer_input_tokens": 187,
+          "selector_input_tokens": 160,
+          "total_input_tokens": 347,
+          "peak_call_input_tokens": 187,
+          "peak_call_input_with_output_reserve": 315,
+          "code_change_vs_whole_file_pct": -58.04195804195804,
+          "total_input_change_vs_whole_file_pct": 28.51851851851852
+        },
+        "R0": {
+          "code_tokens": 1017,
+          "answer_input_tokens": 1145,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1145,
+          "peak_call_input_tokens": 1145,
+          "peak_call_input_with_output_reserve": 1273,
+          "code_change_vs_whole_file_pct": 611.1888111888112,
+          "total_input_change_vs_whole_file_pct": 324.074074074074
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__canonical_key",
+      "project": "eval_cache",
+      "category": "cross_file",
+      "split": "original48",
+      "baseline_file": "eval_cache/service.py",
+      "whole_file": {
+        "code_tokens": 156,
+        "answer_input_tokens": 296,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 296,
+        "peak_call_input_tokens": 296,
+        "peak_call_input_with_output_reserve": 424
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 61,
+          "answer_input_tokens": 202,
+          "selector_input_tokens": 224,
+          "total_input_tokens": 426,
+          "peak_call_input_tokens": 224,
+          "peak_call_input_with_output_reserve": 330,
+          "code_change_vs_whole_file_pct": -60.897435897435905,
+          "total_input_change_vs_whole_file_pct": 43.918918918918926
+        },
+        "B": {
+          "code_tokens": 422,
+          "answer_input_tokens": 562,
+          "selector_input_tokens": 224,
+          "total_input_tokens": 786,
+          "peak_call_input_tokens": 562,
+          "peak_call_input_with_output_reserve": 690,
+          "code_change_vs_whole_file_pct": 170.51282051282053,
+          "total_input_change_vs_whole_file_pct": 165.54054054054052
+        },
+        "R0": {
+          "code_tokens": 1024,
+          "answer_input_tokens": 1165,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1165,
+          "peak_call_input_tokens": 1165,
+          "peak_call_input_with_output_reserve": 1293,
+          "code_change_vs_whole_file_pct": 556.4102564102564,
+          "total_input_change_vs_whole_file_pct": 293.5810810810811
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__private_entry",
+      "project": "eval_cache",
+      "category": "cross_file",
+      "split": "original48",
+      "baseline_file": "eval_cache/service.py",
+      "whole_file": {
+        "code_tokens": 156,
+        "answer_input_tokens": 291,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 291,
+        "peak_call_input_tokens": 291,
+        "peak_call_input_with_output_reserve": 419
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 139,
+          "answer_input_tokens": 275,
+          "selector_input_tokens": 188,
+          "total_input_tokens": 463,
+          "peak_call_input_tokens": 275,
+          "peak_call_input_with_output_reserve": 403,
+          "code_change_vs_whole_file_pct": -10.897435897435892,
+          "total_input_change_vs_whole_file_pct": 59.10652920962198
+        },
+        "B": {
+          "code_tokens": 625,
+          "answer_input_tokens": 761,
+          "selector_input_tokens": 188,
+          "total_input_tokens": 949,
+          "peak_call_input_tokens": 761,
+          "peak_call_input_with_output_reserve": 889,
+          "code_change_vs_whole_file_pct": 300.64102564102564,
+          "total_input_change_vs_whole_file_pct": 226.1168384879725
+        },
+        "R0": {
+          "code_tokens": 1007,
+          "answer_input_tokens": 1142,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1142,
+          "peak_call_input_tokens": 1142,
+          "peak_call_input_with_output_reserve": 1270,
+          "code_change_vs_whole_file_pct": 545.5128205128206,
+          "total_input_change_vs_whole_file_pct": 292.4398625429553
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__negative_ttl",
+      "project": "eval_cache",
+      "category": "boundary",
+      "split": "original48",
+      "baseline_file": "eval_cache/rules.py",
+      "whole_file": {
+        "code_tokens": 143,
+        "answer_input_tokens": 267,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 267,
+        "peak_call_input_tokens": 267,
+        "peak_call_input_with_output_reserve": 395
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 57,
+          "answer_input_tokens": 182,
+          "selector_input_tokens": 177,
+          "total_input_tokens": 359,
+          "peak_call_input_tokens": 182,
+          "peak_call_input_with_output_reserve": 310,
+          "code_change_vs_whole_file_pct": -60.13986013986015,
+          "total_input_change_vs_whole_file_pct": 34.456928838951306
+        },
+        "B": {
+          "code_tokens": 162,
+          "answer_input_tokens": 287,
+          "selector_input_tokens": 177,
+          "total_input_tokens": 464,
+          "peak_call_input_tokens": 287,
+          "peak_call_input_with_output_reserve": 415,
+          "code_change_vs_whole_file_pct": 13.286713286713292,
+          "total_input_change_vs_whole_file_pct": 73.78277153558052
+        },
+        "R0": {
+          "code_tokens": 1019,
+          "answer_input_tokens": 1143,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1143,
+          "peak_call_input_tokens": 1143,
+          "peak_call_input_with_output_reserve": 1271,
+          "code_change_vs_whole_file_pct": 612.5874125874126,
+          "total_input_change_vs_whole_file_pct": 328.08988764044943
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__public_lifetime",
+      "project": "eval_cache",
+      "category": "semantic",
+      "split": "original48",
+      "baseline_file": "eval_cache/service.py",
+      "whole_file": {
+        "code_tokens": 156,
+        "answer_input_tokens": 321,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 321,
+        "peak_call_input_tokens": 321,
+        "peak_call_input_with_output_reserve": 449
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 57,
+          "answer_input_tokens": 223,
+          "selector_input_tokens": 336,
+          "total_input_tokens": 559,
+          "peak_call_input_tokens": 336,
+          "peak_call_input_with_output_reserve": 432,
+          "code_change_vs_whole_file_pct": -63.46153846153846,
+          "total_input_change_vs_whole_file_pct": 74.14330218068537
+        },
+        "B": {
+          "code_tokens": 162,
+          "answer_input_tokens": 328,
+          "selector_input_tokens": 336,
+          "total_input_tokens": 664,
+          "peak_call_input_tokens": 336,
+          "peak_call_input_with_output_reserve": 456,
+          "code_change_vs_whole_file_pct": 3.8461538461538547,
+          "total_input_change_vs_whole_file_pct": 106.85358255451712
+        },
+        "R0": {
+          "code_tokens": 1009,
+          "answer_input_tokens": 1174,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1174,
+          "peak_call_input_tokens": 1174,
+          "peak_call_input_with_output_reserve": 1302,
+          "code_change_vs_whole_file_pct": 546.7948717948718,
+          "total_input_change_vs_whole_file_pct": 265.73208722741435
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__do_not_store",
+      "project": "eval_cache",
+      "category": "semantic",
+      "split": "original48",
+      "baseline_file": "eval_cache/service.py",
+      "whole_file": {
+        "code_tokens": 156,
+        "answer_input_tokens": 309,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 309,
+        "peak_call_input_tokens": 309,
+        "peak_call_input_with_output_reserve": 437
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 139,
+          "answer_input_tokens": 293,
+          "selector_input_tokens": 324,
+          "total_input_tokens": 617,
+          "peak_call_input_tokens": 324,
+          "peak_call_input_with_output_reserve": 421,
+          "code_change_vs_whole_file_pct": -10.897435897435892,
+          "total_input_change_vs_whole_file_pct": 99.67637540453073
+        },
+        "B": {
+          "code_tokens": 625,
+          "answer_input_tokens": 779,
+          "selector_input_tokens": 324,
+          "total_input_tokens": 1103,
+          "peak_call_input_tokens": 779,
+          "peak_call_input_with_output_reserve": 907,
+          "code_change_vs_whole_file_pct": 300.64102564102564,
+          "total_input_change_vs_whole_file_pct": 256.957928802589
+        },
+        "R0": {
+          "code_tokens": 1007,
+          "answer_input_tokens": 1160,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1160,
+          "peak_call_input_tokens": 1160,
+          "peak_call_input_with_output_reserve": 1288,
+          "code_change_vs_whole_file_pct": 545.5128205128206,
+          "total_input_change_vs_whole_file_pct": 275.40453074433657
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__schema_change",
+      "project": "eval_cache",
+      "category": "change_impact",
+      "split": "original48",
+      "baseline_file": "eval_cache/service.py",
+      "whole_file": {
+        "code_tokens": 156,
+        "answer_input_tokens": 330,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 330,
+        "peak_call_input_tokens": 330,
+        "peak_call_input_with_output_reserve": 458
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 185,
+          "answer_input_tokens": 360,
+          "selector_input_tokens": 258,
+          "total_input_tokens": 618,
+          "peak_call_input_tokens": 360,
+          "peak_call_input_with_output_reserve": 488,
+          "code_change_vs_whole_file_pct": 18.58974358974359,
+          "total_input_change_vs_whole_file_pct": 87.27272727272728
+        },
+        "B": {
+          "code_tokens": 596,
+          "answer_input_tokens": 770,
+          "selector_input_tokens": 258,
+          "total_input_tokens": 1028,
+          "peak_call_input_tokens": 770,
+          "peak_call_input_with_output_reserve": 898,
+          "code_change_vs_whole_file_pct": 282.05128205128204,
+          "total_input_change_vs_whole_file_pct": 211.51515151515153
+        },
+        "R0": {
+          "code_tokens": 1011,
+          "answer_input_tokens": 1186,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1186,
+          "peak_call_input_tokens": 1186,
+          "peak_call_input_with_output_reserve": 1314,
+          "code_change_vs_whole_file_pct": 548.0769230769231,
+          "total_input_change_vs_whole_file_pct": 259.3939393939394
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__direct_calls",
+      "project": "eval_cache",
+      "category": "architecture",
+      "split": "original48",
+      "baseline_file": "eval_cache/service.py",
+      "whole_file": {
+        "code_tokens": 156,
+        "answer_input_tokens": 297,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 297,
+        "peak_call_input_tokens": 297,
+        "peak_call_input_with_output_reserve": 425
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 139,
+          "answer_input_tokens": 281,
+          "selector_input_tokens": 225,
+          "total_input_tokens": 506,
+          "peak_call_input_tokens": 281,
+          "peak_call_input_with_output_reserve": 409,
+          "code_change_vs_whole_file_pct": -10.897435897435892,
+          "total_input_change_vs_whole_file_pct": 70.37037037037037
+        },
+        "B": {
+          "code_tokens": 352,
+          "answer_input_tokens": 494,
+          "selector_input_tokens": 225,
+          "total_input_tokens": 719,
+          "peak_call_input_tokens": 494,
+          "peak_call_input_with_output_reserve": 622,
+          "code_change_vs_whole_file_pct": 125.64102564102564,
+          "total_input_change_vs_whole_file_pct": 142.0875420875421
+        },
+        "R0": {
+          "code_tokens": 1024,
+          "answer_input_tokens": 1166,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1166,
+          "peak_call_input_tokens": 1166,
+          "peak_call_input_with_output_reserve": 1294,
+          "code_change_vs_whole_file_pct": 556.4102564102564,
+          "total_input_change_vs_whole_file_pct": 292.5925925925926
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__rounding",
+      "project": "eval_schedules",
+      "category": "single_function",
+      "split": "original48",
+      "baseline_file": "eval_schedules/rules.py",
+      "whole_file": {
+        "code_tokens": 115,
+        "answer_input_tokens": 239,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 239,
+        "peak_call_input_tokens": 239,
+        "peak_call_input_with_output_reserve": 367
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 45,
+          "answer_input_tokens": 170,
+          "selector_input_tokens": 103,
+          "total_input_tokens": 273,
+          "peak_call_input_tokens": 170,
+          "peak_call_input_with_output_reserve": 298,
+          "code_change_vs_whole_file_pct": -60.86956521739131,
+          "total_input_change_vs_whole_file_pct": 14.225941422594147
+        },
+        "B": {
+          "code_tokens": 89,
+          "answer_input_tokens": 214,
+          "selector_input_tokens": 103,
+          "total_input_tokens": 317,
+          "peak_call_input_tokens": 214,
+          "peak_call_input_with_output_reserve": 342,
+          "code_change_vs_whole_file_pct": -22.608695652173914,
+          "total_input_change_vs_whole_file_pct": 32.635983263598334
+        },
+        "R0": {
+          "code_tokens": 1010,
+          "answer_input_tokens": 1134,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1134,
+          "peak_call_input_tokens": 1134,
+          "peak_call_input_with_output_reserve": 1262,
+          "code_change_vs_whole_file_pct": 778.2608695652174,
+          "total_input_change_vs_whole_file_pct": 374.4769874476988
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__busy_buffer",
+      "project": "eval_schedules",
+      "category": "cross_file",
+      "split": "original48",
+      "baseline_file": "eval_schedules/service.py",
+      "whole_file": {
+        "code_tokens": 199,
+        "answer_input_tokens": 337,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 337,
+        "peak_call_input_tokens": 337,
+        "peak_call_input_with_output_reserve": 465
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 98,
+          "answer_input_tokens": 237,
+          "selector_input_tokens": 117,
+          "total_input_tokens": 354,
+          "peak_call_input_tokens": 237,
+          "peak_call_input_with_output_reserve": 365,
+          "code_change_vs_whole_file_pct": -50.753768844221106,
+          "total_input_change_vs_whole_file_pct": 5.044510385756684
+        },
+        "B": {
+          "code_tokens": 574,
+          "answer_input_tokens": 712,
+          "selector_input_tokens": 117,
+          "total_input_tokens": 829,
+          "peak_call_input_tokens": 712,
+          "peak_call_input_with_output_reserve": 840,
+          "code_change_vs_whole_file_pct": 188.44221105527637,
+          "total_input_change_vs_whole_file_pct": 145.99406528189908
+        },
+        "R0": {
+          "code_tokens": 1011,
+          "answer_input_tokens": 1150,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1150,
+          "peak_call_input_tokens": 1150,
+          "peak_call_input_with_output_reserve": 1278,
+          "code_change_vs_whole_file_pct": 408.04020100502515,
+          "total_input_change_vs_whole_file_pct": 241.24629080118694
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__appointment",
+      "project": "eval_schedules",
+      "category": "cross_file",
+      "split": "original48",
+      "baseline_file": "eval_schedules/service.py",
+      "whole_file": {
+        "code_tokens": 199,
+        "answer_input_tokens": 336,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 336,
+        "peak_call_input_tokens": 336,
+        "peak_call_input_with_output_reserve": 464
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 167,
+          "answer_input_tokens": 305,
+          "selector_input_tokens": 114,
+          "total_input_tokens": 419,
+          "peak_call_input_tokens": 305,
+          "peak_call_input_with_output_reserve": 433,
+          "code_change_vs_whole_file_pct": -16.080402010050253,
+          "total_input_change_vs_whole_file_pct": 24.702380952380953
+        },
+        "B": {
+          "code_tokens": 566,
+          "answer_input_tokens": 704,
+          "selector_input_tokens": 114,
+          "total_input_tokens": 818,
+          "peak_call_input_tokens": 704,
+          "peak_call_input_with_output_reserve": 832,
+          "code_change_vs_whole_file_pct": 184.42211055276383,
+          "total_input_change_vs_whole_file_pct": 143.45238095238093
+        },
+        "R0": {
+          "code_tokens": 1005,
+          "answer_input_tokens": 1142,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1142,
+          "peak_call_input_tokens": 1142,
+          "peak_call_input_with_output_reserve": 1270,
+          "code_change_vs_whole_file_pct": 405.0251256281407,
+          "total_input_change_vs_whole_file_pct": 239.88095238095238
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__closing_edge",
+      "project": "eval_schedules",
+      "category": "boundary",
+      "split": "original48",
+      "baseline_file": "eval_schedules/service.py",
+      "whole_file": {
+        "code_tokens": 199,
+        "answer_input_tokens": 329,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 329,
+        "peak_call_input_tokens": 329,
+        "peak_call_input_with_output_reserve": 457
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 98,
+          "answer_input_tokens": 229,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 338,
+          "peak_call_input_tokens": 229,
+          "peak_call_input_with_output_reserve": 357,
+          "code_change_vs_whole_file_pct": -50.753768844221106,
+          "total_input_change_vs_whole_file_pct": 2.735562310030404
+        },
+        "B": {
+          "code_tokens": 574,
+          "answer_input_tokens": 704,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 813,
+          "peak_call_input_tokens": 704,
+          "peak_call_input_with_output_reserve": 832,
+          "code_change_vs_whole_file_pct": 188.44221105527637,
+          "total_input_change_vs_whole_file_pct": 147.11246200607903
+        },
+        "R0": {
+          "code_tokens": 1011,
+          "answer_input_tokens": 1142,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1142,
+          "peak_call_input_tokens": 1142,
+          "peak_call_input_with_output_reserve": 1270,
+          "code_change_vs_whole_file_pct": 408.04020100502515,
+          "total_input_change_vs_whole_file_pct": 247.11246200607903
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__weekend",
+      "project": "eval_schedules",
+      "category": "semantic",
+      "split": "original48",
+      "baseline_file": "eval_schedules/service.py",
+      "whole_file": {
+        "code_tokens": 199,
+        "answer_input_tokens": 356,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 356,
+        "peak_call_input_tokens": 356,
+        "peak_call_input_with_output_reserve": 484
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 32,
+          "answer_input_tokens": 190,
+          "selector_input_tokens": 187,
+          "total_input_tokens": 377,
+          "peak_call_input_tokens": 190,
+          "peak_call_input_with_output_reserve": 318,
+          "code_change_vs_whole_file_pct": -83.91959798994975,
+          "total_input_change_vs_whole_file_pct": 5.89887640449438
+        },
+        "B": {
+          "code_tokens": 84,
+          "answer_input_tokens": 241,
+          "selector_input_tokens": 187,
+          "total_input_tokens": 428,
+          "peak_call_input_tokens": 241,
+          "peak_call_input_with_output_reserve": 369,
+          "code_change_vs_whole_file_pct": -57.78894472361809,
+          "total_input_change_vs_whole_file_pct": 20.2247191011236
+        },
+        "R0": {
+          "code_tokens": 1004,
+          "answer_input_tokens": 1161,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1161,
+          "peak_call_input_tokens": 1161,
+          "peak_call_input_with_output_reserve": 1289,
+          "code_change_vs_whole_file_pct": 404.52261306532665,
+          "total_input_change_vs_whole_file_pct": 226.12359550561797
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__too_late",
+      "project": "eval_schedules",
+      "category": "semantic",
+      "split": "original48",
+      "baseline_file": "eval_schedules/service.py",
+      "whole_file": {
+        "code_tokens": 199,
+        "answer_input_tokens": 354,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 354,
+        "peak_call_input_tokens": 354,
+        "peak_call_input_with_output_reserve": 482
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 167,
+          "answer_input_tokens": 323,
+          "selector_input_tokens": 183,
+          "total_input_tokens": 506,
+          "peak_call_input_tokens": 323,
+          "peak_call_input_with_output_reserve": 451,
+          "code_change_vs_whole_file_pct": -16.080402010050253,
+          "total_input_change_vs_whole_file_pct": 42.93785310734464
+        },
+        "B": {
+          "code_tokens": 672,
+          "answer_input_tokens": 827,
+          "selector_input_tokens": 183,
+          "total_input_tokens": 1010,
+          "peak_call_input_tokens": 827,
+          "peak_call_input_with_output_reserve": 955,
+          "code_change_vs_whole_file_pct": 237.68844221105527,
+          "total_input_change_vs_whole_file_pct": 185.31073446327682
+        },
+        "R0": {
+          "code_tokens": 1006,
+          "answer_input_tokens": 1161,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1161,
+          "peak_call_input_tokens": 1161,
+          "peak_call_input_with_output_reserve": 1289,
+          "code_change_vs_whole_file_pct": 405.52763819095475,
+          "total_input_change_vs_whole_file_pct": 227.96610169491527
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__buffer_change",
+      "project": "eval_schedules",
+      "category": "change_impact",
+      "split": "original48",
+      "baseline_file": "eval_schedules/service.py",
+      "whole_file": {
+        "code_tokens": 199,
+        "answer_input_tokens": 388,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 388,
+        "peak_call_input_tokens": 388,
+        "peak_call_input_with_output_reserve": 516
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 54,
+          "answer_input_tokens": 244,
+          "selector_input_tokens": 272,
+          "total_input_tokens": 516,
+          "peak_call_input_tokens": 272,
+          "peak_call_input_with_output_reserve": 372,
+          "code_change_vs_whole_file_pct": -72.8643216080402,
+          "total_input_change_vs_whole_file_pct": 32.98969072164948
+        },
+        "B": {
+          "code_tokens": 98,
+          "answer_input_tokens": 288,
+          "selector_input_tokens": 272,
+          "total_input_tokens": 560,
+          "peak_call_input_tokens": 288,
+          "peak_call_input_with_output_reserve": 416,
+          "code_change_vs_whole_file_pct": -50.753768844221106,
+          "total_input_change_vs_whole_file_pct": 44.329896907216494
+        },
+        "R0": {
+          "code_tokens": 1024,
+          "answer_input_tokens": 1213,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1213,
+          "peak_call_input_tokens": 1213,
+          "peak_call_input_with_output_reserve": 1341,
+          "code_change_vs_whole_file_pct": 414.57286432160805,
+          "total_input_change_vs_whole_file_pct": 212.62886597938143
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__direct_calls",
+      "project": "eval_schedules",
+      "category": "architecture",
+      "split": "original48",
+      "baseline_file": "eval_schedules/service.py",
+      "whole_file": {
+        "code_tokens": 199,
+        "answer_input_tokens": 336,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 336,
+        "peak_call_input_tokens": 336,
+        "peak_call_input_with_output_reserve": 464
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 98,
+          "answer_input_tokens": 236,
+          "selector_input_tokens": 116,
+          "total_input_tokens": 352,
+          "peak_call_input_tokens": 236,
+          "peak_call_input_with_output_reserve": 364,
+          "code_change_vs_whole_file_pct": -50.753768844221106,
+          "total_input_change_vs_whole_file_pct": 4.761904761904767
+        },
+        "B": {
+          "code_tokens": 574,
+          "answer_input_tokens": 711,
+          "selector_input_tokens": 116,
+          "total_input_tokens": 827,
+          "peak_call_input_tokens": 711,
+          "peak_call_input_with_output_reserve": 839,
+          "code_change_vs_whole_file_pct": 188.44221105527637,
+          "total_input_change_vs_whole_file_pct": 146.13095238095238
+        },
+        "R0": {
+          "code_tokens": 1011,
+          "answer_input_tokens": 1149,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1149,
+          "peak_call_input_tokens": 1149,
+          "peak_call_input_with_output_reserve": 1277,
+          "code_change_vs_whole_file_pct": 408.04020100502515,
+          "total_input_change_vs_whole_file_pct": 241.96428571428572
+        }
+      }
+    },
+    {
+      "task_id": "eval_pricing__v2_refund_capped_units",
+      "project": "eval_pricing",
+      "category": "single_function",
+      "split": "additional48",
+      "baseline_file": "eval_pricing/rules.py",
+      "whole_file": {
+        "code_tokens": 168,
+        "answer_input_tokens": 298,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 298,
+        "peak_call_input_tokens": 298,
+        "peak_call_input_with_output_reserve": 426
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 48,
+          "answer_input_tokens": 179,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 288,
+          "peak_call_input_tokens": 179,
+          "peak_call_input_with_output_reserve": 307,
+          "code_change_vs_whole_file_pct": -71.42857142857143,
+          "total_input_change_vs_whole_file_pct": -3.3557046979865723
+        },
+        "B": {
+          "code_tokens": 72,
+          "answer_input_tokens": 203,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 312,
+          "peak_call_input_tokens": 203,
+          "peak_call_input_with_output_reserve": 331,
+          "code_change_vs_whole_file_pct": -57.14285714285714,
+          "total_input_change_vs_whole_file_pct": 4.697986577181212
+        },
+        "R0": {
+          "code_tokens": 1015,
+          "answer_input_tokens": 1145,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1145,
+          "peak_call_input_tokens": 1145,
+          "peak_call_input_with_output_reserve": 1273,
+          "code_change_vs_whole_file_pct": 504.1666666666667,
+          "total_input_change_vs_whole_file_pct": 284.2281879194631
+        }
+      }
+    },
+    {
+      "task_id": "eval_pricing__v2_two_nonmember_items",
+      "project": "eval_pricing",
+      "category": "cross_file",
+      "split": "additional48",
+      "baseline_file": "eval_pricing/service.py",
+      "whole_file": {
+        "code_tokens": 175,
+        "answer_input_tokens": 305,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 305,
+        "peak_call_input_tokens": 305,
+        "peak_call_input_with_output_reserve": 433
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 94,
+          "answer_input_tokens": 225,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 334,
+          "peak_call_input_tokens": 225,
+          "peak_call_input_with_output_reserve": 353,
+          "code_change_vs_whole_file_pct": -46.285714285714285,
+          "total_input_change_vs_whole_file_pct": 9.508196721311467
+        },
+        "B": {
+          "code_tokens": 551,
+          "answer_input_tokens": 682,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 791,
+          "peak_call_input_tokens": 682,
+          "peak_call_input_with_output_reserve": 810,
+          "code_change_vs_whole_file_pct": 214.85714285714286,
+          "total_input_change_vs_whole_file_pct": 159.344262295082
+        },
+        "R0": {
+          "code_tokens": 1023,
+          "answer_input_tokens": 1154,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1154,
+          "peak_call_input_tokens": 1154,
+          "peak_call_input_with_output_reserve": 1282,
+          "code_change_vs_whole_file_pct": 484.5714285714286,
+          "total_input_change_vs_whole_file_pct": 278.3606557377049
+        }
+      }
+    },
+    {
+      "task_id": "eval_pricing__v2_five_member_receipt",
+      "project": "eval_pricing",
+      "category": "cross_file",
+      "split": "additional48",
+      "baseline_file": "eval_pricing/service.py",
+      "whole_file": {
+        "code_tokens": 175,
+        "answer_input_tokens": 305,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 305,
+        "peak_call_input_tokens": 305,
+        "peak_call_input_with_output_reserve": 433
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 159,
+          "answer_input_tokens": 290,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 399,
+          "peak_call_input_tokens": 290,
+          "peak_call_input_with_output_reserve": 418,
+          "code_change_vs_whole_file_pct": -9.142857142857142,
+          "total_input_change_vs_whole_file_pct": 30.819672131147534
+        },
+        "B": {
+          "code_tokens": 530,
+          "answer_input_tokens": 661,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 770,
+          "peak_call_input_tokens": 661,
+          "peak_call_input_with_output_reserve": 789,
+          "code_change_vs_whole_file_pct": 202.85714285714283,
+          "total_input_change_vs_whole_file_pct": 152.45901639344262
+        },
+        "R0": {
+          "code_tokens": 1018,
+          "answer_input_tokens": 1149,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1149,
+          "peak_call_input_tokens": 1149,
+          "peak_call_input_with_output_reserve": 1277,
+          "code_change_vs_whole_file_pct": 481.71428571428567,
+          "total_input_change_vs_whole_file_pct": 276.72131147540983
+        }
+      }
+    },
+    {
+      "task_id": "eval_pricing__v2_free_delivery_exact_edge",
+      "project": "eval_pricing",
+      "category": "boundary",
+      "split": "additional48",
+      "baseline_file": "eval_pricing/service.py",
+      "whole_file": {
+        "code_tokens": 175,
+        "answer_input_tokens": 305,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 305,
+        "peak_call_input_tokens": 305,
+        "peak_call_input_with_output_reserve": 433
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 94,
+          "answer_input_tokens": 225,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 334,
+          "peak_call_input_tokens": 225,
+          "peak_call_input_with_output_reserve": 353,
+          "code_change_vs_whole_file_pct": -46.285714285714285,
+          "total_input_change_vs_whole_file_pct": 9.508196721311467
+        },
+        "B": {
+          "code_tokens": 551,
+          "answer_input_tokens": 682,
+          "selector_input_tokens": 109,
+          "total_input_tokens": 791,
+          "peak_call_input_tokens": 682,
+          "peak_call_input_with_output_reserve": 810,
+          "code_change_vs_whole_file_pct": 214.85714285714286,
+          "total_input_change_vs_whole_file_pct": 159.344262295082
+        },
+        "R0": {
+          "code_tokens": 1023,
+          "answer_input_tokens": 1154,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1154,
+          "peak_call_input_tokens": 1154,
+          "peak_call_input_with_output_reserve": 1282,
+          "code_change_vs_whole_file_pct": 484.5714285714286,
+          "total_input_change_vs_whole_file_pct": 278.3606557377049
+        }
+      }
+    },
+    {
+      "task_id": "eval_pricing__v2_large_member_order",
+      "project": "eval_pricing",
+      "category": "semantic",
+      "split": "additional48",
+      "baseline_file": "eval_pricing/service.py",
+      "whole_file": {
+        "code_tokens": 175,
+        "answer_input_tokens": 325,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 325,
+        "peak_call_input_tokens": 325,
+        "peak_call_input_with_output_reserve": 453
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 94,
+          "answer_input_tokens": 245,
+          "selector_input_tokens": 180,
+          "total_input_tokens": 425,
+          "peak_call_input_tokens": 245,
+          "peak_call_input_with_output_reserve": 373,
+          "code_change_vs_whole_file_pct": -46.285714285714285,
+          "total_input_change_vs_whole_file_pct": 30.76923076923077
+        },
+        "B": {
+          "code_tokens": 551,
+          "answer_input_tokens": 702,
+          "selector_input_tokens": 180,
+          "total_input_tokens": 882,
+          "peak_call_input_tokens": 702,
+          "peak_call_input_with_output_reserve": 830,
+          "code_change_vs_whole_file_pct": 214.85714285714286,
+          "total_input_change_vs_whole_file_pct": 171.3846153846154
+        },
+        "R0": {
+          "code_tokens": 1013,
+          "answer_input_tokens": 1163,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1163,
+          "peak_call_input_tokens": 1163,
+          "peak_call_input_with_output_reserve": 1291,
+          "code_change_vs_whole_file_pct": 478.85714285714283,
+          "total_input_change_vs_whole_file_pct": 257.8461538461538
+        }
+      }
+    },
+    {
+      "task_id": "eval_pricing__v2_negative_unit_price",
+      "project": "eval_pricing",
+      "category": "semantic",
+      "split": "additional48",
+      "baseline_file": "eval_pricing/service.py",
+      "whole_file": {
+        "code_tokens": 175,
+        "answer_input_tokens": 316,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 316,
+        "peak_call_input_tokens": 316,
+        "peak_call_input_with_output_reserve": 444
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 54,
+          "answer_input_tokens": 196,
+          "selector_input_tokens": 171,
+          "total_input_tokens": 367,
+          "peak_call_input_tokens": 196,
+          "peak_call_input_with_output_reserve": 324,
+          "code_change_vs_whole_file_pct": -69.14285714285715,
+          "total_input_change_vs_whole_file_pct": 16.13924050632911
+        },
+        "B": {
+          "code_tokens": 134,
+          "answer_input_tokens": 276,
+          "selector_input_tokens": 171,
+          "total_input_tokens": 447,
+          "peak_call_input_tokens": 276,
+          "peak_call_input_with_output_reserve": 404,
+          "code_change_vs_whole_file_pct": -23.42857142857143,
+          "total_input_change_vs_whole_file_pct": 41.45569620253164
+        },
+        "R0": {
+          "code_tokens": 1017,
+          "answer_input_tokens": 1158,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1158,
+          "peak_call_input_tokens": 1158,
+          "peak_call_input_with_output_reserve": 1286,
+          "code_change_vs_whole_file_pct": 481.1428571428571,
+          "total_input_change_vs_whole_file_pct": 266.45569620253167
+        }
+      }
+    },
+    {
+      "task_id": "eval_pricing__v2_delivery_threshold_intervention",
+      "project": "eval_pricing",
+      "category": "change_impact",
+      "split": "additional48",
+      "baseline_file": "eval_pricing/service.py",
+      "whole_file": {
+        "code_tokens": 175,
+        "answer_input_tokens": 363,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 363,
+        "peak_call_input_tokens": 363,
+        "peak_call_input_with_output_reserve": 491
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 54,
+          "answer_input_tokens": 243,
+          "selector_input_tokens": 218,
+          "total_input_tokens": 461,
+          "peak_call_input_tokens": 243,
+          "peak_call_input_with_output_reserve": 371,
+          "code_change_vs_whole_file_pct": -69.14285714285715,
+          "total_input_change_vs_whole_file_pct": 26.997245179063366
+        },
+        "B": {
+          "code_tokens": 134,
+          "answer_input_tokens": 323,
+          "selector_input_tokens": 218,
+          "total_input_tokens": 541,
+          "peak_call_input_tokens": 323,
+          "peak_call_input_with_output_reserve": 451,
+          "code_change_vs_whole_file_pct": -23.42857142857143,
+          "total_input_change_vs_whole_file_pct": 49.03581267217631
+        },
+        "R0": {
+          "code_tokens": 1024,
+          "answer_input_tokens": 1213,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1213,
+          "peak_call_input_tokens": 1213,
+          "peak_call_input_with_output_reserve": 1341,
+          "code_change_vs_whole_file_pct": 485.14285714285717,
+          "total_input_change_vs_whole_file_pct": 234.15977961432506
+        }
+      }
+    },
+    {
+      "task_id": "eval_pricing__v2_receipt_transitive_calls",
+      "project": "eval_pricing",
+      "category": "architecture",
+      "split": "additional48",
+      "baseline_file": "eval_pricing/service.py",
+      "whole_file": {
+        "code_tokens": 175,
+        "answer_input_tokens": 329,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 329,
+        "peak_call_input_tokens": 329,
+        "peak_call_input_with_output_reserve": 457
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 159,
+          "answer_input_tokens": 314,
+          "selector_input_tokens": 133,
+          "total_input_tokens": 447,
+          "peak_call_input_tokens": 314,
+          "peak_call_input_with_output_reserve": 442,
+          "code_change_vs_whole_file_pct": -9.142857142857142,
+          "total_input_change_vs_whole_file_pct": 35.866261398176306
+        },
+        "B": {
+          "code_tokens": 530,
+          "answer_input_tokens": 685,
+          "selector_input_tokens": 133,
+          "total_input_tokens": 818,
+          "peak_call_input_tokens": 685,
+          "peak_call_input_with_output_reserve": 813,
+          "code_change_vs_whole_file_pct": 202.85714285714283,
+          "total_input_change_vs_whole_file_pct": 148.6322188449848
+        },
+        "R0": {
+          "code_tokens": 1016,
+          "answer_input_tokens": 1171,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1171,
+          "peak_call_input_tokens": 1171,
+          "peak_call_input_with_output_reserve": 1299,
+          "code_change_vs_whole_file_pct": 480.5714285714286,
+          "total_input_change_vs_whole_file_pct": 255.9270516717325
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__v2_empty_and_duplicate_scopes",
+      "project": "eval_authorization",
+      "category": "single_function",
+      "split": "additional48",
+      "baseline_file": "eval_authorization/rules.py",
+      "whole_file": {
+        "code_tokens": 147,
+        "answer_input_tokens": 283,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 283,
+        "peak_call_input_tokens": 283,
+        "peak_call_input_with_output_reserve": 411
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 39,
+          "answer_input_tokens": 176,
+          "selector_input_tokens": 117,
+          "total_input_tokens": 293,
+          "peak_call_input_tokens": 176,
+          "peak_call_input_with_output_reserve": 304,
+          "code_change_vs_whole_file_pct": -73.46938775510203,
+          "total_input_change_vs_whole_file_pct": 3.5335689045936425
+        },
+        "B": {
+          "code_tokens": 60,
+          "answer_input_tokens": 196,
+          "selector_input_tokens": 117,
+          "total_input_tokens": 313,
+          "peak_call_input_tokens": 196,
+          "peak_call_input_with_output_reserve": 324,
+          "code_change_vs_whole_file_pct": -59.183673469387756,
+          "total_input_change_vs_whole_file_pct": 10.600706713780927
+        },
+        "R0": {
+          "code_tokens": 1024,
+          "answer_input_tokens": 1161,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1161,
+          "peak_call_input_tokens": 1161,
+          "peak_call_input_with_output_reserve": 1289,
+          "code_change_vs_whole_file_pct": 596.5986394557823,
+          "total_input_change_vs_whole_file_pct": 310.24734982332154
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__v2_nonowner_read",
+      "project": "eval_authorization",
+      "category": "cross_file",
+      "split": "additional48",
+      "baseline_file": "eval_authorization/service.py",
+      "whole_file": {
+        "code_tokens": 161,
+        "answer_input_tokens": 305,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 305,
+        "peak_call_input_tokens": 305,
+        "peak_call_input_with_output_reserve": 433
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 100,
+          "answer_input_tokens": 245,
+          "selector_input_tokens": 121,
+          "total_input_tokens": 366,
+          "peak_call_input_tokens": 245,
+          "peak_call_input_with_output_reserve": 373,
+          "code_change_vs_whole_file_pct": -37.88819875776398,
+          "total_input_change_vs_whole_file_pct": 19.999999999999996
+        },
+        "B": {
+          "code_tokens": 541,
+          "answer_input_tokens": 686,
+          "selector_input_tokens": 121,
+          "total_input_tokens": 807,
+          "peak_call_input_tokens": 686,
+          "peak_call_input_with_output_reserve": 814,
+          "code_change_vs_whole_file_pct": 236.0248447204969,
+          "total_input_change_vs_whole_file_pct": 164.59016393442622
+        },
+        "R0": {
+          "code_tokens": 1019,
+          "answer_input_tokens": 1163,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1163,
+          "peak_call_input_tokens": 1163,
+          "peak_call_input_with_output_reserve": 1291,
+          "code_change_vs_whole_file_pct": 532.9192546583851,
+          "total_input_change_vs_whole_file_pct": 281.3114754098361
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__v2_duplicate_write_permission",
+      "project": "eval_authorization",
+      "category": "cross_file",
+      "split": "additional48",
+      "baseline_file": "eval_authorization/service.py",
+      "whole_file": {
+        "code_tokens": 161,
+        "answer_input_tokens": 301,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 301,
+        "peak_call_input_tokens": 301,
+        "peak_call_input_with_output_reserve": 429
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 158,
+          "answer_input_tokens": 299,
+          "selector_input_tokens": 121,
+          "total_input_tokens": 420,
+          "peak_call_input_tokens": 299,
+          "peak_call_input_with_output_reserve": 427,
+          "code_change_vs_whole_file_pct": -1.8633540372670843,
+          "total_input_change_vs_whole_file_pct": 39.53488372093024
+        },
+        "B": {
+          "code_tokens": 447,
+          "answer_input_tokens": 587,
+          "selector_input_tokens": 121,
+          "total_input_tokens": 708,
+          "peak_call_input_tokens": 587,
+          "peak_call_input_with_output_reserve": 715,
+          "code_change_vs_whole_file_pct": 177.63975155279502,
+          "total_input_change_vs_whole_file_pct": 135.2159468438538
+        },
+        "R0": {
+          "code_tokens": 1022,
+          "answer_input_tokens": 1162,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1162,
+          "peak_call_input_tokens": 1162,
+          "peak_call_input_with_output_reserve": 1290,
+          "code_change_vs_whole_file_pct": 534.7826086956521,
+          "total_input_change_vs_whole_file_pct": 286.046511627907
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__v2_last_valid_session_second",
+      "project": "eval_authorization",
+      "category": "boundary",
+      "split": "additional48",
+      "baseline_file": "eval_authorization/service.py",
+      "whole_file": {
+        "code_tokens": 161,
+        "answer_input_tokens": 297,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 297,
+        "peak_call_input_tokens": 297,
+        "peak_call_input_with_output_reserve": 425
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 158,
+          "answer_input_tokens": 295,
+          "selector_input_tokens": 117,
+          "total_input_tokens": 412,
+          "peak_call_input_tokens": 295,
+          "peak_call_input_with_output_reserve": 423,
+          "code_change_vs_whole_file_pct": -1.8633540372670843,
+          "total_input_change_vs_whole_file_pct": 38.72053872053871
+        },
+        "B": {
+          "code_tokens": 447,
+          "answer_input_tokens": 583,
+          "selector_input_tokens": 117,
+          "total_input_tokens": 700,
+          "peak_call_input_tokens": 583,
+          "peak_call_input_with_output_reserve": 711,
+          "code_change_vs_whole_file_pct": 177.63975155279502,
+          "total_input_change_vs_whole_file_pct": 135.69023569023568
+        },
+        "R0": {
+          "code_tokens": 1022,
+          "answer_input_tokens": 1158,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1158,
+          "peak_call_input_tokens": 1158,
+          "peak_call_input_with_output_reserve": 1286,
+          "code_change_vs_whole_file_pct": 534.7826086956521,
+          "total_input_change_vs_whole_file_pct": 289.8989898989899
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__v2_revoked_admin",
+      "project": "eval_authorization",
+      "category": "semantic",
+      "split": "additional48",
+      "baseline_file": "eval_authorization/service.py",
+      "whole_file": {
+        "code_tokens": 161,
+        "answer_input_tokens": 322,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 322,
+        "peak_call_input_tokens": 322,
+        "peak_call_input_with_output_reserve": 450
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 45,
+          "answer_input_tokens": 207,
+          "selector_input_tokens": 140,
+          "total_input_tokens": 347,
+          "peak_call_input_tokens": 207,
+          "peak_call_input_with_output_reserve": 335,
+          "code_change_vs_whole_file_pct": -72.04968944099379,
+          "total_input_change_vs_whole_file_pct": 7.763975155279512
+        },
+        "B": {
+          "code_tokens": 94,
+          "answer_input_tokens": 256,
+          "selector_input_tokens": 140,
+          "total_input_tokens": 396,
+          "peak_call_input_tokens": 256,
+          "peak_call_input_with_output_reserve": 384,
+          "code_change_vs_whole_file_pct": -41.61490683229814,
+          "total_input_change_vs_whole_file_pct": 22.98136645962734
+        },
+        "R0": {
+          "code_tokens": 1024,
+          "answer_input_tokens": 1186,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1186,
+          "peak_call_input_tokens": 1186,
+          "peak_call_input_with_output_reserve": 1314,
+          "code_change_vs_whole_file_pct": 536.0248447204968,
+          "total_input_change_vs_whole_file_pct": 268.32298136645966
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__v2_owner_case_mismatch",
+      "project": "eval_authorization",
+      "category": "semantic",
+      "split": "additional48",
+      "baseline_file": "eval_authorization/service.py",
+      "whole_file": {
+        "code_tokens": 161,
+        "answer_input_tokens": 333,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 333,
+        "peak_call_input_tokens": 333,
+        "peak_call_input_with_output_reserve": 461
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 45,
+          "answer_input_tokens": 218,
+          "selector_input_tokens": 181,
+          "total_input_tokens": 399,
+          "peak_call_input_tokens": 218,
+          "peak_call_input_with_output_reserve": 346,
+          "code_change_vs_whole_file_pct": -72.04968944099379,
+          "total_input_change_vs_whole_file_pct": 19.819819819819816
+        },
+        "B": {
+          "code_tokens": 94,
+          "answer_input_tokens": 267,
+          "selector_input_tokens": 181,
+          "total_input_tokens": 448,
+          "peak_call_input_tokens": 267,
+          "peak_call_input_with_output_reserve": 395,
+          "code_change_vs_whole_file_pct": -41.61490683229814,
+          "total_input_change_vs_whole_file_pct": 34.534534534534544
+        },
+        "R0": {
+          "code_tokens": 1018,
+          "answer_input_tokens": 1191,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1191,
+          "peak_call_input_tokens": 1191,
+          "peak_call_input_with_output_reserve": 1319,
+          "code_change_vs_whole_file_pct": 532.2981366459627,
+          "total_input_change_vs_whole_file_pct": 257.65765765765764
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__v2_write_scope_intervention",
+      "project": "eval_authorization",
+      "category": "change_impact",
+      "split": "additional48",
+      "baseline_file": "eval_authorization/service.py",
+      "whole_file": {
+        "code_tokens": 161,
+        "answer_input_tokens": 348,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 348,
+        "peak_call_input_tokens": 348,
+        "peak_call_input_with_output_reserve": 476
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 134,
+          "answer_input_tokens": 322,
+          "selector_input_tokens": 296,
+          "total_input_tokens": 618,
+          "peak_call_input_tokens": 322,
+          "peak_call_input_with_output_reserve": 450,
+          "code_change_vs_whole_file_pct": -16.770186335403725,
+          "total_input_change_vs_whole_file_pct": 77.58620689655173
+        },
+        "B": {
+          "code_tokens": 286,
+          "answer_input_tokens": 473,
+          "selector_input_tokens": 296,
+          "total_input_tokens": 769,
+          "peak_call_input_tokens": 473,
+          "peak_call_input_with_output_reserve": 601,
+          "code_change_vs_whole_file_pct": 77.63975155279503,
+          "total_input_change_vs_whole_file_pct": 120.97701149425286
+        },
+        "R0": {
+          "code_tokens": 1020,
+          "answer_input_tokens": 1208,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1208,
+          "peak_call_input_tokens": 1208,
+          "peak_call_input_with_output_reserve": 1336,
+          "code_change_vs_whole_file_pct": 533.5403726708074,
+          "total_input_change_vs_whole_file_pct": 247.1264367816092
+        }
+      }
+    },
+    {
+      "task_id": "eval_authorization__v2_own_edit_transitive_calls",
+      "project": "eval_authorization",
+      "category": "architecture",
+      "split": "additional48",
+      "baseline_file": "eval_authorization/service.py",
+      "whole_file": {
+        "code_tokens": 161,
+        "answer_input_tokens": 317,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 317,
+        "peak_call_input_tokens": 317,
+        "peak_call_input_with_output_reserve": 445
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 158,
+          "answer_input_tokens": 315,
+          "selector_input_tokens": 137,
+          "total_input_tokens": 452,
+          "peak_call_input_tokens": 315,
+          "peak_call_input_with_output_reserve": 443,
+          "code_change_vs_whole_file_pct": -1.8633540372670843,
+          "total_input_change_vs_whole_file_pct": 42.586750788643535
+        },
+        "B": {
+          "code_tokens": 447,
+          "answer_input_tokens": 603,
+          "selector_input_tokens": 137,
+          "total_input_tokens": 740,
+          "peak_call_input_tokens": 603,
+          "peak_call_input_with_output_reserve": 731,
+          "code_change_vs_whole_file_pct": 177.63975155279502,
+          "total_input_change_vs_whole_file_pct": 133.43848580441642
+        },
+        "R0": {
+          "code_tokens": 1024,
+          "answer_input_tokens": 1180,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1180,
+          "peak_call_input_tokens": 1180,
+          "peak_call_input_with_output_reserve": 1308,
+          "code_change_vs_whole_file_pct": 536.0248447204968,
+          "total_input_change_vs_whole_file_pct": 272.2397476340694
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__v2_bucket_near_wrap",
+      "project": "eval_routing",
+      "category": "single_function",
+      "split": "additional48",
+      "baseline_file": "eval_routing/rules.py",
+      "whole_file": {
+        "code_tokens": 104,
+        "answer_input_tokens": 225,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 225,
+        "peak_call_input_tokens": 225,
+        "peak_call_input_with_output_reserve": 353
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 39,
+          "answer_input_tokens": 161,
+          "selector_input_tokens": 98,
+          "total_input_tokens": 259,
+          "peak_call_input_tokens": 161,
+          "peak_call_input_with_output_reserve": 289,
+          "code_change_vs_whole_file_pct": -62.5,
+          "total_input_change_vs_whole_file_pct": 15.11111111111112
+        },
+        "B": {
+          "code_tokens": 51,
+          "answer_input_tokens": 173,
+          "selector_input_tokens": 98,
+          "total_input_tokens": 271,
+          "peak_call_input_tokens": 173,
+          "peak_call_input_with_output_reserve": 301,
+          "code_change_vs_whole_file_pct": -50.96153846153846,
+          "total_input_change_vs_whole_file_pct": 20.444444444444443
+        },
+        "R0": {
+          "code_tokens": 1015,
+          "answer_input_tokens": 1136,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1136,
+          "peak_call_input_tokens": 1136,
+          "peak_call_input_with_output_reserve": 1264,
+          "code_change_vs_whole_file_pct": 875.9615384615385,
+          "total_input_change_vs_whole_file_pct": 404.88888888888886
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__v2_empty_path",
+      "project": "eval_routing",
+      "category": "cross_file",
+      "split": "additional48",
+      "baseline_file": "eval_routing/service.py",
+      "whole_file": {
+        "code_tokens": 166,
+        "answer_input_tokens": 325,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 325,
+        "peak_call_input_tokens": 325,
+        "peak_call_input_with_output_reserve": 453
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 98,
+          "answer_input_tokens": 258,
+          "selector_input_tokens": 159,
+          "total_input_tokens": 417,
+          "peak_call_input_tokens": 258,
+          "peak_call_input_with_output_reserve": 386,
+          "code_change_vs_whole_file_pct": -40.963855421686745,
+          "total_input_change_vs_whole_file_pct": 28.3076923076923
+        },
+        "B": {
+          "code_tokens": 509,
+          "answer_input_tokens": 669,
+          "selector_input_tokens": 159,
+          "total_input_tokens": 828,
+          "peak_call_input_tokens": 669,
+          "peak_call_input_with_output_reserve": 797,
+          "code_change_vs_whole_file_pct": 206.6265060240964,
+          "total_input_change_vs_whole_file_pct": 154.76923076923077
+        },
+        "R0": {
+          "code_tokens": 1020,
+          "answer_input_tokens": 1179,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1179,
+          "peak_call_input_tokens": 1179,
+          "peak_call_input_with_output_reserve": 1307,
+          "code_change_vs_whole_file_pct": 514.4578313253012,
+          "total_input_change_vs_whole_file_pct": 262.7692307692308
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__v2_last_retry_fallback",
+      "project": "eval_routing",
+      "category": "cross_file",
+      "split": "additional48",
+      "baseline_file": "eval_routing/service.py",
+      "whole_file": {
+        "code_tokens": 166,
+        "answer_input_tokens": 327,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 327,
+        "peak_call_input_tokens": 327,
+        "peak_call_input_with_output_reserve": 455
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 156,
+          "answer_input_tokens": 318,
+          "selector_input_tokens": 140,
+          "total_input_tokens": 458,
+          "peak_call_input_tokens": 318,
+          "peak_call_input_with_output_reserve": 446,
+          "code_change_vs_whole_file_pct": -6.024096385542165,
+          "total_input_change_vs_whole_file_pct": 40.061162079510694
+        },
+        "B": {
+          "code_tokens": 496,
+          "answer_input_tokens": 657,
+          "selector_input_tokens": 140,
+          "total_input_tokens": 797,
+          "peak_call_input_tokens": 657,
+          "peak_call_input_with_output_reserve": 785,
+          "code_change_vs_whole_file_pct": 198.79518072289156,
+          "total_input_change_vs_whole_file_pct": 143.73088685015293
+        },
+        "R0": {
+          "code_tokens": 1005,
+          "answer_input_tokens": 1166,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1166,
+          "peak_call_input_tokens": 1166,
+          "peak_call_input_with_output_reserve": 1294,
+          "code_change_vs_whole_file_pct": 505.4216867469879,
+          "total_input_change_vs_whole_file_pct": 256.5749235474006
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__v2_canary_exact_threshold",
+      "project": "eval_routing",
+      "category": "boundary",
+      "split": "additional48",
+      "baseline_file": "eval_routing/rules.py",
+      "whole_file": {
+        "code_tokens": 104,
+        "answer_input_tokens": 227,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 227,
+        "peak_call_input_tokens": 227,
+        "peak_call_input_with_output_reserve": 355
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 78,
+          "answer_input_tokens": 202,
+          "selector_input_tokens": 104,
+          "total_input_tokens": 306,
+          "peak_call_input_tokens": 202,
+          "peak_call_input_with_output_reserve": 330,
+          "code_change_vs_whole_file_pct": -25.0,
+          "total_input_change_vs_whole_file_pct": 34.801762114537446
+        },
+        "B": {
+          "code_tokens": 127,
+          "answer_input_tokens": 251,
+          "selector_input_tokens": 104,
+          "total_input_tokens": 355,
+          "peak_call_input_tokens": 251,
+          "peak_call_input_with_output_reserve": 379,
+          "code_change_vs_whole_file_pct": 22.115384615384627,
+          "total_input_change_vs_whole_file_pct": 56.38766519823788
+        },
+        "R0": {
+          "code_tokens": 1009,
+          "answer_input_tokens": 1132,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1132,
+          "peak_call_input_tokens": 1132,
+          "peak_call_input_with_output_reserve": 1260,
+          "code_change_vs_whole_file_pct": 870.1923076923076,
+          "total_input_change_vs_whole_file_pct": 398.67841409691624
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__v2_priority_not_fastest",
+      "project": "eval_routing",
+      "category": "semantic",
+      "split": "additional48",
+      "baseline_file": "eval_routing/service.py",
+      "whole_file": {
+        "code_tokens": 166,
+        "answer_input_tokens": 322,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 322,
+        "peak_call_input_tokens": 322,
+        "peak_call_input_with_output_reserve": 450
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 42,
+          "answer_input_tokens": 199,
+          "selector_input_tokens": 165,
+          "total_input_tokens": 364,
+          "peak_call_input_tokens": 199,
+          "peak_call_input_with_output_reserve": 327,
+          "code_change_vs_whole_file_pct": -74.69879518072288,
+          "total_input_change_vs_whole_file_pct": 13.043478260869556
+        },
+        "B": {
+          "code_tokens": 75,
+          "answer_input_tokens": 232,
+          "selector_input_tokens": 165,
+          "total_input_tokens": 397,
+          "peak_call_input_tokens": 232,
+          "peak_call_input_with_output_reserve": 360,
+          "code_change_vs_whole_file_pct": -54.81927710843373,
+          "total_input_change_vs_whole_file_pct": 23.291925465838514
+        },
+        "R0": {
+          "code_tokens": 1020,
+          "answer_input_tokens": 1177,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1177,
+          "peak_call_input_tokens": 1177,
+          "peak_call_input_with_output_reserve": 1305,
+          "code_change_vs_whole_file_pct": 514.4578313253012,
+          "total_input_change_vs_whole_file_pct": 265.52795031055905
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__v2_retry_without_backend",
+      "project": "eval_routing",
+      "category": "semantic",
+      "split": "additional48",
+      "baseline_file": "eval_routing/service.py",
+      "whole_file": {
+        "code_tokens": 166,
+        "answer_input_tokens": 317,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 317,
+        "peak_call_input_tokens": 317,
+        "peak_call_input_with_output_reserve": 445
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 156,
+          "answer_input_tokens": 308,
+          "selector_input_tokens": 161,
+          "total_input_tokens": 469,
+          "peak_call_input_tokens": 308,
+          "peak_call_input_with_output_reserve": 436,
+          "code_change_vs_whole_file_pct": -6.024096385542165,
+          "total_input_change_vs_whole_file_pct": 47.94952681388012
+        },
+        "B": {
+          "code_tokens": 496,
+          "answer_input_tokens": 647,
+          "selector_input_tokens": 161,
+          "total_input_tokens": 808,
+          "peak_call_input_tokens": 647,
+          "peak_call_input_with_output_reserve": 775,
+          "code_change_vs_whole_file_pct": 198.79518072289156,
+          "total_input_change_vs_whole_file_pct": 154.88958990536278
+        },
+        "R0": {
+          "code_tokens": 1008,
+          "answer_input_tokens": 1160,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1160,
+          "peak_call_input_tokens": 1160,
+          "peak_call_input_with_output_reserve": 1288,
+          "code_change_vs_whole_file_pct": 507.2289156626506,
+          "total_input_change_vs_whole_file_pct": 265.93059936908514
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__v2_latency_intervention",
+      "project": "eval_routing",
+      "category": "change_impact",
+      "split": "additional48",
+      "baseline_file": "eval_routing/service.py",
+      "whole_file": {
+        "code_tokens": 166,
+        "answer_input_tokens": 384,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 384,
+        "peak_call_input_tokens": 384,
+        "peak_call_input_with_output_reserve": 512
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 84,
+          "answer_input_tokens": 303,
+          "selector_input_tokens": 298,
+          "total_input_tokens": 601,
+          "peak_call_input_tokens": 303,
+          "peak_call_input_with_output_reserve": 431,
+          "code_change_vs_whole_file_pct": -49.397590361445786,
+          "total_input_change_vs_whole_file_pct": 56.51041666666667
+        },
+        "B": {
+          "code_tokens": 136,
+          "answer_input_tokens": 355,
+          "selector_input_tokens": 298,
+          "total_input_tokens": 653,
+          "peak_call_input_tokens": 355,
+          "peak_call_input_with_output_reserve": 483,
+          "code_change_vs_whole_file_pct": -18.07228915662651,
+          "total_input_change_vs_whole_file_pct": 70.05208333333333
+        },
+        "R0": {
+          "code_tokens": 1002,
+          "answer_input_tokens": 1221,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1221,
+          "peak_call_input_tokens": 1221,
+          "peak_call_input_with_output_reserve": 1349,
+          "code_change_vs_whole_file_pct": 503.61445783132524,
+          "total_input_change_vs_whole_file_pct": 217.96875
+        }
+      }
+    },
+    {
+      "task_id": "eval_routing__v2_retry_transitive_calls",
+      "project": "eval_routing",
+      "category": "architecture",
+      "split": "additional48",
+      "baseline_file": "eval_routing/service.py",
+      "whole_file": {
+        "code_tokens": 166,
+        "answer_input_tokens": 320,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 320,
+        "peak_call_input_tokens": 320,
+        "peak_call_input_with_output_reserve": 448
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 156,
+          "answer_input_tokens": 311,
+          "selector_input_tokens": 133,
+          "total_input_tokens": 444,
+          "peak_call_input_tokens": 311,
+          "peak_call_input_with_output_reserve": 439,
+          "code_change_vs_whole_file_pct": -6.024096385542165,
+          "total_input_change_vs_whole_file_pct": 38.74999999999999
+        },
+        "B": {
+          "code_tokens": 496,
+          "answer_input_tokens": 650,
+          "selector_input_tokens": 133,
+          "total_input_tokens": 783,
+          "peak_call_input_tokens": 650,
+          "peak_call_input_with_output_reserve": 778,
+          "code_change_vs_whole_file_pct": 198.79518072289156,
+          "total_input_change_vs_whole_file_pct": 144.6875
+        },
+        "R0": {
+          "code_tokens": 1015,
+          "answer_input_tokens": 1170,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1170,
+          "peak_call_input_tokens": 1170,
+          "peak_call_input_with_output_reserve": 1298,
+          "code_change_vs_whole_file_pct": 511.4457831325301,
+          "total_input_change_vs_whole_file_pct": 265.625
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__v2_allocate_exact_available",
+      "project": "eval_inventory",
+      "category": "single_function",
+      "split": "additional48",
+      "baseline_file": "eval_inventory/rules.py",
+      "whole_file": {
+        "code_tokens": 105,
+        "answer_input_tokens": 231,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 231,
+        "peak_call_input_tokens": 231,
+        "peak_call_input_with_output_reserve": 359
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 46,
+          "answer_input_tokens": 173,
+          "selector_input_tokens": 103,
+          "total_input_tokens": 276,
+          "peak_call_input_tokens": 173,
+          "peak_call_input_with_output_reserve": 301,
+          "code_change_vs_whole_file_pct": -56.19047619047619,
+          "total_input_change_vs_whole_file_pct": 19.480519480519476
+        },
+        "B": {
+          "code_tokens": 62,
+          "answer_input_tokens": 189,
+          "selector_input_tokens": 103,
+          "total_input_tokens": 292,
+          "peak_call_input_tokens": 189,
+          "peak_call_input_with_output_reserve": 317,
+          "code_change_vs_whole_file_pct": -40.95238095238095,
+          "total_input_change_vs_whole_file_pct": 26.406926406926413
+        },
+        "R0": {
+          "code_tokens": 1022,
+          "answer_input_tokens": 1149,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1149,
+          "peak_call_input_tokens": 1149,
+          "peak_call_input_with_output_reserve": 1277,
+          "code_change_vs_whole_file_pct": 873.3333333333333,
+          "total_input_change_vs_whole_file_pct": 397.4025974025974
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__v2_maximum_valid_reservation",
+      "project": "eval_inventory",
+      "category": "cross_file",
+      "split": "additional48",
+      "baseline_file": "eval_inventory/service.py",
+      "whole_file": {
+        "code_tokens": 197,
+        "answer_input_tokens": 328,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 328,
+        "peak_call_input_tokens": 328,
+        "peak_call_input_with_output_reserve": 456
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 119,
+          "answer_input_tokens": 251,
+          "selector_input_tokens": 108,
+          "total_input_tokens": 359,
+          "peak_call_input_tokens": 251,
+          "peak_call_input_with_output_reserve": 379,
+          "code_change_vs_whole_file_pct": -39.59390862944162,
+          "total_input_change_vs_whole_file_pct": 9.45121951219512
+        },
+        "B": {
+          "code_tokens": 483,
+          "answer_input_tokens": 615,
+          "selector_input_tokens": 108,
+          "total_input_tokens": 723,
+          "peak_call_input_tokens": 615,
+          "peak_call_input_with_output_reserve": 743,
+          "code_change_vs_whole_file_pct": 145.1776649746193,
+          "total_input_change_vs_whole_file_pct": 120.42682926829266
+        },
+        "R0": {
+          "code_tokens": 1010,
+          "answer_input_tokens": 1142,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1142,
+          "peak_call_input_tokens": 1142,
+          "peak_call_input_with_output_reserve": 1270,
+          "code_change_vs_whole_file_pct": 412.69035532994917,
+          "total_input_change_vs_whole_file_pct": 248.1707317073171
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__v2_partial_depletes_available",
+      "project": "eval_inventory",
+      "category": "cross_file",
+      "split": "additional48",
+      "baseline_file": "eval_inventory/service.py",
+      "whole_file": {
+        "code_tokens": 197,
+        "answer_input_tokens": 324,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 324,
+        "peak_call_input_tokens": 324,
+        "peak_call_input_with_output_reserve": 452
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 182,
+          "answer_input_tokens": 310,
+          "selector_input_tokens": 106,
+          "total_input_tokens": 416,
+          "peak_call_input_tokens": 310,
+          "peak_call_input_with_output_reserve": 438,
+          "code_change_vs_whole_file_pct": -7.614213197969544,
+          "total_input_change_vs_whole_file_pct": 28.395061728395056
+        },
+        "B": {
+          "code_tokens": 525,
+          "answer_input_tokens": 653,
+          "selector_input_tokens": 106,
+          "total_input_tokens": 759,
+          "peak_call_input_tokens": 653,
+          "peak_call_input_with_output_reserve": 781,
+          "code_change_vs_whole_file_pct": 166.49746192893403,
+          "total_input_change_vs_whole_file_pct": 134.25925925925927
+        },
+        "R0": {
+          "code_tokens": 1015,
+          "answer_input_tokens": 1143,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1143,
+          "peak_call_input_tokens": 1143,
+          "peak_call_input_with_output_reserve": 1271,
+          "code_change_vs_whole_file_pct": 415.2284263959391,
+          "total_input_change_vs_whole_file_pct": 252.77777777777777
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__v2_zero_units",
+      "project": "eval_inventory",
+      "category": "boundary",
+      "split": "additional48",
+      "baseline_file": "eval_inventory/service.py",
+      "whole_file": {
+        "code_tokens": 197,
+        "answer_input_tokens": 326,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 326,
+        "peak_call_input_tokens": 326,
+        "peak_call_input_with_output_reserve": 454
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 119,
+          "answer_input_tokens": 249,
+          "selector_input_tokens": 106,
+          "total_input_tokens": 355,
+          "peak_call_input_tokens": 249,
+          "peak_call_input_with_output_reserve": 377,
+          "code_change_vs_whole_file_pct": -39.59390862944162,
+          "total_input_change_vs_whole_file_pct": 8.895705521472387
+        },
+        "B": {
+          "code_tokens": 483,
+          "answer_input_tokens": 613,
+          "selector_input_tokens": 106,
+          "total_input_tokens": 719,
+          "peak_call_input_tokens": 613,
+          "peak_call_input_with_output_reserve": 741,
+          "code_change_vs_whole_file_pct": 145.1776649746193,
+          "total_input_change_vs_whole_file_pct": 120.5521472392638
+        },
+        "R0": {
+          "code_tokens": 1018,
+          "answer_input_tokens": 1148,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1148,
+          "peak_call_input_tokens": 1148,
+          "peak_call_input_with_output_reserve": 1276,
+          "code_change_vs_whole_file_pct": 416.75126903553297,
+          "total_input_change_vs_whole_file_pct": 252.1472392638037
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__v2_enough_stock",
+      "project": "eval_inventory",
+      "category": "semantic",
+      "split": "additional48",
+      "baseline_file": "eval_inventory/service.py",
+      "whole_file": {
+        "code_tokens": 197,
+        "answer_input_tokens": 358,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 358,
+        "peak_call_input_tokens": 358,
+        "peak_call_input_with_output_reserve": 486
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 81,
+          "answer_input_tokens": 243,
+          "selector_input_tokens": 141,
+          "total_input_tokens": 384,
+          "peak_call_input_tokens": 243,
+          "peak_call_input_with_output_reserve": 371,
+          "code_change_vs_whole_file_pct": -58.88324873096447,
+          "total_input_change_vs_whole_file_pct": 7.2625698324022325
+        },
+        "B": {
+          "code_tokens": 72,
+          "answer_input_tokens": 233,
+          "selector_input_tokens": 141,
+          "total_input_tokens": 374,
+          "peak_call_input_tokens": 233,
+          "peak_call_input_with_output_reserve": 361,
+          "code_change_vs_whole_file_pct": -63.45177664974619,
+          "total_input_change_vs_whole_file_pct": 4.469273743016755
+        },
+        "R0": {
+          "code_tokens": 1014,
+          "answer_input_tokens": 1175,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1175,
+          "peak_call_input_tokens": 1175,
+          "peak_call_input_with_output_reserve": 1303,
+          "code_change_vs_whole_file_pct": 414.72081218274116,
+          "total_input_change_vs_whole_file_pct": 228.21229050279328
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__v2_below_safety_reserve",
+      "project": "eval_inventory",
+      "category": "semantic",
+      "split": "additional48",
+      "baseline_file": "eval_inventory/service.py",
+      "whole_file": {
+        "code_tokens": 197,
+        "answer_input_tokens": 353,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 353,
+        "peak_call_input_tokens": 353,
+        "peak_call_input_with_output_reserve": 481
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 81,
+          "answer_input_tokens": 238,
+          "selector_input_tokens": 136,
+          "total_input_tokens": 374,
+          "peak_call_input_tokens": 238,
+          "peak_call_input_with_output_reserve": 366,
+          "code_change_vs_whole_file_pct": -58.88324873096447,
+          "total_input_change_vs_whole_file_pct": 5.9490084985835745
+        },
+        "B": {
+          "code_tokens": 72,
+          "answer_input_tokens": 228,
+          "selector_input_tokens": 136,
+          "total_input_tokens": 364,
+          "peak_call_input_tokens": 228,
+          "peak_call_input_with_output_reserve": 356,
+          "code_change_vs_whole_file_pct": -63.45177664974619,
+          "total_input_change_vs_whole_file_pct": 3.116147308781869
+        },
+        "R0": {
+          "code_tokens": 1023,
+          "answer_input_tokens": 1179,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1179,
+          "peak_call_input_tokens": 1179,
+          "peak_call_input_with_output_reserve": 1307,
+          "code_change_vs_whole_file_pct": 419.2893401015229,
+          "total_input_change_vs_whole_file_pct": 233.99433427762037
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__v2_order_cap_intervention",
+      "project": "eval_inventory",
+      "category": "change_impact",
+      "split": "additional48",
+      "baseline_file": "eval_inventory/service.py",
+      "whole_file": {
+        "code_tokens": 197,
+        "answer_input_tokens": 371,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 371,
+        "peak_call_input_tokens": 371,
+        "peak_call_input_with_output_reserve": 499
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 33,
+          "answer_input_tokens": 208,
+          "selector_input_tokens": 255,
+          "total_input_tokens": 463,
+          "peak_call_input_tokens": 255,
+          "peak_call_input_with_output_reserve": 351,
+          "code_change_vs_whole_file_pct": -83.24873096446701,
+          "total_input_change_vs_whole_file_pct": 24.797843665768205
+        },
+        "B": {
+          "code_tokens": 95,
+          "answer_input_tokens": 270,
+          "selector_input_tokens": 255,
+          "total_input_tokens": 525,
+          "peak_call_input_tokens": 270,
+          "peak_call_input_with_output_reserve": 398,
+          "code_change_vs_whole_file_pct": -51.776649746192895,
+          "total_input_change_vs_whole_file_pct": 41.50943396226414
+        },
+        "R0": {
+          "code_tokens": 1007,
+          "answer_input_tokens": 1181,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1181,
+          "peak_call_input_tokens": 1181,
+          "peak_call_input_with_output_reserve": 1309,
+          "code_change_vs_whole_file_pct": 411.16751269035535,
+          "total_input_change_vs_whole_file_pct": 218.32884097035043
+        }
+      }
+    },
+    {
+      "task_id": "eval_inventory__v2_remaining_transitive_calls",
+      "project": "eval_inventory",
+      "category": "architecture",
+      "split": "additional48",
+      "baseline_file": "eval_inventory/service.py",
+      "whole_file": {
+        "code_tokens": 197,
+        "answer_input_tokens": 351,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 351,
+        "peak_call_input_tokens": 351,
+        "peak_call_input_with_output_reserve": 479
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 182,
+          "answer_input_tokens": 337,
+          "selector_input_tokens": 133,
+          "total_input_tokens": 470,
+          "peak_call_input_tokens": 337,
+          "peak_call_input_with_output_reserve": 465,
+          "code_change_vs_whole_file_pct": -7.614213197969544,
+          "total_input_change_vs_whole_file_pct": 33.903133903133906
+        },
+        "B": {
+          "code_tokens": 525,
+          "answer_input_tokens": 680,
+          "selector_input_tokens": 133,
+          "total_input_tokens": 813,
+          "peak_call_input_tokens": 680,
+          "peak_call_input_with_output_reserve": 808,
+          "code_change_vs_whole_file_pct": 166.49746192893403,
+          "total_input_change_vs_whole_file_pct": 131.62393162393164
+        },
+        "R0": {
+          "code_tokens": 1007,
+          "answer_input_tokens": 1161,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1161,
+          "peak_call_input_tokens": 1161,
+          "peak_call_input_with_output_reserve": 1289,
+          "code_change_vs_whole_file_pct": 411.16751269035535,
+          "total_input_change_vs_whole_file_pct": 230.76923076923075
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__v2_short_private_ttl",
+      "project": "eval_cache",
+      "category": "single_function",
+      "split": "additional48",
+      "baseline_file": "eval_cache/rules.py",
+      "whole_file": {
+        "code_tokens": 143,
+        "answer_input_tokens": 268,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 268,
+        "peak_call_input_tokens": 268,
+        "peak_call_input_with_output_reserve": 396
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 57,
+          "answer_input_tokens": 183,
+          "selector_input_tokens": 178,
+          "total_input_tokens": 361,
+          "peak_call_input_tokens": 183,
+          "peak_call_input_with_output_reserve": 311,
+          "code_change_vs_whole_file_pct": -60.13986013986015,
+          "total_input_change_vs_whole_file_pct": 34.70149253731343
+        },
+        "B": {
+          "code_tokens": 162,
+          "answer_input_tokens": 288,
+          "selector_input_tokens": 178,
+          "total_input_tokens": 466,
+          "peak_call_input_tokens": 288,
+          "peak_call_input_with_output_reserve": 416,
+          "code_change_vs_whole_file_pct": 13.286713286713292,
+          "total_input_change_vs_whole_file_pct": 73.88059701492537
+        },
+        "R0": {
+          "code_tokens": 1019,
+          "answer_input_tokens": 1144,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1144,
+          "peak_call_input_tokens": 1144,
+          "peak_call_input_with_output_reserve": 1272,
+          "code_change_vs_whole_file_pct": 612.5874125874126,
+          "total_input_change_vs_whole_file_pct": 326.8656716417911
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__v2_new_query_key",
+      "project": "eval_cache",
+      "category": "cross_file",
+      "split": "additional48",
+      "baseline_file": "eval_cache/service.py",
+      "whole_file": {
+        "code_tokens": 156,
+        "answer_input_tokens": 295,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 295,
+        "peak_call_input_tokens": 295,
+        "peak_call_input_with_output_reserve": 423
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 61,
+          "answer_input_tokens": 201,
+          "selector_input_tokens": 291,
+          "total_input_tokens": 492,
+          "peak_call_input_tokens": 291,
+          "peak_call_input_with_output_reserve": 387,
+          "code_change_vs_whole_file_pct": -60.897435897435905,
+          "total_input_change_vs_whole_file_pct": 66.77966101694915
+        },
+        "B": {
+          "code_tokens": 422,
+          "answer_input_tokens": 561,
+          "selector_input_tokens": 291,
+          "total_input_tokens": 852,
+          "peak_call_input_tokens": 561,
+          "peak_call_input_with_output_reserve": 689,
+          "code_change_vs_whole_file_pct": 170.51282051282053,
+          "total_input_change_vs_whole_file_pct": 188.8135593220339
+        },
+        "R0": {
+          "code_tokens": 1024,
+          "answer_input_tokens": 1164,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1164,
+          "peak_call_input_tokens": 1164,
+          "peak_call_input_with_output_reserve": 1292,
+          "code_change_vs_whole_file_pct": 556.4102564102564,
+          "total_input_change_vs_whole_file_pct": 294.5762711864407
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__v2_private_lifetime_clamp",
+      "project": "eval_cache",
+      "category": "cross_file",
+      "split": "additional48",
+      "baseline_file": "eval_cache/service.py",
+      "whole_file": {
+        "code_tokens": 156,
+        "answer_input_tokens": 300,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 300,
+        "peak_call_input_tokens": 300,
+        "peak_call_input_with_output_reserve": 428
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 139,
+          "answer_input_tokens": 284,
+          "selector_input_tokens": 197,
+          "total_input_tokens": 481,
+          "peak_call_input_tokens": 284,
+          "peak_call_input_with_output_reserve": 412,
+          "code_change_vs_whole_file_pct": -10.897435897435892,
+          "total_input_change_vs_whole_file_pct": 60.33333333333333
+        },
+        "B": {
+          "code_tokens": 625,
+          "answer_input_tokens": 770,
+          "selector_input_tokens": 197,
+          "total_input_tokens": 967,
+          "peak_call_input_tokens": 770,
+          "peak_call_input_with_output_reserve": 898,
+          "code_change_vs_whole_file_pct": 300.64102564102564,
+          "total_input_change_vs_whole_file_pct": 222.33333333333331
+        },
+        "R0": {
+          "code_tokens": 1010,
+          "answer_input_tokens": 1154,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1154,
+          "peak_call_input_tokens": 1154,
+          "peak_call_input_with_output_reserve": 1282,
+          "code_change_vs_whole_file_pct": 547.4358974358975,
+          "total_input_change_vs_whole_file_pct": 284.6666666666667
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__v2_private_ttl_exact_edge",
+      "project": "eval_cache",
+      "category": "boundary",
+      "split": "additional48",
+      "baseline_file": "eval_cache/service.py",
+      "whole_file": {
+        "code_tokens": 156,
+        "answer_input_tokens": 287,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 287,
+        "peak_call_input_tokens": 287,
+        "peak_call_input_with_output_reserve": 415
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 139,
+          "answer_input_tokens": 271,
+          "selector_input_tokens": 184,
+          "total_input_tokens": 455,
+          "peak_call_input_tokens": 271,
+          "peak_call_input_with_output_reserve": 399,
+          "code_change_vs_whole_file_pct": -10.897435897435892,
+          "total_input_change_vs_whole_file_pct": 58.53658536585367
+        },
+        "B": {
+          "code_tokens": 625,
+          "answer_input_tokens": 757,
+          "selector_input_tokens": 184,
+          "total_input_tokens": 941,
+          "peak_call_input_tokens": 757,
+          "peak_call_input_with_output_reserve": 885,
+          "code_change_vs_whole_file_pct": 300.64102564102564,
+          "total_input_change_vs_whole_file_pct": 227.8745644599303
+        },
+        "R0": {
+          "code_tokens": 1010,
+          "answer_input_tokens": 1141,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1141,
+          "peak_call_input_tokens": 1141,
+          "peak_call_input_with_output_reserve": 1269,
+          "code_change_vs_whole_file_pct": 547.4358974358975,
+          "total_input_change_vs_whole_file_pct": 297.5609756097561
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__v2_default_public_lifetime",
+      "project": "eval_cache",
+      "category": "semantic",
+      "split": "additional48",
+      "baseline_file": "eval_cache/service.py",
+      "whole_file": {
+        "code_tokens": 156,
+        "answer_input_tokens": 323,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 323,
+        "peak_call_input_tokens": 323,
+        "peak_call_input_with_output_reserve": 451
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 34,
+          "answer_input_tokens": 202,
+          "selector_input_tokens": 338,
+          "total_input_tokens": 540,
+          "peak_call_input_tokens": 338,
+          "peak_call_input_with_output_reserve": 434,
+          "code_change_vs_whole_file_pct": -78.2051282051282,
+          "total_input_change_vs_whole_file_pct": 67.18266253869969
+        },
+        "B": {
+          "code_tokens": 60,
+          "answer_input_tokens": 227,
+          "selector_input_tokens": 338,
+          "total_input_tokens": 565,
+          "peak_call_input_tokens": 338,
+          "peak_call_input_with_output_reserve": 434,
+          "code_change_vs_whole_file_pct": -61.53846153846154,
+          "total_input_change_vs_whole_file_pct": 74.92260061919505
+        },
+        "R0": {
+          "code_tokens": 1009,
+          "answer_input_tokens": 1176,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1176,
+          "peak_call_input_tokens": 1176,
+          "peak_call_input_with_output_reserve": 1304,
+          "code_change_vs_whole_file_pct": 546.7948717948718,
+          "total_input_change_vs_whole_file_pct": 264.0866873065015
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__v2_negative_private_lifetime",
+      "project": "eval_cache",
+      "category": "semantic",
+      "split": "additional48",
+      "baseline_file": "eval_cache/service.py",
+      "whole_file": {
+        "code_tokens": 156,
+        "answer_input_tokens": 314,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 314,
+        "peak_call_input_tokens": 314,
+        "peak_call_input_with_output_reserve": 442
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 139,
+          "answer_input_tokens": 298,
+          "selector_input_tokens": 329,
+          "total_input_tokens": 627,
+          "peak_call_input_tokens": 329,
+          "peak_call_input_with_output_reserve": 426,
+          "code_change_vs_whole_file_pct": -10.897435897435892,
+          "total_input_change_vs_whole_file_pct": 99.68152866242038
+        },
+        "B": {
+          "code_tokens": 625,
+          "answer_input_tokens": 784,
+          "selector_input_tokens": 329,
+          "total_input_tokens": 1113,
+          "peak_call_input_tokens": 784,
+          "peak_call_input_with_output_reserve": 912,
+          "code_change_vs_whole_file_pct": 300.64102564102564,
+          "total_input_change_vs_whole_file_pct": 254.45859872611467
+        },
+        "R0": {
+          "code_tokens": 1021,
+          "answer_input_tokens": 1180,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1180,
+          "peak_call_input_tokens": 1180,
+          "peak_call_input_with_output_reserve": 1308,
+          "code_change_vs_whole_file_pct": 554.4871794871794,
+          "total_input_change_vs_whole_file_pct": 275.79617834394907
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__v2_private_cap_intervention",
+      "project": "eval_cache",
+      "category": "change_impact",
+      "split": "additional48",
+      "baseline_file": "eval_cache/service.py",
+      "whole_file": {
+        "code_tokens": 156,
+        "answer_input_tokens": 340,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 340,
+        "peak_call_input_tokens": 340,
+        "peak_call_input_with_output_reserve": 468
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 57,
+          "answer_input_tokens": 242,
+          "selector_input_tokens": 268,
+          "total_input_tokens": 510,
+          "peak_call_input_tokens": 268,
+          "peak_call_input_with_output_reserve": 370,
+          "code_change_vs_whole_file_pct": -63.46153846153846,
+          "total_input_change_vs_whole_file_pct": 50.0
+        },
+        "B": {
+          "code_tokens": 162,
+          "answer_input_tokens": 347,
+          "selector_input_tokens": 268,
+          "total_input_tokens": 615,
+          "peak_call_input_tokens": 347,
+          "peak_call_input_with_output_reserve": 475,
+          "code_change_vs_whole_file_pct": 3.8461538461538547,
+          "total_input_change_vs_whole_file_pct": 80.88235294117648
+        },
+        "R0": {
+          "code_tokens": 1021,
+          "answer_input_tokens": 1205,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1205,
+          "peak_call_input_tokens": 1205,
+          "peak_call_input_with_output_reserve": 1333,
+          "code_change_vs_whole_file_pct": 554.4871794871794,
+          "total_input_change_vs_whole_file_pct": 254.41176470588235
+        }
+      }
+    },
+    {
+      "task_id": "eval_cache__v2_entry_transitive_calls",
+      "project": "eval_cache",
+      "category": "architecture",
+      "split": "additional48",
+      "baseline_file": "eval_cache/service.py",
+      "whole_file": {
+        "code_tokens": 156,
+        "answer_input_tokens": 313,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 313,
+        "peak_call_input_tokens": 313,
+        "peak_call_input_with_output_reserve": 441
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 139,
+          "answer_input_tokens": 297,
+          "selector_input_tokens": 210,
+          "total_input_tokens": 507,
+          "peak_call_input_tokens": 297,
+          "peak_call_input_with_output_reserve": 425,
+          "code_change_vs_whole_file_pct": -10.897435897435892,
+          "total_input_change_vs_whole_file_pct": 61.98083067092652
+        },
+        "B": {
+          "code_tokens": 524,
+          "answer_input_tokens": 681,
+          "selector_input_tokens": 210,
+          "total_input_tokens": 891,
+          "peak_call_input_tokens": 681,
+          "peak_call_input_with_output_reserve": 809,
+          "code_change_vs_whole_file_pct": 235.8974358974359,
+          "total_input_change_vs_whole_file_pct": 184.66453674121402
+        },
+        "R0": {
+          "code_tokens": 1009,
+          "answer_input_tokens": 1166,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1166,
+          "peak_call_input_tokens": 1166,
+          "peak_call_input_with_output_reserve": 1294,
+          "code_change_vs_whole_file_pct": 546.7948717948718,
+          "total_input_change_vs_whole_file_pct": 272.5239616613419
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__v2_buffer_exact_separation",
+      "project": "eval_schedules",
+      "category": "single_function",
+      "split": "additional48",
+      "baseline_file": "eval_schedules/rules.py",
+      "whole_file": {
+        "code_tokens": 115,
+        "answer_input_tokens": 251,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 251,
+        "peak_call_input_tokens": 251,
+        "peak_call_input_with_output_reserve": 379
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 54,
+          "answer_input_tokens": 191,
+          "selector_input_tokens": 115,
+          "total_input_tokens": 306,
+          "peak_call_input_tokens": 191,
+          "peak_call_input_with_output_reserve": 319,
+          "code_change_vs_whole_file_pct": -53.04347826086957,
+          "total_input_change_vs_whole_file_pct": 21.912350597609564
+        },
+        "B": {
+          "code_tokens": 98,
+          "answer_input_tokens": 235,
+          "selector_input_tokens": 115,
+          "total_input_tokens": 350,
+          "peak_call_input_tokens": 235,
+          "peak_call_input_with_output_reserve": 363,
+          "code_change_vs_whole_file_pct": -14.782608695652177,
+          "total_input_change_vs_whole_file_pct": 39.44223107569722
+        },
+        "R0": {
+          "code_tokens": 1022,
+          "answer_input_tokens": 1159,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1159,
+          "peak_call_input_tokens": 1159,
+          "peak_call_input_with_output_reserve": 1287,
+          "code_change_vs_whole_file_pct": 788.695652173913,
+          "total_input_change_vs_whole_file_pct": 361.7529880478088
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__v2_two_busy_intervals",
+      "project": "eval_schedules",
+      "category": "cross_file",
+      "split": "additional48",
+      "baseline_file": "eval_schedules/service.py",
+      "whole_file": {
+        "code_tokens": 199,
+        "answer_input_tokens": 345,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 345,
+        "peak_call_input_tokens": 345,
+        "peak_call_input_with_output_reserve": 473
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 98,
+          "answer_input_tokens": 245,
+          "selector_input_tokens": 125,
+          "total_input_tokens": 370,
+          "peak_call_input_tokens": 245,
+          "peak_call_input_with_output_reserve": 373,
+          "code_change_vs_whole_file_pct": -50.753768844221106,
+          "total_input_change_vs_whole_file_pct": 7.246376811594213
+        },
+        "B": {
+          "code_tokens": 574,
+          "answer_input_tokens": 720,
+          "selector_input_tokens": 125,
+          "total_input_tokens": 845,
+          "peak_call_input_tokens": 720,
+          "peak_call_input_with_output_reserve": 848,
+          "code_change_vs_whole_file_pct": 188.44221105527637,
+          "total_input_change_vs_whole_file_pct": 144.9275362318841
+        },
+        "R0": {
+          "code_tokens": 1011,
+          "answer_input_tokens": 1158,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1158,
+          "peak_call_input_tokens": 1158,
+          "peak_call_input_with_output_reserve": 1286,
+          "code_change_vs_whole_file_pct": 408.04020100502515,
+          "total_input_change_vs_whole_file_pct": 235.6521739130435
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__v2_wrapped_workday",
+      "project": "eval_schedules",
+      "category": "cross_file",
+      "split": "additional48",
+      "baseline_file": "eval_schedules/service.py",
+      "whole_file": {
+        "code_tokens": 199,
+        "answer_input_tokens": 344,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 344,
+        "peak_call_input_tokens": 344,
+        "peak_call_input_with_output_reserve": 472
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 167,
+          "answer_input_tokens": 313,
+          "selector_input_tokens": 122,
+          "total_input_tokens": 435,
+          "peak_call_input_tokens": 313,
+          "peak_call_input_with_output_reserve": 441,
+          "code_change_vs_whole_file_pct": -16.080402010050253,
+          "total_input_change_vs_whole_file_pct": 26.453488372093027
+        },
+        "B": {
+          "code_tokens": 566,
+          "answer_input_tokens": 712,
+          "selector_input_tokens": 122,
+          "total_input_tokens": 834,
+          "peak_call_input_tokens": 712,
+          "peak_call_input_with_output_reserve": 840,
+          "code_change_vs_whole_file_pct": 184.42211055276383,
+          "total_input_change_vs_whole_file_pct": 142.44186046511626
+        },
+        "R0": {
+          "code_tokens": 1023,
+          "answer_input_tokens": 1169,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1169,
+          "peak_call_input_tokens": 1169,
+          "peak_call_input_with_output_reserve": 1297,
+          "code_change_vs_whole_file_pct": 414.070351758794,
+          "total_input_change_vs_whole_file_pct": 239.82558139534885
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__v2_max_duration_closing_edge",
+      "project": "eval_schedules",
+      "category": "boundary",
+      "split": "additional48",
+      "baseline_file": "eval_schedules/service.py",
+      "whole_file": {
+        "code_tokens": 199,
+        "answer_input_tokens": 330,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 330,
+        "peak_call_input_tokens": 330,
+        "peak_call_input_with_output_reserve": 458
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 98,
+          "answer_input_tokens": 230,
+          "selector_input_tokens": 110,
+          "total_input_tokens": 340,
+          "peak_call_input_tokens": 230,
+          "peak_call_input_with_output_reserve": 358,
+          "code_change_vs_whole_file_pct": -50.753768844221106,
+          "total_input_change_vs_whole_file_pct": 3.0303030303030276
+        },
+        "B": {
+          "code_tokens": 574,
+          "answer_input_tokens": 705,
+          "selector_input_tokens": 110,
+          "total_input_tokens": 815,
+          "peak_call_input_tokens": 705,
+          "peak_call_input_with_output_reserve": 833,
+          "code_change_vs_whole_file_pct": 188.44221105527637,
+          "total_input_change_vs_whole_file_pct": 146.96969696969697
+        },
+        "R0": {
+          "code_tokens": 1011,
+          "answer_input_tokens": 1143,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1143,
+          "peak_call_input_tokens": 1143,
+          "peak_call_input_with_output_reserve": 1271,
+          "code_change_vs_whole_file_pct": 408.04020100502515,
+          "total_input_change_vs_whole_file_pct": 246.36363636363637
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__v2_next_week_opening",
+      "project": "eval_schedules",
+      "category": "semantic",
+      "split": "additional48",
+      "baseline_file": "eval_schedules/service.py",
+      "whole_file": {
+        "code_tokens": 199,
+        "answer_input_tokens": 362,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 362,
+        "peak_call_input_tokens": 362,
+        "peak_call_input_with_output_reserve": 490
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 32,
+          "answer_input_tokens": 196,
+          "selector_input_tokens": 193,
+          "total_input_tokens": 389,
+          "peak_call_input_tokens": 196,
+          "peak_call_input_with_output_reserve": 324,
+          "code_change_vs_whole_file_pct": -83.91959798994975,
+          "total_input_change_vs_whole_file_pct": 7.458563535911611
+        },
+        "B": {
+          "code_tokens": 84,
+          "answer_input_tokens": 247,
+          "selector_input_tokens": 193,
+          "total_input_tokens": 440,
+          "peak_call_input_tokens": 247,
+          "peak_call_input_with_output_reserve": 375,
+          "code_change_vs_whole_file_pct": -57.78894472361809,
+          "total_input_change_vs_whole_file_pct": 21.54696132596685
+        },
+        "R0": {
+          "code_tokens": 1013,
+          "answer_input_tokens": 1177,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1177,
+          "peak_call_input_tokens": 1177,
+          "peak_call_input_with_output_reserve": 1305,
+          "code_change_vs_whole_file_pct": 409.0452261306533,
+          "total_input_change_vs_whole_file_pct": 225.13812154696132
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__v2_overlong_duration",
+      "project": "eval_schedules",
+      "category": "semantic",
+      "split": "additional48",
+      "baseline_file": "eval_schedules/service.py",
+      "whole_file": {
+        "code_tokens": 199,
+        "answer_input_tokens": 354,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 354,
+        "peak_call_input_tokens": 354,
+        "peak_call_input_with_output_reserve": 482
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 167,
+          "answer_input_tokens": 323,
+          "selector_input_tokens": 183,
+          "total_input_tokens": 506,
+          "peak_call_input_tokens": 323,
+          "peak_call_input_with_output_reserve": 451,
+          "code_change_vs_whole_file_pct": -16.080402010050253,
+          "total_input_change_vs_whole_file_pct": 42.93785310734464
+        },
+        "B": {
+          "code_tokens": 672,
+          "answer_input_tokens": 827,
+          "selector_input_tokens": 183,
+          "total_input_tokens": 1010,
+          "peak_call_input_tokens": 827,
+          "peak_call_input_with_output_reserve": 955,
+          "code_change_vs_whole_file_pct": 237.68844221105527,
+          "total_input_change_vs_whole_file_pct": 185.31073446327682
+        },
+        "R0": {
+          "code_tokens": 1006,
+          "answer_input_tokens": 1161,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1161,
+          "peak_call_input_tokens": 1161,
+          "peak_call_input_with_output_reserve": 1289,
+          "code_change_vs_whole_file_pct": 405.52763819095475,
+          "total_input_change_vs_whole_file_pct": 227.96610169491527
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__v2_slot_size_intervention",
+      "project": "eval_schedules",
+      "category": "change_impact",
+      "split": "additional48",
+      "baseline_file": "eval_schedules/service.py",
+      "whole_file": {
+        "code_tokens": 199,
+        "answer_input_tokens": 375,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 375,
+        "peak_call_input_tokens": 375,
+        "peak_call_input_with_output_reserve": 503
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 45,
+          "answer_input_tokens": 222,
+          "selector_input_tokens": 257,
+          "total_input_tokens": 479,
+          "peak_call_input_tokens": 257,
+          "peak_call_input_with_output_reserve": 353,
+          "code_change_vs_whole_file_pct": -77.38693467336684,
+          "total_input_change_vs_whole_file_pct": 27.73333333333334
+        },
+        "B": {
+          "code_tokens": 89,
+          "answer_input_tokens": 266,
+          "selector_input_tokens": 257,
+          "total_input_tokens": 523,
+          "peak_call_input_tokens": 266,
+          "peak_call_input_with_output_reserve": 394,
+          "code_change_vs_whole_file_pct": -55.27638190954774,
+          "total_input_change_vs_whole_file_pct": 39.46666666666667
+        },
+        "R0": {
+          "code_tokens": 1023,
+          "answer_input_tokens": 1199,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1199,
+          "peak_call_input_tokens": 1199,
+          "peak_call_input_with_output_reserve": 1327,
+          "code_change_vs_whole_file_pct": 414.070351758794,
+          "total_input_change_vs_whole_file_pct": 219.73333333333335
+        }
+      }
+    },
+    {
+      "task_id": "eval_schedules__v2_appointment_transitive_calls",
+      "project": "eval_schedules",
+      "category": "architecture",
+      "split": "additional48",
+      "baseline_file": "eval_schedules/service.py",
+      "whole_file": {
+        "code_tokens": 199,
+        "answer_input_tokens": 351,
+        "selector_input_tokens": 0,
+        "total_input_tokens": 351,
+        "peak_call_input_tokens": 351,
+        "peak_call_input_with_output_reserve": 479
+      },
+      "arms": {
+        "A": {
+          "code_tokens": 167,
+          "answer_input_tokens": 320,
+          "selector_input_tokens": 129,
+          "total_input_tokens": 449,
+          "peak_call_input_tokens": 320,
+          "peak_call_input_with_output_reserve": 448,
+          "code_change_vs_whole_file_pct": -16.080402010050253,
+          "total_input_change_vs_whole_file_pct": 27.920227920227923
+        },
+        "B": {
+          "code_tokens": 566,
+          "answer_input_tokens": 719,
+          "selector_input_tokens": 129,
+          "total_input_tokens": 848,
+          "peak_call_input_tokens": 719,
+          "peak_call_input_with_output_reserve": 847,
+          "code_change_vs_whole_file_pct": 184.42211055276383,
+          "total_input_change_vs_whole_file_pct": 141.5954415954416
+        },
+        "R0": {
+          "code_tokens": 1023,
+          "answer_input_tokens": 1175,
+          "selector_input_tokens": 0,
+          "total_input_tokens": 1175,
+          "peak_call_input_tokens": 1175,
+          "peak_call_input_with_output_reserve": 1303,
+          "code_change_vs_whole_file_pct": 414.070351758794,
+          "total_input_change_vs_whole_file_pct": 234.75783475783473
+        }
+      }
+    }
+  ],
+  "checks": {
+    "original_864_record_token_counts_reproduced": true,
+    "same_model_and_tokenizer": true,
+    "three_repeat_counts_identical": true,
+    "all_whole_file_inputs_fit_context": true,
+    "independent_arithmetic_values_checked": 144
+  },
+  "protocol_sha256": "814ea1fa6011518cb3e8c7ebe998781de423c6705183805407562e2c7d1d95a7",
+  "token_counts_sha256": "164f1accfe94a6183ccc520a2b14e5cd583c6883db798c9d962ba77bd85826dd"
+}

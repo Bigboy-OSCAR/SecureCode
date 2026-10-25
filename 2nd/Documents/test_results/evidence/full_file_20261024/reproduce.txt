@@ -1,0 +1,55 @@
+파일 하나 전체를 실제 모델에 전달하는 실험 재현
+
+이번 자료는 토큰만 계산한 비교가 아니다. 96문제 × 3회 = 288개 답변을 실제 생성하고,
+원래 A/B 576개와 R0 288개 실제 답변과 비교한다.
+파일 경로를 미리 제공하는 조건이며, 다른 파일로의 의존 확장은 하지 않는다.
+
+프로젝트 루트 /Users/oscar/Desktop/SecureCode 에서 실행한다.
+기존 결과를 덮어쓰지 않도록 존재하지 않는 새 출력 경로를 사용한다.
+
+FULL_REPRO_OUT=/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/full_file_reproduction_new
+python3 2nd/experiments/symbol_raptor/experiment_full.py prepare --out "$FULL_REPRO_OUT"
+
+별도 터미널에서, 8766 포트가 비어 있는 상태로 동일 모델 서버를 실행한다.
+
+/opt/homebrew/bin/llama-server -m /Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf --host 127.0.0.1 --port 8766 --ctx-size 8192 --parallel 1 --no-warmup --cache-ram 0 --no-cache-prompt
+
+모델 로딩이 끝나면 개발용 점검과 본 평가를 순서대로 수행한다.
+
+python3 2nd/experiments/symbol_raptor/experiment_full.py dev --out "$FULL_REPRO_OUT"
+python3 2nd/experiments/symbol_raptor/experiment_full.py run --out "$FULL_REPRO_OUT"
+
+원본 실험은 개발 8답변, 평가 288답변, 각 세션 예열 1답변씩 총 298회 모델 호출이다.
+예열과 개발용 답변은 평가에서 제외된다. 중단·재개 없이 실행하면 호출 수 검증도 동일하다.
+파일 전체를 읽고 같은 답변 프롬프트에 넣는다. 파일이 1,024토큰보다 길면 자르지 않고 중단한다.
+현재 고정된 평가 파일은 모두 104~199토큰이므로 전체를 그대로 전달한다.
+모델/서버 실행 파일/주요 설정은 이전 A/B와 같아야 한다.
+
+측정이 모두 끝나면 집계 및 오프라인 검증을 수행한다.
+
+python3 2nd/experiments/symbol_raptor/analyze_full.py --out "$FULL_REPRO_OUT"
+python3 2nd/experiments/symbol_raptor/verify_full.py --out "$FULL_REPRO_OUT"
+
+verification.json의 PASS를 확인한다.
+검증은 실제 호출 로그, 파일 원문 전체와 입력 일치, 같은 질문과 모델, 독립 채점,
+오프라인 토큰 계산, 별도 통계 재계산을 확인한다.
+서로 다른 세션의 시간 차이는 순수한 방식 효과로 해석하지 않는다.
+
+현재 발행된 근거를 이용하여 설명용 색인과 보고서를 다시 생성하려면:
+
+python3 2nd/experiments/symbol_raptor/build_index_example.py
+python3 2nd/experiments/symbol_raptor/report_full.py
+
+build_index_example.py는 설명용 세 파일을 만들고 실제 A/B/R0 구현으로 색인·후보를 생성한다.
+예제는 96문제 평가에 섞이지 않는다. A/B 출발 함수는 설명을 위해 고정하며 LLM 선택을 실행한 것처럼 표시하지 않는다.
+새 경로에서 보고서까지 재생성하려면 index_example 폴더를 그 경로에 복사하고 report_full.py --out을 사용한다.
+문서 내 근거 링크는 발행 폴더 full_file_20261024를 가리키므로 다른 경로로 발행할 때 확인한다.
+
+보고서 대상 파일:
+/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md
+
+protocol.json은 실행 전에 고정한 입력과 코드를 기록한다.
+analysis_plan.json과 source_snapshot은 분석·검증·설명 코드를 보관한다.
+report_manifest.json과 completion_audit.json은 최종 보고서와 확인 결과를 기록한다.
+이전 보고서는 history/report_before_full_file_run.md에 보관했다.
+A/B, R0 및 이전 토큰 계산의 원자료는 변경하지 않는다.

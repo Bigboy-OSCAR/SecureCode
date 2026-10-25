@@ -1,0 +1,67 @@
+대형 파일 네 방식 실제 실행 재현
+
+96문제 × 3반복 × 4방식(A, B, R0, 파일 전체) = 1,152개 평가 답변.
+개발용 8문제 × 4방식 = 32개는 평가 점수에서 제외한다.
+이전 작은 파일의 1,152개 평가 답변은 기존 evidence 폴더에 보존되어 있다.
+
+프로젝트 루트: /Users/oscar/Desktop/SecureCode
+기존 결과를 덮어쓰지 않도록 존재하지 않는 새 출력 경로를 지정한다.
+
+LARGE_REPRO_OUT=/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/large_files_reproduction_new
+python3 2nd/experiments/symbol_raptor/experiment_large.py prepare --out "$LARGE_REPRO_OUT"
+
+준비 단계는 평가 6개와 개발 1개 프로젝트의 파일마다 무관한 실행 가능한 함수를 추가한다.
+기존 함수·상수 본문/import/참조와 정답을 보존하고 다시 검증한다.
+4096토큰 이상이 되는 최소 추가 함수 수는 모델 출력을 보지 않고 토크나이저만으로 결정한다.
+A/B/R0 검색 코드 상한은 기존 1024토큰, 파일 전체는 자르지 않고 그대로 전달한다.
+전체 모델 컨텍스트는 모든 방식에서 8192토큰이다.
+
+8766 포트가 비어 있을 때 별도 터미널에서 같은 모델 서버를 시작한다.
+
+/opt/homebrew/bin/llama-server -m /Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf --host 127.0.0.1 --port 8766 --ctx-size 8192 --parallel 1 --no-warmup --cache-ram 0 --no-cache-prompt
+
+모델 로딩 후 개발 점검과 평가를 순서대로 실행한다.
+
+python3 2nd/experiments/symbol_raptor/experiment_large.py dev --out "$LARGE_REPRO_OUT"
+python3 2nd/experiments/symbol_raptor/experiment_large.py run --out "$LARGE_REPRO_OUT"
+
+각 A/B 요청은 출발 함수 선택과 답변을 별도 실제 호출한다. R0과 파일 전체는 답변만 호출한다.
+같은 질문 블록 안에서 네 방식을 번갈아 실행한다. 반복별 96블록 순서는 고정 난수로 섞는다.
+프로젝트·반복마다 각 방식이 1~4번째 위치에 정확히 네 번씩 등장한다.
+캐시 재사용은 끄며, 모델 서버 응답의 cache_n=0도 검증한다.
+중단 없이 개발과 평가를 실행하면 예열 두 번을 포함하여 총 1,778개 모델 호출이 남는다.
+
+측정이 끝나면 집계와 오프라인 검증을 실행한다.
+
+python3 2nd/experiments/symbol_raptor/analyze_large.py --out "$LARGE_REPRO_OUT"
+python3 2nd/experiments/symbol_raptor/verify_large.py --out "$LARGE_REPRO_OUT"
+
+verification.json의 PASS를 확인한다.
+원문 입력, 선택 원문 재구성, 독립 TF-IDF 검색 순위, 오프라인 토큰 계산과 greedy 구성,
+형식·자료형을 지키는 정답 채점, 실제 호출 기록, 시간, 통계를 재확인한다.
+이 검증은 반복 측정이 독립된 문제 수를 늘려 주는 것으로 간주하지 않는다.
+큰 파일 내부 여섯 정답률 차이에 프로젝트 단위 검정과 Holm 보정을 적용한다.
+
+현재 발행된 결과로 기존 Markdown 보고서의 8절을 다시 생성하려면:
+
+python3 2nd/experiments/symbol_raptor/report_large.py
+
+이 마지막 명령은 현재 발행 폴더 large_files_20261024와 그 폴더에 보존한 수정 전 보고서를 사용한다.
+새 실행 폴더의 결과는 별도 저장되며, 위 명령이 새 결과로 자동 교체하지는 않는다.
+현재 보고서:
+/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md
+
+주의할 해석 범위:
+- 질문 대상 함수가 길어진 것이 아니라, 무관한 함수가 더해져 파일과 검색 후보가 커진 합성 실험이다.
+- 파일 전체 방식은 대상 파일 경로를 이미 알고 시작한다.
+- 큰 파일의 네 방식은 같은 세션에서 교차 실행했다. 작은 파일은 이전 세션의 실제 기록이다.
+- 파일 전체는 원문 전체, 검색 방식은 1024토큰 한도이므로 동일 코드량 조건은 아니다.
+- 사전 색인/참조 그래프/검색 벡터 생성은 질의 시간에서 제외한다.
+- 작은 6개 합성 프로젝트와 한 모델의 결과로 실제 대규모 저장소에 일반화하지 않는다.
+
+protocol.json: 측정 전에 고정한 구성과 입력/코드 해시.
+analysis_plan.json: 평가 시작 전 분석 및 검증 코드 해시.
+report_plan.json: 평가 진행 중 작성한 보고서 생성 코드와 사례 선정 방침.
+source_snapshot: 원래 실행 및 분석 코드 보관.
+model_calls.jsonl/results.jsonl: 실제 모델 호출과 질문별 측정 기록.
+report_manifest.json/completion_audit.json: 발행 결과와 최종 확인.

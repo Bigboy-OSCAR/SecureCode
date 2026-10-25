@@ -1,0 +1,47 @@
+{
+  "created_at_utc": "2026-10-25T04:21:01.948132+00:00",
+  "request": "3번 보고서를 내용 누락 없이 재구성",
+  "new_model_calls": 0,
+  "before": {
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md": {
+      "snapshot": "03_현재색인_A와_파일간확장_B_재실험_비교보고서.md",
+      "sha256": "53a1af06219a268e1325fb9f532068c081cb7ff085b5dfcdcbf3f3e8997f43b1"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/report_manifest.json": {
+      "snapshot": "report_manifest.json",
+      "sha256": "5b0ee4e497d57c7b949105a5d7a8e17e24a1beb01a43fc3cc17f8c8aae69812b"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/completion_audit.json": {
+      "snapshot": "completion_audit.json",
+      "sha256": "d6341dba1b3ea38e652fe9dc07bac3f87b0fa82b81d8b983f88883228c2c2b76"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/final_source_manifest.json": {
+      "snapshot": "final_source_manifest.json",
+      "sha256": "1c37c0ce8b14eed17265e63e19d81ae8849314340091061ca08b23a50e3aeab4"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/deliverable_manifest.json": {
+      "snapshot": "deliverable_manifest.json",
+      "sha256": "c4fa55e69a42114be6a110e8efc1d167aeac3d2adec1a51185c505d99d17128e"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/work_status.json": {
+      "snapshot": "work_status.json",
+      "sha256": "a2ae315650e9f745d45bdb164db67a4fa4f0e89bfd286adca9f1e3060aa8ac59"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/reproduce.txt": {
+      "snapshot": "reproduce.txt",
+      "sha256": "e215cfd07211b430cc8a76fbedcd90cfde672cc63607dd58da4e1afb4113b64c"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/report_raptor_large.py": {
+      "snapshot": "before_report_raptor_large.py",
+      "sha256": "0d25dce196c09866b4614c237e205fedcb31c6257ac72a4f6a37bba8cf2b5f5a"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/audit_raptor_report.py": {
+      "snapshot": "before_audit_raptor_report.py",
+      "sha256": "0563ebb04a4e08c5a04186ccad6d680f485547da7c81f9d6911f8eccdc90c269"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/verify_report_mechanisms.py": {
+      "snapshot": "before_verify_report_mechanisms.py",
+      "sha256": "15f2385192c08fd6e6c01d09a0792b45e1a04b73dcee60213cd3be40a1b5640b"
+    }
+  }
+}

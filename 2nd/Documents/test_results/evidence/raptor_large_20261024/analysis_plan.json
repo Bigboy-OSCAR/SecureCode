@@ -1,0 +1,8 @@
+{
+  "stage": "Before evaluation",
+  "files": {
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/analyze_raptor_large.py": "a9dc6f743e397962f57f953c1877e53ac08de907b56e0f62c3195d10c938fd94",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/verify_raptor_large.py": "69506323d8836a9c84980c06790a7f5ac557eda94f3b8c230ceb0f38c0b39348"
+  },
+  "frozen_at_utc": "2026-10-24T13:48:10.729788+00:00"
+}

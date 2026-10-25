@@ -1,0 +1,13 @@
+{
+  "recorded_at_utc": "2026-10-24T15:44:51.372909+00:00",
+  "before_new_evaluation": true,
+  "source_hashes": {
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/results_eval_main.jsonl": "2c619e280d34a8c04f5865fc35caf4902e93cb4710a59ae6cc5cdcca9f6497d9",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/revision_v2/results_new.jsonl": "60138e011dd992aef4944daf8916b30455be67cfafae6cdf6ef0f3a4b3d46e44",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/revision_v2/results_old.jsonl": "df7d1cbdd97d8d2cb2c64df7696ac7c3e86ac6e49d5db7cb5e413f32011a5131",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/dataset/eval_tasks.json": "857883a571e5a781d237609578dbd909953efb16da837dea58030aa5339b072b",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/revision_v2/holdout/eval_tasks.json": "06a9efc888fff9dd99681f38bffdfd5c32c878ae8850af5ed801d8024a2226ef"
+  },
+  "original48_question_text_matches": 48,
+  "additional48_question_text_matches": 48
+}

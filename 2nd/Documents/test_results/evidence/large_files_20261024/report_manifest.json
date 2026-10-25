@@ -1,0 +1,10 @@
+{
+  "created_at_utc": "2026-10-24T13:25:42.886798+00:00",
+  "report": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md",
+  "report_sha256": "830ebd00bb6b9ed9192a6465bffcf8f5ad7bd0cf18f43960a165c464c037fea0",
+  "summary_sha256": "911c9455ab8a603a63b371b7baf95c2214ce6ead712a7d260af9704efcbcae15",
+  "verification_sha256": "bb1724d5d85192fccee520bf74c5cbad6e42270f6291e9a67c47a9af30bc583f",
+  "generator_sha256": "36b2d8756fddae68089bc6fa11c2c5e7b4230e017891d5c9d776fd93d90e5efb",
+  "output_limit_diagnostics_sha256": "eb53866187c3622a95f6c887de3bf4feb2f4737fe36f1ffdbd979612831fe671",
+  "previous_report_sha256": "2a630baed990451ce801b1697e2792a9255f4279089d4f18c0dbd5734758d256"
+}
