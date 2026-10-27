@@ -1,0 +1,345 @@
+{
+  "created_at_utc": "2026-10-26T19:34:30.585717+00:00",
+  "analysis_type": "post_hoc_descriptive",
+  "note": "Failure inspection and conditional cost summaries. Primary estimates, thresholds and scoring are unchanged. Subgroups are selected by H outcomes and are not independent performance comparisons.",
+  "results_sha256": "5f6cec3ad6fbca67b0f07fbb7de69c95914c2905990e2781b0c839a8394432ed",
+  "source_sha256": "92b951d82122ed976322fd38af6b1daf14ad1076407b91b37157541fd5687bb8",
+  "groups": {
+    "all": {
+      "query_executions": 288,
+      "unique_questions": 96,
+      "arms": {
+        "H": {
+          "accuracy": 0.19791666666666666,
+          "mean_total_input": 1016.6458333333334,
+          "mean_peak_input": 671.8125,
+          "mean_raw_tokens": 198.77083333333334,
+          "mean_seconds": 4.692035467885136
+        },
+        "R0": {
+          "accuracy": 0.2604166666666667,
+          "mean_total_input": 1164.6979166666667,
+          "mean_peak_input": 1164.6979166666667,
+          "mean_raw_tokens": 1016.1458333333334,
+          "mean_seconds": 5.005646787628899
+        },
+        "B": {
+          "accuracy": 0.20833333333333334,
+          "mean_total_input": 769.4270833333334,
+          "mean_peak_input": 591.125,
+          "mean_raw_tokens": 366.0104166666667,
+          "mean_seconds": 3.4917492734205857
+        }
+      },
+      "H_total_reduction_vs_matched_R0_pct": 12.711629446118899
+    },
+    "valid_selection": {
+      "query_executions": 222,
+      "unique_questions": 74,
+      "arms": {
+        "H": {
+          "accuracy": 0.25675675675675674,
+          "mean_total_input": 1072.6486486486488,
+          "mean_peak_input": 670.8783783783783,
+          "mean_raw_tokens": 257.86486486486484,
+          "mean_seconds": 4.744947298427678
+        },
+        "R0": {
+          "accuracy": 0.25675675675675674,
+          "mean_total_input": 1162.662162162162,
+          "mean_peak_input": 1162.662162162162,
+          "mean_raw_tokens": 1015.7162162162163,
+          "mean_seconds": 5.044595346856351
+        },
+        "B": {
+          "accuracy": 0.21621621621621623,
+          "mean_total_input": 766.1351351351351,
+          "mean_peak_input": 581.1891891891892,
+          "mean_raw_tokens": 352.2027027027027,
+          "mean_seconds": 3.533887953040854
+        }
+      },
+      "H_total_reduction_vs_matched_R0_pct": 7.742017969013315
+    },
+    "invalid_selection": {
+      "query_executions": 66,
+      "unique_questions": 22,
+      "arms": {
+        "H": {
+          "accuracy": 0,
+          "mean_total_input": 828.2727272727273,
+          "mean_peak_input": 674.9545454545455,
+          "mean_raw_tokens": 0,
+          "mean_seconds": 4.514059310605675
+        },
+        "R0": {
+          "accuracy": 0.2727272727272727,
+          "mean_total_input": 1171.5454545454545,
+          "mean_peak_input": 1171.5454545454545,
+          "mean_raw_tokens": 1017.5909090909091,
+          "mean_seconds": 4.874637997500196
+        },
+        "B": {
+          "accuracy": 0.18181818181818182,
+          "mean_total_input": 780.5,
+          "mean_peak_input": 624.5454545454545,
+          "mean_raw_tokens": 412.45454545454544,
+          "mean_seconds": 3.3500100783342286
+        }
+      },
+      "H_total_reduction_vs_matched_R0_pct": 29.30084581361061
+    },
+    "all_required_raw": {
+      "query_executions": 39,
+      "unique_questions": 13,
+      "arms": {
+        "H": {
+          "accuracy": 0.6923076923076923,
+          "mean_total_input": 951.6153846153846,
+          "mean_peak_input": 653.8461538461538,
+          "mean_raw_tokens": 164.53846153846155,
+          "mean_seconds": 4.092966814178419
+        },
+        "R0": {
+          "accuracy": 0.6153846153846154,
+          "mean_total_input": 1151.4615384615386,
+          "mean_peak_input": 1151.4615384615386,
+          "mean_raw_tokens": 1018.0769230769231,
+          "mean_seconds": 4.8012182137194594
+        },
+        "B": {
+          "accuracy": 0.7692307692307693,
+          "mean_total_input": 510,
+          "mean_peak_input": 384.9230769230769,
+          "mean_raw_tokens": 251.46153846153845,
+          "mean_seconds": 2.6023295608958086
+        }
+      },
+      "H_total_reduction_vs_matched_R0_pct": 17.35586879551073
+    },
+    "missing_required_raw": {
+      "query_executions": 249,
+      "unique_questions": 83,
+      "arms": {
+        "H": {
+          "accuracy": 0.12048192771084337,
+          "mean_total_input": 1026.8313253012047,
+          "mean_peak_input": 674.6265060240963,
+          "mean_raw_tokens": 204.13253012048193,
+          "mean_seconds": 4.785865497983778
+        },
+        "R0": {
+          "accuracy": 0.20481927710843373,
+          "mean_total_input": 1166.7710843373493,
+          "mean_peak_input": 1166.7710843373493,
+          "mean_raw_tokens": 1015.843373493976,
+          "mean_seconds": 5.037665720891822
+        },
+        "B": {
+          "accuracy": 0.12048192771084337,
+          "mean_total_input": 810.0602409638554,
+          "mean_peak_input": 623.4216867469879,
+          "mean_raw_tokens": 383.95180722891564,
+          "mean_seconds": 3.6310559753822975
+        }
+      },
+      "H_total_reduction_vs_matched_R0_pct": 11.993763036698956
+    },
+    "both_H_R0_correct": {
+      "query_executions": 42,
+      "unique_questions": 14,
+      "arms": {
+        "H": {
+          "accuracy": 1,
+          "mean_total_input": 1002,
+          "mean_peak_input": 664.7857142857143,
+          "mean_raw_tokens": 193.57142857142858,
+          "mean_seconds": 4.2376325149012875
+        },
+        "R0": {
+          "accuracy": 1,
+          "mean_total_input": 1162.4285714285713,
+          "mean_peak_input": 1162.4285714285713,
+          "mean_raw_tokens": 1018.7142857142857,
+          "mean_seconds": 4.793484747070969
+        },
+        "B": {
+          "accuracy": 0.7857142857142857,
+          "mean_total_input": 593.5714285714286,
+          "mean_peak_input": 441.7142857142857,
+          "mean_raw_tokens": 212.28571428571428,
+          "mean_seconds": 2.764364476141054
+        }
+      },
+      "H_total_reduction_vs_matched_R0_pct": 13.801155216910399
+    }
+  },
+  "selection_outcomes": {
+    "valid": 222,
+    "more_than_eight_items": 36,
+    "unlisted_row": 18,
+    "empty_selection": 12
+  },
+  "first_invalid": {
+    "task_id": "eval_authorization__expiry",
+    "repeat": 0,
+    "question": "What does can_edit_own('u1',['document:write'],100,3700) return?",
+    "source_index": {
+      "text": "1. function service.py:10-11 can_edit_own(user, scopes, created_at, now) -> service.py::authorize\n2. constant policy.py:4-4 WRITE_SCOPE -> -\n3. constant policy.py:5-5 READ_SCOPE -> -\n4. function rules.py:9-10 required_scope(action) -> policy.py::READ_ACTION,policy.py::READ_SCOPE,policy.py::WRITE_ACTION,policy.py::WRITE_SCOPE\n5. function rules.py:100-108 aux_rules_009_flat_cells(groups) -> -\n6. constant policy.py:3-3 WRITE_ACTION -> -\n7. function rules.py:15-17 scope_allows(scopes, action) -> rules.py::normalized_scopes,rules.py::required_scope\n8. constant presentation.py:1-1 DISPLAY_PREFIX -> -\n9. function service.py:4-8 authorize(user, owner, role, scopes, action, created_at, now, revoked) -> policy.py::ALLOW_REASON,policy.py::DENY_REASON,rules.py::role_allows,rules.py::scope_allows,rules.py::session_valid\n10. function presentation.py:15-16 summarize_count(values) -> presentation.py::DISPLAY_PREFIX\n11. function presentation.py:9-10 display_reference(reference) -> presentation.py::DISPLAY_PREFIX,presentation.py::DISPLAY_WIDTH\n12. function rules.py:12-13 role_allows(role, owner, user) -> policy.py::ADMIN_ROLE\n13. function rules.py:3-4 normalized_scopes(scopes) -> -\n14. function rules.py:42-50 aux_rules_003_trimmed_text(value, limit) -> -\n15. function rules.py:151-159 aux_rules_015_trimmed_text(value, limit) -> -\n16. function rules.py:260-268 aux_rules_027_trimmed_text(value, limit) -> -\n17. function rules.py:369-377 aux_rules_039_trimmed_text(value, limit) -> -\n18. function rules.py:478-486 aux_rules_051_trimmed_text(value, limit) -> -\n19. function rules.py:6-7 session_valid(created_at, now, revoked) -> policy.py::MAX_SESSION_AGE",
+      "tokens": 506,
+      "items": [
+        {
+          "number": 1,
+          "uri": "memory://symbol/service.py::can_edit_own",
+          "score": 0.348341388618134,
+          "line": "1. function service.py:10-11 can_edit_own(user, scopes, created_at, now) -> service.py::authorize"
+        },
+        {
+          "number": 2,
+          "uri": "memory://symbol/policy.py::WRITE_SCOPE",
+          "score": 0.1925091210943867,
+          "line": "2. constant policy.py:4-4 WRITE_SCOPE -> -"
+        },
+        {
+          "number": 3,
+          "uri": "memory://symbol/policy.py::READ_SCOPE",
+          "score": 0.11786468270955487,
+          "line": "3. constant policy.py:5-5 READ_SCOPE -> -"
+        },
+        {
+          "number": 4,
+          "uri": "memory://symbol/rules.py::required_scope",
+          "score": 0.11458169808557195,
+          "line": "4. function rules.py:9-10 required_scope(action) -> policy.py::READ_ACTION,policy.py::READ_SCOPE,policy.py::WRITE_ACTION,policy.py::WRITE_SCOPE"
+        },
+        {
+          "number": 5,
+          "uri": "memory://symbol/rules.py::aux_rules_009_flat_cells",
+          "score": 0.09338652361712053,
+          "line": "5. function rules.py:100-108 aux_rules_009_flat_cells(groups) -> -"
+        },
+        {
+          "number": 6,
+          "uri": "memory://symbol/policy.py::WRITE_ACTION",
+          "score": 0.08165893768141617,
+          "line": "6. constant policy.py:3-3 WRITE_ACTION -> -"
+        },
+        {
+          "number": 7,
+          "uri": "memory://symbol/rules.py::scope_allows",
+          "score": 0.07754998527782346,
+          "line": "7. function rules.py:15-17 scope_allows(scopes, action) -> rules.py::normalized_scopes,rules.py::required_scope"
+        },
+        {
+          "number": 8,
+          "uri": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+          "score": 0.06976974914500617,
+          "line": "8. constant presentation.py:1-1 DISPLAY_PREFIX -> -"
+        },
+        {
+          "number": 9,
+          "uri": "memory://symbol/service.py::authorize",
+          "score": 0.05193344471868897,
+          "line": "9. function service.py:4-8 authorize(user, owner, role, scopes, action, created_at, now, revoked) -> policy.py::ALLOW_REASON,policy.py::DENY_REASON,rules.py::role_allows,rules.py::scope_allows,rules.py::session_valid"
+        },
+        {
+          "number": 10,
+          "uri": "memory://symbol/presentation.py::summarize_count",
+          "score": 0.04237391288641956,
+          "line": "10. function presentation.py:15-16 summarize_count(values) -> presentation.py::DISPLAY_PREFIX"
+        },
+        {
+          "number": 11,
+          "uri": "memory://symbol/presentation.py::display_reference",
+          "score": 0.035656319746767765,
+          "line": "11. function presentation.py:9-10 display_reference(reference) -> presentation.py::DISPLAY_PREFIX,presentation.py::DISPLAY_WIDTH"
+        },
+        {
+          "number": 12,
+          "uri": "memory://symbol/rules.py::role_allows",
+          "score": 0.02954652445949087,
+          "line": "12. function rules.py:12-13 role_allows(role, owner, user) -> policy.py::ADMIN_ROLE"
+        },
+        {
+          "number": 13,
+          "uri": "memory://symbol/rules.py::normalized_scopes",
+          "score": 0.028352747399224616,
+          "line": "13. function rules.py:3-4 normalized_scopes(scopes) -> -"
+        },
+        {
+          "number": 14,
+          "uri": "memory://symbol/rules.py::aux_rules_003_trimmed_text",
+          "score": 0.0259601598202205,
+          "line": "14. function rules.py:42-50 aux_rules_003_trimmed_text(value, limit) -> -"
+        },
+        {
+          "number": 15,
+          "uri": "memory://symbol/rules.py::aux_rules_015_trimmed_text",
+          "score": 0.0259601598202205,
+          "line": "15. function rules.py:151-159 aux_rules_015_trimmed_text(value, limit) -> -"
+        },
+        {
+          "number": 16,
+          "uri": "memory://symbol/rules.py::aux_rules_027_trimmed_text",
+          "score": 0.0259601598202205,
+          "line": "16. function rules.py:260-268 aux_rules_027_trimmed_text(value, limit) -> -"
+        },
+        {
+          "number": 17,
+          "uri": "memory://symbol/rules.py::aux_rules_039_trimmed_text",
+          "score": 0.0259601598202205,
+          "line": "17. function rules.py:369-377 aux_rules_039_trimmed_text(value, limit) -> -"
+        },
+        {
+          "number": 18,
+          "uri": "memory://symbol/rules.py::aux_rules_051_trimmed_text",
+          "score": 0.0259601598202205,
+          "line": "18. function rules.py:478-486 aux_rules_051_trimmed_text(value, limit) -> -"
+        },
+        {
+          "number": 19,
+          "uri": "memory://symbol/rules.py::session_valid",
+          "score": 0.02487880264343194,
+          "line": "19. function rules.py:6-7 session_valid(created_at, now, revoked) -> policy.py::MAX_SESSION_AGE"
+        }
+      ],
+      "rejected": [
+        "memory://symbol/rules.py::aux_rules_000_event_text",
+        "memory://symbol/rules.py::aux_rules_012_event_text",
+        "memory://symbol/rules.py::aux_rules_024_event_text",
+        "memory://symbol/rules.py::aux_rules_036_event_text",
+        "memory://symbol/rules.py::aux_rules_048_event_text"
+      ]
+    },
+    "requested_uris": [],
+    "selection_failure": "selector_invalid_or_empty",
+    "context_tokens": 0,
+    "input_tokens": 802,
+    "selector_answer": "```json\n{\"read\":[1, 2, 3, 4, 6, 7, 9, 10, 11, 12, 13, 19]}\n```",
+    "reason": "more_than_eight_items"
+  },
+  "required_index_occurrences": 2688,
+  "required_index_locations": {
+    "shown": 1101,
+    "zero_score": 765,
+    "outside_top_24": 774,
+    "index_512_token_limit": 48
+  },
+  "required_items_per_question": {
+    "1": 14,
+    "2": 5,
+    "3": 1,
+    "4": 5,
+    "5": 4,
+    "6": 4,
+    "7": 1,
+    "9": 2,
+    "11": 11,
+    "12": 12,
+    "13": 11,
+    "14": 20,
+    "15": 4,
+    "16": 2
+  },
+  "questions_requiring_more_than_eight_items": 62
+}

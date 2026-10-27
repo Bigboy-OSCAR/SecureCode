@@ -39,10 +39,30 @@ report_raptor_large.py는 reorganize_report.py 이후 clarify_report_context.py�
 검증은 verify_report_reorganization.py --output 2nd/Documents/test_results/evidence/raptor_large_20261024/revisions/reader_context_20261025/preservation_check.json 후 audit_raptor_report.py를 실행한다. --output을 지정해 이전 편집의 검증 기록을 보존한다.
 이번 독자 관점 검토는 실제 독자 대상 이해도 시험이 아니다. 검토 내용·전후 문서·보존 확인과 생성 소스는 revisions/reader_context_20261025에 보관했다. 새 벤치마크 모델 호출은 없다.
 
-2026-10-25 UI 색인 생성 과정 추가 — 최신 보고서 재현:
+2026-10-25 UI 색인 생성 과정 추가 — 당시 버전의 재현:
 report_raptor_large.py는 기존 결과 조립 → reorganize_report.py → clarify_report_context.py → add_index_build_section.py 순서로 보고서를 만든다.
 추가 문장은 revisions/ui_index_build_20261025/section.md에 보존했다. 새 2절을 삽입하고 기존 2~6절과 문서 안의 참조 번호를 3~7절로 이동한다.
 현재 보고서는 report_raptor_large.py를 실행한 뒤 audit_raptor_report.py로 수치·예제·링크를 검증한다. 모델 서버나 새 모델 호출은 필요 없다.
 이번 보존 검증은 add_index_build_section.previous_document(현재 보고서, section.md)로 새 절·목차를 제거하고 번호를 되돌린 결과가 변경 전 보고서와 바이트 단위로 같음을 확인했다. 결과와 코드 근거 해시는 이 리비전의 verification.json에 있다.
 앞선 verify_report_reorganization.py 및 verify_report_mechanisms.py는 당시 절 번호에 맞춘 역사적 검증이다. 새 절 번호를 사용하는 현재 문서에 직접 실행하거나 이전 검증 기록을 덮어쓰지 않는다.
 새 절은 실제 Python 실험 구축 코드와 제품 UI 연결 제안을 구분한다. UI 구현이나 새 실험은 수행하지 않았다.
+
+2026-10-25 TF-IDF 설명 보강 — 당시 버전의 재현:
+report_raptor_large.py는 앞선 UI 절 추가까지 재현한 다음 revisions/tfidf_explanation_20261025/replacement.json으로 1.5절의 TF-IDF 설명 문단을 교체한다. report_raptor_large.py 실행 후 audit_raptor_report.py로 확인한다.
+TF-IDF 설명용 세 후보의 수치는 실제 Retriever로 계산했으며 tfidf_example.json에 보존했다. 새 평가나 모델 호출은 없다. 해당 설명을 이전 문단으로 되돌리면 수정 전 보고서와 정확히 같음을 verification.json에 기록했다.
+
+2026-10-25 후보 정의 보완 — 당시 버전의 재현:
+report_raptor_large.py는 TF-IDF 설명 보강 뒤 revisions/candidate_definition_20261025/replacement.json으로 후보의 정의·예시와 TF/IDF의 집계 대상을 추가한다. 이후 audit_raptor_report.py로 점검한다. 해당 추가분을 되돌리면 이전 문서와 동일하며 새 모델 호출은 없다.
+
+2026-10-25 사용자 질문 처리 설명 — 당시 버전의 재현:
+report_raptor_large.py는 후보 정의 보완 뒤 revisions/query_processing_20261025/edits.json으로 색인 준비와 질문 처리의 시점을 분리하고, 질문 단어 추출·가중치 계산·검색·원래 질문 전달 과정을 추가한다. 이후 audit_raptor_report.py로 점검한다. 실제 words/검색 코드로 계산한 예제는 query_examples.json에 보존했다. 기존 내용과 평가 기록은 보존했으며 새 모델 호출은 없다.
+2026-10-27 R0 코드·질문 계산 흐름 — 최신 보고서 재현:
+1. revisions/r0_walkthrough_20261027/calculate_example.py를 실행하면 실제 words/TF-IDF/pack 코드와 모델의 오프라인 토크나이저로 두 함수 예제를 계산하고 worked_example.json에 저장한다. 모델 추론이나 서버 연결은 하지 않는다.
+2. report_raptor_large.py는 이전 편집까지 재현한 뒤 revisions/r0_walkthrough_20261027/replacement.json으로 1.5절 설명을 교체한다. section.md는 같은 교체 본문의 읽기용 원본이다.
+3. audit_raptor_report.py로 기존 실험 수치와 문서 표·코드 블록·링크를 점검한다.
+두 함수 본문만을 후보 text로 쓰는 설명용 계산이므로 실제 프로젝트 후보의 경로·제목·import는 포함하지 않는다. 1,024토큰 한도에서 0점 후보도 포함되어 최종 원문은 두 함수·24토큰이다. 새 LLM 답변은 생성하지 않았다.
+이전 0.605·0.796 예제는 별도 접이식 설명에 보존하고 재계산했다. verification.json은 1.5절 교체를 되돌리면 직전 문서와 완전히 같음, 숫자와 최종 프롬프트가 실제 계산 기록과 일치함, 기존 35개 고정 기록이 보존됨을 확인한 결과다.
+
+
+2026-10-27 H 결합 방식 추가 — 최신 보고서 재현:
+기존 보고서 조립 뒤 report_hybrid.py가 검증된 H 실험 설명과 8절 결과를 추가한다. 새 실험과 재현 순서는 ../hybrid_index_20261027/reproduce.md를 참조한다. 기존 실험 기록은 그대로 보존하며, 새 B/R0/H 평가 864답변과 모델 호출 1,482회는 별도 폴더에 저장했다. 현재 문서는 audit_raptor_report.py와 audit_hybrid_report.py로 함께 검증한다.

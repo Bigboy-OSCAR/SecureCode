@@ -1,0 +1,14 @@
+{
+  "frozen_at_utc": "2026-10-26T18:25:25.594949+00:00",
+  "primary_contrasts": [
+    "H-R0",
+    "H-B"
+  ],
+  "plan": "Same six-project cluster inference as previous report; token savings include all selector and answer calls. No output-based tuning. Reused questions explicitly exploratory.",
+  "files": {
+    "2nd/experiments/symbol_raptor/analyze_hybrid.py": "eabbe0f040ab77dd2128cb8f8ca4995389ea2b7b32ed0067786ce3fc8a848cbb",
+    "2nd/experiments/symbol_raptor/analyze_v2.py": "e4fd7c4ef7c9f3c3734d526569d9e1322ae49e08062c2b12492f53c49ee69ae5",
+    "2nd/experiments/symbol_raptor/analyze.py": "ae04b2ce78b4634e4fca493bd69e325cfed02fdb23b2e8cc9a17959b7d5e3c60",
+    "2nd/experiments/symbol_raptor/output_diagnostics.py": "61dc56a7f165527ed08b107552b7872884f0a4c58c8898b3dc139371808514e7"
+  }
+}

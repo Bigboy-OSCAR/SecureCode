@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "completed_at_utc": "2026-10-26T17:48:16.608927+00:00",
+  "report_sha256": "0a2624f7999f81dd44c1d6c55b023caeb8478c5f65e21004534b8de49f17b2e5",
+  "new_benchmark_model_calls": 0,
+  "only_section_1_5_changed": true,
+  "exact_reverse_to_previous_report": true,
+  "prior_artifacts_unchanged": 35,
+  "actual_retriever_arithmetic_verified": true,
+  "displayed_values_match_actual_calculation": true,
+  "actual_pack_with_offline_model_tokenizer_verified": true,
+  "final_prompt_excerpt_matches": true,
+  "legacy_example_preserved_and_recalculated": true,
+  "implementation_sources": {
+    "2nd/experiments/symbol_raptor/experiment.py": "b8f664facdff58c7b410f704216611e5a4e5bbd239ac394a9bb4e5f29f9234cb"
+  },
+  "existing_audit_checks": 14,
+  "existing_numeric_fields": 194
+}

@@ -1,0 +1,27 @@
+{
+  "saved_at_utc": "2026-10-25T10:02:15.527666+00:00",
+  "editorial_revision": "revisions/candidate_definition_20261025",
+  "new_benchmark_model_calls": 0,
+  "report_sha256": "33f538e1bd98f4029c8ff17193167439bda7e6afb520d7593a96600b4cca73bb",
+  "files": {
+    "03_현재색인_A와_파일간확장_B_재실험_비교보고서.md": "4e143184a14d16256150c381e0aa888cf6a85a15c7d0499e17855b29c1ecd354",
+    "completion_audit.json": "3b7aea6ba4de4a9051a6382bb0693652490ae09c00d0bc16a46e3afcd9a0ec0c",
+    "completion_audit_after.json": "75291c027754e2708cf8f8f44aaf92401266e0139eb0f8142497025143f46ea4",
+    "deliverable_manifest.json": "c235417dcf96d87cdf76d3a74b594a829a56f7a45642344525534c11de110c7b",
+    "final_source_manifest.json": "1bf998da3fd3710bd36b2b69221cb567771b76367745fde74942370650ae2bd6",
+    "replacement.json": "90335a443ac1765e0196e9420f7afd42cd360684c88af5ff5d80265038fa97d0",
+    "report_after.md": "33f538e1bd98f4029c8ff17193167439bda7e6afb520d7593a96600b4cca73bb",
+    "report_manifest.json": "2df9efd6935d344100bc0341453378ccb8690a23015c45924a233b3e9bb647a9",
+    "report_manifest_after.json": "2269507995b905442e2054f955809d3e92cac17aae4be789a4474eac18dad12b",
+    "report_raptor_large.py": "235ed5e69df947ec24e336329b5d181a51683da81ffeb541427c2f74afb200b1",
+    "reproduce.txt": "01840931eda7c0f40c8700544cdea9871d15bd7ae3960061e52be4d27f0f39f0",
+    "reproduce_after.txt": "aa53703c7a7c2b59bb1408f469cfc7077363d72bba0bbc06b51d8000c016b0dc",
+    "source_snapshot/add_index_build_section.py": "dd3c634422b2246ee4670409373b6374a6a1b3abef2ee9a69d80bf34052eae67",
+    "source_snapshot/audit_raptor_report.py": "bc95000de8a0804c7b3af53294ec29cdb1c1152cb6d7b8c8e04d68b493e739d8",
+    "source_snapshot/clarify_report_context.py": "c33af1c3ed0a4a5664c453afc2180546c47d7975d6ee309fbc46fc6bbf77c411",
+    "source_snapshot/reorganize_report.py": "21c37ae604b9fa19266499e502777aeba2a03426aa0957821e0fa5e6b2c3db82",
+    "source_snapshot/report_raptor_large.py": "6e4eb4f27a0af495280321ee2db6ca8d61f12fd02d921c79110df83985ee7b1c",
+    "verification.json": "b198fe1d587fd7d0e271a2688103ce8436359e54ec1a90d209387c2276710b13",
+    "work_status.json": "20803c5a8693c12f5fb393f93213c034f970d97203c65a43f65bc0c41f0d7246"
+  }
+}

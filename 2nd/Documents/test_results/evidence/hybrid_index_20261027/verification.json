@@ -1,0 +1,133 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-26T19:34:30.305864+00:00",
+  "checks": [
+    {
+      "name": "frozen_sources_projects_tasks_and_historical_results",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "terminal_completion_and_result_hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "analysis_plan_precedes_evaluation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "exact_864_evaluation_and_24_development_rows",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "96_questions_three_repeats_six_projects",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "development_project_is_separate",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_six_arm_orders_balanced_each_repeat",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_model_calls_retained_no_shared_inference",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no_transport_errors_input_truncation_or_prompt_cache",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "generation_limits_and_parameters_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same_model_binary_and_server_settings_as_previous_large_run",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "physical_call_and_query_times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent_typed_answer_grading",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_96_gold_answers_reexecuted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent_AST_graph_raw_bundles_and_body_free_metadata",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "independent_TFIDF_ranks_root_mapping_explicit_selection_and_exact_payloads",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "unique_raw_coverage_and_all_call_token_sums",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "offline_tokenizer_index_cap_raw_cap_and_independent_packing",
+      "passed": true,
+      "detail": {
+        "strings": 32515,
+        "tokenizer": {
+          "binary": "/opt/homebrew/Cellar/llama.cpp/8680/bin/llama-tokenize",
+          "binary_sha256": "a6364e9a027fa6e76b66f6e61b6af397dc63128f7072be6c1589e80830e349d5",
+          "command": [
+            "/opt/homebrew/bin/llama-tokenize",
+            "-m",
+            "/Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf",
+            "--no-bos",
+            "--no-escape",
+            "--ids",
+            "--log-disable",
+            "--stdin"
+          ],
+          "separator_token": 151643,
+          "standalone_crosschecks": 13,
+          "all_standalone_crosschecks_passed": true
+        }
+      }
+    },
+    {
+      "name": "independent_accuracy_time_token_savings_cluster_intervals_and_Holm",
+      "passed": true,
+      "detail": {
+        "numeric_fields": 177
+      }
+    }
+  ],
+  "records": 864,
+  "development_records": 24,
+  "model_calls": 1482,
+  "numeric_fields": 177,
+  "summary_sha256": "1eba25e8d919c1ed1bf4740ea6958af8137c58b8a2ecf7787498860ef25d7123",
+  "results_sha256": "5f6cec3ad6fbca67b0f07fbb7de69c95914c2905990e2781b0c839a8394432ed",
+  "verifier_sha256": "50b6a25783497727dfb031fad8056a4470198a4cbc113261360fe0d220f1aee0",
+  "limitations": [
+    "Local audit, not external validation.",
+    "B candidate outline and literal selector prompts are checked against preserved generators; TF-IDF, graph, H metadata, selection, packing, tokenization and primary statistics are independently reconstructed."
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "stopped_at_utc": "2026-10-26T19:41:09.832809+00:00",
+  "owned_server_session": 42520,
+  "exit_code": 0,
+  "evaluation_session_exit_code": 0,
+  "postprocessing_session_exit_code": 0,
+  "note": "The server started for this experiment was stopped after all 864 evaluation answers completed. No server is needed for report reproduction."
+}

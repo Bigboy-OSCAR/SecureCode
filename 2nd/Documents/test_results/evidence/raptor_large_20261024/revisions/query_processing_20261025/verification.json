@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "completed_at_utc": "2026-10-25T10:09:18.306443+00:00",
+  "report_sha256": "835fb6d7ca4734d7cdafae6efb2cf28bea146d49715beb063ce977391e04497c",
+  "new_benchmark_model_calls": 0,
+  "only_scoped_question_processing_edits": true,
+  "prior_artifacts_unchanged": 31,
+  "actual_question_tokenization_examples_verified": true,
+  "empty_query_zero_scores_and_id_sort_verified": true,
+  "implementation_sources": {
+    "2nd/experiments/symbol_raptor/experiment.py": "b8f664facdff58c7b410f704216611e5a4e5bbd239ac394a9bb4e5f29f9234cb",
+    "2nd/experiments/symbol_raptor/experiment_raptor_large.py": "1e6b190b5eeb8141aec9f4f282ad95a04538db5825e3a67d10440c437a1668eb"
+  },
+  "existing_audit_checks": 14,
+  "existing_numeric_fields": 194
+}

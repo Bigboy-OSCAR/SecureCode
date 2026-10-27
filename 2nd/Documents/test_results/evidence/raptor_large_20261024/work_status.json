@@ -1,5 +1,5 @@
 {
-  "updated_at_utc": "2026-10-25T06:07:42.243945+00:00",
+  "updated_at_utc": "2026-10-26T19:41:09.832809+00:00",
   "state": "complete",
   "owned_server_pid": 24876,
   "server_session": 21970,
@@ -20,18 +20,25 @@
     "Construction and post-hoc per-method hypotheses added. Original measurement verification: 19 checks; current document audit: 14 checks, 194 fields, 38 links; editorial revision verification: 17 checks.",
     "Report reorganized into six topical sections plus three appendices. Existing 38 tables / 828 data cells, 14 code blocks and all evidence links retained; 604 nonempty source lines mapped. Document preservation: 18 checks; numeric/document audit: 14 checks, 194 numeric fields, 41 local links. No new model calls.",
     "Reader-context editorial review completed; purpose, units, single-file baseline, method rationale and observed benefits/tradeoffs clarified. Existing body lines and tables retained. No human reader comprehension test and no new benchmark model calls.",
-    "Added a separate UI index-build chapter covering actors, seven stages, per-method preparation, disk versus memory, query-time work and refresh/failure handling. Existing report fully preserved after reversing insertion/renumbering. Eight editorial checks and 14 report audit checks passed; no new benchmark calls or UI implementation."
+    "Added a separate UI index-build chapter covering actors, seven stages, per-method preparation, disk versus memory, query-time work and refresh/failure handling. Existing report fully preserved after reversing insertion/renumbering. Eight editorial checks and 14 report audit checks passed; no new benchmark calls or UI implementation.",
+    "Expanded section 1.5 with TF/IDF definitions, candidate-based document frequency, actual smoothed IDF and logarithmic TF formulas, normalization and cosine scores, raw-only fitting and LLM input distinction. Worked example calculated by actual Retriever. All other report content and experiment artifacts preserved.",
+    "Defined candidate before TF-IDF terminology, with actual single-function and dependency-bundle examples and explicit per-candidate versus project-wide counting scope. Other report content preserved.",
+    "Separated preparation from query-time processing; added actual question tokenization examples, distinction from AST parsing, existing IDF use, original-question delivery and limitations for Korean-only/empty queries. Existing experiment records preserved.",
+    "Rewrote section 1.5 around remaining(stock, hold), total(price, quantity), and the complete English question. Actual word counts, IDF, TF-IDF, normalization, cosine products and final packing are shown. The offline tokenizer confirms two candidates/24 context tokens at budget 1024, including the zero-score candidate. Legacy 0.605/0.796 calculation retained. Other sections and 35 prior artifacts unchanged; no new inference calls.",
+    "Added verified H experiment: 864 fresh B/R0/H answers, 1482 model calls in separate evidence folder. Prior experiment counts above remain historical; previous report content is recoverable byte-for-byte."
   ],
   "fresh_evaluation_completed": 864,
   "repeat": "all_three_complete",
   "independent_verification": "PASS",
   "report_audit": "PASS",
-  "completed_at_utc": "2026-10-25T06:07:42.243945+00:00",
-  "report_sha256": "9a92d95608ab890f7516184dcc36d55853a3ea501a8ca3a5e3c7a0a9dfa2b4c1",
+  "completed_at_utc": "2026-10-26T17:48:16.608927+00:00",
+  "report_sha256": "9385c85fa9f3ada5351ade724a6f75ac3ab64d9cd90b0646e1c1bc3be4cecffa",
   "server_stopped": true,
   "codex_file_open_status": "queued",
   "experiment_completed_at_utc": "2026-10-24T18:22:21.279628+00:00",
-  "editorial_revision": "revisions/ui_index_build_20261025",
+  "editorial_revision": "revisions/r0_walkthrough_20261027",
   "revision_new_model_calls": 0,
-  "revision_verification": "PASS"
+  "revision_verification": "PASS",
+  "additional_experiment": "hybrid_index_20261027",
+  "additional_experiment_report_audit": "PASS"
 }

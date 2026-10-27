@@ -1,0 +1,16 @@
+{
+  "generated_at_utc": "2026-10-25T09:49:58.055691+00:00",
+  "report_sha256": "4e143184a14d16256150c381e0aa888cf6a85a15c7d0499e17855b29c1ecd354",
+  "report_digest": "62dc61882ac0c4c3371b75d08b3a3a854b7492af4bdbdf782d93f79407e66f91",
+  "summary_sha256": "4fe4ab8ead23de69ecde243fd6b187fd7be42d8409b9b78ad600b8c7d23e83ce",
+  "verification_sha256": "b997a5e7cd95c89c50e9e82ea9eba05cedd2738b0810fd1980e18c04b0b53dc3",
+  "generator_sha256": "235ed5e69df947ec24e336329b5d181a51683da81ffeb541427c2f74afb200b1",
+  "editorial_revision": "revisions/tfidf_explanation_20261025",
+  "tfidf_explanation_sha256": "dfff704c0ee9ae75ec6e875b6e931f276b6d0f9fac948d48784f7cfb8e1eba49",
+  "layout_generator_sha256": "21c37ae604b9fa19266499e502777aeba2a03426aa0957821e0fa5e6b2c3db82",
+  "reader_context_generator_sha256": "c33af1c3ed0a4a5664c453afc2180546c47d7975d6ee309fbc46fc6bbf77c411",
+  "index_build_chapter_sha256": "c8702424e52cc936f65e24aa76d022a4fcffa5b73b80234fd6de290c4f056617",
+  "index_build_inserter_sha256": "dd3c634422b2246ee4670409373b6374a6a1b3abef2ee9a69d80bf34052eae67",
+  "mechanism_revision": "revisions/methods_and_interpretation_20261025",
+  "mechanism_facts_sha256": "733ba9d3ff4370b324eee6d6288c4863cb092b8ca8eea8b10474f4945c9e3104"
+}

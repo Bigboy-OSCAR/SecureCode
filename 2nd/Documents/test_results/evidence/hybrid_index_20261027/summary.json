@@ -1,0 +1,3420 @@
+{
+  "status": "COMPLETE",
+  "created_at_utc": "2026-10-26T19:32:59.994514+00:00",
+  "populations": {
+    "all96": {
+      "B": {
+        "metrics": {
+          "correct": 60,
+          "total": 288,
+          "accuracy": 0.20833333333333334,
+          "unique_questions": 96,
+          "order_only_count": 3,
+          "order_tolerant_accuracy": 0.21875,
+          "mean_query_seconds": 3.4915516948855534,
+          "request_mean_seconds": 3.4917492734205857,
+          "request_p50_seconds": 3.5142170835024444,
+          "request_p95_seconds": 5.349322462618872,
+          "question_median_p95_seconds": 5.300446093482606,
+          "mean_context_tokens": 366.0104166666667,
+          "mean_selected_context_tokens": 366.0104166666667,
+          "mean_input_tokens": 769.4270833333334,
+          "mean_output_tokens": 28.729166666666668,
+          "mean_prefill_seconds": 2.3416967083333335,
+          "mean_decode_seconds": 1.1219532222222222,
+          "mean_other_seconds": 0.028099342865030012,
+          "mean_tokenize_seconds": 0.01954999851184564,
+          "mean_compaction_seconds": 0,
+          "raw_evidence_recall": 0.7235352754884005,
+          "all_raw_evidence": 0.4895833333333333,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 198,
+            "invalid_json": 15,
+            "invalid_schema": 6,
+            "abstained": 9
+          },
+          "by_category": {
+            "architecture": {
+              "correct": 21,
+              "total": 36,
+              "accuracy": 0.5833333333333334,
+              "unique_questions": 12
+            },
+            "boundary": {
+              "correct": 9,
+              "total": 36,
+              "accuracy": 0.25,
+              "unique_questions": 12
+            },
+            "change_impact": {
+              "correct": 3,
+              "total": 36,
+              "accuracy": 0.08333333333333333,
+              "unique_questions": 12
+            },
+            "cross_file": {
+              "correct": 0,
+              "total": 72,
+              "accuracy": 0,
+              "unique_questions": 24
+            },
+            "semantic": {
+              "correct": 6,
+              "total": 72,
+              "accuracy": 0.08333333333333333,
+              "unique_questions": 24
+            },
+            "single_function": {
+              "correct": 21,
+              "total": 36,
+              "accuracy": 0.5833333333333334,
+              "unique_questions": 12
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 15,
+              "total": 48,
+              "accuracy": 0.3125,
+              "unique_questions": 16
+            },
+            "eval_cache": {
+              "correct": 0,
+              "total": 48,
+              "accuracy": 0,
+              "unique_questions": 16
+            },
+            "eval_inventory": {
+              "correct": 9,
+              "total": 48,
+              "accuracy": 0.1875,
+              "unique_questions": 16
+            },
+            "eval_pricing": {
+              "correct": 9,
+              "total": 48,
+              "accuracy": 0.1875,
+              "unique_questions": 16
+            },
+            "eval_routing": {
+              "correct": 21,
+              "total": 48,
+              "accuracy": 0.4375,
+              "unique_questions": 16
+            },
+            "eval_schedules": {
+              "correct": 6,
+              "total": 48,
+              "accuracy": 0.125,
+              "unique_questions": 16
+            }
+          },
+          "question_equivalent_correct": 20.0,
+          "answer_limit_calls": 0,
+          "selector_limit_calls": 0
+        },
+        "tokens": {
+          "context": 366.0104166666667,
+          "index": 0,
+          "selector": 254.63541666666666,
+          "answer": 514.7916666666666,
+          "total": 769.4270833333334,
+          "peak": 591.125,
+          "output": 28.729166666666668
+        }
+      },
+      "R0": {
+        "metrics": {
+          "correct": 75,
+          "total": 288,
+          "accuracy": 0.2604166666666667,
+          "unique_questions": 96,
+          "order_only_count": 6,
+          "order_tolerant_accuracy": 0.28125,
+          "mean_query_seconds": 5.005777765625074,
+          "request_mean_seconds": 5.005646787628899,
+          "request_p50_seconds": 4.842505021006218,
+          "request_p95_seconds": 5.904214785306249,
+          "question_median_p95_seconds": 5.903024968516547,
+          "mean_context_tokens": 1016.1458333333334,
+          "mean_selected_context_tokens": 1016.1458333333334,
+          "mean_input_tokens": 1164.6979166666667,
+          "mean_output_tokens": 19.71875,
+          "mean_prefill_seconds": 3.4663110555555554,
+          "mean_decode_seconds": 0.7900519791666667,
+          "mean_other_seconds": 0.7492837529066763,
+          "mean_tokenize_seconds": 0.7422954532410384,
+          "mean_compaction_seconds": 0,
+          "raw_evidence_recall": 0.9901751893939394,
+          "all_raw_evidence": 0.9791666666666666,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 201,
+            "invalid_json": 12
+          },
+          "by_category": {
+            "architecture": {
+              "correct": 12,
+              "total": 36,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 12
+            },
+            "boundary": {
+              "correct": 12,
+              "total": 36,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 12
+            },
+            "change_impact": {
+              "correct": 12,
+              "total": 36,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 12
+            },
+            "cross_file": {
+              "correct": 6,
+              "total": 72,
+              "accuracy": 0.08333333333333333,
+              "unique_questions": 24
+            },
+            "semantic": {
+              "correct": 12,
+              "total": 72,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 24
+            },
+            "single_function": {
+              "correct": 21,
+              "total": 36,
+              "accuracy": 0.5833333333333334,
+              "unique_questions": 12
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 24,
+              "total": 48,
+              "accuracy": 0.5,
+              "unique_questions": 16
+            },
+            "eval_cache": {
+              "correct": 3,
+              "total": 48,
+              "accuracy": 0.0625,
+              "unique_questions": 16
+            },
+            "eval_inventory": {
+              "correct": 9,
+              "total": 48,
+              "accuracy": 0.1875,
+              "unique_questions": 16
+            },
+            "eval_pricing": {
+              "correct": 15,
+              "total": 48,
+              "accuracy": 0.3125,
+              "unique_questions": 16
+            },
+            "eval_routing": {
+              "correct": 18,
+              "total": 48,
+              "accuracy": 0.375,
+              "unique_questions": 16
+            },
+            "eval_schedules": {
+              "correct": 6,
+              "total": 48,
+              "accuracy": 0.125,
+              "unique_questions": 16
+            }
+          },
+          "question_equivalent_correct": 25.0,
+          "answer_limit_calls": 0,
+          "selector_limit_calls": 0
+        },
+        "tokens": {
+          "context": 1016.1458333333334,
+          "index": 0,
+          "selector": 0,
+          "answer": 1164.6979166666667,
+          "total": 1164.6979166666667,
+          "peak": 1164.6979166666667,
+          "output": 19.71875
+        }
+      },
+      "H": {
+        "metrics": {
+          "correct": 57,
+          "total": 288,
+          "accuracy": 0.19791666666666666,
+          "unique_questions": 96,
+          "order_only_count": 0,
+          "order_tolerant_accuracy": 0.19791666666666666,
+          "mean_query_seconds": 4.6907569388101065,
+          "request_mean_seconds": 4.692035467885136,
+          "request_p50_seconds": 4.572911521012429,
+          "request_p95_seconds": 6.5426332454982905,
+          "question_median_p95_seconds": 6.521789957987494,
+          "mean_context_tokens": 198.77083333333334,
+          "mean_selected_context_tokens": 198.77083333333334,
+          "mean_input_tokens": 1016.6458333333334,
+          "mean_output_tokens": 39.854166666666664,
+          "mean_prefill_seconds": 3.0489541944444443,
+          "mean_decode_seconds": 1.5883461666666667,
+          "mean_other_seconds": 0.054735106774024406,
+          "mean_tokenize_seconds": 0.044925482391994995,
+          "mean_compaction_seconds": 0,
+          "raw_evidence_recall": 0.2911644923363673,
+          "all_raw_evidence": 0.13541666666666666,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "selector_invalid": 66,
+            "wrong_answer": 150,
+            "invalid_json": 15
+          },
+          "by_category": {
+            "architecture": {
+              "correct": 15,
+              "total": 36,
+              "accuracy": 0.4166666666666667,
+              "unique_questions": 12
+            },
+            "boundary": {
+              "correct": 12,
+              "total": 36,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 12
+            },
+            "change_impact": {
+              "correct": 6,
+              "total": 36,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 12
+            },
+            "cross_file": {
+              "correct": 0,
+              "total": 72,
+              "accuracy": 0,
+              "unique_questions": 24
+            },
+            "semantic": {
+              "correct": 3,
+              "total": 72,
+              "accuracy": 0.041666666666666664,
+              "unique_questions": 24
+            },
+            "single_function": {
+              "correct": 21,
+              "total": 36,
+              "accuracy": 0.5833333333333334,
+              "unique_questions": 12
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 12,
+              "total": 48,
+              "accuracy": 0.25,
+              "unique_questions": 16
+            },
+            "eval_cache": {
+              "correct": 9,
+              "total": 48,
+              "accuracy": 0.1875,
+              "unique_questions": 16
+            },
+            "eval_inventory": {
+              "correct": 6,
+              "total": 48,
+              "accuracy": 0.125,
+              "unique_questions": 16
+            },
+            "eval_pricing": {
+              "correct": 9,
+              "total": 48,
+              "accuracy": 0.1875,
+              "unique_questions": 16
+            },
+            "eval_routing": {
+              "correct": 12,
+              "total": 48,
+              "accuracy": 0.25,
+              "unique_questions": 16
+            },
+            "eval_schedules": {
+              "correct": 9,
+              "total": 48,
+              "accuracy": 0.1875,
+              "unique_questions": 16
+            }
+          },
+          "question_equivalent_correct": 19.0,
+          "answer_limit_calls": 0,
+          "selector_limit_calls": 0
+        },
+        "tokens": {
+          "context": 198.77083333333334,
+          "index": 500.3020833333333,
+          "selector": 669.4270833333334,
+          "answer": 347.21875,
+          "total": 1016.6458333333334,
+          "peak": 671.8125,
+          "output": 39.854166666666664
+        }
+      }
+    },
+    "original48": {
+      "B": {
+        "metrics": {
+          "correct": 30,
+          "total": 144,
+          "accuracy": 0.20833333333333334,
+          "unique_questions": 48,
+          "order_only_count": 3,
+          "order_tolerant_accuracy": 0.22916666666666666,
+          "mean_query_seconds": 3.433158374208991,
+          "request_mean_seconds": 3.433182322889479,
+          "request_p50_seconds": 3.5361330835003173,
+          "request_p95_seconds": 5.158232165168738,
+          "question_median_p95_seconds": 5.129972331812314,
+          "mean_context_tokens": 368.875,
+          "mean_selected_context_tokens": 368.875,
+          "mean_input_tokens": 762.625,
+          "mean_output_tokens": 27.916666666666668,
+          "mean_prefill_seconds": 2.3177944166666666,
+          "mean_decode_seconds": 1.0871375694444445,
+          "mean_other_seconds": 0.02825033677836799,
+          "mean_tokenize_seconds": 0.019754331412615202,
+          "mean_compaction_seconds": 0,
+          "raw_evidence_recall": 0.766313721001221,
+          "all_raw_evidence": 0.5625,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 96,
+            "invalid_schema": 6,
+            "abstained": 3,
+            "invalid_json": 9
+          },
+          "by_category": {
+            "architecture": {
+              "correct": 15,
+              "total": 18,
+              "accuracy": 0.8333333333333334,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 0,
+              "total": 18,
+              "accuracy": 0,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 0,
+              "total": 36,
+              "accuracy": 0,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 3,
+              "total": 36,
+              "accuracy": 0.08333333333333333,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 12,
+              "total": 24,
+              "accuracy": 0.5,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 0,
+              "total": 24,
+              "accuracy": 0,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 9,
+              "total": 24,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            }
+          },
+          "question_equivalent_correct": 10.0,
+          "answer_limit_calls": 0,
+          "selector_limit_calls": 0
+        },
+        "tokens": {
+          "context": 368.875,
+          "index": 0,
+          "selector": 246.72916666666666,
+          "answer": 515.8958333333334,
+          "total": 762.625,
+          "peak": 585.6041666666666,
+          "output": 27.916666666666668
+        }
+      },
+      "R0": {
+        "metrics": {
+          "correct": 30,
+          "total": 144,
+          "accuracy": 0.20833333333333334,
+          "unique_questions": 48,
+          "order_only_count": 6,
+          "order_tolerant_accuracy": 0.25,
+          "mean_query_seconds": 4.926208815125695,
+          "request_mean_seconds": 4.926596713882948,
+          "request_p50_seconds": 4.7993145209911745,
+          "request_p95_seconds": 5.5725708518162715,
+          "question_median_p95_seconds": 5.534896914602723,
+          "mean_context_tokens": 1016.5,
+          "mean_selected_context_tokens": 1016.5,
+          "mean_input_tokens": 1163.2083333333333,
+          "mean_output_tokens": 17.9375,
+          "mean_prefill_seconds": 3.4627105902777777,
+          "mean_decode_seconds": 0.7145393888888889,
+          "mean_other_seconds": 0.7493467347162819,
+          "mean_tokenize_seconds": 0.7424273905283675,
+          "mean_compaction_seconds": 0,
+          "raw_evidence_recall": 0.9973958333333334,
+          "all_raw_evidence": 0.9791666666666666,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 108,
+            "invalid_json": 6
+          },
+          "by_category": {
+            "architecture": {
+              "correct": 9,
+              "total": 18,
+              "accuracy": 0.5,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 0,
+              "total": 18,
+              "accuracy": 0,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 3,
+              "total": 36,
+              "accuracy": 0.08333333333333333,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 6,
+              "total": 36,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 15,
+              "total": 24,
+              "accuracy": 0.625,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 0,
+              "total": 24,
+              "accuracy": 0,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 9,
+              "total": 24,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 0,
+              "total": 24,
+              "accuracy": 0,
+              "unique_questions": 8
+            }
+          },
+          "question_equivalent_correct": 10.0,
+          "answer_limit_calls": 0,
+          "selector_limit_calls": 0
+        },
+        "tokens": {
+          "context": 1016.5,
+          "index": 0,
+          "selector": 0,
+          "answer": 1163.2083333333333,
+          "total": 1163.2083333333333,
+          "peak": 1163.2083333333333,
+          "output": 17.9375
+        }
+      },
+      "H": {
+        "metrics": {
+          "correct": 27,
+          "total": 144,
+          "accuracy": 0.1875,
+          "unique_questions": 48,
+          "order_only_count": 0,
+          "order_tolerant_accuracy": 0.1875,
+          "mean_query_seconds": 4.5585482752485404,
+          "request_mean_seconds": 4.559361215027214,
+          "request_p50_seconds": 4.514380041495315,
+          "request_p95_seconds": 6.110644702697755,
+          "question_median_p95_seconds": 5.983779598351975,
+          "mean_context_tokens": 175.0625,
+          "mean_selected_context_tokens": 175.0625,
+          "mean_input_tokens": 988.6458333333334,
+          "mean_output_tokens": 38.583333333333336,
+          "mean_prefill_seconds": 2.9714035416666666,
+          "mean_decode_seconds": 1.5344927361111111,
+          "mean_other_seconds": 0.05346493724943635,
+          "mean_tokenize_seconds": 0.04385669392407484,
+          "mean_compaction_seconds": 0,
+          "raw_evidence_recall": 0.35190076127576125,
+          "all_raw_evidence": 0.20833333333333334,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "selector_invalid": 33,
+            "wrong_answer": 78,
+            "invalid_json": 6
+          },
+          "by_category": {
+            "architecture": {
+              "correct": 12,
+              "total": 18,
+              "accuracy": 0.6666666666666666,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 0,
+              "total": 18,
+              "accuracy": 0,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 0,
+              "total": 36,
+              "accuracy": 0,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 3,
+              "total": 36,
+              "accuracy": 0.08333333333333333,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 9,
+              "total": 24,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            }
+          },
+          "question_equivalent_correct": 9.0,
+          "answer_limit_calls": 0,
+          "selector_limit_calls": 0
+        },
+        "tokens": {
+          "context": 175.0625,
+          "index": 499.6041666666667,
+          "selector": 666.9583333333334,
+          "answer": 321.6875,
+          "total": 988.6458333333334,
+          "peak": 667.5625,
+          "output": 38.583333333333336
+        }
+      }
+    },
+    "additional48": {
+      "B": {
+        "metrics": {
+          "correct": 30,
+          "total": 144,
+          "accuracy": 0.20833333333333334,
+          "unique_questions": 48,
+          "order_only_count": 0,
+          "order_tolerant_accuracy": 0.20833333333333334,
+          "mean_query_seconds": 3.549945015562116,
+          "request_mean_seconds": 3.550316223951692,
+          "request_p50_seconds": 3.499669166485546,
+          "request_p95_seconds": 5.524648364233144,
+          "question_median_p95_seconds": 5.47930889143463,
+          "mean_context_tokens": 363.1458333333333,
+          "mean_selected_context_tokens": 363.1458333333333,
+          "mean_input_tokens": 776.2291666666666,
+          "mean_output_tokens": 29.541666666666668,
+          "mean_prefill_seconds": 2.365599,
+          "mean_decode_seconds": 1.156768875,
+          "mean_other_seconds": 0.02794834895169204,
+          "mean_tokenize_seconds": 0.019345665611076077,
+          "mean_compaction_seconds": 0,
+          "raw_evidence_recall": 0.68075682997558,
+          "all_raw_evidence": 0.4166666666666667,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 102,
+            "invalid_json": 6,
+            "abstained": 6
+          },
+          "by_category": {
+            "architecture": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 3,
+              "total": 18,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 3,
+              "total": 18,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 0,
+              "total": 36,
+              "accuracy": 0,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 3,
+              "total": 36,
+              "accuracy": 0.08333333333333333,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 15,
+              "total": 18,
+              "accuracy": 0.8333333333333334,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 0,
+              "total": 24,
+              "accuracy": 0,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 12,
+              "total": 24,
+              "accuracy": 0.5,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            }
+          },
+          "question_equivalent_correct": 10.0,
+          "answer_limit_calls": 0,
+          "selector_limit_calls": 0
+        },
+        "tokens": {
+          "context": 363.1458333333333,
+          "index": 0,
+          "selector": 262.5416666666667,
+          "answer": 513.6875,
+          "total": 776.2291666666666,
+          "peak": 596.6458333333334,
+          "output": 29.541666666666668
+        }
+      },
+      "R0": {
+        "metrics": {
+          "correct": 45,
+          "total": 144,
+          "accuracy": 0.3125,
+          "unique_questions": 48,
+          "order_only_count": 0,
+          "order_tolerant_accuracy": 0.3125,
+          "mean_query_seconds": 5.0853467161244525,
+          "request_mean_seconds": 5.084696861374848,
+          "request_p50_seconds": 4.889288333011791,
+          "request_p95_seconds": 6.1084328981960425,
+          "question_median_p95_seconds": 6.039960683547542,
+          "mean_context_tokens": 1015.7916666666666,
+          "mean_selected_context_tokens": 1015.7916666666666,
+          "mean_input_tokens": 1166.1875,
+          "mean_output_tokens": 21.5,
+          "mean_prefill_seconds": 3.4699115208333335,
+          "mean_decode_seconds": 0.8655645694444445,
+          "mean_other_seconds": 0.7492207710970706,
+          "mean_tokenize_seconds": 0.7421635159537092,
+          "mean_compaction_seconds": 0,
+          "raw_evidence_recall": 0.9829545454545454,
+          "all_raw_evidence": 0.9791666666666666,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "wrong_answer": 93,
+            "invalid_json": 6
+          },
+          "by_category": {
+            "architecture": {
+              "correct": 3,
+              "total": 18,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 12,
+              "total": 18,
+              "accuracy": 0.6666666666666666,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 3,
+              "total": 36,
+              "accuracy": 0.08333333333333333,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 6,
+              "total": 36,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 15,
+              "total": 18,
+              "accuracy": 0.8333333333333334,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 9,
+              "total": 24,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 12,
+              "total": 24,
+              "accuracy": 0.5,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 9,
+              "total": 24,
+              "accuracy": 0.375,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            }
+          },
+          "question_equivalent_correct": 15.0,
+          "answer_limit_calls": 0,
+          "selector_limit_calls": 0
+        },
+        "tokens": {
+          "context": 1015.7916666666666,
+          "index": 0,
+          "selector": 0,
+          "answer": 1166.1875,
+          "total": 1166.1875,
+          "peak": 1166.1875,
+          "output": 21.5
+        }
+      },
+      "H": {
+        "metrics": {
+          "correct": 30,
+          "total": 144,
+          "accuracy": 0.20833333333333334,
+          "unique_questions": 48,
+          "order_only_count": 0,
+          "order_tolerant_accuracy": 0.20833333333333334,
+          "mean_query_seconds": 4.822965602371672,
+          "request_mean_seconds": 4.824709720743057,
+          "request_p50_seconds": 4.785999187006382,
+          "request_p95_seconds": 6.9919765813057895,
+          "question_median_p95_seconds": 6.843107660303939,
+          "mean_context_tokens": 222.47916666666666,
+          "mean_selected_context_tokens": 222.47916666666666,
+          "mean_input_tokens": 1044.6458333333333,
+          "mean_output_tokens": 41.125,
+          "mean_prefill_seconds": 3.1265048472222223,
+          "mean_decode_seconds": 1.6421995972222223,
+          "mean_other_seconds": 0.05600527629861247,
+          "mean_tokenize_seconds": 0.04599427085991516,
+          "mean_compaction_seconds": 0,
+          "raw_evidence_recall": 0.2304282233969734,
+          "all_raw_evidence": 0.0625,
+          "unstable_questions": 0,
+          "different_output_questions": 0,
+          "failure_counts": {
+            "selector_invalid": 33,
+            "wrong_answer": 72,
+            "invalid_json": 9
+          },
+          "by_category": {
+            "architecture": {
+              "correct": 3,
+              "total": 18,
+              "accuracy": 0.16666666666666666,
+              "unique_questions": 6
+            },
+            "boundary": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "change_impact": {
+              "correct": 6,
+              "total": 18,
+              "accuracy": 0.3333333333333333,
+              "unique_questions": 6
+            },
+            "cross_file": {
+              "correct": 0,
+              "total": 36,
+              "accuracy": 0,
+              "unique_questions": 12
+            },
+            "semantic": {
+              "correct": 0,
+              "total": 36,
+              "accuracy": 0,
+              "unique_questions": 12
+            },
+            "single_function": {
+              "correct": 15,
+              "total": 18,
+              "accuracy": 0.8333333333333334,
+              "unique_questions": 6
+            }
+          },
+          "by_project": {
+            "eval_authorization": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_cache": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_inventory": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_pricing": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            },
+            "eval_routing": {
+              "correct": 3,
+              "total": 24,
+              "accuracy": 0.125,
+              "unique_questions": 8
+            },
+            "eval_schedules": {
+              "correct": 6,
+              "total": 24,
+              "accuracy": 0.25,
+              "unique_questions": 8
+            }
+          },
+          "question_equivalent_correct": 10.0,
+          "answer_limit_calls": 0,
+          "selector_limit_calls": 0
+        },
+        "tokens": {
+          "context": 222.47916666666666,
+          "index": 501,
+          "selector": 671.8958333333334,
+          "answer": 372.75,
+          "total": 1044.6458333333333,
+          "peak": 676.0625,
+          "output": 41.125
+        }
+      }
+    }
+  },
+  "fresh_answers": 864,
+  "development_answers": 24,
+  "new_model_calls": 1482,
+  "comparisons": {
+    "H-R0": {
+      "higher": "H",
+      "base": "R0",
+      "delta_pp": -6.25,
+      "ci95_pp": [
+        -15.625,
+        4.166666666666666
+      ],
+      "win": 5,
+      "loss": 11,
+      "tie": 80,
+      "latency_delta_seconds": -0.31502082681496724,
+      "latency_ci95_seconds": [
+        -0.5307787048777755,
+        -0.0999978228795344
+      ],
+      "latency_ratio": 0.9370685552646322,
+      "latency_reduction_pct": 6.293144473536783,
+      "latency_reduction_ci95_pct": [
+        2.0160396433119177,
+        10.670998419153221
+      ],
+      "both_success_n": 14,
+      "both_success_latency_ratio": 0.8838371178495001,
+      "project_deltas_pp": {
+        "eval_authorization": -25.0,
+        "eval_cache": 12.5,
+        "eval_inventory": -6.25,
+        "eval_pricing": -12.5,
+        "eval_routing": -12.5,
+        "eval_schedules": 6.25
+      },
+      "unadjusted_project_signflip_p": 0.40625,
+      "bootstrap_resamples": 46656,
+      "cluster_count": 6,
+      "interpretation": "Exploratory exact-enumerated percentile bootstrap over six project clusters; repeated questions are not independent observations. No noninferiority claim.",
+      "cost": {
+        "total": {
+          "reduction_pct": 12.711629446118899,
+          "ci95_pct": [
+            7.785160377527445,
+            18.002389145434773
+          ]
+        },
+        "peak": {
+          "reduction_pct": 42.318734292690344,
+          "ci95_pct": [
+            41.85524609951272,
+            42.74278850463437
+          ]
+        },
+        "context": {
+          "reduction_pct": 80.43874935930292,
+          "ci95_pct": [
+            74.75727159949558,
+            86.32835331152651
+          ]
+        }
+      },
+      "holm_p_two_quality_contrasts": 0.8125
+    },
+    "H-B": {
+      "higher": "H",
+      "base": "B",
+      "delta_pp": -1.0416666666666665,
+      "ci95_pp": [
+        -10.416666666666668,
+        8.333333333333332
+      ],
+      "win": 6,
+      "loss": 7,
+      "tie": 83,
+      "latency_delta_seconds": 1.199205243924553,
+      "latency_ci95_seconds": [
+        0.9180918506948124,
+        1.5230107903225876
+      ],
+      "latency_ratio": 1.3434591117986758,
+      "latency_reduction_pct": -34.345911179867585,
+      "latency_reduction_ci95_pct": [
+        -46.602072053192956,
+        -24.543240846121495
+      ],
+      "both_success_n": 13,
+      "both_success_latency_ratio": 1.6225191606645024,
+      "project_deltas_pp": {
+        "eval_authorization": -6.25,
+        "eval_cache": 18.75,
+        "eval_inventory": -6.25,
+        "eval_pricing": 0,
+        "eval_routing": -18.75,
+        "eval_schedules": 6.25
+      },
+      "unadjusted_project_signflip_p": 1.0,
+      "bootstrap_resamples": 46656,
+      "cluster_count": 6,
+      "interpretation": "Exploratory exact-enumerated percentile bootstrap over six project clusters; repeated questions are not independent observations. No noninferiority claim.",
+      "cost": {
+        "total": {
+          "reduction_pct": -32.13023759561362,
+          "ci95_pct": [
+            -43.48251156410967,
+            -22.456277307009476
+          ]
+        },
+        "peak": {
+          "reduction_pct": -13.64982025798267,
+          "ci95_pct": [
+            -22.225392296718983,
+            -6.093497410181126
+          ]
+        },
+        "context": {
+          "reduction_pct": 45.692574778723284,
+          "ci95_pct": [
+            31.54923927681156,
+            60.29985944088708
+          ]
+        }
+      },
+      "holm_p_two_quality_contrasts": 1
+    }
+  },
+  "historical": {
+    "A": {
+      "metrics": {
+        "correct": 51,
+        "total": 288,
+        "accuracy": 0.17708333333333334,
+        "unique_questions": 96,
+        "order_only_count": 0,
+        "order_tolerant_accuracy": 0.17708333333333334,
+        "mean_query_seconds": 2.617736356874957,
+        "request_mean_seconds": 2.6223091082532743,
+        "request_p50_seconds": 2.2423383124987595,
+        "request_p95_seconds": 4.885739522702351,
+        "question_median_p95_seconds": 4.8798483124919585,
+        "mean_context_tokens": 97.1875,
+        "mean_selected_context_tokens": 97.1875,
+        "mean_input_tokens": 500.9166666666667,
+        "mean_output_tokens": 26.635416666666668,
+        "mean_prefill_seconds": 1.5631840138888888,
+        "mean_decode_seconds": 1.040028357638889,
+        "mean_other_seconds": 0.01909673672549676,
+        "mean_tokenize_seconds": 0.005937108528238848,
+        "mean_compaction_seconds": 0,
+        "raw_evidence_recall": 0.28767598142598144,
+        "all_raw_evidence": 0.14583333333333334,
+        "unstable_questions": 0,
+        "different_output_questions": 0,
+        "failure_counts": {
+          "wrong_answer": 216,
+          "abstained": 12,
+          "invalid_json": 9
+        },
+        "by_category": {
+          "architecture": {
+            "correct": 6,
+            "total": 36,
+            "accuracy": 0.16666666666666666,
+            "unique_questions": 12
+          },
+          "boundary": {
+            "correct": 12,
+            "total": 36,
+            "accuracy": 0.3333333333333333,
+            "unique_questions": 12
+          },
+          "change_impact": {
+            "correct": 0,
+            "total": 36,
+            "accuracy": 0,
+            "unique_questions": 12
+          },
+          "cross_file": {
+            "correct": 3,
+            "total": 72,
+            "accuracy": 0.041666666666666664,
+            "unique_questions": 24
+          },
+          "semantic": {
+            "correct": 6,
+            "total": 72,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 24
+          },
+          "single_function": {
+            "correct": 24,
+            "total": 36,
+            "accuracy": 0.6666666666666666,
+            "unique_questions": 12
+          }
+        },
+        "by_project": {
+          "eval_authorization": {
+            "correct": 15,
+            "total": 48,
+            "accuracy": 0.3125,
+            "unique_questions": 16
+          },
+          "eval_cache": {
+            "correct": 6,
+            "total": 48,
+            "accuracy": 0.125,
+            "unique_questions": 16
+          },
+          "eval_inventory": {
+            "correct": 6,
+            "total": 48,
+            "accuracy": 0.125,
+            "unique_questions": 16
+          },
+          "eval_pricing": {
+            "correct": 6,
+            "total": 48,
+            "accuracy": 0.125,
+            "unique_questions": 16
+          },
+          "eval_routing": {
+            "correct": 12,
+            "total": 48,
+            "accuracy": 0.25,
+            "unique_questions": 16
+          },
+          "eval_schedules": {
+            "correct": 6,
+            "total": 48,
+            "accuracy": 0.125,
+            "unique_questions": 16
+          }
+        },
+        "question_equivalent_correct": 17.0
+      },
+      "tokens": {
+        "context": 97.1875,
+        "index": 0,
+        "selector": 254.63541666666666,
+        "answer": 246.28125,
+        "total": 500.9166666666667,
+        "peak": 342.0104166666667,
+        "output": 26.635416666666668
+      }
+    },
+    "B": {
+      "metrics": {
+        "correct": 60,
+        "total": 288,
+        "accuracy": 0.20833333333333334,
+        "unique_questions": 96,
+        "order_only_count": 3,
+        "order_tolerant_accuracy": 0.21875,
+        "mean_query_seconds": 3.4967072643236556,
+        "request_mean_seconds": 3.503720763333806,
+        "request_p50_seconds": 3.5247988749979413,
+        "request_p95_seconds": 5.407184814139327,
+        "question_median_p95_seconds": 5.26555604200621,
+        "mean_context_tokens": 366.0104166666667,
+        "mean_selected_context_tokens": 366.0104166666667,
+        "mean_input_tokens": 769.4270833333334,
+        "mean_output_tokens": 28.729166666666668,
+        "mean_prefill_seconds": 2.347429239583333,
+        "mean_decode_seconds": 1.1331415416666666,
+        "mean_other_seconds": 0.023149982083805948,
+        "mean_tokenize_seconds": 0.016337238217400026,
+        "mean_compaction_seconds": 0,
+        "raw_evidence_recall": 0.7235352754884005,
+        "all_raw_evidence": 0.4895833333333333,
+        "unstable_questions": 0,
+        "different_output_questions": 0,
+        "failure_counts": {
+          "wrong_answer": 198,
+          "abstained": 9,
+          "invalid_schema": 6,
+          "invalid_json": 15
+        },
+        "by_category": {
+          "architecture": {
+            "correct": 21,
+            "total": 36,
+            "accuracy": 0.5833333333333334,
+            "unique_questions": 12
+          },
+          "boundary": {
+            "correct": 9,
+            "total": 36,
+            "accuracy": 0.25,
+            "unique_questions": 12
+          },
+          "change_impact": {
+            "correct": 3,
+            "total": 36,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 12
+          },
+          "cross_file": {
+            "correct": 0,
+            "total": 72,
+            "accuracy": 0,
+            "unique_questions": 24
+          },
+          "semantic": {
+            "correct": 6,
+            "total": 72,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 24
+          },
+          "single_function": {
+            "correct": 21,
+            "total": 36,
+            "accuracy": 0.5833333333333334,
+            "unique_questions": 12
+          }
+        },
+        "by_project": {
+          "eval_authorization": {
+            "correct": 15,
+            "total": 48,
+            "accuracy": 0.3125,
+            "unique_questions": 16
+          },
+          "eval_cache": {
+            "correct": 0,
+            "total": 48,
+            "accuracy": 0,
+            "unique_questions": 16
+          },
+          "eval_inventory": {
+            "correct": 9,
+            "total": 48,
+            "accuracy": 0.1875,
+            "unique_questions": 16
+          },
+          "eval_pricing": {
+            "correct": 9,
+            "total": 48,
+            "accuracy": 0.1875,
+            "unique_questions": 16
+          },
+          "eval_routing": {
+            "correct": 21,
+            "total": 48,
+            "accuracy": 0.4375,
+            "unique_questions": 16
+          },
+          "eval_schedules": {
+            "correct": 6,
+            "total": 48,
+            "accuracy": 0.125,
+            "unique_questions": 16
+          }
+        },
+        "question_equivalent_correct": 20.0
+      },
+      "tokens": {
+        "context": 366.0104166666667,
+        "index": 0,
+        "selector": 254.63541666666666,
+        "answer": 514.7916666666666,
+        "total": 769.4270833333334,
+        "peak": 591.125,
+        "output": 28.729166666666668
+      }
+    },
+    "R0": {
+      "metrics": {
+        "correct": 75,
+        "total": 288,
+        "accuracy": 0.2604166666666667,
+        "unique_questions": 96,
+        "order_only_count": 6,
+        "order_tolerant_accuracy": 0.28125,
+        "mean_query_seconds": 4.998328398395188,
+        "request_mean_seconds": 5.012757007798882,
+        "request_p50_seconds": 4.862946562498109,
+        "request_p95_seconds": 5.901329293204617,
+        "question_median_p95_seconds": 5.862568989246938,
+        "mean_context_tokens": 1016.1458333333334,
+        "mean_selected_context_tokens": 1016.1458333333334,
+        "mean_input_tokens": 1164.6979166666667,
+        "mean_output_tokens": 19.71875,
+        "mean_prefill_seconds": 3.4728376840277777,
+        "mean_decode_seconds": 0.7952130625,
+        "mean_other_seconds": 0.7447062612711043,
+        "mean_tokenize_seconds": 0.7385161601816637,
+        "mean_compaction_seconds": 0,
+        "raw_evidence_recall": 0.9901751893939394,
+        "all_raw_evidence": 0.9791666666666666,
+        "unstable_questions": 0,
+        "different_output_questions": 0,
+        "failure_counts": {
+          "wrong_answer": 201,
+          "invalid_json": 12
+        },
+        "by_category": {
+          "architecture": {
+            "correct": 12,
+            "total": 36,
+            "accuracy": 0.3333333333333333,
+            "unique_questions": 12
+          },
+          "boundary": {
+            "correct": 12,
+            "total": 36,
+            "accuracy": 0.3333333333333333,
+            "unique_questions": 12
+          },
+          "change_impact": {
+            "correct": 12,
+            "total": 36,
+            "accuracy": 0.3333333333333333,
+            "unique_questions": 12
+          },
+          "cross_file": {
+            "correct": 6,
+            "total": 72,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 24
+          },
+          "semantic": {
+            "correct": 12,
+            "total": 72,
+            "accuracy": 0.16666666666666666,
+            "unique_questions": 24
+          },
+          "single_function": {
+            "correct": 21,
+            "total": 36,
+            "accuracy": 0.5833333333333334,
+            "unique_questions": 12
+          }
+        },
+        "by_project": {
+          "eval_authorization": {
+            "correct": 24,
+            "total": 48,
+            "accuracy": 0.5,
+            "unique_questions": 16
+          },
+          "eval_cache": {
+            "correct": 3,
+            "total": 48,
+            "accuracy": 0.0625,
+            "unique_questions": 16
+          },
+          "eval_inventory": {
+            "correct": 9,
+            "total": 48,
+            "accuracy": 0.1875,
+            "unique_questions": 16
+          },
+          "eval_pricing": {
+            "correct": 15,
+            "total": 48,
+            "accuracy": 0.3125,
+            "unique_questions": 16
+          },
+          "eval_routing": {
+            "correct": 18,
+            "total": 48,
+            "accuracy": 0.375,
+            "unique_questions": 16
+          },
+          "eval_schedules": {
+            "correct": 6,
+            "total": 48,
+            "accuracy": 0.125,
+            "unique_questions": 16
+          }
+        },
+        "question_equivalent_correct": 25.0
+      },
+      "tokens": {
+        "context": 1016.1458333333334,
+        "index": 0,
+        "selector": 0,
+        "answer": 1164.6979166666667,
+        "total": 1164.6979166666667,
+        "peak": 1164.6979166666667,
+        "output": 19.71875
+      }
+    },
+    "RF": {
+      "metrics": {
+        "correct": 45,
+        "total": 288,
+        "accuracy": 0.15625,
+        "unique_questions": 96,
+        "order_only_count": 0,
+        "order_tolerant_accuracy": 0.15625,
+        "mean_query_seconds": 5.799708638052532,
+        "request_mean_seconds": 5.807716543982577,
+        "request_p50_seconds": 5.516108375508338,
+        "request_p95_seconds": 7.267538069297006,
+        "question_median_p95_seconds": 7.213421979500708,
+        "mean_context_tokens": 1015.5625,
+        "mean_selected_context_tokens": 1015.5625,
+        "mean_input_tokens": 1163.8854166666667,
+        "mean_output_tokens": 21.895833333333332,
+        "mean_prefill_seconds": 3.424471701388889,
+        "mean_decode_seconds": 0.8604831354166667,
+        "mean_other_seconds": 1.5227617071770219,
+        "mean_tokenize_seconds": 1.5153439369773878,
+        "mean_compaction_seconds": 0,
+        "raw_evidence_recall": 0.5313216297591298,
+        "all_raw_evidence": 0.4583333333333333,
+        "unstable_questions": 0,
+        "different_output_questions": 0,
+        "failure_counts": {
+          "wrong_answer": 225,
+          "invalid_json": 9,
+          "execution_or_limit": 3,
+          "abstained": 6
+        },
+        "by_category": {
+          "architecture": {
+            "correct": 3,
+            "total": 36,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 12
+          },
+          "boundary": {
+            "correct": 6,
+            "total": 36,
+            "accuracy": 0.16666666666666666,
+            "unique_questions": 12
+          },
+          "change_impact": {
+            "correct": 3,
+            "total": 36,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 12
+          },
+          "cross_file": {
+            "correct": 6,
+            "total": 72,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 24
+          },
+          "semantic": {
+            "correct": 6,
+            "total": 72,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 24
+          },
+          "single_function": {
+            "correct": 21,
+            "total": 36,
+            "accuracy": 0.5833333333333334,
+            "unique_questions": 12
+          }
+        },
+        "by_project": {
+          "eval_authorization": {
+            "correct": 18,
+            "total": 48,
+            "accuracy": 0.375,
+            "unique_questions": 16
+          },
+          "eval_cache": {
+            "correct": 0,
+            "total": 48,
+            "accuracy": 0,
+            "unique_questions": 16
+          },
+          "eval_inventory": {
+            "correct": 3,
+            "total": 48,
+            "accuracy": 0.0625,
+            "unique_questions": 16
+          },
+          "eval_pricing": {
+            "correct": 9,
+            "total": 48,
+            "accuracy": 0.1875,
+            "unique_questions": 16
+          },
+          "eval_routing": {
+            "correct": 12,
+            "total": 48,
+            "accuracy": 0.25,
+            "unique_questions": 16
+          },
+          "eval_schedules": {
+            "correct": 3,
+            "total": 48,
+            "accuracy": 0.0625,
+            "unique_questions": 16
+          }
+        },
+        "question_equivalent_correct": 15.0
+      },
+      "tokens": {
+        "context": 1015.5625,
+        "index": 0,
+        "selector": 0,
+        "answer": 1163.8854166666667,
+        "total": 1163.8854166666667,
+        "peak": 1163.8854166666667,
+        "output": 21.895833333333332
+      }
+    },
+    "RH": {
+      "metrics": {
+        "correct": 48,
+        "total": 288,
+        "accuracy": 0.16666666666666666,
+        "unique_questions": 96,
+        "order_only_count": 0,
+        "order_tolerant_accuracy": 0.16666666666666666,
+        "mean_query_seconds": 5.789371642291826,
+        "request_mean_seconds": 5.7928782731529385,
+        "request_p50_seconds": 5.529367604001891,
+        "request_p95_seconds": 7.156800158000986,
+        "question_median_p95_seconds": 7.122514051501639,
+        "mean_context_tokens": 1016.1666666666666,
+        "mean_selected_context_tokens": 1016.1666666666666,
+        "mean_input_tokens": 1164.46875,
+        "mean_output_tokens": 20.989583333333332,
+        "mean_prefill_seconds": 3.4263004027777777,
+        "mean_decode_seconds": 0.8247525520833333,
+        "mean_other_seconds": 1.5418253182918271,
+        "mean_tokenize_seconds": 1.5344984005483235,
+        "mean_compaction_seconds": 0,
+        "raw_evidence_recall": 0.5330577408702408,
+        "all_raw_evidence": 0.4583333333333333,
+        "unstable_questions": 0,
+        "different_output_questions": 0,
+        "failure_counts": {
+          "wrong_answer": 222,
+          "invalid_json": 9,
+          "execution_or_limit": 3,
+          "abstained": 6
+        },
+        "by_category": {
+          "architecture": {
+            "correct": 3,
+            "total": 36,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 12
+          },
+          "boundary": {
+            "correct": 6,
+            "total": 36,
+            "accuracy": 0.16666666666666666,
+            "unique_questions": 12
+          },
+          "change_impact": {
+            "correct": 3,
+            "total": 36,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 12
+          },
+          "cross_file": {
+            "correct": 9,
+            "total": 72,
+            "accuracy": 0.125,
+            "unique_questions": 24
+          },
+          "semantic": {
+            "correct": 6,
+            "total": 72,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 24
+          },
+          "single_function": {
+            "correct": 21,
+            "total": 36,
+            "accuracy": 0.5833333333333334,
+            "unique_questions": 12
+          }
+        },
+        "by_project": {
+          "eval_authorization": {
+            "correct": 18,
+            "total": 48,
+            "accuracy": 0.375,
+            "unique_questions": 16
+          },
+          "eval_cache": {
+            "correct": 3,
+            "total": 48,
+            "accuracy": 0.0625,
+            "unique_questions": 16
+          },
+          "eval_inventory": {
+            "correct": 3,
+            "total": 48,
+            "accuracy": 0.0625,
+            "unique_questions": 16
+          },
+          "eval_pricing": {
+            "correct": 9,
+            "total": 48,
+            "accuracy": 0.1875,
+            "unique_questions": 16
+          },
+          "eval_routing": {
+            "correct": 12,
+            "total": 48,
+            "accuracy": 0.25,
+            "unique_questions": 16
+          },
+          "eval_schedules": {
+            "correct": 3,
+            "total": 48,
+            "accuracy": 0.0625,
+            "unique_questions": 16
+          }
+        },
+        "question_equivalent_correct": 16.0
+      },
+      "tokens": {
+        "context": 1016.1666666666666,
+        "index": 0,
+        "selector": 0,
+        "answer": 1164.46875,
+        "total": 1164.46875,
+        "peak": 1164.46875,
+        "output": 20.989583333333332
+      }
+    },
+    "C": {
+      "metrics": {
+        "correct": 48,
+        "total": 288,
+        "accuracy": 0.16666666666666666,
+        "unique_questions": 96,
+        "order_only_count": 3,
+        "order_tolerant_accuracy": 0.17708333333333334,
+        "mean_query_seconds": 5.22714750166718,
+        "request_mean_seconds": 5.233455518506768,
+        "request_p50_seconds": 5.255780520994449,
+        "request_p95_seconds": 7.097566991898929,
+        "question_median_p95_seconds": 7.056123801998183,
+        "mean_context_tokens": 804.625,
+        "mean_selected_context_tokens": 1016.1666666666666,
+        "mean_input_tokens": 952.9375,
+        "mean_output_tokens": 22.427083333333332,
+        "mean_prefill_seconds": 2.810121670138889,
+        "mean_decode_seconds": 0.8812011354166667,
+        "mean_other_seconds": 1.5421327129512126,
+        "mean_tokenize_seconds": 1.5350885462660497,
+        "mean_compaction_seconds": 0.001975722791030421,
+        "raw_evidence_recall": 0.5330577408702408,
+        "all_raw_evidence": 0.4583333333333333,
+        "unstable_questions": 0,
+        "different_output_questions": 0,
+        "failure_counts": {
+          "wrong_answer": 219,
+          "invalid_json": 12,
+          "abstained": 9
+        },
+        "by_category": {
+          "architecture": {
+            "correct": 3,
+            "total": 36,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 12
+          },
+          "boundary": {
+            "correct": 3,
+            "total": 36,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 12
+          },
+          "change_impact": {
+            "correct": 3,
+            "total": 36,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 12
+          },
+          "cross_file": {
+            "correct": 9,
+            "total": 72,
+            "accuracy": 0.125,
+            "unique_questions": 24
+          },
+          "semantic": {
+            "correct": 6,
+            "total": 72,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 24
+          },
+          "single_function": {
+            "correct": 24,
+            "total": 36,
+            "accuracy": 0.6666666666666666,
+            "unique_questions": 12
+          }
+        },
+        "by_project": {
+          "eval_authorization": {
+            "correct": 12,
+            "total": 48,
+            "accuracy": 0.25,
+            "unique_questions": 16
+          },
+          "eval_cache": {
+            "correct": 3,
+            "total": 48,
+            "accuracy": 0.0625,
+            "unique_questions": 16
+          },
+          "eval_inventory": {
+            "correct": 6,
+            "total": 48,
+            "accuracy": 0.125,
+            "unique_questions": 16
+          },
+          "eval_pricing": {
+            "correct": 9,
+            "total": 48,
+            "accuracy": 0.1875,
+            "unique_questions": 16
+          },
+          "eval_routing": {
+            "correct": 12,
+            "total": 48,
+            "accuracy": 0.25,
+            "unique_questions": 16
+          },
+          "eval_schedules": {
+            "correct": 6,
+            "total": 48,
+            "accuracy": 0.125,
+            "unique_questions": 16
+          }
+        },
+        "question_equivalent_correct": 16.0
+      },
+      "tokens": {
+        "context": 804.625,
+        "index": 0,
+        "selector": 0,
+        "answer": 952.9375,
+        "total": 952.9375,
+        "peak": 952.9375,
+        "output": 22.427083333333332
+      }
+    },
+    "FULL": {
+      "metrics": {
+        "correct": 45,
+        "total": 288,
+        "accuracy": 0.15625,
+        "unique_questions": 96,
+        "order_only_count": 6,
+        "order_tolerant_accuracy": 0.17708333333333334,
+        "mean_query_seconds": 14.345383484823742,
+        "request_mean_seconds": 14.372123760749876,
+        "request_p50_seconds": 13.920664437500818,
+        "request_p95_seconds": 18.691358516896432,
+        "question_median_p95_seconds": 18.750995405993308,
+        "mean_context_tokens": 4117.614583333333,
+        "mean_selected_context_tokens": 4117.614583333333,
+        "mean_input_tokens": 4265.75,
+        "mean_output_tokens": 27.25,
+        "mean_prefill_seconds": 13.179826003472222,
+        "mean_decode_seconds": 1.1523200277777779,
+        "mean_other_seconds": 0.03997772949987532,
+        "mean_tokenize_seconds": 0.027942054108532628,
+        "mean_compaction_seconds": 0,
+        "raw_evidence_recall": 0.3058223316035816,
+        "all_raw_evidence": 0.14583333333333334,
+        "unstable_questions": 0,
+        "different_output_questions": 0,
+        "failure_counts": {
+          "wrong_answer": 198,
+          "invalid_json": 24,
+          "execution_or_limit": 21
+        },
+        "by_category": {
+          "architecture": {
+            "correct": 6,
+            "total": 36,
+            "accuracy": 0.16666666666666666,
+            "unique_questions": 12
+          },
+          "boundary": {
+            "correct": 9,
+            "total": 36,
+            "accuracy": 0.25,
+            "unique_questions": 12
+          },
+          "change_impact": {
+            "correct": 3,
+            "total": 36,
+            "accuracy": 0.08333333333333333,
+            "unique_questions": 12
+          },
+          "cross_file": {
+            "correct": 0,
+            "total": 72,
+            "accuracy": 0,
+            "unique_questions": 24
+          },
+          "semantic": {
+            "correct": 3,
+            "total": 72,
+            "accuracy": 0.041666666666666664,
+            "unique_questions": 24
+          },
+          "single_function": {
+            "correct": 24,
+            "total": 36,
+            "accuracy": 0.6666666666666666,
+            "unique_questions": 12
+          }
+        },
+        "by_project": {
+          "eval_authorization": {
+            "correct": 12,
+            "total": 48,
+            "accuracy": 0.25,
+            "unique_questions": 16
+          },
+          "eval_cache": {
+            "correct": 6,
+            "total": 48,
+            "accuracy": 0.125,
+            "unique_questions": 16
+          },
+          "eval_inventory": {
+            "correct": 6,
+            "total": 48,
+            "accuracy": 0.125,
+            "unique_questions": 16
+          },
+          "eval_pricing": {
+            "correct": 9,
+            "total": 48,
+            "accuracy": 0.1875,
+            "unique_questions": 16
+          },
+          "eval_routing": {
+            "correct": 6,
+            "total": 48,
+            "accuracy": 0.125,
+            "unique_questions": 16
+          },
+          "eval_schedules": {
+            "correct": 6,
+            "total": 48,
+            "accuracy": 0.125,
+            "unique_questions": 16
+          }
+        },
+        "question_equivalent_correct": 15.0
+      },
+      "tokens": {
+        "context": 4117.614583333333,
+        "index": 0,
+        "selector": 0,
+        "answer": 4265.75,
+        "total": 4265.75,
+        "peak": 4265.75,
+        "output": 27.25
+      }
+    }
+  },
+  "history_comparison_is_descriptive": true,
+  "inputs": {
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/hybrid_index_20261027/protocol.json": "4a2c6c18c444b7d94c5ddd712b71c317a38e6f56849980141e8eca716fdccb8f",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/hybrid_index_20261027/results.jsonl": "5f6cec3ad6fbca67b0f07fbb7de69c95914c2905990e2781b0c839a8394432ed",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/hybrid_index_20261027/model_calls.jsonl": "9f2ac29d7e5cb9a55f1a80068935272c76eba53da3d8f904da099564b2665e63",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/hybrid_index_20261027/analysis_plan.json": "aba022e8852d6fc761f671c9c0cf71e89def22d3096204ee61ffb6e62fde16dd"
+  },
+  "hybrid_diagnostics": {
+    "mean_index_items": 17.5625,
+    "mean_index_tokens": 500.3020833333333,
+    "mean_requested_symbols": 2.4270833333333335,
+    "mean_delivered_symbols": 2.4270833333333335,
+    "invalid_selection_calls": 66,
+    "index_required_recall": 0.4890978668322418,
+    "index_all_required_calls": 48,
+    "requested_required_recall": 0.2911644923363673,
+    "raw_required_recall": 0.2911644923363673,
+    "raw_all_required_calls": 39,
+    "source_budget_rejected_calls": 0,
+    "index_budget_rejected_calls": 288,
+    "correct_with_all_raw": 27
+  },
+  "historical_control_reproduction": {
+    "B": {
+      "pairs": 288,
+      "same_context": 288,
+      "same_answer_prompt": 288,
+      "same_answer": 288
+    },
+    "R0": {
+      "pairs": 288,
+      "same_context": 288,
+      "same_answer_prompt": 288,
+      "same_answer": 288
+    }
+  },
+  "examples": [
+    {
+      "kind": "H_gain_R0",
+      "task_id": "eval_cache__negative_ttl",
+      "question": "What does cache_ttl(-1, False) return?",
+      "expected": 0,
+      "arms": {
+        "H": {
+          "correct": true,
+          "parsed_answer": 0,
+          "context_tokens": 87,
+          "input_tokens": 868,
+          "raw_evidence_recall": 0.25,
+          "chosen": [
+            {
+              "id": "memory://symbol/rules.py::cache_ttl",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/rules.py::cache_ttl"
+              ]
+            }
+          ]
+        },
+        "R0": {
+          "correct": false,
+          "parsed_answer": 300,
+          "context_tokens": 1021,
+          "input_tokens": 1145,
+          "raw_evidence_recall": 1.0,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/rules.py::cache_ttl",
+              "level": 0,
+              "score": 0.11568721382734587,
+              "source_uris": [
+                "memory://symbol/rules.py::cache_ttl"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/service.py::cache_entry",
+              "level": 0,
+              "score": 0.1102891441672709,
+              "source_uris": [
+                "memory://symbol/service.py::cache_entry"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::cache_ttl",
+              "level": 0,
+              "score": 0.09276338300078069,
+              "source_uris": [
+                "memory://symbol/rules.py::cache_ttl",
+                "memory://symbol/policy.py::DEFAULT_TTL",
+                "memory://symbol/policy.py::MAX_TTL",
+                "memory://symbol/policy.py::PRIVATE_TTL"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/service.py::render_cache_key",
+              "level": 0,
+              "score": 0.09174679843793535,
+              "source_uris": [
+                "memory://symbol/service.py::render_cache_key"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/service.py::cache_partition",
+              "level": 0,
+              "score": 0.08757852471375463,
+              "source_uris": [
+                "memory://symbol/service.py::cache_partition"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::cache_partition",
+              "level": 0,
+              "score": 0.08298948299576288,
+              "source_uris": [
+                "memory://symbol/service.py::cache_partition",
+                "memory://symbol/rules.py::normalize_tenant",
+                "memory://symbol/policy.py::ANONYMOUS_TENANT"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::aux_service_000_event_text",
+              "level": 0,
+              "score": 0.07574856696537528,
+              "source_uris": [
+                "memory://symbol/service.py::aux_service_000_event_text"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::aux_service_039_trimmed_text",
+              "level": 0,
+              "score": 0.07274979203701451,
+              "source_uris": [
+                "memory://symbol/service.py::aux_service_039_trimmed_text"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::CACHE_NAMESPACE",
+              "level": 0,
+              "score": 0.0723317330178006,
+              "source_uris": [
+                "memory://symbol/policy.py::CACHE_NAMESPACE"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/audit.py::recent_events",
+              "level": 0,
+              "score": 0.003851932004930075,
+              "source_uris": [
+                "memory://symbol/audit.py::recent_events"
+              ]
+            }
+          ]
+        },
+        "B": {
+          "correct": false,
+          "parsed_answer": 30,
+          "context_tokens": 176,
+          "input_tokens": 478,
+          "raw_evidence_recall": 1.0,
+          "chosen": [
+            {
+              "id": "memory://symbol/rules.py::cache_ttl",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::cache_ttl"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::DEFAULT_TTL",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::DEFAULT_TTL"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::MAX_TTL",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::MAX_TTL"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::PRIVATE_TTL",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::PRIVATE_TTL"
+              ]
+            }
+          ]
+        }
+      },
+      "index": {
+        "text": "1. function rules.py:273-275 cache_ttl(requested, private) -> policy.py::DEFAULT_TTL,policy.py::MAX_TTL,policy.py::PRIVATE_TTL\n2. function service.py:268-270 cache_entry(tenant, resource, query, requested_ttl, private, now) -> rules.py::cache_ttl,service.py::render_cache_key\n3. function service.py:265-266 render_cache_key(tenant, resource, query) -> policy.py::CACHE_NAMESPACE,policy.py::KEY_SEPARATOR,policy.py::SCHEMA_VERSION,rules.py::canonical_query,rules.py::normalize_resource,rules.py::normalize_tenant\n4. function service.py:272-273 cache_partition(tenant) -> rules.py::normalize_tenant\n5. function service.py:4-9 aux_service_000_event_text(event, fields) -> -\n6. function service.py:364-372 aux_service_039_trimmed_text(value, limit) -> -\n7. function service.py:473-481 aux_service_051_trimmed_text(value, limit) -> -\n8. function service.py:27-35 aux_service_003_trimmed_text(value, limit) -> -\n9. function service.py:136-144 aux_service_015_trimmed_text(value, limit) -> -\n10. function service.py:245-253 aux_service_027_trimmed_text(value, limit) -> -\n11. constant policy.py:272-272 CACHE_NAMESPACE -> -\n12. function service.py:341-346 aux_service_036_event_text(event, fields) -> -\n13. function service.py:450-455 aux_service_048_event_text(event, fields) -> -\n14. function service.py:113-118 aux_service_012_event_text(event, fields) -> -\n15. function service.py:222-227 aux_service_024_event_text(event, fields) -> -\n16. function service.py:19-25 aux_service_002_histogram(labels) -> -\n17. function service.py:37-45 aux_service_004_unique_items(values) -> -",
+        "tokens": 512,
+        "items": [
+          {
+            "number": 1,
+            "uri": "memory://symbol/rules.py::cache_ttl",
+            "score": 0.11568721382734587,
+            "line": "1. function rules.py:273-275 cache_ttl(requested, private) -> policy.py::DEFAULT_TTL,policy.py::MAX_TTL,policy.py::PRIVATE_TTL"
+          },
+          {
+            "number": 2,
+            "uri": "memory://symbol/service.py::cache_entry",
+            "score": 0.1102891441672709,
+            "line": "2. function service.py:268-270 cache_entry(tenant, resource, query, requested_ttl, private, now) -> rules.py::cache_ttl,service.py::render_cache_key"
+          },
+          {
+            "number": 3,
+            "uri": "memory://symbol/service.py::render_cache_key",
+            "score": 0.09174679843793535,
+            "line": "3. function service.py:265-266 render_cache_key(tenant, resource, query) -> policy.py::CACHE_NAMESPACE,policy.py::KEY_SEPARATOR,policy.py::SCHEMA_VERSION,rules.py::canonical_query,rules.py::normalize_resource,rules.py::normalize_tenant"
+          },
+          {
+            "number": 4,
+            "uri": "memory://symbol/service.py::cache_partition",
+            "score": 0.08757852471375463,
+            "line": "4. function service.py:272-273 cache_partition(tenant) -> rules.py::normalize_tenant"
+          },
+          {
+            "number": 5,
+            "uri": "memory://symbol/service.py::aux_service_000_event_text",
+            "score": 0.07574856696537528,
+            "line": "5. function service.py:4-9 aux_service_000_event_text(event, fields) -> -"
+          },
+          {
+            "number": 6,
+            "uri": "memory://symbol/service.py::aux_service_039_trimmed_text",
+            "score": 0.07274979203701451,
+            "line": "6. function service.py:364-372 aux_service_039_trimmed_text(value, limit) -> -"
+          },
+          {
+            "number": 7,
+            "uri": "memory://symbol/service.py::aux_service_051_trimmed_text",
+            "score": 0.07274979203701451,
+            "line": "7. function service.py:473-481 aux_service_051_trimmed_text(value, limit) -> -"
+          },
+          {
+            "number": 8,
+            "uri": "memory://symbol/service.py::aux_service_003_trimmed_text",
+            "score": 0.07250543172836754,
+            "line": "8. function service.py:27-35 aux_service_003_trimmed_text(value, limit) -> -"
+          },
+          {
+            "number": 9,
+            "uri": "memory://symbol/service.py::aux_service_015_trimmed_text",
+            "score": 0.07250543172836754,
+            "line": "9. function service.py:136-144 aux_service_015_trimmed_text(value, limit) -> -"
+          },
+          {
+            "number": 10,
+            "uri": "memory://symbol/service.py::aux_service_027_trimmed_text",
+            "score": 0.07250543172836754,
+            "line": "10. function service.py:245-253 aux_service_027_trimmed_text(value, limit) -> -"
+          },
+          {
+            "number": 11,
+            "uri": "memory://symbol/policy.py::CACHE_NAMESPACE",
+            "score": 0.0723317330178006,
+            "line": "11. constant policy.py:272-272 CACHE_NAMESPACE -> -"
+          },
+          {
+            "number": 12,
+            "uri": "memory://symbol/service.py::aux_service_036_event_text",
+            "score": 0.07161983401086992,
+            "line": "12. function service.py:341-346 aux_service_036_event_text(event, fields) -> -"
+          },
+          {
+            "number": 13,
+            "uri": "memory://symbol/service.py::aux_service_048_event_text",
+            "score": 0.07161983401086992,
+            "line": "13. function service.py:450-455 aux_service_048_event_text(event, fields) -> -"
+          },
+          {
+            "number": 14,
+            "uri": "memory://symbol/service.py::aux_service_012_event_text",
+            "score": 0.07136190079411174,
+            "line": "14. function service.py:113-118 aux_service_012_event_text(event, fields) -> -"
+          },
+          {
+            "number": 15,
+            "uri": "memory://symbol/service.py::aux_service_024_event_text",
+            "score": 0.07136190079411174,
+            "line": "15. function service.py:222-227 aux_service_024_event_text(event, fields) -> -"
+          },
+          {
+            "number": 16,
+            "uri": "memory://symbol/service.py::aux_service_002_histogram",
+            "score": 0.06793844236943215,
+            "line": "16. function service.py:19-25 aux_service_002_histogram(labels) -> -"
+          },
+          {
+            "number": 17,
+            "uri": "memory://symbol/service.py::aux_service_004_unique_items",
+            "score": 0.06705946534316243,
+            "line": "17. function service.py:37-45 aux_service_004_unique_items(values) -> -"
+          }
+        ],
+        "rejected": [
+          "memory://symbol/service.py::aux_service_028_unique_items",
+          "memory://symbol/service.py::aux_service_040_unique_items",
+          "memory://symbol/service.py::aux_service_052_unique_items",
+          "memory://symbol/service.py::aux_service_016_unique_items",
+          "memory://symbol/service.py::aux_service_038_histogram",
+          "memory://symbol/service.py::aux_service_050_histogram",
+          "memory://symbol/service.py::aux_service_014_histogram"
+        ]
+      },
+      "selector_answer": "```json\n{\"read\":[1]}\n```",
+      "requested_uris": [
+        "memory://symbol/rules.py::cache_ttl"
+      ],
+      "context": "### memory://symbol/rules.py::cache_ttl lines 273-275\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef cache_ttl(requested, private):\n    ceiling = PRIVATE_TTL if private else MAX_TTL\n    return min(max(DEFAULT_TTL if requested is None else requested, 0), ceiling)"
+    },
+    {
+      "kind": "H_loss_R0",
+      "task_id": "eval_authorization__direct_calls",
+      "question": "List the project-defined functions directly called by authorize. Ignore builtins, and return a sorted list of function names.",
+      "expected": [
+        "role_allows",
+        "scope_allows",
+        "session_valid"
+      ],
+      "arms": {
+        "R0": {
+          "correct": true,
+          "parsed_answer": [
+            "role_allows",
+            "scope_allows",
+            "session_valid"
+          ],
+          "context_tokens": 1017,
+          "input_tokens": 1154,
+          "raw_evidence_recall": 1.0,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::authorize",
+              "level": 0,
+              "score": 0.06587696994283347,
+              "source_uris": [
+                "memory://symbol/service.py::authorize"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.05019925074844104,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::aux_policy_001_batches",
+              "level": 0,
+              "score": 0.037938071310067455,
+              "source_uris": [
+                "memory://symbol/policy.py::aux_policy_001_batches"
+              ]
+            },
+            {
+              "id": "memory://symbol/audit.py::aux_audit_001_batches",
+              "level": 0,
+              "score": 0.037772258363962384,
+              "source_uris": [
+                "memory://symbol/audit.py::aux_audit_001_batches"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::aux_presentation_001_batches",
+              "level": 0,
+              "score": 0.03776169196101002,
+              "source_uris": [
+                "memory://symbol/presentation.py::aux_presentation_001_batches"
+              ]
+            },
+            {
+              "id": "memory://symbol/audit.py::AUDIT_VERSION",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/audit.py::AUDIT_VERSION"
+              ]
+            }
+          ]
+        },
+        "H": {
+          "correct": false,
+          "parsed_answer": [
+            "role_allows",
+            "scope_allows"
+          ],
+          "context_tokens": 122,
+          "input_tokens": 927,
+          "raw_evidence_recall": 1.0,
+          "chosen": [
+            {
+              "id": "memory://symbol/service.py::authorize",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/service.py::authorize"
+              ]
+            }
+          ]
+        },
+        "B": {
+          "correct": true,
+          "parsed_answer": [
+            "role_allows",
+            "scope_allows",
+            "session_valid"
+          ],
+          "context_tokens": 541,
+          "input_tokens": 791,
+          "raw_evidence_recall": 1.0,
+          "chosen": [
+            {
+              "id": "memory://symbol/service.py::authorize",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::authorize"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::role_allows",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::role_allows"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::scope_allows",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::scope_allows"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::session_valid",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::session_valid"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::normalized_scopes",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::normalized_scopes"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::required_scope",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::required_scope"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::ALLOW_REASON",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::ALLOW_REASON"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::DENY_REASON",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::DENY_REASON"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::ADMIN_ROLE",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::ADMIN_ROLE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::MAX_SESSION_AGE",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            }
+          ]
+        }
+      },
+      "index": {
+        "text": "1. function service.py:4-8 authorize(user, owner, role, scopes, action, created_at, now, revoked) -> policy.py::ALLOW_REASON,policy.py::DENY_REASON,rules.py::role_allows,rules.py::scope_allows,rules.py::session_valid\n2. function service.py:10-11 can_edit_own(user, scopes, created_at, now) -> service.py::authorize\n3. function policy.py:17-23 aux_policy_001_batches(values, width) -> -\n4. function audit.py:25-31 aux_audit_001_batches(values, width) -> -\n5. function presentation.py:25-31 aux_presentation_001_batches(values, width) -> -\n6. function policy.py:126-132 aux_policy_013_batches(values, width) -> -\n7. function policy.py:235-241 aux_policy_025_batches(values, width) -> -\n8. function policy.py:344-350 aux_policy_037_batches(values, width) -> -\n9. function policy.py:453-459 aux_policy_049_batches(values, width) -> -\n10. function audit.py:134-140 aux_audit_013_batches(values, width) -> -\n11. function audit.py:243-249 aux_audit_025_batches(values, width) -> -\n12. function audit.py:352-358 aux_audit_037_batches(values, width) -> -\n13. function audit.py:461-467 aux_audit_049_batches(values, width) -> -\n14. function presentation.py:134-140 aux_presentation_013_batches(values, width) -> -\n15. function presentation.py:243-249 aux_presentation_025_batches(values, width) -> -\n16. function presentation.py:352-358 aux_presentation_037_batches(values, width) -> -\n17. function presentation.py:461-467 aux_presentation_049_batches(values, width) -> -\n18. function rules.py:26-32 aux_rules_001_batches(values, width) -> -",
+        "tokens": 512,
+        "items": [
+          {
+            "number": 1,
+            "uri": "memory://symbol/service.py::authorize",
+            "score": 0.06587696994283347,
+            "line": "1. function service.py:4-8 authorize(user, owner, role, scopes, action, created_at, now, revoked) -> policy.py::ALLOW_REASON,policy.py::DENY_REASON,rules.py::role_allows,rules.py::scope_allows,rules.py::session_valid"
+          },
+          {
+            "number": 2,
+            "uri": "memory://symbol/service.py::can_edit_own",
+            "score": 0.05019925074844104,
+            "line": "2. function service.py:10-11 can_edit_own(user, scopes, created_at, now) -> service.py::authorize"
+          },
+          {
+            "number": 3,
+            "uri": "memory://symbol/policy.py::aux_policy_001_batches",
+            "score": 0.037938071310067455,
+            "line": "3. function policy.py:17-23 aux_policy_001_batches(values, width) -> -"
+          },
+          {
+            "number": 4,
+            "uri": "memory://symbol/audit.py::aux_audit_001_batches",
+            "score": 0.037772258363962384,
+            "line": "4. function audit.py:25-31 aux_audit_001_batches(values, width) -> -"
+          },
+          {
+            "number": 5,
+            "uri": "memory://symbol/presentation.py::aux_presentation_001_batches",
+            "score": 0.03776169196101002,
+            "line": "5. function presentation.py:25-31 aux_presentation_001_batches(values, width) -> -"
+          },
+          {
+            "number": 6,
+            "uri": "memory://symbol/policy.py::aux_policy_013_batches",
+            "score": 0.03768704553503415,
+            "line": "6. function policy.py:126-132 aux_policy_013_batches(values, width) -> -"
+          },
+          {
+            "number": 7,
+            "uri": "memory://symbol/policy.py::aux_policy_025_batches",
+            "score": 0.03768704553503415,
+            "line": "7. function policy.py:235-241 aux_policy_025_batches(values, width) -> -"
+          },
+          {
+            "number": 8,
+            "uri": "memory://symbol/policy.py::aux_policy_037_batches",
+            "score": 0.03768704553503415,
+            "line": "8. function policy.py:344-350 aux_policy_037_batches(values, width) -> -"
+          },
+          {
+            "number": 9,
+            "uri": "memory://symbol/policy.py::aux_policy_049_batches",
+            "score": 0.03768704553503415,
+            "line": "9. function policy.py:453-459 aux_policy_049_batches(values, width) -> -"
+          },
+          {
+            "number": 10,
+            "uri": "memory://symbol/audit.py::aux_audit_013_batches",
+            "score": 0.037194393940995565,
+            "line": "10. function audit.py:134-140 aux_audit_013_batches(values, width) -> -"
+          },
+          {
+            "number": 11,
+            "uri": "memory://symbol/audit.py::aux_audit_025_batches",
+            "score": 0.037194393940995565,
+            "line": "11. function audit.py:243-249 aux_audit_025_batches(values, width) -> -"
+          },
+          {
+            "number": 12,
+            "uri": "memory://symbol/audit.py::aux_audit_037_batches",
+            "score": 0.037194393940995565,
+            "line": "12. function audit.py:352-358 aux_audit_037_batches(values, width) -> -"
+          },
+          {
+            "number": 13,
+            "uri": "memory://symbol/audit.py::aux_audit_049_batches",
+            "score": 0.037194393940995565,
+            "line": "13. function audit.py:461-467 aux_audit_049_batches(values, width) -> -"
+          },
+          {
+            "number": 14,
+            "uri": "memory://symbol/presentation.py::aux_presentation_013_batches",
+            "score": 0.03718430498318026,
+            "line": "14. function presentation.py:134-140 aux_presentation_013_batches(values, width) -> -"
+          },
+          {
+            "number": 15,
+            "uri": "memory://symbol/presentation.py::aux_presentation_025_batches",
+            "score": 0.03718430498318026,
+            "line": "15. function presentation.py:243-249 aux_presentation_025_batches(values, width) -> -"
+          },
+          {
+            "number": 16,
+            "uri": "memory://symbol/presentation.py::aux_presentation_037_batches",
+            "score": 0.03718430498318026,
+            "line": "16. function presentation.py:352-358 aux_presentation_037_batches(values, width) -> -"
+          },
+          {
+            "number": 17,
+            "uri": "memory://symbol/presentation.py::aux_presentation_049_batches",
+            "score": 0.03718430498318026,
+            "line": "17. function presentation.py:461-467 aux_presentation_049_batches(values, width) -> -"
+          },
+          {
+            "number": 18,
+            "uri": "memory://symbol/rules.py::aux_rules_001_batches",
+            "score": 0.03380469638612509,
+            "line": "18. function rules.py:26-32 aux_rules_001_batches(values, width) -> -"
+          }
+        ],
+        "rejected": [
+          "memory://symbol/service.py::aux_service_001_batches",
+          "memory://symbol/service.py::aux_service_013_batches",
+          "memory://symbol/service.py::aux_service_025_batches",
+          "memory://symbol/service.py::aux_service_037_batches",
+          "memory://symbol/service.py::aux_service_049_batches",
+          "memory://symbol/rules.py::aux_rules_013_batches"
+        ]
+      },
+      "selector_answer": "```json\n{\"read\":[1]}\n```",
+      "requested_uris": [
+        "memory://symbol/service.py::authorize"
+      ],
+      "context": "### memory://symbol/service.py::authorize lines 4-8\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}"
+    },
+    {
+      "kind": "H_gain_B",
+      "task_id": "eval_authorization__v2_last_valid_session_second",
+      "question": "What does can_edit_own('owner',['document:write'],200,3799) return?",
+      "expected": true,
+      "arms": {
+        "R0": {
+          "correct": true,
+          "parsed_answer": true,
+          "context_tokens": 1003,
+          "input_tokens": 1140,
+          "raw_evidence_recall": 1.0,
+          "chosen": [
+            {
+              "id": "atomic:memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.36241602787514793,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.23498358556789745,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own",
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::WRITE_SCOPE",
+              "level": 0,
+              "score": 0.20028739987956592,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::READ_SCOPE",
+              "level": 0,
+              "score": 0.12262697322249173,
+              "source_uris": [
+                "memory://symbol/policy.py::READ_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::required_scope",
+              "level": 0,
+              "score": 0.1192113404958754,
+              "source_uris": [
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::READ_ACTION",
+                "memory://symbol/policy.py::READ_SCOPE",
+                "memory://symbol/policy.py::WRITE_ACTION",
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+              "level": 0,
+              "score": 0.07258877692164746,
+              "source_uris": [
+                "memory://symbol/presentation.py::DISPLAY_PREFIX"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::aux_policy_021_flat_cells",
+              "level": 0,
+              "score": 0.06787477127425019,
+              "source_uris": [
+                "memory://symbol/policy.py::aux_policy_021_flat_cells"
+              ]
+            }
+          ]
+        },
+        "H": {
+          "correct": true,
+          "parsed_answer": true,
+          "context_tokens": 380,
+          "input_tokens": 1180,
+          "raw_evidence_recall": 0.4,
+          "chosen": [
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::WRITE_SCOPE",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::READ_SCOPE",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/policy.py::READ_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::authorize",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/service.py::authorize"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::scope_allows",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/rules.py::scope_allows"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::normalized_scopes",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/rules.py::normalized_scopes"
+              ]
+            }
+          ]
+        },
+        "B": {
+          "correct": false,
+          "parsed_answer": false,
+          "context_tokens": 447,
+          "input_tokens": 700,
+          "raw_evidence_recall": 0.4666666666666667,
+          "chosen": [
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::authorize",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::authorize"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::role_allows",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::role_allows"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::scope_allows",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::scope_allows"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::session_valid",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::session_valid"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::ALLOW_REASON",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::ALLOW_REASON"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::DENY_REASON",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::DENY_REASON"
+              ]
+            }
+          ]
+        }
+      },
+      "index": {
+        "text": "1. function service.py:10-11 can_edit_own(user, scopes, created_at, now) -> service.py::authorize\n2. constant policy.py:4-4 WRITE_SCOPE -> -\n3. function rules.py:12-13 role_allows(role, owner, user) -> policy.py::ADMIN_ROLE\n4. constant policy.py:5-5 READ_SCOPE -> -\n5. function rules.py:9-10 required_scope(action) -> policy.py::READ_ACTION,policy.py::READ_SCOPE,policy.py::WRITE_ACTION,policy.py::WRITE_SCOPE\n6. function service.py:4-8 authorize(user, owner, role, scopes, action, created_at, now, revoked) -> policy.py::ALLOW_REASON,policy.py::DENY_REASON,rules.py::role_allows,rules.py::scope_allows,rules.py::session_valid\n7. constant policy.py:3-3 WRITE_ACTION -> -\n8. function rules.py:15-17 scope_allows(scopes, action) -> rules.py::normalized_scopes,rules.py::required_scope\n9. constant presentation.py:1-1 DISPLAY_PREFIX -> -\n10. function policy.py:200-208 aux_policy_021_flat_cells(groups) -> -\n11. function audit.py:200-206 aux_audit_020_missing_fields(record, required) -> -\n12. function presentation.py:200-206 aux_presentation_020_missing_fields(record, required) -> -\n13. function presentation.py:15-16 summarize_count(values) -> presentation.py::DISPLAY_PREFIX\n14. function presentation.py:9-10 display_reference(reference) -> presentation.py::DISPLAY_PREFIX,presentation.py::DISPLAY_WIDTH\n15. function rules.py:3-4 normalized_scopes(scopes) -> -\n16. function rules.py:42-50 aux_rules_003_trimmed_text(value, limit) -> -\n17. function rules.py:151-159 aux_rules_015_trimmed_text(value, limit) -> -\n18. function rules.py:260-268 aux_rules_027_trimmed_text(value, limit) -> -\n19. function rules.py:369-377 aux_rules_039_trimmed_text(value, limit) -> -",
+        "tokens": 507,
+        "items": [
+          {
+            "number": 1,
+            "uri": "memory://symbol/service.py::can_edit_own",
+            "score": 0.36241602787514793,
+            "line": "1. function service.py:10-11 can_edit_own(user, scopes, created_at, now) -> service.py::authorize"
+          },
+          {
+            "number": 2,
+            "uri": "memory://symbol/policy.py::WRITE_SCOPE",
+            "score": 0.20028739987956592,
+            "line": "2. constant policy.py:4-4 WRITE_SCOPE -> -"
+          },
+          {
+            "number": 3,
+            "uri": "memory://symbol/rules.py::role_allows",
+            "score": 0.14070792192888934,
+            "line": "3. function rules.py:12-13 role_allows(role, owner, user) -> policy.py::ADMIN_ROLE"
+          },
+          {
+            "number": 4,
+            "uri": "memory://symbol/policy.py::READ_SCOPE",
+            "score": 0.12262697322249173,
+            "line": "4. constant policy.py:5-5 READ_SCOPE -> -"
+          },
+          {
+            "number": 5,
+            "uri": "memory://symbol/rules.py::required_scope",
+            "score": 0.1192113404958754,
+            "line": "5. function rules.py:9-10 required_scope(action) -> policy.py::READ_ACTION,policy.py::READ_SCOPE,policy.py::WRITE_ACTION,policy.py::WRITE_SCOPE"
+          },
+          {
+            "number": 6,
+            "uri": "memory://symbol/service.py::authorize",
+            "score": 0.1046519592212528,
+            "line": "6. function service.py:4-8 authorize(user, owner, role, scopes, action, created_at, now, revoked) -> policy.py::ALLOW_REASON,policy.py::DENY_REASON,rules.py::role_allows,rules.py::scope_allows,rules.py::session_valid"
+          },
+          {
+            "number": 7,
+            "uri": "memory://symbol/policy.py::WRITE_ACTION",
+            "score": 0.08495834489379553,
+            "line": "7. constant policy.py:3-3 WRITE_ACTION -> -"
+          },
+          {
+            "number": 8,
+            "uri": "memory://symbol/rules.py::scope_allows",
+            "score": 0.08068337138362625,
+            "line": "8. function rules.py:15-17 scope_allows(scopes, action) -> rules.py::normalized_scopes,rules.py::required_scope"
+          },
+          {
+            "number": 9,
+            "uri": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+            "score": 0.07258877692164746,
+            "line": "9. constant presentation.py:1-1 DISPLAY_PREFIX -> -"
+          },
+          {
+            "number": 10,
+            "uri": "memory://symbol/policy.py::aux_policy_021_flat_cells",
+            "score": 0.06787477127425019,
+            "line": "10. function policy.py:200-208 aux_policy_021_flat_cells(groups) -> -"
+          },
+          {
+            "number": 11,
+            "uri": "memory://symbol/audit.py::aux_audit_020_missing_fields",
+            "score": 0.06688013297908692,
+            "line": "11. function audit.py:200-206 aux_audit_020_missing_fields(record, required) -> -"
+          },
+          {
+            "number": 12,
+            "uri": "memory://symbol/presentation.py::aux_presentation_020_missing_fields",
+            "score": 0.06686238910292694,
+            "line": "12. function presentation.py:200-206 aux_presentation_020_missing_fields(record, required) -> -"
+          },
+          {
+            "number": 13,
+            "uri": "memory://symbol/presentation.py::summarize_count",
+            "score": 0.044086019335068664,
+            "line": "13. function presentation.py:15-16 summarize_count(values) -> presentation.py::DISPLAY_PREFIX"
+          },
+          {
+            "number": 14,
+            "uri": "memory://symbol/presentation.py::display_reference",
+            "score": 0.037097003667961655,
+            "line": "14. function presentation.py:9-10 display_reference(reference) -> presentation.py::DISPLAY_PREFIX,presentation.py::DISPLAY_WIDTH"
+          },
+          {
+            "number": 15,
+            "uri": "memory://symbol/rules.py::normalized_scopes",
+            "score": 0.029498332462120448,
+            "line": "15. function rules.py:3-4 normalized_scopes(scopes) -> -"
+          },
+          {
+            "number": 16,
+            "uri": "memory://symbol/rules.py::aux_rules_003_trimmed_text",
+            "score": 0.02700907303140533,
+            "line": "16. function rules.py:42-50 aux_rules_003_trimmed_text(value, limit) -> -"
+          },
+          {
+            "number": 17,
+            "uri": "memory://symbol/rules.py::aux_rules_015_trimmed_text",
+            "score": 0.02700907303140533,
+            "line": "17. function rules.py:151-159 aux_rules_015_trimmed_text(value, limit) -> -"
+          },
+          {
+            "number": 18,
+            "uri": "memory://symbol/rules.py::aux_rules_027_trimmed_text",
+            "score": 0.02700907303140533,
+            "line": "18. function rules.py:260-268 aux_rules_027_trimmed_text(value, limit) -> -"
+          },
+          {
+            "number": 19,
+            "uri": "memory://symbol/rules.py::aux_rules_039_trimmed_text",
+            "score": 0.02700907303140533,
+            "line": "19. function rules.py:369-377 aux_rules_039_trimmed_text(value, limit) -> -"
+          }
+        ],
+        "rejected": [
+          "memory://symbol/rules.py::aux_rules_051_trimmed_text",
+          "memory://symbol/rules.py::session_valid",
+          "memory://symbol/rules.py::aux_rules_000_event_text",
+          "memory://symbol/rules.py::aux_rules_012_event_text",
+          "memory://symbol/rules.py::aux_rules_024_event_text"
+        ]
+      },
+      "selector_answer": "```json\n{\"read\":[1, 2, 4, 6, 8, 15]}\n```",
+      "requested_uris": [
+        "memory://symbol/service.py::can_edit_own",
+        "memory://symbol/policy.py::WRITE_SCOPE",
+        "memory://symbol/policy.py::READ_SCOPE",
+        "memory://symbol/service.py::authorize",
+        "memory://symbol/rules.py::scope_allows",
+        "memory://symbol/rules.py::normalized_scopes"
+      ],
+      "context": "### memory://symbol/service.py::can_edit_own lines 10-11\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef can_edit_own(user, scopes, created_at, now):\n    return authorize(user, user, \"member\", scopes, \"write\", created_at, now, False)[\"allowed\"]\n\n### memory://symbol/policy.py::WRITE_SCOPE lines 4-4\n\nWRITE_SCOPE = \"document:write\"\n\n### memory://symbol/policy.py::READ_SCOPE lines 5-5\n\nREAD_SCOPE = \"document:read\"\n\n### memory://symbol/service.py::authorize lines 4-8\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}\n\n### memory://symbol/rules.py::scope_allows lines 15-17\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef scope_allows(scopes, action):\n    required = required_scope(action)\n    return bool(required) and required in normalized_scopes(scopes)\n\n### memory://symbol/rules.py::normalized_scopes lines 3-4\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef normalized_scopes(scopes):\n    return sorted(set(scope.strip().lower() for scope in scopes))"
+    },
+    {
+      "kind": "H_missing_raw",
+      "task_id": "eval_authorization__admin_without_scope",
+      "question": "What does authorize('u1','u2','admin',['document:read'],'write',100,200,False) return?",
+      "expected": {
+        "allowed": false,
+        "reason": "denied"
+      },
+      "arms": {
+        "B": {
+          "correct": false,
+          "parsed_answer": null,
+          "context_tokens": 541,
+          "input_tokens": 803,
+          "raw_evidence_recall": 0.7142857142857143,
+          "chosen": [
+            {
+              "id": "memory://symbol/service.py::authorize",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/service.py::authorize"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::role_allows",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::role_allows"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::scope_allows",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::scope_allows"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::session_valid",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::session_valid"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::normalized_scopes",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::normalized_scopes"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::required_scope",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/rules.py::required_scope"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::ALLOW_REASON",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::ALLOW_REASON"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::DENY_REASON",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::DENY_REASON"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::ADMIN_ROLE",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::ADMIN_ROLE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::MAX_SESSION_AGE",
+              "level": 0,
+              "score": 0,
+              "source_uris": [
+                "memory://symbol/policy.py::MAX_SESSION_AGE"
+              ]
+            }
+          ]
+        },
+        "H": {
+          "correct": false,
+          "parsed_answer": null,
+          "context_tokens": 310,
+          "input_tokens": 1125,
+          "raw_evidence_recall": 0.2857142857142857,
+          "chosen": [
+            {
+              "id": "memory://symbol/service.py::authorize",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/service.py::authorize"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::READ_ACTION",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/policy.py::READ_ACTION"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::WRITE_ACTION",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_ACTION"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::session_valid",
+              "level": 0,
+              "score": 0.0,
+              "source_uris": [
+                "memory://symbol/rules.py::session_valid"
+              ]
+            }
+          ]
+        },
+        "R0": {
+          "correct": false,
+          "parsed_answer": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "context_tokens": 1017,
+          "input_tokens": 1159,
+          "raw_evidence_recall": 1.0,
+          "chosen": [
+            {
+              "id": "memory://symbol/policy.py::READ_SCOPE",
+              "level": 0,
+              "score": 0.20215501441568542,
+              "source_uris": [
+                "memory://symbol/policy.py::READ_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/policy.py::WRITE_SCOPE",
+              "level": 0,
+              "score": 0.20166914549349754,
+              "source_uris": [
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::required_scope",
+              "level": 0,
+              "score": 0.17748985099629006,
+              "source_uris": [
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::READ_ACTION",
+                "memory://symbol/policy.py::READ_SCOPE",
+                "memory://symbol/policy.py::WRITE_ACTION",
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/service.py::authorize",
+              "level": 0,
+              "score": 0.15522579171248668,
+              "source_uris": [
+                "memory://symbol/service.py::authorize",
+                "memory://symbol/policy.py::ALLOW_REASON",
+                "memory://symbol/policy.py::DENY_REASON",
+                "memory://symbol/rules.py::role_allows",
+                "memory://symbol/rules.py::scope_allows",
+                "memory://symbol/rules.py::session_valid",
+                "memory://symbol/policy.py::ADMIN_ROLE",
+                "memory://symbol/rules.py::normalized_scopes",
+                "memory://symbol/rules.py::required_scope",
+                "memory://symbol/policy.py::MAX_SESSION_AGE",
+                "memory://symbol/policy.py::READ_ACTION",
+                "memory://symbol/policy.py::READ_SCOPE",
+                "memory://symbol/policy.py::WRITE_ACTION",
+                "memory://symbol/policy.py::WRITE_SCOPE"
+              ]
+            },
+            {
+              "id": "memory://symbol/rules.py::aux_rules_009_flat_cells",
+              "level": 0,
+              "score": 0.13253369935445639,
+              "source_uris": [
+                "memory://symbol/rules.py::aux_rules_009_flat_cells"
+              ]
+            },
+            {
+              "id": "atomic:memory://symbol/service.py::can_edit_own",
+              "level": 0,
+              "score": 0.09844400268679998,
+              "source_uris": [
+                "memory://symbol/service.py::can_edit_own"
+              ]
+            }
+          ]
+        }
+      },
+      "index": {
+        "text": "1. constant policy.py:5-5 READ_SCOPE -> -\n2. constant policy.py:4-4 WRITE_SCOPE -> -\n3. function rules.py:9-10 required_scope(action) -> policy.py::READ_ACTION,policy.py::READ_SCOPE,policy.py::WRITE_ACTION,policy.py::WRITE_SCOPE\n4. function service.py:4-8 authorize(user, owner, role, scopes, action, created_at, now, revoked) -> policy.py::ALLOW_REASON,policy.py::DENY_REASON,rules.py::role_allows,rules.py::scope_allows,rules.py::session_valid\n5. function service.py:10-11 can_edit_own(user, scopes, created_at, now) -> service.py::authorize\n6. function rules.py:100-108 aux_rules_009_flat_cells(groups) -> -\n7. function rules.py:15-17 scope_allows(scopes, action) -> rules.py::normalized_scopes,rules.py::required_scope\n8. function rules.py:12-13 role_allows(role, owner, user) -> policy.py::ADMIN_ROLE\n9. constant policy.py:1-1 ADMIN_ROLE -> -\n10. constant policy.py:2-2 READ_ACTION -> -\n11. constant policy.py:3-3 WRITE_ACTION -> -\n12. function rules.py:3-4 normalized_scopes(scopes) -> -\n13. constant presentation.py:1-1 DISPLAY_PREFIX -> -\n14. function policy.py:200-208 aux_policy_021_flat_cells(groups) -> -\n15. function audit.py:200-206 aux_audit_020_missing_fields(record, required) -> -\n16. function presentation.py:200-206 aux_presentation_020_missing_fields(record, required) -> -\n17. function rules.py:6-7 session_valid(created_at, now, revoked) -> policy.py::MAX_SESSION_AGE\n18. function rules.py:42-50 aux_rules_003_trimmed_text(value, limit) -> -\n19. function rules.py:151-159 aux_rules_015_trimmed_text(value, limit) -> -\n20. function rules.py:260-268 aux_rules_027_trimmed_text(value, limit) -> -",
+        "tokens": 509,
+        "items": [
+          {
+            "number": 1,
+            "uri": "memory://symbol/policy.py::READ_SCOPE",
+            "score": 0.20215501441568542,
+            "line": "1. constant policy.py:5-5 READ_SCOPE -> -"
+          },
+          {
+            "number": 2,
+            "uri": "memory://symbol/policy.py::WRITE_SCOPE",
+            "score": 0.20166914549349754,
+            "line": "2. constant policy.py:4-4 WRITE_SCOPE -> -"
+          },
+          {
+            "number": 3,
+            "uri": "memory://symbol/rules.py::required_scope",
+            "score": 0.17748985099629006,
+            "line": "3. function rules.py:9-10 required_scope(action) -> policy.py::READ_ACTION,policy.py::READ_SCOPE,policy.py::WRITE_ACTION,policy.py::WRITE_SCOPE"
+          },
+          {
+            "number": 4,
+            "uri": "memory://symbol/service.py::authorize",
+            "score": 0.15522579171248668,
+            "line": "4. function service.py:4-8 authorize(user, owner, role, scopes, action, created_at, now, revoked) -> policy.py::ALLOW_REASON,policy.py::DENY_REASON,rules.py::role_allows,rules.py::scope_allows,rules.py::session_valid"
+          },
+          {
+            "number": 5,
+            "uri": "memory://symbol/service.py::can_edit_own",
+            "score": 0.13265811571816447,
+            "line": "5. function service.py:10-11 can_edit_own(user, scopes, created_at, now) -> service.py::authorize"
+          },
+          {
+            "number": 6,
+            "uri": "memory://symbol/rules.py::aux_rules_009_flat_cells",
+            "score": 0.13253369935445639,
+            "line": "6. function rules.py:100-108 aux_rules_009_flat_cells(groups) -> -"
+          },
+          {
+            "number": 7,
+            "uri": "memory://symbol/rules.py::scope_allows",
+            "score": 0.13034928331124546,
+            "line": "7. function rules.py:15-17 scope_allows(scopes, action) -> rules.py::normalized_scopes,rules.py::required_scope"
+          },
+          {
+            "number": 8,
+            "uri": "memory://symbol/rules.py::role_allows",
+            "score": 0.09683061274389893,
+            "line": "8. function rules.py:12-13 role_allows(role, owner, user) -> policy.py::ADMIN_ROLE"
+          },
+          {
+            "number": 9,
+            "uri": "memory://symbol/policy.py::ADMIN_ROLE",
+            "score": 0.09150995340521062,
+            "line": "9. constant policy.py:1-1 ADMIN_ROLE -> -"
+          },
+          {
+            "number": 10,
+            "uri": "memory://symbol/policy.py::READ_ACTION",
+            "score": 0.08628975134135014,
+            "line": "10. constant policy.py:2-2 READ_ACTION -> -"
+          },
+          {
+            "number": 11,
+            "uri": "memory://symbol/policy.py::WRITE_ACTION",
+            "score": 0.0855444567535255,
+            "line": "11. constant policy.py:3-3 WRITE_ACTION -> -"
+          },
+          {
+            "number": 12,
+            "uri": "memory://symbol/rules.py::normalized_scopes",
+            "score": 0.07326843721702532,
+            "line": "12. function rules.py:3-4 normalized_scopes(scopes) -> -"
+          },
+          {
+            "number": 13,
+            "uri": "memory://symbol/presentation.py::DISPLAY_PREFIX",
+            "score": 0.07308955342677188,
+            "line": "13. constant presentation.py:1-1 DISPLAY_PREFIX -> -"
+          },
+          {
+            "number": 14,
+            "uri": "memory://symbol/policy.py::aux_policy_021_flat_cells",
+            "score": 0.06834302672896776,
+            "line": "14. function policy.py:200-208 aux_policy_021_flat_cells(groups) -> -"
+          },
+          {
+            "number": 15,
+            "uri": "memory://symbol/audit.py::aux_audit_020_missing_fields",
+            "score": 0.06734152660873402,
+            "line": "15. function audit.py:200-206 aux_audit_020_missing_fields(record, required) -> -"
+          },
+          {
+            "number": 16,
+            "uri": "memory://symbol/presentation.py::aux_presentation_020_missing_fields",
+            "score": 0.06732366032086431,
+            "line": "16. function presentation.py:200-206 aux_presentation_020_missing_fields(record, required) -> -"
+          },
+          {
+            "number": 17,
+            "uri": "memory://symbol/rules.py::session_valid",
+            "score": 0.06429115894302741,
+            "line": "17. function rules.py:6-7 session_valid(created_at, now, revoked) -> policy.py::MAX_SESSION_AGE"
+          },
+          {
+            "number": 18,
+            "uri": "memory://symbol/rules.py::aux_rules_003_trimmed_text",
+            "score": 0.06344230991675305,
+            "line": "18. function rules.py:42-50 aux_rules_003_trimmed_text(value, limit) -> -"
+          },
+          {
+            "number": 19,
+            "uri": "memory://symbol/rules.py::aux_rules_015_trimmed_text",
+            "score": 0.06344230991675305,
+            "line": "19. function rules.py:151-159 aux_rules_015_trimmed_text(value, limit) -> -"
+          },
+          {
+            "number": 20,
+            "uri": "memory://symbol/rules.py::aux_rules_027_trimmed_text",
+            "score": 0.06344230991675305,
+            "line": "20. function rules.py:260-268 aux_rules_027_trimmed_text(value, limit) -> -"
+          }
+        ],
+        "rejected": [
+          "memory://symbol/rules.py::aux_rules_039_trimmed_text",
+          "memory://symbol/rules.py::aux_rules_051_trimmed_text",
+          "memory://symbol/rules.py::aux_rules_000_event_text",
+          "memory://symbol/rules.py::aux_rules_012_event_text"
+        ]
+      },
+      "selector_answer": "```json\n{\"read\":[4, 5, 10, 11, 17]}\n```",
+      "requested_uris": [
+        "memory://symbol/service.py::authorize",
+        "memory://symbol/service.py::can_edit_own",
+        "memory://symbol/policy.py::READ_ACTION",
+        "memory://symbol/policy.py::WRITE_ACTION",
+        "memory://symbol/rules.py::session_valid"
+      ],
+      "context": "### memory://symbol/service.py::authorize lines 4-8\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}\n\n### memory://symbol/service.py::can_edit_own lines 10-11\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef can_edit_own(user, scopes, created_at, now):\n    return authorize(user, user, \"member\", scopes, \"write\", created_at, now, False)[\"allowed\"]\n\n### memory://symbol/policy.py::READ_ACTION lines 2-2\n\nREAD_ACTION = \"read\"\n\n### memory://symbol/policy.py::WRITE_ACTION lines 3-3\n\nWRITE_ACTION = \"write\"\n\n### memory://symbol/rules.py::session_valid lines 6-7\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef session_valid(created_at, now, revoked):\n    return not revoked and 0 <= now - created_at < MAX_SESSION_AGE"
+    }
+  ]
+}

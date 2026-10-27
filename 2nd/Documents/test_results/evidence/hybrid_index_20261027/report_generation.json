@@ -1,0 +1,13 @@
+{
+  "generated_at_utc": "2026-10-26T19:38:41.631555+00:00",
+  "summary_sha256": "1eba25e8d919c1ed1bf4740ea6958af8137c58b8a2ecf7787498860ef25d7123",
+  "verification_sha256": "802f868c5736504ca40add0b996524648009f85f2354ebf4e3ac68cddddf0ffc",
+  "generator_sha256": "820101c618a6d2818ab4d7f3a23cb238839e5946ddbc45b35ac953fb00062602",
+  "materials": {
+    "report_materials/cases.md": "e7eaf45fb149f2953f6da7020bb82572fe0ef40a8d58c418ee20303e73f6cc83",
+    "report_materials/design.md": "e64ad1fafdf58216dc86473e6d7071b013fe9b16487e4c96c371d288ef5a02c8",
+    "report_materials/interpretation.md": "b32ca81d704ce2accd36c1edaed592fac3e37350bfc0411dee5a33c757f5503f",
+    "report_materials/method.md": "b689513e47f02a4a550e9ba19afc9f6bbe1732953dd15ecad1aaf97b017ec612",
+    "report_materials/opening.md": "ab5673541b0390cde45979833cad6990a3437ee9ba350f5a595f3107053d99be"
+  }
+}

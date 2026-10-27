@@ -1,0 +1,43 @@
+{
+  "source_sha256": "b8f664facdff58c7b410f704216611e5a4e5bbd239ac394a9bb4e5f29f9234cb",
+  "query": "stock hold",
+  "idf": {
+    "stock": 1.2876820724517808,
+    "hold": 1.6931471805599454,
+    "price": 1.2876820724517808
+  },
+  "unseen_idf": 2.386294361119891,
+  "query_vector": {
+    "stock": 0.6053485081062916,
+    "hold": 0.7959605415681652
+  },
+  "candidates": [
+    {
+      "id": "example1",
+      "text": "stock stock hold",
+      "vector": {
+        "stock": 0.7898069290660905,
+        "hold": 0.6133555370249717
+      },
+      "score": 0.9663152516263989
+    },
+    {
+      "id": "example2",
+      "text": "stock price",
+      "vector": {
+        "stock": 0.7071067811865476,
+        "price": 0.7071067811865476
+      },
+      "score": 0.42804603506311856
+    },
+    {
+      "id": "example3",
+      "text": "price",
+      "vector": {
+        "price": 1.0
+      },
+      "score": 0.0
+    }
+  ],
+  "purpose": "Educational arithmetic example using actual Retriever; no benchmark or model call."
+}

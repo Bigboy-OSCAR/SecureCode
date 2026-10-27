@@ -1,0 +1,2259 @@
+[
+  {
+    "id": "eval_pricing__refund",
+    "project": "eval_pricing",
+    "category": "single_function",
+    "question": "What does refundable(1001, 2, 3) return?",
+    "target_uri": "memory://symbol/rules.py::refundable",
+    "expected": 667,
+    "required_uris": [
+      "memory://symbol/rules.py::refundable"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_pricing__member_order",
+    "project": "eval_pricing",
+    "category": "cross_file",
+    "question": "What does checkout_total(1999, 3, True) return?",
+    "target_uri": "memory://symbol/service.py::checkout_total",
+    "expected": 6505,
+    "required_uris": [
+      "memory://symbol/service.py::checkout_total",
+      "memory://symbol/rules.py::line_subtotal",
+      "memory://symbol/rules.py::member_discount",
+      "memory://symbol/rules.py::sales_tax",
+      "memory://symbol/policy.py::DELIVERY_CENTS",
+      "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+      "memory://symbol/policy.py::MEMBER_BPS",
+      "memory://symbol/policy.py::TAX_BPS",
+      "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+      "memory://symbol/policy.py::MIN_QUANTITY",
+      "memory://symbol/policy.py::MAX_QUANTITY"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_pricing__receipt",
+    "project": "eval_pricing",
+    "category": "cross_file",
+    "question": "What does order_receipt(4000, 3, True) return?",
+    "target_uri": "memory://symbol/service.py::order_receipt",
+    "expected": {
+      "accepted": true,
+      "currency": "USD",
+      "total": 12016
+    },
+    "required_uris": [
+      "memory://symbol/service.py::order_receipt",
+      "memory://symbol/policy.py::CURRENCY",
+      "memory://symbol/service.py::checkout_total",
+      "memory://symbol/rules.py::line_subtotal",
+      "memory://symbol/rules.py::member_discount",
+      "memory://symbol/rules.py::sales_tax",
+      "memory://symbol/policy.py::DELIVERY_CENTS",
+      "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+      "memory://symbol/policy.py::MEMBER_BPS",
+      "memory://symbol/policy.py::TAX_BPS",
+      "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+      "memory://symbol/policy.py::MIN_QUANTITY",
+      "memory://symbol/policy.py::MAX_QUANTITY"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_pricing__quantity_cap",
+    "project": "eval_pricing",
+    "category": "boundary",
+    "question": "What does checkout_total(100, 21, False) return?",
+    "target_uri": "memory://symbol/service.py::checkout_total",
+    "expected": -1,
+    "required_uris": [
+      "memory://symbol/service.py::checkout_total",
+      "memory://symbol/rules.py::line_subtotal",
+      "memory://symbol/policy.py::MIN_QUANTITY",
+      "memory://symbol/policy.py::MAX_QUANTITY"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_pricing__discount_delivery",
+    "project": "eval_pricing",
+    "category": "semantic",
+    "question": "A member buys 3 units priced at 2000 cents each. Calculate the final checkout amount in cents, including the membership reduction, rounded sales tax, and delivery charge.",
+    "target_uri": "memory://symbol/service.py::checkout_total",
+    "expected": 6507,
+    "required_uris": [
+      "memory://symbol/service.py::checkout_total",
+      "memory://symbol/rules.py::line_subtotal",
+      "memory://symbol/rules.py::member_discount",
+      "memory://symbol/rules.py::sales_tax",
+      "memory://symbol/policy.py::DELIVERY_CENTS",
+      "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+      "memory://symbol/policy.py::MEMBER_BPS",
+      "memory://symbol/policy.py::TAX_BPS",
+      "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+      "memory://symbol/policy.py::MIN_QUANTITY",
+      "memory://symbol/policy.py::MAX_QUANTITY"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_pricing__invalid_receipt",
+    "project": "eval_pricing",
+    "category": "semantic",
+    "question": "A non-member orders zero units priced at 2500 cents each. Return the retail order receipt object containing currency, total, and accepted.",
+    "target_uri": "memory://symbol/service.py::order_receipt",
+    "expected": {
+      "accepted": false,
+      "currency": "USD",
+      "total": -1
+    },
+    "required_uris": [
+      "memory://symbol/service.py::order_receipt",
+      "memory://symbol/policy.py::CURRENCY",
+      "memory://symbol/service.py::checkout_total",
+      "memory://symbol/rules.py::line_subtotal",
+      "memory://symbol/policy.py::MIN_QUANTITY",
+      "memory://symbol/policy.py::MAX_QUANTITY"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_pricing__tax_change",
+    "project": "eval_pricing",
+    "category": "change_impact",
+    "question": "If policy.TAX_BPS changes from 825 to 1000, which exact calls change: sales_tax(1000), checkout_total(2000,3,True), reward_points(1000)? Return a sorted list of changed function names.",
+    "target_uri": "memory://symbol/service.py::checkout_total",
+    "expected": [
+      "checkout_total",
+      "sales_tax"
+    ],
+    "required_uris": [
+      "memory://symbol/service.py::checkout_total",
+      "memory://symbol/rules.py::line_subtotal",
+      "memory://symbol/rules.py::member_discount",
+      "memory://symbol/rules.py::sales_tax",
+      "memory://symbol/policy.py::DELIVERY_CENTS",
+      "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+      "memory://symbol/policy.py::MEMBER_BPS",
+      "memory://symbol/policy.py::TAX_BPS",
+      "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+      "memory://symbol/policy.py::MIN_QUANTITY",
+      "memory://symbol/policy.py::MAX_QUANTITY",
+      "memory://symbol/service.py::reward_points"
+    ],
+    "verification": "Compared the specified calls before and after a policy-constant intervention in separate fresh subprocesses. This is fixed-input impact, not all possible inputs.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_pricing__direct_calls",
+    "project": "eval_pricing",
+    "category": "architecture",
+    "question": "List the project-defined functions directly called by checkout_total. Ignore builtins, and return a sorted list of function names.",
+    "target_uri": "memory://symbol/service.py::checkout_total",
+    "expected": [
+      "line_subtotal",
+      "member_discount",
+      "sales_tax"
+    ],
+    "required_uris": [
+      "memory://symbol/service.py::checkout_total"
+    ],
+    "verification": "Parsed function AST and resolved local/from-import project functions; compared direct call names with a separately declared expected list.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_authorization__normalize",
+    "project": "eval_authorization",
+    "category": "single_function",
+    "question": "What does normalized_scopes([' Document:Read ', 'document:read', ' DOCUMENT:WRITE ']) return?",
+    "target_uri": "memory://symbol/rules.py::normalized_scopes",
+    "expected": [
+      "document:read",
+      "document:write"
+    ],
+    "required_uris": [
+      "memory://symbol/rules.py::normalized_scopes"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_authorization__own_write",
+    "project": "eval_authorization",
+    "category": "cross_file",
+    "question": "What does authorize('u1','u1','member',[' DOCUMENT:WRITE '],'write',100,200,False) return?",
+    "target_uri": "memory://symbol/service.py::authorize",
+    "expected": {
+      "allowed": true,
+      "reason": "allowed"
+    },
+    "required_uris": [
+      "memory://symbol/service.py::authorize",
+      "memory://symbol/rules.py::session_valid",
+      "memory://symbol/rules.py::role_allows",
+      "memory://symbol/rules.py::scope_allows",
+      "memory://symbol/rules.py::required_scope",
+      "memory://symbol/rules.py::normalized_scopes",
+      "memory://symbol/policy.py::ADMIN_ROLE",
+      "memory://symbol/policy.py::READ_ACTION",
+      "memory://symbol/policy.py::WRITE_ACTION",
+      "memory://symbol/policy.py::READ_SCOPE",
+      "memory://symbol/policy.py::WRITE_SCOPE",
+      "memory://symbol/policy.py::MAX_SESSION_AGE",
+      "memory://symbol/policy.py::ALLOW_REASON",
+      "memory://symbol/policy.py::DENY_REASON"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_authorization__admin_without_scope",
+    "project": "eval_authorization",
+    "category": "cross_file",
+    "question": "What does authorize('u1','u2','admin',['document:read'],'write',100,200,False) return?",
+    "target_uri": "memory://symbol/service.py::authorize",
+    "expected": {
+      "allowed": false,
+      "reason": "denied"
+    },
+    "required_uris": [
+      "memory://symbol/service.py::authorize",
+      "memory://symbol/rules.py::session_valid",
+      "memory://symbol/rules.py::role_allows",
+      "memory://symbol/rules.py::scope_allows",
+      "memory://symbol/rules.py::required_scope",
+      "memory://symbol/rules.py::normalized_scopes",
+      "memory://symbol/policy.py::ADMIN_ROLE",
+      "memory://symbol/policy.py::READ_ACTION",
+      "memory://symbol/policy.py::WRITE_ACTION",
+      "memory://symbol/policy.py::READ_SCOPE",
+      "memory://symbol/policy.py::WRITE_SCOPE",
+      "memory://symbol/policy.py::MAX_SESSION_AGE",
+      "memory://symbol/policy.py::ALLOW_REASON",
+      "memory://symbol/policy.py::DENY_REASON"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_authorization__expiry",
+    "project": "eval_authorization",
+    "category": "boundary",
+    "question": "What does can_edit_own('u1',['document:write'],100,3700) return?",
+    "target_uri": "memory://symbol/service.py::can_edit_own",
+    "expected": false,
+    "required_uris": [
+      "memory://symbol/service.py::can_edit_own",
+      "memory://symbol/service.py::authorize",
+      "memory://symbol/rules.py::session_valid",
+      "memory://symbol/policy.py::MAX_SESSION_AGE"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_authorization__unknown_action",
+    "project": "eval_authorization",
+    "category": "semantic",
+    "question": "An administrator u1 requests deletion of a document owned by u2. Their permissions contain document:read and document:write, their session began at time 100, current time is 200, and it is not revoked. Return the authorization decision object with allowed and reason.",
+    "target_uri": "memory://symbol/service.py::authorize",
+    "expected": {
+      "allowed": false,
+      "reason": "denied"
+    },
+    "required_uris": [
+      "memory://symbol/service.py::authorize",
+      "memory://symbol/rules.py::session_valid",
+      "memory://symbol/rules.py::role_allows",
+      "memory://symbol/rules.py::scope_allows",
+      "memory://symbol/rules.py::required_scope",
+      "memory://symbol/rules.py::normalized_scopes",
+      "memory://symbol/policy.py::ADMIN_ROLE",
+      "memory://symbol/policy.py::READ_ACTION",
+      "memory://symbol/policy.py::WRITE_ACTION",
+      "memory://symbol/policy.py::READ_SCOPE",
+      "memory://symbol/policy.py::WRITE_SCOPE",
+      "memory://symbol/policy.py::MAX_SESSION_AGE",
+      "memory://symbol/policy.py::ALLOW_REASON",
+      "memory://symbol/policy.py::DENY_REASON"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_authorization__future_session",
+    "project": "eval_authorization",
+    "category": "semantic",
+    "question": "A member u1 wants to edit their own document with permission document:write. The session creation timestamp is 500 while the current timestamp is 499. What boolean does the own-document editing check return?",
+    "target_uri": "memory://symbol/service.py::can_edit_own",
+    "expected": false,
+    "required_uris": [
+      "memory://symbol/service.py::can_edit_own",
+      "memory://symbol/service.py::authorize",
+      "memory://symbol/rules.py::session_valid",
+      "memory://symbol/policy.py::MAX_SESSION_AGE"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_authorization__session_change",
+    "project": "eval_authorization",
+    "category": "change_impact",
+    "question": "If policy.MAX_SESSION_AGE changes from 3600 to 1800, which exact calls change: session_valid(100,2500,False), can_edit_own('u1',['document:write'],100,2500), user_key(' U1 ')? Return a sorted list of changed function names.",
+    "target_uri": "memory://symbol/service.py::can_edit_own",
+    "expected": [
+      "can_edit_own",
+      "session_valid"
+    ],
+    "required_uris": [
+      "memory://symbol/service.py::authorize",
+      "memory://symbol/rules.py::session_valid",
+      "memory://symbol/rules.py::role_allows",
+      "memory://symbol/rules.py::scope_allows",
+      "memory://symbol/rules.py::required_scope",
+      "memory://symbol/rules.py::normalized_scopes",
+      "memory://symbol/policy.py::ADMIN_ROLE",
+      "memory://symbol/policy.py::READ_ACTION",
+      "memory://symbol/policy.py::WRITE_ACTION",
+      "memory://symbol/policy.py::READ_SCOPE",
+      "memory://symbol/policy.py::WRITE_SCOPE",
+      "memory://symbol/policy.py::MAX_SESSION_AGE",
+      "memory://symbol/policy.py::ALLOW_REASON",
+      "memory://symbol/policy.py::DENY_REASON",
+      "memory://symbol/service.py::can_edit_own",
+      "memory://symbol/service.py::user_key"
+    ],
+    "verification": "Compared the specified calls before and after a policy-constant intervention in separate fresh subprocesses. This is fixed-input impact, not all possible inputs.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_authorization__direct_calls",
+    "project": "eval_authorization",
+    "category": "architecture",
+    "question": "List the project-defined functions directly called by authorize. Ignore builtins, and return a sorted list of function names.",
+    "target_uri": "memory://symbol/service.py::authorize",
+    "expected": [
+      "role_allows",
+      "scope_allows",
+      "session_valid"
+    ],
+    "required_uris": [
+      "memory://symbol/service.py::authorize"
+    ],
+    "verification": "Parsed function AST and resolved local/from-import project functions; compared direct call names with a separately declared expected list.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_routing__path",
+    "project": "eval_routing",
+    "category": "single_function",
+    "question": "What does normalize_path('  ///orders///  ') return?",
+    "target_uri": "memory://symbol/rules.py::normalize_path",
+    "expected": "/orders",
+    "required_uris": [
+      "memory://symbol/rules.py::normalize_path",
+      "memory://symbol/policy.py::DEFAULT_PATH"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_routing__preferred",
+    "project": "eval_routing",
+    "category": "cross_file",
+    "question": "What does route_request('ab',' /orders/ ',{'east': {'up': True, 'latency_ms': 120}, 'west': {'up': True, 'latency_ms': 90}}) return?",
+    "target_uri": "memory://symbol/service.py::route_request",
+    "expected": "east:/orders",
+    "required_uris": [
+      "memory://symbol/service.py::route_request",
+      "memory://symbol/rules.py::healthy",
+      "memory://symbol/rules.py::use_canary",
+      "memory://symbol/rules.py::bucket",
+      "memory://symbol/rules.py::normalize_path",
+      "memory://symbol/policy.py::PRIMARY_REGION",
+      "memory://symbol/policy.py::SECONDARY_REGION",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::CANARY_SUFFIX",
+      "memory://symbol/policy.py::MAX_LATENCY_MS",
+      "memory://symbol/policy.py::CANARY_PERCENT",
+      "memory://symbol/policy.py::DEFAULT_PATH"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_routing__fallback",
+    "project": "eval_routing",
+    "category": "cross_file",
+    "question": "What does route_request('d',' /health/ ',{'east': {'up': True, 'latency_ms': 151}, 'west': {'up': True, 'latency_ms': 100}}) return?",
+    "target_uri": "memory://symbol/service.py::route_request",
+    "expected": "west-canary:/health",
+    "required_uris": [
+      "memory://symbol/service.py::route_request",
+      "memory://symbol/rules.py::healthy",
+      "memory://symbol/rules.py::use_canary",
+      "memory://symbol/rules.py::bucket",
+      "memory://symbol/rules.py::normalize_path",
+      "memory://symbol/policy.py::PRIMARY_REGION",
+      "memory://symbol/policy.py::SECONDARY_REGION",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::CANARY_SUFFIX",
+      "memory://symbol/policy.py::MAX_LATENCY_MS",
+      "memory://symbol/policy.py::CANARY_PERCENT",
+      "memory://symbol/policy.py::DEFAULT_PATH"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_routing__latency_edge",
+    "project": "eval_routing",
+    "category": "boundary",
+    "question": "What does healthy({'up':True,'latency_ms':150}) return?",
+    "target_uri": "memory://symbol/rules.py::healthy",
+    "expected": true,
+    "required_uris": [
+      "memory://symbol/rules.py::healthy",
+      "memory://symbol/policy.py::MAX_LATENCY_MS"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_routing__no_backend",
+    "project": "eval_routing",
+    "category": "semantic",
+    "question": "For user d requesting /orders, the east backend is down with latency 10 ms and the west backend is up with latency 200 ms. What string does the normal request-routing workflow return?",
+    "target_uri": "memory://symbol/service.py::route_request",
+    "expected": "unavailable",
+    "required_uris": [
+      "memory://symbol/service.py::route_request",
+      "memory://symbol/rules.py::healthy",
+      "memory://symbol/rules.py::use_canary",
+      "memory://symbol/rules.py::bucket",
+      "memory://symbol/rules.py::normalize_path",
+      "memory://symbol/policy.py::PRIMARY_REGION",
+      "memory://symbol/policy.py::SECONDARY_REGION",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::CANARY_SUFFIX",
+      "memory://symbol/policy.py::MAX_LATENCY_MS",
+      "memory://symbol/policy.py::CANARY_PERCENT",
+      "memory://symbol/policy.py::DEFAULT_PATH"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_routing__retry_exhausted",
+    "project": "eval_routing",
+    "category": "semantic",
+    "question": "A request from user d for /health has both backends healthy (east 120 ms, west 90 ms), but its retry attempt is 3. What string does the retry-aware destination lookup return?",
+    "target_uri": "memory://symbol/service.py::retry_destination",
+    "expected": "exhausted",
+    "required_uris": [
+      "memory://symbol/service.py::retry_destination",
+      "memory://symbol/policy.py::RETRY_LIMIT"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_routing__canary_change",
+    "project": "eval_routing",
+    "category": "change_impact",
+    "question": "If policy.CANARY_PERCENT changes from 20 to 0, which exact calls change: use_canary('d'), route_request('d','/x',{'east': {'up': True, 'latency_ms': 120}, 'west': {'up': True, 'latency_ms': 90}}), route_tag('east')? Return a sorted list of changed function names.",
+    "target_uri": "memory://symbol/service.py::route_request",
+    "expected": [
+      "route_request",
+      "use_canary"
+    ],
+    "required_uris": [
+      "memory://symbol/service.py::route_request",
+      "memory://symbol/rules.py::healthy",
+      "memory://symbol/rules.py::use_canary",
+      "memory://symbol/rules.py::bucket",
+      "memory://symbol/rules.py::normalize_path",
+      "memory://symbol/policy.py::PRIMARY_REGION",
+      "memory://symbol/policy.py::SECONDARY_REGION",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::CANARY_SUFFIX",
+      "memory://symbol/policy.py::MAX_LATENCY_MS",
+      "memory://symbol/policy.py::CANARY_PERCENT",
+      "memory://symbol/policy.py::DEFAULT_PATH",
+      "memory://symbol/service.py::route_tag"
+    ],
+    "verification": "Compared the specified calls before and after a policy-constant intervention in separate fresh subprocesses. This is fixed-input impact, not all possible inputs.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_routing__direct_calls",
+    "project": "eval_routing",
+    "category": "architecture",
+    "question": "List the project-defined functions directly called by route_request. Ignore builtins, and return a sorted list of function names.",
+    "target_uri": "memory://symbol/service.py::route_request",
+    "expected": [
+      "healthy",
+      "normalize_path",
+      "use_canary"
+    ],
+    "required_uris": [
+      "memory://symbol/service.py::route_request"
+    ],
+    "verification": "Parsed function AST and resolved local/from-import project functions; compared direct call names with a separately declared expected list.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_inventory__allocation",
+    "project": "eval_inventory",
+    "category": "single_function",
+    "question": "What does allocate(4, 7, False) return?",
+    "target_uri": "memory://symbol/rules.py::allocate",
+    "expected": 0,
+    "required_uris": [
+      "memory://symbol/rules.py::allocate"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_inventory__partial",
+    "project": "eval_inventory",
+    "category": "cross_file",
+    "question": "What does reserve(12,4,7,True,100) return?",
+    "target_uri": "memory://symbol/service.py::reserve",
+    "expected": {
+      "expires": 1000,
+      "status": "partial",
+      "units": 5
+    },
+    "required_uris": [
+      "memory://symbol/service.py::reserve",
+      "memory://symbol/rules.py::sellable",
+      "memory://symbol/rules.py::valid_quantity",
+      "memory://symbol/rules.py::allocate",
+      "memory://symbol/policy.py::SAFETY_STOCK",
+      "memory://symbol/policy.py::MAX_PER_ORDER",
+      "memory://symbol/policy.py::MIN_ORDER",
+      "memory://symbol/policy.py::RESERVATION_TTL",
+      "memory://symbol/policy.py::ACCEPTED",
+      "memory://symbol/policy.py::PARTIAL",
+      "memory://symbol/policy.py::DENIED"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_inventory__remaining",
+    "project": "eval_inventory",
+    "category": "cross_file",
+    "question": "What does remaining_after(20,2,6,False) return?",
+    "target_uri": "memory://symbol/service.py::remaining_after",
+    "expected": 9,
+    "required_uris": [
+      "memory://symbol/service.py::remaining_after",
+      "memory://symbol/service.py::reserve",
+      "memory://symbol/rules.py::sellable",
+      "memory://symbol/rules.py::valid_quantity",
+      "memory://symbol/rules.py::allocate",
+      "memory://symbol/policy.py::SAFETY_STOCK",
+      "memory://symbol/policy.py::MAX_PER_ORDER",
+      "memory://symbol/policy.py::MIN_ORDER",
+      "memory://symbol/policy.py::RESERVATION_TTL",
+      "memory://symbol/policy.py::ACCEPTED",
+      "memory://symbol/policy.py::PARTIAL",
+      "memory://symbol/policy.py::DENIED"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_inventory__order_limit",
+    "project": "eval_inventory",
+    "category": "boundary",
+    "question": "What does reserve(100,0,13,True,50) return?",
+    "target_uri": "memory://symbol/service.py::reserve",
+    "expected": {
+      "expires": 50,
+      "status": "denied",
+      "units": 0
+    },
+    "required_uris": [
+      "memory://symbol/service.py::reserve",
+      "memory://symbol/rules.py::valid_quantity",
+      "memory://symbol/policy.py::MIN_ORDER",
+      "memory://symbol/policy.py::MAX_PER_ORDER",
+      "memory://symbol/policy.py::DENIED"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_inventory__safety_buffer",
+    "project": "eval_inventory",
+    "category": "semantic",
+    "question": "A warehouse has 8 physical units and 5 already held units. A customer requests 1 unit, permits partial fulfillment, and the current time is 200. Return the reservation object containing status, units, and expires.",
+    "target_uri": "memory://symbol/service.py::reserve",
+    "expected": {
+      "expires": 200,
+      "status": "denied",
+      "units": 0
+    },
+    "required_uris": [
+      "memory://symbol/service.py::reserve",
+      "memory://symbol/rules.py::sellable",
+      "memory://symbol/rules.py::valid_quantity",
+      "memory://symbol/rules.py::allocate",
+      "memory://symbol/policy.py::SAFETY_STOCK",
+      "memory://symbol/policy.py::MAX_PER_ORDER",
+      "memory://symbol/policy.py::MIN_ORDER",
+      "memory://symbol/policy.py::RESERVATION_TTL",
+      "memory://symbol/policy.py::ACCEPTED",
+      "memory://symbol/policy.py::PARTIAL",
+      "memory://symbol/policy.py::DENIED"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_inventory__all_or_nothing",
+    "project": "eval_inventory",
+    "category": "semantic",
+    "question": "A warehouse has 14 physical units and 3 already held units. A customer requests 9 units and refuses partial fulfillment. How many sellable units remain after attempting this reservation?",
+    "target_uri": "memory://symbol/service.py::remaining_after",
+    "expected": 8,
+    "required_uris": [
+      "memory://symbol/service.py::remaining_after",
+      "memory://symbol/service.py::reserve",
+      "memory://symbol/rules.py::sellable",
+      "memory://symbol/rules.py::valid_quantity",
+      "memory://symbol/rules.py::allocate",
+      "memory://symbol/policy.py::SAFETY_STOCK",
+      "memory://symbol/policy.py::MAX_PER_ORDER",
+      "memory://symbol/policy.py::MIN_ORDER",
+      "memory://symbol/policy.py::RESERVATION_TTL",
+      "memory://symbol/policy.py::ACCEPTED",
+      "memory://symbol/policy.py::PARTIAL",
+      "memory://symbol/policy.py::DENIED"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_inventory__buffer_change",
+    "project": "eval_inventory",
+    "category": "change_impact",
+    "question": "If policy.SAFETY_STOCK changes from 3 to 5, which exact calls change: sellable(12,4), reserve(12,4,7,True,100), stock_label(12)? Return a sorted list of changed function names.",
+    "target_uri": "memory://symbol/service.py::reserve",
+    "expected": [
+      "reserve",
+      "sellable"
+    ],
+    "required_uris": [
+      "memory://symbol/service.py::reserve",
+      "memory://symbol/rules.py::sellable",
+      "memory://symbol/rules.py::valid_quantity",
+      "memory://symbol/rules.py::allocate",
+      "memory://symbol/policy.py::SAFETY_STOCK",
+      "memory://symbol/policy.py::MAX_PER_ORDER",
+      "memory://symbol/policy.py::MIN_ORDER",
+      "memory://symbol/policy.py::RESERVATION_TTL",
+      "memory://symbol/policy.py::ACCEPTED",
+      "memory://symbol/policy.py::PARTIAL",
+      "memory://symbol/policy.py::DENIED",
+      "memory://symbol/service.py::stock_label"
+    ],
+    "verification": "Compared the specified calls before and after a policy-constant intervention in separate fresh subprocesses. This is fixed-input impact, not all possible inputs.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_inventory__direct_calls",
+    "project": "eval_inventory",
+    "category": "architecture",
+    "question": "List the project-defined functions directly called by reserve. Ignore builtins, and return a sorted list of function names.",
+    "target_uri": "memory://symbol/service.py::reserve",
+    "expected": [
+      "allocate",
+      "sellable",
+      "valid_quantity"
+    ],
+    "required_uris": [
+      "memory://symbol/service.py::reserve"
+    ],
+    "verification": "Parsed function AST and resolved local/from-import project functions; compared direct call names with a separately declared expected list.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_cache__resource",
+    "project": "eval_cache",
+    "category": "single_function",
+    "question": "What does normalize_resource('  North/East Plan  ') return?",
+    "target_uri": "memory://symbol/rules.py::normalize_resource",
+    "expected": "north/east_plan",
+    "required_uris": [
+      "memory://symbol/rules.py::normalize_resource"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_cache__canonical_key",
+    "project": "eval_cache",
+    "category": "cross_file",
+    "question": "What does render_cache_key(' TEAM-A ',' Summary View ',{'z':2,'a':1,'trace':'on'}) return?",
+    "target_uri": "memory://symbol/service.py::render_cache_key",
+    "expected": "render|team-a|summary_view|a=1&z=2|v4",
+    "required_uris": [
+      "memory://symbol/service.py::render_cache_key",
+      "memory://symbol/rules.py::normalize_tenant",
+      "memory://symbol/rules.py::normalize_resource",
+      "memory://symbol/rules.py::canonical_query",
+      "memory://symbol/policy.py::CACHE_NAMESPACE",
+      "memory://symbol/policy.py::SCHEMA_VERSION",
+      "memory://symbol/policy.py::KEY_SEPARATOR",
+      "memory://symbol/policy.py::ANONYMOUS_TENANT",
+      "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_cache__private_entry",
+    "project": "eval_cache",
+    "category": "cross_file",
+    "question": "What does cache_entry(' ',' Revenue ',{'debug':1},None,True,100) return?",
+    "target_uri": "memory://symbol/service.py::cache_entry",
+    "expected": {
+      "expires": 130,
+      "key": "render|public|revenue||v4",
+      "store": true
+    },
+    "required_uris": [
+      "memory://symbol/service.py::cache_entry",
+      "memory://symbol/rules.py::cache_ttl",
+      "memory://symbol/policy.py::DEFAULT_TTL",
+      "memory://symbol/policy.py::PRIVATE_TTL",
+      "memory://symbol/policy.py::MAX_TTL",
+      "memory://symbol/service.py::render_cache_key",
+      "memory://symbol/rules.py::normalize_tenant",
+      "memory://symbol/rules.py::normalize_resource",
+      "memory://symbol/rules.py::canonical_query",
+      "memory://symbol/policy.py::CACHE_NAMESPACE",
+      "memory://symbol/policy.py::SCHEMA_VERSION",
+      "memory://symbol/policy.py::KEY_SEPARATOR",
+      "memory://symbol/policy.py::ANONYMOUS_TENANT",
+      "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_cache__negative_ttl",
+    "project": "eval_cache",
+    "category": "boundary",
+    "question": "What does cache_ttl(-1, False) return?",
+    "target_uri": "memory://symbol/rules.py::cache_ttl",
+    "expected": 0,
+    "required_uris": [
+      "memory://symbol/rules.py::cache_ttl",
+      "memory://symbol/policy.py::DEFAULT_TTL",
+      "memory://symbol/policy.py::PRIVATE_TTL",
+      "memory://symbol/policy.py::MAX_TTL"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_cache__public_lifetime",
+    "project": "eval_cache",
+    "category": "semantic",
+    "question": "Prepare a public render-cache record for tenant ACME, resource Monthly Sales, query keys b=2 and a=1, requested lifetime 5000 seconds, and current time 10. Return the object with key, expires, and store.",
+    "target_uri": "memory://symbol/service.py::cache_entry",
+    "expected": {
+      "expires": 3610,
+      "key": "render|acme|monthly_sales|a=1&b=2|v4",
+      "store": true
+    },
+    "required_uris": [
+      "memory://symbol/service.py::cache_entry",
+      "memory://symbol/rules.py::cache_ttl",
+      "memory://symbol/policy.py::DEFAULT_TTL",
+      "memory://symbol/policy.py::PRIVATE_TTL",
+      "memory://symbol/policy.py::MAX_TTL",
+      "memory://symbol/service.py::render_cache_key",
+      "memory://symbol/rules.py::normalize_tenant",
+      "memory://symbol/rules.py::normalize_resource",
+      "memory://symbol/rules.py::canonical_query",
+      "memory://symbol/policy.py::CACHE_NAMESPACE",
+      "memory://symbol/policy.py::SCHEMA_VERSION",
+      "memory://symbol/policy.py::KEY_SEPARATOR",
+      "memory://symbol/policy.py::ANONYMOUS_TENANT",
+      "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_cache__do_not_store",
+    "project": "eval_cache",
+    "category": "semantic",
+    "question": "Prepare a private render-cache record for tenant ACME, resource Daily, no query parameters, requested lifetime zero, and current time 50. Return the object with key, expires, and store.",
+    "target_uri": "memory://symbol/service.py::cache_entry",
+    "expected": {
+      "expires": 50,
+      "key": "render|acme|daily||v4",
+      "store": false
+    },
+    "required_uris": [
+      "memory://symbol/service.py::cache_entry",
+      "memory://symbol/rules.py::cache_ttl",
+      "memory://symbol/policy.py::DEFAULT_TTL",
+      "memory://symbol/policy.py::PRIVATE_TTL",
+      "memory://symbol/policy.py::MAX_TTL",
+      "memory://symbol/service.py::render_cache_key",
+      "memory://symbol/rules.py::normalize_tenant",
+      "memory://symbol/rules.py::normalize_resource",
+      "memory://symbol/rules.py::canonical_query",
+      "memory://symbol/policy.py::CACHE_NAMESPACE",
+      "memory://symbol/policy.py::SCHEMA_VERSION",
+      "memory://symbol/policy.py::KEY_SEPARATOR",
+      "memory://symbol/policy.py::ANONYMOUS_TENANT",
+      "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_cache__schema_change",
+    "project": "eval_cache",
+    "category": "change_impact",
+    "question": "If policy.SCHEMA_VERSION changes from 4 to 5, which exact calls change: render_cache_key('ACME','Daily',{}), cache_entry('ACME','Daily',{},60,False,10), cache_partition('ACME')? Return a sorted list of changed function names.",
+    "target_uri": "memory://symbol/service.py::render_cache_key",
+    "expected": [
+      "cache_entry",
+      "render_cache_key"
+    ],
+    "required_uris": [
+      "memory://symbol/service.py::cache_entry",
+      "memory://symbol/rules.py::cache_ttl",
+      "memory://symbol/policy.py::DEFAULT_TTL",
+      "memory://symbol/policy.py::PRIVATE_TTL",
+      "memory://symbol/policy.py::MAX_TTL",
+      "memory://symbol/service.py::render_cache_key",
+      "memory://symbol/rules.py::normalize_tenant",
+      "memory://symbol/rules.py::normalize_resource",
+      "memory://symbol/rules.py::canonical_query",
+      "memory://symbol/policy.py::CACHE_NAMESPACE",
+      "memory://symbol/policy.py::SCHEMA_VERSION",
+      "memory://symbol/policy.py::KEY_SEPARATOR",
+      "memory://symbol/policy.py::ANONYMOUS_TENANT",
+      "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+      "memory://symbol/service.py::cache_partition"
+    ],
+    "verification": "Compared the specified calls before and after a policy-constant intervention in separate fresh subprocesses. This is fixed-input impact, not all possible inputs.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_cache__direct_calls",
+    "project": "eval_cache",
+    "category": "architecture",
+    "question": "List the project-defined functions directly called by render_cache_key. Ignore builtins and string methods, and return a sorted list of function names.",
+    "target_uri": "memory://symbol/service.py::render_cache_key",
+    "expected": [
+      "canonical_query",
+      "normalize_resource",
+      "normalize_tenant"
+    ],
+    "required_uris": [
+      "memory://symbol/service.py::render_cache_key"
+    ],
+    "verification": "Parsed function AST and resolved local/from-import project functions; compared direct call names with a separately declared expected list.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_schedules__rounding",
+    "project": "eval_schedules",
+    "category": "single_function",
+    "question": "What does round_slot(541) return?",
+    "target_uri": "memory://symbol/rules.py::round_slot",
+    "expected": 570,
+    "required_uris": [
+      "memory://symbol/rules.py::round_slot",
+      "memory://symbol/policy.py::SLOT_MINUTES"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_schedules__busy_buffer",
+    "project": "eval_schedules",
+    "category": "cross_file",
+    "question": "What does first_available(0,540,30,[[570,600]]) return?",
+    "target_uri": "memory://symbol/service.py::first_available",
+    "expected": 630,
+    "required_uris": [
+      "memory://symbol/service.py::first_available",
+      "memory://symbol/rules.py::round_slot",
+      "memory://symbol/rules.py::working_day",
+      "memory://symbol/rules.py::valid_duration",
+      "memory://symbol/rules.py::overlaps",
+      "memory://symbol/policy.py::OPEN_MINUTE",
+      "memory://symbol/policy.py::CLOSE_MINUTE",
+      "memory://symbol/policy.py::SLOT_MINUTES",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::BUFFER_MINUTES",
+      "memory://symbol/policy.py::WORK_DAYS",
+      "memory://symbol/policy.py::MIN_DURATION",
+      "memory://symbol/policy.py::MAX_DURATION"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_schedules__appointment",
+    "project": "eval_schedules",
+    "category": "cross_file",
+    "question": "What does appointment(2,556,60,[[600,660]]) return?",
+    "target_uri": "memory://symbol/service.py::appointment",
+    "expected": {
+      "day": 2,
+      "end": 750,
+      "start": 690
+    },
+    "required_uris": [
+      "memory://symbol/service.py::appointment",
+      "memory://symbol/service.py::first_available",
+      "memory://symbol/rules.py::round_slot",
+      "memory://symbol/rules.py::working_day",
+      "memory://symbol/rules.py::valid_duration",
+      "memory://symbol/rules.py::overlaps",
+      "memory://symbol/policy.py::OPEN_MINUTE",
+      "memory://symbol/policy.py::CLOSE_MINUTE",
+      "memory://symbol/policy.py::SLOT_MINUTES",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::BUFFER_MINUTES",
+      "memory://symbol/policy.py::WORK_DAYS",
+      "memory://symbol/policy.py::MIN_DURATION",
+      "memory://symbol/policy.py::MAX_DURATION"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_schedules__closing_edge",
+    "project": "eval_schedules",
+    "category": "boundary",
+    "question": "What does first_available(4,990,30,[]) return?",
+    "target_uri": "memory://symbol/service.py::first_available",
+    "expected": 990,
+    "required_uris": [
+      "memory://symbol/service.py::first_available",
+      "memory://symbol/rules.py::round_slot",
+      "memory://symbol/rules.py::working_day",
+      "memory://symbol/rules.py::valid_duration",
+      "memory://symbol/rules.py::overlaps",
+      "memory://symbol/policy.py::OPEN_MINUTE",
+      "memory://symbol/policy.py::CLOSE_MINUTE",
+      "memory://symbol/policy.py::SLOT_MINUTES",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::BUFFER_MINUTES",
+      "memory://symbol/policy.py::WORK_DAYS",
+      "memory://symbol/policy.py::MIN_DURATION",
+      "memory://symbol/policy.py::MAX_DURATION"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_schedules__weekend",
+    "project": "eval_schedules",
+    "category": "semantic",
+    "question": "Find the booking object for day index 5, earliest minute 600, duration 30 minutes, and an empty calendar. Return day, start, and end; weekday indices begin with Monday at zero.",
+    "target_uri": "memory://symbol/service.py::appointment",
+    "expected": {
+      "day": 5,
+      "end": -1,
+      "start": -1
+    },
+    "required_uris": [
+      "memory://symbol/service.py::appointment",
+      "memory://symbol/service.py::first_available",
+      "memory://symbol/rules.py::working_day",
+      "memory://symbol/policy.py::WORK_DAYS",
+      "memory://symbol/policy.py::UNAVAILABLE"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_schedules__too_late",
+    "project": "eval_schedules",
+    "category": "semantic",
+    "question": "Find the first appointment start on day index 1 at or after minute 1000, lasting 30 minutes, with no existing bookings. Return the integer start value used by the scheduling workflow.",
+    "target_uri": "memory://symbol/service.py::first_available",
+    "expected": -1,
+    "required_uris": [
+      "memory://symbol/service.py::first_available",
+      "memory://symbol/rules.py::round_slot",
+      "memory://symbol/rules.py::working_day",
+      "memory://symbol/rules.py::valid_duration",
+      "memory://symbol/rules.py::overlaps",
+      "memory://symbol/policy.py::OPEN_MINUTE",
+      "memory://symbol/policy.py::CLOSE_MINUTE",
+      "memory://symbol/policy.py::SLOT_MINUTES",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::BUFFER_MINUTES",
+      "memory://symbol/policy.py::WORK_DAYS",
+      "memory://symbol/policy.py::MIN_DURATION",
+      "memory://symbol/policy.py::MAX_DURATION"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_schedules__buffer_change",
+    "project": "eval_schedules",
+    "category": "change_impact",
+    "question": "If policy.BUFFER_MINUTES changes from 10 to 0, which exact calls change: overlaps(540,570,[[570,600]]), first_available(0,540,30,[[570,600]]), weekday_label(0)? Return a sorted list of changed function names.",
+    "target_uri": "memory://symbol/service.py::first_available",
+    "expected": [
+      "first_available",
+      "overlaps"
+    ],
+    "required_uris": [
+      "memory://symbol/service.py::first_available",
+      "memory://symbol/rules.py::round_slot",
+      "memory://symbol/rules.py::working_day",
+      "memory://symbol/rules.py::valid_duration",
+      "memory://symbol/rules.py::overlaps",
+      "memory://symbol/policy.py::OPEN_MINUTE",
+      "memory://symbol/policy.py::CLOSE_MINUTE",
+      "memory://symbol/policy.py::SLOT_MINUTES",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::BUFFER_MINUTES",
+      "memory://symbol/policy.py::WORK_DAYS",
+      "memory://symbol/policy.py::MIN_DURATION",
+      "memory://symbol/policy.py::MAX_DURATION",
+      "memory://symbol/service.py::weekday_label"
+    ],
+    "verification": "Compared the specified calls before and after a policy-constant intervention in separate fresh subprocesses. This is fixed-input impact, not all possible inputs.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_schedules__direct_calls",
+    "project": "eval_schedules",
+    "category": "architecture",
+    "question": "List the project-defined functions directly called by first_available. Ignore builtins, and return a sorted list of function names.",
+    "target_uri": "memory://symbol/service.py::first_available",
+    "expected": [
+      "overlaps",
+      "round_slot",
+      "valid_duration",
+      "working_day"
+    ],
+    "required_uris": [
+      "memory://symbol/service.py::first_available"
+    ],
+    "verification": "Parsed function AST and resolved local/from-import project functions; compared direct call names with a separately declared expected list.",
+    "split": "original48"
+  },
+  {
+    "id": "eval_pricing__v2_refund_capped_units",
+    "project": "eval_pricing",
+    "category": "single_function",
+    "question": "What does refundable(101, 4, 3) return?",
+    "expected": 101,
+    "target_uri": "memory://symbol/rules.py::refundable",
+    "required_uris": [
+      "memory://symbol/rules.py::refundable"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_pricing__v2_two_nonmember_items",
+    "project": "eval_pricing",
+    "category": "cross_file",
+    "question": "What does checkout_total(3001, 2, False) return?",
+    "expected": 6497,
+    "target_uri": "memory://symbol/service.py::checkout_total",
+    "required_uris": [
+      "memory://symbol/service.py::checkout_total",
+      "memory://symbol/rules.py::line_subtotal",
+      "memory://symbol/rules.py::member_discount",
+      "memory://symbol/rules.py::sales_tax",
+      "memory://symbol/policy.py::DELIVERY_CENTS",
+      "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+      "memory://symbol/policy.py::MEMBER_BPS",
+      "memory://symbol/policy.py::TAX_BPS",
+      "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+      "memory://symbol/policy.py::MIN_QUANTITY",
+      "memory://symbol/policy.py::MAX_QUANTITY"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_pricing__v2_five_member_receipt",
+    "project": "eval_pricing",
+    "category": "cross_file",
+    "question": "What does order_receipt(1499, 5, True) return?",
+    "expected": {
+      "accepted": true,
+      "currency": "USD",
+      "total": 7505
+    },
+    "target_uri": "memory://symbol/service.py::order_receipt",
+    "required_uris": [
+      "memory://symbol/service.py::checkout_total",
+      "memory://symbol/rules.py::line_subtotal",
+      "memory://symbol/rules.py::member_discount",
+      "memory://symbol/rules.py::sales_tax",
+      "memory://symbol/policy.py::DELIVERY_CENTS",
+      "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+      "memory://symbol/policy.py::MEMBER_BPS",
+      "memory://symbol/policy.py::TAX_BPS",
+      "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+      "memory://symbol/policy.py::MIN_QUANTITY",
+      "memory://symbol/policy.py::MAX_QUANTITY",
+      "memory://symbol/service.py::order_receipt",
+      "memory://symbol/policy.py::CURRENCY"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_pricing__v2_free_delivery_exact_edge",
+    "project": "eval_pricing",
+    "category": "boundary",
+    "question": "What does checkout_total(3000, 2, False) return?",
+    "expected": 6495,
+    "target_uri": "memory://symbol/service.py::checkout_total",
+    "required_uris": [
+      "memory://symbol/service.py::checkout_total",
+      "memory://symbol/rules.py::line_subtotal",
+      "memory://symbol/rules.py::member_discount",
+      "memory://symbol/rules.py::sales_tax",
+      "memory://symbol/policy.py::DELIVERY_CENTS",
+      "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+      "memory://symbol/policy.py::MEMBER_BPS",
+      "memory://symbol/policy.py::TAX_BPS",
+      "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+      "memory://symbol/policy.py::MIN_QUANTITY",
+      "memory://symbol/policy.py::MAX_QUANTITY"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_pricing__v2_large_member_order",
+    "project": "eval_pricing",
+    "category": "semantic",
+    "question": "A member buys 2 units priced at 25000 cents each. Calculate the final checkout amount in cents, including the membership reduction, rounded sales tax, and delivery.",
+    "expected": 53151,
+    "target_uri": "memory://symbol/service.py::checkout_total",
+    "required_uris": [
+      "memory://symbol/service.py::checkout_total",
+      "memory://symbol/rules.py::line_subtotal",
+      "memory://symbol/rules.py::member_discount",
+      "memory://symbol/rules.py::sales_tax",
+      "memory://symbol/policy.py::DELIVERY_CENTS",
+      "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+      "memory://symbol/policy.py::MEMBER_BPS",
+      "memory://symbol/policy.py::TAX_BPS",
+      "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+      "memory://symbol/policy.py::MIN_QUANTITY",
+      "memory://symbol/policy.py::MAX_QUANTITY"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_pricing__v2_negative_unit_price",
+    "project": "eval_pricing",
+    "category": "semantic",
+    "question": "A member orders 2 units whose unit price is minus 1 cent. Return the retail receipt object containing currency, total, and accepted.",
+    "expected": {
+      "accepted": false,
+      "currency": "USD",
+      "total": -1
+    },
+    "target_uri": "memory://symbol/service.py::order_receipt",
+    "required_uris": [
+      "memory://symbol/service.py::checkout_total",
+      "memory://symbol/rules.py::line_subtotal",
+      "memory://symbol/rules.py::member_discount",
+      "memory://symbol/rules.py::sales_tax",
+      "memory://symbol/policy.py::DELIVERY_CENTS",
+      "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+      "memory://symbol/policy.py::MEMBER_BPS",
+      "memory://symbol/policy.py::TAX_BPS",
+      "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+      "memory://symbol/policy.py::MIN_QUANTITY",
+      "memory://symbol/policy.py::MAX_QUANTITY",
+      "memory://symbol/service.py::order_receipt",
+      "memory://symbol/policy.py::CURRENCY"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_pricing__v2_delivery_threshold_intervention",
+    "project": "eval_pricing",
+    "category": "change_impact",
+    "question": "If policy.FREE_DELIVERY_CENTS changes from 6000 to 7000 before the program is loaded, which exact calls change their return values: checkout_total(6100,1,False), order_receipt(6100,1,False), member_discount(6100,True)? Return a sorted list of changed function names.",
+    "expected": [
+      "checkout_total",
+      "order_receipt"
+    ],
+    "target_uri": "memory://symbol/service.py::checkout_total",
+    "required_uris": [
+      "memory://symbol/service.py::checkout_total",
+      "memory://symbol/rules.py::line_subtotal",
+      "memory://symbol/rules.py::member_discount",
+      "memory://symbol/rules.py::sales_tax",
+      "memory://symbol/policy.py::DELIVERY_CENTS",
+      "memory://symbol/policy.py::FREE_DELIVERY_CENTS",
+      "memory://symbol/policy.py::MEMBER_BPS",
+      "memory://symbol/policy.py::TAX_BPS",
+      "memory://symbol/policy.py::DISCOUNT_CAP_CENTS",
+      "memory://symbol/policy.py::MIN_QUANTITY",
+      "memory://symbol/policy.py::MAX_QUANTITY",
+      "memory://symbol/service.py::order_receipt",
+      "memory://symbol/policy.py::CURRENCY"
+    ],
+    "verification": "Fresh-process before/after policy intervention at the listed inputs; changed names agree with a separately declared expected set. This does not mean all-input change impact.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_pricing__v2_receipt_transitive_calls",
+    "project": "eval_pricing",
+    "category": "architecture",
+    "question": "Starting at order_receipt, list all project-defined functions reachable through one or more function-call edges, including indirect callees. Exclude order_receipt itself and all builtins. Return a sorted list of function names.",
+    "expected": [
+      "checkout_total",
+      "line_subtotal",
+      "member_discount",
+      "sales_tax"
+    ],
+    "target_uri": "memory://symbol/service.py::order_receipt",
+    "required_uris": [
+      "memory://symbol/service.py::order_receipt",
+      "memory://symbol/service.py::checkout_total",
+      "memory://symbol/rules.py::line_subtotal",
+      "memory://symbol/rules.py::member_discount",
+      "memory://symbol/rules.py::sales_tax"
+    ],
+    "verification": "AST-resolved transitive project-call graph; reachable names agree with a separately declared expected list. Builtins, methods, constants and the starting function are excluded.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_authorization__v2_empty_and_duplicate_scopes",
+    "project": "eval_authorization",
+    "category": "single_function",
+    "question": "What does normalized_scopes([' X:Y ', 'x:y', ' DOCUMENT:READ', '']) return?",
+    "expected": [
+      "",
+      "document:read",
+      "x:y"
+    ],
+    "target_uri": "memory://symbol/rules.py::normalized_scopes",
+    "required_uris": [
+      "memory://symbol/rules.py::normalized_scopes"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_authorization__v2_nonowner_read",
+    "project": "eval_authorization",
+    "category": "cross_file",
+    "question": "What does authorize('a9','b2','member',['document:read'],'read',1000,1001,False) return?",
+    "expected": {
+      "allowed": false,
+      "reason": "denied"
+    },
+    "target_uri": "memory://symbol/service.py::authorize",
+    "required_uris": [
+      "memory://symbol/service.py::authorize",
+      "memory://symbol/rules.py::session_valid",
+      "memory://symbol/rules.py::role_allows",
+      "memory://symbol/rules.py::scope_allows",
+      "memory://symbol/rules.py::required_scope",
+      "memory://symbol/rules.py::normalized_scopes",
+      "memory://symbol/policy.py::ADMIN_ROLE",
+      "memory://symbol/policy.py::READ_ACTION",
+      "memory://symbol/policy.py::WRITE_ACTION",
+      "memory://symbol/policy.py::READ_SCOPE",
+      "memory://symbol/policy.py::WRITE_SCOPE",
+      "memory://symbol/policy.py::MAX_SESSION_AGE",
+      "memory://symbol/policy.py::ALLOW_REASON",
+      "memory://symbol/policy.py::DENY_REASON"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_authorization__v2_duplicate_write_permission",
+    "project": "eval_authorization",
+    "category": "cross_file",
+    "question": "What does can_edit_own('k8',[' DOCUMENT:WRITE ','document:write'],50,1849) return?",
+    "expected": true,
+    "target_uri": "memory://symbol/service.py::can_edit_own",
+    "required_uris": [
+      "memory://symbol/service.py::authorize",
+      "memory://symbol/rules.py::session_valid",
+      "memory://symbol/rules.py::role_allows",
+      "memory://symbol/rules.py::scope_allows",
+      "memory://symbol/rules.py::required_scope",
+      "memory://symbol/rules.py::normalized_scopes",
+      "memory://symbol/policy.py::ADMIN_ROLE",
+      "memory://symbol/policy.py::READ_ACTION",
+      "memory://symbol/policy.py::WRITE_ACTION",
+      "memory://symbol/policy.py::READ_SCOPE",
+      "memory://symbol/policy.py::WRITE_SCOPE",
+      "memory://symbol/policy.py::MAX_SESSION_AGE",
+      "memory://symbol/policy.py::ALLOW_REASON",
+      "memory://symbol/policy.py::DENY_REASON",
+      "memory://symbol/service.py::can_edit_own"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_authorization__v2_last_valid_session_second",
+    "project": "eval_authorization",
+    "category": "boundary",
+    "question": "What does can_edit_own('owner',['document:write'],200,3799) return?",
+    "expected": true,
+    "target_uri": "memory://symbol/service.py::can_edit_own",
+    "required_uris": [
+      "memory://symbol/service.py::authorize",
+      "memory://symbol/rules.py::session_valid",
+      "memory://symbol/rules.py::role_allows",
+      "memory://symbol/rules.py::scope_allows",
+      "memory://symbol/rules.py::required_scope",
+      "memory://symbol/rules.py::normalized_scopes",
+      "memory://symbol/policy.py::ADMIN_ROLE",
+      "memory://symbol/policy.py::READ_ACTION",
+      "memory://symbol/policy.py::WRITE_ACTION",
+      "memory://symbol/policy.py::READ_SCOPE",
+      "memory://symbol/policy.py::WRITE_SCOPE",
+      "memory://symbol/policy.py::MAX_SESSION_AGE",
+      "memory://symbol/policy.py::ALLOW_REASON",
+      "memory://symbol/policy.py::DENY_REASON",
+      "memory://symbol/service.py::can_edit_own"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_authorization__v2_revoked_admin",
+    "project": "eval_authorization",
+    "category": "semantic",
+    "question": "Administrator root requests writing a document owned by b2. Permissions contain document:write. The session began at time 0, current time is 10, and the session is revoked. Return the authorization decision object with allowed and reason.",
+    "expected": {
+      "allowed": false,
+      "reason": "session"
+    },
+    "target_uri": "memory://symbol/service.py::authorize",
+    "required_uris": [
+      "memory://symbol/service.py::authorize",
+      "memory://symbol/rules.py::session_valid",
+      "memory://symbol/rules.py::role_allows",
+      "memory://symbol/rules.py::scope_allows",
+      "memory://symbol/rules.py::required_scope",
+      "memory://symbol/rules.py::normalized_scopes",
+      "memory://symbol/policy.py::ADMIN_ROLE",
+      "memory://symbol/policy.py::READ_ACTION",
+      "memory://symbol/policy.py::WRITE_ACTION",
+      "memory://symbol/policy.py::READ_SCOPE",
+      "memory://symbol/policy.py::WRITE_SCOPE",
+      "memory://symbol/policy.py::MAX_SESSION_AGE",
+      "memory://symbol/policy.py::ALLOW_REASON",
+      "memory://symbol/policy.py::DENY_REASON"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_authorization__v2_owner_case_mismatch",
+    "project": "eval_authorization",
+    "category": "semantic",
+    "question": "A member with user ID U9 requests reading a document owned by user ID u9. Permissions contain document:read, the session began at 1000, current time is 1100, and it is not revoked. Return the authorization decision object with allowed and reason.",
+    "expected": {
+      "allowed": false,
+      "reason": "denied"
+    },
+    "target_uri": "memory://symbol/service.py::authorize",
+    "required_uris": [
+      "memory://symbol/service.py::authorize",
+      "memory://symbol/rules.py::session_valid",
+      "memory://symbol/rules.py::role_allows",
+      "memory://symbol/rules.py::scope_allows",
+      "memory://symbol/rules.py::required_scope",
+      "memory://symbol/rules.py::normalized_scopes",
+      "memory://symbol/policy.py::ADMIN_ROLE",
+      "memory://symbol/policy.py::READ_ACTION",
+      "memory://symbol/policy.py::WRITE_ACTION",
+      "memory://symbol/policy.py::READ_SCOPE",
+      "memory://symbol/policy.py::WRITE_SCOPE",
+      "memory://symbol/policy.py::MAX_SESSION_AGE",
+      "memory://symbol/policy.py::ALLOW_REASON",
+      "memory://symbol/policy.py::DENY_REASON"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_authorization__v2_write_scope_intervention",
+    "project": "eval_authorization",
+    "category": "change_impact",
+    "question": "If policy.WRITE_SCOPE changes from 'document:write' to 'document:modify' before the program is loaded, which exact calls change their return values: scope_allows(['document:write'],'write'), can_edit_own('v2',['document:write'],0,123), user_key(' V2 ')? Return a sorted list of changed function names.",
+    "expected": [
+      "can_edit_own",
+      "scope_allows"
+    ],
+    "target_uri": "memory://symbol/service.py::can_edit_own",
+    "required_uris": [
+      "memory://symbol/service.py::authorize",
+      "memory://symbol/rules.py::session_valid",
+      "memory://symbol/rules.py::role_allows",
+      "memory://symbol/rules.py::scope_allows",
+      "memory://symbol/rules.py::required_scope",
+      "memory://symbol/rules.py::normalized_scopes",
+      "memory://symbol/policy.py::ADMIN_ROLE",
+      "memory://symbol/policy.py::READ_ACTION",
+      "memory://symbol/policy.py::WRITE_ACTION",
+      "memory://symbol/policy.py::READ_SCOPE",
+      "memory://symbol/policy.py::WRITE_SCOPE",
+      "memory://symbol/policy.py::MAX_SESSION_AGE",
+      "memory://symbol/policy.py::ALLOW_REASON",
+      "memory://symbol/policy.py::DENY_REASON",
+      "memory://symbol/service.py::can_edit_own",
+      "memory://symbol/service.py::user_key"
+    ],
+    "verification": "Fresh-process before/after policy intervention at the listed inputs; changed names agree with a separately declared expected set. This does not mean all-input change impact.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_authorization__v2_own_edit_transitive_calls",
+    "project": "eval_authorization",
+    "category": "architecture",
+    "question": "Starting at can_edit_own, list all project-defined functions reachable through one or more function-call edges, including indirect callees. Exclude can_edit_own itself and all builtins. Return a sorted list of function names.",
+    "expected": [
+      "authorize",
+      "normalized_scopes",
+      "required_scope",
+      "role_allows",
+      "scope_allows",
+      "session_valid"
+    ],
+    "target_uri": "memory://symbol/service.py::can_edit_own",
+    "required_uris": [
+      "memory://symbol/service.py::can_edit_own",
+      "memory://symbol/service.py::authorize",
+      "memory://symbol/rules.py::normalized_scopes",
+      "memory://symbol/rules.py::required_scope",
+      "memory://symbol/rules.py::role_allows",
+      "memory://symbol/rules.py::scope_allows",
+      "memory://symbol/rules.py::session_valid"
+    ],
+    "verification": "AST-resolved transitive project-call graph; reachable names agree with a separately declared expected list. Builtins, methods, constants and the starting function are excluded.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_routing__v2_bucket_near_wrap",
+    "project": "eval_routing",
+    "category": "single_function",
+    "question": "What does bucket('c') return?",
+    "expected": 99,
+    "target_uri": "memory://symbol/rules.py::bucket",
+    "required_uris": [
+      "memory://symbol/rules.py::bucket"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_routing__v2_empty_path",
+    "project": "eval_routing",
+    "category": "cross_file",
+    "question": "What does route_request('e','',{'east': {'up': True, 'latency_ms': 150}, 'west': {'up': True, 'latency_ms': 151}}) return?",
+    "expected": "east-canary:/",
+    "target_uri": "memory://symbol/service.py::route_request",
+    "required_uris": [
+      "memory://symbol/service.py::route_request",
+      "memory://symbol/rules.py::healthy",
+      "memory://symbol/rules.py::use_canary",
+      "memory://symbol/rules.py::bucket",
+      "memory://symbol/rules.py::normalize_path",
+      "memory://symbol/policy.py::PRIMARY_REGION",
+      "memory://symbol/policy.py::SECONDARY_REGION",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::CANARY_SUFFIX",
+      "memory://symbol/policy.py::MAX_LATENCY_MS",
+      "memory://symbol/policy.py::CANARY_PERCENT",
+      "memory://symbol/policy.py::DEFAULT_PATH"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_routing__v2_last_retry_fallback",
+    "project": "eval_routing",
+    "category": "cross_file",
+    "question": "What does retry_destination('az','/x//',{'east': {'up': False, 'latency_ms': 0}, 'west': {'up': True, 'latency_ms': 150}},2) return?",
+    "expected": "west-canary:/x",
+    "target_uri": "memory://symbol/service.py::retry_destination",
+    "required_uris": [
+      "memory://symbol/service.py::route_request",
+      "memory://symbol/rules.py::healthy",
+      "memory://symbol/rules.py::use_canary",
+      "memory://symbol/rules.py::bucket",
+      "memory://symbol/rules.py::normalize_path",
+      "memory://symbol/policy.py::PRIMARY_REGION",
+      "memory://symbol/policy.py::SECONDARY_REGION",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::CANARY_SUFFIX",
+      "memory://symbol/policy.py::MAX_LATENCY_MS",
+      "memory://symbol/policy.py::CANARY_PERCENT",
+      "memory://symbol/policy.py::DEFAULT_PATH",
+      "memory://symbol/service.py::retry_destination",
+      "memory://symbol/policy.py::RETRY_LIMIT"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_routing__v2_canary_exact_threshold",
+    "project": "eval_routing",
+    "category": "boundary",
+    "question": "What does use_canary('x') return?",
+    "expected": false,
+    "target_uri": "memory://symbol/rules.py::use_canary",
+    "required_uris": [
+      "memory://symbol/rules.py::use_canary",
+      "memory://symbol/rules.py::bucket",
+      "memory://symbol/policy.py::CANARY_PERCENT"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_routing__v2_priority_not_fastest",
+    "project": "eval_routing",
+    "category": "semantic",
+    "question": "User Z requests the path ' /v2// '. Both backends are up: east latency is 149 ms and west latency is 1 ms. What string does the normal request-routing workflow return?",
+    "expected": "east:/v2",
+    "target_uri": "memory://symbol/service.py::route_request",
+    "required_uris": [
+      "memory://symbol/service.py::route_request",
+      "memory://symbol/rules.py::healthy",
+      "memory://symbol/rules.py::use_canary",
+      "memory://symbol/rules.py::bucket",
+      "memory://symbol/rules.py::normalize_path",
+      "memory://symbol/policy.py::PRIMARY_REGION",
+      "memory://symbol/policy.py::SECONDARY_REGION",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::CANARY_SUFFIX",
+      "memory://symbol/policy.py::MAX_LATENCY_MS",
+      "memory://symbol/policy.py::CANARY_PERCENT",
+      "memory://symbol/policy.py::DEFAULT_PATH"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_routing__v2_retry_without_backend",
+    "project": "eval_routing",
+    "category": "semantic",
+    "question": "User xy requests /status on retry attempt 1. Both east and west backends are down, each with recorded latency 0 ms. What string does the retry-aware destination lookup return?",
+    "expected": "unavailable",
+    "target_uri": "memory://symbol/service.py::retry_destination",
+    "required_uris": [
+      "memory://symbol/service.py::route_request",
+      "memory://symbol/rules.py::healthy",
+      "memory://symbol/rules.py::use_canary",
+      "memory://symbol/rules.py::bucket",
+      "memory://symbol/rules.py::normalize_path",
+      "memory://symbol/policy.py::PRIMARY_REGION",
+      "memory://symbol/policy.py::SECONDARY_REGION",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::CANARY_SUFFIX",
+      "memory://symbol/policy.py::MAX_LATENCY_MS",
+      "memory://symbol/policy.py::CANARY_PERCENT",
+      "memory://symbol/policy.py::DEFAULT_PATH",
+      "memory://symbol/service.py::retry_destination",
+      "memory://symbol/policy.py::RETRY_LIMIT"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_routing__v2_latency_intervention",
+    "project": "eval_routing",
+    "category": "change_impact",
+    "question": "If policy.MAX_LATENCY_MS changes from 150 to 160 before the program is loaded, which exact calls change their return values: healthy({'up':True,'latency_ms':155}), route_request('m','/api',{'east': {'up': True, 'latency_ms': 155}, 'west': {'up': True, 'latency_ms': 80}}), normalize_path(' /items// ')? Return a sorted list of changed function names.",
+    "expected": [
+      "healthy",
+      "route_request"
+    ],
+    "target_uri": "memory://symbol/service.py::route_request",
+    "required_uris": [
+      "memory://symbol/service.py::route_request",
+      "memory://symbol/rules.py::healthy",
+      "memory://symbol/rules.py::use_canary",
+      "memory://symbol/rules.py::bucket",
+      "memory://symbol/rules.py::normalize_path",
+      "memory://symbol/policy.py::PRIMARY_REGION",
+      "memory://symbol/policy.py::SECONDARY_REGION",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::CANARY_SUFFIX",
+      "memory://symbol/policy.py::MAX_LATENCY_MS",
+      "memory://symbol/policy.py::CANARY_PERCENT",
+      "memory://symbol/policy.py::DEFAULT_PATH"
+    ],
+    "verification": "Fresh-process before/after policy intervention at the listed inputs; changed names agree with a separately declared expected set. This does not mean all-input change impact.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_routing__v2_retry_transitive_calls",
+    "project": "eval_routing",
+    "category": "architecture",
+    "question": "Starting at retry_destination, list all project-defined functions reachable through one or more function-call edges, including indirect callees. Exclude retry_destination itself and all builtins. Return a sorted list of function names.",
+    "expected": [
+      "bucket",
+      "healthy",
+      "normalize_path",
+      "route_request",
+      "use_canary"
+    ],
+    "target_uri": "memory://symbol/service.py::retry_destination",
+    "required_uris": [
+      "memory://symbol/service.py::retry_destination",
+      "memory://symbol/service.py::route_request",
+      "memory://symbol/rules.py::bucket",
+      "memory://symbol/rules.py::healthy",
+      "memory://symbol/rules.py::normalize_path",
+      "memory://symbol/rules.py::use_canary"
+    ],
+    "verification": "AST-resolved transitive project-call graph; reachable names agree with a separately declared expected list. Builtins, methods, constants and the starting function are excluded.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_inventory__v2_allocate_exact_available",
+    "project": "eval_inventory",
+    "category": "single_function",
+    "question": "What does allocate(6, 6, False) return?",
+    "expected": 6,
+    "target_uri": "memory://symbol/rules.py::allocate",
+    "required_uris": [
+      "memory://symbol/rules.py::allocate"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_inventory__v2_maximum_valid_reservation",
+    "project": "eval_inventory",
+    "category": "cross_file",
+    "question": "What does reserve(18,2,12,False,75) return?",
+    "expected": {
+      "expires": 975,
+      "status": "reserved",
+      "units": 12
+    },
+    "target_uri": "memory://symbol/service.py::reserve",
+    "required_uris": [
+      "memory://symbol/service.py::reserve",
+      "memory://symbol/rules.py::sellable",
+      "memory://symbol/rules.py::valid_quantity",
+      "memory://symbol/rules.py::allocate",
+      "memory://symbol/policy.py::SAFETY_STOCK",
+      "memory://symbol/policy.py::MAX_PER_ORDER",
+      "memory://symbol/policy.py::MIN_ORDER",
+      "memory://symbol/policy.py::RESERVATION_TTL",
+      "memory://symbol/policy.py::ACCEPTED",
+      "memory://symbol/policy.py::PARTIAL",
+      "memory://symbol/policy.py::DENIED"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_inventory__v2_partial_depletes_available",
+    "project": "eval_inventory",
+    "category": "cross_file",
+    "question": "What does remaining_after(9,1,8,True) return?",
+    "expected": 0,
+    "target_uri": "memory://symbol/service.py::remaining_after",
+    "required_uris": [
+      "memory://symbol/service.py::reserve",
+      "memory://symbol/rules.py::sellable",
+      "memory://symbol/rules.py::valid_quantity",
+      "memory://symbol/rules.py::allocate",
+      "memory://symbol/policy.py::SAFETY_STOCK",
+      "memory://symbol/policy.py::MAX_PER_ORDER",
+      "memory://symbol/policy.py::MIN_ORDER",
+      "memory://symbol/policy.py::RESERVATION_TTL",
+      "memory://symbol/policy.py::ACCEPTED",
+      "memory://symbol/policy.py::PARTIAL",
+      "memory://symbol/policy.py::DENIED",
+      "memory://symbol/service.py::remaining_after"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_inventory__v2_zero_units",
+    "project": "eval_inventory",
+    "category": "boundary",
+    "question": "What does reserve(9,1,0,True,99) return?",
+    "expected": {
+      "expires": 99,
+      "status": "denied",
+      "units": 0
+    },
+    "target_uri": "memory://symbol/service.py::reserve",
+    "required_uris": [
+      "memory://symbol/service.py::reserve",
+      "memory://symbol/rules.py::sellable",
+      "memory://symbol/rules.py::valid_quantity",
+      "memory://symbol/rules.py::allocate",
+      "memory://symbol/policy.py::SAFETY_STOCK",
+      "memory://symbol/policy.py::MAX_PER_ORDER",
+      "memory://symbol/policy.py::MIN_ORDER",
+      "memory://symbol/policy.py::RESERVATION_TTL",
+      "memory://symbol/policy.py::ACCEPTED",
+      "memory://symbol/policy.py::PARTIAL",
+      "memory://symbol/policy.py::DENIED"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_inventory__v2_enough_stock",
+    "project": "eval_inventory",
+    "category": "semantic",
+    "question": "A warehouse has 25 physical units and 10 units already held. A customer requests 11 units and refuses partial fulfillment. Current time is 500. Return the reservation object containing status, units, and expires.",
+    "expected": {
+      "expires": 1400,
+      "status": "reserved",
+      "units": 11
+    },
+    "target_uri": "memory://symbol/service.py::reserve",
+    "required_uris": [
+      "memory://symbol/service.py::reserve",
+      "memory://symbol/rules.py::sellable",
+      "memory://symbol/rules.py::valid_quantity",
+      "memory://symbol/rules.py::allocate",
+      "memory://symbol/policy.py::SAFETY_STOCK",
+      "memory://symbol/policy.py::MAX_PER_ORDER",
+      "memory://symbol/policy.py::MIN_ORDER",
+      "memory://symbol/policy.py::RESERVATION_TTL",
+      "memory://symbol/policy.py::ACCEPTED",
+      "memory://symbol/policy.py::PARTIAL",
+      "memory://symbol/policy.py::DENIED"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_inventory__v2_below_safety_reserve",
+    "project": "eval_inventory",
+    "category": "semantic",
+    "question": "A warehouse has 4 physical units and 2 units already held. A customer requests 3 units and permits partial fulfillment. Current time is 0. Return the reservation object containing status, units, and expires.",
+    "expected": {
+      "expires": 0,
+      "status": "denied",
+      "units": 0
+    },
+    "target_uri": "memory://symbol/service.py::reserve",
+    "required_uris": [
+      "memory://symbol/service.py::reserve",
+      "memory://symbol/rules.py::sellable",
+      "memory://symbol/rules.py::valid_quantity",
+      "memory://symbol/rules.py::allocate",
+      "memory://symbol/policy.py::SAFETY_STOCK",
+      "memory://symbol/policy.py::MAX_PER_ORDER",
+      "memory://symbol/policy.py::MIN_ORDER",
+      "memory://symbol/policy.py::RESERVATION_TTL",
+      "memory://symbol/policy.py::ACCEPTED",
+      "memory://symbol/policy.py::PARTIAL",
+      "memory://symbol/policy.py::DENIED"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_inventory__v2_order_cap_intervention",
+    "project": "eval_inventory",
+    "category": "change_impact",
+    "question": "If policy.MAX_PER_ORDER changes from 12 to 4 before the program is loaded, which exact calls change their return values: valid_quantity(5), reserve(15,1,5,False,300), stock_label(15)? Return a sorted list of changed function names.",
+    "expected": [
+      "reserve",
+      "valid_quantity"
+    ],
+    "target_uri": "memory://symbol/service.py::reserve",
+    "required_uris": [
+      "memory://symbol/service.py::reserve",
+      "memory://symbol/rules.py::sellable",
+      "memory://symbol/rules.py::valid_quantity",
+      "memory://symbol/rules.py::allocate",
+      "memory://symbol/policy.py::SAFETY_STOCK",
+      "memory://symbol/policy.py::MAX_PER_ORDER",
+      "memory://symbol/policy.py::MIN_ORDER",
+      "memory://symbol/policy.py::RESERVATION_TTL",
+      "memory://symbol/policy.py::ACCEPTED",
+      "memory://symbol/policy.py::PARTIAL",
+      "memory://symbol/policy.py::DENIED",
+      "memory://symbol/service.py::stock_label"
+    ],
+    "verification": "Fresh-process before/after policy intervention at the listed inputs; changed names agree with a separately declared expected set. This does not mean all-input change impact.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_inventory__v2_remaining_transitive_calls",
+    "project": "eval_inventory",
+    "category": "architecture",
+    "question": "Starting at remaining_after, list all project-defined functions reachable through one or more function-call edges, including indirect callees. Exclude remaining_after itself and all builtins. Return a sorted list of function names.",
+    "expected": [
+      "allocate",
+      "reserve",
+      "sellable",
+      "valid_quantity"
+    ],
+    "target_uri": "memory://symbol/service.py::remaining_after",
+    "required_uris": [
+      "memory://symbol/service.py::remaining_after",
+      "memory://symbol/service.py::reserve",
+      "memory://symbol/rules.py::allocate",
+      "memory://symbol/rules.py::sellable",
+      "memory://symbol/rules.py::valid_quantity"
+    ],
+    "verification": "AST-resolved transitive project-call graph; reachable names agree with a separately declared expected list. Builtins, methods, constants and the starting function are excluded.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_cache__v2_short_private_ttl",
+    "project": "eval_cache",
+    "category": "single_function",
+    "question": "What does cache_ttl(17, True) return?",
+    "expected": 17,
+    "target_uri": "memory://symbol/rules.py::cache_ttl",
+    "required_uris": [
+      "memory://symbol/rules.py::cache_ttl",
+      "memory://symbol/policy.py::DEFAULT_TTL",
+      "memory://symbol/policy.py::PRIVATE_TTL",
+      "memory://symbol/policy.py::MAX_TTL"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_cache__v2_new_query_key",
+    "project": "eval_cache",
+    "category": "cross_file",
+    "question": "What does render_cache_key(' Org-B ','Audit Log',{'n':0,'sort':'desc','debug':'yes'}) return?",
+    "expected": "render|org-b|audit_log|n=0&sort=desc|v4",
+    "target_uri": "memory://symbol/service.py::render_cache_key",
+    "required_uris": [
+      "memory://symbol/service.py::render_cache_key",
+      "memory://symbol/rules.py::normalize_tenant",
+      "memory://symbol/rules.py::normalize_resource",
+      "memory://symbol/rules.py::canonical_query",
+      "memory://symbol/policy.py::CACHE_NAMESPACE",
+      "memory://symbol/policy.py::SCHEMA_VERSION",
+      "memory://symbol/policy.py::KEY_SEPARATOR",
+      "memory://symbol/policy.py::ANONYMOUS_TENANT",
+      "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_cache__v2_private_lifetime_clamp",
+    "project": "eval_cache",
+    "category": "cross_file",
+    "question": "What does cache_entry(' TEN-9 ','Live View',{'z':9,'a':2},45,True,1000) return?",
+    "expected": {
+      "expires": 1030,
+      "key": "render|ten-9|live_view|a=2&z=9|v4",
+      "store": true
+    },
+    "target_uri": "memory://symbol/service.py::cache_entry",
+    "required_uris": [
+      "memory://symbol/service.py::render_cache_key",
+      "memory://symbol/rules.py::normalize_tenant",
+      "memory://symbol/rules.py::normalize_resource",
+      "memory://symbol/rules.py::canonical_query",
+      "memory://symbol/policy.py::CACHE_NAMESPACE",
+      "memory://symbol/policy.py::SCHEMA_VERSION",
+      "memory://symbol/policy.py::KEY_SEPARATOR",
+      "memory://symbol/policy.py::ANONYMOUS_TENANT",
+      "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+      "memory://symbol/service.py::cache_entry",
+      "memory://symbol/rules.py::cache_ttl",
+      "memory://symbol/policy.py::DEFAULT_TTL",
+      "memory://symbol/policy.py::PRIVATE_TTL",
+      "memory://symbol/policy.py::MAX_TTL"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_cache__v2_private_ttl_exact_edge",
+    "project": "eval_cache",
+    "category": "boundary",
+    "question": "What does cache_entry('edge','One',{},30,True,7) return?",
+    "expected": {
+      "expires": 37,
+      "key": "render|edge|one||v4",
+      "store": true
+    },
+    "target_uri": "memory://symbol/service.py::cache_entry",
+    "required_uris": [
+      "memory://symbol/service.py::render_cache_key",
+      "memory://symbol/rules.py::normalize_tenant",
+      "memory://symbol/rules.py::normalize_resource",
+      "memory://symbol/rules.py::canonical_query",
+      "memory://symbol/policy.py::CACHE_NAMESPACE",
+      "memory://symbol/policy.py::SCHEMA_VERSION",
+      "memory://symbol/policy.py::KEY_SEPARATOR",
+      "memory://symbol/policy.py::ANONYMOUS_TENANT",
+      "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+      "memory://symbol/service.py::cache_entry",
+      "memory://symbol/rules.py::cache_ttl",
+      "memory://symbol/policy.py::DEFAULT_TTL",
+      "memory://symbol/policy.py::PRIVATE_TTL",
+      "memory://symbol/policy.py::MAX_TTL"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_cache__v2_default_public_lifetime",
+    "project": "eval_cache",
+    "category": "semantic",
+    "question": "Prepare a public render-cache record for a tenant given as one space, resource ' Weekly View ', query keys page=3 and trace='hidden', no requested lifetime (None), and current time 120. Return the object with key, expires, and store.",
+    "expected": {
+      "expires": 420,
+      "key": "render|public|weekly_view|page=3|v4",
+      "store": true
+    },
+    "target_uri": "memory://symbol/service.py::cache_entry",
+    "required_uris": [
+      "memory://symbol/service.py::render_cache_key",
+      "memory://symbol/rules.py::normalize_tenant",
+      "memory://symbol/rules.py::normalize_resource",
+      "memory://symbol/rules.py::canonical_query",
+      "memory://symbol/policy.py::CACHE_NAMESPACE",
+      "memory://symbol/policy.py::SCHEMA_VERSION",
+      "memory://symbol/policy.py::KEY_SEPARATOR",
+      "memory://symbol/policy.py::ANONYMOUS_TENANT",
+      "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+      "memory://symbol/service.py::cache_entry",
+      "memory://symbol/rules.py::cache_ttl",
+      "memory://symbol/policy.py::DEFAULT_TTL",
+      "memory://symbol/policy.py::PRIVATE_TTL",
+      "memory://symbol/policy.py::MAX_TTL"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_cache__v2_negative_private_lifetime",
+    "project": "eval_cache",
+    "category": "semantic",
+    "question": "Prepare a private render-cache record for tenant TEAM, resource Chart, query key q='ok', requested lifetime minus 10 seconds, and current time 77. Return the object with key, expires, and store.",
+    "expected": {
+      "expires": 77,
+      "key": "render|team|chart|q=ok|v4",
+      "store": false
+    },
+    "target_uri": "memory://symbol/service.py::cache_entry",
+    "required_uris": [
+      "memory://symbol/service.py::render_cache_key",
+      "memory://symbol/rules.py::normalize_tenant",
+      "memory://symbol/rules.py::normalize_resource",
+      "memory://symbol/rules.py::canonical_query",
+      "memory://symbol/policy.py::CACHE_NAMESPACE",
+      "memory://symbol/policy.py::SCHEMA_VERSION",
+      "memory://symbol/policy.py::KEY_SEPARATOR",
+      "memory://symbol/policy.py::ANONYMOUS_TENANT",
+      "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+      "memory://symbol/service.py::cache_entry",
+      "memory://symbol/rules.py::cache_ttl",
+      "memory://symbol/policy.py::DEFAULT_TTL",
+      "memory://symbol/policy.py::PRIVATE_TTL",
+      "memory://symbol/policy.py::MAX_TTL"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_cache__v2_private_cap_intervention",
+    "project": "eval_cache",
+    "category": "change_impact",
+    "question": "If policy.PRIVATE_TTL changes from 30 to 10 before the program is loaded, which exact calls change their return values: cache_ttl(25,True), cache_entry('x2','Result',{},25,True,5), render_cache_key('x2','Result',{})? Return a sorted list of changed function names.",
+    "expected": [
+      "cache_entry",
+      "cache_ttl"
+    ],
+    "target_uri": "memory://symbol/service.py::cache_entry",
+    "required_uris": [
+      "memory://symbol/service.py::render_cache_key",
+      "memory://symbol/rules.py::normalize_tenant",
+      "memory://symbol/rules.py::normalize_resource",
+      "memory://symbol/rules.py::canonical_query",
+      "memory://symbol/policy.py::CACHE_NAMESPACE",
+      "memory://symbol/policy.py::SCHEMA_VERSION",
+      "memory://symbol/policy.py::KEY_SEPARATOR",
+      "memory://symbol/policy.py::ANONYMOUS_TENANT",
+      "memory://symbol/policy.py::EXCLUDED_QUERY_KEYS",
+      "memory://symbol/service.py::cache_entry",
+      "memory://symbol/rules.py::cache_ttl",
+      "memory://symbol/policy.py::DEFAULT_TTL",
+      "memory://symbol/policy.py::PRIVATE_TTL",
+      "memory://symbol/policy.py::MAX_TTL"
+    ],
+    "verification": "Fresh-process before/after policy intervention at the listed inputs; changed names agree with a separately declared expected set. This does not mean all-input change impact.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_cache__v2_entry_transitive_calls",
+    "project": "eval_cache",
+    "category": "architecture",
+    "question": "Starting at cache_entry, list all project-defined functions reachable through one or more function-call edges, including indirect callees. Exclude cache_entry itself and all builtins or string methods. Return a sorted list of function names.",
+    "expected": [
+      "cache_ttl",
+      "canonical_query",
+      "normalize_resource",
+      "normalize_tenant",
+      "render_cache_key"
+    ],
+    "target_uri": "memory://symbol/service.py::cache_entry",
+    "required_uris": [
+      "memory://symbol/service.py::cache_entry",
+      "memory://symbol/rules.py::cache_ttl",
+      "memory://symbol/rules.py::canonical_query",
+      "memory://symbol/rules.py::normalize_resource",
+      "memory://symbol/rules.py::normalize_tenant",
+      "memory://symbol/service.py::render_cache_key"
+    ],
+    "verification": "AST-resolved transitive project-call graph; reachable names agree with a separately declared expected list. Builtins, methods, constants and the starting function are excluded.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_schedules__v2_buffer_exact_separation",
+    "project": "eval_schedules",
+    "category": "single_function",
+    "question": "What does overlaps(600,630,[[640,670]]) return?",
+    "expected": false,
+    "target_uri": "memory://symbol/rules.py::overlaps",
+    "required_uris": [
+      "memory://symbol/rules.py::overlaps",
+      "memory://symbol/policy.py::BUFFER_MINUTES"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_schedules__v2_two_busy_intervals",
+    "project": "eval_schedules",
+    "category": "cross_file",
+    "question": "What does first_available(3,545,45,[[570,615],[660,690]]) return?",
+    "expected": 720,
+    "target_uri": "memory://symbol/service.py::first_available",
+    "required_uris": [
+      "memory://symbol/service.py::first_available",
+      "memory://symbol/rules.py::round_slot",
+      "memory://symbol/rules.py::working_day",
+      "memory://symbol/rules.py::valid_duration",
+      "memory://symbol/rules.py::overlaps",
+      "memory://symbol/policy.py::OPEN_MINUTE",
+      "memory://symbol/policy.py::CLOSE_MINUTE",
+      "memory://symbol/policy.py::SLOT_MINUTES",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::BUFFER_MINUTES",
+      "memory://symbol/policy.py::WORK_DAYS",
+      "memory://symbol/policy.py::MIN_DURATION",
+      "memory://symbol/policy.py::MAX_DURATION"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_schedules__v2_wrapped_workday",
+    "project": "eval_schedules",
+    "category": "cross_file",
+    "question": "What does appointment(8,515,90,[[540,600],[690,720]]) return?",
+    "expected": {
+      "day": 8,
+      "end": 840,
+      "start": 750
+    },
+    "target_uri": "memory://symbol/service.py::appointment",
+    "required_uris": [
+      "memory://symbol/service.py::first_available",
+      "memory://symbol/rules.py::round_slot",
+      "memory://symbol/rules.py::working_day",
+      "memory://symbol/rules.py::valid_duration",
+      "memory://symbol/rules.py::overlaps",
+      "memory://symbol/policy.py::OPEN_MINUTE",
+      "memory://symbol/policy.py::CLOSE_MINUTE",
+      "memory://symbol/policy.py::SLOT_MINUTES",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::BUFFER_MINUTES",
+      "memory://symbol/policy.py::WORK_DAYS",
+      "memory://symbol/policy.py::MIN_DURATION",
+      "memory://symbol/policy.py::MAX_DURATION",
+      "memory://symbol/service.py::appointment"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_schedules__v2_max_duration_closing_edge",
+    "project": "eval_schedules",
+    "category": "boundary",
+    "question": "What does first_available(0,840,180,[]) return?",
+    "expected": 840,
+    "target_uri": "memory://symbol/service.py::first_available",
+    "required_uris": [
+      "memory://symbol/service.py::first_available",
+      "memory://symbol/rules.py::round_slot",
+      "memory://symbol/rules.py::working_day",
+      "memory://symbol/rules.py::valid_duration",
+      "memory://symbol/rules.py::overlaps",
+      "memory://symbol/policy.py::OPEN_MINUTE",
+      "memory://symbol/policy.py::CLOSE_MINUTE",
+      "memory://symbol/policy.py::SLOT_MINUTES",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::BUFFER_MINUTES",
+      "memory://symbol/policy.py::WORK_DAYS",
+      "memory://symbol/policy.py::MIN_DURATION",
+      "memory://symbol/policy.py::MAX_DURATION"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_schedules__v2_next_week_opening",
+    "project": "eval_schedules",
+    "category": "semantic",
+    "question": "Find the booking object for day index 7, earliest minute 530, duration 20 minutes, and an empty calendar. Weekday indices begin with Monday at zero and continue into later weeks. Return day, start, and end.",
+    "expected": {
+      "day": 7,
+      "end": 560,
+      "start": 540
+    },
+    "target_uri": "memory://symbol/service.py::appointment",
+    "required_uris": [
+      "memory://symbol/service.py::first_available",
+      "memory://symbol/rules.py::round_slot",
+      "memory://symbol/rules.py::working_day",
+      "memory://symbol/rules.py::valid_duration",
+      "memory://symbol/rules.py::overlaps",
+      "memory://symbol/policy.py::OPEN_MINUTE",
+      "memory://symbol/policy.py::CLOSE_MINUTE",
+      "memory://symbol/policy.py::SLOT_MINUTES",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::BUFFER_MINUTES",
+      "memory://symbol/policy.py::WORK_DAYS",
+      "memory://symbol/policy.py::MIN_DURATION",
+      "memory://symbol/policy.py::MAX_DURATION",
+      "memory://symbol/service.py::appointment"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_schedules__v2_overlong_duration",
+    "project": "eval_schedules",
+    "category": "semantic",
+    "question": "Find the first appointment start on day index 3 at or after minute 560, lasting 181 minutes, with no existing bookings. Return the integer start value used by the scheduling workflow.",
+    "expected": -1,
+    "target_uri": "memory://symbol/service.py::first_available",
+    "required_uris": [
+      "memory://symbol/service.py::first_available",
+      "memory://symbol/rules.py::round_slot",
+      "memory://symbol/rules.py::working_day",
+      "memory://symbol/rules.py::valid_duration",
+      "memory://symbol/rules.py::overlaps",
+      "memory://symbol/policy.py::OPEN_MINUTE",
+      "memory://symbol/policy.py::CLOSE_MINUTE",
+      "memory://symbol/policy.py::SLOT_MINUTES",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::BUFFER_MINUTES",
+      "memory://symbol/policy.py::WORK_DAYS",
+      "memory://symbol/policy.py::MIN_DURATION",
+      "memory://symbol/policy.py::MAX_DURATION"
+    ],
+    "verification": "Fresh isolated Python execution; exact JSON value/type agrees with an independently declared hand-calculated expected answer.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_schedules__v2_slot_size_intervention",
+    "project": "eval_schedules",
+    "category": "change_impact",
+    "question": "If policy.SLOT_MINUTES changes from 30 to 15 before the program is loaded, which exact calls change their return values: round_slot(571), appointment(1,571,30,[]), weekday_label(8)? Return a sorted list of changed function names.",
+    "expected": [
+      "appointment",
+      "round_slot"
+    ],
+    "target_uri": "memory://symbol/service.py::appointment",
+    "required_uris": [
+      "memory://symbol/service.py::first_available",
+      "memory://symbol/rules.py::round_slot",
+      "memory://symbol/rules.py::working_day",
+      "memory://symbol/rules.py::valid_duration",
+      "memory://symbol/rules.py::overlaps",
+      "memory://symbol/policy.py::OPEN_MINUTE",
+      "memory://symbol/policy.py::CLOSE_MINUTE",
+      "memory://symbol/policy.py::SLOT_MINUTES",
+      "memory://symbol/policy.py::UNAVAILABLE",
+      "memory://symbol/policy.py::BUFFER_MINUTES",
+      "memory://symbol/policy.py::WORK_DAYS",
+      "memory://symbol/policy.py::MIN_DURATION",
+      "memory://symbol/policy.py::MAX_DURATION",
+      "memory://symbol/service.py::appointment",
+      "memory://symbol/service.py::weekday_label"
+    ],
+    "verification": "Fresh-process before/after policy intervention at the listed inputs; changed names agree with a separately declared expected set. This does not mean all-input change impact.",
+    "split": "additional48"
+  },
+  {
+    "id": "eval_schedules__v2_appointment_transitive_calls",
+    "project": "eval_schedules",
+    "category": "architecture",
+    "question": "Starting at appointment, list all project-defined functions reachable through one or more function-call edges, including indirect callees. Exclude appointment itself and all builtins. Return a sorted list of function names.",
+    "expected": [
+      "first_available",
+      "overlaps",
+      "round_slot",
+      "valid_duration",
+      "working_day"
+    ],
+    "target_uri": "memory://symbol/service.py::appointment",
+    "required_uris": [
+      "memory://symbol/service.py::appointment",
+      "memory://symbol/service.py::first_available",
+      "memory://symbol/rules.py::overlaps",
+      "memory://symbol/rules.py::round_slot",
+      "memory://symbol/rules.py::valid_duration",
+      "memory://symbol/rules.py::working_day"
+    ],
+    "verification": "AST-resolved transitive project-call graph; reachable names agree with a separately declared expected list. Builtins, methods, constants and the starting function are excluded.",
+    "split": "additional48"
+  }
+]

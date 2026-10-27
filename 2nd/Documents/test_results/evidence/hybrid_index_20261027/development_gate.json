@@ -1,0 +1,12 @@
+{
+  "checked_at_utc": "2026-10-26T18:29:27.722428+00:00",
+  "rows": 24,
+  "calls": 41,
+  "transport_errors": 0,
+  "truncated_inputs": 0,
+  "nonzero_prompt_cache": 0,
+  "H_invalid_selections": 1,
+  "protocol_unchanged": true,
+  "main_evaluation_allowed": true,
+  "note": "Structural smoke checks only. Incorrect answers and invalid selections remain in results; no prompt or parameter tuning."
+}

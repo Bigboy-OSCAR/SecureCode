@@ -1,0 +1,57 @@
+{
+  "examples": [
+    {
+      "question": "Stock hold?",
+      "terms": [
+        "stock",
+        "hold"
+      ],
+      "counts": {
+        "stock": 1,
+        "hold": 1
+      }
+    },
+    {
+      "question": "How does remainingStock use SAFETY_STOCK?",
+      "terms": [
+        "how",
+        "does",
+        "remaining",
+        "stock",
+        "use",
+        "safety_stock",
+        "safety",
+        "stock"
+      ],
+      "counts": {
+        "how": 1,
+        "does": 1,
+        "remaining": 1,
+        "stock": 2,
+        "use": 1,
+        "safety_stock": 1,
+        "safety": 1
+      }
+    },
+    {
+      "question": "재고가 얼마나 남아 있나요?",
+      "terms": [],
+      "counts": {}
+    }
+  ],
+  "empty_query_ranking": [
+    {
+      "id": "a",
+      "score": 0
+    },
+    {
+      "id": "b",
+      "score": 0
+    },
+    {
+      "id": "c",
+      "score": 0
+    }
+  ],
+  "note": "Executed existing tokenizer and retrieval code only; no LLM calls."
+}

@@ -1,0 +1,39 @@
+{
+  "created_at_utc": "2026-10-25T09:49:36.814476+00:00",
+  "request": "1.5 R0의 TF-IDF 용어, 희소성 계산, 가중치 적용과 검색 점수 예시 보강",
+  "new_benchmark_model_calls": 0,
+  "before": {
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md": {
+      "snapshot": "03_현재색인_A와_파일간확장_B_재실험_비교보고서.md",
+      "sha256": "9a92d95608ab890f7516184dcc36d55853a3ea501a8ca3a5e3c7a0a9dfa2b4c1"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/report_raptor_large.py": {
+      "snapshot": "report_raptor_large.py",
+      "sha256": "838541ef74c27140f6a9175c6fe06fd6bbc1515bcb6cf228c41f3e31cd0c5168"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/report_manifest.json": {
+      "snapshot": "report_manifest.json",
+      "sha256": "be2a450720a066b3957d4aafe26fda8b844d30c2903f7613fcab98806e63d157"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/completion_audit.json": {
+      "snapshot": "completion_audit.json",
+      "sha256": "95ee3fa667e710fd7d5e169d1df5c0b103f2733e0c8fff4a56042916907b9192"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/deliverable_manifest.json": {
+      "snapshot": "deliverable_manifest.json",
+      "sha256": "48da83a426d9aeb80ba9bbcc72068c60dec2a2978396bf9389fb1d6f8c8079c2"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/final_source_manifest.json": {
+      "snapshot": "final_source_manifest.json",
+      "sha256": "fbb3cfe356649f4d01d8c7602bf0b1abc0bd64716b36ceedd8850c11a9dc532d"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/work_status.json": {
+      "snapshot": "work_status.json",
+      "sha256": "4f7a23b5c6242a45adc7b4b25d418360dbeca1dfbd5e66e11aeff9261c9fa280"
+    },
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/raptor_large_20261024/reproduce.txt": {
+      "snapshot": "reproduce.txt",
+      "sha256": "b00e4e7c8ea2acdae6830e429a415b97e8937a2d0aca00a486ead89d092b5268"
+    }
+  }
+}

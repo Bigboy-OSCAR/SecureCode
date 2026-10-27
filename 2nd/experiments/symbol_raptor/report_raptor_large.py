@@ -395,16 +395,59 @@ def main():
     text=clarify_report_context.clarify(text)
     section_path=out/add_index_build_section.REVISION/'section.md'
     text=add_index_build_section.insert(text,section_path.read_text())
+    tfidf_revision='revisions/tfidf_explanation_20261025'
+    tfidf_path=out/tfidf_revision/'replacement.json'
+    tfidf_edit=exp.read(tfidf_path)
+    assert text==(out/tfidf_revision/exp.REPORT.name).read_text()
+    assert text.count(tfidf_edit['old'])==1
+    text=text.replace(tfidf_edit['old'],tfidf_edit['new'],1)
+    candidate_revision='revisions/candidate_definition_20261025'
+    candidate_path=out/candidate_revision/'replacement.json'
+    candidate_edit=exp.read(candidate_path)
+    assert text==(out/candidate_revision/exp.REPORT.name).read_text()
+    assert text.count(candidate_edit['old'])==1
+    text=text.replace(candidate_edit['old'],candidate_edit['new'],1)
+    query_revision='revisions/query_processing_20261025'
+    query_path=out/query_revision/'edits.json'
+    query_edits=exp.read(query_path)
+    assert text==(out/query_revision/exp.REPORT.name).read_text()
+    for edit in query_edits['edits']:
+        assert text.count(edit['old'])==1
+        text=text.replace(edit['old'],edit['new'],1)
+    walkthrough_revision='revisions/r0_walkthrough_20261027'
+    walkthrough_path=out/walkthrough_revision/'replacement.json'
+    walkthrough_edit=exp.read(walkthrough_path)
+    assert text==(out/walkthrough_revision/exp.REPORT.name).read_text()
+    assert text.count(walkthrough_edit['old'])==1
+    text=text.replace(walkthrough_edit['old'],walkthrough_edit['new'],1)
+    hybrid_metadata={}
+    hybrid_out=exp.v1.DEFAULT_OUT/'hybrid_index_20261027'
+    if (hybrid_out/'verification.json').exists():
+        import report_hybrid
+        text=report_hybrid.augment(text)
+        hybrid_metadata={
+            'additional_experiment':'hybrid_index_20261027',
+            'hybrid_summary_sha256':exp.v1.sha(hybrid_out/'summary.json'),
+            'hybrid_verification_sha256':exp.v1.sha(hybrid_out/'verification.json'),
+            'hybrid_generator_sha256':exp.v1.sha(report_hybrid.__file__),
+            'hybrid_report_generation_sha256':exp.v1.sha(hybrid_out/'report_generation.json'),
+        }
     exp.REPORT.write_text(text)
     exp.v1.dump(manifest,{'generated_at_utc':exp.audit.now(),'report_sha256':exp.v1.sha(exp.REPORT),'report_digest':exp.audit.digest(text),
         'summary_sha256':exp.v1.sha(out/'summary.json'),'verification_sha256':exp.v1.sha(out/'verification.json'),
-        'generator_sha256':exp.v1.sha(__file__),'editorial_revision':add_index_build_section.REVISION,
+        'generator_sha256':exp.v1.sha(__file__),'editorial_revision':walkthrough_revision,
+        'r0_walkthrough_sha256':exp.v1.sha(walkthrough_path),
+        'r0_worked_example_sha256':exp.v1.sha(out/walkthrough_revision/'worked_example.json'),
+        'query_processing_sha256':exp.v1.sha(query_path),
+        'candidate_definition_sha256':exp.v1.sha(candidate_path),
+        'tfidf_explanation_sha256':exp.v1.sha(tfidf_path),
         'layout_generator_sha256':exp.v1.sha(reorganize_report.__file__),
         'reader_context_generator_sha256':exp.v1.sha(clarify_report_context.__file__),
         'index_build_chapter_sha256':exp.v1.sha(section_path),
         'index_build_inserter_sha256':exp.v1.sha(add_index_build_section.__file__),
         'mechanism_revision':REVISION,
-        'mechanism_facts_sha256':exp.v1.sha(out/REVISION/'mechanism_facts.json')})
+        'mechanism_facts_sha256':exp.v1.sha(out/REVISION/'mechanism_facts.json'),
+        **hybrid_metadata})
     print('Updated report:',exp.REPORT,'characters:',len(text))
 
 if __name__=='__main__':main()

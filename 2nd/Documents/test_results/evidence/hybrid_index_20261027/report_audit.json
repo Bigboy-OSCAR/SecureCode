@@ -1,0 +1,100 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-26T19:38:58.423260+00:00",
+  "checks": [
+    {
+      "name": "verified_complete_evaluation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_previous_report_content_recoverable_byte_for_byte",
+      "passed": true,
+      "detail": {
+        "edits": 17
+      }
+    },
+    {
+      "name": "new_results_generated_from_verified_summary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report_materials_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "method_actors_search_storage_payload_and_cost_explained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_results_distinguished_from_fresh_controls",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "balanced_code_fences_and_table_columns",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no_image_embeds",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_links_and_explicit_anchors_resolve",
+      "passed": true,
+      "detail": {
+        "links": 59
+      }
+    },
+    {
+      "name": "new_call_accounting",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "posthoc_diagnostics_uses_unchanged_complete_results",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "posthoc_failure_categories_and_index_omissions_recomputed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "eight_item_structural_limit_count",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "conditional_costs_recomputed_on_matched_questions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "conditional_cost_table_matches_records",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "example_eval_cache__negative_ttl",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "example_eval_authorization__direct_calls",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "report_sha256": "9385c85fa9f3ada5351ade724a6f75ac3ab64d9cd90b0646e1c1bc3be4cecffa",
+  "summary_sha256": "1eba25e8d919c1ed1bf4740ea6958af8137c58b8a2ecf7787498860ef25d7123",
+  "verification_sha256": "802f868c5736504ca40add0b996524648009f85f2354ebf4e3ac68cddddf0ffc",
+  "audit_source_sha256": "b3c90136a4aae401a14bd47e77e62212fa9e8be96b933cc17a004258a7a3d44f",
+  "note": "Document review and numerical/source checks, not an external reader comprehension study."
+}

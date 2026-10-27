@@ -1,0 +1,13 @@
+{
+  "checked_at_utc": "2026-10-26T18:51:41.707516+00:00",
+  "first_repeat_rows": 288,
+  "arm_counts": {
+    "B": 96,
+    "H": 96,
+    "R0": 96
+  },
+  "transport_errors": 0,
+  "input_truncations": 0,
+  "cache_reuse_calls": 0,
+  "protocol_unchanged": true
+}

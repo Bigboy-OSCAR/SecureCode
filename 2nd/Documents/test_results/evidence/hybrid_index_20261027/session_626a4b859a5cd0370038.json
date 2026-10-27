@@ -1,0 +1,16 @@
+{
+  "started_at_utc": "2026-10-26T18:24:22.162045+00:00",
+  "pid": 68372,
+  "dev": true,
+  "resume_after_rows": 0,
+  "vector_build_seconds": {
+    "dev_shipping": 0.014391459000762552,
+    "eval_authorization": 0.013974833011161536,
+    "eval_cache": 0.014066375006223097,
+    "eval_inventory": 0.01384158301516436,
+    "eval_pricing": 0.013725208002142608,
+    "eval_routing": 0.013903291983297095,
+    "eval_schedules": 0.014574000000720844
+  },
+  "environment_sha256": "34260b94e76b6f9b437a5b4f6c620d1a9868eb1fe68210e270e8820172383ad4"
+}

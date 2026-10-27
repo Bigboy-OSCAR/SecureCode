@@ -1,0 +1,32 @@
+{
+  "saved_at_utc": "2026-10-26T19:41:09.832809+00:00",
+  "files": {
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/hybrid_index_20261027/final_source_snapshot/experiment_hybrid.py": "fe1358a920fc4d00bef1e1af4a8b8f1dd4b9ffc367c1c8e85679cbc7de3023d9",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/hybrid_index_20261027/final_source_snapshot/analyze_hybrid.py": "eabbe0f040ab77dd2128cb8f8ca4995389ea2b7b32ed0067786ce3fc8a848cbb",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/hybrid_index_20261027/final_source_snapshot/verify_hybrid.py": "50b6a25783497727dfb031fad8056a4470198a4cbc113261360fe0d220f1aee0",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/hybrid_index_20261027/final_source_snapshot/diagnose_hybrid.py": "92b951d82122ed976322fd38af6b1daf14ad1076407b91b37157541fd5687bb8",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/hybrid_index_20261027/final_source_snapshot/report_hybrid.py": "820101c618a6d2818ab4d7f3a23cb238839e5946ddbc45b35ac953fb00062602",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/hybrid_index_20261027/final_source_snapshot/audit_hybrid_report.py": "b3c90136a4aae401a14bd47e77e62212fa9e8be96b933cc17a004258a7a3d44f",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/hybrid_index_20261027/final_source_snapshot/report_raptor_large.py": "b5952834f3d2c710166dc92a9dc8ff9b2b3e44a7d5d9e2e0be36a9c2e66ac754",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/hybrid_index_20261027/final_source_snapshot/audit_raptor_report.py": "bc95000de8a0804c7b3af53294ec29cdb1c1152cb6d7b8c8e04d68b493e739d8",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/hybrid_index_20261027/final_source_snapshot/reorganize_report.py": "21c37ae604b9fa19266499e502777aeba2a03426aa0957821e0fa5e6b2c3db82",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/hybrid_index_20261027/final_source_snapshot/clarify_report_context.py": "c33af1c3ed0a4a5664c453afc2180546c47d7975d6ee309fbc46fc6bbf77c411",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/hybrid_index_20261027/final_source_snapshot/add_index_build_section.py": "dd3c634422b2246ee4670409373b6374a6a1b3abef2ee9a69d80bf34052eae67"
+  },
+  "current_sources": {
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/experiment_hybrid.py": "fe1358a920fc4d00bef1e1af4a8b8f1dd4b9ffc367c1c8e85679cbc7de3023d9",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/analyze_hybrid.py": "eabbe0f040ab77dd2128cb8f8ca4995389ea2b7b32ed0067786ce3fc8a848cbb",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/verify_hybrid.py": "50b6a25783497727dfb031fad8056a4470198a4cbc113261360fe0d220f1aee0",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/diagnose_hybrid.py": "92b951d82122ed976322fd38af6b1daf14ad1076407b91b37157541fd5687bb8",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/report_hybrid.py": "820101c618a6d2818ab4d7f3a23cb238839e5946ddbc45b35ac953fb00062602",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/audit_hybrid_report.py": "b3c90136a4aae401a14bd47e77e62212fa9e8be96b933cc17a004258a7a3d44f",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/report_raptor_large.py": "b5952834f3d2c710166dc92a9dc8ff9b2b3e44a7d5d9e2e0be36a9c2e66ac754",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/audit_raptor_report.py": "bc95000de8a0804c7b3af53294ec29cdb1c1152cb6d7b8c8e04d68b493e739d8",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/reorganize_report.py": "21c37ae604b9fa19266499e502777aeba2a03426aa0957821e0fa5e6b2c3db82",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/clarify_report_context.py": "c33af1c3ed0a4a5664c453afc2180546c47d7975d6ee309fbc46fc6bbf77c411",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/symbol_raptor/add_index_build_section.py": "dd3c634422b2246ee4670409373b6374a6a1b3abef2ee9a69d80bf34052eae67"
+  },
+  "report_sha256": "9385c85fa9f3ada5351ade724a6f75ac3ab64d9cd90b0646e1c1bc3be4cecffa",
+  "report_audit_sha256": "5306f8e57d0deb5a81a5b1633c0d7ca90a27ac1d90628037d9f58ed6c0cd48ab",
+  "verification_sha256": "802f868c5736504ca40add0b996524648009f85f2354ebf4e3ac68cddddf0ffc"
+}

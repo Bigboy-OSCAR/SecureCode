@@ -1,0 +1,625 @@
+[
+  {
+    "kind": "H_gain_R0",
+    "task_id": "eval_cache__negative_ttl",
+    "repeat": 0,
+    "question": "What does cache_ttl(-1, False) return?",
+    "expected": 0,
+    "arms": {
+      "H": {
+        "correct": true,
+        "parsed_answer": 0,
+        "context_tokens": 87,
+        "input_tokens": 868,
+        "raw_evidence_recall": 0.25,
+        "chosen": [
+          {
+            "id": "memory://symbol/rules.py::cache_ttl",
+            "level": 0,
+            "score": 0.0,
+            "source_uris": [
+              "memory://symbol/rules.py::cache_ttl"
+            ]
+          }
+        ],
+        "requested_uris": [
+          "memory://symbol/rules.py::cache_ttl"
+        ],
+        "selection_valid": true,
+        "context": "### memory://symbol/rules.py::cache_ttl lines 273-275\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef cache_ttl(requested, private):\n    ceiling = PRIVATE_TTL if private else MAX_TTL\n    return min(max(DEFAULT_TTL if requested is None else requested, 0), ceiling)",
+        "source_index": {
+          "text": "1. function rules.py:273-275 cache_ttl(requested, private) -> policy.py::DEFAULT_TTL,policy.py::MAX_TTL,policy.py::PRIVATE_TTL\n2. function service.py:268-270 cache_entry(tenant, resource, query, requested_ttl, private, now) -> rules.py::cache_ttl,service.py::render_cache_key\n3. function service.py:265-266 render_cache_key(tenant, resource, query) -> policy.py::CACHE_NAMESPACE,policy.py::KEY_SEPARATOR,policy.py::SCHEMA_VERSION,rules.py::canonical_query,rules.py::normalize_resource,rules.py::normalize_tenant\n4. function service.py:272-273 cache_partition(tenant) -> rules.py::normalize_tenant\n5. function service.py:4-9 aux_service_000_event_text(event, fields) -> -\n6. function service.py:364-372 aux_service_039_trimmed_text(value, limit) -> -\n7. function service.py:473-481 aux_service_051_trimmed_text(value, limit) -> -\n8. function service.py:27-35 aux_service_003_trimmed_text(value, limit) -> -\n9. function service.py:136-144 aux_service_015_trimmed_text(value, limit) -> -\n10. function service.py:245-253 aux_service_027_trimmed_text(value, limit) -> -\n11. constant policy.py:272-272 CACHE_NAMESPACE -> -\n12. function service.py:341-346 aux_service_036_event_text(event, fields) -> -\n13. function service.py:450-455 aux_service_048_event_text(event, fields) -> -\n14. function service.py:113-118 aux_service_012_event_text(event, fields) -> -\n15. function service.py:222-227 aux_service_024_event_text(event, fields) -> -\n16. function service.py:19-25 aux_service_002_histogram(labels) -> -\n17. function service.py:37-45 aux_service_004_unique_items(values) -> -",
+          "tokens": 512,
+          "items": [
+            {
+              "number": 1,
+              "uri": "memory://symbol/rules.py::cache_ttl",
+              "score": 0.11568721382734587,
+              "line": "1. function rules.py:273-275 cache_ttl(requested, private) -> policy.py::DEFAULT_TTL,policy.py::MAX_TTL,policy.py::PRIVATE_TTL"
+            },
+            {
+              "number": 2,
+              "uri": "memory://symbol/service.py::cache_entry",
+              "score": 0.1102891441672709,
+              "line": "2. function service.py:268-270 cache_entry(tenant, resource, query, requested_ttl, private, now) -> rules.py::cache_ttl,service.py::render_cache_key"
+            },
+            {
+              "number": 3,
+              "uri": "memory://symbol/service.py::render_cache_key",
+              "score": 0.09174679843793535,
+              "line": "3. function service.py:265-266 render_cache_key(tenant, resource, query) -> policy.py::CACHE_NAMESPACE,policy.py::KEY_SEPARATOR,policy.py::SCHEMA_VERSION,rules.py::canonical_query,rules.py::normalize_resource,rules.py::normalize_tenant"
+            },
+            {
+              "number": 4,
+              "uri": "memory://symbol/service.py::cache_partition",
+              "score": 0.08757852471375463,
+              "line": "4. function service.py:272-273 cache_partition(tenant) -> rules.py::normalize_tenant"
+            },
+            {
+              "number": 5,
+              "uri": "memory://symbol/service.py::aux_service_000_event_text",
+              "score": 0.07574856696537528,
+              "line": "5. function service.py:4-9 aux_service_000_event_text(event, fields) -> -"
+            },
+            {
+              "number": 6,
+              "uri": "memory://symbol/service.py::aux_service_039_trimmed_text",
+              "score": 0.07274979203701451,
+              "line": "6. function service.py:364-372 aux_service_039_trimmed_text(value, limit) -> -"
+            },
+            {
+              "number": 7,
+              "uri": "memory://symbol/service.py::aux_service_051_trimmed_text",
+              "score": 0.07274979203701451,
+              "line": "7. function service.py:473-481 aux_service_051_trimmed_text(value, limit) -> -"
+            },
+            {
+              "number": 8,
+              "uri": "memory://symbol/service.py::aux_service_003_trimmed_text",
+              "score": 0.07250543172836754,
+              "line": "8. function service.py:27-35 aux_service_003_trimmed_text(value, limit) -> -"
+            },
+            {
+              "number": 9,
+              "uri": "memory://symbol/service.py::aux_service_015_trimmed_text",
+              "score": 0.07250543172836754,
+              "line": "9. function service.py:136-144 aux_service_015_trimmed_text(value, limit) -> -"
+            },
+            {
+              "number": 10,
+              "uri": "memory://symbol/service.py::aux_service_027_trimmed_text",
+              "score": 0.07250543172836754,
+              "line": "10. function service.py:245-253 aux_service_027_trimmed_text(value, limit) -> -"
+            },
+            {
+              "number": 11,
+              "uri": "memory://symbol/policy.py::CACHE_NAMESPACE",
+              "score": 0.0723317330178006,
+              "line": "11. constant policy.py:272-272 CACHE_NAMESPACE -> -"
+            },
+            {
+              "number": 12,
+              "uri": "memory://symbol/service.py::aux_service_036_event_text",
+              "score": 0.07161983401086992,
+              "line": "12. function service.py:341-346 aux_service_036_event_text(event, fields) -> -"
+            },
+            {
+              "number": 13,
+              "uri": "memory://symbol/service.py::aux_service_048_event_text",
+              "score": 0.07161983401086992,
+              "line": "13. function service.py:450-455 aux_service_048_event_text(event, fields) -> -"
+            },
+            {
+              "number": 14,
+              "uri": "memory://symbol/service.py::aux_service_012_event_text",
+              "score": 0.07136190079411174,
+              "line": "14. function service.py:113-118 aux_service_012_event_text(event, fields) -> -"
+            },
+            {
+              "number": 15,
+              "uri": "memory://symbol/service.py::aux_service_024_event_text",
+              "score": 0.07136190079411174,
+              "line": "15. function service.py:222-227 aux_service_024_event_text(event, fields) -> -"
+            },
+            {
+              "number": 16,
+              "uri": "memory://symbol/service.py::aux_service_002_histogram",
+              "score": 0.06793844236943215,
+              "line": "16. function service.py:19-25 aux_service_002_histogram(labels) -> -"
+            },
+            {
+              "number": 17,
+              "uri": "memory://symbol/service.py::aux_service_004_unique_items",
+              "score": 0.06705946534316243,
+              "line": "17. function service.py:37-45 aux_service_004_unique_items(values) -> -"
+            }
+          ],
+          "rejected": [
+            "memory://symbol/service.py::aux_service_028_unique_items",
+            "memory://symbol/service.py::aux_service_040_unique_items",
+            "memory://symbol/service.py::aux_service_052_unique_items",
+            "memory://symbol/service.py::aux_service_016_unique_items",
+            "memory://symbol/service.py::aux_service_038_histogram",
+            "memory://symbol/service.py::aux_service_050_histogram",
+            "memory://symbol/service.py::aux_service_014_histogram"
+          ]
+        }
+      },
+      "R0": {
+        "correct": false,
+        "parsed_answer": 300,
+        "context_tokens": 1021,
+        "input_tokens": 1145,
+        "raw_evidence_recall": 1.0,
+        "chosen": [
+          {
+            "id": "atomic:memory://symbol/rules.py::cache_ttl",
+            "level": 0,
+            "score": 0.11568721382734587,
+            "source_uris": [
+              "memory://symbol/rules.py::cache_ttl"
+            ]
+          },
+          {
+            "id": "atomic:memory://symbol/service.py::cache_entry",
+            "level": 0,
+            "score": 0.1102891441672709,
+            "source_uris": [
+              "memory://symbol/service.py::cache_entry"
+            ]
+          },
+          {
+            "id": "memory://symbol/rules.py::cache_ttl",
+            "level": 0,
+            "score": 0.09276338300078069,
+            "source_uris": [
+              "memory://symbol/rules.py::cache_ttl",
+              "memory://symbol/policy.py::DEFAULT_TTL",
+              "memory://symbol/policy.py::MAX_TTL",
+              "memory://symbol/policy.py::PRIVATE_TTL"
+            ]
+          },
+          {
+            "id": "atomic:memory://symbol/service.py::render_cache_key",
+            "level": 0,
+            "score": 0.09174679843793535,
+            "source_uris": [
+              "memory://symbol/service.py::render_cache_key"
+            ]
+          },
+          {
+            "id": "atomic:memory://symbol/service.py::cache_partition",
+            "level": 0,
+            "score": 0.08757852471375463,
+            "source_uris": [
+              "memory://symbol/service.py::cache_partition"
+            ]
+          },
+          {
+            "id": "memory://symbol/service.py::cache_partition",
+            "level": 0,
+            "score": 0.08298948299576288,
+            "source_uris": [
+              "memory://symbol/service.py::cache_partition",
+              "memory://symbol/rules.py::normalize_tenant",
+              "memory://symbol/policy.py::ANONYMOUS_TENANT"
+            ]
+          },
+          {
+            "id": "memory://symbol/service.py::aux_service_000_event_text",
+            "level": 0,
+            "score": 0.07574856696537528,
+            "source_uris": [
+              "memory://symbol/service.py::aux_service_000_event_text"
+            ]
+          },
+          {
+            "id": "memory://symbol/service.py::aux_service_039_trimmed_text",
+            "level": 0,
+            "score": 0.07274979203701451,
+            "source_uris": [
+              "memory://symbol/service.py::aux_service_039_trimmed_text"
+            ]
+          },
+          {
+            "id": "memory://symbol/policy.py::CACHE_NAMESPACE",
+            "level": 0,
+            "score": 0.0723317330178006,
+            "source_uris": [
+              "memory://symbol/policy.py::CACHE_NAMESPACE"
+            ]
+          },
+          {
+            "id": "atomic:memory://symbol/audit.py::recent_events",
+            "level": 0,
+            "score": 0.003851932004930075,
+            "source_uris": [
+              "memory://symbol/audit.py::recent_events"
+            ]
+          }
+        ],
+        "requested_uris": [],
+        "selection_valid": null,
+        "context": "### memory://symbol/rules.py::cache_ttl lines 273-275\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef cache_ttl(requested, private):\n    ceiling = PRIVATE_TTL if private else MAX_TTL\n    return min(max(DEFAULT_TTL if requested is None else requested, 0), ceiling)\n\n### memory://symbol/service.py::cache_entry lines 268-270\nfrom policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl\ndef cache_entry(tenant, resource, query, requested_ttl, private, now):\n    ttl = cache_ttl(requested_ttl, private)\n    return {\"key\": render_cache_key(tenant, resource, query), \"expires\": now + ttl, \"store\": ttl > 0}\n\n### memory://symbol/rules.py::cache_ttl lines 273-275\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef cache_ttl(requested, private):\n    ceiling = PRIVATE_TTL if private else MAX_TTL\n    return min(max(DEFAULT_TTL if requested is None else requested, 0), ceiling)\n\n### memory://symbol/policy.py::DEFAULT_TTL lines 274-274\n\nDEFAULT_TTL = 300\n\n### memory://symbol/policy.py::MAX_TTL lines 276-276\n\nMAX_TTL = 3600\n\n### memory://symbol/policy.py::PRIVATE_TTL lines 275-275\n\nPRIVATE_TTL = 30\n\n### memory://symbol/service.py::render_cache_key lines 265-266\nfrom policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl\ndef render_cache_key(tenant, resource, query):\n    return KEY_SEPARATOR.join((CACHE_NAMESPACE, normalize_tenant(tenant), normalize_resource(resource), canonical_query(query), \"v\" + str(SCHEMA_VERSION)))\n\n### memory://symbol/service.py::cache_partition lines 272-273\nfrom policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl\ndef cache_partition(tenant):\n    return sum(ord(char) for char in normalize_tenant(tenant)) % 16\n\n### memory://symbol/service.py::cache_partition lines 272-273\nfrom policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl\ndef cache_partition(tenant):\n    return sum(ord(char) for char in normalize_tenant(tenant)) % 16\n\n### memory://symbol/rules.py::normalize_tenant lines 264-265\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef normalize_tenant(tenant):\n    return tenant.strip().lower() or ANONYMOUS_TENANT\n\n### memory://symbol/policy.py::ANONYMOUS_TENANT lines 277-277\n\nANONYMOUS_TENANT = \"public\"\n\n### memory://symbol/service.py::aux_service_000_event_text lines 4-9\nfrom policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl\ndef aux_service_000_event_text(event, fields):\n    parts = [str(event).strip()]\n    for key in sorted(fields):\n        value = str(fields[key]).replace('\\n', ' ')\n        parts.append(str(key) + '=' + value)\n    return ' | '.join(parts)\n\n### memory://symbol/service.py::aux_service_039_trimmed_text lines 364-372\nfrom policy import CACHE_NAMESPACE, SCHEMA_VERSION, KEY_SEPARATOR\nfrom rules import normalize_tenant, normalize_resource, canonical_query, cache_ttl\ndef aux_service_039_trimmed_text(value, limit):\n    text = ' '.join(str(value).split())\n    if limit < 0:\n        raise ValueError('negative text limit')\n    if len(text) <= limit:\n        return text\n    if limit < 3:\n        return text[:limit]\n    return text[:limit - 3] + '...'\n\n### memory://symbol/policy.py::CACHE_NAMESPACE lines 272-272\n\nCACHE_NAMESPACE = \"render\"\n\n### memory://symbol/audit.py::recent_events lines 270-271\n\ndef recent_events(events):\n    return events[-MAX_RECENT_EVENTS:]",
+        "source_index": null
+      },
+      "B": {
+        "correct": false,
+        "parsed_answer": 30,
+        "context_tokens": 176,
+        "input_tokens": 478,
+        "raw_evidence_recall": 1.0,
+        "chosen": [
+          {
+            "id": "memory://symbol/rules.py::cache_ttl",
+            "level": 0,
+            "score": 0,
+            "source_uris": [
+              "memory://symbol/rules.py::cache_ttl"
+            ]
+          },
+          {
+            "id": "memory://symbol/policy.py::DEFAULT_TTL",
+            "level": 0,
+            "score": 0,
+            "source_uris": [
+              "memory://symbol/policy.py::DEFAULT_TTL"
+            ]
+          },
+          {
+            "id": "memory://symbol/policy.py::MAX_TTL",
+            "level": 0,
+            "score": 0,
+            "source_uris": [
+              "memory://symbol/policy.py::MAX_TTL"
+            ]
+          },
+          {
+            "id": "memory://symbol/policy.py::PRIVATE_TTL",
+            "level": 0,
+            "score": 0,
+            "source_uris": [
+              "memory://symbol/policy.py::PRIVATE_TTL"
+            ]
+          }
+        ],
+        "requested_uris": [],
+        "selection_valid": true,
+        "context": "### memory://symbol/rules.py::cache_ttl lines 273-275\nfrom policy import ANONYMOUS_TENANT, DEFAULT_TTL, PRIVATE_TTL, MAX_TTL, EXCLUDED_QUERY_KEYS\ndef cache_ttl(requested, private):\n    ceiling = PRIVATE_TTL if private else MAX_TTL\n    return min(max(DEFAULT_TTL if requested is None else requested, 0), ceiling)\n\n### memory://symbol/policy.py::DEFAULT_TTL lines 274-274\n\nDEFAULT_TTL = 300\n\n### memory://symbol/policy.py::MAX_TTL lines 276-276\n\nMAX_TTL = 3600\n\n### memory://symbol/policy.py::PRIVATE_TTL lines 275-275\n\nPRIVATE_TTL = 30",
+        "source_index": null
+      }
+    }
+  },
+  {
+    "kind": "H_loss_R0",
+    "task_id": "eval_authorization__direct_calls",
+    "repeat": 0,
+    "question": "List the project-defined functions directly called by authorize. Ignore builtins, and return a sorted list of function names.",
+    "expected": [
+      "role_allows",
+      "scope_allows",
+      "session_valid"
+    ],
+    "arms": {
+      "R0": {
+        "correct": true,
+        "parsed_answer": [
+          "role_allows",
+          "scope_allows",
+          "session_valid"
+        ],
+        "context_tokens": 1017,
+        "input_tokens": 1154,
+        "raw_evidence_recall": 1.0,
+        "chosen": [
+          {
+            "id": "atomic:memory://symbol/service.py::authorize",
+            "level": 0,
+            "score": 0.06587696994283347,
+            "source_uris": [
+              "memory://symbol/service.py::authorize"
+            ]
+          },
+          {
+            "id": "memory://symbol/service.py::can_edit_own",
+            "level": 0,
+            "score": 0.05019925074844104,
+            "source_uris": [
+              "memory://symbol/service.py::can_edit_own",
+              "memory://symbol/service.py::authorize",
+              "memory://symbol/policy.py::ALLOW_REASON",
+              "memory://symbol/policy.py::DENY_REASON",
+              "memory://symbol/rules.py::role_allows",
+              "memory://symbol/rules.py::scope_allows",
+              "memory://symbol/rules.py::session_valid",
+              "memory://symbol/policy.py::ADMIN_ROLE",
+              "memory://symbol/rules.py::normalized_scopes",
+              "memory://symbol/rules.py::required_scope",
+              "memory://symbol/policy.py::MAX_SESSION_AGE"
+            ]
+          },
+          {
+            "id": "memory://symbol/policy.py::aux_policy_001_batches",
+            "level": 0,
+            "score": 0.037938071310067455,
+            "source_uris": [
+              "memory://symbol/policy.py::aux_policy_001_batches"
+            ]
+          },
+          {
+            "id": "memory://symbol/audit.py::aux_audit_001_batches",
+            "level": 0,
+            "score": 0.037772258363962384,
+            "source_uris": [
+              "memory://symbol/audit.py::aux_audit_001_batches"
+            ]
+          },
+          {
+            "id": "memory://symbol/presentation.py::aux_presentation_001_batches",
+            "level": 0,
+            "score": 0.03776169196101002,
+            "source_uris": [
+              "memory://symbol/presentation.py::aux_presentation_001_batches"
+            ]
+          },
+          {
+            "id": "memory://symbol/audit.py::AUDIT_VERSION",
+            "level": 0,
+            "score": 0.0,
+            "source_uris": [
+              "memory://symbol/audit.py::AUDIT_VERSION"
+            ]
+          }
+        ],
+        "requested_uris": [],
+        "selection_valid": null,
+        "context": "### memory://symbol/service.py::authorize lines 4-8\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}\n\n### memory://symbol/service.py::can_edit_own lines 10-11\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef can_edit_own(user, scopes, created_at, now):\n    return authorize(user, user, \"member\", scopes, \"write\", created_at, now, False)[\"allowed\"]\n\n### memory://symbol/service.py::authorize lines 4-8\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}\n\n### memory://symbol/policy.py::ALLOW_REASON lines 7-7\n\nALLOW_REASON = \"allowed\"\n\n### memory://symbol/policy.py::DENY_REASON lines 8-8\n\nDENY_REASON = \"denied\"\n\n### memory://symbol/rules.py::role_allows lines 12-13\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef role_allows(role, owner, user):\n    return role == ADMIN_ROLE or owner == user\n\n### memory://symbol/rules.py::scope_allows lines 15-17\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef scope_allows(scopes, action):\n    required = required_scope(action)\n    return bool(required) and required in normalized_scopes(scopes)\n\n### memory://symbol/rules.py::session_valid lines 6-7\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef session_valid(created_at, now, revoked):\n    return not revoked and 0 <= now - created_at < MAX_SESSION_AGE\n\n### memory://symbol/policy.py::ADMIN_ROLE lines 1-1\n\nADMIN_ROLE = \"admin\"\n\n### memory://symbol/rules.py::normalized_scopes lines 3-4\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef normalized_scopes(scopes):\n    return sorted(set(scope.strip().lower() for scope in scopes))\n\n### memory://symbol/rules.py::required_scope lines 9-10\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")\n\n### memory://symbol/policy.py::MAX_SESSION_AGE lines 6-6\n\nMAX_SESSION_AGE = 3600\n\n### memory://symbol/policy.py::aux_policy_001_batches lines 17-23\n\ndef aux_policy_001_batches(values, width):\n    if width < 1:\n        raise ValueError('width must be positive')\n    batches = []\n    for offset in range(0, len(values), width):\n        batches.append(list(values[offset:offset + width]))\n    return batches\n\n### memory://symbol/audit.py::aux_audit_001_batches lines 25-31\n\ndef aux_audit_001_batches(values, width):\n    if width < 1:\n        raise ValueError('width must be positive')\n    batches = []\n    for offset in range(0, len(values), width):\n        batches.append(list(values[offset:offset + width]))\n    return batches\n\n### memory://symbol/presentation.py::aux_presentation_001_batches lines 25-31\n\ndef aux_presentation_001_batches(values, width):\n    if width < 1:\n        raise ValueError('width must be positive')\n    batches = []\n    for offset in range(0, len(values), width):\n        batches.append(list(values[offset:offset + width]))\n    return batches\n\n### memory://symbol/audit.py::AUDIT_VERSION lines 1-1\n\nAUDIT_VERSION = 2",
+        "source_index": null
+      },
+      "H": {
+        "correct": false,
+        "parsed_answer": [
+          "role_allows",
+          "scope_allows"
+        ],
+        "context_tokens": 122,
+        "input_tokens": 927,
+        "raw_evidence_recall": 1.0,
+        "chosen": [
+          {
+            "id": "memory://symbol/service.py::authorize",
+            "level": 0,
+            "score": 0.0,
+            "source_uris": [
+              "memory://symbol/service.py::authorize"
+            ]
+          }
+        ],
+        "requested_uris": [
+          "memory://symbol/service.py::authorize"
+        ],
+        "selection_valid": true,
+        "context": "### memory://symbol/service.py::authorize lines 4-8\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}",
+        "source_index": {
+          "text": "1. function service.py:4-8 authorize(user, owner, role, scopes, action, created_at, now, revoked) -> policy.py::ALLOW_REASON,policy.py::DENY_REASON,rules.py::role_allows,rules.py::scope_allows,rules.py::session_valid\n2. function service.py:10-11 can_edit_own(user, scopes, created_at, now) -> service.py::authorize\n3. function policy.py:17-23 aux_policy_001_batches(values, width) -> -\n4. function audit.py:25-31 aux_audit_001_batches(values, width) -> -\n5. function presentation.py:25-31 aux_presentation_001_batches(values, width) -> -\n6. function policy.py:126-132 aux_policy_013_batches(values, width) -> -\n7. function policy.py:235-241 aux_policy_025_batches(values, width) -> -\n8. function policy.py:344-350 aux_policy_037_batches(values, width) -> -\n9. function policy.py:453-459 aux_policy_049_batches(values, width) -> -\n10. function audit.py:134-140 aux_audit_013_batches(values, width) -> -\n11. function audit.py:243-249 aux_audit_025_batches(values, width) -> -\n12. function audit.py:352-358 aux_audit_037_batches(values, width) -> -\n13. function audit.py:461-467 aux_audit_049_batches(values, width) -> -\n14. function presentation.py:134-140 aux_presentation_013_batches(values, width) -> -\n15. function presentation.py:243-249 aux_presentation_025_batches(values, width) -> -\n16. function presentation.py:352-358 aux_presentation_037_batches(values, width) -> -\n17. function presentation.py:461-467 aux_presentation_049_batches(values, width) -> -\n18. function rules.py:26-32 aux_rules_001_batches(values, width) -> -",
+          "tokens": 512,
+          "items": [
+            {
+              "number": 1,
+              "uri": "memory://symbol/service.py::authorize",
+              "score": 0.06587696994283347,
+              "line": "1. function service.py:4-8 authorize(user, owner, role, scopes, action, created_at, now, revoked) -> policy.py::ALLOW_REASON,policy.py::DENY_REASON,rules.py::role_allows,rules.py::scope_allows,rules.py::session_valid"
+            },
+            {
+              "number": 2,
+              "uri": "memory://symbol/service.py::can_edit_own",
+              "score": 0.05019925074844104,
+              "line": "2. function service.py:10-11 can_edit_own(user, scopes, created_at, now) -> service.py::authorize"
+            },
+            {
+              "number": 3,
+              "uri": "memory://symbol/policy.py::aux_policy_001_batches",
+              "score": 0.037938071310067455,
+              "line": "3. function policy.py:17-23 aux_policy_001_batches(values, width) -> -"
+            },
+            {
+              "number": 4,
+              "uri": "memory://symbol/audit.py::aux_audit_001_batches",
+              "score": 0.037772258363962384,
+              "line": "4. function audit.py:25-31 aux_audit_001_batches(values, width) -> -"
+            },
+            {
+              "number": 5,
+              "uri": "memory://symbol/presentation.py::aux_presentation_001_batches",
+              "score": 0.03776169196101002,
+              "line": "5. function presentation.py:25-31 aux_presentation_001_batches(values, width) -> -"
+            },
+            {
+              "number": 6,
+              "uri": "memory://symbol/policy.py::aux_policy_013_batches",
+              "score": 0.03768704553503415,
+              "line": "6. function policy.py:126-132 aux_policy_013_batches(values, width) -> -"
+            },
+            {
+              "number": 7,
+              "uri": "memory://symbol/policy.py::aux_policy_025_batches",
+              "score": 0.03768704553503415,
+              "line": "7. function policy.py:235-241 aux_policy_025_batches(values, width) -> -"
+            },
+            {
+              "number": 8,
+              "uri": "memory://symbol/policy.py::aux_policy_037_batches",
+              "score": 0.03768704553503415,
+              "line": "8. function policy.py:344-350 aux_policy_037_batches(values, width) -> -"
+            },
+            {
+              "number": 9,
+              "uri": "memory://symbol/policy.py::aux_policy_049_batches",
+              "score": 0.03768704553503415,
+              "line": "9. function policy.py:453-459 aux_policy_049_batches(values, width) -> -"
+            },
+            {
+              "number": 10,
+              "uri": "memory://symbol/audit.py::aux_audit_013_batches",
+              "score": 0.037194393940995565,
+              "line": "10. function audit.py:134-140 aux_audit_013_batches(values, width) -> -"
+            },
+            {
+              "number": 11,
+              "uri": "memory://symbol/audit.py::aux_audit_025_batches",
+              "score": 0.037194393940995565,
+              "line": "11. function audit.py:243-249 aux_audit_025_batches(values, width) -> -"
+            },
+            {
+              "number": 12,
+              "uri": "memory://symbol/audit.py::aux_audit_037_batches",
+              "score": 0.037194393940995565,
+              "line": "12. function audit.py:352-358 aux_audit_037_batches(values, width) -> -"
+            },
+            {
+              "number": 13,
+              "uri": "memory://symbol/audit.py::aux_audit_049_batches",
+              "score": 0.037194393940995565,
+              "line": "13. function audit.py:461-467 aux_audit_049_batches(values, width) -> -"
+            },
+            {
+              "number": 14,
+              "uri": "memory://symbol/presentation.py::aux_presentation_013_batches",
+              "score": 0.03718430498318026,
+              "line": "14. function presentation.py:134-140 aux_presentation_013_batches(values, width) -> -"
+            },
+            {
+              "number": 15,
+              "uri": "memory://symbol/presentation.py::aux_presentation_025_batches",
+              "score": 0.03718430498318026,
+              "line": "15. function presentation.py:243-249 aux_presentation_025_batches(values, width) -> -"
+            },
+            {
+              "number": 16,
+              "uri": "memory://symbol/presentation.py::aux_presentation_037_batches",
+              "score": 0.03718430498318026,
+              "line": "16. function presentation.py:352-358 aux_presentation_037_batches(values, width) -> -"
+            },
+            {
+              "number": 17,
+              "uri": "memory://symbol/presentation.py::aux_presentation_049_batches",
+              "score": 0.03718430498318026,
+              "line": "17. function presentation.py:461-467 aux_presentation_049_batches(values, width) -> -"
+            },
+            {
+              "number": 18,
+              "uri": "memory://symbol/rules.py::aux_rules_001_batches",
+              "score": 0.03380469638612509,
+              "line": "18. function rules.py:26-32 aux_rules_001_batches(values, width) -> -"
+            }
+          ],
+          "rejected": [
+            "memory://symbol/service.py::aux_service_001_batches",
+            "memory://symbol/service.py::aux_service_013_batches",
+            "memory://symbol/service.py::aux_service_025_batches",
+            "memory://symbol/service.py::aux_service_037_batches",
+            "memory://symbol/service.py::aux_service_049_batches",
+            "memory://symbol/rules.py::aux_rules_013_batches"
+          ]
+        }
+      },
+      "B": {
+        "correct": true,
+        "parsed_answer": [
+          "role_allows",
+          "scope_allows",
+          "session_valid"
+        ],
+        "context_tokens": 541,
+        "input_tokens": 791,
+        "raw_evidence_recall": 1.0,
+        "chosen": [
+          {
+            "id": "memory://symbol/service.py::authorize",
+            "level": 0,
+            "score": 0,
+            "source_uris": [
+              "memory://symbol/service.py::authorize"
+            ]
+          },
+          {
+            "id": "memory://symbol/rules.py::role_allows",
+            "level": 0,
+            "score": 0,
+            "source_uris": [
+              "memory://symbol/rules.py::role_allows"
+            ]
+          },
+          {
+            "id": "memory://symbol/rules.py::scope_allows",
+            "level": 0,
+            "score": 0,
+            "source_uris": [
+              "memory://symbol/rules.py::scope_allows"
+            ]
+          },
+          {
+            "id": "memory://symbol/rules.py::session_valid",
+            "level": 0,
+            "score": 0,
+            "source_uris": [
+              "memory://symbol/rules.py::session_valid"
+            ]
+          },
+          {
+            "id": "memory://symbol/rules.py::normalized_scopes",
+            "level": 0,
+            "score": 0,
+            "source_uris": [
+              "memory://symbol/rules.py::normalized_scopes"
+            ]
+          },
+          {
+            "id": "memory://symbol/rules.py::required_scope",
+            "level": 0,
+            "score": 0,
+            "source_uris": [
+              "memory://symbol/rules.py::required_scope"
+            ]
+          },
+          {
+            "id": "memory://symbol/policy.py::ALLOW_REASON",
+            "level": 0,
+            "score": 0,
+            "source_uris": [
+              "memory://symbol/policy.py::ALLOW_REASON"
+            ]
+          },
+          {
+            "id": "memory://symbol/policy.py::DENY_REASON",
+            "level": 0,
+            "score": 0,
+            "source_uris": [
+              "memory://symbol/policy.py::DENY_REASON"
+            ]
+          },
+          {
+            "id": "memory://symbol/policy.py::ADMIN_ROLE",
+            "level": 0,
+            "score": 0,
+            "source_uris": [
+              "memory://symbol/policy.py::ADMIN_ROLE"
+            ]
+          },
+          {
+            "id": "memory://symbol/policy.py::MAX_SESSION_AGE",
+            "level": 0,
+            "score": 0,
+            "source_uris": [
+              "memory://symbol/policy.py::MAX_SESSION_AGE"
+            ]
+          }
+        ],
+        "requested_uris": [],
+        "selection_valid": true,
+        "context": "### memory://symbol/service.py::authorize lines 4-8\nfrom policy import ALLOW_REASON, DENY_REASON\nfrom rules import session_valid, role_allows, scope_allows\ndef authorize(user, owner, role, scopes, action, created_at, now, revoked):\n    if not session_valid(created_at, now, revoked):\n        return {\"allowed\": False, \"reason\": \"session\"}\n    granted = role_allows(role, owner, user) and scope_allows(scopes, action)\n    return {\"allowed\": granted, \"reason\": ALLOW_REASON if granted else DENY_REASON}\n\n### memory://symbol/rules.py::role_allows lines 12-13\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef role_allows(role, owner, user):\n    return role == ADMIN_ROLE or owner == user\n\n### memory://symbol/rules.py::scope_allows lines 15-17\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef scope_allows(scopes, action):\n    required = required_scope(action)\n    return bool(required) and required in normalized_scopes(scopes)\n\n### memory://symbol/rules.py::session_valid lines 6-7\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef session_valid(created_at, now, revoked):\n    return not revoked and 0 <= now - created_at < MAX_SESSION_AGE\n\n### memory://symbol/rules.py::normalized_scopes lines 3-4\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef normalized_scopes(scopes):\n    return sorted(set(scope.strip().lower() for scope in scopes))\n\n### memory://symbol/rules.py::required_scope lines 9-10\nfrom policy import ADMIN_ROLE, READ_ACTION, WRITE_ACTION, WRITE_SCOPE, READ_SCOPE, MAX_SESSION_AGE\ndef required_scope(action):\n    return {READ_ACTION: READ_SCOPE, WRITE_ACTION: WRITE_SCOPE}.get(action, \"\")\n\n### memory://symbol/policy.py::ALLOW_REASON lines 7-7\n\nALLOW_REASON = \"allowed\"\n\n### memory://symbol/policy.py::DENY_REASON lines 8-8\n\nDENY_REASON = \"denied\"\n\n### memory://symbol/policy.py::ADMIN_ROLE lines 1-1\n\nADMIN_ROLE = \"admin\"\n\n### memory://symbol/policy.py::MAX_SESSION_AGE lines 6-6\n\nMAX_SESSION_AGE = 3600",
+        "source_index": null
+      }
+    }
+  }
+]

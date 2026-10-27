@@ -1,0 +1,170 @@
+[
+  {
+    "id": "dev_shipping__steps",
+    "project": "dev_shipping",
+    "category": "single_function",
+    "question": "What does weight_steps(501) return?",
+    "target_uri": "memory://symbol/rules.py::weight_steps",
+    "expected": 2,
+    "required_uris": [
+      "memory://symbol/rules.py::weight_steps",
+      "memory://symbol/policy.py::MIN_GRAMS",
+      "memory://symbol/policy.py::STEP_GRAMS"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result."
+  },
+  {
+    "id": "dev_shipping__quote",
+    "project": "dev_shipping",
+    "category": "cross_file",
+    "question": "What does shipping_quote(6200, 501, True) return?",
+    "target_uri": "memory://symbol/service.py::shipping_quote",
+    "expected": {
+      "cents": 770,
+      "status": "accepted"
+    },
+    "required_uris": [
+      "memory://symbol/service.py::shipping_quote",
+      "memory://symbol/rules.py::allowed_weight",
+      "memory://symbol/rules.py::free_shipping",
+      "memory://symbol/rules.py::weight_charge",
+      "memory://symbol/rules.py::weight_steps",
+      "memory://symbol/policy.py::BASE_CENTS",
+      "memory://symbol/policy.py::REMOTE_SURCHARGE",
+      "memory://symbol/policy.py::STEP_GRAMS",
+      "memory://symbol/policy.py::STEP_CENTS",
+      "memory://symbol/policy.py::FREE_FROM_CENTS",
+      "memory://symbol/policy.py::MIN_GRAMS",
+      "memory://symbol/policy.py::MAX_GRAMS"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result."
+  },
+  {
+    "id": "dev_shipping__total",
+    "project": "dev_shipping",
+    "category": "cross_file",
+    "question": "What does parcel_total(9000, 1600, True) return?",
+    "target_uri": "memory://symbol/service.py::parcel_total",
+    "expected": 9240,
+    "required_uris": [
+      "memory://symbol/service.py::parcel_total",
+      "memory://symbol/service.py::shipping_quote",
+      "memory://symbol/rules.py::allowed_weight",
+      "memory://symbol/rules.py::free_shipping",
+      "memory://symbol/rules.py::weight_charge",
+      "memory://symbol/rules.py::weight_steps",
+      "memory://symbol/policy.py::BASE_CENTS",
+      "memory://symbol/policy.py::REMOTE_SURCHARGE",
+      "memory://symbol/policy.py::STEP_GRAMS",
+      "memory://symbol/policy.py::STEP_CENTS",
+      "memory://symbol/policy.py::FREE_FROM_CENTS",
+      "memory://symbol/policy.py::MIN_GRAMS",
+      "memory://symbol/policy.py::MAX_GRAMS"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result."
+  },
+  {
+    "id": "dev_shipping__max_weight",
+    "project": "dev_shipping",
+    "category": "boundary",
+    "question": "What does shipping_quote(9000, 20001, False) return?",
+    "target_uri": "memory://symbol/service.py::shipping_quote",
+    "expected": {
+      "cents": 0,
+      "status": "rejected"
+    },
+    "required_uris": [
+      "memory://symbol/service.py::shipping_quote",
+      "memory://symbol/rules.py::allowed_weight",
+      "memory://symbol/policy.py::MIN_GRAMS",
+      "memory://symbol/policy.py::MAX_GRAMS"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result."
+  },
+  {
+    "id": "dev_shipping__remote_free",
+    "project": "dev_shipping",
+    "category": "semantic",
+    "question": "An accepted parcel order is worth 8000 cents, weighs 500 grams, and goes to a remote address. Return the delivery quotation object, including status and cents.",
+    "target_uri": "memory://symbol/service.py::shipping_quote",
+    "expected": {
+      "cents": 240,
+      "status": "accepted"
+    },
+    "required_uris": [
+      "memory://symbol/service.py::shipping_quote",
+      "memory://symbol/rules.py::allowed_weight",
+      "memory://symbol/rules.py::free_shipping",
+      "memory://symbol/rules.py::weight_charge",
+      "memory://symbol/rules.py::weight_steps",
+      "memory://symbol/policy.py::BASE_CENTS",
+      "memory://symbol/policy.py::REMOTE_SURCHARGE",
+      "memory://symbol/policy.py::STEP_GRAMS",
+      "memory://symbol/policy.py::STEP_CENTS",
+      "memory://symbol/policy.py::FREE_FROM_CENTS",
+      "memory://symbol/policy.py::MIN_GRAMS",
+      "memory://symbol/policy.py::MAX_GRAMS"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result."
+  },
+  {
+    "id": "dev_shipping__invalid_total",
+    "project": "dev_shipping",
+    "category": "semantic",
+    "question": "A parcel order is worth 4000 cents but weighs zero grams and is not remote. What integer does the complete payable-order calculation return?",
+    "target_uri": "memory://symbol/service.py::parcel_total",
+    "expected": -1,
+    "required_uris": [
+      "memory://symbol/service.py::parcel_total",
+      "memory://symbol/service.py::shipping_quote",
+      "memory://symbol/rules.py::allowed_weight",
+      "memory://symbol/policy.py::MIN_GRAMS",
+      "memory://symbol/policy.py::MAX_GRAMS"
+    ],
+    "verification": "Executed the named function in a fresh isolated Python subprocess; independently checked against a hand-calculated expected result."
+  },
+  {
+    "id": "dev_shipping__policy_change",
+    "project": "dev_shipping",
+    "category": "change_impact",
+    "question": "If policy.STEP_CENTS changes from 90 to 120, which of these exact calls changes its return value: weight_charge(501), parcel_total(6200,501,False), tracking_key(' a9 ')? Return a sorted list of changed function names.",
+    "target_uri": "memory://symbol/service.py::parcel_total",
+    "expected": [
+      "parcel_total",
+      "weight_charge"
+    ],
+    "required_uris": [
+      "memory://symbol/service.py::shipping_quote",
+      "memory://symbol/rules.py::allowed_weight",
+      "memory://symbol/rules.py::free_shipping",
+      "memory://symbol/rules.py::weight_charge",
+      "memory://symbol/rules.py::weight_steps",
+      "memory://symbol/policy.py::BASE_CENTS",
+      "memory://symbol/policy.py::REMOTE_SURCHARGE",
+      "memory://symbol/policy.py::STEP_GRAMS",
+      "memory://symbol/policy.py::STEP_CENTS",
+      "memory://symbol/policy.py::FREE_FROM_CENTS",
+      "memory://symbol/policy.py::MIN_GRAMS",
+      "memory://symbol/policy.py::MAX_GRAMS",
+      "memory://symbol/service.py::parcel_total",
+      "memory://symbol/service.py::tracking_key"
+    ],
+    "verification": "Compared the specified calls before and after a policy-constant intervention in separate fresh subprocesses. This is fixed-input impact, not all possible inputs."
+  },
+  {
+    "id": "dev_shipping__direct_calls",
+    "project": "dev_shipping",
+    "category": "architecture",
+    "question": "List the project-defined functions directly called by shipping_quote. Ignore builtins, and return a sorted list of function names.",
+    "target_uri": "memory://symbol/service.py::shipping_quote",
+    "expected": [
+      "allowed_weight",
+      "free_shipping",
+      "weight_charge"
+    ],
+    "required_uris": [
+      "memory://symbol/service.py::shipping_quote"
+    ],
+    "verification": "Parsed function AST and resolved local/from-import project functions; compared direct call names with a separately declared expected list."
+  }
+]

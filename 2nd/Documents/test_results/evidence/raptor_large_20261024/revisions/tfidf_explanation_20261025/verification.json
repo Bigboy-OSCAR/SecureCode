@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "completed_at_utc": "2026-10-25T09:50:38.687883+00:00",
+  "report_sha256": "4e143184a14d16256150c381e0aa888cf6a85a15c7d0499e17855b29c1ecd354",
+  "new_benchmark_model_calls": 0,
+  "checks": [
+    {
+      "name": "only_requested_explanation_replaced",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "before_report_matches_saved_hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worked_example_scores_match_actual_search_code",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "idf_and_tf_values_match_actual_search_code",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "internal_links_resolve",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "previous_experiment_and_revision_artifacts_unchanged",
+      "passed": true,
+      "detail": 24
+    },
+    {
+      "name": "existing_report_audit_passes",
+      "passed": true,
+      "detail": {
+        "checks": 14,
+        "numeric_fields": 194
+      }
+    }
+  ],
+  "example_sha256": "5941e7d51cc0b38871187c62375b3b4fd0782c40dae338c877e0193f1628c914"
+}

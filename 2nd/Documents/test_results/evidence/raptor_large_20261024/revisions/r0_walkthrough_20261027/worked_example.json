@@ -1,0 +1,276 @@
+{
+  "scope": "Two function bodies only; explanatory arithmetic, not benchmark data.",
+  "model_inference_calls": 0,
+  "implementation_sha256": "b8f664facdff58c7b410f704216611e5a4e5bbd239ac394a9bb4e5f29f9234cb",
+  "N": 2,
+  "df": {
+    "remaining": 1,
+    "def": 2,
+    "hold": 1,
+    "stock": 1,
+    "return": 2,
+    "quantity": 1,
+    "price": 1,
+    "total": 1
+  },
+  "idf": {
+    "remaining": 1.4054651081081644,
+    "def": 1.0,
+    "hold": 1.4054651081081644,
+    "stock": 1.4054651081081644,
+    "return": 1.0,
+    "quantity": 1.4054651081081644,
+    "price": 1.4054651081081644,
+    "total": 1.4054651081081644
+  },
+  "unseen_idf": 2.09861228866811,
+  "candidates": {
+    "remaining": {
+      "text": "def remaining(stock, hold):\n    return stock - hold\n",
+      "terms": [
+        "def",
+        "remaining",
+        "stock",
+        "hold",
+        "return",
+        "stock",
+        "hold"
+      ],
+      "counts": {
+        "def": 1,
+        "remaining": 1,
+        "stock": 2,
+        "hold": 2,
+        "return": 1
+      },
+      "tf": {
+        "def": 1.0,
+        "remaining": 1.0,
+        "stock": 1.6931471805599454,
+        "hold": 1.6931471805599454,
+        "return": 1.0
+      },
+      "weights": {
+        "def": 1.0,
+        "remaining": 1.4054651081081644,
+        "stock": 2.3796592851687173,
+        "hold": 2.3796592851687173,
+        "return": 1.0
+      },
+      "norm": 3.9116350541798854,
+      "normalized": {
+        "def": 0.2556475709387619,
+        "remaining": 0.3593037409270366,
+        "stock": 0.6083541159152531,
+        "hold": 0.6083541159152531,
+        "return": 0.2556475709387619
+      }
+    },
+    "total": {
+      "text": "def total(price, quantity):\n    return price * quantity\n",
+      "terms": [
+        "def",
+        "total",
+        "price",
+        "quantity",
+        "return",
+        "price",
+        "quantity"
+      ],
+      "counts": {
+        "def": 1,
+        "total": 1,
+        "price": 2,
+        "quantity": 2,
+        "return": 1
+      },
+      "tf": {
+        "def": 1.0,
+        "total": 1.0,
+        "price": 1.6931471805599454,
+        "quantity": 1.6931471805599454,
+        "return": 1.0
+      },
+      "weights": {
+        "def": 1.0,
+        "total": 1.4054651081081644,
+        "price": 2.3796592851687173,
+        "quantity": 2.3796592851687173,
+        "return": 1.0
+      },
+      "norm": 3.9116350541798854,
+      "normalized": {
+        "def": 0.2556475709387619,
+        "total": 0.3593037409270366,
+        "price": 0.6083541159152531,
+        "quantity": 0.6083541159152531,
+        "return": 0.2556475709387619
+      }
+    }
+  },
+  "question": {
+    "text": "How are stock and hold used?",
+    "terms": [
+      "how",
+      "are",
+      "stock",
+      "and",
+      "hold",
+      "used"
+    ],
+    "counts": {
+      "how": 1,
+      "are": 1,
+      "stock": 1,
+      "and": 1,
+      "hold": 1,
+      "used": 1
+    },
+    "tf": {
+      "how": 1.0,
+      "are": 1.0,
+      "stock": 1.0,
+      "and": 1.0,
+      "hold": 1.0,
+      "used": 1.0
+    },
+    "weights": {
+      "how": 2.09861228866811,
+      "are": 2.09861228866811,
+      "stock": 1.4054651081081644,
+      "and": 2.09861228866811,
+      "hold": 1.4054651081081644,
+      "used": 2.09861228866811
+    },
+    "norm": 4.644067020706549,
+    "normalized": {
+      "how": 0.4518910427672568,
+      "are": 0.4518910427672568,
+      "stock": 0.3026366979291218,
+      "and": 0.4518910427672568,
+      "hold": 0.3026366979291218,
+      "used": 0.4518910427672568
+    }
+  },
+  "ranking": [
+    {
+      "id": "remaining",
+      "score": 0.3682205616243648,
+      "products": {
+        "how": 0.0,
+        "are": 0.0,
+        "stock": 0.1841102808121824,
+        "and": 0.0,
+        "hold": 0.1841102808121824,
+        "used": 0.0
+      }
+    },
+    {
+      "id": "total",
+      "score": 0.0,
+      "products": {
+        "how": 0.0,
+        "are": 0.0,
+        "stock": 0.0,
+        "and": 0.0,
+        "hold": 0.0,
+        "used": 0.0
+      }
+    }
+  ],
+  "packing": {
+    "budget": 1024,
+    "individual_tokens": {
+      "remaining": 12,
+      "total": 12
+    },
+    "context_tokens": 24,
+    "chosen": [
+      {
+        "id": "remaining",
+        "level": 0,
+        "score": 0.3682205616243648,
+        "source_uris": [
+          "example:remaining"
+        ]
+      },
+      {
+        "id": "total",
+        "level": 0,
+        "score": 0.0,
+        "source_uris": [
+          "example:total"
+        ]
+      }
+    ],
+    "rejected": [],
+    "context": "def remaining(stock, hold):\n    return stock - hold\n\n\ndef total(price, quantity):\n    return price * quantity\n",
+    "answer_prompt": "Answer a Python code comprehension question using only the provided code and summaries. Trace exact Python operations; preserve case, slashes and spaces. Source code takes precedence over summaries if they conflict. If information is insufficient, use null. Return only one valid JSON object of the form {\"answer\": <requested value>}. No markdown or explanation. For a set/list of names, return the requested sorted JSON list.\n\nQuestion:\nHow are stock and hold used?\n\nCode context:\ndef remaining(stock, hold):\n    return stock - hold\n\n\ndef total(price, quantity):\n    return price * quantity\n\n\nAnswer:",
+    "tokenizer": {
+      "binary": "/opt/homebrew/Cellar/llama.cpp/8680/bin/llama-tokenize",
+      "binary_sha256": "a6364e9a027fa6e76b66f6e61b6af397dc63128f7072be6c1589e80830e349d5",
+      "command": [
+        "/opt/homebrew/bin/llama-tokenize",
+        "-m",
+        "/Users/oscar/Desktop/SecureCode/1st/symbol_test/work/models/qwen2.5-coder-7b-instruct-q5_k_m.gguf",
+        "--no-bos",
+        "--no-escape",
+        "--ids",
+        "--log-disable",
+        "--stdin"
+      ],
+      "separator_token": 151643,
+      "standalone_crosschecks": 3,
+      "all_standalone_crosschecks_passed": true
+    }
+  },
+  "legacy_example": {
+    "candidate_texts": [
+      "stock stock hold",
+      "stock price",
+      "price"
+    ],
+    "idf": {
+      "hold": 1.6931471805599454,
+      "stock": 1.2876820724517808,
+      "price": 1.2876820724517808
+    },
+    "question": "stock hold",
+    "weights": {
+      "stock": 1.2876820724517808,
+      "hold": 1.6931471805599454
+    },
+    "norm": 2.1271747682670097,
+    "normalized": {
+      "stock": 0.6053485081062916,
+      "hold": 0.7959605415681652
+    },
+    "candidates": {
+      "stock stock hold": {
+        "stock": 0.7898069290660905,
+        "hold": 0.6133555370249717
+      },
+      "stock price": {
+        "stock": 0.7071067811865476,
+        "price": 0.7071067811865476
+      },
+      "price": {
+        "price": 1.0
+      }
+    },
+    "ranking": [
+      {
+        "id": "0",
+        "score": 0.9663152516263989
+      },
+      {
+        "id": "1",
+        "score": 0.42804603506311856
+      },
+      {
+        "id": "2",
+        "score": 0.0
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "completed_at_utc": "2026-10-25T10:02:15.527666+00:00",
+  "report_sha256": "33f538e1bd98f4029c8ff17193167439bda7e6afb520d7593a96600b4cca73bb",
+  "new_benchmark_model_calls": 0,
+  "only_candidate_definition_added": true,
+  "prior_artifacts_unchanged": 28,
+  "existing_audit_checks": 14,
+  "existing_numeric_fields": 194
+}

@@ -1,0 +1,28 @@
+{
+  "saved_at_utc": "2026-10-25T10:09:18.306443+00:00",
+  "editorial_revision": "revisions/query_processing_20261025",
+  "new_benchmark_model_calls": 0,
+  "report_sha256": "835fb6d7ca4734d7cdafae6efb2cf28bea146d49715beb063ce977391e04497c",
+  "files": {
+    "03_현재색인_A와_파일간확장_B_재실험_비교보고서.md": "33f538e1bd98f4029c8ff17193167439bda7e6afb520d7593a96600b4cca73bb",
+    "completion_audit.json": "75291c027754e2708cf8f8f44aaf92401266e0139eb0f8142497025143f46ea4",
+    "completion_audit_after.json": "f58986abc1fbab3b4712da3cfd114ae42cea02179aefb751457f897d18a0cb3b",
+    "deliverable_manifest.json": "5061e0ef0e728febb2b5f6cc77225b1bcde13fef8e9c7172e3dcddc8059e6f12",
+    "edits.json": "cbb5b39a8030df1336a214e8ca390342b70728dca83b3c8323337f1df47c27c4",
+    "final_source_manifest.json": "0088fd98f2bec1fbd60310adfe45d6761e26ffcdeeaa33b026c839dfa96e1c75",
+    "query_examples.json": "4873cbc04af4cc3a44b6ff7213f083fdb808b87a6208782e6fa3f20be5d1bbc1",
+    "report_after.md": "835fb6d7ca4734d7cdafae6efb2cf28bea146d49715beb063ce977391e04497c",
+    "report_manifest.json": "2269507995b905442e2054f955809d3e92cac17aae4be789a4474eac18dad12b",
+    "report_manifest_after.json": "591b133de94bb20e2a2a61474e1cfe2ed5019faaec544c8e8aeeaf0833d414ca",
+    "report_raptor_large.py": "6e4eb4f27a0af495280321ee2db6ca8d61f12fd02d921c79110df83985ee7b1c",
+    "reproduce.txt": "aa53703c7a7c2b59bb1408f469cfc7077363d72bba0bbc06b51d8000c016b0dc",
+    "reproduce_after.txt": "33270215f2a0df82c913c7b1c793b8938b84789f96cf9b5e03220eeacab24cc1",
+    "source_snapshot/add_index_build_section.py": "dd3c634422b2246ee4670409373b6374a6a1b3abef2ee9a69d80bf34052eae67",
+    "source_snapshot/audit_raptor_report.py": "bc95000de8a0804c7b3af53294ec29cdb1c1152cb6d7b8c8e04d68b493e739d8",
+    "source_snapshot/clarify_report_context.py": "c33af1c3ed0a4a5664c453afc2180546c47d7975d6ee309fbc46fc6bbf77c411",
+    "source_snapshot/reorganize_report.py": "21c37ae604b9fa19266499e502777aeba2a03426aa0957821e0fa5e6b2c3db82",
+    "source_snapshot/report_raptor_large.py": "d01a8824e6210a0d2843fdbe35d9f66896221abac1d012a4d92a325eec2bc343",
+    "verification.json": "5683ada2ddfefddc8d5d13631519925bb3444f02b3c6da6f7ba5a0eb14c69ae9",
+    "work_status.json": "d4bbb53e799b3671350a31b89cdcc8322a64d29e32dec4a48af81d4aa631805e"
+  }
+}
