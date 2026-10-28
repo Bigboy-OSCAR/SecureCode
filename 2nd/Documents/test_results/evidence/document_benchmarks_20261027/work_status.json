@@ -1,0 +1,55 @@
+{
+  "status": "superseded_by_user_scope_change",
+  "scope": "SCROLLS validation qmsum,qasper,narrative_qa,quality; LongBench v1 test hotpotqa,musique,multifieldqa_en; all unique labelled questions",
+  "arms": [
+    "A",
+    "B",
+    "R0",
+    "FULL"
+  ],
+  "unique_questions": 7317,
+  "planned_evaluations": 29268,
+  "server_exec_session": 84466,
+  "runner_exec_session": 30578,
+  "download_exec_session": 64871,
+  "download_status": "completed exit0",
+  "preparation_status": "completed exit0",
+  "preflight_tests": 41,
+  "remaining": [
+    "Complete all 29268 evaluations",
+    "Analyze official dataset metrics and paired comparisons",
+    "Independently verify call payloads, result completeness, and numerical tables",
+    "Add section 9 데이터셋을 이용한 실험 to report03 and verify preservation"
+  ],
+  "cost_note": "data_manifest.preparation_seconds measures only successful resumed normalization after a pre-inference QuALITY parser fix; it is not fresh end-to-end index construction time.",
+  "runner_pid": 97407,
+  "last_observed": {
+    "pid": 97407,
+    "session_id": "7375f5eab7da9d4b",
+    "completed": 575,
+    "planned": 29268,
+    "last": {
+      "task_id": "quality:62085_OTOKKIL9_3",
+      "arm": "B"
+    },
+    "at": "2026-10-27T12:54:38.696055+00:00",
+    "status": "running"
+  },
+  "prepared_verification_status": "PASS",
+  "final_verification_status": "pending full run",
+  "postprocess_exec_session": 14219,
+  "postprocess_pid": 4145,
+  "postprocess_status": "waiting_for_runner",
+  "postprocess_safety_tests": 4,
+  "independent_verifier_tests": 15,
+  "report_generator_self_test": "PASS",
+  "last_updated_at_utc": "2026-10-27T12:54:49.336574+00:00",
+  "last_goal_turn_classification": "verified wait: live exec sessions 30578 and 14219 polled; full experiment remains incomplete",
+  "updated_at_utc": "2026-10-27T13:18:14.384138+00:00",
+  "reason": "User requested one suitable RAPTOR dataset instead of seven; fresh QASPER-only experiment uses a separate directory.",
+  "replacement_evidence": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027",
+  "runner_exit_code": 143,
+  "supervisor_exit_code": 143,
+  "server_exit_code": 0,
+  "completed_result_files": 665
+}

@@ -1,0 +1,33 @@
+{
+  "created_at_utc": "2026-10-27T11:22:25.702882+00:00",
+  "sources": {
+    "postprocess_when_complete.py": "dedef9ee7f1e5dcc45cabdf630e262e5a677b2efb9c2e63f4a9e6f48c9b7a970",
+    "test_postprocess_when_complete.py": "b1a2efb71e68f397c7a4e8cc0c254925df7c72f6adc6ab2a1ce77fdc92249a25",
+    "verify_results.py": "f588e8c9b5815a10ea31abe4c95efffed709ce6e8704dfefd2db08ab87f9f0e0",
+    "test_verify_results.py": "1ffecfaadb3d770599ae118e09270b34d89a1ae8783766294da08af39c408b13",
+    "report_documents.py": "e8099fc25a6047574d1146217082afbd07a3c159bbfba95116082496f37021dd"
+  },
+  "protocol_sha256": "7255d4a297a01452d0bd0074266892abf9db66a93d8f5291595b4e8b7e229e61",
+  "purpose": "Post-inference full-result verification and report generation; does not alter frozen experiment design.",
+  "stages": [
+    [
+      "analysis",
+      "analyze_results.py",
+      [
+        "analyze"
+      ]
+    ],
+    [
+      "verification",
+      "verify_results.py",
+      []
+    ],
+    [
+      "report",
+      "report_documents.py",
+      [
+        "apply"
+      ]
+    ]
+  ]
+}

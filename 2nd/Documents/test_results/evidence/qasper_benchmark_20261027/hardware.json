@@ -1,0 +1,11 @@
+{
+  "recorded_at_utc": "2026-10-27T13:25:18.617291+00:00",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "hardware": {
+    "machdep.cpu.brand_string": "unavailable",
+    "hw.memsize": "unavailable",
+    "hw.ncpu": "unavailable"
+  },
+  "inference_concurrency": 1,
+  "server_port": 8766
+}

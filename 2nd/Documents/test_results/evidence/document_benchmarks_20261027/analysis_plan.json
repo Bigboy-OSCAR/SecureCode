@@ -1,0 +1,99 @@
+{
+  "version": "DOCUMENT-ABR0-FULL-ANALYSIS-1.0",
+  "arms": [
+    "A",
+    "B",
+    "R0",
+    "FULL"
+  ],
+  "datasets": [
+    "qmsum",
+    "qasper",
+    "narrative_qa",
+    "quality",
+    "hotpotqa",
+    "musique",
+    "multifieldqa_en"
+  ],
+  "expected_unique_questions": {
+    "qmsum": 272,
+    "qasper": 984,
+    "narrative_qa": 3425,
+    "quality": 2086,
+    "hotpotqa": 200,
+    "musique": 200,
+    "multifieldqa_en": 150
+  },
+  "expected_questions": 7317,
+  "expected_result_rows": 29268,
+  "final_gate": "Exact task ID membership, four arms once per task, schedule order and completed.json results hash; no absent cases imputed.",
+  "primary_population": "Every unique question; context-overflow empty predictions retained in official task scores.",
+  "fit_population": "The fixed questions whose FULL answer status is ok, with all four arms present. Same membership for all four arms.",
+  "partial_population": "Only complete four-arm question blocks from the verified schedule prefix; never a final result.",
+  "metrics": {
+    "qmsum": "rouge/geometric_mean",
+    "qasper": "f1",
+    "narrative_qa": "f1",
+    "quality": "exact_match",
+    "hotpotqa": "f1",
+    "musique": "f1",
+    "multifieldqa_en": "f1"
+  },
+  "qmsum_aggregation": "Geometric mean of corpus mean ROUGE-1/2/L percentages, recomputed in every bootstrap draw; ROUGE-Lsum secondary.",
+  "contrasts_all": [
+    [
+      "B",
+      "A"
+    ],
+    [
+      "R0",
+      "A"
+    ],
+    [
+      "R0",
+      "B"
+    ]
+  ],
+  "contrasts_full_fit": [
+    [
+      "B",
+      "A"
+    ],
+    [
+      "R0",
+      "A"
+    ],
+    [
+      "R0",
+      "B"
+    ],
+    [
+      "A",
+      "FULL"
+    ],
+    [
+      "B",
+      "FULL"
+    ],
+    [
+      "R0",
+      "FULL"
+    ]
+  ],
+  "contrast_direction": "left minus right, score difference in percentage points; cost savings vs FULL = 100*(FULL-left)/FULL.",
+  "bootstrap": {
+    "draws": 10000,
+    "seed": 20261027,
+    "unit": "cluster_id = SHA256(context.strip()), supplied by frozen source_clusters.json",
+    "algorithm": "Sample K context clusters with replacement, preserve every question in each selected cluster, aggregate weighted sums/counts.",
+    "limitation": "Outer-whitespace variants share a cluster while inference keeps exact original context. Multi-document contexts can still share individual passages across clusters; these are approximate context clusters, not guaranteed independent articles.",
+    "interval": "Descriptive 2.5th/97.5th percentiles; no p-values, multiplicity correction or confirmatory significance claims.",
+    "generation_repeats": 1,
+    "less_than_two_clusters": "No interval reported."
+  },
+  "tokens": "Actual input sums all completed selector and answer calls; peak is the maximum one-call input. Prepared source tokens include unsent FULL overflow text; actual answer-source tokens are zero if answer was not called.",
+  "timing": "Call seconds sum only status=ok call records. Query latency uses only completed answers with non-null non-resumed query_seconds. Every timing denominator is explicit. Index construction/loading is excluded by runner and reported separately.",
+  "overflow_cost_policy": "Actual zero-call FULL overflow remains visible but is never used as a cheap baseline. Savings and fair four-arm cost comparison use the identical FULL-fit question population.",
+  "no_pooling": "No cross-dataset quality average; no pooling with prior 8192-context experiments. This run uses 32768 context and 1024 source budget.",
+  "created_at_utc": "2026-10-27T10:55:54.574802+00:00"
+}

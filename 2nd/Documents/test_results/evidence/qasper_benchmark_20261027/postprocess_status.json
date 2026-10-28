@@ -1,0 +1,26 @@
+{
+  "pid": 46353,
+  "started_at_utc": "2026-10-27T13:54:31.109064+00:00",
+  "status": "report_ready_for_final_review",
+  "stages_completed": [
+    "analysis",
+    "verification",
+    "report"
+  ],
+  "inference_started_or_retried": false,
+  "observed_runner_pid": "37058",
+  "updated_at_utc": "2026-10-27T21:45:34.594404+00:00",
+  "completed_result_rows": 3936,
+  "active_stage": null,
+  "child_pid": null,
+  "child_command": [
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/document_benchmarks/.venv/bin/python",
+    "-B",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/report_documents.py",
+    "apply"
+  ],
+  "last_child_returncode": 0,
+  "last_successful_stage": "report",
+  "report_path": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md",
+  "report_sha256": "18d13e8560a4a7894f5356de7811cb2d17df60ccbe8b46068825a9bee904f4b0"
+}

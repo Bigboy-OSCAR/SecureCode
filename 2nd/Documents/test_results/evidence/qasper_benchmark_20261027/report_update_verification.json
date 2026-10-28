@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-27T21:45:34.586426+00:00",
+  "report_sha256": "18d13e8560a4a7894f5356de7811cb2d17df60ccbe8b46068825a9bee904f4b0",
+  "report_path": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md",
+  "before_sha256": "9385c85fa9f3ada5351ade724a6f75ac3ab64d9cd90b0646e1c1bc3be4cecffa",
+  "section_sha256": "767822c19e04556ffb24232592da3a02aee88467244f9499cc5d2a8f6a7bed15",
+  "summary_sha256": "7bc85143f1d79e4b5e9ad2596054ca14c6e048c08b6134f80738bd694c16f472",
+  "verification_sha256": "e26e1b6f4c81c2de65d7153b04cb16ede6a538d00e7bb9b549d4d1054ce922d3",
+  "checks": [
+    "complete final verified results only",
+    "QASPER all 984 questions and 273 contexts",
+    "four arms and same FULL-fit population",
+    "final artifacts hash bound",
+    "historical report byte-for-byte recoverable",
+    "section, contents row and reading notice inserted; historical body and appendices preserved",
+    "QASPER-only result section",
+    "balanced example fences and no images",
+    "local evidence links exist"
+  ],
+  "local_links_checked": [
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/input_eligibility.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/official_sources/scrolls/metrics/f1.py",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/verification.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/protocol.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/analysis_plan.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/summary.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/task_scores.jsonl",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/data_manifest.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/research_papers.md",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/research_sources.md",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/execution_notes.md",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/asset_load_times.jsonl",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/report_update.json"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-27T13:20:29.744007+00:00",
+  "tests_run": 8,
+  "failures": 0,
+  "errors": 0,
+  "python": "3.14.4 (main, Apr  7 2026, 13:13:20) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "executable": "/Users/oscar/Desktop/SecureCode/2nd/experiments/document_benchmarks/.venv/bin/python",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "dependencies": {
+    "rouge-score": "0.1.2",
+    "nltk": "3.9.2"
+  },
+  "nltk_english_resource": "/Users/oscar/Desktop/SecureCode/2nd/experiments/document_benchmarks/.venv/nltk_data/tokenizers/punkt_tab/english",
+  "source_and_resource_sha256": {
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/official_sources/scrolls/scrolls.py": "ee4d5d15eb7535ddb2295f0268bad593d6e3a03ebaa16f1127c57e37302f5f65",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/official_sources/longbench/LongBench.py": "be9fad2dba34c4ddf77c83640974160bb95c0bb8759e6274ca01a6b2fe9f3372",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/official_sources/longbench/LongBench/metrics.py": "e22e2a2662e0f7e683137fa3541f64edb6a801e9138d16d2f3459a6ab9941323",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/official_sources/longbench/LongBench/eval.py": "1a3acfc25d9b053e9bb75c479f7e385d0cb9989f0f7115346b7d632655967721",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/official_sources/scrolls/metrics/f1.py": "25be6c76c22f91355830adb1467e2537069568e720201771fcdfa092722fabb0",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/official_sources/scrolls/metrics/exact_match.py": "b8982ececc6fe9f3980fa85ae3ea5fc4ac42cd5ae731ca66609c93cdf0d840d2",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/official_sources/scrolls/metrics/rouge.py": "ec17ebc1e4de1048f6c76acfbe3fe26c80ccd4d6d6212c067a1974792370278a",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/official_sources/scrolls/metrics/scrolls.py": "58c2f568b482cda5ac398977f6bf7cc4dcf148359c2fb6812e564827570a11a9",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/official_sources/scrolls/evaluator/dataset_evaluator.py": "805102571c15ec8f92bfee85ca2e4657ea4a96ad2b4a62c93bdd0b5aed2b194b",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/metrics.py": "1778778cbb4372e396dc06ad54f675fccf75866bfd7fe5e1e7be9be9e3268d3e",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/test_metrics.py": "6d193d1b1e0d7e27641606c797a8b9314dce81dd60b8ff0d94c232e2b7052250",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/.venv/nltk_data/tokenizers/punkt_tab/english/sent_starters.txt": "f3f8535483e1dba487241b764945168123bca3209a9645e59acd1225dc76edac",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/.venv/nltk_data/tokenizers/punkt_tab/english/abbrev_types.txt": "92a3e070f43d9b4c5534758ca40ad7343b04e7e29bfe0c2eb658a39445a4f779",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/.venv/nltk_data/tokenizers/punkt_tab/english/ortho_context.tab": "4bbcca25ed3d3f06c02402abf8419b9f033b8adc06e7b482eca4e45f81a5dc4c",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/.venv/nltk_data/tokenizers/punkt_tab/english/collocations.tab": "8e2da1225e4dd2cc9dba261ee231ccb134859e21b46006e7f472c5ee269af0cf"
+  },
+  "official_equivalence_scope": [
+    "SCROLLS QASPER max-reference token F1 (evaluation metric); existing shared-library checks for other metrics are retained but other datasets are not evaluated."
+  ],
+  "test_output": "test_bad_inputs_fail_instead_of_changing_population (test_metrics.MetricsTests.test_bad_inputs_fail_instead_of_changing_population) ... ok\ntest_empty_failed_requests_remain_in_denominator (test_metrics.MetricsTests.test_empty_failed_requests_remain_in_denominator) ... ok\ntest_f1_counts_duplicate_tokens_and_empty_scores (test_metrics.MetricsTests.test_f1_counts_duplicate_tokens_and_empty_scores) ... ok\ntest_f1_dataset_aggregation_matches_both_official_benchmarks (test_metrics.MetricsTests.test_f1_dataset_aggregation_matches_both_official_benchmarks) ... ok\ntest_normalization_order_punctuation_and_articles (test_metrics.MetricsTests.test_normalization_order_punctuation_and_articles) ... ok\ntest_qmsum_geometric_mean_is_computed_after_corpus_average (test_metrics.MetricsTests.test_qmsum_geometric_mean_is_computed_after_corpus_average) ... ok\ntest_qmsum_official_rouge_multireference_and_no_stemming (test_metrics.MetricsTests.test_qmsum_official_rouge_multireference_and_no_stemming) ... ok\ntest_quality_requires_full_normalized_answer_not_choice_letter (test_metrics.MetricsTests.test_quality_requires_full_normalized_answer_not_choice_letter) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.112s\n\nOK\n"
+}

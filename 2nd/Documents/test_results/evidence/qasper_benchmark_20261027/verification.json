@@ -1,0 +1,151 @@
+{
+  "status": "PASS",
+  "completed_at_utc": "2026-10-27T21:45:34.310056+00:00",
+  "questions": 984,
+  "result_rows": 3936,
+  "call_records": 5905,
+  "evaluation_call_records": 5904,
+  "smoke_call_records": 1,
+  "total_call_records": 5905,
+  "dataset_question_counts": {
+    "qasper": 984
+  },
+  "dataset_arm_rows": {
+    "qasper": {
+      "A": 984,
+      "B": 984,
+      "R0": 984,
+      "FULL": 984
+    }
+  },
+  "protocol_sha256": "556c3bd4f14dc81d8d02c1fc38f96ddccf0cf89bfe99148f5bb86da3fced7feb",
+  "results_sha256": "5e7cc13d4cb2b3ca68e9efcf3bccde0a1a51d6cdee88a968652b318d235f1cf2",
+  "summary_sha256": "7bc85143f1d79e4b5e9ad2596054ca14c6e048c08b6134f80738bd694c16f472",
+  "task_scores_sha256": "dd25fd8c27ce237dfb63f13da361103f796dc9e8226344838b558b44ef47d668",
+  "data_manifest_sha256": "8158520c0416e481bceb3ff6a2335005736201344abc9861ff73d2b873980d0b",
+  "completed_sha256": "ef37f3032c8a0f6c06431f3cf136a4560db7f7b2655c23e4b7c8cd948171370e",
+  "verifier_sha256": "0925a3da0b923db49bac344e48cab00ad9629883af39b957188efad133929b15",
+  "test_verifier_sha256": "c6ddc515d0c39b534b8162fad8f9b42acb46d8f2e2b0c37d9da865115fecfdf4",
+  "document_count": 273,
+  "evaluation_actual_token_totals": {
+    "input_tokens": 8988986,
+    "output_tokens": 45868
+  },
+  "smoke_actual_token_totals": {
+    "input_tokens": 26,
+    "output_tokens": 2
+  },
+  "total_actual_token_totals": {
+    "input_tokens": 8989012,
+    "output_tokens": 45870
+  },
+  "smoke_evidence": {
+    "key": "320bbd4529de189bd47fe9d0133c79beb9125778e274a08c7a9528e191f0da62",
+    "task_id": "smoke_transport",
+    "arm": "SMOKE",
+    "stage": "answer",
+    "call_sha256": "78ca9ac090fd2ffaacb80471de0b55b00bad7128baf5937eed4363da555dda35",
+    "metadata_sha256": "403c3f8ceb00d417edf1c5fec89d59ad28094e3c4bcb7423028274069a71885a",
+    "input_tokens": 26,
+    "output_tokens": 2,
+    "call_seconds": 0.1767925829917658,
+    "scope": "One pre-freeze transport check; excluded from all evaluation scores, token means and timings.",
+    "tokenizer_crosschecks_note": "Sidecar reports three preflight crosschecks; this audit independently recounts the smoke request with the frozen GGUF tokenizer."
+  },
+  "stable_generation_settings": {
+    "seed": 1,
+    "temperature": 0.0,
+    "dynatemp_range": 0.0,
+    "dynatemp_exponent": 1.0,
+    "top_k": 40,
+    "top_p": 0.949999988079071,
+    "min_p": 0.05000000074505806,
+    "top_n_sigma": -1.0,
+    "xtc_probability": 0.0,
+    "xtc_threshold": 0.10000000149011612,
+    "typical_p": 1.0,
+    "repeat_last_n": 64,
+    "repeat_penalty": 1.0,
+    "presence_penalty": 0.0,
+    "frequency_penalty": 0.0,
+    "dry_multiplier": 0.0,
+    "dry_base": 1.75,
+    "dry_allowed_length": 2,
+    "dry_penalty_last_n": 32768,
+    "dry_sequence_breakers": [
+      "\n",
+      ":",
+      "\"",
+      "*"
+    ],
+    "mirostat": 0,
+    "mirostat_tau": 5.0,
+    "mirostat_eta": 0.10000000149011612,
+    "stop": [
+      "<|im_end|>",
+      "<|im_start|>"
+    ],
+    "n_keep": 0,
+    "n_discard": 0,
+    "ignore_eos": false,
+    "stream": false,
+    "logit_bias": [],
+    "n_probs": 0,
+    "min_keep": 0,
+    "grammar": "",
+    "grammar_lazy": false,
+    "grammar_triggers": [],
+    "preserved_tokens": [],
+    "chat_format": "Content-only",
+    "reasoning_format": "deepseek",
+    "reasoning_in_content": false,
+    "generation_prompt": "",
+    "samplers": [
+      "penalties",
+      "dry",
+      "top_n_sigma",
+      "top_k",
+      "typ_p",
+      "top_p",
+      "min_p",
+      "xtc",
+      "temperature"
+    ],
+    "speculative.n_max": 16,
+    "speculative.n_min": 0,
+    "speculative.p_min": 0.75,
+    "speculative.type": "none",
+    "speculative.ngram_size_n": 1024,
+    "speculative.ngram_size_m": 1024,
+    "speculative.ngram_m_hits": 1024,
+    "timings_per_token": false,
+    "post_sampling_probs": false,
+    "backend_sampling": false,
+    "lora": []
+  },
+  "seconds": 176.54810341697885,
+  "checks": [
+    "Frozen sources, source snapshots, model, engine, protocol and prepared-data evidence unchanged",
+    "All 984 QASPER validation questions, 273 exact contexts, four arms and 3936 scheduled rows present",
+    "Every atomic result file equals its JSONL projection; all 5904 evaluation call records are uniquely accounted for",
+    "Exactly one known pre-freeze SMOKE call is separately audited; all other extra calls are rejected",
+    "Independent A/B catalog, selector, graph traversal and whole-item source packing replay",
+    "Independent R0 candidate population, TF-IDF, cosine ordering and greedy packing replay",
+    "Every answer/selector prompt rebuilt from question and selected source only; no gold injected",
+    "FULL context remains byte exact; every overflow has no response and zero actual token cost",
+    "Every requested prompt counted with actual GGUF tokenizer and matched against server input counts",
+    "Model parameters, no prompt-cache reuse, no input truncation and context/output budgets checked",
+    "Every prediction, strict selector result, token sum/peak, call time and output-limit flag reconciled",
+    "Every saved per-task metric recomputed using pinned official metric primitives",
+    "Every summary population, numeric aggregate, paired bootstrap interval and FULL saving independently recomputed"
+  ],
+  "shared_primitives": [
+    "Frozen common.Tokenizer GGUF bridge",
+    "Pinned official SCROLLS normalized token-F1 primitive",
+    "NumPy numerical routines; no runner/analyzer functions imported"
+  ],
+  "limitations": [
+    "Protocol/source hashes and logs are internal audit evidence, not an external certification.",
+    "This verifier does not prove the scientific adequacy of the experimental design or independence of overlapping source contexts."
+  ]
+}

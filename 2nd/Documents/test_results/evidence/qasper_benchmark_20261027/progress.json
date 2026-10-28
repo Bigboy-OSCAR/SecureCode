@@ -1,0 +1,12 @@
+{
+  "pid": 37058,
+  "session_id": "629b484ed2983126",
+  "completed": 3936,
+  "planned": 3936,
+  "last": {
+    "task_id": "qasper:f71b52e00e0be80c926f153b9fe0a06dd93af11e",
+    "arm": "R0"
+  },
+  "at": "2026-10-27T21:42:35.160700+00:00",
+  "status": "running"
+}

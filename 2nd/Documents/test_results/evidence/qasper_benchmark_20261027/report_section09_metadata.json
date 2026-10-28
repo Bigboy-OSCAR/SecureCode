@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "created_at_utc": "2026-10-27T21:45:34.515029+00:00",
+  "section_sha256": "767822c19e04556ffb24232592da3a02aee88467244f9499cc5d2a8f6a7bed15",
+  "source_sha256": "a7f69f1ba0ead6fb41640d639cb99294cffc41a4758a476828c79a4e0f8f9653",
+  "input_hashes": {
+    "summary": "7bc85143f1d79e4b5e9ad2596054ca14c6e048c08b6134f80738bd694c16f472",
+    "verification": "e26e1b6f4c81c2de65d7153b04cb16ede6a538d00e7bb9b549d4d1054ce922d3",
+    "completed": "ef37f3032c8a0f6c06431f3cf136a4560db7f7b2655c23e4b7c8cd948171370e",
+    "protocol": "556c3bd4f14dc81d8d02c1fc38f96ddccf0cf89bfe99148f5bb86da3fced7feb",
+    "results": "5e7cc13d4cb2b3ca68e9efcf3bccde0a1a51d6cdee88a968652b318d235f1cf2",
+    "task_scores": "dd25fd8c27ce237dfb63f13da361103f796dc9e8226344838b558b44ef47d668",
+    "tasks": "2e06b09fc53507f1e8eff3daaf0f2fc105b5f3c8ca4e216e2d29fbc72164349d",
+    "data_manifest": "8158520c0416e481bceb3ff6a2335005736201344abc9861ff73d2b873980d0b",
+    "analysis_plan": "07e24b82dd750878b4fdd3fdc5848be72d536140e3b5f849ef86a6e98e536920",
+    "source_clusters": "d568790f86f0374e8e184361d3503e872f6c19c0723dbd1737551f15326da0d7",
+    "input_eligibility": "08ec591f422cf643e2679f5b652983b98a18b511c0e36c6e60e01b3c32620561"
+  },
+  "graph_statistics": {
+    "qasper": {
+      "exact_contexts": 273,
+      "clusters": 273,
+      "question_weighted_mean_tokens": 4881.664634146341,
+      "nodes": 6018,
+      "linked_nodes": 5486,
+      "cross_edges": 0,
+      "multi_document_contexts": 0,
+      "edges": {
+        "paragraph_continuation": 9504,
+        "section_heading_mention": 41
+      }
+    }
+  },
+  "section_characters": 9166,
+  "report_modified": false
+}

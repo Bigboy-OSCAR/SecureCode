@@ -1,0 +1,9 @@
+{
+  "pid": 4145,
+  "started_at_utc": "2026-10-27T11:22:29.372939+00:00",
+  "status": "waiting_for_runner",
+  "stages_completed": [],
+  "inference_started_or_retried": false,
+  "observed_runner_pid": "97407",
+  "updated_at_utc": "2026-10-27T11:22:29.374728+00:00"
+}

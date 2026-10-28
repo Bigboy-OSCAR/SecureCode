@@ -1,0 +1,5 @@
+{
+  "status": "discarded_before_evaluation",
+  "reason": "Postprocessing files were inadvertently included while being prepared; no evaluation calls or results existed. Final freeze separately binds postprocessing.",
+  "at": "2026-10-27T13:26:47.670122+00:00"
+}

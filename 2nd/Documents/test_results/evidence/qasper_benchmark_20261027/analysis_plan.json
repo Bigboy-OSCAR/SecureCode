@@ -1,0 +1,82 @@
+{
+  "version": "QASPER-ABR0-FULL-ANALYSIS-1.0",
+  "arms": [
+    "A",
+    "B",
+    "R0",
+    "FULL"
+  ],
+  "datasets": [
+    "qasper"
+  ],
+  "expected_unique_questions": {
+    "qasper": 984
+  },
+  "expected_questions": 984,
+  "expected_result_rows": 3936,
+  "expected_exact_source_contexts": 273,
+  "final_gate": "Exact task ID membership, four arms once per task, schedule order and completed.json results hash; no absent cases imputed.",
+  "primary_population": "Every unique question; context-overflow empty predictions retained in official task scores.",
+  "fit_population": "The fixed questions whose FULL answer status is ok, with all four arms present. Same membership for all four arms.",
+  "partial_population": "Only complete four-arm question blocks from the verified schedule prefix; never a final result.",
+  "metrics": {
+    "qasper": "f1"
+  },
+  "qasper_aggregation": "For each question take the maximum normalized token F1 over every grouped reference answer; report the arithmetic mean over all unique validation questions, multiplied by 100.",
+  "contrasts_all": [
+    [
+      "B",
+      "A"
+    ],
+    [
+      "R0",
+      "A"
+    ],
+    [
+      "R0",
+      "B"
+    ]
+  ],
+  "contrasts_full_fit": [
+    [
+      "B",
+      "A"
+    ],
+    [
+      "R0",
+      "A"
+    ],
+    [
+      "R0",
+      "B"
+    ],
+    [
+      "A",
+      "FULL"
+    ],
+    [
+      "B",
+      "FULL"
+    ],
+    [
+      "R0",
+      "FULL"
+    ]
+  ],
+  "contrast_direction": "left minus right, score difference in percentage points; cost savings vs FULL = 100*(FULL-left)/FULL.",
+  "bootstrap": {
+    "draws": 10000,
+    "seed": 20261027,
+    "unit": "cluster_id = SHA256(context.strip()), supplied by frozen source_clusters.json",
+    "algorithm": "Sample K context clusters with replacement, preserve every question in each selected cluster, aggregate weighted sums/counts.",
+    "limitation": "Outer-whitespace variants share a cluster while inference keeps exact original context. These are source-context clusters; exact text hashing does not prove that all underlying publications are independent.",
+    "interval": "Descriptive 2.5th/97.5th percentiles; no p-values, multiplicity correction or confirmatory significance claims.",
+    "generation_repeats": 1,
+    "less_than_two_clusters": "No interval reported."
+  },
+  "tokens": "Actual input sums all completed selector and answer calls; peak is the maximum one-call input. Prepared source tokens include unsent FULL overflow text; actual answer-source tokens are zero if answer was not called.",
+  "timing": "Call seconds sum only status=ok call records. Query latency uses only completed answers with non-null non-resumed query_seconds. Every timing denominator is explicit. Index construction/loading is excluded by runner and reported separately.",
+  "overflow_cost_policy": "Actual zero-call FULL overflow remains visible but is never used as a cheap baseline. Savings and fair four-arm cost comparison use the identical FULL-fit question population.",
+  "no_pooling": "QASPER only; no other dataset results and no pooling with the abandoned seven-dataset run or prior 8192-context experiments. This run uses 32768 context and 1024 source budget.",
+  "created_at_utc": "2026-10-27T13:22:20.241461+00:00"
+}

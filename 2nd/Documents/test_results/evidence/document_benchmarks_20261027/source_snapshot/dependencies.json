@@ -1,0 +1,7 @@
+{
+  "python": "3.14.4 (main, Apr  7 2026, 13:13:20) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "executable": "/Users/oscar/Desktop/SecureCode/2nd/experiments/document_benchmarks/.venv/bin/python",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "pip_freeze": "absl-py==2.5.1\nclick==8.5.0\ncloudpickle==3.1.2\njoblib==1.6.0\nnltk==3.9.2\nnumpy==2.3.5\nregex==2026.9.29\nrouge_score==0.1.2\nsix==1.17.0\ntqdm==4.70.1\n",
+  "metrics_verification": "metrics_verification.json"
+}

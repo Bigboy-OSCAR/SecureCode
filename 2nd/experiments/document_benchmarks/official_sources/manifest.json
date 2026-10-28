@@ -1,0 +1,101 @@
+{
+  "retrieved_at_utc": "2026-10-27T10:29:02.978732+00:00",
+  "files": [
+    {
+      "path": "scrolls/metrics/scrolls.py",
+      "url": "https://huggingface.co/datasets/tau/scrolls/resolve/927b875150ac8f02262ddd3b078d33a9debc935b/metrics/scrolls.py",
+      "bytes": 13542,
+      "sha256": "58c2f568b482cda5ac398977f6bf7cc4dcf148359c2fb6812e564827570a11a9"
+    },
+    {
+      "path": "scrolls/metrics/f1.py",
+      "url": "https://huggingface.co/datasets/tau/scrolls/resolve/927b875150ac8f02262ddd3b078d33a9debc935b/metrics/f1.py",
+      "bytes": 1718,
+      "sha256": "25be6c76c22f91355830adb1467e2537069568e720201771fcdfa092722fabb0"
+    },
+    {
+      "path": "scrolls/metrics/exact_match.py",
+      "url": "https://huggingface.co/datasets/tau/scrolls/resolve/927b875150ac8f02262ddd3b078d33a9debc935b/metrics/exact_match.py",
+      "bytes": 1233,
+      "sha256": "b8982ececc6fe9f3980fa85ae3ea5fc4ac42cd5ae731ca66609c93cdf0d840d2"
+    },
+    {
+      "path": "scrolls/metrics/rouge.py",
+      "url": "https://huggingface.co/datasets/tau/scrolls/resolve/927b875150ac8f02262ddd3b078d33a9debc935b/metrics/rouge.py",
+      "bytes": 1023,
+      "sha256": "ec17ebc1e4de1048f6c76acfbe3fe26c80ccd4d6d6212c067a1974792370278a"
+    },
+    {
+      "path": "scrolls/scrolls.py",
+      "url": "https://huggingface.co/datasets/tau/scrolls/resolve/927b875150ac8f02262ddd3b078d33a9debc935b/scrolls.py",
+      "bytes": 18612,
+      "sha256": "ee4d5d15eb7535ddb2295f0268bad593d6e3a03ebaa16f1127c57e37302f5f65"
+    },
+    {
+      "path": "scrolls/README.md",
+      "url": "https://huggingface.co/datasets/tau/scrolls/resolve/927b875150ac8f02262ddd3b078d33a9debc935b/README.md",
+      "bytes": 7366,
+      "sha256": "f0640cce555ecb6820ce097c3b1dde69de2e4388149715160a6df3a3103e26de"
+    },
+    {
+      "path": "scrolls/evaluator/dataset_evaluator.py",
+      "url": "https://raw.githubusercontent.com/tau-nlp/scrolls/bfc0da0747976418cd0c4b8837db023ea567ba84/evaluator/dataset_evaluator.py",
+      "bytes": 7119,
+      "sha256": "805102571c15ec8f92bfee85ca2e4657ea4a96ad2b4a62c93bdd0b5aed2b194b"
+    },
+    {
+      "path": "scrolls/evaluator/EVALUATE_DATASET.md",
+      "url": "https://raw.githubusercontent.com/tau-nlp/scrolls/bfc0da0747976418cd0c4b8837db023ea567ba84/evaluator/EVALUATE_DATASET.md",
+      "bytes": 1283,
+      "sha256": "b49ca489968f45e62317fbdb61db5fa34944698c8b99ee92d317ff91874a4a68"
+    },
+    {
+      "path": "scrolls/LICENSE",
+      "url": "https://raw.githubusercontent.com/tau-nlp/scrolls/bfc0da0747976418cd0c4b8837db023ea567ba84/LICENSE",
+      "bytes": 1070,
+      "sha256": "ca0886eb2cfbb4ff2314848434bdee618747daac0ca287770f5ac0da5e440b50"
+    },
+    {
+      "path": "longbench/LongBench/eval.py",
+      "url": "https://raw.githubusercontent.com/THUDM/LongBench/2e00731f8d0bff23dc4325161044d0ed8af94c1e/LongBench/eval.py",
+      "bytes": 3776,
+      "sha256": "1a3acfc25d9b053e9bb75c479f7e385d0cb9989f0f7115346b7d632655967721"
+    },
+    {
+      "path": "longbench/LongBench/metrics.py",
+      "url": "https://raw.githubusercontent.com/THUDM/LongBench/2e00731f8d0bff23dc4325161044d0ed8af94c1e/LongBench/metrics.py",
+      "bytes": 5190,
+      "sha256": "e22e2a2662e0f7e683137fa3541f64edb6a801e9138d16d2f3459a6ab9941323"
+    },
+    {
+      "path": "longbench/LongBench/config/dataset2prompt.json",
+      "url": "https://raw.githubusercontent.com/THUDM/LongBench/2e00731f8d0bff23dc4325161044d0ed8af94c1e/LongBench/config/dataset2prompt.json",
+      "bytes": 5437,
+      "sha256": "56d22ad4f382169c2b8a11ff4c982a4a1bea096c8152b0f0b85b64686b157c30"
+    },
+    {
+      "path": "longbench/LongBench/config/dataset2maxlen.json",
+      "url": "https://raw.githubusercontent.com/THUDM/LongBench/2e00731f8d0bff23dc4325161044d0ed8af94c1e/LongBench/config/dataset2maxlen.json",
+      "bytes": 459,
+      "sha256": "72966b3c0933e214591637fb085798c5e687ebff4ddaab5d99bbc31120532022"
+    },
+    {
+      "path": "longbench/LICENSE",
+      "url": "https://raw.githubusercontent.com/THUDM/LongBench/2e00731f8d0bff23dc4325161044d0ed8af94c1e/LICENSE",
+      "bytes": 1075,
+      "sha256": "bf7f05f274d65931bdf14f060b6855f1c359b8424eb74fd3091d25de89d700c3"
+    },
+    {
+      "path": "longbench/README.md",
+      "url": "https://huggingface.co/datasets/zai-org/LongBench/resolve/5e628be450b7e67fb7ae6e201bd6d8f7056f7672/README.md",
+      "bytes": 16038,
+      "sha256": "5c648f2d0f5f1953f9361fdd3dcda23077f103b4028599095a31f03b74fe6458"
+    },
+    {
+      "path": "longbench/LongBench.py",
+      "url": "https://huggingface.co/datasets/zai-org/LongBench/resolve/5e628be450b7e67fb7ae6e201bd6d8f7056f7672/LongBench.py",
+      "bytes": 3982,
+      "sha256": "be9fad2dba34c4ddf77c83640974160bb95c0bb8759e6274ca01a6b2fe9f3372"
+    }
+  ]
+}
