@@ -1,0 +1,27 @@
+{
+  "name": "host",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "hook:test": "tsx src/pointer-hooks/example.ts",
+    "sdk:probe": "tsx tools/sdk-probe.ts",
+    "plugin:test": "tsx src/cline-plugins/test-runtime-pointer-plugin.ts",
+    "cline:test": "tsx src/cline-plugins/test-cline-core.ts",
+    "session:test": "tsx src/cline-plugins/test-session.ts",
+    "pipeline:test": "tsx src/cline-plugins/test-full-pipeline.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@cline/sdk": "^0.2.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6"
+  }
+}
