@@ -1,13 +1,13 @@
 import { ClineCore } from "@cline/sdk";
+import { createRuntimePointerPlugin } from "../pointer-hooks/runtimePointerHooks.js";
 
-function printEvent(event: unknown) {
+function printEvent(event: any) {
   console.log("\n=== EVENT ===");
   console.log(JSON.stringify(event, null, 2));
 }
 
 function extractText(event: any): string | undefined {
   return (
-    event?.payload?.text ??
     event?.text ??
     event?.payload?.delta?.text ??
     event?.payload?.content?.text
@@ -26,9 +26,17 @@ function extractError(event: any): unknown {
 }
 
 async function main() {
+  const runtimePointerPlugin = createRuntimePointerPlugin({
+    baseUrl: "http://127.0.0.1:8000",
+    workspaceId: "w1",
+    sessionId: "s1",
+    thresholdBytes: 100,
+  });
+
   const cline = await ClineCore.create({
     clientName: "securecode-host",
     backendMode: "auto",
+    plugins: [runtimePointerPlugin],
   });
 
   const unsubscribe = cline.subscribe((event) => {
@@ -47,7 +55,7 @@ async function main() {
   });
 
   const session = await cline.start({
-    prompt: "Say exactly: SecureCode Cline session is working.",
+    prompt: "Read the file src/cline-plugins/test-session.ts and summarize it.",
     config: {
       providerId: "anthropic",
       modelId: "claude-sonnet-4-6",
@@ -55,7 +63,7 @@ async function main() {
       systemPrompt: "You are a helpful coding assistant.",
       cwd: process.cwd(),
       workspaceRoot: process.cwd(),
-      enableTools: false,
+      enableTools: true,
       enableSpawnAgent: false,
       enableAgentTeams: false,
     },

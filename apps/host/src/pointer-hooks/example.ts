@@ -1,29 +1,24 @@
-import { ClineCore } from "clinesdk";
-import { registerRuntimePointerHooks } from "./runtimePointerHooks";
+import { storeRuntimePointer } from "./runtimePointerHook.js";
 
 async function main() {
-  const core = await ClineCore.create({
-    provider: "scripted",
-  });
+  const largeToolOutput = "x".repeat(10000);
 
-  registerRuntimePointerHooks(core, {
-    baseUrl: "http://127.0.0.1:8000",
-    workspaceId: "w1",
-    sessionId: "s1",
-    thresholdBytes: 8 * 1024,
-    maxBytes: 32 * 1024,
-  });
+  const result = await storeRuntimePointer(
+    {
+      toolName: "read_file",
+      content: largeToolOutput,
+    },
+    {
+      workspaceId: "w1",
+      sessionId: "s1",
+      thresholdBytes: 4096,
+    },
+  );
 
-  await core.start();
-
-  await core.send({
-    text: "Analyze this large PDF and summarize page 3.",
-  });
-
-  await core.dispose();
+  console.log("hook result:", result);
 }
 
 main().catch((error) => {
-  console.error(error);
+  console.error("hook test failed:", error);
   process.exit(1);
 });

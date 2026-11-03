@@ -1,4 +1,4 @@
-import { ClineCore, type AgentPlugin } from "clinesdk";
+import { ClineCore, type AgentPlugin } from "@cline/sdk";
 
 type ToolResult = {
   toolName?: string;
@@ -13,6 +13,50 @@ type RuntimePointerConfig = {
   maxBytes?: number;
 };
 
+async function readRuntimePointer(
+  baseUrl: string,
+  pointerUri: string
+): Promise<string> {
+  const match = pointerUri.match(
+    /^securecode:\/\/runtime\/([^/]+)\/([^/]+)\/([^/?]+)/
+  );
+
+  if (!match) {
+    throw new Error(`Pointer URI 파싱 실패: ${pointerUri}`);
+  }
+
+  const [, workspaceId, sessionId, pointerId] = match;
+
+  const response = await fetch(
+    `${baseUrl}/api/v1/pointers/runtime/read`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        pointer_id: pointerId,
+        workspace_id: workspaceId,
+        session_id: sessionId,
+        cursor: 0,
+        max_bytes: 32768,
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(`pointer read 실패: ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  if (!data.content) {
+    throw new Error("pointer content가 비어 있습니다.");
+  }
+
+  return data.content;
+}
+
 export function createRuntimePointerPlugin(
   config: RuntimePointerConfig,
 ): AgentPlugin {
@@ -26,8 +70,13 @@ export function createRuntimePointerPlugin(
     },
     hooks: {
       afterTool: async ({ result }) => {
-        const toolResult = result as ToolResult;
-        const content = toolResult?.result ?? "";
+        const isStringResult = typeof result === "string";
+        const toolResult = isStringResult
+          ? { result }
+          : (result as ToolResult);
+        const content = isStringResult
+          ? result
+          : (toolResult?.result ?? "");
 
         if (!content) {
           return { result };
@@ -76,10 +125,12 @@ export function createRuntimePointerPlugin(
         ].join("\n");
 
         return {
-          result: {
-            ...toolResult,
-            result: pointerResult,
-          },
+          result: isStringResult
+            ? pointerResult
+            : {
+                ...toolResult,
+                result: pointerResult,
+              },
           appendContext: [
             {
               type: "runtime_pointer",
@@ -90,9 +141,27 @@ export function createRuntimePointerPlugin(
         };
       },
 
-      beforeModel: async ({ messages }) => {
+      beforeModel: async ({ messages, appendContext }) => {
+        const newMessages = [...messages];
+
+        for (const item of appendContext ?? []) {
+          if (item.type !== "runtime_pointer") {
+            continue;
+          }
+
+          const content = await readRuntimePointer(
+            config.baseUrl,
+            item.pointer
+          );
+
+          newMessages.push({
+            role: "assistant",
+            content: `이전 tool 결과:\n\n${content}`,
+          });
+        }
+
         return {
-          messages,
+          messages: newMessages,
         };
       },
     },
