@@ -1,0 +1,486 @@
+{
+  "task_id": "3.1",
+  "generated_at": "2026-11-02T20:41:58.364Z",
+  "node_version": "v26.13.0",
+  "platform": "win32",
+  "packages": {
+    "@cline/sdk": "0.2.0",
+    "@cline/core": "0.2.0",
+    "@cline/agents": "0.2.0",
+    "@cline/llms": "0.2.0",
+    "@cline/shared": "0.2.0",
+    "typescript": "6.0.3",
+    "tsx": "4.23.15"
+  },
+  "repository_git_unchanged": true,
+  "all_passed": true,
+  "scenarios": [
+    {
+      "scenario": "lifecycle",
+      "passed": true,
+      "checks": [
+        {
+          "name": "start returned session and first result",
+          "passed": true,
+          "evidence": "finish=completed"
+        },
+        {
+          "name": "send ran a second turn",
+          "passed": true,
+          "evidence": "finish=completed"
+        },
+        {
+          "name": "abort ended the in-flight turn",
+          "passed": true,
+          "evidence": "resolved:aborted"
+        },
+        {
+          "name": "session usable after abort",
+          "passed": true,
+          "evidence": "finish=completed"
+        },
+        {
+          "name": "send after stop is refused",
+          "passed": true,
+          "evidence": "refused:session not found: 1793652086915_dxw21"
+        },
+        {
+          "name": "provider requests match turns",
+          "passed": true,
+          "evidence": "requests=4"
+        },
+        {
+          "name": "subscribe delivered core events",
+          "passed": true,
+          "evidence": "agent_event,chunk,ended,session_snapshot,status"
+        },
+        {
+          "name": "dispose completed",
+          "passed": true,
+          "evidence": "ClineCore.dispose resolved"
+        },
+        {
+          "name": "abort during tool signals the tool and ends run",
+          "passed": true,
+          "evidence": "aborted_tools=1 resolved:aborted elapsed_ms=355"
+        },
+        {
+          "name": "no provider request after aborted tool",
+          "passed": true,
+          "evidence": "requests=1"
+        }
+      ],
+      "observations": {
+        "core_event_types": [
+          "agent_event",
+          "chunk",
+          "ended",
+          "session_snapshot",
+          "status"
+        ],
+        "aborted_outcome": "resolved:aborted"
+      }
+    },
+    {
+      "scenario": "pointer-replacement",
+      "passed": true,
+      "checks": [
+        {
+          "name": "two provider requests captured",
+          "passed": true,
+          "evidence": "requests=2"
+        },
+        {
+          "name": "first request has no sentinel",
+          "passed": true,
+          "evidence": "request#1 body scanned"
+        },
+        {
+          "name": "afterTool replaced the result",
+          "passed": true,
+          "evidence": "replaced=1"
+        },
+        {
+          "name": "fixture stored full original",
+          "passed": true,
+          "evidence": "stored bytes=65536"
+        },
+        {
+          "name": "second request carries pointer",
+          "passed": true,
+          "evidence": "pointer uri found in request#2"
+        },
+        {
+          "name": "second request has no sentinel",
+          "passed": true,
+          "evidence": "request#2 bytes=1040"
+        },
+        {
+          "name": "tool_use/tool_result pairing preserved",
+          "passed": true,
+          "evidence": "request#2 pairing"
+        },
+        {
+          "name": "canonical history has pointer",
+          "passed": true,
+          "evidence": "readMessages contains pointer"
+        },
+        {
+          "name": "canonical history has no sentinel",
+          "passed": true,
+          "evidence": "history chars=1279"
+        },
+        {
+          "name": "persisted transcript has no sentinel",
+          "passed": true,
+          "evidence": "messages.json scanned"
+        }
+      ],
+      "observations": {
+        "core_events_total": 27,
+        "core_events_containing_sentinel": 0,
+        "request2_block_order": [
+          {
+            "role": "user",
+            "type": "text"
+          },
+          {
+            "role": "assistant",
+            "type": "tool_use",
+            "toolUseId": "toolu_probe_1"
+          },
+          {
+            "role": "user",
+            "type": "tool_result",
+            "toolUseId": "toolu_probe_1"
+          }
+        ],
+        "request_bytes": [
+          598,
+          1040
+        ],
+        "request1_url_path": "/v1/messages",
+        "request1_body_keys": [
+          "fallbacks",
+          "max_tokens",
+          "messages",
+          "model",
+          "stream",
+          "system",
+          "tool_choice",
+          "tools"
+        ],
+        "request1_tool_names": [
+          "probe_generate_log"
+        ]
+      }
+    },
+    {
+      "scenario": "approval",
+      "passed": true,
+      "checks": [
+        {
+          "name": "approval requested once",
+          "passed": true,
+          "evidence": "requests=1"
+        },
+        {
+          "name": "approval carries ids and input",
+          "passed": true,
+          "evidence": "toolName/toolCallId/sessionId/input present"
+        },
+        {
+          "name": "rejected tool not executed",
+          "passed": true,
+          "evidence": "executions=0"
+        },
+        {
+          "name": "rejection reaches model as error tool_result",
+          "passed": true,
+          "evidence": "request#2 has is_error tool_result"
+        },
+        {
+          "name": "digest mismatch refused",
+          "passed": true,
+          "evidence": "digest_mismatch"
+        },
+        {
+          "name": "approved tool executed once",
+          "passed": true,
+          "evidence": "outcome=applied executions=1"
+        },
+        {
+          "name": "approval timeout rejects and late decision refused",
+          "passed": true,
+          "evidence": "executions=0 late=unknown_or_settled"
+        },
+        {
+          "name": "raw SDK gap reproduced (abort leaves approval pending)",
+          "passed": true,
+          "evidence": "settled_before_late=false executions=1"
+        },
+        {
+          "name": "broker cancel + abort ends run",
+          "passed": true,
+          "evidence": "cancelled=1 resolved:aborted"
+        },
+        {
+          "name": "late approval after cancel refused, tool not run",
+          "passed": true,
+          "evidence": "late=unknown_or_settled executions=0"
+        }
+      ],
+      "observations": {
+        "raw_sdk_run_settled_before_late_approval": false,
+        "raw_sdk_tool_executions_after_abort_then_late_approval": 1
+      }
+    },
+    {
+      "scenario": "hook-failure",
+      "passed": true,
+      "checks": [
+        {
+          "name": "direct hook: storage failure fails run, no raw fallback",
+          "passed": true,
+          "evidence": "requests=1 leak(req/hist/evt)=false/false/false resolved:error"
+        },
+        {
+          "name": "direct hook: storage timeout fails run, no raw fallback",
+          "passed": true,
+          "evidence": "requests=1 leak(req/hist/evt)=false/false/false resolved:error"
+        },
+        {
+          "name": "direct hook errors fail closed even with ignore",
+          "passed": true,
+          "evidence": "requests=1 leak(req/hist/evt)=false/false/false resolved:error"
+        },
+        {
+          "name": "direct hook has no SDK timeout (own timeout required)",
+          "passed": true,
+          "evidence": "requests=2 leak(req/hist/evt)=true/true/true resolved:completed"
+        },
+        {
+          "name": "object plugin hook errors also fail closed under ignore (differs from docs)",
+          "passed": true,
+          "evidence": "requests=1 leak(req/hist/evt)=false/false/false resolved:error"
+        },
+        {
+          "name": "plugin hook + throw fails run, no raw fallback",
+          "passed": true,
+          "evidence": "requests=1 leak(req/hist/evt)=false/false/false resolved:error"
+        },
+        {
+          "name": "object plugin hook has no 3 s SDK timeout (differs from docs)",
+          "passed": true,
+          "evidence": "requests=2 leak(req/hist/evt)=true/true/true resolved:completed elapsed_ms=5270"
+        }
+      ],
+      "observations": {
+        "direct_hook_hang_elapsed_ms": 5281,
+        "plugin_hook_hang_elapsed_ms": 5270,
+        "plugin_hook_hang_summary": {
+          "outcome": "resolved:completed",
+          "requestCount": 2,
+          "sentinelInRequests": true,
+          "sentinelInHistory": true,
+          "sentinelInEvents": true
+        }
+      }
+    },
+    {
+      "scenario": "before-model",
+      "passed": true,
+      "checks": [
+        {
+          "name": "beforeModel saw messages/tools each call",
+          "passed": true,
+          "evidence": "calls=2 tools=probe_generate_log|probe_run_command"
+        },
+        {
+          "name": "beforeModel saw tool-call then tool-result order",
+          "passed": true,
+          "evidence": "parts#2=text,tool-call,tool-result roles=user,assistant,tool"
+        },
+        {
+          "name": "tool removal reached outbound payload",
+          "passed": true,
+          "evidence": "outbound tools=probe_generate_log"
+        },
+        {
+          "name": "beforeModel options.maxTokensPerTurn not applied outbound (finding)",
+          "passed": true,
+          "evidence": "outbound max_tokens=1024 requested=321"
+        },
+        {
+          "name": "message projection reached outbound payload",
+          "passed": true,
+          "evidence": "projection marker in request#1"
+        },
+        {
+          "name": "projection did not rewrite canonical history",
+          "passed": true,
+          "evidence": "readMessages keeps original prompt"
+        },
+        {
+          "name": "outbound tool pairing preserved",
+          "passed": true,
+          "evidence": "request#2 pairing"
+        },
+        {
+          "name": "SDK truncates >8000-char tool result after beforeModel (finding)",
+          "passed": true,
+          "evidence": "view#2=67496 outbound#2=8891"
+        },
+        {
+          "name": "outbound size differs from beforeModel view",
+          "passed": true,
+          "evidence": "[{\"before_model_view_bytes\":709,\"outbound_body_bytes\":598},{\"before_model_view_bytes\":67496,\"outbound_body_bytes\":8891}]"
+        },
+        {
+          "name": "beforeModel stop sends no provider request",
+          "passed": true,
+          "evidence": "requests=0 finish=aborted"
+        }
+      ],
+      "observations": {
+        "framing_bytes": [
+          {
+            "before_model_view_bytes": 709,
+            "outbound_body_bytes": 598
+          },
+          {
+            "before_model_view_bytes": 67496,
+            "outbound_body_bytes": 8891
+          }
+        ],
+        "before_model_option_keys": [
+          "maxTokensPerTurn",
+          "metadata"
+        ],
+        "stop_finish_reason": "aborted"
+      }
+    },
+    {
+      "scenario": "outbound-gate",
+      "passed": true,
+      "checks": [
+        {
+          "name": "first request delivered under cap",
+          "passed": true,
+          "evidence": "delivered=1"
+        },
+        {
+          "name": "oversized final payload blocked at fetch",
+          "passed": true,
+          "evidence": "blocked_attempts=1 bytes=8876"
+        },
+        {
+          "name": "blocked payload never delivered",
+          "passed": true,
+          "evidence": "scripted server never saw sentinel"
+        },
+        {
+          "name": "run fails instead of completing",
+          "passed": true,
+          "evidence": "resolved:error"
+        }
+      ],
+      "observations": {
+        "blocked_attempts_including_sdk_retries": 1,
+        "budget_error_visible_in_core_events": true,
+        "count_request_fields_available": [
+          "model",
+          "system",
+          "tools",
+          "messages",
+          "tool_choice"
+        ]
+      }
+    },
+    {
+      "scenario": "tool-restriction",
+      "passed": true,
+      "checks": [
+        {
+          "name": "enableTools=false exposes only project tools",
+          "passed": true,
+          "evidence": "tools=probe_generate_log"
+        },
+        {
+          "name": "policies alone keep provider web_search (finding)",
+          "passed": true,
+          "evidence": "tools=web_search|probe_generate_log"
+        },
+        {
+          "name": "no spawn/team/mcp/skills tools when disabled in config",
+          "passed": true,
+          "evidence": "tools=web_search|read_files|search_codebase|run_commands|fetch_web_content|editor|probe_generate_log"
+        },
+        {
+          "name": "call to hidden run_commands never executes",
+          "passed": true,
+          "evidence": "bash_calls=0 error_result=true"
+        },
+        {
+          "name": "read_files executor replaced by app wrapper",
+          "passed": true,
+          "evidence": "wrapper_calls=1"
+        },
+        {
+          "name": "only allow-listed built-in exposed",
+          "passed": true,
+          "evidence": "tools=read_files"
+        },
+        {
+          "name": "global web_search off removes provider tool",
+          "passed": true,
+          "evidence": "tools=probe_generate_log"
+        }
+      ],
+      "observations": {
+        "enable_tools_true_with_disabled_policies": [
+          "web_search",
+          "probe_generate_log"
+        ],
+        "enable_tools_true_without_policies": [
+          "web_search",
+          "read_files",
+          "search_codebase",
+          "run_commands",
+          "fetch_web_content",
+          "editor",
+          "probe_generate_log"
+        ]
+      }
+    },
+    {
+      "scenario": "checkpoint",
+      "passed": true,
+      "checks": [
+        {
+          "name": "createCheckpoint never called when disabled",
+          "passed": true,
+          "evidence": "calls=0"
+        },
+        {
+          "name": "git status unchanged",
+          "passed": true,
+          "evidence": "status_lines=1"
+        },
+        {
+          "name": "git refs unchanged",
+          "passed": true,
+          "evidence": "refs=0"
+        },
+        {
+          "name": "git stash unchanged",
+          "passed": true,
+          "evidence": "stash_entries=0"
+        }
+      ],
+      "observations": {
+        "manifest_checkpoint_fields": []
+      }
+    }
+  ]
+}

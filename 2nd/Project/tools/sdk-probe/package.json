@@ -1,0 +1,22 @@
+{
+  "name": "@securecode/sdk-probe",
+  "version": "0.0.0",
+  "private": true,
+  "description": "3.1 Cline SDK compatibility probe. Not production code; final workspace assembly belongs to task 3.2.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "probe": "tsx src/main.ts"
+  },
+  "dependencies": {
+    "@cline/sdk": "0.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3"
+  }
+}
