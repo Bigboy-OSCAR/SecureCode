@@ -222,3 +222,6 @@ __marimo__/
 /2nd/Documents/test_results/evidence/hybrid_index_20261027/offline_token_counts.json
 /2nd/Documents/test_results/evidence/document_benchmarks_20261027/raw/narrative_qa.jsonl
 /2nd/Documents/test_results/evidence/large_files_20261024/offline_token_counts.json
+node_modules/
+*.db
+.DS_Store
