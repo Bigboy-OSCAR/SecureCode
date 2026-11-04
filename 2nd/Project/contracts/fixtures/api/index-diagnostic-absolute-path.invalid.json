@@ -1,0 +1,24 @@
+{
+    "schema_ref": "api/workspace.schema.json#/definitions/IndexStatusResponse",
+    "expect": "invalid",
+    "scenario": "UI-05",
+    "data": {
+        "schema_version": "1",
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "index_status": "partial",
+        "index_revision": 2,
+        "searchable": true,
+        "counts": {
+            "discovered": 1,
+            "indexed": 0,
+            "skipped": 0,
+            "failed": 1
+        },
+        "diagnostics": [
+            {
+                "relative_path": "/home/someone/app/broken.py",
+                "reason_code": "syntax_error"
+            }
+        ]
+    }
+}

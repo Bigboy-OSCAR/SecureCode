@@ -1,0 +1,14 @@
+{
+    "schema_ref": "api/session.schema.json#/definitions/Session",
+    "expect": "valid",
+    "scenario": "UI-08",
+    "data": {
+        "schema_version": "1",
+        "session_id": "ses_01J9Z6Q4TEST",
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "status": "active",
+        "active_run_id": "run_01J9Z6Q4TEST",
+        "last_run_id": "run_01J9Z6Q4TEST",
+        "created_at": "2026-11-04T09:00:00Z"
+    }
+}

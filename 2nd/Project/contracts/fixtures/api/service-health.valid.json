@@ -1,0 +1,27 @@
+{
+    "schema_ref": "api/system.schema.json#/definitions/ServiceHealthResponse",
+    "expect": "valid",
+    "scenario": "3.2",
+    "data": {
+        "schema_version": "1",
+        "service": "context-service",
+        "status": "ok",
+        "version": "0.1.0",
+        "components": [
+            {
+                "name": "data_dir",
+                "status": "ok"
+            },
+            {
+                "name": "token_counter",
+                "status": "not_configured",
+                "reason_code": "TOKENIZER_UNAVAILABLE"
+            },
+            {
+                "name": "pointers",
+                "status": "not_implemented",
+                "owner_task": "4.3"
+            }
+        ]
+    }
+}

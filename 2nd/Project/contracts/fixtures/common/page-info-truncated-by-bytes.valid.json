@@ -1,0 +1,11 @@
+{
+    "schema_ref": "common/pagination.schema.json#/definitions/PageInfo",
+    "expect": "valid",
+    "scenario": "H-07",
+    "data": {
+        "limit": 50,
+        "next_cursor": "c2NvcGU6MTIz",
+        "has_more": true,
+        "truncated_by_bytes": true
+    }
+}

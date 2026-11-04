@@ -1,0 +1,14 @@
+{
+    "schema_ref": "common/api-error.schema.json#/definitions/ErrorResponse",
+    "expect": "valid",
+    "scenario": "UI-01",
+    "data": {
+        "schema_version": "1",
+        "error": {
+            "code": "BOOTSTRAP_CODE_EXPIRED",
+            "message": "접속 코드가 만료되었습니다. 실행 창의 새 코드를 입력하세요.",
+            "retryable": false,
+            "request_id": "req_01J9Z6Q4TEST"
+        }
+    }
+}

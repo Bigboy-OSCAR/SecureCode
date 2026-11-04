@@ -1,0 +1,21 @@
+{
+    "schema_ref": "events/app-event.schema.json#/definitions/AppEvent",
+    "expect": "valid",
+    "scenario": "UI-16",
+    "data": {
+        "schema_version": "1",
+        "event_id": "evt_01J9Z6Q4EV0006",
+        "sequence": 6,
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "session_id": "ses_01J9Z6Q4TEST",
+        "run_id": "run_01J9Z6Q4TEST",
+        "type": "run.pointer_created",
+        "timestamp": "2026-11-04T09:00:00Z",
+        "payload": {
+            "pointer": "securecode://runtime/ws_01J9Z6Q4TEST/ses_01J9Z6Q4TEST/6f1c2a7e-0d3b-4c55-9b1e-2f3a4b5c6d7e?v=1",
+            "kind": "runtime",
+            "byte_size": 65536,
+            "tool_call_id": "toolu_log_1"
+        }
+    }
+}

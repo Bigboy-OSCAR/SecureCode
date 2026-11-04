@@ -1,0 +1,26 @@
+{
+    "schema_ref": "api/approval.schema.json#/definitions/ApprovalDecisionResponse",
+    "expect": "valid",
+    "scenario": "UI-11",
+    "data": {
+        "schema_version": "1",
+        "approval": {
+            "approval_id": "apr_01J9Z6Q4TEST",
+            "run_id": "run_01J9Z6Q4TEST",
+            "tool_call_id": "toolu_cmd_1",
+            "tool_name": "run_project_command",
+            "input_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "status": "rejected",
+            "requested_at": "2026-11-04T09:00:00Z",
+            "expires_at": "2026-11-04T09:05:00Z",
+            "review": {
+                "kind": "command",
+                "summary": "pytest -q 실행",
+                "content": "pytest -q tests/unit",
+                "content_truncated": false,
+                "reviewable": true
+            },
+            "decided_at": "2026-11-04T09:05:00Z"
+        }
+    }
+}

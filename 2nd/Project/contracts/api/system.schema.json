@@ -1,0 +1,189 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "System API",
+    "description": "Auth bootstrap, health and read-only settings (H-01, H-10). Public paths: POST /api/v1/auth/bootstrap, GET /api/v1/health, GET /api/v1/settings. Internal: GET /internal/v1/health on context-service.",
+    "definitions": {
+        "BootstrapRequest": {
+            "title": "BootstrapRequest",
+            "description": "One-time code printed by the local launcher. Exchanged for an HttpOnly SameSite=Strict cookie; never put in a URL.",
+            "type": "object",
+            "required": ["code"],
+            "additionalProperties": false,
+            "properties": {
+                "code": { "type": "string", "minLength": 8, "maxLength": 64, "pattern": "^[A-Za-z0-9-]+$" }
+            }
+        },
+        "BootstrapResponse": {
+            "title": "BootstrapResponse",
+            "type": "object",
+            "required": ["schema_version", "authenticated", "session_expires_at"],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "authenticated": { "type": "boolean", "const": true },
+                "session_expires_at": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" }
+            }
+        },
+        "HealthStatus": {
+            "title": "HealthStatus",
+            "type": "string",
+            "enum": ["ok", "degraded", "unavailable"]
+        },
+        "ComponentStatus": {
+            "title": "ComponentStatus",
+            "type": "string",
+            "enum": ["ok", "degraded", "unavailable", "not_configured", "not_implemented"]
+        },
+        "ComponentName": {
+            "title": "ComponentName",
+            "type": "string",
+            "enum": [
+                "host",
+                "context_service",
+                "cline_sdk",
+                "model_provider",
+                "token_counter",
+                "data_dir",
+                "symbols",
+                "pointers",
+                "context_selector",
+                "pdf"
+            ]
+        },
+        "ComponentHealth": {
+            "title": "ComponentHealth",
+            "type": "object",
+            "required": ["name", "status"],
+            "additionalProperties": false,
+            "properties": {
+                "name": { "$ref": "#/definitions/ComponentName" },
+                "status": { "$ref": "#/definitions/ComponentStatus" },
+                "reason_code": { "$ref": "../common/api-error.schema.json#/definitions/ErrorCode" },
+                "owner_task": {
+                    "description": "Roadmap task that makes a not_implemented component available.",
+                    "type": "string",
+                    "pattern": "^[1-4]\\.[0-9]{1,2}$"
+                }
+            }
+        },
+        "HealthResponse": {
+            "title": "HealthResponse",
+            "description": "Before bootstrap only schema_version and status are returned. components appear for an authenticated session.",
+            "type": "object",
+            "required": ["schema_version", "status"],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "status": { "$ref": "#/definitions/HealthStatus" },
+                "components": {
+                    "type": "array",
+                    "maxItems": 16,
+                    "items": { "$ref": "#/definitions/ComponentHealth" }
+                }
+            }
+        },
+        "ServiceHealthResponse": {
+            "title": "ServiceHealthResponse",
+            "description": "Internal context-service health (bearer token required).",
+            "type": "object",
+            "required": ["schema_version", "service", "status", "version", "components"],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "service": { "type": "string", "const": "context-service" },
+                "status": { "$ref": "#/definitions/HealthStatus" },
+                "version": { "type": "string", "maxLength": 32 },
+                "components": {
+                    "type": "array",
+                    "maxItems": 16,
+                    "items": { "$ref": "#/definitions/ComponentHealth" }
+                }
+            }
+        },
+        "ProtectionName": {
+            "title": "ProtectionName",
+            "type": "string",
+            "enum": [
+                "runtime_pointer_hook",
+                "model_request_gate",
+                "approval_broker",
+                "tool_allowlist",
+                "checkpoint_disabled"
+            ]
+        },
+        "ProtectionState": {
+            "title": "ProtectionState",
+            "description": "A required protection. A session cannot start while any of them is not ready (PROTECTION_UNAVAILABLE).",
+            "type": "object",
+            "required": ["name", "ready"],
+            "additionalProperties": false,
+            "properties": {
+                "name": { "$ref": "#/definitions/ProtectionName" },
+                "ready": { "type": "boolean" },
+                "reason_code": { "$ref": "../common/api-error.schema.json#/definitions/ErrorCode" }
+            }
+        },
+        "SettingsResponse": {
+            "title": "SettingsResponse",
+            "description": "Read-only settings without secrets or server paths (H-10).",
+            "type": "object",
+            "required": ["schema_version", "provider", "budget", "limits", "protections"],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "provider": {
+                    "type": "object",
+                    "required": ["provider_id", "model_id", "configured"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "provider_id": { "type": "string", "maxLength": 64 },
+                        "model_id": { "type": "string", "maxLength": 128 },
+                        "configured": {
+                            "description": "true when a key is present on the server. The key itself is never returned.",
+                            "type": "boolean"
+                        },
+                        "reason_code": { "$ref": "../common/api-error.schema.json#/definitions/ErrorCode" }
+                    }
+                },
+                "budget": {
+                    "type": "object",
+                    "required": [
+                        "context_limit_tokens",
+                        "max_output_tokens",
+                        "safety_margin_tokens",
+                        "body_count_mode",
+                        "final_request_gate"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                        "context_limit_tokens": { "type": "integer", "minimum": 1 },
+                        "max_output_tokens": { "type": "integer", "minimum": 1 },
+                        "safety_margin_tokens": { "type": "integer", "minimum": 0 },
+                        "body_count_mode": {
+                            "oneOf": [
+                                { "$ref": "../common/token-count.schema.json#/definitions/CountMode" },
+                                { "type": "null" }
+                            ]
+                        },
+                        "final_request_gate": {
+                            "description": "enforced only after 4.8 verifies the fetch gate; until then not_verified.",
+                            "type": "string",
+                            "enum": ["enforced", "not_verified", "unavailable"]
+                        }
+                    }
+                },
+                "limits": {
+                    "description": "Product defaults from roadmap 0.7 (bytes unless named otherwise).",
+                    "type": "object",
+                    "additionalProperties": { "type": "integer", "minimum": 0 },
+                    "maxProperties": 32
+                },
+                "protections": {
+                    "type": "array",
+                    "maxItems": 16,
+                    "items": { "$ref": "#/definitions/ProtectionState" }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "schema_ref": "common/api-error.schema.json#/definitions/ErrorResponse",
+    "expect": "invalid",
+    "scenario": "H-10",
+    "data": {
+        "schema_version": "1",
+        "error": {
+            "code": "INTERNAL_ERROR",
+            "message": "x",
+            "retryable": false,
+            "request_id": "req_01J9Z6Q4TEST",
+            "details": {
+                "trace": {
+                    "path": "/srv/app"
+                }
+            }
+        }
+    }
+}

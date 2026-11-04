@@ -1,0 +1,40 @@
+"""contracts/fixtures 전체를 jsonschema로 검사한다. TS(Ajv) 결과와 같아야 한다."""
+
+import json
+
+import pytest
+
+from support.helpers import CONTRACTS_ROOT, ContractCheck
+
+FIXTURE_PATHS = sorted((CONTRACTS_ROOT / "fixtures").rglob("*.json"))
+
+
+def test_fixture_set_is_not_empty() -> None:
+    """
+    함수 이름: test_fixture_set_is_not_empty()
+    기능: fixture 디렉토리를 찾지 못해 시험이 0건으로 통과하는 일을 막는다.
+    인자: 없음
+    반환값: 없음
+    작성 날짜: 2026/11/04
+    """
+    assert len(FIXTURE_PATHS) >= 50
+
+
+@pytest.mark.parametrize(
+    "fixture_path", FIXTURE_PATHS, ids=lambda path: path.relative_to(CONTRACTS_ROOT).as_posix()
+)
+def test_fixture_matches_expectation(fixture_path: object, contract_check: ContractCheck) -> None:
+    """
+    함수 이름: test_fixture_matches_expectation()
+    기능: fixture의 expect(valid/invalid)와 스키마 검사 결과가 같은지 확인한다.
+    인자: fixture_path -> fixture 파일 경로
+        contract_check -> 계약 검사 함수
+    반환값: 없음
+    작성 날짜: 2026/11/04
+    """
+    document = json.loads(fixture_path.read_text(encoding="utf-8"))  # type: ignore[attr-defined]
+    errors = contract_check(document["schema_ref"], document["data"])
+    if document["expect"] == "valid":
+        assert errors == []
+    else:
+        assert errors != []

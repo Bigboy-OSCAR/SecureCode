@@ -1,0 +1,42 @@
+{
+    "name": "securecode",
+    "version": "0.0.0",
+    "private": true,
+    "description": "SecureCode local coding assistant (Cline SDK host + Python context service). Root commands are owned by task 3.2.",
+    "type": "module",
+    "engines": {
+        "node": "^22.12.0 || ^24.0.0"
+    },
+    "workspaces": [
+        "contracts",
+        "apps/host",
+        "tools/sdk-probe"
+    ],
+    "scripts": {
+        "dev": "tsx scripts/dev/start.ts",
+        "stop": "tsx scripts/dev/stop.ts",
+        "check": "tsx scripts/check/main.ts",
+        "check:lint": "eslint .",
+        "check:format": "prettier --check .",
+        "check:types": "tsx scripts/check/typecheck.ts",
+        "check:structure": "tsx scripts/check/structure.ts",
+        "generate:contracts": "npm run generate -w @securecode/contracts",
+        "test:unit": "tsx scripts/test/unit.ts",
+        "test:contracts": "tsx scripts/test/contracts.ts",
+        "test:integration": "tsx scripts/test/integration.ts",
+        "test:e2e": "tsx scripts/test/e2e.ts",
+        "test:live": "tsx scripts/test/live.ts",
+        "build": "tsx scripts/build.ts",
+        "probe:sdk": "npm run probe -w @securecode/sdk-probe"
+    },
+    "devDependencies": {
+        "@eslint/js": "10.0.1",
+        "@types/node": "22.20.5",
+        "eslint": "10.13.0",
+        "globals": "17.13.0",
+        "prettier": "3.9.10",
+        "tsx": "4.23.15",
+        "typescript": "6.0.3",
+        "typescript-eslint": "8.71.2"
+    }
+}

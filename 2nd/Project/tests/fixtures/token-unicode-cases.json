@@ -1,0 +1,78 @@
+{
+    "description": "Shared Unicode vectors for tokens.count (3.2). Both Python and TypeScript must agree on validity and UTF-8 byte length; lone surrogates are rejected with VALIDATION_FAILED before any provider call.",
+    "cases": [
+        {
+            "name": "ascii_code",
+            "text": "def add(a, b):\n    return a + b\n",
+            "utf8_bytes": 32,
+            "code_points": 32,
+            "expect": "valid"
+        },
+        {
+            "name": "korean",
+            "text": "\uc0ac\uc6a9\uc790 \uc124\uc815\uc744 \ubd88\ub7ec\uc628\ub2e4",
+            "utf8_bytes": 32,
+            "code_points": 12,
+            "expect": "valid"
+        },
+        {
+            "name": "emoji_surrogate_pair",
+            "text": "\ud83d\ude00\ud83d\ude80",
+            "utf8_bytes": 8,
+            "code_points": 2,
+            "expect": "valid"
+        },
+        {
+            "name": "combining_mark",
+            "text": "e\u0301",
+            "utf8_bytes": 3,
+            "code_points": 2,
+            "expect": "valid"
+        },
+        {
+            "name": "zwj_sequence",
+            "text": "\ud83d\udc69\u200d\ud83d\udcbb",
+            "utf8_bytes": 11,
+            "code_points": 3,
+            "expect": "valid"
+        },
+        {
+            "name": "crlf",
+            "text": "a\r\nb",
+            "utf8_bytes": 4,
+            "code_points": 4,
+            "expect": "valid"
+        },
+        {
+            "name": "nul_char",
+            "text": "a\u0000b",
+            "utf8_bytes": 3,
+            "code_points": 3,
+            "expect": "valid"
+        },
+        {
+            "name": "bom_prefix",
+            "text": "\ufeffx",
+            "utf8_bytes": 4,
+            "code_points": 2,
+            "expect": "valid"
+        },
+        {
+            "name": "mixed_korean_code",
+            "text": "# \uc124\uc815 \ub85c\ub354\ndef load_config(\uacbd\ub85c: str) -> dict:\n    return {}\n",
+            "utf8_bytes": 68,
+            "code_points": 56,
+            "expect": "valid"
+        },
+        {
+            "name": "lone_high_surrogate",
+            "text": "\ud800",
+            "expect": "invalid_unicode"
+        },
+        {
+            "name": "lone_low_surrogate",
+            "text": "x\udc00",
+            "expect": "invalid_unicode"
+        }
+    ]
+}

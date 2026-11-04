@@ -1,0 +1,24 @@
+{
+    "schema_ref": "api/system.schema.json#/definitions/HealthResponse",
+    "expect": "valid",
+    "scenario": "UI-02",
+    "data": {
+        "schema_version": "1",
+        "status": "ok",
+        "components": [
+            {
+                "name": "host",
+                "status": "ok"
+            },
+            {
+                "name": "context_service",
+                "status": "ok"
+            },
+            {
+                "name": "symbols",
+                "status": "not_implemented",
+                "owner_task": "3.4"
+            }
+        ]
+    }
+}

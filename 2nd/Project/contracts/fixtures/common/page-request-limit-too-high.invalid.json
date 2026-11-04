@@ -1,0 +1,8 @@
+{
+    "schema_ref": "common/pagination.schema.json#/definitions/PageRequest",
+    "expect": "invalid",
+    "scenario": "H-07",
+    "data": {
+        "limit": 101
+    }
+}

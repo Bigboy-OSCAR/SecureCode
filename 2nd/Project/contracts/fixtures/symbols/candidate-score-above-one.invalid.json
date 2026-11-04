@@ -1,0 +1,25 @@
+{
+    "schema_ref": "symbols/symbol.schema.json#/definitions/SymbolCandidate",
+    "expect": "invalid",
+    "scenario": "UI-09",
+    "data": {
+        "candidate_id": "cand_01J9Z6Q4C001",
+        "symbol_ids": ["sym_01J9Z6Q4S001", "sym_01J9Z6Q4S002"],
+        "primary": {
+            "symbol_id": "sym_01J9Z6Q4S001",
+            "qualname": "load_config",
+            "kind": "function",
+            "relative_path": "app/config.py",
+            "start_line": 12,
+            "end_line": 30,
+            "content_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "score": 1.5,
+        "index_revision": 3,
+        "depth": 1,
+        "estimated_tokens": {
+            "token_count": 310,
+            "count_mode": "provider_estimate"
+        }
+    }
+}

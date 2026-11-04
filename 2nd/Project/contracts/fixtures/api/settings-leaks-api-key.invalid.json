@@ -1,0 +1,23 @@
+{
+    "schema_ref": "api/system.schema.json#/definitions/SettingsResponse",
+    "expect": "invalid",
+    "scenario": "UI-32",
+    "data": {
+        "schema_version": "1",
+        "provider": {
+            "provider_id": "anthropic",
+            "model_id": "claude-sonnet-5-5",
+            "configured": true,
+            "api_key": "sk-ant-redacted"
+        },
+        "budget": {
+            "context_limit_tokens": 1,
+            "max_output_tokens": 1,
+            "safety_margin_tokens": 0,
+            "body_count_mode": null,
+            "final_request_gate": "unavailable"
+        },
+        "limits": {},
+        "protections": []
+    }
+}

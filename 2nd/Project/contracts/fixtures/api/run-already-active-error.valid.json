@@ -1,0 +1,17 @@
+{
+    "schema_ref": "common/api-error.schema.json#/definitions/ErrorResponse",
+    "expect": "valid",
+    "scenario": "UI-10",
+    "data": {
+        "schema_version": "1",
+        "error": {
+            "code": "RUN_ALREADY_ACTIVE",
+            "message": "이 세션에서 이미 실행 중인 요청이 있습니다.",
+            "retryable": true,
+            "request_id": "req_01J9Z6Q4TEST",
+            "details": {
+                "active_run_id": "run_01J9Z6Q4TEST"
+            }
+        }
+    }
+}

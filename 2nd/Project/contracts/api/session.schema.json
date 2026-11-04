@@ -1,0 +1,61 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Session API",
+    "description": "H-04 discovery. POST /api/v1/sessions, GET /api/v1/sessions/:id, GET /api/v1/workspaces/:id/sessions, GET /api/v1/sessions/:id/runs. One active run per session.",
+    "definitions": {
+        "SessionStatus": {
+            "title": "SessionStatus",
+            "type": "string",
+            "enum": ["active", "closed"]
+        },
+        "SessionCreateRequest": {
+            "title": "SessionCreateRequest",
+            "type": "object",
+            "required": ["workspace_id", "idempotency_key"],
+            "additionalProperties": false,
+            "properties": {
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "idempotency_key": { "$ref": "../common/primitives.schema.json#/definitions/IdempotencyKey" }
+            }
+        },
+        "Session": {
+            "title": "Session",
+            "type": "object",
+            "required": [
+                "schema_version",
+                "session_id",
+                "workspace_id",
+                "status",
+                "active_run_id",
+                "last_run_id",
+                "created_at"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "session_id": { "$ref": "../common/primitives.schema.json#/definitions/SessionId" },
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "status": { "$ref": "#/definitions/SessionStatus" },
+                "active_run_id": {
+                    "description": "Non-null while a run is queued/running/awaiting_approval/cancelling; the UI resumes it after reload.",
+                    "oneOf": [{ "$ref": "../common/primitives.schema.json#/definitions/RunId" }, { "type": "null" }]
+                },
+                "last_run_id": {
+                    "oneOf": [{ "$ref": "../common/primitives.schema.json#/definitions/RunId" }, { "type": "null" }]
+                },
+                "created_at": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" }
+            }
+        },
+        "SessionListResponse": {
+            "title": "SessionListResponse",
+            "type": "object",
+            "required": ["schema_version", "items", "page"],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "items": { "type": "array", "maxItems": 100, "items": { "$ref": "#/definitions/Session" } },
+                "page": { "$ref": "../common/pagination.schema.json#/definitions/PageInfo" }
+            }
+        }
+    }
+}

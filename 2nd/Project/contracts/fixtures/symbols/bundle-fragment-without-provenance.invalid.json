@@ -1,0 +1,24 @@
+{
+    "schema_ref": "symbols/symbol.schema.json#/definitions/SymbolBundle",
+    "expect": "invalid",
+    "scenario": "UI-09",
+    "data": {
+        "schema_version": "1",
+        "candidate_id": "cand_01J9Z6Q4C001",
+        "index_revision": 3,
+        "fragments": [
+            {
+                "symbol_id": "sym_01J9Z6Q4S001",
+                "start_line": 12,
+                "end_line": 30,
+                "content": "def f(): ..."
+            }
+        ],
+        "omissions": [],
+        "unresolved_references": [],
+        "token_count": {
+            "token_count": 5,
+            "count_mode": "provider_estimate"
+        }
+    }
+}

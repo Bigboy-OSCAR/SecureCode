@@ -1,0 +1,13 @@
+{
+    "schema_ref": "common/api-error.schema.json#/definitions/ErrorResponse",
+    "expect": "invalid",
+    "scenario": "H-01",
+    "data": {
+        "schema_version": "1",
+        "error": {
+            "code": "NOT_FOUND",
+            "message": "x",
+            "retryable": false
+        }
+    }
+}

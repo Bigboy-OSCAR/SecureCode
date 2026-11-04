@@ -10,7 +10,9 @@ interface ContentBlockSummary {
 }
 
 function asRecordArray(value: unknown): Record<string, unknown>[] {
-    return Array.isArray(value) ? value.filter((item): item is Record<string, unknown> => typeof item === "object" && item !== null) : [];
+    return Array.isArray(value)
+        ? value.filter((item): item is Record<string, unknown> => typeof item === "object" && item !== null)
+        : [];
 }
 
 export function listToolNames(request: CapturedRequest): string[] {
@@ -29,7 +31,12 @@ export function summarizeContentBlocks(request: CapturedRequest): ContentBlockSu
             continue;
         }
         for (const block of asRecordArray(content)) {
-            const toolUseId = typeof block.id === "string" ? block.id : typeof block.tool_use_id === "string" ? block.tool_use_id : undefined;
+            const toolUseId =
+                typeof block.id === "string"
+                    ? block.id
+                    : typeof block.tool_use_id === "string"
+                      ? block.tool_use_id
+                      : undefined;
             summaries.push({ role, type: String(block.type), ...(toolUseId ? { toolUseId } : {}) });
         }
     }

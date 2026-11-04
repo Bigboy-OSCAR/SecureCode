@@ -1,0 +1,23 @@
+{
+    "schema_ref": "api/approval.schema.json#/definitions/ApprovalRequest",
+    "expect": "valid",
+    "scenario": "UI-12",
+    "data": {
+        "approval_id": "apr_01J9Z6Q4TEST",
+        "run_id": "run_01J9Z6Q4TEST",
+        "tool_call_id": "toolu_cmd_1",
+        "tool_name": "run_project_command",
+        "input_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "status": "pending",
+        "requested_at": "2026-11-04T09:00:00Z",
+        "expires_at": "2026-11-04T09:05:00Z",
+        "review": {
+            "kind": "file_change",
+            "summary": "대형 패치",
+            "content": "--- a/app.py\n+++ b/app.py\n",
+            "content_truncated": true,
+            "reviewable": false,
+            "target_paths": ["app.py"]
+        }
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "schema_ref": "api/workspace.schema.json#/definitions/Workspace",
+    "expect": "invalid",
+    "scenario": "UI-02",
+    "data": {
+        "schema_version": "1",
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "display_name": "x",
+        "index_revision": null,
+        "index_status": "not_indexed",
+        "supported_languages": ["python"],
+        "created_at": "2026-11-04T09:00:00Z",
+        "root_path": "C:/Users/someone/project"
+    }
+}

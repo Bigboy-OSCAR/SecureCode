@@ -1,0 +1,9 @@
+{
+    "schema_ref": "api/system.schema.json#/definitions/HealthResponse",
+    "expect": "invalid",
+    "scenario": "UI-01",
+    "data": {
+        "schema_version": "1",
+        "status": "green"
+    }
+}

@@ -1,0 +1,53 @@
+{
+    "schema_ref": "api/run.schema.json#/definitions/RunSnapshot",
+    "expect": "valid",
+    "scenario": "UI-11",
+    "data": {
+        "schema_version": "1",
+        "run_id": "run_01J9Z6Q4TEST",
+        "session_id": "ses_01J9Z6Q4TEST",
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "status": "awaiting_approval",
+        "created_at": "2026-11-04T09:00:00Z",
+        "updated_at": "2026-11-04T09:05:00Z",
+        "prompt_preview": "테스트를 실행해 실패 원인을 찾아줘",
+        "replay": {
+            "oldest_sequence": 1,
+            "last_sequence": 7
+        },
+        "answer": {
+            "text": "테스트를 실행하겠습니다.",
+            "truncated": false
+        },
+        "tool_calls": [
+            {
+                "tool_call_id": "toolu_log_1",
+                "tool_name": "read_log",
+                "phase": "completed",
+                "summary": "64 KiB 로그를 Runtime Pointer로 저장",
+                "output_pointer": "securecode://runtime/ws_01J9Z6Q4TEST/ses_01J9Z6Q4TEST/6f1c2a7e-0d3b-4c55-9b1e-2f3a4b5c6d7e?v=1",
+                "output_bytes": 65536
+            }
+        ],
+        "pending_approvals": [
+            {
+                "approval_id": "apr_01J9Z6Q4TEST",
+                "run_id": "run_01J9Z6Q4TEST",
+                "tool_call_id": "toolu_cmd_1",
+                "tool_name": "run_project_command",
+                "input_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "status": "pending",
+                "requested_at": "2026-11-04T09:00:00Z",
+                "expires_at": "2026-11-04T09:05:00Z",
+                "review": {
+                    "kind": "command",
+                    "summary": "pytest -q 실행",
+                    "content": "pytest -q tests/unit",
+                    "content_truncated": false,
+                    "reviewable": true
+                }
+            }
+        ],
+        "terminal": null
+    }
+}

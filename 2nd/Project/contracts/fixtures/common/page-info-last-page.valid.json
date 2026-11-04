@@ -1,0 +1,10 @@
+{
+    "schema_ref": "common/pagination.schema.json#/definitions/PageInfo",
+    "expect": "valid",
+    "scenario": "H-02",
+    "data": {
+        "limit": 20,
+        "next_cursor": null,
+        "has_more": false
+    }
+}

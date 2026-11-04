@@ -1,0 +1,19 @@
+{
+    "schema_ref": "events/app-event.schema.json#/definitions/AppEvent",
+    "expect": "valid",
+    "scenario": "UI-07",
+    "data": {
+        "schema_version": "1",
+        "event_id": "evt_01J9Z6Q4EV0001",
+        "sequence": 1,
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "session_id": "ses_01J9Z6Q4TEST",
+        "run_id": "run_01J9Z6Q4TEST",
+        "type": "run.status_changed",
+        "timestamp": "2026-11-04T09:00:00Z",
+        "payload": {
+            "status": "running",
+            "previous_status": "queued"
+        }
+    }
+}

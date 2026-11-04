@@ -25,7 +25,9 @@ export interface ApprovalTicket {
 }
 
 export function digestToolInput(input: unknown): string {
-    return createHash("sha256").update(JSON.stringify(input) ?? "null").digest("hex");
+    return createHash("sha256")
+        .update(JSON.stringify(input) ?? "null")
+        .digest("hex");
 }
 
 export class ApprovalBroker {
@@ -40,13 +42,22 @@ export class ApprovalBroker {
         const expiresAt = Date.now() + this.timeoutMs;
 
         return new Promise((resolve) => {
-            const timer = setTimeout(() => this.settle(approvalId, { approved: false, reason: "approval timed out" }), this.timeoutMs);
+            const timer = setTimeout(
+                () => this.settle(approvalId, { approved: false, reason: "approval timed out" }),
+                this.timeoutMs,
+            );
             const settle = (result: ToolApprovalResult): void => {
                 clearTimeout(timer);
                 resolve(result);
             };
             this.pending.set(approvalId, { sessionId: request.sessionId, inputDigest, expiresAt, settle });
-            this.tickets.push({ approvalId, sessionId: request.sessionId, toolName: request.toolName, inputDigest, expiresAt });
+            this.tickets.push({
+                approvalId,
+                sessionId: request.sessionId,
+                toolName: request.toolName,
+                inputDigest,
+                expiresAt,
+            });
         });
     };
 

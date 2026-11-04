@@ -1,0 +1,243 @@
+{
+    "description": "HTTP status and default retryability per ErrorCode. 'final' rows are fixed by 3.2. 'draft' rows are the 3.2 default that the named task must confirm (roadmap 0.6: pointer/context codes 4.2, display text 2.2). transport=success_body means the code is reported inside a 200 response body (e.g. search no_match), never as an ErrorResponse. Tests assert that every ErrorCode has exactly one row.",
+    "codes": {
+        "INVALID_POINTER": {
+            "http_status": 400,
+            "retryable": false,
+            "owner_task": "4.2",
+            "status": "draft",
+            "transport": "error_response"
+        },
+        "NOT_FOUND": {
+            "http_status": 404,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "EXPIRED": {
+            "http_status": 410,
+            "retryable": false,
+            "owner_task": "4.2",
+            "status": "draft",
+            "transport": "error_response"
+        },
+        "FORBIDDEN": {
+            "http_status": 403,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "SOURCE_CHANGED": {
+            "http_status": 409,
+            "retryable": false,
+            "owner_task": "4.2",
+            "status": "draft",
+            "transport": "error_response"
+        },
+        "INVALID_SELECTOR": {
+            "http_status": 400,
+            "retryable": false,
+            "owner_task": "4.2",
+            "status": "draft",
+            "transport": "error_response"
+        },
+        "UNSUPPORTED_FORMAT": {
+            "http_status": 415,
+            "retryable": false,
+            "owner_task": "4.2",
+            "status": "draft",
+            "transport": "error_response"
+        },
+        "UNSUPPORTED_LANGUAGE": {
+            "http_status": 422,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "PARSE_FAILED": {
+            "http_status": 422,
+            "retryable": false,
+            "owner_task": "4.2",
+            "status": "draft",
+            "transport": "error_response"
+        },
+        "NO_MATCH": {
+            "http_status": 200,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "success_body"
+        },
+        "BUDGET_EXCEEDED": {
+            "http_status": 413,
+            "retryable": false,
+            "owner_task": "4.2",
+            "status": "draft",
+            "transport": "error_response"
+        },
+        "TOKENIZER_UNAVAILABLE": {
+            "http_status": 503,
+            "retryable": true,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "SDK_UNAVAILABLE": {
+            "http_status": 503,
+            "retryable": true,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "PROVIDER_ERROR": {
+            "http_status": 502,
+            "retryable": true,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "APPROVAL_REJECTED": {
+            "http_status": 409,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "CANCELLED": {
+            "http_status": 409,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "UNAUTHENTICATED": {
+            "http_status": 401,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "BOOTSTRAP_CODE_INVALID": {
+            "http_status": 401,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "BOOTSTRAP_CODE_EXPIRED": {
+            "http_status": 401,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "ORIGIN_REJECTED": {
+            "http_status": 403,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "VALIDATION_FAILED": {
+            "http_status": 422,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "PAYLOAD_TOO_LARGE": {
+            "http_status": 413,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "QUOTA_EXCEEDED": {
+            "http_status": 507,
+            "retryable": false,
+            "owner_task": "4.2",
+            "status": "draft",
+            "transport": "error_response"
+        },
+        "RUN_ALREADY_ACTIVE": {
+            "http_status": 409,
+            "retryable": true,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "IDEMPOTENCY_CONFLICT": {
+            "http_status": 409,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "APPROVAL_EXPIRED": {
+            "http_status": 410,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "APPROVAL_DIGEST_MISMATCH": {
+            "http_status": 409,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "APPROVAL_ALREADY_DECIDED": {
+            "http_status": 409,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "PROTECTION_UNAVAILABLE": {
+            "http_status": 503,
+            "retryable": true,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "INDEX_NOT_READY": {
+            "http_status": 409,
+            "retryable": true,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "RATE_LIMITED": {
+            "http_status": 429,
+            "retryable": true,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "SERVICE_UNAVAILABLE": {
+            "http_status": 503,
+            "retryable": true,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "NOT_IMPLEMENTED": {
+            "http_status": 501,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        },
+        "INTERNAL_ERROR": {
+            "http_status": 500,
+            "retryable": false,
+            "owner_task": "3.2",
+            "status": "final",
+            "transport": "error_response"
+        }
+    }
+}

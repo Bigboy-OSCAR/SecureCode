@@ -1,0 +1,19 @@
+# Generated / vendored / lockfiles
+node_modules/
+package-lock.json
+dist/
+coverage/
+.securecode/
+artifacts/
+
+# Markdown documents are owned by several roles; they are reviewed, not auto-formatted.
+*.md
+
+# Python is formatted by ruff (services/context-service/pyproject.toml).
+services/
+
+# Legacy pre-3.2 pointer code (owner 임우형, tasks 4.3/4.4 reopened on 2026-11-04).
+# Listed in scripts/check/structure-baseline.json; remove these lines when the owner reworks the files.
+apps/host/src/cline-plugins/
+apps/host/src/pointer-hooks/
+apps/host/tools/sdk-probe.ts

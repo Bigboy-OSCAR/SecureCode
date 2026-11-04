@@ -1,0 +1,182 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Run API",
+    "description": "H-04. POST /api/v1/sessions/:id/runs, GET /api/v1/runs/:id (snapshot), GET /api/v1/runs/:id/events (SSE), POST /api/v1/runs/:id/cancel. The snapshot is the recovery source when SSE replay is unavailable.",
+    "definitions": {
+        "RunStatus": {
+            "title": "RunStatus",
+            "description": "completed/failed/cancelled are terminal and never change afterwards. cancel goes through cancelling until the SDK confirms.",
+            "type": "string",
+            "enum": ["queued", "running", "awaiting_approval", "cancelling", "completed", "failed", "cancelled"]
+        },
+        "TerminalRunStatus": {
+            "title": "TerminalRunStatus",
+            "type": "string",
+            "enum": ["completed", "failed", "cancelled"]
+        },
+        "SymbolContextRef": {
+            "title": "SymbolContextRef",
+            "type": "object",
+            "required": ["kind", "candidate_id", "index_revision"],
+            "additionalProperties": false,
+            "properties": {
+                "kind": { "type": "string", "const": "symbol" },
+                "candidate_id": { "$ref": "../symbols/symbol.schema.json#/definitions/CandidateId" },
+                "index_revision": { "$ref": "../common/primitives.schema.json#/definitions/IndexRevision" }
+            }
+        },
+        "PointerContextRef": {
+            "title": "PointerContextRef",
+            "description": "Boundary to 4.2: range selectors for explicit pointer context are added by 4.2 in contracts/pointers.",
+            "type": "object",
+            "required": ["kind", "pointer"],
+            "additionalProperties": false,
+            "properties": {
+                "kind": { "$ref": "../common/primitives.schema.json#/definitions/PointerKind" },
+                "pointer": { "$ref": "../common/primitives.schema.json#/definitions/PointerUri" }
+            }
+        },
+        "ContextRef": {
+            "title": "ContextRef",
+            "oneOf": [{ "$ref": "#/definitions/SymbolContextRef" }, { "$ref": "#/definitions/PointerContextRef" }]
+        },
+        "RunCreateRequest": {
+            "title": "RunCreateRequest",
+            "description": "Same idempotency_key + same body returns the first run (200). Same key with a different body is IDEMPOTENCY_CONFLICT. A second active run is RUN_ALREADY_ACTIVE.",
+            "type": "object",
+            "required": ["prompt", "idempotency_key"],
+            "additionalProperties": false,
+            "properties": {
+                "prompt": { "type": "string", "minLength": 1, "maxLength": 32000 },
+                "idempotency_key": { "$ref": "../common/primitives.schema.json#/definitions/IdempotencyKey" },
+                "context_refs": {
+                    "description": "User-selected context (explicit). The budget still applies (roadmap 0.7).",
+                    "type": "array",
+                    "maxItems": 32,
+                    "items": { "$ref": "#/definitions/ContextRef" }
+                }
+            }
+        },
+        "ToolCallPhase": {
+            "title": "ToolCallPhase",
+            "type": "string",
+            "enum": ["requested", "awaiting_approval", "running", "completed", "failed", "rejected", "cancelled"]
+        },
+        "ToolCallSummary": {
+            "title": "ToolCallSummary",
+            "description": "Bounded tool status. Raw tool output never appears here; large output is referenced by output_pointer.",
+            "type": "object",
+            "required": ["tool_call_id", "tool_name", "phase", "summary"],
+            "additionalProperties": false,
+            "properties": {
+                "tool_call_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+                "tool_name": { "type": "string", "minLength": 1, "maxLength": 128 },
+                "phase": { "$ref": "#/definitions/ToolCallPhase" },
+                "summary": { "$ref": "../common/primitives.schema.json#/definitions/ShortText" },
+                "output_pointer": { "$ref": "../common/primitives.schema.json#/definitions/PointerUri" },
+                "output_bytes": { "type": "integer", "minimum": 0 }
+            }
+        },
+        "RunTerminal": {
+            "title": "RunTerminal",
+            "type": "object",
+            "required": ["status", "finished_at"],
+            "additionalProperties": false,
+            "properties": {
+                "status": { "$ref": "#/definitions/TerminalRunStatus" },
+                "finished_at": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "reason_code": { "$ref": "../common/api-error.schema.json#/definitions/ErrorCode" },
+                "message": { "$ref": "../common/primitives.schema.json#/definitions/ShortText" }
+            }
+        },
+        "ReplayWindow": {
+            "title": "ReplayWindow",
+            "description": "Events with sequence >= oldest_sequence can be replayed with Last-Event-ID. Older ones require this snapshot.",
+            "type": "object",
+            "required": ["oldest_sequence", "last_sequence"],
+            "additionalProperties": false,
+            "properties": {
+                "oldest_sequence": { "type": "integer", "minimum": 1 },
+                "last_sequence": { "type": "integer", "minimum": 0 }
+            }
+        },
+        "RunSnapshot": {
+            "title": "RunSnapshot",
+            "description": "Server state the UI (1.3/1.4) renders after reload or replay gap. It is the full truth for this run; events are increments on top of it.",
+            "type": "object",
+            "required": [
+                "schema_version",
+                "run_id",
+                "session_id",
+                "workspace_id",
+                "status",
+                "created_at",
+                "updated_at",
+                "prompt_preview",
+                "replay",
+                "answer",
+                "tool_calls",
+                "pending_approvals",
+                "terminal"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "run_id": { "$ref": "../common/primitives.schema.json#/definitions/RunId" },
+                "session_id": { "$ref": "../common/primitives.schema.json#/definitions/SessionId" },
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "status": { "$ref": "#/definitions/RunStatus" },
+                "created_at": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "updated_at": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "prompt_preview": { "$ref": "../common/primitives.schema.json#/definitions/ShortText" },
+                "replay": { "$ref": "#/definitions/ReplayWindow" },
+                "answer": {
+                    "type": "object",
+                    "required": ["text", "truncated"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "text": { "type": "string", "maxLength": 65536 },
+                        "truncated": { "type": "boolean" }
+                    }
+                },
+                "tool_calls": {
+                    "type": "array",
+                    "maxItems": 50,
+                    "items": { "$ref": "#/definitions/ToolCallSummary" }
+                },
+                "tool_calls_truncated": { "type": "boolean" },
+                "pending_approvals": {
+                    "type": "array",
+                    "maxItems": 8,
+                    "items": { "$ref": "approval.schema.json#/definitions/ApprovalRequest" }
+                },
+                "terminal": {
+                    "oneOf": [{ "$ref": "#/definitions/RunTerminal" }, { "type": "null" }]
+                }
+            }
+        },
+        "RunSummary": {
+            "title": "RunSummary",
+            "type": "object",
+            "required": ["run_id", "status", "created_at", "prompt_preview"],
+            "additionalProperties": false,
+            "properties": {
+                "run_id": { "$ref": "../common/primitives.schema.json#/definitions/RunId" },
+                "status": { "$ref": "#/definitions/RunStatus" },
+                "created_at": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "prompt_preview": { "$ref": "../common/primitives.schema.json#/definitions/ShortText" }
+            }
+        },
+        "RunListResponse": {
+            "title": "RunListResponse",
+            "type": "object",
+            "required": ["schema_version", "items", "page"],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "items": { "type": "array", "maxItems": 100, "items": { "$ref": "#/definitions/RunSummary" } },
+                "page": { "$ref": "../common/pagination.schema.json#/definitions/PageInfo" }
+            }
+        }
+    }
+}

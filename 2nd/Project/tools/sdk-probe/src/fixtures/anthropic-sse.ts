@@ -43,8 +43,14 @@ function buildMessageStart(messageId: string, modelId: string): SseEvent {
 
 function buildTextBlock(index: number, text: string): SseEvent[] {
     return [
-        { event: "content_block_start", data: { type: "content_block_start", index, content_block: { type: "text", text: "" } } },
-        { event: "content_block_delta", data: { type: "content_block_delta", index, delta: { type: "text_delta", text } } },
+        {
+            event: "content_block_start",
+            data: { type: "content_block_start", index, content_block: { type: "text", text: "" } },
+        },
+        {
+            event: "content_block_delta",
+            data: { type: "content_block_delta", index, delta: { type: "text_delta", text } },
+        },
         { event: "content_block_stop", data: { type: "content_block_stop", index } },
     ];
 }
@@ -76,7 +82,11 @@ export function buildTurnSseBody(turn: ScriptedTurn, messageId: string, modelId:
     const stopReason = (turn.toolUses?.length ?? 0) > 0 ? "tool_use" : "end_turn";
     events.push({
         event: "message_delta",
-        data: { type: "message_delta", delta: { stop_reason: stopReason, stop_sequence: null }, usage: { output_tokens: 1 } },
+        data: {
+            type: "message_delta",
+            delta: { stop_reason: stopReason, stop_sequence: null },
+            usage: { output_tokens: 1 },
+        },
     });
     events.push({ event: "message_stop", data: { type: "message_stop" } });
 

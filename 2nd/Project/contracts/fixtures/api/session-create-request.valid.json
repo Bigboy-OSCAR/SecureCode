@@ -1,0 +1,9 @@
+{
+    "schema_ref": "api/session.schema.json#/definitions/SessionCreateRequest",
+    "expect": "valid",
+    "scenario": "UI-07",
+    "data": {
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "idempotency_key": "session-0001"
+    }
+}

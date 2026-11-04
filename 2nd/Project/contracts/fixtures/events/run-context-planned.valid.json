@@ -1,0 +1,23 @@
+{
+    "schema_ref": "events/app-event.schema.json#/definitions/AppEvent",
+    "expect": "valid",
+    "scenario": "UI-30",
+    "data": {
+        "schema_version": "1",
+        "event_id": "evt_01J9Z6Q4EV0007",
+        "sequence": 7,
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "session_id": "ses_01J9Z6Q4TEST",
+        "run_id": "run_01J9Z6Q4TEST",
+        "type": "run.context_planned",
+        "timestamp": "2026-11-04T09:00:00Z",
+        "payload": {
+            "selected_count": 3,
+            "omitted_count": 1,
+            "used_tokens": 5400,
+            "budget_tokens": 12000,
+            "count_mode": "provider_estimate",
+            "index_revision": 3
+        }
+    }
+}

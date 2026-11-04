@@ -1,0 +1,160 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Workspace and index API",
+    "description": "H-02/H-03. POST /api/v1/workspaces, GET /api/v1/workspaces (list, added by 3.2 for reload recovery), GET /api/v1/workspaces/:id, POST|GET /api/v1/workspaces/:id/index.",
+    "definitions": {
+        "IndexState": {
+            "title": "IndexState",
+            "description": "ready = searchable; partial = searchable with per-file diagnostics; parsed = parsed but retrieval not ready (3.3 before 3.4); stale = files changed since index_revision.",
+            "type": "string",
+            "enum": ["not_indexed", "queued", "indexing", "parsed", "ready", "partial", "stale", "failed"]
+        },
+        "SupportedLanguage": {
+            "title": "SupportedLanguage",
+            "type": "string",
+            "enum": ["python"]
+        },
+        "WorkspaceCreateRequest": {
+            "title": "WorkspaceCreateRequest",
+            "description": "root_path is input only. Responses never echo it.",
+            "type": "object",
+            "required": ["display_name", "root_path", "idempotency_key"],
+            "additionalProperties": false,
+            "properties": {
+                "display_name": { "type": "string", "minLength": 1, "maxLength": 120 },
+                "root_path": { "type": "string", "minLength": 1, "maxLength": 4096 },
+                "idempotency_key": { "$ref": "../common/primitives.schema.json#/definitions/IdempotencyKey" }
+            }
+        },
+        "Workspace": {
+            "title": "Workspace",
+            "type": "object",
+            "required": [
+                "schema_version",
+                "workspace_id",
+                "display_name",
+                "index_revision",
+                "index_status",
+                "supported_languages",
+                "created_at"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "display_name": { "type": "string", "minLength": 1, "maxLength": 120 },
+                "index_revision": {
+                    "oneOf": [
+                        { "$ref": "../common/primitives.schema.json#/definitions/IndexRevision" },
+                        { "type": "null" }
+                    ]
+                },
+                "index_status": { "$ref": "#/definitions/IndexState" },
+                "supported_languages": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": { "$ref": "#/definitions/SupportedLanguage" }
+                },
+                "created_at": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" }
+            }
+        },
+        "WorkspaceListResponse": {
+            "title": "WorkspaceListResponse",
+            "type": "object",
+            "required": ["schema_version", "items", "page"],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "items": { "type": "array", "maxItems": 100, "items": { "$ref": "#/definitions/Workspace" } },
+                "page": { "$ref": "../common/pagination.schema.json#/definitions/PageInfo" }
+            }
+        },
+        "IndexRequest": {
+            "title": "IndexRequest",
+            "description": "Requesting an index while one is queued or indexing returns that active job's status (HTTP 202) instead of starting a second one. The same idempotency_key always returns the first result.",
+            "type": "object",
+            "required": ["idempotency_key"],
+            "additionalProperties": false,
+            "properties": {
+                "idempotency_key": { "$ref": "../common/primitives.schema.json#/definitions/IdempotencyKey" }
+            }
+        },
+        "IndexDiagnostic": {
+            "title": "IndexDiagnostic",
+            "type": "object",
+            "required": ["relative_path", "reason_code"],
+            "additionalProperties": false,
+            "properties": {
+                "relative_path": { "$ref": "../common/primitives.schema.json#/definitions/RelativePath" },
+                "reason_code": {
+                    "type": "string",
+                    "enum": [
+                        "syntax_error",
+                        "encoding_error",
+                        "unsupported_language",
+                        "too_large",
+                        "excluded",
+                        "path_rejected"
+                    ]
+                },
+                "line": { "type": "integer", "minimum": 1 }
+            }
+        },
+        "IndexStatusResponse": {
+            "title": "IndexStatusResponse",
+            "description": "The GET status is the source of truth for indexing (no run SSE exists for it).",
+            "type": "object",
+            "required": [
+                "schema_version",
+                "workspace_id",
+                "index_status",
+                "index_revision",
+                "searchable",
+                "counts",
+                "diagnostics"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "index_status": { "$ref": "#/definitions/IndexState" },
+                "index_revision": {
+                    "description": "Revision currently served to searches; null before the first successful index.",
+                    "oneOf": [
+                        { "$ref": "../common/primitives.schema.json#/definitions/IndexRevision" },
+                        { "type": "null" }
+                    ]
+                },
+                "pending_revision": {
+                    "description": "Revision being built; becomes index_revision atomically when ready.",
+                    "oneOf": [
+                        { "$ref": "../common/primitives.schema.json#/definitions/IndexRevision" },
+                        { "type": "null" }
+                    ]
+                },
+                "searchable": { "type": "boolean" },
+                "counts": {
+                    "type": "object",
+                    "required": ["discovered", "indexed", "skipped", "failed"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "discovered": { "type": "integer", "minimum": 0 },
+                        "indexed": { "type": "integer", "minimum": 0 },
+                        "skipped": { "type": "integer", "minimum": 0 },
+                        "failed": { "type": "integer", "minimum": 0 }
+                    }
+                },
+                "diagnostics": {
+                    "description": "First 50 diagnostics; diagnostics_truncated tells the UI more exist.",
+                    "type": "array",
+                    "maxItems": 50,
+                    "items": { "$ref": "#/definitions/IndexDiagnostic" }
+                },
+                "diagnostics_truncated": { "type": "boolean" },
+                "started_at": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "completed_at": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" }
+            }
+        }
+    }
+}

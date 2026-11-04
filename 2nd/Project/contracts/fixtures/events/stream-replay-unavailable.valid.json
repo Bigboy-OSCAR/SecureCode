@@ -1,0 +1,19 @@
+{
+    "schema_ref": "events/app-event.schema.json#/definitions/AppEvent",
+    "expect": "valid",
+    "scenario": "UI-14",
+    "data": {
+        "schema_version": "1",
+        "event_id": "evt_01J9Z6Q4EV0010",
+        "sequence": 812,
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "session_id": "ses_01J9Z6Q4TEST",
+        "run_id": "run_01J9Z6Q4TEST",
+        "type": "stream.replay_unavailable",
+        "timestamp": "2026-11-04T09:00:00Z",
+        "payload": {
+            "requested_after_sequence": 2,
+            "oldest_available_sequence": 500
+        }
+    }
+}

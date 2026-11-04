@@ -1,0 +1,17 @@
+{
+    "schema_ref": "common/api-error.schema.json#/definitions/ErrorResponse",
+    "expect": "valid",
+    "scenario": "3.2",
+    "data": {
+        "schema_version": "1",
+        "error": {
+            "code": "NOT_IMPLEMENTED",
+            "message": "아직 구현되지 않은 API입니다.",
+            "retryable": false,
+            "request_id": "req_01J9Z6Q4TEST",
+            "details": {
+                "owner_task": "3.5"
+            }
+        }
+    }
+}

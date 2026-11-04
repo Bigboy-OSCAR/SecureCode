@@ -79,7 +79,10 @@ export function buildProbeStartInput(options: ProbeSessionOptions): ClineCoreSta
             yolo: false,
             toolPolicies,
             hookErrorMode: options.hookErrorMode ?? "throw",
-            checkpoint: { enabled: false, ...(options.checkpointSpy ? { createCheckpoint: options.checkpointSpy } : {}) },
+            checkpoint: {
+                enabled: false,
+                ...(options.checkpointSpy ? { createCheckpoint: options.checkpointSpy } : {}),
+            },
             compaction: { enabled: false },
             extraTools: options.extraTools,
             ...(options.hooks ? { hooks: options.hooks } : {}),

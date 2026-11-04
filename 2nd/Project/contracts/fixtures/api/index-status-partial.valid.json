@@ -1,0 +1,33 @@
+{
+    "schema_ref": "api/workspace.schema.json#/definitions/IndexStatusResponse",
+    "expect": "valid",
+    "scenario": "UI-05",
+    "data": {
+        "schema_version": "1",
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "index_status": "partial",
+        "index_revision": 2,
+        "pending_revision": null,
+        "searchable": true,
+        "counts": {
+            "discovered": 120,
+            "indexed": 118,
+            "skipped": 0,
+            "failed": 2
+        },
+        "diagnostics": [
+            {
+                "relative_path": "app/broken.py",
+                "reason_code": "syntax_error",
+                "line": 14
+            },
+            {
+                "relative_path": "app/legacy.py",
+                "reason_code": "encoding_error"
+            }
+        ],
+        "diagnostics_truncated": false,
+        "started_at": "2026-11-04T09:00:00Z",
+        "completed_at": "2026-11-04T09:05:00Z"
+    }
+}

@@ -1,0 +1,27 @@
+# Work-root ignore rules (task 3.2). The repository root .gitignore covers Python caches and venvs.
+
+# Node workspaces: only the root package-lock.json is tracked.
+node_modules/
+apps/*/package-lock.json
+contracts/package-lock.json
+tools/*/package-lock.json
+*.tsbuildinfo
+dist/
+coverage/
+
+# Runtime data: registry, index, pointer blobs, SDK home, logs, pid files.
+.securecode/
+
+# Local secrets. Only .env.example (names, no values) is tracked.
+.env
+.env.*
+!.env.example
+
+# Local SQLite files created by pre-3.2 stores that default to the working directory.
+*.db
+*.db-journal
+*.sqlite3
+
+# Raw verification output must not be committed; summarized evidence JSON may be.
+artifacts/verification/**/raw/
+*.log

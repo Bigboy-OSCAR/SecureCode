@@ -1,0 +1,89 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Token count",
+    "description": "Internal tokens.count contract (context-service POST /internal/v1/tokens/count). Body counting only; provider framing of the whole request and the final hard cap belong to 4.8.",
+    "definitions": {
+        "CountMode": {
+            "title": "CountMode",
+            "description": "exact = local tokenizer identical to the provider (none exists for the 3.1 model). provider_estimate = provider count_tokens API (documented as an estimate). provider_reported = usage returned after a real request.",
+            "type": "string",
+            "enum": ["exact", "provider_estimate", "provider_reported"]
+        },
+        "TokenCountMethod": {
+            "title": "TokenCountMethod",
+            "type": "string",
+            "enum": ["anthropic_count_tokens"]
+        },
+        "TokenCountFraming": {
+            "title": "TokenCountFraming",
+            "description": "What surrounds the counted text. single_user_message = one user message holding one text block; the count includes that minimal framing.",
+            "type": "string",
+            "enum": ["single_user_message"]
+        },
+        "TokenCountRequest": {
+            "title": "TokenCountRequest",
+            "type": "object",
+            "required": ["text"],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "primitives.schema.json#/definitions/SchemaVersion" },
+                "text": {
+                    "description": "Text to count. Must be valid Unicode (no lone surrogates) and at most 1 MiB as UTF-8.",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "model_id": {
+                    "description": "Optional; must equal the configured model. Omit to use it.",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                }
+            }
+        },
+        "TokenCountResult": {
+            "title": "TokenCountResult",
+            "type": "object",
+            "required": [
+                "schema_version",
+                "token_count",
+                "count_mode",
+                "provider_id",
+                "model_id",
+                "method",
+                "framing",
+                "text_bytes",
+                "cached"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "primitives.schema.json#/definitions/SchemaVersion" },
+                "token_count": { "type": "integer", "minimum": 0 },
+                "count_mode": { "$ref": "#/definitions/CountMode" },
+                "provider_id": { "type": "string", "minLength": 1, "maxLength": 64 },
+                "model_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+                "method": { "$ref": "#/definitions/TokenCountMethod" },
+                "framing": { "$ref": "#/definitions/TokenCountFraming" },
+                "text_bytes": {
+                    "description": "UTF-8 byte length of the counted text.",
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "cached": {
+                    "description": "true when served from the in-process cache keyed by sha256(model_id, text).",
+                    "type": "boolean"
+                }
+            }
+        },
+        "TokenCountSummary": {
+            "title": "TokenCountSummary",
+            "description": "Compact count embedded in other DTOs (bundles, plans). Never present a provider_estimate as exact.",
+            "type": "object",
+            "required": ["token_count", "count_mode"],
+            "additionalProperties": false,
+            "properties": {
+                "token_count": { "type": "integer", "minimum": 0 },
+                "count_mode": { "$ref": "#/definitions/CountMode" }
+            }
+        }
+    }
+}

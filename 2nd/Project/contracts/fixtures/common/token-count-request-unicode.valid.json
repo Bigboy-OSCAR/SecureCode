@@ -1,0 +1,8 @@
+{
+    "schema_ref": "common/token-count.schema.json#/definitions/TokenCountRequest",
+    "expect": "valid",
+    "scenario": "UI-31",
+    "data": {
+        "text": "def 계산(): return '😀'  # é"
+    }
+}

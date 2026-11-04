@@ -1,0 +1,14 @@
+{
+    "schema_ref": "api/workspace.schema.json#/definitions/WorkspaceListResponse",
+    "expect": "valid",
+    "scenario": "UI-02",
+    "data": {
+        "schema_version": "1",
+        "items": [],
+        "page": {
+            "limit": 20,
+            "next_cursor": null,
+            "has_more": false
+        }
+    }
+}

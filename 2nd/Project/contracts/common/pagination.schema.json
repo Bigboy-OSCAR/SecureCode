@@ -1,0 +1,40 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Pagination",
+    "description": "Cursor pagination for every list/search response (workspaces, sessions, pointers, symbol candidates). Responses also obey a byte cap; a page may hold fewer items than limit.",
+    "definitions": {
+        "PageLimit": {
+            "title": "PageLimit",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 20
+        },
+        "PageRequest": {
+            "title": "PageRequest",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "limit": { "$ref": "#/definitions/PageLimit" },
+                "cursor": { "$ref": "primitives.schema.json#/definitions/OpaqueCursor" }
+            }
+        },
+        "PageInfo": {
+            "title": "PageInfo",
+            "type": "object",
+            "required": ["limit", "next_cursor", "has_more"],
+            "additionalProperties": false,
+            "properties": {
+                "limit": { "$ref": "#/definitions/PageLimit" },
+                "next_cursor": {
+                    "oneOf": [{ "$ref": "primitives.schema.json#/definitions/OpaqueCursor" }, { "type": "null" }]
+                },
+                "has_more": { "type": "boolean" },
+                "truncated_by_bytes": {
+                    "description": "true when the page ended early because of the response byte cap.",
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}

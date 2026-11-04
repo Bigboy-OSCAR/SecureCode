@@ -1,0 +1,8 @@
+{
+    "schema_ref": "api/run.schema.json#/definitions/RunCreateRequest",
+    "expect": "invalid",
+    "scenario": "UI-10",
+    "data": {
+        "prompt": "x"
+    }
+}

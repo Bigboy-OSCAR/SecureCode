@@ -1,0 +1,86 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "API error",
+    "description": "Single error envelope for the public /api/v1 and the internal context-service API. HTTP status and retry defaults per code live in contracts/common/error-codes.json.",
+    "definitions": {
+        "ErrorCode": {
+            "title": "ErrorCode",
+            "type": "string",
+            "enum": [
+                "INVALID_POINTER",
+                "NOT_FOUND",
+                "EXPIRED",
+                "FORBIDDEN",
+                "SOURCE_CHANGED",
+                "INVALID_SELECTOR",
+                "UNSUPPORTED_FORMAT",
+                "UNSUPPORTED_LANGUAGE",
+                "PARSE_FAILED",
+                "NO_MATCH",
+                "BUDGET_EXCEEDED",
+                "TOKENIZER_UNAVAILABLE",
+                "SDK_UNAVAILABLE",
+                "PROVIDER_ERROR",
+                "APPROVAL_REJECTED",
+                "CANCELLED",
+                "UNAUTHENTICATED",
+                "BOOTSTRAP_CODE_INVALID",
+                "BOOTSTRAP_CODE_EXPIRED",
+                "ORIGIN_REJECTED",
+                "VALIDATION_FAILED",
+                "PAYLOAD_TOO_LARGE",
+                "QUOTA_EXCEEDED",
+                "RUN_ALREADY_ACTIVE",
+                "IDEMPOTENCY_CONFLICT",
+                "APPROVAL_EXPIRED",
+                "APPROVAL_DIGEST_MISMATCH",
+                "APPROVAL_ALREADY_DECIDED",
+                "PROTECTION_UNAVAILABLE",
+                "INDEX_NOT_READY",
+                "RATE_LIMITED",
+                "SERVICE_UNAVAILABLE",
+                "NOT_IMPLEMENTED",
+                "INTERNAL_ERROR"
+            ]
+        },
+        "ErrorDetails": {
+            "title": "ErrorDetails",
+            "description": "Optional machine-readable hints. Scalars only: no paths, keys, tokens or raw content.",
+            "type": "object",
+            "maxProperties": 16,
+            "propertyNames": { "pattern": "^[a-z][a-z0-9_]{0,63}$" },
+            "additionalProperties": {
+                "type": ["string", "number", "integer", "boolean", "null"],
+                "maxLength": 256
+            }
+        },
+        "ApiError": {
+            "title": "ApiError",
+            "type": "object",
+            "required": ["code", "message", "retryable", "request_id"],
+            "additionalProperties": false,
+            "properties": {
+                "code": { "$ref": "#/definitions/ErrorCode" },
+                "message": {
+                    "description": "User-facing, safe to display; never contains server paths, secrets or large source text.",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500
+                },
+                "retryable": { "type": "boolean" },
+                "request_id": { "$ref": "primitives.schema.json#/definitions/RequestId" },
+                "details": { "$ref": "#/definitions/ErrorDetails" }
+            }
+        },
+        "ErrorResponse": {
+            "title": "ErrorResponse",
+            "type": "object",
+            "required": ["schema_version", "error"],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "primitives.schema.json#/definitions/SchemaVersion" },
+                "error": { "$ref": "#/definitions/ApiError" }
+            }
+        }
+    }
+}

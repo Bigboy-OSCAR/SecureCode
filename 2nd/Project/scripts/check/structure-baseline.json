@@ -1,0 +1,96 @@
+{
+    "description": "Known violations that existed before task 3.2 (2026-11-04). They are reported as KNOWN, never as PASS, and keep `npm run check` INCOMPLETE until removed. Owners delete an entry after fixing it; 3.7 must end with an empty list. path ending with '/' matches a directory prefix.",
+    "entries": [
+        {
+            "path": "apps/host/src/cline-plugins/",
+            "rule": "layout",
+            "owner": "임우형",
+            "task": "4.4",
+            "note": "not a 0.5 directory; SDK wiring belongs in apps/host/src/cline/plugins (3.5 port) and pointer logic in src/pointer-hooks"
+        },
+        {
+            "path": "apps/host/src/cline-plugins/",
+            "rule": "test-in-src",
+            "owner": "임우형",
+            "task": "4.4",
+            "note": "test-*.ts runners must move to apps/host/tests/"
+        },
+        {
+            "path": "apps/host/src/cline-plugins/",
+            "rule": "typecheck",
+            "owner": "임우형",
+            "task": "4.4",
+            "note": "fails strict Bundler typecheck (3.1 C-01): uses non-existent SDK APIs (ClineCore.use, ClineCoreOptions.plugins)"
+        },
+        {
+            "path": "apps/host/src/pointer-hooks/",
+            "rule": "typecheck",
+            "owner": "임우형",
+            "task": "4.4",
+            "note": "afterTool returns string results and reads beforeModel.messages/appendContext, which the 0.2.0 types do not have"
+        },
+        {
+            "path": "apps/host/tools/sdk-probe.ts",
+            "rule": "layout",
+            "owner": "임우형",
+            "task": "4.4",
+            "note": "duplicate of tools/sdk-probe (3.1); remove or move under tools/"
+        },
+        {
+            "path": "services/context-service/src/securecode_context/api/pointers.py",
+            "rule": "python-docstring",
+            "owner": "임우형",
+            "task": "4.3",
+            "note": "no CODING_CONVENTIONS docstrings; module-level SQLiteRuntimeStore() writes runtime_pointers.db into the working directory"
+        },
+        {
+            "path": "services/context-service/src/securecode_context/api/main.py",
+            "rule": "python-docstring",
+            "owner": "임우형",
+            "task": "4.3",
+            "note": "pre-3.2 app entry; the 3.2 entry is securecode_context.app (python -m securecode_context.app)"
+        },
+        {
+            "path": "services/context-service/src/securecode_context/api/schemas.py",
+            "rule": "python-docstring",
+            "owner": "임우형",
+            "task": "4.3",
+            "note": "replace with 4.2 pointer contracts"
+        },
+        {
+            "path": "services/context-service/src/securecode_context/pointers/",
+            "rule": "python-docstring",
+            "owner": "임우형",
+            "task": "4.3",
+            "note": "no CODING_CONVENTIONS docstrings; Optional[...] style (ruff UP045 ignored for this path)"
+        },
+        {
+            "path": "services/context-service/tests/test_runtime_store.py",
+            "rule": "python-docstring",
+            "owner": "임우형",
+            "task": "4.3",
+            "note": "move to tests/unit/ with docstrings"
+        },
+        {
+            "path": "services/context-service/tests/test_source_store.py",
+            "rule": "python-docstring",
+            "owner": "임우형",
+            "task": "4.5",
+            "note": "move to tests/unit/ with docstrings"
+        },
+        {
+            "path": "services/context-service/tests/test_sqlite_runtime_store.py",
+            "rule": "python-docstring",
+            "owner": "임우형",
+            "task": "4.3",
+            "note": "move to tests/unit/ with docstrings"
+        },
+        {
+            "path": "services/context-service/main.py",
+            "rule": "python-docstring",
+            "owner": "임우형",
+            "task": "4.3",
+            "note": "uv init stub printing hello; not an entry point"
+        }
+    ]
+}

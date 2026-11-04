@@ -1,0 +1,17 @@
+{
+    "schema_ref": "common/api-error.schema.json#/definitions/ErrorResponse",
+    "expect": "valid",
+    "scenario": "UI-03",
+    "data": {
+        "schema_version": "1",
+        "error": {
+            "code": "FORBIDDEN",
+            "message": "허용되지 않은 경로입니다.",
+            "retryable": false,
+            "request_id": "req_01J9Z6Q4TEST",
+            "details": {
+                "reason": "path_outside_allowed_roots"
+            }
+        }
+    }
+}

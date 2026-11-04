@@ -1,0 +1,17 @@
+{
+    "schema_ref": "common/api-error.schema.json#/definitions/ErrorResponse",
+    "expect": "valid",
+    "scenario": "UI-15",
+    "data": {
+        "schema_version": "1",
+        "error": {
+            "code": "PROTECTION_UNAVAILABLE",
+            "message": "필수 보호 기능이 준비되지 않아 실행을 시작하지 않았습니다.",
+            "retryable": true,
+            "request_id": "req_01J9Z6Q4TEST",
+            "details": {
+                "protection": "runtime_pointer_hook"
+            }
+        }
+    }
+}

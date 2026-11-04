@@ -4,18 +4,16 @@
 
 ## 실행
 
-작업 루트(`2nd/Project`) 기준:
+작업 루트(`2nd/Project`)에서 실행한다. 의존성은 루트 workspace lockfile(`package-lock.json`)로 고정된다(3.2에서 통합).
 
 ```sh
-cd tools/sdk-probe
 npm ci
-npm run typecheck
-npm run probe                     # 전체 8개 시나리오
-npm run probe -- approval         # 특정 시나리오만
+npm run probe:sdk                                   # 전체 8개 시나리오
+npm run probe -w @securecode/sdk-probe -- approval  # 특정 시나리오만
 ```
 
-- Node 22 이상이 필요하다(`engines.node: ">=22"`). API 키는 필요 없다.
-- 증거는 `artifacts/verification/3.1/sdk-probe-result.json`에 기록된다(절대경로·원문·키 제외).
+- Node 22 또는 24 LTS가 필요하다. API 키는 필요 없다.
+- 증거는 `artifacts/verification/<작업>/sdk-probe-result.json`에 기록된다. 기본값은 `3.1`이고 `SDK_PROBE_TASK_ID=3.2`처럼 바꿀 수 있다. 절대경로·원문·키는 기록하지 않는다.
 - 모든 검사가 통과하고 저장소의 Git refs/stash가 그대로일 때만 종료 코드 0이다.
 
 ## 구조

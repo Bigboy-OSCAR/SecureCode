@@ -1,0 +1,38 @@
+{
+    "schema_ref": "symbols/symbol.schema.json#/definitions/SymbolSearchResponse",
+    "expect": "valid",
+    "scenario": "UI-09",
+    "data": {
+        "schema_version": "1",
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "index_revision": 3,
+        "candidates": [
+            {
+                "candidate_id": "cand_01J9Z6Q4C001",
+                "symbol_ids": ["sym_01J9Z6Q4S001", "sym_01J9Z6Q4S002"],
+                "primary": {
+                    "symbol_id": "sym_01J9Z6Q4S001",
+                    "qualname": "load_config",
+                    "kind": "function",
+                    "relative_path": "app/config.py",
+                    "start_line": 12,
+                    "end_line": 30,
+                    "content_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                },
+                "score": 0.42,
+                "index_revision": 3,
+                "depth": 1,
+                "estimated_tokens": {
+                    "token_count": 310,
+                    "count_mode": "provider_estimate"
+                }
+            }
+        ],
+        "page": {
+            "limit": 10,
+            "next_cursor": "Y2FuZDoy",
+            "has_more": true
+        },
+        "no_match": null
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "schema_ref": "events/app-event.schema.json#/definitions/AppEvent",
+    "expect": "valid",
+    "scenario": "UI-13",
+    "data": {
+        "schema_version": "1",
+        "event_id": "evt_01J9Z6Q4EV0009",
+        "sequence": 9,
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "session_id": "ses_01J9Z6Q4TEST",
+        "run_id": "run_01J9Z6Q4TEST",
+        "type": "run.status_changed",
+        "timestamp": "2026-11-04T09:00:00Z",
+        "payload": {
+            "status": "cancelled",
+            "previous_status": "cancelling",
+            "terminal": {
+                "status": "cancelled",
+                "finished_at": "2026-11-04T09:05:00Z",
+                "reason_code": "CANCELLED"
+            }
+        }
+    }
+}

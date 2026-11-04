@@ -28,7 +28,9 @@ const scenarioRunners: Record<string, () => Promise<ScenarioResult>> = {
 
 function printSummary(result: ScenarioResult): void {
     const failedChecks = result.checks.filter((record) => !record.passed);
-    console.log(`${result.passed ? "PASS" : "FAIL"} ${result.scenario} (${result.checks.length - failedChecks.length}/${result.checks.length})`);
+    console.log(
+        `${result.passed ? "PASS" : "FAIL"} ${result.scenario} (${result.checks.length - failedChecks.length}/${result.checks.length})`,
+    );
     for (const record of failedChecks) {
         console.log(`  - FAILED ${record.name}: ${record.evidence}`);
     }
@@ -49,7 +51,8 @@ async function main(): Promise<void> {
     }
 
     const gitAfter = readRepositoryGitState();
-    const gitUnchanged = gitBefore.refsDigest === gitAfter.refsDigest && gitBefore.stashEntries === gitAfter.stashEntries;
+    const gitUnchanged =
+        gitBefore.refsDigest === gitAfter.refsDigest && gitBefore.stashEntries === gitAfter.stashEntries;
     const evidencePath = writeEvidence(results, gitBefore, gitAfter);
     console.log(`repository refs/stash unchanged: ${gitUnchanged}`);
     console.log(`evidence: ${evidencePath}`);

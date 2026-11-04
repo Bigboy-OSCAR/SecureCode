@@ -25,15 +25,42 @@ export async function runCheckpointScenario(): Promise<ScenarioResult> {
     try {
         await withProbeRun({ name: "checkpoint", turns }, async ({ core, workspaceDir }) => {
             const before = readGitFingerprint(workspaceDir);
-            const started = await core.start(buildProbeStartInput({ cwd: workspaceDir, prompt: "go", extraTools: [createSentinelTool()], checkpointSpy, interactive: true }));
+            const started = await core.start(
+                buildProbeStartInput({
+                    cwd: workspaceDir,
+                    prompt: "go",
+                    extraTools: [createSentinelTool()],
+                    checkpointSpy,
+                    interactive: true,
+                }),
+            );
             await core.send({ sessionId: started.sessionId, prompt: "second run" }).catch(() => undefined);
             const after = readGitFingerprint(workspaceDir);
 
-            recorder.check("createCheckpoint never called when disabled", checkpointCalls === 0, `calls=${checkpointCalls}`);
-            recorder.check("git status unchanged", before.status === after.status, `status_lines=${after.status.split("\n").filter(Boolean).length}`);
-            recorder.check("git refs unchanged", before.refs === after.refs, `refs=${after.refs.split("\n").filter(Boolean).length}`);
-            recorder.check("git stash unchanged", before.stash === after.stash, `stash_entries=${after.stash.split("\n").filter(Boolean).length}`);
-            recorder.observe("manifest_checkpoint_fields", Object.keys(started.manifest).filter((key) => key.includes("checkpoint")));
+            recorder.check(
+                "createCheckpoint never called when disabled",
+                checkpointCalls === 0,
+                `calls=${checkpointCalls}`,
+            );
+            recorder.check(
+                "git status unchanged",
+                before.status === after.status,
+                `status_lines=${after.status.split("\n").filter(Boolean).length}`,
+            );
+            recorder.check(
+                "git refs unchanged",
+                before.refs === after.refs,
+                `refs=${after.refs.split("\n").filter(Boolean).length}`,
+            );
+            recorder.check(
+                "git stash unchanged",
+                before.stash === after.stash,
+                `stash_entries=${after.stash.split("\n").filter(Boolean).length}`,
+            );
+            recorder.observe(
+                "manifest_checkpoint_fields",
+                Object.keys(started.manifest).filter((key) => key.includes("checkpoint")),
+            );
         });
     } catch (error) {
         recorder.fail("scenario threw", error);

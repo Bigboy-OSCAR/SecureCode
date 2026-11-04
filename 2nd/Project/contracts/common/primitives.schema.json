@@ -1,0 +1,109 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Common primitives",
+    "description": "Shared scalar contracts (schema_version 1). Identifiers are opaque: clients compare them, never parse them.",
+    "definitions": {
+        "SchemaVersion": {
+            "title": "SchemaVersion",
+            "description": "Wire compatibility version. Breaking changes require a new value and a docs/contracts change record.",
+            "type": "string",
+            "const": "1"
+        },
+        "WorkspaceId": {
+            "title": "WorkspaceId",
+            "type": "string",
+            "pattern": "^ws_[A-Za-z0-9-]{8,64}$"
+        },
+        "SessionId": {
+            "title": "SessionId",
+            "type": "string",
+            "pattern": "^ses_[A-Za-z0-9-]{8,64}$"
+        },
+        "RunId": {
+            "title": "RunId",
+            "type": "string",
+            "pattern": "^run_[A-Za-z0-9-]{8,64}$"
+        },
+        "ApprovalId": {
+            "title": "ApprovalId",
+            "type": "string",
+            "pattern": "^apr_[A-Za-z0-9-]{8,64}$"
+        },
+        "RequestId": {
+            "title": "RequestId",
+            "description": "Correlates one HTTP request across host, context-service and logs.",
+            "type": "string",
+            "pattern": "^req_[A-Za-z0-9-]{8,64}$"
+        },
+        "EventId": {
+            "title": "EventId",
+            "description": "Unique per event. The SSE `id:` line carries the run-scoped sequence, not this value.",
+            "type": "string",
+            "pattern": "^evt_[A-Za-z0-9-]{8,64}$"
+        },
+        "IdempotencyKey": {
+            "title": "IdempotencyKey",
+            "description": "Client-chosen key; the same key with the same body returns the first result.",
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9._:-]+$"
+        },
+        "Timestamp": {
+            "title": "Timestamp",
+            "description": "RFC 3339 timestamp in UTC.",
+            "type": "string",
+            "format": "date-time"
+        },
+        "Sha256Hex": {
+            "title": "Sha256Hex",
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+        },
+        "InputDigest": {
+            "title": "InputDigest",
+            "description": "sha256 of the canonical JSON of a tool input, prefixed with the algorithm.",
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "RelativePath": {
+            "title": "RelativePath",
+            "description": "Workspace-relative POSIX path. Server absolute paths never leave the server.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024,
+            "pattern": "^(?![A-Za-z]:)(?!/)(?!.*(^|/)\\.\\.(/|$)).+$"
+        },
+        "OpaqueCursor": {
+            "title": "OpaqueCursor",
+            "description": "Server-issued cursor bound to scope, revision and operation. Clients pass it back unchanged.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+        },
+        "IndexRevision": {
+            "title": "IndexRevision",
+            "description": "Monotonic symbol index revision of one workspace (3.3).",
+            "type": "integer",
+            "minimum": 1
+        },
+        "PointerUri": {
+            "title": "PointerUri",
+            "description": "Boundary reference to a 4.2-owned pointer. Opaque handle; format follows docs/architecture/POINTER_DESIGN.md.",
+            "type": "string",
+            "maxLength": 512,
+            "pattern": "^securecode://(source|runtime)/[^\\s]+$"
+        },
+        "PointerKind": {
+            "title": "PointerKind",
+            "type": "string",
+            "enum": ["source", "runtime"]
+        },
+        "ShortText": {
+            "title": "ShortText",
+            "description": "User-visible bounded text such as a summary or message.",
+            "type": "string",
+            "maxLength": 500
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "schema_ref": "common/api-error.schema.json#/definitions/ErrorResponse",
+    "expect": "valid",
+    "scenario": "H-07",
+    "data": {
+        "schema_version": "1",
+        "error": {
+            "code": "NOT_FOUND",
+            "message": "요청한 항목을 찾을 수 없습니다.",
+            "retryable": false,
+            "request_id": "req_01J9Z6Q4TEST"
+        }
+    }
+}

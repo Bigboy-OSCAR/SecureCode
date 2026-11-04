@@ -1,0 +1,9 @@
+{
+    "schema_ref": "api/approval.schema.json#/definitions/ApprovalDecisionRequest",
+    "expect": "invalid",
+    "scenario": "UI-11",
+    "data": {
+        "decision": "auto_approve_all",
+        "input_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+}

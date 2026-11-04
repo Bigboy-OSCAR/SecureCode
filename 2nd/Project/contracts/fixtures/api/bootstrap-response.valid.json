@@ -1,0 +1,10 @@
+{
+    "schema_ref": "api/system.schema.json#/definitions/BootstrapResponse",
+    "expect": "valid",
+    "scenario": "UI-01",
+    "data": {
+        "schema_version": "1",
+        "authenticated": true,
+        "session_expires_at": "2026-11-04T09:05:00Z"
+    }
+}

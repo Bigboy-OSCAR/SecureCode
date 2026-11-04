@@ -30,10 +30,14 @@ function readStringField(input: unknown, fieldName: string): string {
 function waitUnlessAborted(signal: AbortSignal | undefined, delayMs: number): Promise<void> {
     return new Promise((resolve, reject) => {
         const timer = setTimeout(resolve, delayMs);
-        signal?.addEventListener("abort", () => {
-            clearTimeout(timer);
-            reject(new Error("command aborted"));
-        }, { once: true });
+        signal?.addEventListener(
+            "abort",
+            () => {
+                clearTimeout(timer);
+                reject(new Error("command aborted"));
+            },
+            { once: true },
+        );
     });
 }
 

@@ -1,0 +1,40 @@
+{
+    "schema_ref": "symbols/symbol.schema.json#/definitions/SymbolBundle",
+    "expect": "valid",
+    "scenario": "UI-09",
+    "data": {
+        "schema_version": "1",
+        "candidate_id": "cand_01J9Z6Q4C001",
+        "index_revision": 3,
+        "fragments": [
+            {
+                "symbol_id": "sym_01J9Z6Q4S001",
+                "start_line": 12,
+                "end_line": 30,
+                "content": "def load_config(path):\n    ...\n",
+                "provenance": {
+                    "pointer": null,
+                    "relative_path": "app/config.py",
+                    "content_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                }
+            }
+        ],
+        "omissions": [
+            {
+                "symbol_id": "sym_01J9Z6Q4S003",
+                "reason": "budget_exceeded"
+            }
+        ],
+        "unresolved_references": [
+            {
+                "from_symbol_id": "sym_01J9Z6Q4S001",
+                "name": "importlib.import_module",
+                "reason": "dynamic_import"
+            }
+        ],
+        "token_count": {
+            "token_count": 310,
+            "count_mode": "provider_estimate"
+        }
+    }
+}

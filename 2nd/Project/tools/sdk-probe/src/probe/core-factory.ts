@@ -16,7 +16,10 @@ export interface ProbeCoreOptions {
     toolExecutors?: ProbeToolExecutors;
 }
 
-const rejectByDefault: ApprovalHandler = async () => ({ approved: false, reason: "probe default: no approval handler" });
+const rejectByDefault: ApprovalHandler = async () => ({
+    approved: false,
+    reason: "probe default: no approval handler",
+});
 
 export async function createProbeCore(options: ProbeCoreOptions): Promise<ClineCore> {
     return ClineCore.create({

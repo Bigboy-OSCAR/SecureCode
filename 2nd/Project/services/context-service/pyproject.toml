@@ -1,12 +1,22 @@
 [project]
-name = "context-service"
+name = "securecode-context-service"
 version = "0.1.0"
-description = "Add your description here"
+description = "SecureCode Python context service: R0 symbols, pointers, context selection and token counting behind an authenticated loopback API."
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.14,<3.15"
 dependencies = [
-    "fastapi>=0.162.0",
-    "uvicorn>=0.54.0",
+    "fastapi>=0.162.0,<0.163",
+    "uvicorn>=0.54.0,<0.55",
+    "httpx>=0.28,<0.29",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9,<10",
+    "ruff>=0.15,<0.16",
+    "mypy>=2,<3",
+    "jsonschema>=4.25,<5",
+    "rfc3339-validator>=0.1.4,<0.2",
 ]
 
 [build-system]
@@ -16,3 +26,45 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["securecode_context*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "N", "B", "UP", "SIM", "RUF", "T20"]
+
+[tool.ruff.lint.pycodestyle]
+# The formatter wraps code at 100. Ruff measures Korean characters as width 2, so docstrings and
+# comments get a wider lint limit instead of being split mid-sentence.
+max-line-length = 120
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["T20"]
+# Pre-3.2 files (uv init stub; pointer MVP owned by 임우형, tasks 4.3/4.4 reopened 2026-11-04).
+# Listed in scripts/check/structure-baseline.json; remove these entries when the owner reworks them.
+"main.py" = ["T201"]
+"src/securecode_context/pointers/**" = ["UP045"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+exclude = ["src/securecode_context/api/pointers.py", "src/securecode_context/pointers/**"]
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+mypy_path = "src"
+packages = ["securecode_context"]
+
+# Pre-3.2 pointer MVP (owner 임우형, tasks 4.3/4.4 reopened 2026-11-04). Type errors here are
+# reported by `npm run check` as KNOWN baseline items, not hidden; remove when the owner reworks them.
+[[tool.mypy.overrides]]
+module = [
+    "securecode_context.api.main",
+    "securecode_context.api.pointers",
+    "securecode_context.api.schemas",
+    "securecode_context.pointers.*",
+]
+ignore_errors = true

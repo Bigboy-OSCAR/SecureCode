@@ -1,0 +1,353 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "AppEvent",
+    "description": "Application events sent over SSE (GET /api/v1/runs/:id/events). Independent of Cline SDK CoreSessionEvent: the host maps SDK events in apps/host/src/cline/events and never forwards them. Every event is run-scoped; sequence starts at 1 per run and increases by 1.",
+    "definitions": {
+        "AppEventType": {
+            "title": "AppEventType",
+            "type": "string",
+            "enum": [
+                "run.status_changed",
+                "run.output_delta",
+                "run.tool_call_updated",
+                "run.approval_requested",
+                "run.approval_resolved",
+                "run.pointer_created",
+                "run.context_planned",
+                "stream.replay_unavailable"
+            ]
+        },
+        "Sequence": {
+            "title": "Sequence",
+            "description": "Run-scoped, starts at 1, +1 per event. Also the SSE id: line and the Last-Event-ID value.",
+            "type": "integer",
+            "minimum": 1
+        },
+        "RunStatusChangedPayload": {
+            "title": "RunStatusChangedPayload",
+            "type": "object",
+            "required": ["status", "previous_status"],
+            "additionalProperties": false,
+            "properties": {
+                "status": { "$ref": "../api/run.schema.json#/definitions/RunStatus" },
+                "previous_status": {
+                    "oneOf": [{ "$ref": "../api/run.schema.json#/definitions/RunStatus" }, { "type": "null" }]
+                },
+                "terminal": { "$ref": "../api/run.schema.json#/definitions/RunTerminal" }
+            }
+        },
+        "RunOutputDeltaPayload": {
+            "title": "RunOutputDeltaPayload",
+            "description": "Answer text chunk. Concatenate chunks of one message_id in sequence order.",
+            "type": "object",
+            "required": ["message_id", "text"],
+            "additionalProperties": false,
+            "properties": {
+                "message_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+                "text": { "type": "string", "maxLength": 4096 }
+            }
+        },
+        "RunToolCallUpdatedPayload": {
+            "title": "RunToolCallUpdatedPayload",
+            "type": "object",
+            "required": ["tool_call"],
+            "additionalProperties": false,
+            "properties": {
+                "tool_call": { "$ref": "../api/run.schema.json#/definitions/ToolCallSummary" }
+            }
+        },
+        "RunApprovalRequestedPayload": {
+            "title": "RunApprovalRequestedPayload",
+            "type": "object",
+            "required": ["approval"],
+            "additionalProperties": false,
+            "properties": {
+                "approval": { "$ref": "../api/approval.schema.json#/definitions/ApprovalRequest" }
+            }
+        },
+        "RunApprovalResolvedPayload": {
+            "title": "RunApprovalResolvedPayload",
+            "type": "object",
+            "required": ["approval_id", "status", "decided_at"],
+            "additionalProperties": false,
+            "properties": {
+                "approval_id": { "$ref": "../common/primitives.schema.json#/definitions/ApprovalId" },
+                "status": { "$ref": "../api/approval.schema.json#/definitions/ApprovalStatus" },
+                "decided_at": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "reason_code": { "$ref": "../common/api-error.schema.json#/definitions/ErrorCode" }
+            }
+        },
+        "RunPointerCreatedPayload": {
+            "title": "RunPointerCreatedPayload",
+            "description": "Boundary to 4.2: the full PointerDescriptor (preview, operations, expiry) is defined in contracts/pointers and read through the pointer API.",
+            "type": "object",
+            "required": ["pointer", "kind", "byte_size"],
+            "additionalProperties": false,
+            "properties": {
+                "pointer": { "$ref": "../common/primitives.schema.json#/definitions/PointerUri" },
+                "kind": { "$ref": "../common/primitives.schema.json#/definitions/PointerKind" },
+                "byte_size": { "type": "integer", "minimum": 0 },
+                "tool_call_id": { "type": "string", "minLength": 1, "maxLength": 128 }
+            }
+        },
+        "RunContextPlannedPayload": {
+            "title": "RunContextPlannedPayload",
+            "description": "Counts only. Boundary to 4.2: the ContextPlan with fragments is defined in contracts/context and fetched through the context API.",
+            "type": "object",
+            "required": ["selected_count", "omitted_count", "used_tokens", "budget_tokens", "count_mode"],
+            "additionalProperties": false,
+            "properties": {
+                "selected_count": { "type": "integer", "minimum": 0 },
+                "omitted_count": { "type": "integer", "minimum": 0 },
+                "used_tokens": { "type": "integer", "minimum": 0 },
+                "budget_tokens": { "type": "integer", "minimum": 0 },
+                "count_mode": { "$ref": "../common/token-count.schema.json#/definitions/CountMode" },
+                "index_revision": { "$ref": "../common/primitives.schema.json#/definitions/IndexRevision" }
+            }
+        },
+        "StreamReplayUnavailablePayload": {
+            "title": "StreamReplayUnavailablePayload",
+            "description": "Sent instead of a replay when Last-Event-ID is older than the retained window. The client must GET the run snapshot.",
+            "type": "object",
+            "required": ["requested_after_sequence", "oldest_available_sequence"],
+            "additionalProperties": false,
+            "properties": {
+                "requested_after_sequence": { "type": "integer", "minimum": 0 },
+                "oldest_available_sequence": { "type": "integer", "minimum": 1 }
+            }
+        },
+        "RunStatusChangedEvent": {
+            "title": "RunStatusChangedEvent",
+            "type": "object",
+            "required": [
+                "schema_version",
+                "event_id",
+                "sequence",
+                "workspace_id",
+                "session_id",
+                "run_id",
+                "type",
+                "timestamp",
+                "payload"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "event_id": { "$ref": "../common/primitives.schema.json#/definitions/EventId" },
+                "sequence": { "$ref": "#/definitions/Sequence" },
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "session_id": { "$ref": "../common/primitives.schema.json#/definitions/SessionId" },
+                "run_id": { "$ref": "../common/primitives.schema.json#/definitions/RunId" },
+                "type": { "type": "string", "const": "run.status_changed" },
+                "timestamp": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "payload": { "$ref": "#/definitions/RunStatusChangedPayload" }
+            }
+        },
+        "RunOutputDeltaEvent": {
+            "title": "RunOutputDeltaEvent",
+            "type": "object",
+            "required": [
+                "schema_version",
+                "event_id",
+                "sequence",
+                "workspace_id",
+                "session_id",
+                "run_id",
+                "type",
+                "timestamp",
+                "payload"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "event_id": { "$ref": "../common/primitives.schema.json#/definitions/EventId" },
+                "sequence": { "$ref": "#/definitions/Sequence" },
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "session_id": { "$ref": "../common/primitives.schema.json#/definitions/SessionId" },
+                "run_id": { "$ref": "../common/primitives.schema.json#/definitions/RunId" },
+                "type": { "type": "string", "const": "run.output_delta" },
+                "timestamp": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "payload": { "$ref": "#/definitions/RunOutputDeltaPayload" }
+            }
+        },
+        "RunToolCallUpdatedEvent": {
+            "title": "RunToolCallUpdatedEvent",
+            "type": "object",
+            "required": [
+                "schema_version",
+                "event_id",
+                "sequence",
+                "workspace_id",
+                "session_id",
+                "run_id",
+                "type",
+                "timestamp",
+                "payload"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "event_id": { "$ref": "../common/primitives.schema.json#/definitions/EventId" },
+                "sequence": { "$ref": "#/definitions/Sequence" },
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "session_id": { "$ref": "../common/primitives.schema.json#/definitions/SessionId" },
+                "run_id": { "$ref": "../common/primitives.schema.json#/definitions/RunId" },
+                "type": { "type": "string", "const": "run.tool_call_updated" },
+                "timestamp": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "payload": { "$ref": "#/definitions/RunToolCallUpdatedPayload" }
+            }
+        },
+        "RunApprovalRequestedEvent": {
+            "title": "RunApprovalRequestedEvent",
+            "type": "object",
+            "required": [
+                "schema_version",
+                "event_id",
+                "sequence",
+                "workspace_id",
+                "session_id",
+                "run_id",
+                "type",
+                "timestamp",
+                "payload"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "event_id": { "$ref": "../common/primitives.schema.json#/definitions/EventId" },
+                "sequence": { "$ref": "#/definitions/Sequence" },
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "session_id": { "$ref": "../common/primitives.schema.json#/definitions/SessionId" },
+                "run_id": { "$ref": "../common/primitives.schema.json#/definitions/RunId" },
+                "type": { "type": "string", "const": "run.approval_requested" },
+                "timestamp": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "payload": { "$ref": "#/definitions/RunApprovalRequestedPayload" }
+            }
+        },
+        "RunApprovalResolvedEvent": {
+            "title": "RunApprovalResolvedEvent",
+            "type": "object",
+            "required": [
+                "schema_version",
+                "event_id",
+                "sequence",
+                "workspace_id",
+                "session_id",
+                "run_id",
+                "type",
+                "timestamp",
+                "payload"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "event_id": { "$ref": "../common/primitives.schema.json#/definitions/EventId" },
+                "sequence": { "$ref": "#/definitions/Sequence" },
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "session_id": { "$ref": "../common/primitives.schema.json#/definitions/SessionId" },
+                "run_id": { "$ref": "../common/primitives.schema.json#/definitions/RunId" },
+                "type": { "type": "string", "const": "run.approval_resolved" },
+                "timestamp": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "payload": { "$ref": "#/definitions/RunApprovalResolvedPayload" }
+            }
+        },
+        "RunPointerCreatedEvent": {
+            "title": "RunPointerCreatedEvent",
+            "type": "object",
+            "required": [
+                "schema_version",
+                "event_id",
+                "sequence",
+                "workspace_id",
+                "session_id",
+                "run_id",
+                "type",
+                "timestamp",
+                "payload"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "event_id": { "$ref": "../common/primitives.schema.json#/definitions/EventId" },
+                "sequence": { "$ref": "#/definitions/Sequence" },
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "session_id": { "$ref": "../common/primitives.schema.json#/definitions/SessionId" },
+                "run_id": { "$ref": "../common/primitives.schema.json#/definitions/RunId" },
+                "type": { "type": "string", "const": "run.pointer_created" },
+                "timestamp": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "payload": { "$ref": "#/definitions/RunPointerCreatedPayload" }
+            }
+        },
+        "RunContextPlannedEvent": {
+            "title": "RunContextPlannedEvent",
+            "type": "object",
+            "required": [
+                "schema_version",
+                "event_id",
+                "sequence",
+                "workspace_id",
+                "session_id",
+                "run_id",
+                "type",
+                "timestamp",
+                "payload"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "event_id": { "$ref": "../common/primitives.schema.json#/definitions/EventId" },
+                "sequence": { "$ref": "#/definitions/Sequence" },
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "session_id": { "$ref": "../common/primitives.schema.json#/definitions/SessionId" },
+                "run_id": { "$ref": "../common/primitives.schema.json#/definitions/RunId" },
+                "type": { "type": "string", "const": "run.context_planned" },
+                "timestamp": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "payload": { "$ref": "#/definitions/RunContextPlannedPayload" }
+            }
+        },
+        "StreamReplayUnavailableEvent": {
+            "title": "StreamReplayUnavailableEvent",
+            "type": "object",
+            "required": [
+                "schema_version",
+                "event_id",
+                "sequence",
+                "workspace_id",
+                "session_id",
+                "run_id",
+                "type",
+                "timestamp",
+                "payload"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "event_id": { "$ref": "../common/primitives.schema.json#/definitions/EventId" },
+                "sequence": {
+                    "description": "Equals the run's current last sequence, so the client can resume after reading the snapshot.",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "session_id": { "$ref": "../common/primitives.schema.json#/definitions/SessionId" },
+                "run_id": { "$ref": "../common/primitives.schema.json#/definitions/RunId" },
+                "type": { "type": "string", "const": "stream.replay_unavailable" },
+                "timestamp": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "payload": { "$ref": "#/definitions/StreamReplayUnavailablePayload" }
+            }
+        },
+        "AppEvent": {
+            "title": "AppEvent",
+            "oneOf": [
+                { "$ref": "#/definitions/RunStatusChangedEvent" },
+                { "$ref": "#/definitions/RunOutputDeltaEvent" },
+                { "$ref": "#/definitions/RunToolCallUpdatedEvent" },
+                { "$ref": "#/definitions/RunApprovalRequestedEvent" },
+                { "$ref": "#/definitions/RunApprovalResolvedEvent" },
+                { "$ref": "#/definitions/RunPointerCreatedEvent" },
+                { "$ref": "#/definitions/RunContextPlannedEvent" },
+                { "$ref": "#/definitions/StreamReplayUnavailableEvent" }
+            ]
+        }
+    }
+}

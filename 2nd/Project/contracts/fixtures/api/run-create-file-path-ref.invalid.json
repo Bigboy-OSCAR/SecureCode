@@ -1,0 +1,15 @@
+{
+    "schema_ref": "api/run.schema.json#/definitions/RunCreateRequest",
+    "expect": "invalid",
+    "scenario": "UI-09",
+    "data": {
+        "prompt": "x",
+        "idempotency_key": "run-0002-abcdef",
+        "context_refs": [
+            {
+                "kind": "source",
+                "pointer": "C:/Users/someone/secret.txt"
+            }
+        ]
+    }
+}

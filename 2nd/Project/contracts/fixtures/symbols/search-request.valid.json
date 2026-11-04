@@ -1,0 +1,12 @@
+{
+    "schema_ref": "symbols/symbol.schema.json#/definitions/SymbolSearchRequest",
+    "expect": "valid",
+    "scenario": "UI-09",
+    "data": {
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "query": "load_config",
+        "page": {
+            "limit": 10
+        }
+    }
+}

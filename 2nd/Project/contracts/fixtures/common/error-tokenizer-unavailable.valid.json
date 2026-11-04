@@ -1,0 +1,17 @@
+{
+    "schema_ref": "common/api-error.schema.json#/definitions/ErrorResponse",
+    "expect": "valid",
+    "scenario": "UI-31",
+    "data": {
+        "schema_version": "1",
+        "error": {
+            "code": "TOKENIZER_UNAVAILABLE",
+            "message": "토큰 계수를 사용할 수 없습니다.",
+            "retryable": true,
+            "request_id": "req_01J9Z6Q4TEST",
+            "details": {
+                "reason": "api_key_missing"
+            }
+        }
+    }
+}

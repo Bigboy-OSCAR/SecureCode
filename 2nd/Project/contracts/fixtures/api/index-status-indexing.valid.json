@@ -1,0 +1,21 @@
+{
+    "schema_ref": "api/workspace.schema.json#/definitions/IndexStatusResponse",
+    "expect": "valid",
+    "scenario": "UI-04",
+    "data": {
+        "schema_version": "1",
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "index_status": "indexing",
+        "index_revision": null,
+        "pending_revision": 1,
+        "searchable": false,
+        "counts": {
+            "discovered": 120,
+            "indexed": 40,
+            "skipped": 3,
+            "failed": 0
+        },
+        "diagnostics": [],
+        "started_at": "2026-11-04T09:00:00Z"
+    }
+}

@@ -43,7 +43,8 @@ function waitForAbort(signal: AbortSignal | null | undefined): Promise<never> {
             reject(new Error("holdUntilAborted turn received a request without an AbortSignal"));
             return;
         }
-        const rejectWithReason = (): void => reject(signal.reason ?? new DOMException("aborted", "AbortError"));
+        const rejectWithReason = (): void =>
+            reject(signal.reason instanceof Error ? signal.reason : new DOMException("aborted", "AbortError"));
         if (signal.aborted) {
             rejectWithReason();
             return;
@@ -84,8 +85,14 @@ export class ScriptedProviderFetch {
 
         const turn = this.pendingTurns.shift();
         if (!turn) {
-            const errorBody = { type: "error", error: { type: "invalid_request_error", message: "scripted turns exhausted" } };
-            return new Response(JSON.stringify(errorBody), { status: 400, headers: { "content-type": "application/json" } });
+            const errorBody = {
+                type: "error",
+                error: { type: "invalid_request_error", message: "scripted turns exhausted" },
+            };
+            return new Response(JSON.stringify(errorBody), {
+                status: 400,
+                headers: { "content-type": "application/json" },
+            });
         }
         if (turn.holdUntilAborted) {
             await waitForAbort(init?.signal);

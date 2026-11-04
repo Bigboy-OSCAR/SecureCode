@@ -22,7 +22,10 @@ function buildCountRequestFields(request: CapturedRequest): string[] {
 
 function gateByBytes(request: CapturedRequest): OutboundGateDecision {
     if (request.bodyBytes > OUTBOUND_BYTE_CAP) {
-        return { allowed: false, reason: `BUDGET_EXCEEDED: outbound ${request.bodyBytes} bytes > cap ${OUTBOUND_BYTE_CAP}` };
+        return {
+            allowed: false,
+            reason: `BUDGET_EXCEEDED: outbound ${request.bodyBytes} bytes > cap ${OUTBOUND_BYTE_CAP}`,
+        };
     }
     return { allowed: true };
 }
@@ -35,22 +38,53 @@ export async function runOutboundGateScenario(): Promise<ScenarioResult> {
     ];
 
     try {
-        await withProbeRun({ name: "outbound-gate", turns, outboundGate: gateByBytes }, async ({ core, scriptedFetch, workspaceDir, coreEvents }) => {
-            const outcome = await core
-                .start(buildProbeStartInput({ cwd: workspaceDir, prompt: "make log", extraTools: [createSentinelTool()] }))
-                .then((result) => `resolved:${result.result?.finishReason}`, (error: unknown) => `rejected:${errorMessage(error)}`);
-            const blocked = scriptedFetch.blockedRequests;
-            const delivered = scriptedFetch.capturedRequests;
-            const errorSurfaced = coreEvents.some((event) => JSON.stringify(event).includes("BUDGET_EXCEEDED"));
+        await withProbeRun(
+            { name: "outbound-gate", turns, outboundGate: gateByBytes },
+            async ({ core, scriptedFetch, workspaceDir, coreEvents }) => {
+                const outcome = await core
+                    .start(
+                        buildProbeStartInput({
+                            cwd: workspaceDir,
+                            prompt: "make log",
+                            extraTools: [createSentinelTool()],
+                        }),
+                    )
+                    .then(
+                        (result) => `resolved:${result.result?.finishReason}`,
+                        (error: unknown) => `rejected:${errorMessage(error)}`,
+                    );
+                const blocked = scriptedFetch.blockedRequests;
+                const delivered = scriptedFetch.capturedRequests;
+                const errorSurfaced = coreEvents.some((event) => JSON.stringify(event).includes("BUDGET_EXCEEDED"));
 
-            recorder.check("first request delivered under cap", delivered.length === 1 && (delivered[0]?.bodyBytes ?? 0) <= OUTBOUND_BYTE_CAP, `delivered=${delivered.length}`);
-            recorder.check("oversized final payload blocked at fetch", blocked.length >= 1 && (blocked[0]?.bodyText.includes(SENTINEL_MARKER) ?? false), `blocked_attempts=${blocked.length} bytes=${blocked[0]?.bodyBytes}`);
-            recorder.check("blocked payload never delivered", !delivered.some((request) => request.bodyText.includes(SENTINEL_MARKER)), "scripted server never saw sentinel");
-            recorder.check("run fails instead of completing", outcome === "resolved:error" || outcome.startsWith("rejected:"), outcome.slice(0, 160));
-            recorder.observe("blocked_attempts_including_sdk_retries", blocked.length);
-            recorder.observe("budget_error_visible_in_core_events", errorSurfaced);
-            recorder.observe("count_request_fields_available", delivered[0] ? buildCountRequestFields(delivered[0]) : []);
-        });
+                recorder.check(
+                    "first request delivered under cap",
+                    delivered.length === 1 && (delivered[0]?.bodyBytes ?? 0) <= OUTBOUND_BYTE_CAP,
+                    `delivered=${delivered.length}`,
+                );
+                recorder.check(
+                    "oversized final payload blocked at fetch",
+                    blocked.length >= 1 && (blocked[0]?.bodyText.includes(SENTINEL_MARKER) ?? false),
+                    `blocked_attempts=${blocked.length} bytes=${blocked[0]?.bodyBytes}`,
+                );
+                recorder.check(
+                    "blocked payload never delivered",
+                    !delivered.some((request) => request.bodyText.includes(SENTINEL_MARKER)),
+                    "scripted server never saw sentinel",
+                );
+                recorder.check(
+                    "run fails instead of completing",
+                    outcome === "resolved:error" || outcome.startsWith("rejected:"),
+                    outcome.slice(0, 160),
+                );
+                recorder.observe("blocked_attempts_including_sdk_retries", blocked.length);
+                recorder.observe("budget_error_visible_in_core_events", errorSurfaced);
+                recorder.observe(
+                    "count_request_fields_available",
+                    delivered[0] ? buildCountRequestFields(delivered[0]) : [],
+                );
+            },
+        );
     } catch (error) {
         recorder.fail("scenario threw", error);
     }

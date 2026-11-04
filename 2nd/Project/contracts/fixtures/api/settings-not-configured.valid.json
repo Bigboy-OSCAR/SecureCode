@@ -1,0 +1,31 @@
+{
+    "schema_ref": "api/system.schema.json#/definitions/SettingsResponse",
+    "expect": "valid",
+    "scenario": "UI-32",
+    "data": {
+        "schema_version": "1",
+        "provider": {
+            "provider_id": "anthropic",
+            "model_id": "claude-sonnet-5-5",
+            "configured": false
+        },
+        "budget": {
+            "context_limit_tokens": 200000,
+            "max_output_tokens": 8192,
+            "safety_margin_tokens": 2048,
+            "body_count_mode": null,
+            "final_request_gate": "not_verified"
+        },
+        "limits": {
+            "runtime_pointer_threshold_bytes": 16384,
+            "pointer_preview_bytes": 512
+        },
+        "protections": [
+            {
+                "name": "runtime_pointer_hook",
+                "ready": false,
+                "reason_code": "NOT_IMPLEMENTED"
+            }
+        ]
+    }
+}

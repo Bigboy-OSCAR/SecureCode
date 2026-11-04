@@ -1,0 +1,229 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "R0 symbol contracts",
+    "description": "R0 TF-IDF Symbol Bundle contracts (3.3/3.4 implement, 4.7/4.8 consume through ContextCandidate). Internal context-service paths: POST /internal/v1/symbols/search, POST /internal/v1/symbols/bundle. No LLM selection, summaries or embeddings.",
+    "definitions": {
+        "SymbolId": {
+            "title": "SymbolId",
+            "type": "string",
+            "pattern": "^sym_[A-Za-z0-9-]{8,64}$"
+        },
+        "CandidateId": {
+            "title": "CandidateId",
+            "type": "string",
+            "pattern": "^cand_[A-Za-z0-9-]{8,64}$"
+        },
+        "SymbolKind": {
+            "title": "SymbolKind",
+            "description": "Python top-level symbols only (roadmap 0.1). Methods are returned as part of their class.",
+            "type": "string",
+            "enum": ["function", "async_function", "class", "constant"]
+        },
+        "SymbolLocation": {
+            "title": "SymbolLocation",
+            "type": "object",
+            "required": ["symbol_id", "qualname", "kind", "relative_path", "start_line", "end_line", "content_sha256"],
+            "additionalProperties": false,
+            "properties": {
+                "symbol_id": { "$ref": "#/definitions/SymbolId" },
+                "qualname": { "type": "string", "minLength": 1, "maxLength": 512 },
+                "kind": { "$ref": "#/definitions/SymbolKind" },
+                "relative_path": { "$ref": "../common/primitives.schema.json#/definitions/RelativePath" },
+                "start_line": {
+                    "description": "1-based, includes decorators.",
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "end_line": { "type": "integer", "minimum": 1 },
+                "content_sha256": { "$ref": "../common/primitives.schema.json#/definitions/Sha256Hex" }
+            }
+        },
+        "SymbolSearchRequest": {
+            "title": "SymbolSearchRequest",
+            "type": "object",
+            "required": ["workspace_id", "query"],
+            "additionalProperties": false,
+            "properties": {
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "query": {
+                    "description": "Question, identifier or file name. TF-IDF does not translate Korean questions (roadmap 0.1).",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2000
+                },
+                "index_revision": { "$ref": "../common/primitives.schema.json#/definitions/IndexRevision" },
+                "page": { "$ref": "../common/pagination.schema.json#/definitions/PageRequest" }
+            }
+        },
+        "SymbolCandidate": {
+            "title": "SymbolCandidate",
+            "description": "One R0 bundle candidate: a start symbol plus static references up to depth 3. No source text; read it with SymbolBundleRequest.",
+            "type": "object",
+            "required": [
+                "candidate_id",
+                "symbol_ids",
+                "primary",
+                "score",
+                "index_revision",
+                "depth",
+                "estimated_tokens"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "candidate_id": { "$ref": "#/definitions/CandidateId" },
+                "symbol_ids": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 64,
+                    "uniqueItems": true,
+                    "items": { "$ref": "#/definitions/SymbolId" }
+                },
+                "primary": { "$ref": "#/definitions/SymbolLocation" },
+                "score": {
+                    "description": "TF-IDF cosine similarity in [0, 1]. Comparable only within one search response.",
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                },
+                "index_revision": { "$ref": "../common/primitives.schema.json#/definitions/IndexRevision" },
+                "depth": { "type": "integer", "minimum": 0, "maximum": 3 },
+                "estimated_tokens": { "$ref": "../common/token-count.schema.json#/definitions/TokenCountSummary" }
+            }
+        },
+        "NoMatch": {
+            "title": "NoMatch",
+            "type": "object",
+            "required": ["reason_code", "hint"],
+            "additionalProperties": false,
+            "properties": {
+                "reason_code": { "type": "string", "const": "NO_MATCH" },
+                "hint": {
+                    "type": "string",
+                    "enum": ["try_identifier_or_file_name", "index_not_ready", "unsupported_language_only"]
+                }
+            }
+        },
+        "SymbolSearchResponse": {
+            "title": "SymbolSearchResponse",
+            "type": "object",
+            "required": ["schema_version", "workspace_id", "index_revision", "candidates", "page", "no_match"],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "index_revision": { "$ref": "../common/primitives.schema.json#/definitions/IndexRevision" },
+                "candidates": {
+                    "type": "array",
+                    "maxItems": 100,
+                    "items": { "$ref": "#/definitions/SymbolCandidate" }
+                },
+                "page": { "$ref": "../common/pagination.schema.json#/definitions/PageInfo" },
+                "no_match": { "oneOf": [{ "$ref": "#/definitions/NoMatch" }, { "type": "null" }] }
+            }
+        },
+        "SymbolBundleRequest": {
+            "title": "SymbolBundleRequest",
+            "type": "object",
+            "required": ["workspace_id", "candidate_id", "index_revision", "max_tokens"],
+            "additionalProperties": false,
+            "properties": {
+                "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
+                "candidate_id": { "$ref": "#/definitions/CandidateId" },
+                "index_revision": { "$ref": "../common/primitives.schema.json#/definitions/IndexRevision" },
+                "max_tokens": { "type": "integer", "minimum": 1 },
+                "max_bytes": { "type": "integer", "minimum": 1, "maximum": 32768 }
+            }
+        },
+        "SourceProvenance": {
+            "title": "SourceProvenance",
+            "description": "Boundary to Source Pointer (4.5): symbols do not create a fourth pointer kind. pointer is null until the file is registered as a Source.",
+            "type": "object",
+            "required": ["pointer", "relative_path", "content_sha256"],
+            "additionalProperties": false,
+            "properties": {
+                "pointer": {
+                    "oneOf": [
+                        { "$ref": "../common/primitives.schema.json#/definitions/PointerUri" },
+                        { "type": "null" }
+                    ]
+                },
+                "relative_path": { "$ref": "../common/primitives.schema.json#/definitions/RelativePath" },
+                "content_sha256": { "$ref": "../common/primitives.schema.json#/definitions/Sha256Hex" }
+            }
+        },
+        "SymbolFragment": {
+            "title": "SymbolFragment",
+            "type": "object",
+            "required": ["symbol_id", "start_line", "end_line", "content", "provenance"],
+            "additionalProperties": false,
+            "properties": {
+                "symbol_id": { "$ref": "#/definitions/SymbolId" },
+                "start_line": { "type": "integer", "minimum": 1 },
+                "end_line": { "type": "integer", "minimum": 1 },
+                "content": { "type": "string", "maxLength": 32768 },
+                "provenance": { "$ref": "#/definitions/SourceProvenance" }
+            }
+        },
+        "SymbolOmission": {
+            "title": "SymbolOmission",
+            "type": "object",
+            "required": ["symbol_id", "reason"],
+            "additionalProperties": false,
+            "properties": {
+                "symbol_id": { "$ref": "#/definitions/SymbolId" },
+                "reason": {
+                    "type": "string",
+                    "enum": ["budget_exceeded", "depth_limit", "duplicate", "too_large", "stale_revision"]
+                }
+            }
+        },
+        "UnresolvedReference": {
+            "title": "UnresolvedReference",
+            "type": "object",
+            "required": ["from_symbol_id", "name", "reason"],
+            "additionalProperties": false,
+            "properties": {
+                "from_symbol_id": { "$ref": "#/definitions/SymbolId" },
+                "name": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "reason": {
+                    "type": "string",
+                    "enum": [
+                        "dynamic_import",
+                        "dynamic_dispatch",
+                        "not_found",
+                        "outside_workspace",
+                        "unsupported_language"
+                    ]
+                }
+            }
+        },
+        "SymbolBundle": {
+            "title": "SymbolBundle",
+            "description": "Source text fragments selected inside the budget. Fragment order is the R0 pack order.",
+            "type": "object",
+            "required": [
+                "schema_version",
+                "candidate_id",
+                "index_revision",
+                "fragments",
+                "omissions",
+                "unresolved_references",
+                "token_count"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "candidate_id": { "$ref": "#/definitions/CandidateId" },
+                "index_revision": { "$ref": "../common/primitives.schema.json#/definitions/IndexRevision" },
+                "fragments": { "type": "array", "maxItems": 64, "items": { "$ref": "#/definitions/SymbolFragment" } },
+                "omissions": { "type": "array", "maxItems": 64, "items": { "$ref": "#/definitions/SymbolOmission" } },
+                "unresolved_references": {
+                    "type": "array",
+                    "maxItems": 64,
+                    "items": { "$ref": "#/definitions/UnresolvedReference" }
+                },
+                "token_count": { "$ref": "../common/token-count.schema.json#/definitions/TokenCountSummary" }
+            }
+        }
+    }
+}

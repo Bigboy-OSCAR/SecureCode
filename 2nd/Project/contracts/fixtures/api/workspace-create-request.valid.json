@@ -1,0 +1,10 @@
+{
+    "schema_ref": "api/workspace.schema.json#/definitions/WorkspaceCreateRequest",
+    "expect": "valid",
+    "scenario": "UI-02",
+    "data": {
+        "display_name": "샘플 프로젝트",
+        "root_path": "C:/work/sample",
+        "idempotency_key": "ws-create-0001"
+    }
+}

@@ -1,0 +1,86 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Approval API",
+    "description": "H-05. POST /api/v1/runs/:id/approvals/:approval_id. The host broker owns approval_id, input_digest and expiry (3.1 S-01). Defaults never auto-approve edits or commands.",
+    "definitions": {
+        "ApprovalStatus": {
+            "title": "ApprovalStatus",
+            "type": "string",
+            "enum": ["pending", "approved", "rejected", "expired", "cancelled"]
+        },
+        "ApprovalReviewKind": {
+            "title": "ApprovalReviewKind",
+            "type": "string",
+            "enum": ["command", "file_change", "other"]
+        },
+        "ApprovalReview": {
+            "title": "ApprovalReview",
+            "description": "What the user reviews. reviewable=false when the content exceeded the review cap: the host rejects approve for it.",
+            "type": "object",
+            "required": ["kind", "summary", "content", "content_truncated", "reviewable"],
+            "additionalProperties": false,
+            "properties": {
+                "kind": { "$ref": "#/definitions/ApprovalReviewKind" },
+                "summary": { "$ref": "../common/primitives.schema.json#/definitions/ShortText" },
+                "content": { "type": "string", "maxLength": 16384 },
+                "content_truncated": { "type": "boolean" },
+                "reviewable": { "type": "boolean" },
+                "target_paths": {
+                    "type": "array",
+                    "maxItems": 20,
+                    "items": { "$ref": "../common/primitives.schema.json#/definitions/RelativePath" }
+                }
+            }
+        },
+        "ApprovalRequest": {
+            "title": "ApprovalRequest",
+            "type": "object",
+            "required": [
+                "approval_id",
+                "run_id",
+                "tool_call_id",
+                "tool_name",
+                "input_digest",
+                "status",
+                "requested_at",
+                "expires_at",
+                "review"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "approval_id": { "$ref": "../common/primitives.schema.json#/definitions/ApprovalId" },
+                "run_id": { "$ref": "../common/primitives.schema.json#/definitions/RunId" },
+                "tool_call_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+                "tool_name": { "type": "string", "minLength": 1, "maxLength": 128 },
+                "input_digest": { "$ref": "../common/primitives.schema.json#/definitions/InputDigest" },
+                "status": { "$ref": "#/definitions/ApprovalStatus" },
+                "requested_at": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "expires_at": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "decided_at": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" },
+                "review": { "$ref": "#/definitions/ApprovalReview" }
+            }
+        },
+        "ApprovalDecisionRequest": {
+            "title": "ApprovalDecisionRequest",
+            "description": "input_digest must equal the pending request (APPROVAL_DIGEST_MISMATCH otherwise). Late, duplicate or expired decisions fail with APPROVAL_ALREADY_DECIDED / APPROVAL_EXPIRED.",
+            "type": "object",
+            "required": ["decision", "input_digest"],
+            "additionalProperties": false,
+            "properties": {
+                "decision": { "type": "string", "enum": ["approve", "reject"] },
+                "input_digest": { "$ref": "../common/primitives.schema.json#/definitions/InputDigest" },
+                "reason": { "$ref": "../common/primitives.schema.json#/definitions/ShortText" }
+            }
+        },
+        "ApprovalDecisionResponse": {
+            "title": "ApprovalDecisionResponse",
+            "type": "object",
+            "required": ["schema_version", "approval"],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
+                "approval": { "$ref": "#/definitions/ApprovalRequest" }
+            }
+        }
+    }
+}

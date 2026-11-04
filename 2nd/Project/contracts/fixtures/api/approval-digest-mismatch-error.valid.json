@@ -1,0 +1,14 @@
+{
+    "schema_ref": "common/api-error.schema.json#/definitions/ErrorResponse",
+    "expect": "valid",
+    "scenario": "UI-12",
+    "data": {
+        "schema_version": "1",
+        "error": {
+            "code": "APPROVAL_DIGEST_MISMATCH",
+            "message": "승인 요청 내용이 바뀌었습니다. 다시 검토하세요.",
+            "retryable": false,
+            "request_id": "req_01J9Z6Q4TEST"
+        }
+    }
+}

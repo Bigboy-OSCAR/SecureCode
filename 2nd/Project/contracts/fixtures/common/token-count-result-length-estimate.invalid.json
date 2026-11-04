@@ -1,0 +1,16 @@
+{
+    "schema_ref": "common/token-count.schema.json#/definitions/TokenCountResult",
+    "expect": "invalid",
+    "scenario": "UI-31",
+    "data": {
+        "schema_version": "1",
+        "token_count": 9,
+        "count_mode": "chars_div_4",
+        "provider_id": "anthropic",
+        "model_id": "claude-sonnet-5-5",
+        "method": "anthropic_count_tokens",
+        "framing": "single_user_message",
+        "text_bytes": 36,
+        "cached": false
+    }
+}

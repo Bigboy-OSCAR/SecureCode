@@ -1,0 +1,8 @@
+{
+    "schema_ref": "api/system.schema.json#/definitions/BootstrapRequest",
+    "expect": "valid",
+    "scenario": "UI-01",
+    "data": {
+        "code": "K7Q2-M9XA-3PZT"
+    }
+}
