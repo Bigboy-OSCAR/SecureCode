@@ -5,7 +5,7 @@
             "http_status": 400,
             "retryable": false,
             "owner_task": "4.2",
-            "status": "draft",
+            "status": "final",
             "transport": "error_response"
         },
         "NOT_FOUND": {
@@ -19,7 +19,7 @@
             "http_status": 410,
             "retryable": false,
             "owner_task": "4.2",
-            "status": "draft",
+            "status": "final",
             "transport": "error_response"
         },
         "FORBIDDEN": {
@@ -33,21 +33,21 @@
             "http_status": 409,
             "retryable": false,
             "owner_task": "4.2",
-            "status": "draft",
+            "status": "final",
             "transport": "error_response"
         },
         "INVALID_SELECTOR": {
             "http_status": 400,
             "retryable": false,
             "owner_task": "4.2",
-            "status": "draft",
+            "status": "final",
             "transport": "error_response"
         },
         "UNSUPPORTED_FORMAT": {
             "http_status": 415,
             "retryable": false,
             "owner_task": "4.2",
-            "status": "draft",
+            "status": "final",
             "transport": "error_response"
         },
         "UNSUPPORTED_LANGUAGE": {
@@ -61,7 +61,7 @@
             "http_status": 422,
             "retryable": false,
             "owner_task": "4.2",
-            "status": "draft",
+            "status": "final",
             "transport": "error_response"
         },
         "NO_MATCH": {
@@ -75,7 +75,7 @@
             "http_status": 413,
             "retryable": false,
             "owner_task": "4.2",
-            "status": "draft",
+            "status": "final",
             "transport": "error_response"
         },
         "TOKENIZER_UNAVAILABLE": {
@@ -159,7 +159,7 @@
             "http_status": 507,
             "retryable": false,
             "owner_task": "4.2",
-            "status": "draft",
+            "status": "final",
             "transport": "error_response"
         },
         "RUN_ALREADY_ACTIVE": {

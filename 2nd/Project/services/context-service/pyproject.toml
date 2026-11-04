@@ -17,6 +17,7 @@ dev = [
     "mypy>=2,<3",
     "jsonschema>=4.25,<5",
     "rfc3339-validator>=0.1.4,<0.2",
+    "types-jsonschema>=4.26.0.20261006",
 ]
 
 [build-system]

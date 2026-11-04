@@ -1,0 +1,15 @@
+{
+  "schema_ref": "pointers/read.schema.json#/definitions/PointerReadResult",
+  "expect": "valid",
+  "scenario": "4.2",
+  "data": {
+    "schema_version": "1",
+    "pointer": "securecode://source/ws_00000001/src_01?v=2",
+    "content": "first part of file",
+    "provenance": { "media_type": "text/plain", "byte_size": 90000, "revision": 2 },
+    "truncated": true,
+    "next_cursor": "c_abc123",
+    "token_count": 5,
+    "count_mode": "provider_estimate"
+  }
+}

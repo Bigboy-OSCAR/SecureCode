@@ -1,0 +1,11 @@
+{
+  "schema_ref": "pointers/read.schema.json#/definitions/PointerReadRequest",
+  "expect": "valid",
+  "scenario": "4.2",
+  "data": {
+    "schema_version": "1",
+    "pointer": "securecode://source/ws_00000001/src_01?v=1",
+    "selector": { "type": "byte", "start": 0, "end": 512 },
+    "max_bytes": 512
+  }
+}

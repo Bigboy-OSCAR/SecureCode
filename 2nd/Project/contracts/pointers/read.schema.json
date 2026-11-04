@@ -1,0 +1,216 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Pointer Read Contracts",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "LineSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "start"
+      ],
+      "properties": {
+        "type": {
+          "const": "line"
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "ByteSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "start"
+      ],
+      "properties": {
+        "type": {
+          "const": "byte"
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "SectionSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "section"
+      ],
+      "properties": {
+        "type": {
+          "const": "section"
+        },
+        "section": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "JsonPathSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "path"
+      ],
+      "properties": {
+        "type": {
+          "const": "json_path"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "PdfPageSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "start"
+      ],
+      "properties": {
+        "type": {
+          "const": "pdf_page"
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "PointerSelector": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LineSelector"
+        },
+        {
+          "$ref": "#/definitions/ByteSelector"
+        },
+        {
+          "$ref": "#/definitions/SectionSelector"
+        },
+        {
+          "$ref": "#/definitions/JsonPathSelector"
+        },
+        {
+          "$ref": "#/definitions/PdfPageSelector"
+        }
+      ]
+    },
+    "PointerReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "pointer"
+      ],
+      "properties": {
+        "schema_version": {
+          "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+        },
+        "pointer": {
+          "$ref": "../common/primitives.schema.json#/definitions/PointerUri"
+        },
+        "selector": {
+          "$ref": "#/definitions/PointerSelector"
+        },
+        "max_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16384
+        },
+        "max_tokens": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32768
+        },
+        "cursor": {
+          "$ref": "../common/primitives.schema.json#/definitions/OpaqueCursor"
+        }
+      }
+    },
+    "PointerReadResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "pointer",
+        "content",
+        "provenance",
+        "truncated",
+        "token_count",
+        "count_mode"
+      ],
+      "properties": {
+        "schema_version": {
+          "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+        },
+        "pointer": {
+          "$ref": "../common/primitives.schema.json#/definitions/PointerUri"
+        },
+        "content": {
+          "type": "string"
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "media_type",
+            "byte_size",
+            "revision"
+          ],
+          "properties": {
+            "media_type": {
+              "type": "string",
+              "minLength": 1
+            },
+            "byte_size": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "truncated": {
+          "type": "boolean"
+        },
+        "next_cursor": {
+          "$ref": "../common/primitives.schema.json#/definitions/OpaqueCursor"
+        },
+        "token_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "count_mode": {
+          "$ref": "../common/token-count.schema.json#/definitions/CountMode"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+    "schema_ref": "context/context.schema.json#/definitions/ContextPlan",
+    "expect": "invalid",
+    "scenario": "4.2",
+    "data": {
+        "schema_version": "1",
+        "selected": [
+            {
+                "candidate_id": "cand_00000001",
+                "ref": {
+                    "kind": "symbol",
+                    "pointer": "securecode://runtime/ws_00000001/ses_00000001/ptr_01?v=1"
+                },
+                "score": 0.9,
+                "explicit": false,
+                "estimated_tokens": 120
+            },
+            {
+                "candidate_id": "cand_00000002",
+                "ref": {
+                    "kind": "runtime",
+                    "pointer": "securecode://runtime/ws_00000001/ses_00000001/ptr_01?v=1"
+                },
+                "score": 1.0,
+                "explicit": true,
+                "estimated_tokens": 80
+            }
+        ],
+        "fragments": [
+            {
+                "candidate_id": "cand_00000001",
+                "ref": {
+                    "kind": "symbol",
+                    "candidate_id": "cand_00000001",
+                    "index_revision": 3
+                },
+                "content": "def f(): ...",
+                "token_count": 118
+            }
+        ],
+        "omitted": [
+            {
+                "candidate_id": "cand_00000003",
+                "reason": "over_budget"
+            }
+        ],
+        "budget": {
+            "budget_tokens": 1000,
+            "used_tokens": 118,
+            "count_mode": "provider_estimate"
+        },
+        "index_revision": 3
+    }
+}

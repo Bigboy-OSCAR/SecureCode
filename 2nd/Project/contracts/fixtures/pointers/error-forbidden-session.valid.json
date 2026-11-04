@@ -1,0 +1,14 @@
+{
+    "schema_ref": "common/api-error.schema.json#/definitions/ErrorResponse",
+    "expect": "valid",
+    "scenario": "4.2",
+    "data": {
+        "schema_version": "1",
+        "error": {
+            "code": "FORBIDDEN",
+            "message": "다른 세션의 포인터에는 접근할 수 없습니다.",
+            "retryable": false,
+            "request_id": "req_01J9Z6Q4TEST"
+        }
+    }
+}

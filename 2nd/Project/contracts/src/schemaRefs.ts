@@ -15,6 +15,13 @@ export const SCHEMA_REFS = {
     symbolSearchResponse: "symbols/symbol.schema.json#/definitions/SymbolSearchResponse",
     symbolBundleRequest: "symbols/symbol.schema.json#/definitions/SymbolBundleRequest",
     symbolBundle: "symbols/symbol.schema.json#/definitions/SymbolBundle",
+    pointerDescriptor: "pointers/pointer.schema.json#/definitions/PointerDescriptor",
+    sourceRegistration: "pointers/pointer.schema.json#/definitions/SourceRegistration",
+    runtimePutRequest: "pointers/pointer.schema.json#/definitions/RuntimePutRequest",
+    pointerReadRequest: "pointers/read.schema.json#/definitions/PointerReadRequest",
+    pointerReadResult: "pointers/read.schema.json#/definitions/PointerReadResult",
+    pointerSearchRequest: "pointers/search.schema.json#/definitions/PointerSearchRequest",
+    pointerSearchResult: "pointers/search.schema.json#/definitions/PointerSearchResult",
 } as const;
 
 export type SchemaRefName = keyof typeof SCHEMA_REFS;

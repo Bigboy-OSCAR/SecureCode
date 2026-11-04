@@ -1,0 +1,17 @@
+{
+    "schema_ref": "common/api-error.schema.json#/definitions/ErrorResponse",
+    "expect": "valid",
+    "scenario": "4.2",
+    "data": {
+        "schema_version": "1",
+        "error": {
+            "code": "QUOTA_EXCEEDED",
+            "message": "저장 용량 상한을 넘었습니다.",
+            "retryable": false,
+            "request_id": "req_01J9Z6Q4TEST",
+            "details": {
+                "reason": "runtime_quota"
+            }
+        }
+    }
+}

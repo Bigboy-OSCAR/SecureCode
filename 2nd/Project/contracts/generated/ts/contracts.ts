@@ -159,6 +159,23 @@ export type SymbolId = string;
  * Python top-level symbols only (roadmap 0.1). Methods are returned as part of their class.
  */
 export type SymbolKind = "function" | "async_function" | "class" | "constant";
+export type PointerDescriptor = {
+    schema_version: SchemaVersion;
+    pointer: PointerUri;
+    kind: PointerKind;
+    workspace_id: WorkspaceId;
+    session_id?: SessionId;
+    revision: number;
+    media_type: string;
+    byte_size: number;
+    preview: string;
+    /**
+     * @minItems 1
+     */
+    available_operations: ["read" | "search", ...("read" | "search")[]];
+    provenance: PointerProvenance;
+    expires_at?: Timestamp;
+};
 
 /**
  * Synthetic root that pulls every contract definition into one generated module.
@@ -269,6 +286,30 @@ export interface ContractsIndex {
     SymbolOmission?: SymbolOmission;
     UnresolvedReference?: UnresolvedReference;
     SymbolBundle?: SymbolBundle;
+    PointerProvenance?: PointerProvenance;
+    PointerDescriptor?: PointerDescriptor;
+    SourceRegistration?: SourceRegistration;
+    RuntimePutRequest?: RuntimePutRequest;
+    LineSelector?: LineSelector;
+    ByteSelector?: ByteSelector;
+    SectionSelector?: SectionSelector;
+    JsonPathSelector?: JsonPathSelector;
+    PdfPageSelector?: PdfPageSelector;
+    PointerSelector?: LineSelector | ByteSelector | SectionSelector | JsonPathSelector | PdfPageSelector;
+    PointerReadRequest?: PointerReadRequest;
+    PointerReadResult?: PointerReadResult;
+    PointerSearchRequest?: PointerSearchRequest;
+    PointerSearchMatch?: PointerSearchMatch;
+    PointerSearchResult?: PointerSearchResult;
+    ContextBudget?: ContextBudget;
+    ContextCandidate?: ContextCandidate;
+    ContextFragment?: ContextFragment;
+    /**
+     * Minimal set defined by 4.2. Task 4.7 may extend it and must update the schema, fixtures and docs/contracts/CONTEXT.md together.
+     */
+    ContextOmissionReason?: "no_match" | "stale" | "unauthorized" | "over_budget";
+    ContextOmission?: ContextOmission;
+    ContextPlan?: ContextPlan;
 }
 /**
  * Optional machine-readable hints. Scalars only: no paths, keys, tokens or raw content.
@@ -898,4 +939,134 @@ export interface SymbolBundle {
      */
     unresolved_references: UnresolvedReference[];
     token_count: TokenCountSummary;
+}
+export interface PointerProvenance {
+    created_at: Timestamp;
+    origin: string;
+    truncated_before_storage?: boolean;
+}
+export interface SourceRegistration {
+    schema_version: SchemaVersion;
+    source_id: string;
+    workspace_id: WorkspaceId;
+    pointer: PointerUri;
+    media_type: string;
+    byte_size: number;
+    fingerprint: Sha256Hex;
+    revision: number;
+    /**
+     * @minItems 1
+     */
+    available_operations: ["read" | "search", ...("read" | "search")[]];
+    provenance: PointerProvenance;
+}
+export interface RuntimePutRequest {
+    schema_version: SchemaVersion;
+    workspace_id: WorkspaceId;
+    session_id: SessionId;
+    media_type: string;
+    content: string;
+    origin: string;
+    truncated_before_storage?: boolean;
+}
+export interface LineSelector {
+    type: "line";
+    start: number;
+    end?: number;
+}
+export interface ByteSelector {
+    type: "byte";
+    start: number;
+    end?: number;
+}
+export interface SectionSelector {
+    type: "section";
+    section: string;
+}
+export interface JsonPathSelector {
+    type: "json_path";
+    path: string;
+}
+export interface PdfPageSelector {
+    type: "pdf_page";
+    start: number;
+    end?: number;
+}
+export interface PointerReadRequest {
+    schema_version: SchemaVersion;
+    pointer: PointerUri;
+    selector?: LineSelector | ByteSelector | SectionSelector | JsonPathSelector | PdfPageSelector;
+    max_bytes?: number;
+    max_tokens?: number;
+    cursor?: OpaqueCursor;
+}
+export interface PointerReadResult {
+    schema_version: SchemaVersion;
+    pointer: PointerUri;
+    content: string;
+    provenance: {
+        media_type: string;
+        byte_size: number;
+        revision: number;
+    };
+    truncated: boolean;
+    next_cursor?: OpaqueCursor;
+    token_count: number;
+    count_mode: CountMode;
+}
+export interface PointerSearchRequest {
+    schema_version: SchemaVersion;
+    pointer: PointerUri;
+    query: string;
+    limit?: number;
+    cursor?: OpaqueCursor;
+    max_bytes?: number;
+    max_tokens?: number;
+}
+export interface PointerSearchMatch {
+    line: number;
+    content: string;
+    byte_offset: number;
+}
+export interface PointerSearchResult {
+    schema_version: SchemaVersion;
+    pointer: PointerUri;
+    matches: PointerSearchMatch[];
+    truncated: boolean;
+    next_cursor?: OpaqueCursor;
+    token_count: number;
+    count_mode: CountMode;
+}
+export interface ContextBudget {
+    budget_tokens: number;
+    used_tokens: number;
+    count_mode: CountMode;
+}
+export interface ContextCandidate {
+    candidate_id: CandidateId;
+    ref: ContextRef;
+    score: number;
+    explicit: boolean;
+    estimated_tokens: number;
+}
+export interface ContextFragment {
+    candidate_id: CandidateId;
+    ref: ContextRef;
+    content: string;
+    token_count: number;
+}
+export interface ContextOmission {
+    candidate_id: CandidateId;
+    /**
+     * Minimal set defined by 4.2. Task 4.7 may extend it and must update the schema, fixtures and docs/contracts/CONTEXT.md together.
+     */
+    reason: "no_match" | "stale" | "unauthorized" | "over_budget";
+}
+export interface ContextPlan {
+    schema_version: SchemaVersion;
+    selected: ContextCandidate[];
+    fragments: ContextFragment[];
+    omitted: ContextOmission[];
+    budget: ContextBudget;
+    index_revision?: IndexRevision;
 }

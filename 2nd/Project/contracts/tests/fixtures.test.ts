@@ -26,7 +26,7 @@ function readFixture(filePath: string): FixtureDocument {
 
 describe("contract fixtures", () => {
     it("exist for every owned area with both outcomes", () => {
-        for (const area of ["common", "api", "events", "symbols"]) {
+        for (const area of ["common", "api", "events", "symbols", "pointers"]) {
             const names = fixtureFiles.map((file) => toPosixRelative(contractsRoot, file));
             assert.ok(
                 names.some((name) => name.startsWith(`fixtures/${area}/`) && name.endsWith(".valid.json")),

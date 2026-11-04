@@ -1,0 +1,17 @@
+{
+    "schema_ref": "common/api-error.schema.json#/definitions/ErrorResponse",
+    "expect": "valid",
+    "scenario": "4.2",
+    "data": {
+        "schema_version": "1",
+        "error": {
+            "code": "INVALID_POINTER",
+            "message": "포인터 형식이 올바르지 않습니다.",
+            "retryable": false,
+            "request_id": "req_01J9Z6Q4TEST",
+            "details": {
+                "reason": "malformed_uri"
+            }
+        }
+    }
+}
