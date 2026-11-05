@@ -1,0 +1,6 @@
+{
+    "schema_ref": "api/workspace.schema.json#/definitions/SupportedLanguage",
+    "expect": "invalid",
+    "scenario": "UI-05",
+    "data": "typescript"
+}

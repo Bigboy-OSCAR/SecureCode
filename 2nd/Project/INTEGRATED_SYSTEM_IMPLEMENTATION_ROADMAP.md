@@ -20,7 +20,7 @@
 | 포함 기능 | 이번 버전의 정확한 의미 | 최종 책임자 |
 |---|---|---|
 | Cline SDK | TypeScript 서버가 실제 `@cline/sdk`를 import하고 세션·모델 호출·도구 실행·승인·취소를 연결 | 박준형 |
-| R0 symbol_index / Symbol Bundle | Python AST 원문·정적 참조 → 단일 원문/깊이 3 참조 묶음 → TF-IDF 코사인 검색 → 예산 안 원문 선택 | 박준형 |
+| R0 symbol_index / Symbol Bundle | 언어별 심볼 원문·정적 참조 → 단일 원문/깊이 3 참조 묶음 → TF-IDF 코사인 검색 → 예산 안 원문 선택 | 박준형 |
 | Runtime Pointer | 큰 로컬 도구 출력은 저장하고 짧은 주소·메타데이터로 교체, 필요한 부분만 다시 읽기 | 임우형 |
 | Source Pointer | 등록한 디스크 파일의 주소·버전·범위를 관리하고 원문 일부만 읽기 | 임우형 |
 | Context Selector | 위 세 자료의 중복·우선순위·토큰 예산을 조정하는 결정적 정책. 새 검색 기법이 아님 | 임우형 |
@@ -30,7 +30,17 @@
 
 **범위에서 제외:** RAPTOR, RF/RH 요약 트리, H의 LLM 후보 선택 단계, 임베딩/벡터 DB, Self-Extend, 별도 에이전트 프레임워크, 클라우드 배포, 다중 사용자 협업, OCR, 암호화 PDF 해제. Cline 내부 기능을 추가 연구 기법으로 부르지 않으며, 암묵적인 컨텍스트 요약/전체 파일 주입은 검증되지 않은 채 켜 두지 않는다.
 
-필수 코드 색인 언어는 **Python**이다. TypeScript/JavaScript 파일은 Source Pointer로 등록·부분 조회할 수 있지만 심볼 색인 지원 완료라고 표시하지 않는다. Python의 최상위 함수·async 함수·클래스·상수와 정적으로 해결 가능한 로컬 import를 지원한다. 동적 import/dispatch는 `unresolved_reference`로 표시한다. 클래스 안 메서드는 MVP에서 클래스 원문 단위로 반환해도 되며 그 한계를 UI와 문서에 쓴다. 한국어 질문의 의미를 TF-IDF가 자동 번역한다고 가정하지 않는다. 식별자·파일명 입력과 무결과 안내를 제공하고 새 임베딩·LLM 재검색을 추가하지 않는다.
+필수 코드 색인 언어는 **Python, C, C++, Java, JavaScript**다. 단일 언어 프로젝트와 다섯 언어가 섞인 프로젝트 모두 한 번의 색인 요청으로 처리한다. `Workspace.supported_languages`의 계약 값은 각각 `python`, `c`, `cpp`, `java`, `javascript`다. TypeScript는 Source Pointer로 등록해 부분 조회할 수 있다.
+
+| 언어 | 색인 대상 확장자 | 3.3 색인과 3.4 검색에서 확인할 원문 예시 |
+|---|---|---|
+| Python | `.py` | 최상위 함수·async 함수·클래스·상수, decorator를 포함한 원문과 로컬 import 참조 |
+| C | `.c`, `.h` | 함수 정의·원형, 이름 있는 구조체와 상수 및 직접 포함한 로컬 헤더의 참조 |
+| C++ | `.C`, `.cc`, `.cpp`, `.cxx`, `.hh`, `.hpp`, `.hxx` | 함수·클래스·상수 및 직접 포함한 프로젝트 헤더의 참조 |
+| Java | `.java` | 클래스·인터페이스·enum·record·annotation의 타입 원문(메서드·필드 포함), 패키지와 명시적 import 참조 |
+| JavaScript | `.js`, `.mjs`, `.cjs`, `.jsx` | 함수·클래스·이름이 있는 화살표 함수·상수, 명시적인 상대 경로 ESM 및 CommonJS 참조 |
+
+`.h`는 두 문법을 확인한다. C++ 분석이 성공하고 C 구문 오류나 클래스·네임스페이스 같은 C++ 전용 구문이 있으면 C++로, 공통 문법만 있으면 C로 분류한다. 같은 이름이 여러 언어에 있어도 파일과 스코프를 확인한 대상만 연결한다. 메서드는 클래스 원문 안에서 제공해도 된다. 동적 호출이나 대상이 불명확한 참조는 제품에서 `unresolved_reference`로 표시한다. 검색 점수가 모두 0이면 식별자·파일명 입력을 안내한다.
 
 ### 0.2 현재 상태와 재사용 원칙
 
@@ -603,7 +613,7 @@ git commit과 git push는 팀원이 직접 한다. 두 명령을 직접/SDK/스�
 수행할 일:
 1. 이 로드맵 0절과 기존 CODING_CONVENTIONS.md를 읽고 UI 목적·사용자 흐름·화면 구조를 docs/ui/SCREEN_SPEC.md에 작성하라. 이 작업은 설계이며 앱 코드나 Figma 파일을 새로 만들 필요는 없다.
 2. 프로젝트 등록/색인, 대화·코드 작업, 승인·취소, 관련 심볼·출처, Source/Runtime 목록·읽기·삭제, PDF 등록/파싱, 컨텍스트 예산·provider 설정 상태를 화면별 와이어프레임과 입력/출력 표로 정의하라.
-3. 정상, 빈 결과, 로딩, 부분 성공, 오류, 만료, 원본 변경, 연결 끊김, 예산 초과를 각 화면에 배정하라. Source 삭제가 등록 해제라는 점과 Python 심볼 지원 범위를 UI 문구에 반영하라.
+3. 정상, 빈 결과, 로딩, 부분 성공, 오류, 만료, 원본 변경, 연결 끊김, 예산 초과를 각 화면에 배정하라. Source 등록 해제의 의미, 다섯 언어의 심볼 지원 범위, TypeScript 자료 등록 안내를 UI 문구에 반영하라.
 4. 승인 없는 명령 실행을 허용하지 않고 사용자 원본 삭제/전체 파일 자동 전송 버튼을 만들지 마라. SDK 용어를 숨기되 상태·출처·제한은 이해할 수 있게 표현하라.
 5. 화면별 수용 시나리오 ID와 김민지 구현 대상, 3.2에 요청할 API/이벤트 요구를 작성하라. 요구사항 누락을 표로 점검하고 모순을 해결하라.
 
@@ -835,7 +845,7 @@ docs/progress/tasks/3.2.md에 task_id/owner/status/시각/선행 증거/변경 �
 마지막 응답에는 완료 범위, 검증 결과, 남은 문제, 다음 시작 가능한 작업을 짧게 보고하라. commit/push는 하지 않았다고 명시하라.
 ```
 
-### 3.3 Python 심볼·정적 참조·원문 색인과 갱신 구현하기
+### 3.3 5개 언어의 심볼·정적 참조·원문 색인과 갱신 구현하기
 
 **선행 조건: 박준형 3.2번 + 임우형 4.2번 작업이 모두 완료된 이후에 진행.**
 
@@ -847,16 +857,18 @@ docs/progress/tasks/3.2.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** services/context-service/src/securecode_context/symbols/{parser,index,graph}; 심볼 fixture/시험  
 **검증 기록:** `docs/progress/tasks/3.3.md`
 
+**2026-11-05 반영 범위** — 로컬 색인 생성은 `services/context-service`에서 `uv run python -m securecode_context.symbols <프로젝트_경로> --out <색인.json>`으로 실행한다. 심볼 원문과 최대 깊이 3의 정적 참조 묶음은 R0 검색 후보가 된다. 작업 공간별 revision 저장·전환, 서비스 검색 API, 웹 화면과 SDK 연결은 각각 3.3~3.6의 후속 인수 대상이다. 기존 Python 벤치마크의 고정 입력·결과는 재현용으로 보존한다.
+
 **완료 조건**
 
-- [ ] Python 원문·정적 참조와 출처/hash가 정확하고 파싱 실패가 파일별로 격리된다.
+- [ ] 다섯 언어 각각에서 심볼 원문·정적 참조와 출처/hash가 정확하고 파싱 실패가 파일별로 격리된다.
 - [ ] 변경/삭제/이동 시 새 revision으로 원자적으로 전환하고 stale 자료를 정상 반환하지 않는다.
 - [ ] 실험 코드 runtime 의존·요약 생성·전체 index 전송이 없고 3.4 입력 계약이 준비됐다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 
 ```text
-작업: 3.3 Python 심볼·정적 참조·원문 색인과 갱신 구현하기
+작업: 3.3 5개 언어의 심볼·정적 참조·원문 색인과 갱신 구현하기
 담당 역할: 박준형
 작업 루트: 2nd/Project (현재 checkout의 저장소 루트 기준)
 로드맵: INTEGRATED_SYSTEM_IMPLEMENTATION_ROADMAP.md (작업 루트 기준)
@@ -872,14 +884,14 @@ git commit과 git push는 팀원이 직접 한다. 두 명령을 직접/SDK/스�
 주요 산출물·수정 범위: services/context-service/src/securecode_context/symbols/{parser,index,graph}; 심볼 fixture/시험
 수행할 일:
 1. 기존 experiment.py의 source_nodes/closure/fragment와 experiment_r0.py의 R0 전용 prepare를 읽고 순수 파싱·참조 분석만 새 모듈로 이식하라. 실험 실행기·Client·build_assets·정답 데이터를 import하지 마라.
-2. Python 최상위 함수/async/클래스/상수·import 선언을 추출하고 decorator 시작 줄, 파일/줄/qualname/hash를 보존하라. 같은 파일 이름 참조, 로컬 from import(상대 import 포함), import alias의 정적으로 확인 가능한 대상만 연결하고 동적 참조는 unresolved로 반환하라.
+2. 0.1의 다섯 언어를 파일별로 판별해 심볼과 참조를 추출하고 파일/줄/qualname/hash를 보존하라. Python은 decorator 시작 줄과 로컬 from import·상대 import·alias를 유지하라. 각 언어의 스코프와 로컬 모듈 규칙으로 대상이 확정될 때만 연결하고 동적·모호한 참조는 unresolved로 남겨라.
 3. .git/.securecode/node_modules/venv/build/generated 제외와 symlink/root 허용 정책을 적용하라. 한 파일 SyntaxError·인코딩 오류가 전체 색인을 중단하지 않게 diagnostics를 남겨라. 미지원 언어는 명시하라.
 4. 파일 manifest/hash와 index_revision을 저장하라. MVP 갱신은 새 revision 전체를 준비한 뒤 원자적으로 교체해도 된다. 파일 수정/삭제/이동과 의존 bundle·IDF 재계산 필요성을 표시하고 이전 revision과 새 자료를 섞지 마라.
 5. 검색기가 아직 준비되지 않았으면 ready 대신 parsed/pending 상태로 두고 3.4에 넘겨라. Source registry는 계약 포트로 주입해 4.5/4.6 미완료 때문에 순환 의존성이 생기지 않게 하되 fixture임을 명시하라.
-6. 함수→다른 파일 helper→상수, 순환 참조, 동명 심볼, decorator, 깨진 파일, 미지원 언어, 변경/삭제/경로 이탈을 검증하라.
+6. 언어별 단독 프로젝트와 혼합 프로젝트를 검증하라. 다섯 언어의 원문·위치, Python 함수→다른 파일 helper→상수 및 decorator, 다른 언어의 로컬 참조, 순환과 언어 간 동명 심볼, 깨진 파일, TypeScript 제외, 변경/삭제/경로 이탈을 확인하라.
 
 반드시 검증할 완료 조건:
-- Python 원문·정적 참조와 출처/hash가 정확하고 파싱 실패가 파일별로 격리된다.
+- 다섯 언어 각각에서 심볼 원문·정적 참조와 출처/hash가 정확하고 파싱 실패가 파일별로 격리된다.
 - 변경/삭제/이동 시 새 revision으로 원자적으로 전환하고 stale 자료를 정상 반환하지 않는다.
 - 실험 코드 runtime 의존·요약 생성·전체 index 전송이 없고 3.4 입력 계약이 준비됐다.
 
@@ -902,7 +914,7 @@ docs/progress/tasks/3.3.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **완료 조건**
 
-- [ ] 원문 atomic/깊이 3 bundle의 TF-IDF 검색과 안정적 순위가 기존 R0 논리를 재현한다.
+- [ ] 다섯 언어에서 원문 atomic/깊이 3 bundle의 TF-IDF 검색과 안정적 순위가 기존 R0 논리를 재현한다.
 - [ ] 관련 원문·출처만 제한된 크기로 반환하고 무결과/큰 후보/중복/stale을 처리한다.
 - [ ] READY는 벡터 준비까지 포함하며 요약·LLM selector·전체 index 전송이 없다.
 
@@ -929,10 +941,10 @@ git commit과 git push는 팀원이 직접 한다. 두 명령을 직접/SDK/스�
 3. SymbolService search/read_bundle에 index_revision, source provenance, score, token_count/count_mode, omissions를 반환하라. 전체 symbol index/candidate text 배열을 모델에 보내지 마라. 토큰 계산은 주입된 TokenCounter를 사용하라.
 4. 검색어 없음/모든 점수 0이면 NO_MATCH 또는 세부 NO_SEARCH_TERMS를 반환하고 영어 식별자·파일명·사용자 선택 범위 안내를 제공하라. 기존 0점 임의 채움과의 차이를 문서화하라.
 5. source hash+range 단위 중복 제거, bundle가 너무 클 때 atomic 후보나 명시적 누락, 재조회 직전 stale 감지를 구현하라. 검색 후보 상한·응답 bytes/token cap을 적용하고 최종 전체 요청 예산은 4.8에 맡겨라.
-6. 원문/vector 준비가 모두 완료된 revision만 READY로 전환하라. 함수→helper→상수 fixture, TF-IDF 순위, 순환 참조, 큰 후보, 부분 중복, 한국어만 있는 질문을 검증하고 사전 요약/선택 LLM 호출이 0회임을 검사하라.
+6. 원문/vector 준비가 모두 완료된 revision만 READY로 전환하라. 다섯 언어 각각의 식별자 검색과 원문 묶음, Python 함수→helper→상수 fixture, TF-IDF 순위, 순환 참조, 큰 후보, 부분 중복, 한국어만 있는 질문을 검증하고 사전 요약/선택 LLM 호출이 0회임을 검사하라.
 
 반드시 검증할 완료 조건:
-- 원문 atomic/깊이 3 bundle의 TF-IDF 검색과 안정적 순위가 기존 R0 논리를 재현한다.
+- 다섯 언어에서 원문 atomic/깊이 3 bundle의 TF-IDF 검색과 안정적 순위가 기존 R0 논리를 재현한다.
 - 관련 원문·출처만 제한된 크기로 반환하고 무결과/큰 후보/중복/stale을 처리한다.
 - READY는 벡터 준비까지 포함하며 요약·LLM selector·전체 index 전송이 없다.
 
@@ -1702,7 +1714,7 @@ docs/progress/tasks/4.10.md에 task_id/owner/status/시각/선행 증거/변경 
 | 2 | 임우형 4.1번 | Runtime·Source Pointer 통합 설계 문서 작성하기 |
 | 3 | 박준형 3.2번 | 모듈 기반 프로젝트 골격·공통 계약·개발 명령 확정하기 |
 | 4 | 김민지 1.1번<br>임우형 4.2번 | UI 실행 기반과 공용 컴포넌트 만들기 / 포인터·조회·예산 데이터 구조와 API 명세 확정하기 |
-| 5 | 김찬우 2.2번<br>박준형 3.3번<br>박준형 3.5번<br>임우형 4.3번<br>임우형 4.5번<br>임우형 4.7번 | 화면별 표시·사용자 동작 상세 명세 작성하기 / Python 심볼·정적 참조·원문 색인과 갱신 구현하기 / Cline SDK 호스트와 UI용 실행·승인·이벤트 API 구현하기 / Runtime Pointer 저장·조회·삭제 MVP 구현하기 / Source Pointer 등록·버전·등록 해제 구현하기 / Context Selector의 우선순위·예산·실패 정책 설계하기 |
+| 5 | 김찬우 2.2번<br>박준형 3.3번<br>박준형 3.5번<br>임우형 4.3번<br>임우형 4.5번<br>임우형 4.7번 | 화면별 표시·사용자 동작 상세 명세 작성하기 / 5개 언어의 심볼·정적 참조·원문 색인과 갱신 구현하기 / Cline SDK 호스트와 UI용 실행·승인·이벤트 API 구현하기 / Runtime Pointer 저장·조회·삭제 MVP 구현하기 / Source Pointer 등록·버전·등록 해제 구현하기 / Context Selector의 우선순위·예산·실패 정책 설계하기 |
 | 6 | 김민지 1.2번<br>박준형 3.4번<br>임우형 4.4번<br>임우형 4.6번 | 계약 fixture로 전체 업무 화면 구현하기 / R0 TF-IDF 검색과 제한된 Symbol Bundle 구현하기 / Cline 도구 출력의 Runtime Pointer 교체 hook 연결하기 / Source Pointer 파일 부분 읽기·검색·변경 감지 구현하기 |
 | 7 | 김민지 1.3번<br>임우형 4.8번<br>임우형 4.9번 | 화면 상태 관리와 사용자 동작 구현하기 / Context Selector와 최종 모델 요청 예산 게이트 구현하기 / PDF 파싱·Source Pointer 연동·Skill 도구 구현하기 |
 | 8 | 김민지 1.4번<br>김찬우 2.3번<br>박준형 3.6번 | 실제 프로젝트·Cline 실행 API와 SSE 연결하기 / 구현 화면의 설계 검토와 최종 인수표 작성하기 / R0·포인터·Context Selector·PDF를 SDK 경로에 통합하기 |
@@ -1739,7 +1751,7 @@ docs/progress/tasks/4.10.md에 task_id/owner/status/시각/선행 증거/변경 
 
 - [ ] **F1 — 재현 가능한 실행:** README대로 설치·설정하면 UI, SDK host, Python 서비스가 함께 시작되고 종료된다. 환경/의존성은 고정돼 있고 원본 연구 폴더 없이 제품 모듈이 실행된다.
 - [ ] **F2 — 실제 SDK/모델:** `@cline/sdk`를 실제 import하며 설정된 provider로 실행했다. CLI subprocess나 UI mock으로 대체하지 않았다. 승인 거절/취소/실패가 실제 실행 결과와 일치한다.
-- [ ] **F3 — R0:** 준비 단계 요약 호출과 후보 선택 LLM 호출이 0회다. Python 함수→helper→상수의 관련 원문이 제공되며 무관한 1,000개 sentinel과 전체 index는 모델 입력에 없다. 변경/삭제 뒤 잘못된 revision을 반환하지 않는다.
+- [ ] **F3 — R0:** 준비 단계 요약 호출과 후보 선택 LLM 호출이 0회다. 다섯 언어의 식별자 검색으로 해당 언어의 원문과 출처를 읽을 수 있다. Python 함수→helper→상수의 정적 참조도 제공되며 무관한 1,000개 sentinel과 전체 index는 모델 입력에 없다. 변경/삭제 뒤 잘못된 revision을 반환하지 않는다.
 - [ ] **F4 — Runtime:** threshold 초과 결과를 저장하고 실제 provider 입력·history·SSE에는 제한된 descriptor만 들어간다. 부분 재조회·삭제·TTL·세션 격리·재시작을 확인했다. 저장/hook 실패 때 원문 fallback이 없다.
 - [ ] **F5 — Source:** 허용된 파일만 등록하고 실제 bounded I/O로 범위를 읽는다. 조회 도중 변경·오래된 cursor·경로 이탈을 감지한다. 등록 해제가 사용자 원본을 삭제하지 않는다.
 - [ ] **F6 — PDF:** 실제 도구/Skill 등록을 확인했다. 텍스트 PDF가 Source Pointer로 연결되고 요청한 페이지의 원문과 정확한 페이지 출처만 반환한다. 스캔/손상/암호화 한계를 성공으로 숨기지 않는다.
@@ -1751,7 +1763,7 @@ docs/progress/tasks/4.10.md에 task_id/owner/status/시각/선행 증거/변경 
 
 필수 통합 데모는 다음과 같이 하나의 시나리오로 재현한다.
 
-1. 작은 Python 프로젝트(함수·다른 파일 helper·상수와 다수 무관 심볼)를 등록하고 R0 색인을 READY로 만든다.
+1. Python, C, C++, Java, JavaScript의 단일 언어 프로젝트와 다섯 언어가 섞인 프로젝트를 등록하고 R0 색인을 READY로 만든다. 각 언어의 식별자로 검색해 원문·출처를 확인한다. 혼합 프로젝트에는 Python 함수·다른 파일 helper·상수와 동명 및 무관 심볼을 포함한다.
 2. 실제 식별자가 포함된 질문을 보내 관련 원문만 전달되고 파일/줄 출처가 보이는지 확인한다.
 3. 안전한 fixture 명령의 실행을 UI에서 승인해 큰 로그를 만들고, Runtime Pointer의 필요한 줄만 다시 읽는다. 거절한 명령은 실행되지 않아야 한다.
 4. 큰 외부 텍스트와 한글 다중 페이지 PDF를 명시적으로 등록한다. Source 부분 조회와 PDF 지정 페이지의 출처를 답변에서 확인한다.

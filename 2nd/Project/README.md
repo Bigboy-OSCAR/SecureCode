@@ -33,6 +33,16 @@ cd services/context-service && uv sync --frozen
 
 종료 코드 `0`은 모두 통과, `1`은 실패, `3`은 미완료(아직 없는 필수 검사, 기존 예외, 비밀값이 없어 건너뜀)다. 미구현 검사를 성공으로 표시하지 않는다.
 
+## R0 인덱스 생성
+
+Python, C, C++, Java, JavaScript 소스에서 R0 원문 인덱스를 만드는 로컬 명령이다. 아래 예시는 프로젝트 루트 기준이다.
+
+```bash
+uv run --project services/context-service python -m securecode_context.symbols /path/to/project --out .securecode/r0-index.json
+```
+
+출력 형식과 지원 범위는 [context-service 실행 안내](services/context-service/README.md#r0-인덱스-생성)에서 확인할 수 있다.
+
 ## 규약
 
 - Python: [CODING_CONVENTIONS.md](CODING_CONVENTIONS.md)

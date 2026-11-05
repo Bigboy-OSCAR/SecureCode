@@ -1,1 +1,1 @@
-"""R0 심볼 색인·검색(3.3/3.4 구현). 3.2는 포트만 정의한다."""
+"""R0 심볼 원문 인덱스. CLI는 python -m securecode_context.symbols 로 실행한다."""

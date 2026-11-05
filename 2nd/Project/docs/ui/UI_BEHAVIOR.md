@@ -71,12 +71,12 @@ SC-01~SC-09와 UI-01~UI-34는 2.1의 ID를 유지한다. 아래 요소 ID는 기
 | 서버 상황 | 표시·복구 |
 | --- | --- |
 | `not_indexed`, `queued`, `indexing`, `parsed` | “색인 없음”, “색인 대기 중”, “색인 중”, “분석 완료·검색 준비 중”. parsed를 준비 완료로 표시하지 않는다. |
-| `ready`, `partial` | “색인 처리 완료”, “일부 파일 제외”. 항상 searchable를 함께 본다. `ready + searchable=false + indexed=0` fixture는 “검색할 Python 코드가 없습니다”; 자료 등록/파일 확인 안내. partial은 성공·실패 수와 원인을 함께 표시한다. |
+| `ready`, `partial` | “색인 처리 완료”, “일부 파일 제외”. 항상 searchable를 함께 본다. `ready + searchable=false + indexed=0` fixture는 “검색할 코드 심볼이 없습니다”; 자료 등록/파일 확인 안내. partial은 성공·실패 수와 원인을 함께 표시한다. |
 | `stale`, `failed` | “파일 변경·색인 갱신 필요”, “색인에 실패했습니다”. 기존 선택을 보류하고 파일 수정 후 갱신. 이전 revision은 서버가 searchable와 revision으로 유효성을 확인한 범위만 사용한다. |
 | 진단 이유 | `syntax_error` 구문 오류, `encoding_error` 문자 해석 실패, `unsupported_language` 지원 언어 아님, `too_large` 크기 초과, `excluded` 제외 규칙, `path_rejected` 허용되지 않은 경로. 위치와 수정·등록 자료로 전환 행동을 표시한다. |
 | 목록 없음·오류·연결 끊김 | “등록된 프로젝트가 없습니다”와 등록 버튼. 오류는 4절에 따라 입력 수정/다시 확인; 단절 중 이미 시작된 색인을 재시작하지 않고 GET으로 복구한다. |
 
-접근성: 파일 수는 의미 있는 이름과 함께 읽고 총량이 없으면 무한 진행 표시를 쓴다. 진단 목록에 키보드로 진입할 수 있게 하고 완료 알림은 한 번 전달한다. Python 지원 범위 문구는 SCREEN_SPEC을 재사용한다.
+접근성: 파일 수는 의미 있는 이름과 함께 읽고 총량이 없으면 무한 진행 표시를 쓴다. 진단 목록에 키보드로 진입할 수 있게 하고 완료 알림은 한 번 전달한다. 색인 지원 언어와 심볼 범위 안내는 SCREEN_SPEC을 재사용한다.
 
 <a id="sc-03"></a>
 
@@ -130,7 +130,7 @@ SC-01~SC-09와 UI-01~UI-34는 2.1의 ID를 유지한다. 아래 요소 ID는 기
 
 ### SC-05 관련 코드·출처
 
-목적: Python 관련 코드를 찾고 제한된 원문·정적 참조를 검토한다. 사례 UI-09/UI-16/UI-17/UI-22/UI-31.
+목적: 지원 언어의 관련 코드를 찾고 제한된 원문·정적 참조를 검토한다. 사례 UI-09/UI-16/UI-17/UI-22/UI-31.
 
 | 요소·와이어프레임 라벨 | 표시 필드·API 출처 | 입력 규칙·버튼 활성·조작 |
 | --- | --- | --- |
@@ -142,7 +142,7 @@ SC-01~SC-09와 UI-01~UI-34는 2.1의 ID를 유지한다. 아래 요소 ID는 기
 | 상황 | 문구·복구 |
 | --- | --- |
 | 검색 중·초기 | “관련 코드를 찾는 중…” / “함수명이나 파일명을 포함해 검색하세요.” 기존 결과는 수정 전 질의에 대한 것임을 표시한다. |
-| `no_match.hint` | try_identifier_or_file_name “관련 코드를 찾지 못했습니다. 함수명이나 파일명을 포함해 보세요”; index_not_ready “색인을 준비한 뒤 다시 검색하세요”; unsupported_language_only “Python 색인을 지원합니다. 다른 파일은 자료로 등록하세요”. 정상 무결과이며 LLM 재검색 버튼 없음. |
+| `no_match.hint` | try_identifier_or_file_name “관련 코드를 찾지 못했습니다. 함수명이나 파일명을 포함해 보세요”; index_not_ready “색인을 준비한 뒤 다시 검색하세요”; unsupported_language_only “색인할 수 있는 파일이 없습니다. 다른 파일은 자료로 등록하세요”와 지원 언어 목록. 정상 무결과이며 LLM 재검색 버튼 없음. |
 | bundle 누락 | budget_exceeded “예산 부족”, depth_limit “참조 깊이 한도”, duplicate “중복”, too_large “원문 크기 초과”, stale_revision “이전 버전”. ContextPlan의 제외 enum과 혼합하지 않는다. |
 | 참조 미확인 | dynamic_import “동적 가져오기”, dynamic_dispatch “실행 중 결정되는 호출”, not_found “정적 참조를 찾지 못함”, outside_workspace “프로젝트 밖 참조”, unsupported_language “지원 언어 아님”. 모두 “확인하지 못한 참조” 아래에 표시한다. |
 | 버전 변경·오류 | 이전 원문은 “이전 버전·전달 불가”. 색인 갱신→다시 검색→사용자 재선택. 4절에 따라 읽기 불가·권한·예산 복구 제공. |
@@ -261,7 +261,7 @@ SC-01~SC-09와 UI-01~UI-34는 2.1의 ID를 유지한다. 아래 요소 ID는 기
 | SOURCE_CHANGED | 409 | false | “원본이 변경됐습니다. 갱신 후 다시 선택하세요.” cursor·선택·preview 무효화, 색인/등록 자료 갱신. | SC-02, SC-05, SC-07, SC-08, SC-09 |
 | INVALID_SELECTOR | 400 | false | “읽을 범위를 확인하세요.” 단위·시작/끝·지원 연산을 수정하고 새 cursor 없이 읽는다. | SC-07 |
 | UNSUPPORTED_FORMAT | 415 | false | “이 형식은 해당 읽기 작업을 지원하지 않습니다.” 지원 형식/연산 선택. PDF 상세 원인은 G-05. | SC-06, SC-07, SC-08 |
-| UNSUPPORTED_LANGUAGE | 422 | false | “Python 코드 색인을 지원합니다.” 다른 언어는 등록 자료로 안내. | SC-02, SC-05 |
+| UNSUPPORTED_LANGUAGE | 422 | false | 작업 공간의 색인 지원 언어를 표시하고 다른 언어의 파일은 자료 등록으로 안내. | SC-02, SC-05 |
 | PARSE_FAILED | 422 | false | “문서를 해석하지 못했습니다.” 원본 확인·다른 자료 선택. details.reason 자유 문자열을 성공/지원 enum으로 해석하지 않는다. | SC-02, SC-08 |
 | NO_MATCH | 200 | false | “일치하는 내용을 찾지 못했습니다.” 식별자·파일명/검색어 변경. ErrorResponse가 아닌 정상 검색 결과. | SC-03, SC-05, SC-07 |
 | BUDGET_EXCEEDED | 413 | false | “요청 범위나 입력 예산 한도를 초과했습니다.” 범위 축소·선택 해제, 이력 초과면 새 대화. | SC-03, SC-05, SC-07, SC-08, SC-09 |

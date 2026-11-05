@@ -16,7 +16,7 @@
 
 - **TypeScript:** `npm run generate:contracts`가 모든 정의를 `contracts/generated/ts/contracts.ts` 하나로 생성한다(손으로 수정 금지). 소비자는 `import type { RunSnapshot } from "@securecode/contracts"`처럼 가져온다. 런타임 검증은 `ContractValidator.load().parse<T>(SCHEMA_REFS.runSnapshot, body)`로 한다(Ajv, 같은 스키마 파일). `check`와 `test:contracts`가 생성 파일이 최신인지 검사한다.
 - **Python:** 같은 스키마 파일을 `jsonschema`(Draft7)로 검사한다(`tests/contract`). 서비스 응답과 모든 fixture를 검증한다. Python DTO를 따로 생성하지 않는다. 서비스 내부 모델(pydantic)은 계약 시험으로 스키마와 맞춘다.
-- **Fixture:** `contracts/fixtures/<영역>/<이름>.<valid|invalid>.json` = `{schema_ref, expect, scenario, data}`. `scenario`는 2.1의 UI/H 번호 또는 작업 번호다. TS(Ajv)와 Python(jsonschema)이 모든 fixture에서 같은 판정을 내야 한다. 현재 76개다(valid 51, invalid 25).
+- **Fixture:** `contracts/fixtures/<영역>/<이름>.<valid|invalid>.json` = `{schema_ref, expect, scenario, data}`. `scenario`는 2.1의 UI/H 번호 또는 작업 번호다. TS(Ajv)와 Python(jsonschema)이 모든 fixture에서 같은 판정을 내야 한다. fixture 수는 `contracts/fixtures`를 열거해 확인한다.
 - **공용 벡터:** `tests/fixtures/token-unicode-cases.json`(tokens.count Unicode), `tests/fixtures/redaction-cases.json`(로그 redaction). TS와 Python 시험이 같은 파일을 쓴다.
 
 ## 2. 공통 규칙
@@ -116,7 +116,7 @@
 
 - `IndexState`: `not_indexed | queued | indexing | parsed | ready | partial | stale | failed`. `partial`은 파일별 진단이 있지만 검색할 수 있는 상태, `parsed`는 3.4 검색기가 준비되기 전 상태, `stale`은 마지막 revision 이후 파일이 바뀐 상태다.
 - 색인은 run이 아니므로 SSE가 없다. `GET /workspaces/:id/index`가 정본이다. 새 revision은 준비가 끝난 뒤 원자적으로 `index_revision`이 된다(그 전에는 `pending_revision`). 진단은 50개까지이고 그 이상은 `diagnostics_truncated`로 표시한다.
-- 지원 언어는 `python`뿐이다. 검색 응답에 `no_match{reason_code: NO_MATCH, hint}`가 있으면 UI가 식별자·파일명 검색을 안내한다. TF-IDF가 한국어 질문을 번역한다고 가정하지 않는다.
+- `Workspace.supported_languages`는 색인기가 지원하는 언어의 목록이다. Python, C, C++, Java, JavaScript의 계약 값은 각각 `python`, `c`, `cpp`, `java`, `javascript`다. 실제 색인 결과는 `counts`, `diagnostics`, `searchable`로 확인한다. 검색 응답에 `no_match{reason_code: NO_MATCH, hint}`가 있으면 UI가 식별자·파일명 검색을 안내한다. TF-IDF가 한국어 질문을 번역한다고 가정하지 않는다.
 - 고정한 `index_revision`이 더 이상 제공되지 않으면 `SOURCE_CHANGED`(`details.current_revision`)를 돌려준다.
 
 ## 8. 버전·변경 절차

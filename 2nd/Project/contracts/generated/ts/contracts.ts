@@ -131,7 +131,7 @@ export type ProtectionName =
  * ready = searchable; partial = searchable with per-file diagnostics; parsed = parsed but retrieval not ready (3.3 before 3.4); stale = files changed since index_revision.
  */
 export type IndexState = "not_indexed" | "queued" | "indexing" | "parsed" | "ready" | "partial" | "stale" | "failed";
-export type SupportedLanguage = "python";
+export type SupportedLanguage = "python" | "c" | "cpp" | "java" | "javascript";
 export type AppEventType =
     | "run.status_changed"
     | "run.output_delta"
@@ -156,7 +156,7 @@ export type AppEvent =
     | StreamReplayUnavailableEvent;
 export type SymbolId = string;
 /**
- * Python top-level symbols only (roadmap 0.1). Methods are returned as part of their class.
+ * Common R0 symbol categories across supported languages (roadmap 0.1). A type declaration can include its methods.
  */
 export type SymbolKind = "function" | "async_function" | "class" | "constant";
 export type PointerDescriptor = {

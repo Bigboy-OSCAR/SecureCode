@@ -12,7 +12,7 @@
         "SupportedLanguage": {
             "title": "SupportedLanguage",
             "type": "string",
-            "enum": ["python"]
+            "enum": ["python", "c", "cpp", "java", "javascript"]
         },
         "WorkspaceCreateRequest": {
             "title": "WorkspaceCreateRequest",

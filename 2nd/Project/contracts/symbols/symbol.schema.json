@@ -15,7 +15,7 @@
         },
         "SymbolKind": {
             "title": "SymbolKind",
-            "description": "Python top-level symbols only (roadmap 0.1). Methods are returned as part of their class.",
+            "description": "Common R0 symbol categories across supported languages (roadmap 0.1). A type declaration can include its methods.",
             "type": "string",
             "enum": ["function", "async_function", "class", "constant"]
         },
