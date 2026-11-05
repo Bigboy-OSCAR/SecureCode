@@ -6,11 +6,11 @@
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { ContractValidator, SCHEMA_REFS } from "@securecode/contracts";
+import { ContractValidator, SCHEMA_REFS, type HealthResponse } from "@securecode/contracts";
 import { pendingResults } from "../lib/pendingSuites.js";
 import { runAndExit, type StepResult } from "../lib/report.js";
-import { findFreePort, startServices } from "../lib/services.js";
-import { uvStep } from "../lib/processes.js";
+import { findFreePorts, startServices } from "../lib/services.js";
+import { toolStep, uvStep } from "../lib/processes.js";
 
 const validator = ContractValidator.load();
 
@@ -23,7 +23,7 @@ async function hostServiceChainSteps(): Promise<StepResult[]> {
     const results: StepResult[] = [];
     let services;
     try {
-        services = await startServices({ hostPort: await findFreePort(), servicePort: await findFreePort(), dataDir });
+        services = await startServices({ ...(await findFreePorts()), dataDir });
     } catch (error) {
         rmSync(dataDir, { recursive: true, force: true });
         return [
@@ -38,7 +38,7 @@ async function hostServiceChainSteps(): Promise<StepResult[]> {
         results.push(
             expectStep(
                 "chain: host health ok",
-                okValid && JSON.stringify(okBody).includes('"ok"'),
+                okValid && (okBody as HealthResponse).status === "ok",
                 JSON.stringify(okBody),
             ),
         );
@@ -56,7 +56,10 @@ async function hostServiceChainSteps(): Promise<StepResult[]> {
 
         await services.stopService();
         const degradedBody: unknown = await (await fetch(`${services.hostUrl}/api/v1/health`)).json();
-        const degraded = JSON.stringify(degradedBody) === JSON.stringify({ schema_version: "1", status: "degraded" });
+        const degraded =
+            validator.validate(SCHEMA_REFS.healthResponse, degradedBody).valid &&
+            (degradedBody as HealthResponse).status === "degraded" &&
+            !(degradedBody as HealthResponse).components;
         results.push(expectStep("chain: host degraded when service stops", degraded, JSON.stringify(degradedBody)));
     } finally {
         await services.stopAll();
@@ -67,6 +70,22 @@ async function hostServiceChainSteps(): Promise<StepResult[]> {
 
 await runAndExit("test:integration", [
     async () => [await uvStep("service process (pytest -m integration)", ["pytest", "-q", "-m", "integration"])],
+    async () => [
+        await toolStep("SDK pointer replacement", process.execPath, [
+            "--import",
+            "tsx",
+            "--test",
+            "apps/host/tests/integration/**/*.test.ts",
+        ]),
+    ],
+    async () => [
+        await toolStep("dev launcher lifecycle", process.execPath, [
+            "--import",
+            "tsx",
+            "--test",
+            "scripts/test/devLifecycle.test.ts",
+        ]),
+    ],
     hostServiceChainSteps,
     () => Promise.resolve(pendingResults("integration")),
 ]);

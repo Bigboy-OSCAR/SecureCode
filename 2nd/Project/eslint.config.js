@@ -1,5 +1,5 @@
 // ESLint flat config for every TypeScript package (task 3.2). Rules are explained in
-// docs/conventions/TYPESCRIPT_REACT.md. Legacy pre-3.2 paths are ignored below and reported by check:structure.
+// docs/conventions/TYPESCRIPT_REACT.md.
 import js from "@eslint/js";
 import globals from "globals";
 import tseslint from "typescript-eslint";
@@ -16,18 +16,7 @@ const sdkImportRestriction = {
 
 export default tseslint.config(
     {
-        ignores: [
-            "**/node_modules/**",
-            "**/dist/**",
-            "**/coverage/**",
-            ".securecode/**",
-            "contracts/generated/**",
-            // Legacy pre-3.2 pointer code (owner 임우형, 4.3/4.4 reopened). Typechecked separately by
-            // apps/host/tsconfig.legacy.json and listed in scripts/check/structure-baseline.json.
-            "apps/host/src/cline-plugins/**",
-            "apps/host/src/pointer-hooks/**",
-            "apps/host/tools/**",
-        ],
+        ignores: ["**/node_modules/**", "**/dist/**", "**/coverage/**", ".securecode/**", "contracts/generated/**"],
     },
     js.configs.recommended,
     {
@@ -73,7 +62,7 @@ export default tseslint.config(
     },
     {
         files: ["apps/host/src/**/*.ts"],
-        ignores: ["apps/host/src/cline/**", "apps/host/src/cline-plugins/**", "apps/host/src/pointer-hooks/**"],
+        ignores: ["apps/host/src/cline/**"],
         rules: {
             "no-restricted-imports": ["error", sdkImportRestriction],
             "no-console": "error",

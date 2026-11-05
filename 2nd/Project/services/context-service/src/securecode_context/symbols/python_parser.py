@@ -8,6 +8,7 @@ from collections.abc import Iterator
 from pathlib import PurePosixPath
 
 from .model import Declaration, Reference
+from .python_layout import PythonLayout
 
 
 def _assigned_names(target: ast.expr) -> Iterator[str]:
@@ -76,12 +77,17 @@ def _bindings(
 
 
 def _references(
-    node: ast.stmt, module: str, bindings: dict[str, set[str]], file_names: set[str]
+    node: ast.stmt,
+    module: str,
+    bindings: dict[str, set[str]],
+    file_names: set[str],
+    key_prefix: str,
 ) -> tuple[Reference, ...]:
     """
     함수 이름: _references()
     기능: 이름 및 정적 속성 경로를 수집하고 매개변수나 로컬 변수와 겹치는 연결을 제외한다.
-    인자: node -> 선언, module -> 모듈명, bindings -> import 대상, file_names -> 파일 내 선언명
+    인자: node -> 선언, module -> 모듈명, bindings -> import 대상, file_names -> 파일 내 선언명,
+        key_prefix -> 프로젝트 이름 공간
     반환값: 정적 대상 후보 또는 미해결 참조
     작성 날짜: 2026/11/05
     """
@@ -125,22 +131,22 @@ def _references(
         if item in member_bases and base.id in bindings:
             continue
         keys = [
-            "py:" + ".".join([prefix, *parts[:size]])
+            key_prefix + ".".join([prefix, *parts[:size]])
             for prefix in bindings.get(base.id, ())
             for size in range(len(parts) + 1)
         ]
         if base.id in file_names and not parts:
-            keys.append(f"py:{module}.{base.id}")
+            keys.append(f"{key_prefix}{module}.{base.id}")
         if keys or parts or not hasattr(builtins, base.id):
             references[name] = Reference(name, tuple(sorted(set(keys))))
     return tuple(references[name] for name in sorted(references))
 
 
-def parse_python(path: str, source: bytes) -> list[Declaration]:
+def parse_python(path: str, source: bytes, layout: PythonLayout) -> list[Declaration]:
     """
     함수 이름: parse_python()
     기능: 데코레이터와 한글의 바이트 위치를 보존하며 선언을 추출한다.
-    인자: path -> 상대 경로, source -> UTF-8 파일 바이트
+    인자: path -> 상대 경로, source -> UTF-8 파일 바이트, layout -> 프로젝트 및 src 경계
     반환값: 추출한 선언 목록
     작성 날짜: 2026/11/05
     """
@@ -149,9 +155,18 @@ def parse_python(path: str, source: bytes) -> list[Declaration]:
     offsets = [len(codecs.BOM_UTF8) if source.startswith(codecs.BOM_UTF8) else 0]
     # AST 열은 UTF-8 바이트 단위다. LF/CRLF/CR만 물리적 줄바꿈으로 처리한다.
     offsets.extend(match.end() for match in re.finditer(rb"\r\n|\r|\n", source))
-    location = PurePosixPath(path).with_suffix("")
+    location = PurePosixPath(path).relative_to(layout.project)
+    in_src = layout.has_src and location.parts[:1] == ("src",)
+    if in_src:
+        location = location.relative_to("src")
+    location = location.with_suffix("")
+    key_prefix = f"py:{layout.project.as_posix()}/"
     package = list(location.parent.parts)
     module = ".".join(package if location.name == "__init__" else location.parts)
+    # src.pkg is also importable from a checkout root. Match both spellings only in this project.
+    module_keys = [key_prefix + module]
+    if in_src:
+        module_keys.append(key_prefix + "src." + module)
     declarations = list(_declarations(tree))
     names = {name for name, _, _ in declarations}
     imports = [n for n in tree.body if isinstance(n, ast.Import | ast.ImportFrom)]
@@ -178,7 +193,7 @@ def parse_python(path: str, source: bytes) -> list[Declaration]:
         start_byte = offsets[start - 1] + node.col_offset
         end_byte = offsets[node.end_lineno - 1] + node.end_col_offset
         if node not in refs:
-            refs[node] = _references(node, module, bindings, names)
+            refs[node] = _references(node, module, bindings, names, key_prefix)
         result.append(
             Declaration(
                 name,
@@ -187,7 +202,7 @@ def parse_python(path: str, source: bytes) -> list[Declaration]:
                 end_byte,
                 start,
                 node.end_lineno,
-                (f"py:{module}.{name}",),
+                tuple(f"{key}.{name}" for key in module_keys),
                 refs[node],
                 import_text,
             )

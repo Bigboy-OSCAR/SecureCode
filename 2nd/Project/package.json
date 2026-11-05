@@ -27,7 +27,7 @@
         "test:e2e": "tsx scripts/test/e2e.ts",
         "test:live": "tsx scripts/test/live.ts",
         "build": "tsx scripts/build.ts",
-        "probe:sdk": "npm run probe -w @securecode/sdk-probe"
+        "probe:sdk": "npm run probe -w @securecode/sdk-probe --"
     },
     "devDependencies": {
         "@eslint/js": "10.0.1",

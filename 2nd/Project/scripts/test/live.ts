@@ -11,7 +11,7 @@ import { ContractValidator, SCHEMA_REFS, type TokenCountResult } from "@secureco
 import { pendingResults } from "../lib/pendingSuites.js";
 import { WORK_ROOT } from "../lib/processes.js";
 import { runAndExit, type StepResult } from "../lib/report.js";
-import { findFreePort, startServices } from "../lib/services.js";
+import { findFreePorts, startServices } from "../lib/services.js";
 
 interface UnicodeCase {
     name: string;
@@ -41,6 +41,10 @@ async function liveTokenCountSteps(): Promise<StepResult[]> {
         return [gate];
     }
     const maxCalls = Number(process.env.SECURECODE_LIVE_SMOKE_MAX_CALLS ?? "10");
+    if (!Number.isSafeInteger(maxCalls) || maxCalls < 0) {
+        return [{ name: "live smoke", status: "FAIL", detail: "MAX_CALLS must be a nonnegative integer" }];
+    }
+    if (maxCalls === 0) return [{ name: "live smoke", status: "SKIPPED", detail: "call budget is zero" }];
     const vectors = JSON.parse(
         readFileSync(join(WORK_ROOT, "tests", "fixtures", "token-unicode-cases.json"), "utf8"),
     ) as {
@@ -49,11 +53,16 @@ async function liveTokenCountSteps(): Promise<StepResult[]> {
     const cases = vectors.cases.filter((item) => item.expect === "valid").slice(0, maxCalls);
     const validator = ContractValidator.load();
     const dataDir = mkdtempSync(join(tmpdir(), "securecode-live-"));
-    const services = await startServices({
-        hostPort: await findFreePort(),
-        servicePort: await findFreePort(),
-        dataDir,
-    });
+    let services;
+    try {
+        services = await startServices({
+            ...(await findFreePorts()),
+            dataDir,
+        });
+    } catch (error) {
+        rmSync(dataDir, { recursive: true, force: true });
+        throw error;
+    }
     const results: StepResult[] = [];
     try {
         for (const vector of cases) {

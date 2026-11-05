@@ -63,7 +63,11 @@ export class ApprovalBroker {
 
     decide(approvalId: string, inputDigest: string, approved: boolean): ApprovalDecisionOutcome {
         const entry = this.pending.get(approvalId);
-        if (!entry || entry.expiresAt < Date.now()) {
+        if (!entry) {
+            return "unknown_or_settled";
+        }
+        if (entry.expiresAt <= Date.now()) {
+            this.settle(approvalId, { approved: false, reason: "approval timed out" });
             return "unknown_or_settled";
         }
         if (entry.inputDigest !== inputDigest) {

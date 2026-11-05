@@ -4,7 +4,13 @@ from collections.abc import Iterator
 
 from tree_sitter import Node
 
-from .javascript_modules import ModuleBindings, assigned_export, collect_bindings, export_keys
+from .javascript_modules import (
+    ModuleBindings,
+    assigned_export,
+    collect_bindings,
+    export_keys,
+    required_module,
+)
 from .model import Declaration, Reference
 from .syntax import node_text, walk
 
@@ -58,6 +64,24 @@ def _pattern_names(pattern: Node) -> Iterator[str]:
             pending.extend(part.named_children)
 
 
+def _module_binds_require(root: Node) -> bool:
+    """
+    함수 이름: _module_binds_require()
+    기능: 모듈 최상위 선언이 CommonJS의 require 이름을 대체하는지 확인한다.
+    인자: root -> JavaScript 파일의 구문 트리
+    반환값: require가 로컬 선언에 묶이면 True
+    작성 날짜: 2026/11/05
+    """
+    for statement in root.named_children:
+        decl = statement.child_by_field_name("declaration") or statement
+        for binding in decl.named_children if decl.type in _VARIABLES else [decl]:
+            if binding.type in _FUNCTIONS | _CLASSES | {"variable_declarator"}:
+                pattern = binding.child_by_field_name("name")
+                if pattern and "require" in _pattern_names(pattern):
+                    return True
+    return False
+
+
 def _bound_names(root: Node) -> set[str]:
     """
     함수 이름: _bound_names()
@@ -86,11 +110,14 @@ def _bound_names(root: Node) -> set[str]:
     return blocked
 
 
-def _references(path: str, value: Node, bindings: ModuleBindings) -> tuple[Reference, ...]:
+def _references(
+    path: str, value: Node, bindings: ModuleBindings, static_require: bool
+) -> tuple[Reference, ...]:
     """
     함수 이름: _references()
     기능: 로컬 식별자와 명시한 import를 연결하고 동적 멤버 호출은 미해결로 남긴다.
-    인자: path -> 상대 경로, value -> 선언 본문, bindings -> 파일의 import 목록
+    인자: path -> 상대 경로, value -> 선언 본문, bindings -> 파일의 import 목록,
+        static_require -> 로컬 require 바인딩 없음
     반환값: 선언에서 사용한 참조와 정확한 대상 키 후보
     작성 날짜: 2026/11/05
     """
@@ -103,6 +130,25 @@ def _references(path: str, value: Node, bindings: ModuleBindings) -> tuple[Refer
             continue
         name = node_text(node)
         parent = node.parent
+        if (
+            name == "require"
+            and static_require
+            and name not in blocked
+            and parent
+            and parent.type == "call_expression"
+        ):
+            access = parent.parent
+            if (
+                access
+                and access.type == "member_expression"
+                and access.child_by_field_name("object") == parent
+            ):
+                prop = access.child_by_field_name("property")
+                module = required_module(parent)
+                if prop and module is not None:
+                    public = node_text(prop)
+                    references[f"require({module}).{public}"] = export_keys(path, module, public)
+                    continue
         prop = None
         if (
             parent
@@ -188,7 +234,9 @@ def parse_javascript(path: str, source: bytes, root: Node) -> list[Declaration]:
     반환값: 위치, 원문, 파일과 export 범위의 참조 정보를 담은 선언 목록
     작성 날짜: 2026/11/05
     """
-    bindings = collect_bindings(root)
+    loader_available = b"require" in source and not _module_binds_require(root)
+    bindings = collect_bindings(root, loader_available)
+    static_require = loader_available and "require" not in bindings.imported
     imports = "\n".join(bindings.statements)
     result: list[Declaration] = []
     for statement in root.named_children:
@@ -208,7 +256,7 @@ def parse_javascript(path: str, source: bytes, root: Node) -> list[Declaration]:
                     span.start_point.row + 1,
                     span.end_point.row + 1,
                     tuple(keys),
-                    _references(path, value, bindings),
+                    _references(path, value, bindings, static_require),
                     imports,
                 )
             )

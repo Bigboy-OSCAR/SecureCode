@@ -1,18 +1,18 @@
 {
-  "schema_ref": "pointers/pointer.schema.json#/definitions/PointerDescriptor",
-  "expect": "invalid",
-  "scenario": "4.2",
-  "data": {
-    "schema_version": "1",
-    "pointer": "securecode://source/ws_00000001/src_01?v=1",
-    "kind": "source",
-    "workspace_id": "ws_00000001",
-    "session_id": "ses_00000001",
-    "revision": 1,
-    "media_type": "text/plain",
-    "byte_size": 100,
-    "preview": "x",
-    "available_operations": ["read"],
-    "provenance": { "created_at": "2026-11-04T11:40:00Z", "origin": "register" }
-  }
+    "schema_ref": "pointers/pointer.schema.json#/definitions/PointerDescriptor",
+    "expect": "invalid",
+    "scenario": "4.2",
+    "data": {
+        "schema_version": "1",
+        "pointer": "securecode://source/ws_00000001/src_01?v=1",
+        "kind": "source",
+        "workspace_id": "ws_00000001",
+        "session_id": "ses_00000001",
+        "revision": 1,
+        "media_type": "text/plain",
+        "byte_size": 100,
+        "preview": "x",
+        "available_operations": ["read"],
+        "provenance": { "created_at": "2026-11-04T11:40:00Z", "origin": "register" }
+    }
 }

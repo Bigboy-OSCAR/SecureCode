@@ -1,15 +1,13 @@
 {
-  "schema_ref": "pointers/search.schema.json#/definitions/PointerSearchResult",
-  "expect": "valid",
-  "scenario": "4.2",
-  "data": {
-    "schema_version": "1",
-    "pointer": "securecode://runtime/ws_00000001/ses_00000001/ptr_01?v=1",
-    "matches": [
-      { "line": 42, "content": "error: connection refused", "byte_offset": 1893 }
-    ],
-    "truncated": false,
-    "token_count": 7,
-    "count_mode": "provider_estimate"
-  }
+    "schema_ref": "pointers/search.schema.json#/definitions/PointerSearchResult",
+    "expect": "valid",
+    "scenario": "4.2",
+    "data": {
+        "schema_version": "1",
+        "pointer": "securecode://runtime/ws_00000001/ses_00000001/ptr_01?v=1",
+        "matches": [{ "line": 42, "content": "error: connection refused", "byte_offset": 1893 }],
+        "truncated": false,
+        "token_count": 7,
+        "count_mode": "provider_estimate"
+    }
 }

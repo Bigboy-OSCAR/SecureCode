@@ -5,6 +5,16 @@ import { ConfigError, loadHostConfig } from "../../src/config/hostConfig.js";
 const baseEnv = { SECURECODE_INTERNAL_TOKEN: "x".repeat(32) };
 
 describe("host config", () => {
+    it("rejects unrepresentable bearer tokens and non-HTTP origins", () => {
+        for (const token of [" ".repeat(32), "한".repeat(32), "k".repeat(32) + "\n"]) {
+            assert.throws(() => loadHostConfig({ ...baseEnv, SECURECODE_INTERNAL_TOKEN: token }, "/work"), ConfigError);
+        }
+        assert.throws(
+            () => loadHostConfig({ ...baseEnv, SECURECODE_ALLOWED_ORIGINS: "ftp://localhost:8888" }, "/work"),
+            ConfigError,
+        );
+    });
+
     it("binds to loopback and derives same-origin allowlists", () => {
         const config = loadHostConfig(baseEnv, "/work");
         assert.equal(config.host, "127.0.0.1");

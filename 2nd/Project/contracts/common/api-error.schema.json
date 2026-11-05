@@ -60,7 +60,7 @@
             "required": ["code", "message", "retryable", "request_id"],
             "additionalProperties": false,
             "properties": {
-                "code": { "$ref": "#/definitions/ErrorCode" },
+                "code": { "allOf": [{ "$ref": "#/definitions/ErrorCode" }, { "not": { "const": "NO_MATCH" } }] },
                 "message": {
                     "description": "User-facing, safe to display; never contains server paths, secrets or large source text.",
                     "type": "string",

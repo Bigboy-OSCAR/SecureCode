@@ -1,4 +1,0 @@
-{
-    "extends": "../../tsconfig.base.json",
-    "include": ["src/cline-plugins/**/*.ts", "src/pointer-hooks/**/*.ts", "tools/**/*.ts"]
-}

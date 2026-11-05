@@ -3,7 +3,7 @@
  * writes a sanitized evidence file. Exits non-zero when any check fails.
  * Usage: `npm run probe` (all) or `npm run probe -- approval hook-failure`.
  */
-import "./env/isolated-cline-home.js";
+import "./support/isolated-cline-home.js";
 import { runApprovalScenario } from "./scenarios/approval.js";
 import { runBeforeModelScenario } from "./scenarios/before-model.js";
 import { runCheckpointScenario } from "./scenarios/checkpoint.js";
@@ -37,7 +37,14 @@ function printSummary(result: ScenarioResult): void {
 }
 
 async function main(): Promise<void> {
-    const selected = process.argv.slice(2);
+    const args = process.argv.slice(2);
+    const selected = args.filter((value) => value !== "--no-evidence");
+    const unknown = selected.filter((name) => !Object.hasOwn(scenarioRunners, name));
+    if (unknown.length > 0) {
+        console.error("Unknown SDK probe scenario. Available:", Object.keys(scenarioRunners).join(", "));
+        process.exitCode = 2;
+        return;
+    }
     const gitBefore = readRepositoryGitState();
     const results: ScenarioResult[] = [];
 
@@ -53,9 +60,11 @@ async function main(): Promise<void> {
     const gitAfter = readRepositoryGitState();
     const gitUnchanged =
         gitBefore.refsDigest === gitAfter.refsDigest && gitBefore.stashEntries === gitAfter.stashEntries;
-    const evidencePath = writeEvidence(results, gitBefore, gitAfter);
     console.log(`repository refs/stash unchanged: ${gitUnchanged}`);
-    console.log(`evidence: ${evidencePath}`);
+    if (!args.includes("--no-evidence")) {
+        const evidencePath = writeEvidence(results, gitBefore, gitAfter, selected.length > 0);
+        console.log(`evidence: ${evidencePath}`);
+    }
     process.exitCode = results.length > 0 && results.every((result) => result.passed) && gitUnchanged ? 0 : 1;
 }
 

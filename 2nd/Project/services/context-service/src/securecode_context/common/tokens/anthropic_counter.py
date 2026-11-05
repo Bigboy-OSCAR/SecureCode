@@ -1,6 +1,7 @@
 """Anthropic count_tokens 기반 본문 계수기(3.1 결정: 공개 로컬 tokenizer 없음, 결과는 provider_estimate)."""
 
 import hashlib
+import json
 import threading
 from collections import OrderedDict
 
@@ -45,12 +46,24 @@ class AnthropicTokenCounter:
         작성 날짜: 2026/11/04
         """
         self.model_id = model_id
+        if cache_size < 0:
+            raise ValueError("cache_size must be nonnegative")
         self.cache_size = cache_size
         self._api_key = api_key
         self._endpoint = f"{base_url.rstrip('/')}/v1/messages/count_tokens"
         self._client = client or httpx.Client(timeout=timeout_seconds)
         self._cache: OrderedDict[str, TokenCount] = OrderedDict()
         self._lock = threading.Lock()
+
+    def close(self) -> None:
+        """
+        함수 이름: close()
+        기능: 서비스가 만든 계수기의 HTTP 연결을 정리한다.
+        인자: 없음
+        반환값: 없음
+        작성 날짜: 2026/11/05
+        """
+        self._client.close()
 
     def describe(self) -> CounterStatus:
         """
@@ -121,22 +134,29 @@ class AnthropicTokenCounter:
             "content-type": "application/json",
         }
         try:
-            response = self._client.post(self._endpoint, json=body, headers=headers)
+            with self._client.stream(
+                "POST", self._endpoint, json=body, headers=headers, follow_redirects=False
+            ) as response:
+                status = response.status_code
+                if status in (401, 403):
+                    raise _unavailable("provider_auth_failed", retryable=False)
+                if status != 200:
+                    raise _unavailable(
+                        f"provider_http_{status}", retryable=status == 429 or status >= 500
+                    )
+                payload = bytearray()
+                for chunk in response.iter_bytes(chunk_size=8192):
+                    if len(payload) + len(chunk) > 64 * 1024:
+                        raise _unavailable("invalid_provider_response", retryable=False)
+                    payload.extend(chunk)
         except httpx.TimeoutException as error:
             raise _unavailable("provider_timeout", retryable=True) from error
         except httpx.HTTPError as error:
             raise _unavailable("provider_unreachable", retryable=True) from error
 
-        if response.status_code in (401, 403):
-            raise _unavailable("provider_auth_failed", retryable=False)
-        if response.status_code == 429 or response.status_code >= 500:
-            raise _unavailable(f"provider_http_{response.status_code}", retryable=True)
-        if response.status_code != 200:
-            raise _unavailable(f"provider_http_{response.status_code}", retryable=False)
-
         try:
-            input_tokens = response.json()["input_tokens"]
-        except (ValueError, KeyError, TypeError) as error:
+            input_tokens = json.loads(payload)["input_tokens"]
+        except (ValueError, KeyError, TypeError, RecursionError) as error:
             raise _unavailable("invalid_provider_response", retryable=False) from error
         if not isinstance(input_tokens, int) or isinstance(input_tokens, bool) or input_tokens < 0:
             raise _unavailable("invalid_provider_response", retryable=False)

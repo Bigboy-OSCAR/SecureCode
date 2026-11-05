@@ -6,7 +6,7 @@
 import { execFileSync } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { probeHomeDir } from "../env/isolated-cline-home.js";
+import { probeHomeDir } from "./isolated-cline-home.js";
 
 export interface GitFingerprint {
     status: string;

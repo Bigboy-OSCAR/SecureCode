@@ -48,29 +48,13 @@ max-line-length = 120
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["T20"]
-# Pre-3.2 files (uv init stub; pointer MVP owned by 임우형, tasks 4.3/4.4 reopened 2026-11-04).
-# Listed in scripts/check/structure-baseline.json; remove these entries when the owner reworks them.
-"main.py" = ["T201"]
-"src/securecode_context/pointers/**" = ["UP045"]
 
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
-exclude = ["src/securecode_context/api/pointers.py", "src/securecode_context/pointers/**"]
 
 [tool.mypy]
 python_version = "3.14"
 strict = true
 mypy_path = "src"
 packages = ["securecode_context"]
-
-# Pre-3.2 pointer MVP (owner 임우형, tasks 4.3/4.4 reopened 2026-11-04). Type errors here are
-# reported by `npm run check` as KNOWN baseline items, not hidden; remove when the owner reworks them.
-[[tool.mypy.overrides]]
-module = [
-    "securecode_context.api.main",
-    "securecode_context.api.pointers",
-    "securecode_context.api.schemas",
-    "securecode_context.pointers.*",
-]
-ignore_errors = true

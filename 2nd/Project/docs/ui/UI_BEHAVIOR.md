@@ -10,7 +10,7 @@
 
 SC-01~SC-09와 UI-01~UI-34는 2.1의 ID를 유지한다. 아래 요소 ID는 기존 와이어프레임의 라벨·버튼을 식별하기 위한 문서 ID이며 API 필드나 실행 타입이 아니다. 화면 구조는 SCREEN_SPEC, 표시·검증·버튼 규칙은 이 문서, 사전 상황→조작/응답→관찰 결과는 UI_BEHAVIOR_CASES를 정본으로 삼는다. 내부 상태 구조·상태 관리 코드·자동 행동 시험은 김민지 1.2/1.3의 책임이다. 이 문서는 별도 상태 전이 모델·machine/reducer·command 프로토콜을 정의하지 않는다.
 
-계약 정본은 [JSON Schema](../../contracts/), [오류 표](../../contracts/common/error-codes.json)다. [API](../contracts/API.md), [EVENTS](../contracts/EVENTS.md), [POINTERS](../contracts/POINTERS.md), [CONTEXT](../contracts/CONTEXT.md)를 함께 사용한다. 생성 타입을 재선언하지 않는다. API 문서에 남은 draft 표기·76개 fixture라는 수치는 4.2 이후의 스키마·실제 파일보다 우선하지 않는다. 확인한 모든 오류 코드는 현재 final이다.
+계약 정본은 [JSON Schema](../../contracts/), [오류 표](../../contracts/common/error-codes.json)다. [API](../contracts/API.md), [EVENTS](../contracts/EVENTS.md), [POINTERS](../contracts/POINTERS.md), [CONTEXT](../contracts/CONTEXT.md)를 함께 사용한다. 생성 타입을 재선언하지 않는다. 확인한 모든 오류 코드는 현재 final이다.
 
 **확정**은 필드가 실제 스키마에 있다는 뜻이고 **보완 대기 G-번호**는 필요한 계약이 없거나 모순된다는 뜻이다. 보완 대기 기능은 시각적인 설계만 제공한다. 없는 DTO·필드·API·fixture를 UI에서 만들어 실연결하거나 다른 동작으로 대체하지 않는다. 이 때문에 2.2와 이에 의존하는 1.2/1.3의 전체 착수 조건을 충족했다고 보고하지 않는다.
 
@@ -289,7 +289,7 @@ SC-01~SC-09와 UI-01~UI-34는 2.1의 ID를 유지한다. 아래 요소 ID는 기
 | NOT_IMPLEMENTED | 501 | false | “이 기능은 아직 준비 중입니다.” 관련 버튼 비활성, 재시도 반복 없음. owner_task는 개발 인계 정보이며 기본 사용자 화면에서 숨긴다. | 모든 화면 |
 | INTERNAL_ERROR | 500 | false | “요청을 처리하지 못했습니다.” request_id와 상태 확인 제공, 실행 결과 미확정이면 재실행하지 않는다. | 모든 화면 |
 
-알 수 없는 코드·schema_version·잘못된 응답은 “응답을 확인할 수 없습니다”로 표시하고 변경/실행 조작을 막는다. 원문 응답·stack trace를 UI에 덤프하거나 새 오류 코드를 wire에 추가하지 않는다. pointer cursor의 scope 오류는 POINTERS 문서의 INVALID_POINTER와 API 문서의 INVALID_SELECTOR가 달라 G-06으로 인계했으며, 어느 응답이든 cursor 폐기·재선택이라는 관찰 결과는 같다.
+알 수 없는 코드·schema_version·잘못된 응답은 “응답을 확인할 수 없습니다”로 표시하고 변경/실행 조작을 막는다. 원문 응답·stack trace를 UI에 덤프하거나 새 오류 코드를 wire에 추가하지 않는다. 다른 자료·scope·query의 pointer cursor는 INVALID_POINTER, 이전 Source revision의 cursor는 SOURCE_CHANGED로 처리하고 새 범위를 선택한다.
 
 ## 5. 이벤트·연결 복구의 관찰 가능한 요구
 

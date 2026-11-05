@@ -27,7 +27,3 @@ export function findBaselineEntry(
 ): BaselineEntry | undefined {
     return entries.find((entry) => entry.rule === rule && pathMatches(entry.path, path));
 }
-
-export function entriesForRule(entries: readonly BaselineEntry[], rule: string): BaselineEntry[] {
-    return entries.filter((entry) => entry.rule === rule);
-}

@@ -1,11 +1,11 @@
 {
-  "schema_ref": "pointers/search.schema.json#/definitions/PointerSearchRequest",
-  "expect": "invalid",
-  "scenario": "4.2",
-  "data": {
-    "schema_version": "1",
-    "pointer": "securecode://runtime/ws_00000001/ses_00000001/ptr_01?v=1",
-    "query": "error",
-    "limit": 1000
-  }
+    "schema_ref": "pointers/search.schema.json#/definitions/PointerSearchRequest",
+    "expect": "invalid",
+    "scenario": "4.2",
+    "data": {
+        "schema_version": "1",
+        "pointer": "securecode://runtime/ws_00000001/ses_00000001/ptr_01?v=1",
+        "query": "error",
+        "limit": 1000
+    }
 }

@@ -3,6 +3,7 @@
  * `artifacts/verification/<task>/` (default task 3.1; set `SDK_PROBE_TASK_ID`
  * when a later task re-runs the probe). Absolute paths and raw outputs are excluded.
  */
+import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -42,9 +43,9 @@ function readInstalledVersion(packageName: string): string {
 export function readRepositoryGitState(): RepositoryGitState {
     const runGit = (args: string[]): string => execFileSync("git", args, { cwd: workRootDir, encoding: "utf8" }).trim();
     const refs = runGit(["for-each-ref", "--format=%(refname) %(objectname)"]);
-    const stash = runGit(["stash", "list"]);
+    const stash = runGit(["stash", "list", "--format=%H"]);
     return {
-        refsDigest: Buffer.from(refs).toString("base64url").slice(-24),
+        refsDigest: createHash("sha256").update(refs).update("\0").update(stash).digest("hex"),
         stashEntries: stash.split("\n").filter(Boolean).length,
     };
 }
@@ -53,6 +54,7 @@ export function writeEvidence(
     results: ScenarioResult[],
     gitBefore: RepositoryGitState,
     gitAfter: RepositoryGitState,
+    partial: boolean,
 ): string {
     const evidence = {
         task_id: evidenceTaskId,
@@ -66,12 +68,13 @@ export function writeEvidence(
         ),
         repository_git_unchanged:
             gitBefore.refsDigest === gitAfter.refsDigest && gitBefore.stashEntries === gitAfter.stashEntries,
-        all_passed: results.every((result) => result.passed),
+        all_passed: results.length > 0 && results.every((result) => result.passed),
         scenarios: results,
     };
     const outputDir = join(workRootDir, "artifacts", "verification", evidenceTaskId);
     mkdirSync(outputDir, { recursive: true });
-    const outputPath = join(outputDir, "sdk-probe-result.json");
+    const fileName = partial ? "sdk-probe-partial-result.json" : "sdk-probe-result.json";
+    const outputPath = join(outputDir, fileName);
     writeFileSync(outputPath, `${JSON.stringify(evidence, null, 2)}\n`, "utf8");
-    return `artifacts/verification/${evidenceTaskId}/sdk-probe-result.json`;
+    return `artifacts/verification/${evidenceTaskId}/${fileName}`;
 }

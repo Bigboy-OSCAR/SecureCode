@@ -3,7 +3,7 @@
  * → send after abort → stop → send after stop is refused → dispose.
  */
 import { COMMAND_TOOL_NAME, type CommandToolCounter, createCommandTool } from "../fixtures/probe-tools.js";
-import { errorMessage, settleWithin, withProbeRun } from "../probe/probe-run.js";
+import { errorMessage, settleWithin, waitForProbeEvent, withProbeRun } from "../probe/probe-run.js";
 import { buildDisabledBuiltinPolicies, buildProbeStartInput } from "../probe/session-config.js";
 import { ScenarioRecorder, type ScenarioResult } from "../support/scenario-result.js";
 
@@ -28,9 +28,7 @@ async function runAbortDuringToolCase(recorder: ScenarioRecorder): Promise<void>
         const started = core.start(
             buildProbeStartInput({ cwd: workspaceDir, prompt: "slow", extraTools, toolPolicies, sessionId }),
         );
-        while (counter.executions === 0) {
-            await waitMs(20);
-        }
+        await waitForProbeEvent(() => counter.executions > 0, started, "tool execution");
         const abortedAt = Date.now();
         await core.abort(sessionId, "probe abort during tool");
         const outcome = await settleWithin(

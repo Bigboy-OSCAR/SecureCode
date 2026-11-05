@@ -119,6 +119,13 @@
                 },
                 "page": { "$ref": "../common/pagination.schema.json#/definitions/PageInfo" },
                 "no_match": { "oneOf": [{ "$ref": "#/definitions/NoMatch" }, { "type": "null" }] }
+            },
+            "if": { "properties": { "no_match": { "type": "object" } } },
+            "then": {
+                "properties": {
+                    "candidates": { "type": "array", "maxItems": 0 },
+                    "page": { "type": "object", "properties": { "has_more": { "const": false } } }
+                }
             }
         },
         "SymbolBundleRequest": {

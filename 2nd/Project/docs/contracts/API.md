@@ -25,7 +25,7 @@
 - JSON 필드는 snake_case다. 응답 최상위에는 `schema_version: "1"`이 있다.
 - 모든 응답에 `X-Request-Id`(`req_…`)가 붙는다. host가 서비스로 같은 값을 넘기며, `ApiError.request_id`와 같다.
 - ID는 접두사가 있는 opaque 문자열이다: `ws_`, `ses_`, `run_`, `apr_`, `req_`, `evt_`, `sym_`, `cand_`. 클라이언트는 비교만 하고 해석하지 않는다. 포인터는 `securecode://(source|runtime)/…` opaque URI이며 **URL path에 넣지 않는다**(본문으로 전달).
-- 서버 절대경로는 응답에 나오지 않는다. 경로는 `RelativePath`(작업 공간 기준 POSIX, `..`·드라이브·`/` 시작 금지)뿐이다. `WorkspaceCreateRequest.root_path`는 입력 전용이다.
+- 응답의 `RelativePath`는 작업 공간 기준 POSIX 상대경로다. 상위 경로 요소(`..`), 절대경로, 역슬래시, ASCII 제어 문자, 빈 경로 요소를 거절한다. `WorkspaceCreateRequest.root_path`는 입력 전용이다.
 - 시간은 RFC 3339 UTC(`Timestamp`)다.
 
 ### 2.1 오류
@@ -34,9 +34,9 @@
 
 | 범주 | 코드 (HTTP) | 확정 |
 | --- | --- | --- |
-| 로드맵 필수 16종 | `INVALID_POINTER` 400, `NOT_FOUND` 404, `EXPIRED` 410, `FORBIDDEN` 403, `SOURCE_CHANGED` 409, `INVALID_SELECTOR` 400, `UNSUPPORTED_FORMAT` 415, `UNSUPPORTED_LANGUAGE` 422, `PARSE_FAILED` 422, `NO_MATCH` (200 본문), `BUDGET_EXCEEDED` 413, `TOKENIZER_UNAVAILABLE` 503, `SDK_UNAVAILABLE` 503, `PROVIDER_ERROR` 502, `APPROVAL_REJECTED` 409, `CANCELLED` 409 | 포인터·예산 계열 7개(`INVALID_POINTER, EXPIRED, SOURCE_CHANGED, INVALID_SELECTOR, UNSUPPORTED_FORMAT, PARSE_FAILED, BUDGET_EXCEEDED`)와 `QUOTA_EXCEEDED`는 **draft**이며 4.2가 확정한다. 표시 문구는 2.2 |
+| 로드맵 필수 16종 | `INVALID_POINTER` 400, `NOT_FOUND` 404, `EXPIRED` 410, `FORBIDDEN` 403, `SOURCE_CHANGED` 409, `INVALID_SELECTOR` 400, `UNSUPPORTED_FORMAT` 415, `UNSUPPORTED_LANGUAGE` 422, `PARSE_FAILED` 422, `NO_MATCH` (200 본문), `BUDGET_EXCEEDED` 413, `TOKENIZER_UNAVAILABLE` 503, `SDK_UNAVAILABLE` 503, `PROVIDER_ERROR` 502, `APPROVAL_REJECTED` 409, `CANCELLED` 409 | 3.2·4.2 확정. 표시 문구는 2.2 |
 | 인증·origin | `UNAUTHENTICATED` 401, `BOOTSTRAP_CODE_INVALID` 401, `BOOTSTRAP_CODE_EXPIRED` 401, `ORIGIN_REJECTED` 403 | 3.2 final |
-| 요청 | `VALIDATION_FAILED` 422, `PAYLOAD_TOO_LARGE` 413, `QUOTA_EXCEEDED` 507(draft), `RATE_LIMITED` 429 | 3.2 |
+| 요청 | `VALIDATION_FAILED` 422, `PAYLOAD_TOO_LARGE` 413, `QUOTA_EXCEEDED` 507, `RATE_LIMITED` 429 | 3.2 |
 | 실행·승인 | `RUN_ALREADY_ACTIVE` 409(retryable), `IDEMPOTENCY_CONFLICT` 409, `APPROVAL_EXPIRED` 410, `APPROVAL_DIGEST_MISMATCH` 409, `APPROVAL_ALREADY_DECIDED` 409, `PROTECTION_UNAVAILABLE` 503 | 3.2 final |
 | 색인·서비스 | `INDEX_NOT_READY` 409, `SERVICE_UNAVAILABLE` 503, `NOT_IMPLEMENTED` 501, `INTERNAL_ERROR` 500 | 3.2 final |
 
@@ -44,8 +44,8 @@
 
 ### 2.2 pagination·응답 상한
 
-- 목록과 검색은 모두 `page: PageRequest{limit 1..100(기본 20), cursor}`를 받고 `PageInfo{limit, next_cursor|null, has_more, truncated_by_bytes?}`를 돌려준다.
-- cursor는 서버가 scope·revision·연산에 묶어 발급하는 opaque 값(≤512자)이다. 다른 scope나 revision에서 쓰면 거절한다(포인터: `INVALID_SELECTOR`/`SOURCE_CHANGED`, 4.2).
+- 작업 공간·세션·run 목록 및 심볼 검색은 `page: PageRequest{limit 1..100(기본 20), cursor}`를 받고 `PageInfo{limit, next_cursor|null, has_more, truncated_by_bytes?}`를 돌려준다. `has_more=true`인 페이지에는 다음 cursor가 필요하며 마지막 페이지의 값은 null이다. 포인터 검색은 최상위에 `limit/cursor`를 받고 `truncated/next_cursor`를 반환한다.
+- cursor는 서버가 scope·revision·연산에 묶어 발급하는 opaque 값(≤512자)이다. 다른 포인터·scope·query의 cursor는 `INVALID_POINTER`, 변경된 Source revision의 cursor는 `SOURCE_CHANGED`로 거절한다.
 - 응답은 byte 상한을 지킨다. 상한 때문에 항목이 `limit`보다 적으면 `truncated_by_bytes: true`다. 조용히 잘라 성공으로 보이지 않는다.
 
 ### 2.3 idempotency
@@ -122,4 +122,4 @@
 ## 8. 버전·변경 절차
 
 - 첫 릴리스(3.8) 전까지 `schema_version`은 `"1"`로 유지한다. 그 전의 **추가형 변경**(선택 필드, 새 정의)은 같은 버전에서 하되 fixture·생성 타입·이 문서를 함께 바꾼다. 필드 삭제·의미 변경은 소유자 handoff와 영향 작업 목록을 남긴다. 릴리스 뒤의 호환성 깨짐은 `"2"`로 올린다.
-- 4.2는 `contracts/pointers`, `contracts/context`를 같은 디렉토리 규칙으로 추가한다(`schemaFiles.ts`가 자동으로 읽는다). 그다음 `PointerService`의 `PointerContractPayload`를 생성 타입으로 바꾸고 `run.schema.json#PointerContextRef`에 selector를 추가하도록 요청한다.
+- 4.2의 포인터·컨텍스트 정의는 `contracts/pointers`와 `contracts/context`에 있다. 포인터의 범위·revision을 고정하는 공개 run 계약 및 관련 구현은 [2.2 보완 인계](../handoffs/2.2-ui-behavior-contract-gaps.md)에 남아 있다.

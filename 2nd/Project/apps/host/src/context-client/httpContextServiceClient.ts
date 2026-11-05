@@ -13,6 +13,7 @@ import {
     type TokenCountResult,
 } from "@securecode/contracts";
 import { ContextServiceError } from "./contextServiceError.js";
+import { requestLoopbackJson } from "./loopbackHttp.js";
 import type { ContextServiceClient, PointerService, SymbolService, TokenCounter } from "./ports.js";
 
 export interface HttpContextServiceClientOptions {
@@ -56,7 +57,7 @@ export class HttpContextServiceClient implements ContextServiceClient {
     }
 
     async health(signal?: AbortSignal): Promise<ServiceHealthResponse> {
-        const body = await this.request("GET", "/internal/v1/health", undefined, signal);
+        const body = await this.request("/internal/v1/health", undefined, signal);
         return this.options.validator.parse<ServiceHealthResponse>(SCHEMA_REFS.serviceHealthResponse, body);
     }
 
@@ -67,32 +68,34 @@ export class HttpContextServiceClient implements ContextServiceClient {
                 reason: "invalid_unicode",
             });
         }
-        const request: TokenCountRequest = { schema_version: "1", text };
-        const body = await this.request("POST", "/internal/v1/tokens/count", request, signal);
-        return this.options.validator.parse<TokenCountResult>(SCHEMA_REFS.tokenCountResult, body);
-    }
-
-    private async request(method: string, path: string, payload: unknown, signal?: AbortSignal): Promise<unknown> {
-        const timeoutSignal = AbortSignal.timeout(this.options.timeoutMs ?? DEFAULT_TIMEOUT_MS);
-        let response: Response;
-        try {
-            response = await fetch(`${this.options.baseUrl}${path}`, {
-                method,
-                headers: {
-                    authorization: `Bearer ${this.options.internalToken}`,
-                    ...(payload === undefined ? {} : { "content-type": "application/json" }),
-                },
-                body: payload === undefined ? null : JSON.stringify(payload),
-                signal: signal ? AbortSignal.any([signal, timeoutSignal]) : timeoutSignal,
-            });
-        } catch (error) {
-            const reason = error instanceof Error && error.name === "TimeoutError" ? "timeout" : "unreachable";
-            throw new ContextServiceError("SERVICE_UNAVAILABLE", "context-service is not reachable", true, {
-                reason,
+        const byteSize = Buffer.byteLength(text, "utf8");
+        if (byteSize === 0) {
+            throw new ContextServiceError("VALIDATION_FAILED", "text must not be empty", false, { reason: "empty" });
+        }
+        if (byteSize > 1024 * 1024) {
+            throw new ContextServiceError("PAYLOAD_TOO_LARGE", "token count input too large", false, {
+                text_bytes: byteSize,
             });
         }
+        const request: TokenCountRequest = { schema_version: "1", text };
+        const body = await this.request("/internal/v1/tokens/count", request, signal);
+        const count = this.options.validator.parse<TokenCountResult>(SCHEMA_REFS.tokenCountResult, body);
+        if (count.text_bytes !== byteSize) {
+            throw new ContextServiceError("SERVICE_UNAVAILABLE", "token result input size mismatch", true);
+        }
+        return count;
+    }
 
-        const body: unknown = await response.json().catch(() => undefined);
+    private async request(path: string, payload: unknown, signal?: AbortSignal): Promise<unknown> {
+        const timeoutSignal = AbortSignal.timeout(this.options.timeoutMs ?? DEFAULT_TIMEOUT_MS);
+        const response = await requestLoopbackJson(
+            this.options.baseUrl,
+            path,
+            this.options.internalToken,
+            payload,
+            signal ? AbortSignal.any([signal, timeoutSignal]) : timeoutSignal,
+        );
+        const body = response.body;
         if (response.ok) {
             return body;
         }

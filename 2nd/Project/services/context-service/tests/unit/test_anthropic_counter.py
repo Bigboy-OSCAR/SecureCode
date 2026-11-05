@@ -205,3 +205,19 @@ def test_unavailable_counter_never_estimates() -> None:
         UnavailableTokenCounter("api_key_missing").count("hello")
     assert error_info.value.code is ErrorCode.TOKENIZER_UNAVAILABLE
     assert error_info.value.details == {"reason": "api_key_missing"}
+
+
+def test_oversized_provider_payload_is_rejected() -> None:
+    """
+    함수 이름: test_oversized_provider_payload_is_rejected()
+    기능: 정상 JSON이어도 응답이 상한을 초과하면 계수를 캐시하거나 사용하지 않는다.
+    인자: 없음
+    반환값: 없음
+    작성 날짜: 2026/11/05
+    """
+    counter = make_counter(
+        lambda _: httpx.Response(200, json={"input_tokens": 4, "extra": "x" * 65536}), []
+    )
+    with pytest.raises(ServiceError) as error:
+        counter.count("hello")
+    assert error.value.details == {"reason": "invalid_provider_response"}

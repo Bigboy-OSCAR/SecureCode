@@ -18,7 +18,8 @@ async function serviceBuildSteps(): Promise<StepResult[]> {
     if (!isUvAvailable()) {
         return [{ name: "build: context-service wheel", status: "FAIL", detail: "uv not found" }];
     }
-    return [await toolStep("build: context-service wheel", uvCommand(), ["build", "--wheel"], { cwd: SERVICE_DIR })];
+    // uv builds the wheel from a fresh source archive, excluding stale files from a prior build.
+    return [await toolStep("build: context-service wheel", uvCommand(), ["build"], { cwd: SERVICE_DIR })];
 }
 
 await runAndExit("build", [

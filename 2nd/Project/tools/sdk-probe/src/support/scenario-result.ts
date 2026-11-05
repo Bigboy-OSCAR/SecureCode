@@ -31,8 +31,8 @@ export class ScenarioRecorder {
     }
 
     fail(name: string, error: unknown): void {
-        const message = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
-        this.check(name, false, message.slice(0, 400));
+        const kind = error instanceof Error ? error.name : "UnknownError";
+        this.check(name, false, `scenario raised ${kind}`);
     }
 
     finish(): ScenarioResult {

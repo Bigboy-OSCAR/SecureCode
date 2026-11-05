@@ -9,13 +9,13 @@ All payloads carry `schema_version: "1"`.
     securecode://runtime/{workspace_id}/{session_id}/{pointer_id}?v=1
     securecode://source/{workspace_id}/{source_id}?v={revision}
 
-- A pointer is an opaque handle. It never contains a file path or a command.
+- The URI contains the documented workspace and session ID components, an opaque object ID made of ASCII letters, digits, underscores or hyphens, and a positive revision. Runtime handles use version 1. The URI kind must match the descriptor or context reference kind.
 - A consumer must not derive storage paths from a pointer.
 - The registry resolves a pointer to an internal object. An unknown or
   malformed pointer returns `INVALID_POINTER`.
 - Validation order: (1) URI shape, (2) workspace scope, (3) session scope for
   runtime pointers, (4) existence, (5) expiry or revision.
-- A pointer from another workspace or session returns `FORBIDDEN`.
+- The service compares the URI scope and revision with the authenticated request and registry record. Another workspace or session returns `FORBIDDEN`. Shape validation alone cannot authorize a read.
 
 ## 2. Descriptor rules
 
@@ -56,6 +56,7 @@ Result: `content`, `provenance`, `truncated`, `next_cursor`, `token_count`, `cou
 | `max_tokens` | at most 32768 | roadmap 0.6 |
 | `cursor` length | at most 512 characters | draft |
 
+- The response schema caps a single content string at 16384 characters. The producer must enforce the requested UTF-8 byte and token caps on the complete response, including multi-byte text. The preview has the same byte-versus-character distinction at 512 bytes.
 - When the result is cut by a cap, `truncated = true` and `next_cursor` is set
   if more content exists.
 - `count_mode` states how `token_count` was produced

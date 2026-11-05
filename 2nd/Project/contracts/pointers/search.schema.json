@@ -1,109 +1,96 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Pointer Search Contracts",
-  "type": "object",
-  "additionalProperties": false,
-  "definitions": {
-    "PointerSearchRequest": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "schema_version",
-        "pointer",
-        "query"
-      ],
-      "properties": {
-        "schema_version": {
-          "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Pointer Search Contracts",
+    "type": "object",
+    "additionalProperties": false,
+    "definitions": {
+        "PointerSearchRequest": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["schema_version", "pointer", "query"],
+            "properties": {
+                "schema_version": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                },
+                "pointer": {
+                    "$ref": "../common/primitives.schema.json#/definitions/PointerUri"
+                },
+                "query": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                },
+                "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                },
+                "cursor": {
+                    "$ref": "../common/primitives.schema.json#/definitions/OpaqueCursor"
+                },
+                "max_bytes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 16384
+                },
+                "max_tokens": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 32768
+                }
+            }
         },
-        "pointer": {
-          "$ref": "../common/primitives.schema.json#/definitions/PointerUri"
+        "PointerSearchMatch": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["line", "content", "byte_offset"],
+            "properties": {
+                "line": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "content": {
+                    "type": "string",
+                    "maxLength": 16384
+                },
+                "byte_offset": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            }
         },
-        "query": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "limit": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 100
-        },
-        "cursor": {
-          "$ref": "../common/primitives.schema.json#/definitions/OpaqueCursor"
-        },
-        "max_bytes": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 16384
-        },
-        "max_tokens": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 32768
+        "PointerSearchResult": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["schema_version", "pointer", "matches", "truncated", "token_count", "count_mode"],
+            "properties": {
+                "schema_version": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                },
+                "pointer": {
+                    "$ref": "../common/primitives.schema.json#/definitions/PointerUri"
+                },
+                "matches": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PointerSearchMatch"
+                    },
+                    "maxItems": 100
+                },
+                "truncated": {
+                    "type": "boolean"
+                },
+                "next_cursor": {
+                    "$ref": "../common/primitives.schema.json#/definitions/OpaqueCursor"
+                },
+                "token_count": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "count_mode": {
+                    "$ref": "../common/token-count.schema.json#/definitions/CountMode"
+                }
+            }
         }
-      }
-    },
-    "PointerSearchMatch": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "line",
-        "content",
-        "byte_offset"
-      ],
-      "properties": {
-        "line": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "content": {
-          "type": "string"
-        },
-        "byte_offset": {
-          "type": "integer",
-          "minimum": 0
-        }
-      }
-    },
-    "PointerSearchResult": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "schema_version",
-        "pointer",
-        "matches",
-        "truncated",
-        "token_count",
-        "count_mode"
-      ],
-      "properties": {
-        "schema_version": {
-          "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
-        },
-        "pointer": {
-          "$ref": "../common/primitives.schema.json#/definitions/PointerUri"
-        },
-        "matches": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PointerSearchMatch"
-          }
-        },
-        "truncated": {
-          "type": "boolean"
-        },
-        "next_cursor": {
-          "$ref": "../common/primitives.schema.json#/definitions/OpaqueCursor"
-        },
-        "token_count": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "count_mode": {
-          "$ref": "../common/token-count.schema.json#/definitions/CountMode"
-        }
-      }
     }
-  }
 }

@@ -31,6 +31,10 @@ const MIN_INTERNAL_TOKEN_CHARS = 32;
 const LOG_LEVELS: readonly LogLevel[] = ["debug", "info", "warn", "error"];
 const LOOPBACK_HOSTNAMES = ["127.0.0.1", "localhost", "[::1]"];
 
+export function isValidInternalToken(token: string): boolean {
+    return token.length >= MIN_INTERNAL_TOKEN_CHARS && /^[\x21-\x7e]+$/.test(token);
+}
+
 function readPort(env: NodeJS.ProcessEnv, name: string, fallback: number): number {
     const raw = env[name]?.trim();
     if (!raw) {
@@ -64,7 +68,11 @@ function readExtraOrigins(env: NodeJS.ProcessEnv): string[] {
         } catch {
             throw new ConfigError("SECURECODE_ALLOWED_ORIGINS contains an invalid origin");
         }
-        if (!LOOPBACK_HOSTNAMES.includes(url.hostname) || url.origin !== origin) {
+        if (
+            !["http:", "https:"].includes(url.protocol) ||
+            !LOOPBACK_HOSTNAMES.includes(url.hostname) ||
+            url.origin !== origin
+        ) {
             throw new ConfigError("SECURECODE_ALLOWED_ORIGINS may only list loopback origins (scheme://host:port)");
         }
     }
@@ -77,8 +85,10 @@ export function loadHostConfig(env: NodeJS.ProcessEnv, workRoot: string): HostCo
     const uiPort = readPort(env, "SECURECODE_UI_DEV_PORT", 5173);
 
     const internalToken = env.SECURECODE_INTERNAL_TOKEN ?? "";
-    if (internalToken.length < MIN_INTERNAL_TOKEN_CHARS) {
-        throw new ConfigError(`SECURECODE_INTERNAL_TOKEN must be at least ${MIN_INTERNAL_TOKEN_CHARS} characters`);
+    if (!isValidInternalToken(internalToken)) {
+        throw new ConfigError(
+            `SECURECODE_INTERNAL_TOKEN must contain at least ${MIN_INTERNAL_TOKEN_CHARS} printable non-space ASCII characters`,
+        );
     }
 
     const dataDirSetting = env.SECURECODE_DATA_DIR?.trim() || ".securecode";

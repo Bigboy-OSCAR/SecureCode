@@ -9,18 +9,19 @@
 ```sh
 npm ci
 npm run probe:sdk                                   # 전체 8개 시나리오
-npm run probe -w @securecode/sdk-probe -- approval  # 특정 시나리오만
+npm run probe:sdk -- approval                       # 특정 시나리오만
+npm run probe:sdk -- --no-evidence                  # 기존 검증 기록을 보존하며 전체 재검증
 ```
 
 - Node 22 또는 24 LTS가 필요하다. API 키는 필요 없다.
-- 증거는 `artifacts/verification/<작업>/sdk-probe-result.json`에 기록된다. 기본값은 `3.1`이고 `SDK_PROBE_TASK_ID=3.2`처럼 바꿀 수 있다. 절대경로·원문·키는 기록하지 않는다.
+- 증거는 `artifacts/verification/<작업>/sdk-probe-result.json`에 기록된다. 기본값은 `3.1`이고 `SDK_PROBE_TASK_ID=3.2`처럼 바꿀 수 있다. 부분 검증은 같은 폴더의 `sdk-probe-partial-result.json`에 기록한다. `--no-evidence`로 실행하면 파일을 쓰지 않는다. 절대경로·원문·키는 기록하지 않는다.
 - 모든 검사가 통과하고 저장소의 Git refs/stash가 그대로일 때만 종료 코드 0이다.
 
 ## 구조
 
 | 경로 | 책임 |
 | --- | --- |
-| `src/env/isolated-cline-home.ts` | `CLINE_DIR`/`CLINE_DATA_DIR`를 임시 폴더로 격리. 사용자 `~/.cline`을 읽거나 쓰지 않는다 |
+| `src/support/isolated-cline-home.ts` | `CLINE_DIR`/`CLINE_DATA_DIR`를 임시 폴더로 격리. 사용자 `~/.cline`을 읽거나 쓰지 않는다 |
 | `src/fixtures/anthropic-sse.ts`, `scripted-fetch.ts` | `ClineCoreOptions.fetch`에 주입하는 scripted provider. SDK의 실제 `anthropic` adapter가 만든 최종 HTTP body를 캡처하고 차단할 수 있다 |
 | `src/fixtures/probe-tools.ts` | 프로젝트 소유 local tool(64 KiB sentinel 로그, 승인 대상 fixture 명령) |
 | `src/fixtures/memory-pointer-fixture.ts` | **정식 Runtime Store가 아닌** 메모리 pointer fixture |

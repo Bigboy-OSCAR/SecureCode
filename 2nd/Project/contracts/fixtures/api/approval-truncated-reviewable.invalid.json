@@ -1,0 +1,12 @@
+{
+    "schema_ref": "api/approval.schema.json#/definitions/ApprovalReview",
+    "expect": "invalid",
+    "scenario": "H-05",
+    "data": {
+        "kind": "command",
+        "summary": "partial command",
+        "content": "cmd",
+        "content_truncated": true,
+        "reviewable": true
+    }
+}

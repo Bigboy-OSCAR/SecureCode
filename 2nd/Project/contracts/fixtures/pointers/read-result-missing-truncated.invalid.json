@@ -1,13 +1,13 @@
 {
-  "schema_ref": "pointers/read.schema.json#/definitions/PointerReadResult",
-  "expect": "invalid",
-  "scenario": "4.2",
-  "data": {
-    "schema_version": "1",
-    "pointer": "securecode://source/ws_00000001/src_01?v=2",
-    "content": "x",
-    "provenance": { "media_type": "text/plain", "byte_size": 1, "revision": 2 },
-    "token_count": 1,
-    "count_mode": "exact"
-  }
+    "schema_ref": "pointers/read.schema.json#/definitions/PointerReadResult",
+    "expect": "invalid",
+    "scenario": "4.2",
+    "data": {
+        "schema_version": "1",
+        "pointer": "securecode://source/ws_00000001/src_01?v=2",
+        "content": "x",
+        "provenance": { "media_type": "text/plain", "byte_size": 1, "revision": 2 },
+        "token_count": 1,
+        "count_mode": "exact"
+    }
 }

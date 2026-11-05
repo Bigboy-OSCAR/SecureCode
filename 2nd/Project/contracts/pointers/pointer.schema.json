@@ -1,226 +1,214 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Pointer Contracts",
-  "type": "object",
-  "additionalProperties": false,
-  "definitions": {
-    "PointerProvenance": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "created_at",
-        "origin"
-      ],
-      "properties": {
-        "created_at": {
-          "$ref": "../common/primitives.schema.json#/definitions/Timestamp"
-        },
-        "origin": {
-          "type": "string",
-          "minLength": 1
-        },
-        "truncated_before_storage": {
-          "type": "boolean"
-        }
-      }
-    },
-    "PointerDescriptor": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "schema_version",
-        "pointer",
-        "kind",
-        "workspace_id",
-        "revision",
-        "media_type",
-        "byte_size",
-        "preview",
-        "available_operations",
-        "provenance"
-      ],
-      "properties": {
-        "schema_version": {
-          "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
-        },
-        "pointer": {
-          "$ref": "../common/primitives.schema.json#/definitions/PointerUri"
-        },
-        "kind": {
-          "$ref": "../common/primitives.schema.json#/definitions/PointerKind"
-        },
-        "workspace_id": {
-          "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
-        },
-        "session_id": {
-          "$ref": "../common/primitives.schema.json#/definitions/SessionId"
-        },
-        "revision": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "media_type": {
-          "type": "string",
-          "minLength": 1
-        },
-        "byte_size": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "preview": {
-          "type": "string",
-          "maxLength": 512
-        },
-        "available_operations": {
-          "type": "array",
-          "minItems": 1,
-          "uniqueItems": true,
-          "items": {
-            "type": "string",
-            "enum": [
-              "read",
-              "search"
-            ]
-          }
-        },
-        "provenance": {
-          "$ref": "#/definitions/PointerProvenance"
-        },
-        "expires_at": {
-          "$ref": "../common/primitives.schema.json#/definitions/Timestamp"
-        }
-      },
-      "allOf": [
-        {
-          "if": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Pointer Contracts",
+    "type": "object",
+    "additionalProperties": false,
+    "definitions": {
+        "PointerProvenance": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["created_at", "origin"],
             "properties": {
-              "kind": {
-                "const": "runtime"
-              }
+                "created_at": {
+                    "$ref": "../common/primitives.schema.json#/definitions/Timestamp"
+                },
+                "origin": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "truncated_before_storage": {
+                    "type": "boolean"
+                }
             }
-          },
-          "then": {
+        },
+        "PointerDescriptor": {
+            "type": "object",
+            "additionalProperties": false,
             "required": [
-              "session_id",
-              "expires_at"
-            ]
-          }
-        },
-        {
-          "if": {
+                "schema_version",
+                "pointer",
+                "kind",
+                "workspace_id",
+                "revision",
+                "media_type",
+                "byte_size",
+                "preview",
+                "available_operations",
+                "provenance"
+            ],
             "properties": {
-              "kind": {
-                "const": "source"
-              }
-            }
-          },
-          "then": {
-            "not": {
-              "required": [
-                "session_id"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    "SourceRegistration": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "schema_version",
-        "source_id",
-        "workspace_id",
-        "pointer",
-        "media_type",
-        "byte_size",
-        "fingerprint",
-        "revision",
-        "available_operations",
-        "provenance"
-      ],
-      "properties": {
-        "schema_version": {
-          "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
-        },
-        "source_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "workspace_id": {
-          "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
-        },
-        "pointer": {
-          "$ref": "../common/primitives.schema.json#/definitions/PointerUri"
-        },
-        "media_type": {
-          "type": "string",
-          "minLength": 1
-        },
-        "byte_size": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "fingerprint": {
-          "$ref": "../common/primitives.schema.json#/definitions/Sha256Hex"
-        },
-        "revision": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "available_operations": {
-          "type": "array",
-          "minItems": 1,
-          "uniqueItems": true,
-          "items": {
-            "type": "string",
-            "enum": [
-              "read",
-              "search"
+                "schema_version": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                },
+                "pointer": {
+                    "$ref": "../common/primitives.schema.json#/definitions/PointerUri"
+                },
+                "kind": {
+                    "$ref": "../common/primitives.schema.json#/definitions/PointerKind"
+                },
+                "workspace_id": {
+                    "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                },
+                "session_id": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SessionId"
+                },
+                "revision": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "media_type": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "byte_size": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "preview": {
+                    "type": "string",
+                    "maxLength": 512
+                },
+                "available_operations": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string",
+                        "enum": ["read", "search"]
+                    }
+                },
+                "provenance": {
+                    "$ref": "#/definitions/PointerProvenance"
+                },
+                "expires_at": {
+                    "$ref": "../common/primitives.schema.json#/definitions/Timestamp"
+                }
+            },
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "kind": {
+                                "const": "runtime"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": ["session_id", "expires_at"],
+                        "properties": {
+                            "pointer": {
+                                "$ref": "../common/primitives.schema.json#/definitions/RuntimePointerUri"
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "kind": {
+                                "const": "source"
+                            }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "pointer": {
+                                "$ref": "../common/primitives.schema.json#/definitions/SourcePointerUri"
+                            },
+                            "session_id": false,
+                            "expires_at": false
+                        }
+                    }
+                }
             ]
-          }
         },
-        "provenance": {
-          "$ref": "#/definitions/PointerProvenance"
+        "SourceRegistration": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "schema_version",
+                "source_id",
+                "workspace_id",
+                "pointer",
+                "media_type",
+                "byte_size",
+                "fingerprint",
+                "revision",
+                "available_operations",
+                "provenance"
+            ],
+            "properties": {
+                "schema_version": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                },
+                "source_id": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "workspace_id": {
+                    "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                },
+                "pointer": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SourcePointerUri"
+                },
+                "media_type": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "byte_size": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "fingerprint": {
+                    "$ref": "../common/primitives.schema.json#/definitions/Sha256Hex"
+                },
+                "revision": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "available_operations": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string",
+                        "enum": ["read", "search"]
+                    }
+                },
+                "provenance": {
+                    "$ref": "#/definitions/PointerProvenance"
+                }
+            }
+        },
+        "RuntimePutRequest": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["schema_version", "workspace_id", "session_id", "media_type", "content", "origin"],
+            "properties": {
+                "schema_version": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                },
+                "workspace_id": {
+                    "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                },
+                "session_id": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SessionId"
+                },
+                "media_type": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "content": {
+                    "type": "string"
+                },
+                "origin": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "truncated_before_storage": {
+                    "type": "boolean"
+                }
+            }
         }
-      }
-    },
-    "RuntimePutRequest": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "schema_version",
-        "workspace_id",
-        "session_id",
-        "media_type",
-        "content",
-        "origin"
-      ],
-      "properties": {
-        "schema_version": {
-          "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
-        },
-        "workspace_id": {
-          "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
-        },
-        "session_id": {
-          "$ref": "../common/primitives.schema.json#/definitions/SessionId"
-        },
-        "media_type": {
-          "type": "string",
-          "minLength": 1
-        },
-        "content": {
-          "type": "string"
-        },
-        "origin": {
-          "type": "string",
-          "minLength": 1
-        },
-        "truncated_before_storage": {
-          "type": "boolean"
-        }
-      }
     }
-  }
 }

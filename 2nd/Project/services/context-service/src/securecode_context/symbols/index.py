@@ -3,11 +3,13 @@
 import hashlib
 import os
 import stat
+import sys
 from pathlib import Path
 from typing import NotRequired, TypedDict
 
 from .graph import RawCandidate, SourceGraph, SourceNode, raw_candidates
 from .parser import EXTENSIONS, parse_source
+from .python_layout import WORKSPACE_LAYOUT, directory_layout
 
 MAX_FILE_BYTES = 1024 * 1024
 EXCLUDED_DIRS = {"node_modules", "venv", "build", "generated", "dist", "__pycache__", "target"}
@@ -58,8 +60,10 @@ def _open_source(root: Path, path: Path, flags: int) -> int:
     반환값: 열린 파일 디스크립터
     작성 날짜: 2026/11/05
     """
-    if os.open not in os.supports_dir_fd:
-        return os.open(path, flags)
+    if sys.platform == "win32":
+        if any(os.path.isreserved(part) for part in path.relative_to(root).parts):
+            raise PermissionError("reserved source path")
+        return os.open(path, flags | os.O_BINARY)
     dir_flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
     directory = os.open(root, dir_flags)
     try:
@@ -88,6 +92,11 @@ def _read_source(root: Path, path: Path) -> bytes:
         opened = os.fstat(stream.fileno())
         if not os.path.samestat(info, opened) or not path.resolve().is_relative_to(root):
             raise OSError("path_rejected")
+        if sys.platform == "win32":
+            from securecode_context.common.windows_file import final_path
+
+            if final_path(stream.fileno()) != path:
+                raise OSError("path_rejected")
         source = stream.read(MAX_FILE_BYTES + 1)
         after_read = os.fstat(stream.fileno())
         if (opened.st_size, opened.st_mtime_ns) != (after_read.st_size, after_read.st_mtime_ns):
@@ -110,8 +119,11 @@ def build_index(root: Path, *, output: Path | None = None) -> R0Index:
     manifest: dict[str, str] = {}
     diagnostics: list[Diagnostic] = []
     excluded_output = (output.parent.resolve() / output.name) if output else None
+    layouts = {root: WORKSPACE_LAYOUT}
     for directory, folders, files in root.walk(on_error=_raise_walk_error):
         folders[:] = sorted(d for d in folders if not d.startswith(".") and d not in EXCLUDED_DIRS)
+        layout = directory_layout(root, directory, folders, files, layouts.pop(directory))
+        layouts.update((directory / folder, layout) for folder in folders)
         for filename in sorted(files):
             path = directory / filename
             if filename.startswith(".") or path == excluded_output:
@@ -139,7 +151,7 @@ def build_index(root: Path, *, output: Path | None = None) -> R0Index:
             file_hash = hashlib.sha256(source).hexdigest()
             manifest[relative] = file_hash
             try:
-                language, declarations = parse_source(relative, source)
+                language, declarations = parse_source(relative, source, python_layout=layout)
             except UnicodeDecodeError:
                 diagnostics.append(Diagnostic(relative_path=relative, reason_code="encoding_error"))
                 continue

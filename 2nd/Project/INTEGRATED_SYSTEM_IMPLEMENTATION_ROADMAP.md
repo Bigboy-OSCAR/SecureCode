@@ -30,7 +30,7 @@
 
 **범위에서 제외:** RAPTOR, RF/RH 요약 트리, H의 LLM 후보 선택 단계, 임베딩/벡터 DB, Self-Extend, 별도 에이전트 프레임워크, 클라우드 배포, 다중 사용자 협업, OCR, 암호화 PDF 해제. Cline 내부 기능을 추가 연구 기법으로 부르지 않으며, 암묵적인 컨텍스트 요약/전체 파일 주입은 검증되지 않은 채 켜 두지 않는다.
 
-필수 코드 색인 언어는 **Python, C, C++, Java, JavaScript**다. 단일 언어 프로젝트와 다섯 언어가 섞인 프로젝트 모두 한 번의 색인 요청으로 처리한다. `Workspace.supported_languages`의 계약 값은 각각 `python`, `c`, `cpp`, `java`, `javascript`다. TypeScript는 Source Pointer로 등록해 부분 조회할 수 있다.
+필수 코드 색인 언어는 **Python, C, C++, Java, JavaScript**다. 단일 언어 프로젝트와 다섯 언어가 섞인 프로젝트 모두 로컬 CLI를 한 번 실행해 색인을 생성할 수 있다. 작업 공간에서 색인을 요청하고 준비 상태를 조회하는 API는 3.3~3.6에서 연결한다. `Workspace.supported_languages`의 계약 값은 각각 `python`, `c`, `cpp`, `java`, `javascript`다. TypeScript는 Source Pointer로 등록해 부분 조회할 수 있다.
 
 | 언어 | 색인 대상 확장자 | 3.3 색인과 3.4 검색에서 확인할 원문 예시 |
 |---|---|---|
@@ -44,7 +44,18 @@
 
 ### 0.2 현재 상태와 재사용 원칙
 
-작성 시점 `2nd/Project`에는 `CODING_CONVENTIONS.md`만 있었다. 아래 기존 코드는 **실험 근거**이며 설치 가능한 통합 제품이 아니다. 이 로드맵의 체크는 모두 미완료로 시작한다. 문서 작성 완료를 구현 완료로 체크하지 않는다.
+**2026-11-05 기준 구현·검증 현황**
+
+| 영역 | 확인한 동작 | 남은 인수 작업 |
+|---|---|---|
+| 실행 기반 (3.1·3.2) | `npm run dev`로 호스트와 Python 서비스를 기동한다. 토큰 없는 내부 요청은 401이며, 서비스 종료 후 호스트는 `degraded`를 반환한다. `npm run stop`은 해당 실행기가 시작한 두 서버의 종료를 확인한다. | 브라우저 인증, 운영 세션·실행·승인·SSE는 3.5에서 연결한다. |
+| R0 (3.3·3.4) | 다섯 언어의 원문·정적 참조를 담은 로컬 JSON을 생성한다. 변경·이동·삭제 뒤 같은 명령을 다시 실행해 갱신할 수 있다. [3.3 검증 기록](docs/progress/tasks/3.3.md) | 작업 공간별 revision 저장·전환, 서비스의 TF-IDF 검색과 예산 내 원문 묶음 읽기 |
+| 포인터 (4.3~4.6) | 인증된 레거시 Runtime API의 세션 격리·부분 읽기, 실제 SDK 훅의 큰 출력 교체, 메모리 Source 등록부의 파일 변경 감지를 검증했다. | 정식 서비스 API, 운영 SDK·SSE 연결, Source 등록부 영속화와 범위 검색 |
+| UI (1.1·2.2) | 화면 사례 34개를 상세 명세에 연결했다. 잘린 승인 내용을 검토 가능으로 표시하는 조합은 계약에서 거절한다. | 2.2는 범위 선택·자료 관리·PDF·미리보기 등의 공개 계약 보완을 기다리는 `BLOCKED` 상태다. [2.2 인계](docs/handoffs/2.2-ui-behavior-contract-gaps.md) |
+
+이번 검토에서 Python 테스트 206개, 호스트 단위 테스트 47개, TypeScript 계약 테스트 142개, 오프라인 SDK 검사 62개가 통과했다. Python 전체 수치에는 Python 계약 시험이 포함된다. 실제 외부 모델 호출과 이번 변경의 Windows 실행 검증은 후속이며 Windows용 Python 정적 타입 검사는 통과했다. [명령별 검증 상태](docs/architecture/ARCHITECTURE.md#7-개발-명령)
+
+아래 실험 자료는 최초 설계의 출발점이다. 제품에 이식한 범위와 남은 조건은 해당 작업의 검증 기록에서 확인한다.
 
 | 기존 자료 | 재사용할 내용 | 제품화 시 보완할 점 |
 |---|---|---|
@@ -66,7 +77,7 @@
     ▼
 Node Cline 호스트 (박준형)
     ├─ ClineCore 세션 / 승인 / 취소 / 이벤트 / 실제 모델 호출
-    ├─ 로컬 도구 registry / beforeModel 예산 게이트
+    ├─ 로컬 도구 registry / beforeModel 조기 검사 / fetch 최종 예산 검사
     ├─ afterTool 결과 교체 연결 ── Runtime 정책 (임우형)
     └─ 인증된 loopback HTTP ────── Python context-service
                                   ├─ symbols: R0 원문 검색 (박준형)
@@ -79,7 +90,7 @@ Node Cline 호스트 (박준형)
 | 경계 | 단일 수정 책임 | 다른 사람의 사용 방식 |
 |---|---|---|
 | 루트 실행/검사 설정, lockfile, 호스트 조립, `/api/v1`, 공통 이벤트 | 박준형 | 필요한 의존성/계약 변경을 `docs/handoffs/`에 기록; 무단 병행 수정 금지 |
-| `contracts/pointers`, `contracts/context`, Python 포인터·PDF, `host/src/pointer-hooks` | 임우형 | 박준형의 SDK adapter 포트에 붙이고 UI에는 DTO만 노출 |
+| `contracts/pointers`, `contracts/context`, Python 포인터·PDF, `apps/host/src/pointer-hooks`와 Runtime Pointer SDK 플러그인 | 임우형 | 박준형의 SDK adapter 포트에 붙이고 UI에는 DTO만 노출 |
 | `docs/ui/{SCREEN_SPEC,UI_BEHAVIOR,ACCEPTANCE}.md`, UI 검토/인계 문서 | 김찬우 | 화면·표시·조작 요구를 문서로 제공; 상태 관리 코드와 실행 타입은 작성하지 않음 |
 | `apps/ui/src/{features,hooks,components,api,styles}`, UI 행동 시험·E2E | 김민지 | 설계 명세와 생성된 API 타입을 사용해 화면 상태·사용자 동작·통신을 구현 |
 | `context-service/src/securecode_context/symbols` | 박준형 | 임우형은 공통 Candidate 계약을 통해 사용 |
@@ -90,7 +101,7 @@ Node Cline 호스트 (박준형)
 
 ### 0.4 Cline SDK 연결에서 반드시 지킬 점
 
-공식 소스·문서를 2026-10-27 확인했다. 검증 소스 ref는 `775d0398039977ca5447ed39c1a7f178df69aa87`이며, 확인한 source package version은 `0.2.0`, Node 조건은 22 이상이다. 이것을 현재 npm 배포 버전이라고 단정하지 않는다. **3.1에서 실제 설치 가능한 버전을 확인·고정하고 타입·실행 증거를 남겨야 한다.**
+3.1은 공식 소스 ref `775d0398039977ca5447ed39c1a7f178df69aa87`와 실제 설치한 `@cline/sdk@0.2.0`의 타입·실행 동작을 대조했다. 제품은 루트 `package-lock.json`으로 SDK를 고정한다. 저장된 증거를 보존하면서 재검증하려면 `npm run probe:sdk -- --no-evidence`를 실행한다. [검증된 SDK 확장점](docs/architecture/SDK_COMPATIBILITY.md)
 
 - `ClineCore.create/start/send/subscribe/abort/stop/dispose`와 typed `hooks.afterTool`, `beforeModel`이 공식 표면에서 확인됐다. 실제 사용하는 인자·반환값은 설치 버전의 `.d.ts`로 확정한다. 검증되지 않은 `onToolResult` 등을 만들어 “SDK API”라고 쓰지 않는다.
 - `afterTool`에서 **`result`를 교체**한다. `appendContext`만 추가하거나 UI에서 원문을 숨기는 것은 Runtime Pointer 적용이 아니다. SDK canonical history와 다음 provider 요청에도 원문이 남지 않는지 검사한다.
@@ -101,14 +112,14 @@ Node Cline 호스트 (박준형)
 - Core의 `capabilities.requestToolApproval`에서 앱이 승인 ID·입력 digest·만료시간을 생성한다. 취소/세션 종료/timeout 때 대기 Promise를 종료하고 늦은 승인을 거절한다. Core의 `CoreSessionEvent`와 하위 Agent 이벤트를 혼동하지 말고 설치 타입을 기준으로 AppEvent에 매핑한다.
 - 필수 pointer/budget hook의 등록·준비가 확인되지 않으면 세션 시작을 차단한다. `hookErrorMode`만으로 미등록 hook이 보장되지는 않는다. 자동 사용자 MCP 설정 도구 유입·spawn agent/teams·미승인 plugin은 검증된 설정으로 비활성화하고 허용 도구 집합을 고정한다.
 - `checkpoint: { enabled: false }`와 로컬 backend 설정을 검증해 SDK가 Git 상태를 자동 변경하지 않게 한다. 프로젝트 도구의 commit/push 실행도 금지한다.
-- 모델 요청 예산은 `beforeModel` 또는 검증된 동일 기능의 확장점 한 곳에서 최종 검증한다. `prepareTurn`의 요청 투영과 저장된 대화 이력 변경을 혼동하지 않는다. 같은 자료를 최초 프롬프트·hook·도구 결과에 중복 삽입하지 않는다.
+- `beforeModel`은 요청을 관측하고 조기에 차단한다. 3.1에서 확인한 최종 차단 지점은 provider 요청 본문이 직렬화된 뒤의 `ClineCoreOptions.fetch`다. 4.8은 이 지점에서 전체 요청의 예산을 검증한다. `prepareTurn`의 요청 투영과 저장된 대화 이력 변경을 혼동하지 않는다. 같은 자료를 최초 프롬프트·hook·도구 결과에 중복 삽입하지 않는다.
 - 기본 읽기/코드 검색 도구가 전체 저장소·거대한 파일을 우회 전송하지 않도록 허용 목록과 wrapper를 고정한다. 기존 내장 도구를 교체/비활성화하는 실제 방법 역시 3.1에서 확인한다.
 
 지원 불일치가 발견되면 3.1/3.5에서 같은 Cline SDK의 공개 API로 대안을 검증한다. 불가능한 기능을 가짜로 구현하거나 다른 SDK로 바꾸지 않는다. 해결하지 못한 필수 기능은 `BLOCKED`로 기록하고 후속 작업을 완료 처리하지 않는다.
 
 ### 0.5 올바른 디렉토리 구조와 파일 분할
 
-아래는 **구현 후 목표 구조**이며 현재 생성된 코드가 아니다. 파일을 먼저 전부 빈 껍데기로 만들지 말고, 해당 담당 작업에서 필요한 모듈을 만든다.
+아래는 **최종 목표 구조**다. 현재 생성한 패키지와 모듈별 담당은 [아키텍처 문서](docs/architecture/ARCHITECTURE.md)에 기록한다. 파일을 먼저 전부 빈 껍데기로 만들지 말고, 해당 담당 작업에서 필요한 모듈을 만든다.
 
 ```text
 Project/
@@ -178,23 +189,25 @@ Project/
 
 **코딩컨벤션:** Python은 기존 `CODING_CONVENTIONS.md`를 반드시 지킨다. 클래스 PascalCase, 함수/변수 snake_case, 공백 4칸, 함수·클래스 설명 docstring에 규약의 필드와 실제 작성 날짜를 포함한다. TypeScript는 3.2에서 별도 보완 규약을 작성한다: strict 모드, 함수/변수 camelCase, 타입/컴포넌트 PascalCase, ESLint/Prettier, 의미 없는 `any` 금지, 비동기 오류 명시, 네트워크 타입 검증. JSON 전송 필드는 snake_case로 고정하고 UI 변환은 mapper 한 곳에서 한다. Python 문법을 TypeScript에 억지로 적용하지 않는다.
 
-### 0.6 공유 데이터·API 계약 초안
+<a id="06-공유-데이터api-계약-초안"></a>
 
-이 절의 이름은 **우리 애플리케이션의 신규 계약 초안**이다. Cline SDK의 실제 함수 이름이라고 오해하지 않는다. 3.2가 공통 계약을, 4.2가 Pointer/Context 세부 계약을 스키마로 확정한다. 소비자는 수기로 타입을 복제하지 않고 생성 타입 또는 동일 JSON Schema를 검증한다. 호환성 버전은 `schema_version: "1"`로 시작한다.
+### 0.6 공유 데이터·API 계약과 연결 범위
+
+3.2의 공통 계약과 4.2의 포인터·컨텍스트 계약은 `contracts/`의 JSON Schema를 기준으로 한다. 다음 표는 버전 1의 주요 필드를 요약한다. 소비자는 생성 타입 또는 같은 스키마로 검증한다. 뒤의 API 표에는 운영 연결을 기다리는 경로도 포함된다. [공개 API 명세](docs/contracts/API.md) · [포인터 명세](docs/contracts/POINTERS.md)
 
 | DTO | 최소 필드/의미 |
 |---|---|
 | Workspace | `workspace_id`, `display_name`, `index_revision`, `index_status`, `supported_languages`; 실제 절대경로는 서버 내부 |
-| SymbolCandidate / Bundle | `candidate_id`, `symbol_ids`, `score`, `index_revision`, `fragments`, `omissions`, `token_count`; 원문 fragment마다 파일/줄/해시/출처 |
+| SymbolCandidate / SymbolBundle | 후보는 `candidate_id`, `primary`, `symbol_ids`, `score`, `index_revision`, `estimated_tokens`를 담는다. 묶음은 `fragments`, `omissions`, `unresolved_references`, `token_count`로 원문·출처·누락을 전달한다. |
 | PointerDescriptor | `pointer`, `kind`(source/runtime), `workspace_id`, `revision`, `media_type`, `byte_size`, `preview`, `available_operations`, `provenance`; runtime에 `session_id`, `expires_at` |
-| ReadRequest | `pointer`, 판별 가능한 `selector`, `max_bytes`, `max_tokens`, `cursor`; 범위는 포인터 문자열 밖 구조화 값 |
-| ReadResult | 제한된 `content`, `provenance`, `truncated`, `next_cursor`, `token_count`, `count_mode`, `revision`; cursor도 scope·revision·연산에 묶음 |
-| ContextCandidate | `kind`(symbol/source/runtime), `candidate_id`, `score`, `explicit`, `provenance`, `estimated_tokens`; 무제한 본문 목록 금지 |
-| ContextPlan | `selected` 메타데이터, 제한된 실제 원문 `fragments`, `omitted[{candidate_id,reason}]`, `budget`, `used_tokens`, `count_mode`, `index_revision`; host가 fragments를 한 번만 삽입 |
+| PointerReadRequest | `pointer`와 선택 필드 `selector`, `max_bytes`, `max_tokens`, `cursor`. 범위는 구조화된 selector로 전달한다. |
+| PointerReadResult | `content`, `provenance.revision`, `truncated`, `next_cursor`, `token_count`, `count_mode`. cursor는 scope·revision·연산에 묶는다. |
+| ContextCandidate | `candidate_id`, `ref`, `score`, `explicit`, `estimated_tokens`. 심볼·Source·Runtime 참조의 종류는 `ref.kind`로 구분한다. |
+| ContextPlan | `selected`, `fragments`, `omitted`, `index_revision`. 사용 토큰과 계수 방식은 `budget.used_tokens`와 `budget.count_mode`에 들어간다. |
 | AppEvent | `schema_version`, `event_id`, 단조 증가 `sequence`, `workspace_id`, `session_id`, `run_id`, `type`, `timestamp`, `payload` |
 | ApiError | `code`, 사용자용 `message`, `retryable`, `request_id`, 선택적 `details`; 내부 경로/키/대형 원문 노출 금지 |
 
-포인터는 메모리 주소가 아닌 opaque handle이다. 예시 형식은 `securecode://source/<workspace_id>/<uuid>?v=<revision>`와 `securecode://runtime/<workspace_id>/<session_id>/<uuid>?v=1`이다. 실제 파일 경로는 registry에만 보관한다. 심볼은 `symbol_id`와 Source provenance를 가지며 별도 네 번째 포인터 기술을 만들지 않는다. PDF 페이지 텍스트도 Source Pointer의 파생 데이터다.
+정식 URI는 `securecode://source/<workspace_id>/<source_id>?v=<revision>`와 `securecode://runtime/<workspace_id>/<session_id>/<pointer_id>?v=1`이다. 서비스는 URI의 종류·범위·버전을 인증된 요청과 등록 기록에 대조한다. Source descriptor에는 `session_id`와 `expires_at`을 허용하지 않는다. 실제 파일 경로는 registry에서 관리한다. 심볼과 PDF 페이지는 Source provenance로 원본을 식별한다.
 
 | UI가 호출할 API / 동작 | 구현 책임 |
 |---|---|
@@ -205,19 +218,23 @@ Project/
 | `GET /api/v1/workspaces/:id/pointers`, `POST /workspaces/:id/sources`, `POST /pointers/read`, `POST /pointers/search`, `DELETE /pointers` | 임우형 서비스 4.3~4.6, 박준형 공개 route 연결 3.6 |
 | `POST /api/v1/context/preview`, `POST /api/v1/pdf/parse`, `GET /api/v1/pdf/jobs/:id` | 임우형 4.8/4.9, 박준형 route 연결 3.6 |
 
-표의 축약 경로는 모두 `/api/v1` 아래다. 포인터 URI를 URL path에 직접 붙이지 않는다. `DELETE /pointers`의 JSON 본문은 pointer와 scope를 가지며 호스트/프록시도 해당 계약을 검증한다. Source 삭제는 **등록 해제와 파생 캐시 삭제**이며 사용자 원본 파일을 삭제하지 않는다. Runtime 삭제는 저장한 실행 결과만 지운다. PDF parse는 job ID를 먼저 반환하고 상태 API/앱 이벤트로 완료를 알린다.
+표의 축약 경로는 모두 `/api/v1` 아래다. 현재 호스트에서 동작하는 공개 경로는 health이며, 계획된 업무 경로는 연결 전까지 501을 반환한다. 포인터 URI를 URL path에 직접 붙이지 않는다. `DELETE /pointers`의 JSON 본문은 pointer와 scope를 가지며 호스트/프록시도 해당 계약을 검증한다. Source 삭제는 **등록 해제와 파생 캐시 삭제**이며 사용자 원본 파일을 삭제하지 않는다. Runtime 삭제는 저장한 실행 결과만 지운다. PDF 작업은 job ID로 상태를 조회하도록 계획했다. job 요청·응답과 지원 상태는 2.2 인계 G-05의 보완 대상이다.
 
 내부 서비스 포트는 `symbols.build_index/search/read_bundle`, `runtime.put/stat/list/read/search/delete/clear_session`, `source.register/stat/list/read/search/unregister`, `context.select`, `pdf.parse/status/read_pages`, 내부 공용 `tokens.count`로 나눈다. Runtime put/세션 정리 같은 관리 기능을 모델에 모두 공개하지 않는다. 모델에는 필요한 검색/부분 조회 도구만 노출한다. 기본 본문 TokenCounter는 3.2가 실행 가능한 구현으로 제공하고, provider framing을 포함한 최종 요청 검사는 4.8이 확장한다. 따라서 포인터/R0 모듈이 후속 Selector를 기다릴 필요가 없다.
 
 세션당 동시 실행은 1개다. 중복 run 생성은 `idempotency_key`로 같은 결과를 반환한다. SSE 연결 끊김은 실행 취소와 다르다. 재연결은 `Last-Event-ID`로 중복 이벤트를 걸러 복원하며, replay 보존 범위를 벗어나면 run snapshot을 다시 읽는다. 종료는 `completed/failed/cancelled` 중 하나만 확정하고 늦은 이벤트가 이를 되돌리지 못한다. 취소는 `cancelling`을 거쳐 SDK 확인 후 `cancelled`가 된다.
 
-포인터 목록·검색 결과·R0 후보 목록도 `limit/cursor`와 최대 응답 bytes/token cap을 가진다. 모델뿐 아니라 SDK 이벤트→AppEvent→SSE에서도 전체 도구 원문을 통과시키지 않는다. 로그/디버그 모드가 이 규칙을 우회하지 않게 한다.
+페이지 계약에서 `has_more=true`이면 다음 cursor가 필요하다. 포인터 검색 결과는 최대 100개이며, `truncated`와 `next_cursor`로 이어 읽기를 표시한다. 서비스는 목록·검색·R0 후보 응답에 정해진 크기 한도를 적용한다. 모델뿐 아니라 SDK 이벤트→AppEvent→SSE에서도 전체 도구 원문을 통과시키지 않는다. 로그/디버그 모드가 이 규칙을 우회하지 않게 한다.
 
-필수 오류군: `INVALID_POINTER`, `NOT_FOUND`, `EXPIRED`, `FORBIDDEN`, `SOURCE_CHANGED`, `INVALID_SELECTOR`, `UNSUPPORTED_FORMAT`, `UNSUPPORTED_LANGUAGE`, `PARSE_FAILED`, `NO_MATCH`, `BUDGET_EXCEEDED`, `TOKENIZER_UNAVAILABLE`, `SDK_UNAVAILABLE`, `PROVIDER_ERROR`, `APPROVAL_REJECTED`, `CANCELLED`. HTTP 상태와 UI 표시/재시도 가능 여부는 4.2/2.2에서 고정한다.
+공통 결과 코드에는 `INVALID_POINTER`, `NOT_FOUND`, `EXPIRED`, `FORBIDDEN`, `SOURCE_CHANGED`, `INVALID_SELECTOR`, `UNSUPPORTED_FORMAT`, `UNSUPPORTED_LANGUAGE`, `PARSE_FAILED`, `NO_MATCH`, `BUDGET_EXCEEDED`, `TOKENIZER_UNAVAILABLE`, `SDK_UNAVAILABLE`, `PROVIDER_ERROR`, `APPROVAL_REJECTED`, `CANCELLED`가 있다. 검색 결과가 없으면 HTTP 200으로 응답한다. 심볼 검색은 빈 `candidates`와 `no_match.reason_code="NO_MATCH"`를, 포인터 검색은 `matches: []`를 반환한다. 오류 상태와 기본 재시도 여부는 [공통 코드표](contracts/common/error-codes.json)를 따른다.
 
 ### 0.7 예산·저장·부분 읽기 기준
 
-프로젝트 정책 기본값은 설정 파일 한 곳에서 관리한다. 초기값은 **도구 출력 16 KiB 초과 시 포인터화**, pointer preview 최대 512 UTF-8 bytes, 부분 조회 최대 32 KiB와 요청 token cap 중 작은 값, Runtime 객체 최대 32 MiB/세션 합계 128 MiB/TTL 24시간, Source 파일 최대 256 MiB, JSON 구조 조회 최대 8 MiB, PDF 최대 50 MiB/500페이지로 둔다. 수치는 SDK 제한이 아닌 제품 기본값이며 4.1에서 근거와 변경 방법을 문서화한다. 상한을 넘으면 조용히 잘라 성공으로 표시하지 않는다.
+도구 출력을 포인터로 교체하는 기준과 포인터를 한 번에 읽을 수 있는 양은 따로 관리한다.
+
+- **도구 출력 교체 (4.4)** — 현재 SDK 훅은 UTF-8 **4,096바이트 이상**을 저장하고 결과를 교체한다. 3.1에서 SDK가 8,000자를 넘는 출력을 자르는 경로를 확인했으므로, 초기 제안인 16 KiB를 적용하려면 먼저 원문 보존 경로를 검증해야 한다. 운영 임계값과 스트리밍 저장 정책은 4.4에서 인수한다.
+- **포인터 부분 읽기·검색 (4.2)** — 요청 상한은 `max_bytes` 16,384바이트와 `max_tokens` 32,768토큰이다. 응답은 요청된 두 한도를 모두 지킨다. preview는 최대 512 UTF-8바이트다. R0 `SymbolBundleRequest.max_bytes`의 상한은 별도로 32 KiB다. [포인터 조회 계약](contracts/pointers/read.schema.json) · [심볼 묶음 계약](contracts/symbols/symbol.schema.json)
+- **제품 저장·파싱 목표** — Runtime 객체 32 MiB, 세션 합계 128 MiB, 기본 TTL 24시간, Source 파일 256 MiB, JSON 구조 조회 8 MiB, PDF 50 MiB·500페이지다. 각 구현 작업에서 적용 여부와 초과 시 오류를 검증한다.
 
 - Runtime은 SQLite 메타데이터 + 개별 blob 등 원자적 파일 저장을 사용한다. 임시 파일→완료 rename, 오류/취소 시 정리, 세션 격리, TTL sweep, 재시작 시 정합성을 지원한다. 프로세스 dict만으로 완료 처리하지 않는다.
 - Source는 등록 시 root/경로 허용을 검증한다. 프로젝트 외부 자료는 UI에서 사용자가 지정한 파일/디렉토리만 허용 목록에 등록한다. symlink와 `..` 경로 이탈을 차단하고 stat/hash/revision으로 오래된 원문을 감지한다. 모든 요청에서 거대한 파일을 재해시하지 않도록 정책을 명시한다.
@@ -236,7 +253,7 @@ available_context = model_context_limit
 
 사용자 명시 선택 → 현재 요청과 연결된 도구 결과/자료 → R0 점수 순으로 선택하고 동점은 안정적인 ID 순으로 처리한다. 명시 선택도 예산을 넘길 수 없다. 먼저 권한/버전 검사, 이어서 같은 source hash+range 중복 제거, 마지막에 토큰 한도 안 선택을 한다. 점수가 다른 검색기끼리 임의 비교되지 않도록 source별 priority와 정규화 기준을 4.7에서 명시한다. 전체 history가 이미 한도를 넘으면 `BUDGET_EXCEEDED`로 중단하고 새 세션/범위 축소를 안내한다. 새로운 요약기를 자동 추가하지 않는다.
 
-최종 직렬화된 모델 입력도 다시 계수한다. **beforeModel 이후 provider message 변환·tool framing이 추가될 수 있으므로 그 hook에 검사가 있다는 사실만으로 최종 입력 hard cap을 보장하지 않는다.** 3.1에서 지원 provider의 outbound payload와 마지막 차단 지점, tokenizer/framing 계수를 검증하고 4.8이 이를 적용한다. 검증 전에는 요청 추정 예산이며 exact라고 표시하지 않는다. tool-call과 tool-result 쌍을 깨뜨리지 않는다. 정확한 계수/최종 차단을 지원하지 못하는 모델은 hard-cap 보장 모드에서 `TOKENIZER_UNAVAILABLE` 또는 명시적 미지원으로 차단한다. 문자열 길이/4를 실제 토큰 수라고 보고하지 않는다. 원문 전송량 비교는 동일 fixture·동일 tokenizer·동일 응답 예산의 원문 baseline과 수행한다.
+최종 직렬화된 모델 입력도 다시 계수한다. **beforeModel 이후 provider message 변환·tool framing이 추가될 수 있으므로 그 hook에 검사가 있다는 사실만으로 최종 입력 hard cap을 보장하지 않는다.** 3.1에서 최종 HTTP 본문의 관측·차단을 검증했다. 3.2의 본문 토큰 계수는 단일 메시지에 대한 provider 추정값이며, 전체 요청·framing의 계수와 예산 적용은 4.8의 인수 범위다. 검증 전에는 요청 추정 예산이며 exact라고 표시하지 않는다. tool-call과 tool-result 쌍을 깨뜨리지 않는다. 정확한 계수/최종 차단을 지원하지 못하는 모델은 hard-cap 보장 모드에서 `TOKENIZER_UNAVAILABLE` 또는 명시적 미지원으로 차단한다. 문자열 길이/4를 실제 토큰 수라고 보고하지 않는다. 원문 전송량 비교는 동일 fixture·동일 tokenizer·동일 응답 예산의 원문 baseline과 수행한다.
 
 ### 0.8 한 작업을 실행하고 체크하는 방법
 
@@ -248,9 +265,9 @@ available_context = model_context_limit
 
 작업 증거는 `task_id / owner / status / started_at / completed_at / dependencies / changed_files / commands_and_results / acceptance_evidence / limitations / next_handoff`를 포함한다. 실행하지 않은 검증을 통과로 쓰지 않는다. 로그에는 API 키·사용자 원문·절대 개인 경로를 제거한다. 로드맵의 해당 항목 외에 다른 사람의 체크를 임의 변경하지 않는다.
 
-**정의상 작업 완료 = 담당 산출물 존재 + 해당 완료 조건 검증 + 증거 기록 + 다음 담당자가 바로 사용할 공개 계약 존재.** 설계 작업은 구현 대신 화면 명세/스키마/사용 사례의 검증이 기준이다. 현재 요청은 로드맵 작성이므로 아래 구현 작업을 지금 실행한 것으로 기록하지 않는다.
+**정의상 작업 완료 = 담당 산출물 존재 + 해당 완료 조건 검증 + 증거 기록 + 다음 담당자가 바로 사용할 공개 계약 존재.** 설계 작업은 구현 대신 화면 명세/스키마/사용 사례의 검증이 기준이다. 부분 검증이 있는 작업은 검증한 동작과 남은 인수 조건을 각각 기록한다.
 
-검증 명령 인터페이스는 3.2가 정의한다: `npm run dev`, `npm run check`, `npm run test:contracts`, `npm run test:integration`, `npm run test:e2e`, `npm run test:live`, `npm run build`. Python 검증은 해당 service 폴더에서 `uv run pytest`, `uv run ruff check .`, `uv run mypy src`를 실행할 수 있게 만든다. 아직 스크립트가 없는 초기 작업은 실제 실행한 직접 명령을 증거에 남기며, 빈 스크립트나 항상 성공하는 명령을 검사 통과로 사용하지 않는다.
+3.2의 공통 명령은 `npm run dev`, `npm run stop`, `npm run check`, `npm run test:unit`, `npm run test:contracts`, `npm run test:integration`, `npm run test:e2e`, `npm run test:live`, `npm run build`다. 2026-11-05 재검증에서 계약 검사는 종료 코드 0이다. `check`·단위·통합·빌드는 구현분이 통과했고 UI·제품 통합·배포 등 각 명령의 남은 항목 때문에 코드 3을 반환했다. UI E2E는 대기 중이며 외부 모델 검사는 명시적으로 켠 경우에만 실행한다. [실행 방법](README.md)
 
 <a id="owner-1"></a>
 
@@ -804,6 +821,8 @@ docs/progress/tasks/3.1.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** 루트 package/lock/실행 설정; apps/host; services/context-service 골격; contracts/common, api, events, symbols; 공통 문서  
 **검증 기록:** `docs/progress/tasks/3.2.md`
 
+후속 검토에서 호스트의 내부 HTTP 요청을 loopback으로 제한하고 리디렉션 시 중단하도록 했다. Python 서비스는 잘못된 입력이나 예외를 기록할 때 원문·비밀값을 노출하지 않도록 하고, 오류 응답의 요청 ID를 헤더와 일치시킨다. 빌드한 Python wheel의 모듈 45개를 현재 소스와 바이트 단위로 대조했다. [호스트 통신 시험](apps/host/tests/unit/contextClient.test.ts) · [서비스 로그 시험](services/context-service/tests/unit/test_redaction.py)
+
 **완료 조건**
 
 - [x] 공통 골격·의존성 lock·Python/TS 규약·health 실행과 계약 fixture 검증이 존재한다.
@@ -855,9 +874,11 @@ docs/progress/tasks/3.2.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **담당:** 박준형  
 **주요 산출물·수정 범위:** services/context-service/src/securecode_context/symbols/{parser,index,graph}; 심볼 fixture/시험  
-**검증 기록:** `docs/progress/tasks/3.3.md`
+**검증 기록:** [3.3 로컬 색인과 혼합 프로젝트 시험](docs/progress/tasks/3.3.md)
 
 **2026-11-05 반영 범위** — 로컬 색인 생성은 `services/context-service`에서 `uv run python -m securecode_context.symbols <프로젝트_경로> --out <색인.json>`으로 실행한다. 심볼 원문과 최대 깊이 3의 정적 참조 묶음은 R0 검색 후보가 된다. 작업 공간별 revision 저장·전환, 서비스 검색 API, 웹 화면과 SDK 연결은 각각 3.3~3.6의 후속 인수 대상이다. 기존 Python 벤치마크의 고정 입력·결과는 재현용으로 보존한다.
+
+로컬 참조 검증에는 Python의 표준 `src/` 배치와 JavaScript의 `require("./lib.cjs").size` 직접 호출·별칭을 포함한다. 같은 저장소에서도 서로 다른 Python 프로젝트의 동명 심볼은 구분한다. 기존 Python 프로젝트 7개를 다시 색인한 결과, R0 후보 314개의 필드와 순서가 고정 결과와 일치했다.
 
 **완료 조건**
 
@@ -912,6 +933,8 @@ docs/progress/tasks/3.3.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** symbols/{retrieval,bundle}; SymbolService 구현; R0 회귀 fixture/시험  
 **검증 기록:** `docs/progress/tasks/3.4.md`
 
+로컬 JSON의 `raw`를 기존 R0 실험 검색기에 넣었을 때 다섯 언어 각각의 식별자 검색에서 해당 심볼이 1위였다. 3.4에서는 같은 입력으로 서비스의 `search`와 `read_bundle`을 검증하고 revision·예산·출처를 함께 확인한다. [선행 시험](docs/progress/tasks/3.3.md)
+
 **완료 조건**
 
 - [ ] 다섯 언어에서 원문 atomic/깊이 3 bundle의 TF-IDF 검색과 안정적 순위가 기존 R0 논리를 재현한다.
@@ -939,7 +962,7 @@ git commit과 git push는 팀원이 직접 한다. 두 명령을 직접/SDK/스�
 1. experiment.py의 raw_items/words/Retriever/pack를 근거로 atomic 원문과 최대 참조 edge 깊이 3 bundle 후보를 생성하라. 메타데이터와 TF-IDF 벡터는 서버 안에만 보관하라.
 2. IDF=ln((N+1)/(df+1))+1, TF=1+ln(count), L2 정규화와 cosine 순위를 구현하라. camelCase/underscore 분리를 보존하고 동점은 stable candidate_id 순으로 정렬하라. 별도 LLM selector·번역·요약/임베딩을 추가하지 마라.
 3. SymbolService search/read_bundle에 index_revision, source provenance, score, token_count/count_mode, omissions를 반환하라. 전체 symbol index/candidate text 배열을 모델에 보내지 마라. 토큰 계산은 주입된 TokenCounter를 사용하라.
-4. 검색어 없음/모든 점수 0이면 NO_MATCH 또는 세부 NO_SEARCH_TERMS를 반환하고 영어 식별자·파일명·사용자 선택 범위 안내를 제공하라. 기존 0점 임의 채움과의 차이를 문서화하라.
+4. 유효한 검색어에서 추출할 토큰이 없거나 모든 점수가 0이면 HTTP 200, 빈 candidates와 no_match.reason_code=NO_MATCH를 반환하고 영어 식별자·파일명·사용자 선택 범위 안내를 제공하라. 기존 0점 임의 채움과의 차이를 문서화하라.
 5. source hash+range 단위 중복 제거, bundle가 너무 클 때 atomic 후보나 명시적 누락, 재조회 직전 stale 감지를 구현하라. 검색 후보 상한·응답 bytes/token cap을 적용하고 최종 전체 요청 예산은 4.8에 맡겨라.
 6. 원문/vector 준비가 모두 완료된 revision만 READY로 전환하라. 다섯 언어 각각의 식별자 검색과 원문 묶음, Python 함수→helper→상수 fixture, TF-IDF 순위, 순환 참조, 큰 후보, 부분 중복, 한국어만 있는 질문을 검증하고 사전 요약/선택 LLM 호출이 0회임을 검사하라.
 
@@ -1237,6 +1260,8 @@ docs/progress/tasks/4.1.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** contracts/pointers, context 및 fixtures; docs/contracts/{POINTERS,CONTEXT}.md; 생성 타입  
 **검증 기록:** `docs/progress/tasks/4.2.md`
 
+후속 계약 검증에서 URI와 descriptor·참조의 종류 일치, Source의 만료 필드 거부, 페이지의 다음 cursor, 검색 결과 상한을 고정했다. 공개 UI에 필요한 범위 선택·등록·삭제·출처 필드는 [2.2 계약 보완 인계](docs/handoffs/2.2-ui-behavior-contract-gaps.md)에서 추적한다.
+
 **완료 조건**
 
 - [x] 포인터/selector/응답/예산/오류 JSON 계약과 단위·범위 규칙이 명확하다.
@@ -1282,7 +1307,7 @@ docs/progress/tasks/4.2.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **선행 조건: 임우형 4.2번 작업이 모두 완료된 이후에 진행.**
 
-- [] **4.3 완료** — 구현/설계·검증·증거 기록 후에만 체크
+- [ ] **4.3 완료** — 구현/설계·검증·증거 기록 후에만 체크
 
 **왜 필요한가 / 무엇을 하는가:** 실행 출력의 원문을 모델 밖에 안전하게 보관해야 짧은 주소로 반복 접근할 수 있다. 세션별 저장소와 수명주기부터 완성해 SDK hook이 신뢰할 수 있는 기반을 제공한다.
 
@@ -1290,11 +1315,13 @@ docs/progress/tasks/4.2.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** pointers/runtime, registry, models; runtime API; 저장소 단위/통합 시험  
 **검증 기록:** `docs/progress/tasks/4.3.md`
 
+**재사용할 구현** — 별도로 기동하는 레거시 FastAPI와 SQLite 저장소에서 Bearer 인증, 작업 공간·세션 격리, TTL, UTF-8 바이트 단위 이어 읽기를 검증했다. 새 Runtime URI는 `?v=1`로 발급한다. 정식 서비스 API, 세션 합산 용량, 검색·정리와 대량 발급 검증은 이 작업에 남아 있다. [레거시 API 실행 안내](services/context-service/README.md#레거시-runtime-pointer-api)
+
 **완료 조건**
 
-- [] Runtime 저장·목록·부분 조회·삭제·세션 정리·TTL·재시작이 실디스크에서 작동한다.
-- [] 10,001회 발급·동시 저장·scope 격리·오류/용량 한도 시험을 통과한다.
-- [] 모든 응답/preview가 제한되며 원자성·정리·멱등 삭제가 확인됐다.
+- [ ] Runtime 저장·목록·부분 조회·삭제·세션 정리·TTL·재시작이 실디스크에서 작동한다.
+- [ ] 10,001회 발급·동시 저장·scope 격리·오류/용량 한도 시험을 통과한다.
+- [ ] 모든 응답/preview가 제한되며 원자성·정리·멱등 삭제가 확인됐다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 
@@ -1335,7 +1362,7 @@ docs/progress/tasks/4.3.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **선행 조건: 임우형 4.3번 + 박준형 3.5번 작업이 모두 완료된 이후에 진행.**
 
-- [] **4.4 완료** — 구현/설계·검증·증거 기록 후에만 체크
+- [ ] **4.4 완료** — 구현/설계·검증·증거 기록 후에만 체크
 
 **왜 필요한가 / 무엇을 하는가:** 저장소만 있으면 Cline이 여전히 원문 전체를 읽을 수 있다. SDK의 모델 입력과 대화 이력에 들어가기 전에 결과를 실제로 교체하고 실패 시 원문 유출을 막는다.
 
@@ -1343,11 +1370,13 @@ docs/progress/tasks/4.3.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** apps/host/src/pointer-hooks; 프로젝트 소유 command executor 연결; Runtime SDK 통합 시험  
 **검증 기록:** `docs/progress/tasks/4.4.md`
 
+**재사용할 구현** — 설치된 SDK의 `afterTool`에서 64 KiB 출력을 한 번 저장하고, 그 원문 대신 포인터가 다음 모델 요청 본문과 SDK 대화 기록에 들어가는 것을 오프라인으로 확인했다. 3.5 운영 세션과 4.3 정식 저장소에 연결한 뒤 승인된 명령, 취소·저장 실패, SSE까지 검증한다. [SDK 통합 시험](apps/host/tests/integration/runtimePointerPlugin.test.ts)
+
 **완료 조건**
 
-- [] 실제 SDK 결과가 모델 입력/history 전에 포인터로 교체되고 부분 재조회가 된다.
-- [] 저장 실패·timeout·미등록 hook·취소에서 원문 fallback이 없고 SSE에도 유출되지 않는다.
-- [] streaming 결과/이미 잘린 결과/제한된 read 결과의 서로 다른 정책을 검증했다.
+- [ ] 실제 SDK 결과가 모델 입력/history 전에 포인터로 교체되고 부분 재조회가 된다.
+- [ ] 저장 실패·timeout·미등록 hook·취소에서 원문 fallback이 없고 SSE에도 유출되지 않는다.
+- [ ] streaming 결과/이미 잘린 결과/제한된 read 결과의 서로 다른 정책을 검증했다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 
@@ -1367,7 +1396,7 @@ git commit과 git push는 팀원이 직접 한다. 두 명령을 직접/SDK/스�
 
 주요 산출물·수정 범위: apps/host/src/pointer-hooks; 프로젝트 소유 command executor 연결; Runtime SDK 통합 시험
 수행할 일:
-1. 3.5 ToolResultTransformer와 검증된 hooks.afterTool에 Runtime 정책을 구현하라. threshold 이하 결과는 제한 검증 후 유지하고 초과 결과는 4.3에 저장한 뒤 짧은 descriptor로 result 자체를 교체하라. appendContext만 더하지 마라.
+1. 기존 apps/host/src/cline/plugins/runtimePointerPlugin.ts의 hooks.afterTool을 3.5 ToolResultTransformer 및 4.3 저장소에 연결하라. 임계값 미만은 제한 검증 후 유지하고, 임계값 이상은 저장한 뒤 짧은 descriptor로 result를 교체하라. appendContext만 더하지 마라.
 2. command stdout/stderr처럼 매우 큰 출력은 프로젝트 소유 executor에서 streaming 저장해 전체 문자열을 먼저 메모리에 만들지 않게 하라. SDK에서 이미 잘린 결과는 captured/truncated와 원본 보존 범위를 정확히 표시하라.
 3. runtime.read/search를 등록하고 source.read/pdf.read 같은 bounded_read 도구는 재귀 포인터화를 금지하며 자체 cap/cursor를 검사하라. 아직 미완료인 Source/PDF는 4.2 계약 fixture로 정책만 검사하고 실제 도구 검증은 3.6에서 하라. 구조화 JSON의 상태·exit code·도구 오류를 포인터 교체 때 잃지 마라.
 4. pointer hook 등록/준비 완료를 확인한 뒤 SDK 세션을 시작하고 미등록·비활성·저장 실패·timeout·취소 시 fail-closed로 중단하라. await 누락이나 기본 ignore 설정으로 원문이 fallback 전달되지 않게 하라.
@@ -1395,6 +1424,8 @@ docs/progress/tasks/4.4.md에 task_id/owner/status/시각/선행 증거/변경 �
 **담당:** 임우형  
 **주요 산출물·수정 범위:** pointers/source의 registry/lifecycle; Source API; 파일 정책 시험  
 **검증 기록:** `docs/progress/tasks/4.5.md`
+
+**재사용할 구현** — 현재 Source 등록부는 메모리에서 작업 공간별 파일 등록·중복 처리·등록 해제를 수행하고, 등록한 파일이 교체되면 기존 ID의 읽기를 거절한다. 디스크 등록부, 재시작 복구, 공개 등록·해제 계약은 후속 범위다. [등록부 회귀 시험](services/context-service/tests/unit/test_source_store.py)
 
 **완료 조건**
 
@@ -1448,6 +1479,8 @@ docs/progress/tasks/4.5.md에 task_id/owner/status/시각/선행 증거/변경 �
 **담당:** 임우형  
 **주요 산출물·수정 범위:** pointers/source/{readers,index,search} 등 기능별 모듈; bounded I/O 시험  
 **검증 기록:** `docs/progress/tasks/4.6.md`
+
+현재 Source 텍스트 읽기는 파일을 작은 단위로 순차 스캔하고 UTF-8 바이트 한도를 지킨다. 뒤쪽 줄을 반복 조회할 때의 seek 인덱스, 검색·JSON 선택자, 토큰 한도와 revision에 묶인 cursor는 이 작업에서 구현·계측한다.
 
 **완료 조건**
 
@@ -1752,7 +1785,7 @@ docs/progress/tasks/4.10.md에 task_id/owner/status/시각/선행 증거/변경 
 - [ ] **F1 — 재현 가능한 실행:** README대로 설치·설정하면 UI, SDK host, Python 서비스가 함께 시작되고 종료된다. 환경/의존성은 고정돼 있고 원본 연구 폴더 없이 제품 모듈이 실행된다.
 - [ ] **F2 — 실제 SDK/모델:** `@cline/sdk`를 실제 import하며 설정된 provider로 실행했다. CLI subprocess나 UI mock으로 대체하지 않았다. 승인 거절/취소/실패가 실제 실행 결과와 일치한다.
 - [ ] **F3 — R0:** 준비 단계 요약 호출과 후보 선택 LLM 호출이 0회다. 다섯 언어의 식별자 검색으로 해당 언어의 원문과 출처를 읽을 수 있다. Python 함수→helper→상수의 정적 참조도 제공되며 무관한 1,000개 sentinel과 전체 index는 모델 입력에 없다. 변경/삭제 뒤 잘못된 revision을 반환하지 않는다.
-- [ ] **F4 — Runtime:** threshold 초과 결과를 저장하고 실제 provider 입력·history·SSE에는 제한된 descriptor만 들어간다. 부분 재조회·삭제·TTL·세션 격리·재시작을 확인했다. 저장/hook 실패 때 원문 fallback이 없다.
+- [ ] **F4 — Runtime:** 임계값 이상 결과를 저장하고 실제 provider 입력·history·SSE에는 제한된 descriptor만 들어간다. 부분 재조회·삭제·TTL·세션 격리·재시작을 확인했다. 저장/hook 실패 때 원문 fallback이 없다.
 - [ ] **F5 — Source:** 허용된 파일만 등록하고 실제 bounded I/O로 범위를 읽는다. 조회 도중 변경·오래된 cursor·경로 이탈을 감지한다. 등록 해제가 사용자 원본을 삭제하지 않는다.
 - [ ] **F6 — PDF:** 실제 도구/Skill 등록을 확인했다. 텍스트 PDF가 Source Pointer로 연결되고 요청한 페이지의 원문과 정확한 페이지 출처만 반환한다. 스캔/손상/암호화 한계를 성공으로 숨기지 않는다.
 - [ ] **F7 — 총 컨텍스트 예산:** 지원 모델의 최종 outbound payload 기준 tokenizer/framing 검증과 예산 차단을 통과했다. tool schema/history/output 예약을 포함하며 초과·계수 미지원은 명시적으로 차단한다.

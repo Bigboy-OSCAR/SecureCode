@@ -7,7 +7,7 @@ import type { ToolApprovalRequest, ToolApprovalResult, ToolPolicy } from "@cline
 import type { ScriptedTurn } from "../fixtures/anthropic-sse.js";
 import { COMMAND_TOOL_NAME, type CommandToolCounter, createCommandTool } from "../fixtures/probe-tools.js";
 import { ApprovalBroker, digestToolInput } from "../probe/approval-broker.js";
-import { errorMessage, settleWithin, withProbeRun } from "../probe/probe-run.js";
+import { errorMessage, settleWithin, waitForProbeEvent, withProbeRun } from "../probe/probe-run.js";
 import { buildDisabledBuiltinPolicies, buildProbeStartInput } from "../probe/session-config.js";
 import { ScenarioRecorder, type ScenarioResult } from "../support/scenario-result.js";
 
@@ -164,9 +164,8 @@ async function runRawAbortCase(recorder: ScenarioRecorder): Promise<void> {
                     sessionId,
                 }),
             );
-            while (!resolveLate) {
-                await waitMs(50);
-            }
+            await waitForProbeEvent(() => resolveLate !== undefined, started, "approval request");
+            if (!resolveLate) throw new Error("approval callback missing");
             await core.abort(sessionId, "probe abort while approval pending");
             await waitMs(500);
             const settledBeforeLateApproval = await Promise.race([

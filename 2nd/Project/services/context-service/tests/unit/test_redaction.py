@@ -1,6 +1,7 @@
 """tests/fixtures/redaction-cases.json 공용 벡터로 Python redaction을 검사한다(TS도 같은 파일 사용)."""
 
 import logging
+import sys
 
 import pytest
 
@@ -36,3 +37,25 @@ def test_filter_redacts_formatted_arguments() -> None:
     )
     RedactingFilter(Redactor()).filter(record)
     assert record.getMessage() == "auth Bearer [REDACTED]"
+
+
+def test_traceback_and_stack_are_redacted() -> None:
+    """
+    함수 이름: test_traceback_and_stack_are_redacted()
+    기능: handler가 나중에 붙이는 traceback, stack_info로 비밀이 유출되지 않는지 검사한다.
+    인자: 없음
+    반환값: 없음
+    작성 날짜: 2026/11/05
+    """
+    secret = "registered" + "_sample_value"
+    try:
+        raise ValueError(secret + " private-source-marker")
+    except ValueError:
+        record = logging.LogRecord(
+            "test", logging.ERROR, __file__, 1, "failure", (), sys.exc_info()
+        )
+    record.stack_info = "stack " + secret
+    RedactingFilter(Redactor([secret])).filter(record)
+    output = logging.Formatter().format(record)
+    assert secret not in output and "private-source-marker" not in output
+    assert "ValueError" in output

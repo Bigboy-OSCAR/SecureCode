@@ -46,7 +46,7 @@ Python context-service (services/context-service, FastAPI)
 | `apps/host/src/{app,routes,config,security,logging,context-client}` | 박준형 | 3.2/3.5/3.6 | — |
 | `apps/host/src/cline/**` (adapter·plugins·tools·events·permissions) | 박준형 | 3.5/3.6 | 포트 `cline/adapter/ports.ts`로 연결 |
 | `apps/host/src/pointer-hooks/**` | 임우형 | 4.4 | `ToolResultTransformer` 구현 |
-| `apps/host/src/cline-plugins/**`, `apps/host/tools/**` | 임우형 (3.2 이전 MVP) | 4.4 재작업 | baseline `KNOWN`. `pointer-hooks/`·`tests/`로 옮긴 뒤 제거 |
+| `apps/host/src/cline/plugins/**`, `apps/host/tests/integration/**` | 임우형 | 4.4 | 설치된 SDK의 afterTool을 오프라인 검증한다. 운영 run 연결은 3.5/3.6에서 인수한다. |
 | `services/context-service/{pyproject.toml,uv.lock,pytest.ini}`, `src/securecode_context/{app,common}`, `api/{health,tokens,middleware,error_responses}.py` | 박준형 | 3.2 | 새 router는 `app/factory.py`에 등록 요청 |
 | `services/context-service/src/securecode_context/symbols/**` | 박준형 | 3.3/3.4 | Candidate 계약으로 사용 |
 | `services/context-service/src/securecode_context/{pointers,context,pdf}/**`, `api/{pointers,schemas,main}.py` | 임우형 | 4.3~4.9 | — |
@@ -98,7 +98,7 @@ TokenCounter는 Python 한 곳에만 구현한다. TypeScript는 `ContextService
 ├── runtime/<workspace_id>/<session_id>/  Runtime blob (4.3)
 ├── cline/                       SDK CLINE_DIR/CLINE_DATA_DIR (3.5)
 ├── logs/                        redaction된 로그 (선택)
-└── run/dev-processes.json       dev pid·port (비밀값 없음, npm run stop이 사용)
+└── run/dev-processes.json       개발 실행 인스턴스 ID·launcher PID (종료 요청은 해당 인스턴스가 직접 처리)
 ```
 
 3.1 S-07: Windows에서는 SDK `dispose` 뒤에도 같은 프로세스가 `cline/` 폴더를 지우지 못한다. 그래서 정리는 다음 기동 때 한다(3.5).
@@ -114,19 +114,19 @@ TokenCounter는 Python 한 곳에만 구현한다. TypeScript는 `ContextService
 
 ## 7. 개발 명령
 
-| 명령 | 하는 일 | 현재 결과(3.2 종료 시) |
+| 명령 | 하는 일 | 검증 상태(2026-11-05) |
 | --- | --- | --- |
-| `npm run dev` / `npm run stop` | service + host 기동(.env 로드, 토큰 생성, 데이터 폴더) / 기록된 pid 종료 | 동작. UI·bootstrap은 PENDING 출력 |
-| `npm run check` | lint·format·types·structure·생성 타입·Ruff·mypy·docstring·unit | exit 3 (KNOWN legacy 3건, PENDING UI) |
+| `npm run dev` / `npm run stop` | service + host 기동(.env 로드, 토큰 생성, 데이터 폴더) / 시작한 launcher가 두 자식 종료 | 동작. UI·bootstrap은 PENDING 출력 |
+| `npm run check` | lint·format·types·structure·생성 타입·Ruff·mypy·docstring·unit | 구현된 검사 통과, exit 3 (PENDING UI) |
 | `npm run test:unit` | host·service unit | exit 3 (PENDING UI 1.3) |
-| `npm run test:contracts` | fixture Ajv+jsonschema, 서비스 응답, 생성 타입 | exit 3 (PENDING 4.2) |
-| `npm run test:integration` | 실제 프로세스: service, host↔service health chain, degraded | exit 3 (PENDING 3.3~4.9) |
+| `npm run test:contracts` | fixture Ajv+jsonschema, 서비스 응답, 생성 타입 | exit 0 (포인터·컨텍스트 포함 계약 검증 통과) |
+| `npm run test:integration` | 서비스 인증·상태, 개발 서버 기동/종료, SDK 도구 결과 교체 | exit 3 (PENDING 3.3~4.9) |
 | `npm run test:e2e` | UI E2E | exit 3 (PENDING 1.6) |
 | `npm run test:live` | opt-in live: tokens.count 실제 provider | exit 3 (SKIPPED 키/opt-in 없음, PENDING 3.6) |
 | `npm run build` | 생성 타입, host 타입, Python wheel | exit 3 (PENDING UI 빌드 1.1, 패키징 3.7) |
 | `npm run probe:sdk` | 3.1 SDK 호환성 검증기 | 62/62 PASS |
 
-종료 코드: 0 = 모두 PASS, 1 = FAIL, 3 = INCOMPLETE(KNOWN/PENDING/SKIPPED). 미구현 항목은 `scripts/lib/pendingSuites.ts`, 3.2 이전 위반은 `scripts/check/structure-baseline.json`에 있다. 두 목록이 비어야 0이 나온다.
+종료 코드: 0 = 모두 PASS, 1 = FAIL, 3 = INCOMPLETE(KNOWN/PENDING/SKIPPED). 명령별 후속 작업은 `scripts/lib/pendingSuites.ts`에 있다. 해당 명령의 검사와 인수가 모두 통과하면 0이다. 구조·코딩 규약의 기존 예외 목록은 비어 있다.
 
 ## 8. 4.1 설계와의 정합 (3.2 판단)
 

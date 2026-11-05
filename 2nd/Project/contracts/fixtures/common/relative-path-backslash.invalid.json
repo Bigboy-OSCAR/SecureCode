@@ -1,0 +1,6 @@
+{
+    "schema_ref": "common/primitives.schema.json#/definitions/RelativePath",
+    "expect": "invalid",
+    "scenario": "H-03",
+    "data": "..\\private.txt"
+}

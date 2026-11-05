@@ -1,152 +1,123 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Context Contracts",
-  "type": "object",
-  "additionalProperties": false,
-  "definitions": {
-    "ContextBudget": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "budget_tokens",
-        "used_tokens",
-        "count_mode"
-      ],
-      "properties": {
-        "budget_tokens": {
-          "type": "integer",
-          "minimum": 0
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Context Contracts",
+    "type": "object",
+    "additionalProperties": false,
+    "definitions": {
+        "ContextBudget": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["budget_tokens", "used_tokens", "count_mode"],
+            "properties": {
+                "budget_tokens": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "used_tokens": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "count_mode": {
+                    "$ref": "../common/token-count.schema.json#/definitions/CountMode"
+                }
+            }
         },
-        "used_tokens": {
-          "type": "integer",
-          "minimum": 0
+        "ContextCandidate": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["candidate_id", "ref", "score", "explicit", "estimated_tokens"],
+            "properties": {
+                "candidate_id": {
+                    "$ref": "../symbols/symbol.schema.json#/definitions/CandidateId"
+                },
+                "ref": {
+                    "$ref": "../api/run.schema.json#/definitions/ContextRef"
+                },
+                "score": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                },
+                "explicit": {
+                    "type": "boolean"
+                },
+                "estimated_tokens": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            }
         },
-        "count_mode": {
-          "$ref": "../common/token-count.schema.json#/definitions/CountMode"
+        "ContextFragment": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["candidate_id", "ref", "content", "token_count"],
+            "properties": {
+                "candidate_id": {
+                    "$ref": "../symbols/symbol.schema.json#/definitions/CandidateId"
+                },
+                "ref": {
+                    "$ref": "../api/run.schema.json#/definitions/ContextRef"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "token_count": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            }
+        },
+        "ContextOmissionReason": {
+            "description": "Minimal set defined by 4.2. Task 4.7 may extend it and must update the schema, fixtures and docs/contracts/CONTEXT.md together.",
+            "type": "string",
+            "enum": ["no_match", "stale", "unauthorized", "over_budget"]
+        },
+        "ContextOmission": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["candidate_id", "reason"],
+            "properties": {
+                "candidate_id": {
+                    "$ref": "../symbols/symbol.schema.json#/definitions/CandidateId"
+                },
+                "reason": {
+                    "$ref": "#/definitions/ContextOmissionReason"
+                }
+            }
+        },
+        "ContextPlan": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["schema_version", "selected", "fragments", "omitted", "budget"],
+            "properties": {
+                "schema_version": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                },
+                "selected": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ContextCandidate"
+                    }
+                },
+                "fragments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ContextFragment"
+                    }
+                },
+                "omitted": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ContextOmission"
+                    }
+                },
+                "budget": {
+                    "$ref": "#/definitions/ContextBudget"
+                },
+                "index_revision": {
+                    "$ref": "../common/primitives.schema.json#/definitions/IndexRevision"
+                }
+            }
         }
-      }
-    },
-    "ContextCandidate": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "candidate_id",
-        "ref",
-        "score",
-        "explicit",
-        "estimated_tokens"
-      ],
-      "properties": {
-        "candidate_id": {
-          "$ref": "../symbols/symbol.schema.json#/definitions/CandidateId"
-        },
-        "ref": {
-          "$ref": "../api/run.schema.json#/definitions/ContextRef"
-        },
-        "score": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 1
-        },
-        "explicit": {
-          "type": "boolean"
-        },
-        "estimated_tokens": {
-          "type": "integer",
-          "minimum": 0
-        }
-      }
-    },
-    "ContextFragment": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "candidate_id",
-        "ref",
-        "content",
-        "token_count"
-      ],
-      "properties": {
-        "candidate_id": {
-          "$ref": "../symbols/symbol.schema.json#/definitions/CandidateId"
-        },
-        "ref": {
-          "$ref": "../api/run.schema.json#/definitions/ContextRef"
-        },
-        "content": {
-          "type": "string"
-        },
-        "token_count": {
-          "type": "integer",
-          "minimum": 0
-        }
-      }
-    },
-    "ContextOmissionReason": {
-      "description": "Minimal set defined by 4.2. Task 4.7 may extend it and must update the schema, fixtures and docs/contracts/CONTEXT.md together.",
-      "type": "string",
-      "enum": [
-        "no_match",
-        "stale",
-        "unauthorized",
-        "over_budget"
-      ]
-    },
-    "ContextOmission": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "candidate_id",
-        "reason"
-      ],
-      "properties": {
-        "candidate_id": {
-          "$ref": "../symbols/symbol.schema.json#/definitions/CandidateId"
-        },
-        "reason": {
-          "$ref": "#/definitions/ContextOmissionReason"
-        }
-      }
-    },
-    "ContextPlan": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "schema_version",
-        "selected",
-        "fragments",
-        "omitted",
-        "budget"
-      ],
-      "properties": {
-        "schema_version": {
-          "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
-        },
-        "selected": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ContextCandidate"
-          }
-        },
-        "fragments": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ContextFragment"
-          }
-        },
-        "omitted": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ContextOmission"
-          }
-        },
-        "budget": {
-          "$ref": "#/definitions/ContextBudget"
-        },
-        "index_revision": {
-          "$ref": "../common/primitives.schema.json#/definitions/IndexRevision"
-        }
-      }
     }
-  }
 }

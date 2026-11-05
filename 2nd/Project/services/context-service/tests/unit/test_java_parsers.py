@@ -1,9 +1,12 @@
 """Java와 JavaScript의 실제 구문 트리에서 원문 범위와 정적 참조 경계를 확인한다."""
 
+from pathlib import Path
+
 import tree_sitter_java
 import tree_sitter_javascript
 from tree_sitter import Language, Parser
 
+from securecode_context.symbols.index import build_index
 from securecode_context.symbols.java import parse_java
 from securecode_context.symbols.javascript import parse_javascript
 from securecode_context.symbols.model import Declaration
@@ -109,3 +112,35 @@ def test_commonjs_relative_literals_only() -> None:
     assert set(refs["run"]) & set(library["compute"].keys)
     assert refs["external.test"] == ()
     assert refs["escaped.test"] == ()
+
+
+def test_literal_require_member_alias_and_direct_call(tmp_path: Path) -> None:
+    """
+    함수 이름: test_literal_require_member_alias_and_direct_call()
+    기능: 리터럴 require의 정적 속성을 호출하거나 별칭으로 쓰는 경우와 동적 인자를 구분한다.
+    인자: tmp_path -> 임시 프로젝트 경로
+    반환값: 없음
+    작성 날짜: 2026/11/05
+    """
+    (tmp_path / "lib.cjs").write_text("exports.size = (v) => v.length;")
+    (tmp_path / "user.cjs").write_text(
+        'const measure = require("./lib.cjs").size;\n'
+        'exports.work = v => measure(v) + require(/* local */ "./lib.cjs").size(v);\n'
+        "exports.dynamic = path => require(path).size();\n"
+        'function shadow(require) { return require("./lib.cjs").size(); }'
+    )
+    (tmp_path / "shadow.cjs").write_text(
+        "function require(name) { return {}; }\n"
+        'const {size} = require("./lib.cjs");\nexports.work = () => size();'
+    )
+    nodes = build_index(tmp_path)["nodes"]
+    size = "memory://symbol/lib.cjs::size"
+    assert nodes["memory://symbol/user.cjs::measure"]["deps"] == [size]
+    assert set(nodes["memory://symbol/user.cjs::work"]["deps"]) == {
+        size,
+        "memory://symbol/user.cjs::measure",
+    }
+    dynamic = nodes["memory://symbol/user.cjs::dynamic"]
+    assert not dynamic["deps"] and "require().size" in dynamic["unresolved_reference"]
+    assert not nodes["memory://symbol/user.cjs::shadow"]["deps"]
+    assert not nodes["memory://symbol/shadow.cjs::work"]["deps"]

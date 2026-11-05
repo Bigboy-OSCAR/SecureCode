@@ -1,0 +1,6 @@
+{
+    "schema_ref": "common/primitives.schema.json#/definitions/PointerUri",
+    "expect": "invalid",
+    "scenario": "H-07",
+    "data": "securecode://source/../../etc/passwd"
+}

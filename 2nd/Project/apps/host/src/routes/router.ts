@@ -21,6 +21,7 @@ interface RouteEntry {
 
 export type RouteMatch =
     | { kind: "found"; handler: RouteHandler; params: Record<string, string> }
+    | { kind: "invalid_path" }
     | { kind: "method_not_allowed" }
     | { kind: "not_found" };
 
@@ -36,7 +37,7 @@ function matchSegments(pattern: string[], actual: string[]): Record<string, stri
     for (const [index, segment] of pattern.entries()) {
         const value = actual[index] ?? "";
         if (segment.startsWith(":")) {
-            params[segment.slice(1)] = decodeURIComponent(value);
+            params[segment.slice(1)] = value;
         } else if (segment !== value) {
             return null;
         }
@@ -53,7 +54,25 @@ export class Router {
     }
 
     match(method: string, path: string): RouteMatch {
-        const actual = splitPath(path);
+        let actual: string[];
+        try {
+            actual = splitPath(path).map((part) => decodeURIComponent(part));
+        } catch {
+            return { kind: "invalid_path" };
+        }
+        if (
+            !path.startsWith("/") ||
+            path.startsWith("//") ||
+            actual.some(
+                (part) =>
+                    part === "." ||
+                    part === ".." ||
+                    part.includes("/") ||
+                    part.includes("\\") ||
+                    Array.from(part).some((ch) => ch.charCodeAt(0) < 32 || ch.charCodeAt(0) === 127),
+            )
+        )
+            return { kind: "invalid_path" };
         let pathMatched = false;
         for (const route of this.routes) {
             const params = matchSegments(route.segments, actual);

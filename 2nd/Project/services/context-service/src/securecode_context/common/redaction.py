@@ -96,6 +96,13 @@ class RedactingFilter(logging.Filter):
         반환값: 항상 True(레코드를 버리지 않는다)
         작성 날짜: 2026/11/04
         """
-        record.msg = self.redactor.redact(record.getMessage())
+        # Tracebacks can contain source lines and exception values supplied by the workspace.
+        message = record.getMessage()
+        if record.exc_info and record.exc_info[0]:
+            message += f" [exception={record.exc_info[0].__name__}]"
+        record.msg = self.redactor.redact(message)
+        record.exc_info = None
+        record.exc_text = None
+        record.stack_info = None
         record.args = None
         return True

@@ -34,7 +34,10 @@
                     "description": "true when the page ended early because of the response byte cap.",
                     "type": "boolean"
                 }
-            }
+            },
+            "if": { "properties": { "has_more": { "const": true } } },
+            "then": { "properties": { "next_cursor": { "$ref": "primitives.schema.json#/definitions/OpaqueCursor" } } },
+            "else": { "properties": { "next_cursor": { "type": "null" } } }
         }
     }
 }

@@ -42,7 +42,6 @@ async function handleRequest(
 ): Promise<void> {
     const requestId = resolveRequestId(request);
     response.setHeader("x-request-id", requestId);
-    const path = new URL(request.url ?? "/", "http://127.0.0.1").pathname;
 
     const rejection = checkRequestOrigin(
         { method: request.method ?? "GET", headers: request.headers },
@@ -53,7 +52,12 @@ async function handleRequest(
         return;
     }
 
+    const path = (request.url ?? "/").split("?", 1)[0] ?? "/";
     const match = router.match(request.method ?? "GET", path);
+    if (match.kind === "invalid_path") {
+        sendError(response, { code: "VALIDATION_FAILED", message: "invalid request path" }, requestId);
+        return;
+    }
     if (match.kind !== "found") {
         sendError(response, { code: "NOT_FOUND", message: "route not found" }, requestId);
         return;

@@ -17,7 +17,7 @@ interface UnicodeVectors {
 
 const TOKEN = "i".repeat(40);
 const vectors = loadSharedVectors<UnicodeVectors>("token-unicode-cases.json");
-let nextResponse: { status: number; body: unknown } = { status: 200, body: {} };
+let nextResponse: { status: number; body: unknown; location?: string } = { status: 200, body: {} };
 const received: { authorization: string | undefined; body: string }[] = [];
 
 function scriptedHandler(request: IncomingMessage, response: ServerResponse): void {
@@ -25,7 +25,10 @@ function scriptedHandler(request: IncomingMessage, response: ServerResponse): vo
     request.on("data", (chunk: Buffer) => chunks.push(chunk));
     request.on("end", () => {
         received.push({ authorization: request.headers.authorization, body: Buffer.concat(chunks).toString("utf8") });
-        response.writeHead(nextResponse.status, { "content-type": "application/json" });
+        response.writeHead(nextResponse.status, {
+            "content-type": "application/json",
+            ...(nextResponse.location ? { location: nextResponse.location } : {}),
+        });
         response.end(JSON.stringify(nextResponse.body));
     });
 }
@@ -87,6 +90,34 @@ describe("HttpContextServiceClient", () => {
         });
     }
 
+    it("rejects empty or oversized input before sending it", async () => {
+        const count = received.length;
+        await assert.rejects(
+            client.tokens.count(""),
+            (error: unknown) => error instanceof ContextServiceError && error.code === "VALIDATION_FAILED",
+        );
+        await assert.rejects(
+            client.tokens.count("🔍".repeat(262145)),
+            (error: unknown) => error instanceof ContextServiceError && error.code === "PAYLOAD_TOO_LARGE",
+        );
+        assert.equal(received.length, count);
+    });
+
+    it("does not forward token payloads across a 307 or accept unbounded response text", async () => {
+        const count = received.length;
+        nextResponse = { status: 307, location: "/unexpected", body: {} };
+        await assert.rejects(
+            client.tokens.count("private test input"),
+            (error: unknown) => error instanceof ContextServiceError && error.code === "SERVICE_UNAVAILABLE",
+        );
+        assert.equal(received.length, count + 1);
+        nextResponse = { status: 200, body: "x".repeat(300000) };
+        await assert.rejects(
+            client.health(),
+            (error: unknown) => error instanceof ContextServiceError && error.code === "SERVICE_UNAVAILABLE",
+        );
+    });
+
     it("maps a contract error response to ContextServiceError", async () => {
         nextResponse = {
             status: 503,
@@ -111,6 +142,8 @@ describe("HttpContextServiceClient", () => {
     it("rejects a response that breaks the contract", async () => {
         nextResponse = { status: 200, body: { ...tokenResult("x"), count_mode: "chars_div_4" } };
         await assert.rejects(client.tokens.count("x"), /does not match/);
+        nextResponse = { status: 200, body: tokenResult("different text") };
+        await assert.rejects(client.tokens.count("x"), /input size mismatch/);
     });
 
     it("reports SERVICE_UNAVAILABLE when nothing listens", async () => {

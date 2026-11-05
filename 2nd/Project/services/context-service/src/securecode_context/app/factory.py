@@ -1,5 +1,8 @@
 """FastAPI 앱 조립(DI). 라우터·미들웨어·오류 처리기·계수기를 연결만 하고 업무 로직은 두지 않는다."""
 
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
 from securecode_context.api.error_responses import register_error_handlers
@@ -45,8 +48,29 @@ def create_app(settings: ServiceSettings, token_counter: TokenCounter | None = N
     반환값: FastAPI 앱
     작성 날짜: 2026/11/04
     """
-    settings.data_dir.mkdir(parents=True, exist_ok=True)
+    settings.data_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
+
+    @asynccontextmanager
+    async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+        """
+        함수 이름: lifespan()
+        기능: 실행마다 계수기를 구성하고 앱이 생성한 provider 연결만 종료한다.
+        인자: app -> 현재 FastAPI 인스턴스
+        반환값: 서비스 수명 컨텍스트
+        작성 날짜: 2026/11/05
+        """
+        if not hasattr(app.state, "token_counter"):
+            app.state.token_counter = build_token_counter(settings)
+        counter = app.state.token_counter
+        try:
+            yield
+        finally:
+            if token_counter is None and isinstance(counter, AnthropicTokenCounter):
+                counter.close()
+                del app.state.token_counter
+
     app = FastAPI(
+        lifespan=lifespan,
         title="SecureCode Context Service",
         version=SERVICE_VERSION,
         docs_url=None,
@@ -54,7 +78,9 @@ def create_app(settings: ServiceSettings, token_counter: TokenCounter | None = N
         openapi_url=None,
     )
     app.state.settings = settings
-    app.state.token_counter = token_counter or build_token_counter(settings)
+    app.state.token_counter = (
+        token_counter if token_counter is not None else build_token_counter(settings)
+    )
 
     install_middleware(app, settings.internal_token)
     register_error_handlers(app)

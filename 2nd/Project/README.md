@@ -12,7 +12,7 @@ npm ci
 ```
 
 ```bash
-cd services/context-service && uv sync --frozen
+uv sync --project services/context-service --frozen
 ```
 
 `.env.example`을 `.env`로 복사해 필요한 값을 채운다. `.env`는 Git에서 제외된다. 키는 서버 환경에만 둔다.
@@ -30,6 +30,8 @@ cd services/context-service && uv sync --frozen
 | `npm run build` | 생성 타입·host 타입·Python wheel |
 | `npm run generate:contracts` | 스키마에서 TS 타입 생성 |
 | `npm run probe:sdk` | Cline SDK 호환성 검증기(3.1) |
+
+`npm run stop`은 현재 데이터 디렉터리에 해당하는 launcher에게 종료를 요청하고 두 서버가 내려갈 때까지 기다린다. launcher가 비정상 종료됐거나 오래된 형식의 실행 기록이 남았으면, 먼저 두 서버가 종료됐는지 확인한 뒤 데이터 디렉터리의 `run/dev-processes.json`을 정리한다.
 
 종료 코드 `0`은 모두 통과, `1`은 실패, `3`은 미완료(아직 없는 필수 검사, 기존 예외, 비밀값이 없어 건너뜀)다. 미구현 검사를 성공으로 표시하지 않는다.
 

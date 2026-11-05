@@ -30,7 +30,9 @@
                     "maxItems": 20,
                     "items": { "$ref": "../common/primitives.schema.json#/definitions/RelativePath" }
                 }
-            }
+            },
+            "if": { "properties": { "content_truncated": { "const": true } } },
+            "then": { "properties": { "reviewable": { "const": false } } }
         },
         "ApprovalRequest": {
             "title": "ApprovalRequest",

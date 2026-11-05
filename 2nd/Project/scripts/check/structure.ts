@@ -4,7 +4,7 @@
  * Baseline-listed legacy violations are KNOWN; anything else FAILs.
  */
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { lstatSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { printSummary, type StepResult } from "../lib/report.js";
@@ -20,18 +20,15 @@ function listWorkRootFiles(): string[] {
     return output.split("\0").filter(Boolean);
 }
 
-function readTextOrEmpty(path: string): string {
-    try {
-        return readFileSync(join(WORK_ROOT, path), "utf8");
-    } catch {
-        return "";
-    }
-}
-
 export function collectViolations(): Violation[] {
     const violations: Violation[] = [];
     for (const path of listWorkRootFiles()) {
-        const file = { path, text: readTextOrEmpty(path) };
+        const fullPath = join(WORK_ROOT, path);
+        // ls-files --cached also returns tracked files deleted in this worktree.
+        // Inspect the current regular file only, without following a workspace symlink.
+        if (!lstatSync(fullPath, { throwIfNoEntry: false })?.isFile()) continue;
+        const inspectContent = /\.(?:ts|tsx|js|mjs|py)$/.test(path) || path === ".env.example";
+        const file = { path, text: inspectContent ? readFileSync(fullPath, "utf8") : "" };
         for (const rule of STRUCTURE_RULES) {
             violations.push(...rule(file));
         }

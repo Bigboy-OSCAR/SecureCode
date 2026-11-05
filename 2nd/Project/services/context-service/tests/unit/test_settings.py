@@ -31,6 +31,11 @@ def test_defaults_bind_to_loopback() -> None:
         ({"SECURECODE_DATA_DIR": ""}, "SECURECODE_DATA_DIR"),
         ({"SECURECODE_CONTEXT_SERVICE_PORT": "70000"}, "between"),
         ({"SECURECODE_LOG_LEVEL": "trace"}, "SECURECODE_LOG_LEVEL"),
+        ({"SECURECODE_INTERNAL_TOKEN": " " * 32}, "ASCII"),
+        ({"SECURECODE_INTERNAL_TOKEN": "한" * 32}, "ASCII"),
+        ({"SECURECODE_PROVIDER_BASE_URL": "http://remote.invalid"}, "HTTPS"),
+        ({"SECURECODE_PROVIDER_BASE_URL": "https://user:pass@remote.invalid"}, "credentials"),
+        ({"SECURECODE_MODEL_ID": "a" * 129}, "128"),
     ],
 )
 def test_rejects_unsafe_settings(override: dict[str, str], message: str) -> None:

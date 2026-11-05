@@ -84,7 +84,9 @@ export type IndexRevision = number;
 /**
  * Boundary reference to a 4.2-owned pointer. Opaque handle; format follows docs/architecture/POINTER_DESIGN.md.
  */
-export type PointerUri = string;
+export type PointerUri = SourcePointerUri | RuntimePointerUri;
+export type SourcePointerUri = string;
+export type RuntimePointerUri = string;
 export type PointerKind = "source" | "runtime";
 /**
  * User-visible bounded text such as a summary or message.
@@ -128,7 +130,7 @@ export type ComponentName =
 export type ProtectionName =
     "runtime_pointer_hook" | "model_request_gate" | "approval_broker" | "tool_allowlist" | "checkpoint_disabled";
 /**
- * ready = searchable; partial = searchable with per-file diagnostics; parsed = parsed but retrieval not ready (3.3 before 3.4); stale = files changed since index_revision.
+ * ready = indexing finished (inspect searchable, including for an empty index); partial = searchable with per-file diagnostics; parsed = parsed but retrieval not ready; stale = files changed since index_revision.
  */
 export type IndexState = "not_indexed" | "queued" | "indexing" | "parsed" | "ready" | "partial" | "stale" | "failed";
 export type SupportedLanguage = "python" | "c" | "cpp" | "java" | "javascript";
@@ -205,6 +207,8 @@ export interface ContractsIndex {
     PointerUri?: PointerUri;
     PointerKind?: PointerKind;
     ShortText?: ShortText;
+    SourcePointerUri?: SourcePointerUri;
+    RuntimePointerUri?: RuntimePointerUri;
     CountMode?: CountMode;
     TokenCountMethod?: TokenCountMethod;
     TokenCountFraming?: TokenCountFraming;
@@ -450,7 +454,7 @@ export interface ToolCallSummary {
     tool_name: string;
     phase: ToolCallPhase;
     summary: ShortText;
-    output_pointer?: PointerUri;
+    output_pointer?: RuntimePointerUri;
     output_bytes?: number;
 }
 export interface RunTerminal {
@@ -949,7 +953,7 @@ export interface SourceRegistration {
     schema_version: SchemaVersion;
     source_id: string;
     workspace_id: WorkspaceId;
-    pointer: PointerUri;
+    pointer: SourcePointerUri;
     media_type: string;
     byte_size: number;
     fingerprint: Sha256Hex;
@@ -1031,6 +1035,9 @@ export interface PointerSearchMatch {
 export interface PointerSearchResult {
     schema_version: SchemaVersion;
     pointer: PointerUri;
+    /**
+     * @maxItems 100
+     */
     matches: PointerSearchMatch[];
     truncated: boolean;
     next_cursor?: OpaqueCursor;

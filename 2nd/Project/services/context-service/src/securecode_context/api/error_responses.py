@@ -29,7 +29,11 @@ def build_error_response(error: ServiceError, request_id: str) -> JSONResponse:
     }
     if error.details:
         body["details"] = error.details
-    return JSONResponse({"schema_version": "1", "error": body}, status_code=error.http_status)
+    return JSONResponse(
+        {"schema_version": "1", "error": body},
+        status_code=error.http_status,
+        headers={"X-Request-Id": request_id},
+    )
 
 
 def _request_id_of(request: Request) -> str:
@@ -68,14 +72,8 @@ async def handle_validation_error(request: Request, error: Exception) -> JSONRes
     """
     if not isinstance(error, RequestValidationError):
         raise error
-    first_location = (
-        ".".join(str(part) for part in error.errors()[0]["loc"]) if error.errors() else ""
-    )
-    service_error = ServiceError(
-        ErrorCode.VALIDATION_FAILED,
-        "요청 형식이 올바르지 않습니다.",
-        {"field": first_location[:256]},
-    )
+    # Unknown JSON keys and route values can themselves contain private input.
+    service_error = ServiceError(ErrorCode.VALIDATION_FAILED, "요청 형식이 올바르지 않습니다.")
     return build_error_response(service_error, _request_id_of(request))
 
 

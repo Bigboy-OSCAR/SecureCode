@@ -1,34 +1,30 @@
-/** `npm run stop`: stops the servers recorded by `npm run dev` in another terminal. */
-import { existsSync, readFileSync, rmSync } from "node:fs";
-import { isAbsolute, join, resolve } from "node:path";
-import { WORK_ROOT } from "../lib/processes.js";
-import { devStatePath, type DevState } from "./state.js";
+import { closeSync, openSync } from "node:fs";
+import { setTimeout as delay } from "node:timers/promises";
+import { currentInstance, devDataDir, stopRequestPath } from "./state.js";
 
-const envFile = join(WORK_ROOT, ".env");
-if (existsSync(envFile)) {
-    process.loadEnvFile(envFile);
-}
-const dataDirSetting = process.env.SECURECODE_DATA_DIR?.trim() || ".securecode";
-const dataDir = isAbsolute(dataDirSetting) ? dataDirSetting : resolve(WORK_ROOT, dataDirSetting);
-const statePath = devStatePath(dataDir);
-
-if (!existsSync(statePath)) {
+const dataDir = devDataDir();
+const state = currentInstance(dataDir);
+if (!state) {
     console.log("no running dev servers recorded");
 } else {
-    const state = JSON.parse(readFileSync(statePath, "utf8")) as DevState;
-    for (const [label, pid] of [
-        ["host", state.host_pid],
-        ["context-service", state.service_pid],
-    ] as const) {
-        if (pid === undefined) {
-            continue;
-        }
-        try {
-            process.kill(pid, "SIGTERM");
-            console.log(`stopped ${label} (pid ${pid})`);
-        } catch {
-            console.log(`${label} (pid ${pid}) was not running`);
-        }
+    // A stale/recycled PID must never be sent a termination signal.
+    try {
+        process.kill(state.launcherPid, 0);
+    } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== "ESRCH") throw error;
+        throw new Error("launcher is gone; check both servers before removing the stale dev-processes.json", {
+            cause: error,
+        });
     }
-    rmSync(statePath, { force: true });
+    try {
+        closeSync(openSync(stopRequestPath(dataDir, state.instance), "wx", 0o600));
+    } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
+    }
+    const deadline = Date.now() + 15000;
+    while (currentInstance(dataDir)?.instance === state.instance) {
+        if (Date.now() >= deadline) throw new Error("launcher did not acknowledge stop; inspect the recorded instance");
+        await delay(100);
+    }
+    console.log("dev servers stopped");
 }

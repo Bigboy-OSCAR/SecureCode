@@ -12,6 +12,7 @@ from .java import parse_java
 from .javascript import parse_javascript
 from .model import Declaration
 from .native import parse_native
+from .python_layout import WORKSPACE_LAYOUT, PythonLayout
 from .python_parser import parse_python
 from .syntax import walk
 
@@ -65,18 +66,20 @@ _EXTRACT = {
 }
 
 
-def parse_source(path: str, source: bytes) -> tuple[str, list[Declaration]]:
+def parse_source(
+    path: str, source: bytes, *, python_layout: PythonLayout = WORKSPACE_LAYOUT
+) -> tuple[str, list[Declaration]]:
     """
     함수 이름: parse_source()
     기능: 지원 파일 하나를 파싱한다. .h는 두 문법으로 검사하고 공통 문법은 C로 처리한다.
-    인자: path -> 상대 경로, source -> 파일 원문
+    인자: path -> 상대 경로, source -> 파일 원문, python_layout -> Python import 경계
     반환값: 실제 사용한 언어와 선언 목록
     작성 날짜: 2026/11/05
     """
     suffix = PurePosixPath(path).suffix
     language = EXTENSIONS[suffix]
     if language == "python":
-        return language, parse_python(path, source)
+        return language, parse_python(path, source, python_layout)
     source.decode("utf-8")
     root = Parser(_GRAMMARS[language]).parse(source).root_node
     if suffix == ".h":

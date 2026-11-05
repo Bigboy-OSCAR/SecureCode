@@ -1,4 +1,4 @@
-/** `npm run check:types`: TypeScript projects only (legacy host code reported as KNOWN). */
+/** `npm run check:types`: TypeScript projects only. */
 import { runAndExit } from "../lib/report.js";
 import { typecheckSteps } from "../lib/steps.js";
 

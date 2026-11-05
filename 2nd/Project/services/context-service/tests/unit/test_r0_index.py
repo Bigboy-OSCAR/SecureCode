@@ -139,3 +139,52 @@ def test_file_isolation(tmp_path: Path) -> None:
         "huge.c": "too_large",
         "escape.js": "path_rejected",
     }
+
+
+def test_python_src_imports_respect_project_boundaries(tmp_path: Path) -> None:
+    """
+    함수 이름: test_python_src_imports_respect_project_boundaries()
+    기능: src 모듈의 상대·절대 import가 형제 프로젝트의 동명 또는 유일한 심볼에 연결되지 않는지 확인한다.
+    인자: tmp_path -> 임시 작업 공간
+    반환값: 없음
+    작성 날짜: 2026/11/05
+    """
+    source = {
+        "pyproject.toml": "",
+        "src/pkg/shared.py": "LIMIT = 1\n",
+        "src/pkg/caller.py": "from .shared import LIMIT\ndef primary(): return LIMIT\n",
+        "tests/use.py": "from pkg.shared import LIMIT\ndef outside(): return LIMIT\n",
+        "apps/other/src/pkg/shared.py": "LIMIT = 2\nOTHER = 3\n",
+        "apps/other/src/pkg/use.py": (
+            "import pkg.shared as sh\n"
+            "from src.pkg.shared import OTHER\n"
+            "def local(): return sh.LIMIT + OTHER\n"
+        ),
+        "src/pkg/missing.py": "from pkg.shared import OTHER\ndef missing(): return OTHER\n",
+        "flat/setup.cfg": "",
+        "flat/src/__init__.py": "",
+        "flat/src/types.py": "FLAG = 1\n",
+        "flat/check.py": (
+            "from src.types import FLAG\nfrom types import FLAG as wrong\n"
+            "def check(): return FLAG + wrong\n"
+        ),
+    }
+    for name, text in source.items():
+        file = tmp_path / name
+        file.parent.mkdir(parents=True, exist_ok=True)
+        file.write_text(text, encoding="utf-8")
+    nodes = build_index(tmp_path)["nodes"]
+    prefix = "memory://symbol/"
+    root_limit = prefix + "src/pkg/shared.py::LIMIT"
+    assert nodes[prefix + "src/pkg/caller.py::primary"]["deps"] == [root_limit]
+    assert nodes[prefix + "tests/use.py::outside"]["deps"] == [root_limit]
+    assert nodes[prefix + "apps/other/src/pkg/use.py::local"]["deps"] == [
+        prefix + "apps/other/src/pkg/shared.py::LIMIT",
+        prefix + "apps/other/src/pkg/shared.py::OTHER",
+    ]
+    missing = nodes[prefix + "src/pkg/missing.py::missing"]
+    assert missing["deps"] == []
+    assert missing["unresolved_reference"] == ["OTHER"]
+    flat = nodes[prefix + "flat/check.py::check"]
+    assert flat["deps"] == [prefix + "flat/src/types.py::FLAG"]
+    assert flat["unresolved_reference"] == ["wrong"]

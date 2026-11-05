@@ -61,3 +61,24 @@ export function settleWithin<T>(work: Promise<T>, timeoutMs: number, label: stri
         );
     });
 }
+
+/** Stop waiting when the run ends early or never reaches the expected SDK event. */
+export async function waitForProbeEvent(
+    predicate: () => boolean,
+    started: Promise<unknown>,
+    label: string,
+    timeoutMs = 10000,
+): Promise<void> {
+    let finished = false;
+    const onFinish = (): void => {
+        finished = true;
+    };
+    void started.then(onFinish, onFinish);
+    const deadline = Date.now() + timeoutMs;
+    while (!predicate()) {
+        if (finished || Date.now() >= deadline) {
+            throw new Error(`SDK did not reach ${label}`);
+        }
+        await new Promise<void>((resolve) => setTimeout(resolve, 20));
+    }
+}

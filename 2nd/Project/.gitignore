@@ -25,3 +25,6 @@ coverage/
 # Raw verification output must not be committed; summarized evidence JSON may be.
 artifacts/verification/**/raw/
 *.log
+
+# Shared TypeScript launcher/check sources (root Python ignores all lib directories).
+!/scripts/lib/

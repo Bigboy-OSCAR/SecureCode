@@ -84,6 +84,22 @@ def _esm_import(statement: Node, bindings: ModuleBindings) -> None:
                         bindings.imported[node_text(alias)] = (module, node_text(name))
 
 
+def required_module(call: Node) -> str | None:
+    """
+    함수 이름: required_module()
+    기능: require 호출을 식별하고 유일한 리터럴 인자에서 모듈 경로를 얻는다.
+    인자: call -> 호출 구문 노드
+    반환값: 모듈 경로, 동적 인자이면 빈 문자열, require 호출이 아니면 None
+    작성 날짜: 2026/11/05
+    """
+    callee = call.child_by_field_name("function")
+    args = call.child_by_field_name("arguments")
+    if not callee or callee.type != "identifier" or node_text(callee) != "require" or not args:
+        return None
+    arguments = [part for part in args.named_children if part.type != "comment"]
+    return _module_name(arguments[0]) if len(arguments) == 1 else ""
+
+
 def _cjs_import(node: Node, bindings: ModuleBindings) -> bool:
     """
     함수 이름: _cjs_import()
@@ -96,11 +112,9 @@ def _cjs_import(node: Node, bindings: ModuleBindings) -> bool:
     call = node.child_by_field_name("value")
     if binding is None or call is None or call.type != "call_expression":
         return False
-    callee = call.child_by_field_name("function")
-    args = call.child_by_field_name("arguments")
-    if not callee or node_text(callee) != "require" or not args or len(args.named_children) != 1:
+    module = required_module(call)
+    if module is None:
         return False
-    module = _module_name(args.named_children[0])
     if binding.type == "identifier":
         bindings.imported[node_text(binding)] = (module, "require:*")
     elif binding.type == "object_pattern":
@@ -147,20 +161,24 @@ def assigned_export(statement: Node) -> tuple[str, Node] | None:
     return None
 
 
-def collect_bindings(root: Node) -> ModuleBindings:
+def collect_bindings(root: Node, loader_available: bool) -> ModuleBindings:
     """
     함수 이름: collect_bindings()
     기능: import와 별도 export 문을 먼저 읽어 선언 순서에 독립적으로 바인딩한다.
-    인자: root -> JavaScript 구문 트리
+    인자: root -> JavaScript 구문 트리, loader_available -> 전역 require 사용 가능 여부
     반환값: 파일의 바인딩 정보
     작성 날짜: 2026/11/05
     """
     bindings = ModuleBindings()
-    for statement in root.named_children:
+    statements = root.named_children
+    for statement in statements:
         if statement.type == "import_statement":
             _esm_import(statement, bindings)
+    loader_available = loader_available and "require" not in bindings.imported
+    for statement in statements:
+        if statement.type == "import_statement":
             bindings.statements.append(node_text(statement))
-        elif statement.type in {"lexical_declaration", "variable_declaration"}:
+        elif loader_available and statement.type in {"lexical_declaration", "variable_declaration"}:
             for decl in statement.named_children:
                 if _cjs_import(decl, bindings):
                     bindings.statements.append(node_text(decl))

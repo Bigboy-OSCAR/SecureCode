@@ -72,7 +72,7 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 1024,
-            "pattern": "^(?![A-Za-z]:)(?!/)(?!.*(^|/)\\.\\.(/|$)).+$"
+            "pattern": "^(?![A-Za-z]:)(?!(?:[\\s\\S]*/)?\\.\\.(?:/|$))[^/\\\\\\x00-\\x1f\\x7f]+(?:/[^/\\\\\\x00-\\x1f\\x7f]+)*(?![\\s\\S])"
         },
         "OpaqueCursor": {
             "title": "OpaqueCursor",
@@ -90,9 +90,14 @@
         "PointerUri": {
             "title": "PointerUri",
             "description": "Boundary reference to a 4.2-owned pointer. Opaque handle; format follows docs/architecture/POINTER_DESIGN.md.",
-            "type": "string",
-            "maxLength": 512,
-            "pattern": "^securecode://(source|runtime)/[^\\s]+$"
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/SourcePointerUri"
+                },
+                {
+                    "$ref": "#/definitions/RuntimePointerUri"
+                }
+            ]
         },
         "PointerKind": {
             "title": "PointerKind",
@@ -104,6 +109,18 @@
             "description": "User-visible bounded text such as a summary or message.",
             "type": "string",
             "maxLength": 500
+        },
+        "SourcePointerUri": {
+            "title": "SourcePointerUri",
+            "type": "string",
+            "maxLength": 512,
+            "pattern": "^securecode://source/ws_[A-Za-z0-9-]{8,64}/[A-Za-z0-9_-]+\\?v=[1-9][0-9]*(?![\\s\\S])"
+        },
+        "RuntimePointerUri": {
+            "title": "RuntimePointerUri",
+            "type": "string",
+            "maxLength": 512,
+            "pattern": "^securecode://runtime/ws_[A-Za-z0-9-]{8,64}/ses_[A-Za-z0-9-]{8,64}/[A-Za-z0-9_-]+\\?v=1(?![\\s\\S])"
         }
     }
 }

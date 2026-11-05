@@ -50,7 +50,7 @@ def check_internal_access(request: Request, internal_token: str) -> None:
         raise ServiceError(ErrorCode.UNAUTHENTICATED, "내부 서비스 인증에 실패했습니다.")
 
 
-def install_middleware(app: FastAPI, internal_token: str) -> None:
+def install_middleware(app: FastAPI, internal_token: str | None = None) -> None:
     """
     함수 이름: install_middleware()
     기능: 모든 요청(404 포함)에 request_id와 내부 인증을 적용하는 미들웨어를 등록한다.
@@ -73,7 +73,12 @@ def install_middleware(app: FastAPI, internal_token: str) -> None:
         request_id = resolve_request_id(request)
         request.state.request_id = request_id
         try:
-            check_internal_access(request, internal_token)
+            token = (
+                request.app.state.settings.internal_token
+                if internal_token is None
+                else internal_token
+            )
+            check_internal_access(request, token)
         except ServiceError as error:
             response: Response = build_error_response(error, request_id)
         else:

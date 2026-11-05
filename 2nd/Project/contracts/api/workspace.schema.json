@@ -5,7 +5,7 @@
     "definitions": {
         "IndexState": {
             "title": "IndexState",
-            "description": "ready = searchable; partial = searchable with per-file diagnostics; parsed = parsed but retrieval not ready (3.3 before 3.4); stale = files changed since index_revision.",
+            "description": "ready = indexing finished (inspect searchable, including for an empty index); partial = searchable with per-file diagnostics; parsed = parsed but retrieval not ready; stale = files changed since index_revision.",
             "type": "string",
             "enum": ["not_indexed", "queued", "indexing", "parsed", "ready", "partial", "stale", "failed"]
         },

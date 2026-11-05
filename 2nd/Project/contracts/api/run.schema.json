@@ -34,6 +34,17 @@
             "properties": {
                 "kind": { "$ref": "../common/primitives.schema.json#/definitions/PointerKind" },
                 "pointer": { "$ref": "../common/primitives.schema.json#/definitions/PointerUri" }
+            },
+            "if": { "properties": { "kind": { "const": "runtime" } } },
+            "then": {
+                "properties": {
+                    "pointer": { "$ref": "../common/primitives.schema.json#/definitions/RuntimePointerUri" }
+                }
+            },
+            "else": {
+                "properties": {
+                    "pointer": { "$ref": "../common/primitives.schema.json#/definitions/SourcePointerUri" }
+                }
             }
         },
         "ContextRef": {
@@ -73,7 +84,7 @@
                 "tool_name": { "type": "string", "minLength": 1, "maxLength": 128 },
                 "phase": { "$ref": "#/definitions/ToolCallPhase" },
                 "summary": { "$ref": "../common/primitives.schema.json#/definitions/ShortText" },
-                "output_pointer": { "$ref": "../common/primitives.schema.json#/definitions/PointerUri" },
+                "output_pointer": { "$ref": "../common/primitives.schema.json#/definitions/RuntimePointerUri" },
                 "output_bytes": { "type": "integer", "minimum": 0 }
             }
         },

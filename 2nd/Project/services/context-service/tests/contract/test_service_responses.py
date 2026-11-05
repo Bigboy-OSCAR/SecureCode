@@ -118,7 +118,9 @@ def test_token_count_success(counting_client: TestClient, contract_check: Contra
     ("raw_body", "status", "code"),
     [
         ('{"text": ""}', 422, "VALIDATION_FAILED"),
-        ('{"text": "x", "extra": 1}', 422, "VALIDATION_FAILED"),
+        ('{"text": "x", "private_input_marker": 1}', 422, "VALIDATION_FAILED"),
+        ('{"text": "x", "model_id": null}', 422, "VALIDATION_FAILED"),
+        ('{"text": "x", "schema_version": null}', 422, "VALIDATION_FAILED"),
         ('{"text": "\\ud800"}', 422, "VALIDATION_FAILED"),
     ],
 )
@@ -148,6 +150,7 @@ def test_token_count_validation(
     assert response.status_code == status
     assert response.json()["error"]["code"] == code
     assert contract_check(ERROR_REF, response.json()) == []
+    assert "private_input_marker" not in response.text
 
 
 def test_unconfigured_counter_and_unknown_route(
@@ -168,3 +171,22 @@ def test_unconfigured_counter_and_unknown_route(
     missing = client.get("/internal/v1/nothing", headers=AUTH)
     assert (missing.status_code, missing.json()["error"]["code"]) == (404, "NOT_FOUND")
     assert contract_check(ERROR_REF, missing.json()) == []
+
+
+def test_chunked_token_request_limit(
+    counting_client: TestClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """
+    함수 이름: test_chunked_token_request_limit()
+    기능: Content-Length가 없어도 JSON 파싱 전에 요청 크기 상한을 적용한다.
+    인자: counting_client -> 계수 가능한 시험 앱, monkeypatch -> 시험용 상한
+    반환값: 없음
+    작성 날짜: 2026/11/05
+    """
+    monkeypatch.setattr("securecode_context.api.tokens.MAX_ENVELOPE_BYTES", 100)
+    response = counting_client.post(
+        "/internal/v1/tokens/count",
+        headers={**AUTH, "content-type": "application/json"},
+        content=iter([b" " * 90, b" " * 90]),
+    )
+    assert response.status_code == 413 and response.json()["error"]["code"] == "PAYLOAD_TOO_LARGE"

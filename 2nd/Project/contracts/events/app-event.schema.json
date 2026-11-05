@@ -88,6 +88,17 @@
                 "kind": { "$ref": "../common/primitives.schema.json#/definitions/PointerKind" },
                 "byte_size": { "type": "integer", "minimum": 0 },
                 "tool_call_id": { "type": "string", "minLength": 1, "maxLength": 128 }
+            },
+            "if": { "properties": { "kind": { "const": "runtime" } } },
+            "then": {
+                "properties": {
+                    "pointer": { "$ref": "../common/primitives.schema.json#/definitions/RuntimePointerUri" }
+                }
+            },
+            "else": {
+                "properties": {
+                    "pointer": { "$ref": "../common/primitives.schema.json#/definitions/SourcePointerUri" }
+                }
             }
         },
         "RunContextPlannedPayload": {
