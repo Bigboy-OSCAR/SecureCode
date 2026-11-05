@@ -1,7 +1,7 @@
 {
     "schema_ref": "api/approval.schema.json#/definitions/ApprovalDecisionRequest",
     "expect": "invalid",
-    "scenario": "UI-12",
+    "scenario": "UI-15",
     "data": {
         "decision": "approve",
         "input_digest": "md5:abc"

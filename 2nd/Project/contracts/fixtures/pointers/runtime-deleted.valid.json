@@ -1,0 +1,13 @@
+{
+    "schema_ref": "pointers/lifecycle.schema.json#/definitions/PointerDeleteResult",
+    "expect": "valid",
+    "scenario": "UI-21",
+    "data": {
+        "schema_version": "1",
+        "kind": "runtime",
+        "pointer": "securecode://runtime/ws_00000001/ses_00000001/ptr_01?v=1",
+        "workspace_id": "ws_00000001",
+        "session_id": "ses_00000001",
+        "effect": "runtime_deleted"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "schema_ref": "pointers/pdf-job.schema.json#/definitions/PdfJobStatus",
+    "expect": "valid",
+    "scenario": "UI-29",
+    "data": {
+        "schema_version": "1",
+        "job_id": "pdf_00000001",
+        "workspace_id": "ws_00000001",
+        "pointer": "securecode://source/ws_00000001/src_pdf_01?v=2",
+        "state": "stale",
+        "reason": "parser_changed"
+    }
+}

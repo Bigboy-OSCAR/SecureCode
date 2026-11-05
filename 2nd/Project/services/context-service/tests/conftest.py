@@ -1,13 +1,37 @@
 """공용 pytest fixture: 계약 스키마 검사 함수, 시험용 서비스 설정."""
 
+from collections.abc import Iterator
 from pathlib import Path
 from typing import Any
 
 import pytest
-from jsonschema import Draft7Validator
+from jsonschema import Draft7Validator, ValidationError, validators
 
 from securecode_context.app.settings import ServiceSettings
 from support.helpers import CONTRACT_BASE_URI, TEST_TOKEN, ContractCheck, build_contract_registry
+
+
+def _max_utf8_bytes(
+    validator: object, limit: int, value: object, schema: object
+) -> Iterator[ValidationError]:
+    """
+    함수 이름: _max_utf8_bytes()
+    기능: 문자 수와 별도로 UTF-8 인코딩과 바이트 한도를 검증한다.
+    인자: validator, schema -> 검증기 문맥, limit -> 바이트 상한, value -> 검사할 값
+    반환값: 한도를 넘거나 UTF-8로 인코딩할 수 없을 때 발생하는 계약 오류
+    작성 날짜: 2026/11/05
+    """
+    if isinstance(value, str):
+        try:
+            length = len(value.encode("utf-8"))
+        except UnicodeEncodeError:
+            yield ValidationError("value must be valid UTF-8")
+            return
+        if length > limit:
+            yield ValidationError(f"value exceeds {limit} UTF-8 bytes")
+
+
+ContractValidator = validators.extend(Draft7Validator, {"maxUtf8Bytes": _max_utf8_bytes})
 
 
 @pytest.fixture(scope="session")
@@ -30,7 +54,7 @@ def contract_check() -> ContractCheck:
         반환값: 오류 메시지 목록
         작성 날짜: 2026/11/04
         """
-        validator = Draft7Validator(
+        validator = ContractValidator(
             {"$ref": CONTRACT_BASE_URI + schema_ref},
             registry=registry,
             format_checker=Draft7Validator.FORMAT_CHECKER,

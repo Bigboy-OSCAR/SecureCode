@@ -1,0 +1,21 @@
+{
+    "schema_ref": "events/app-event.schema.json#/definitions/AppEvent",
+    "expect": "valid",
+    "scenario": "UI-14",
+    "data": {
+        "schema_version": "1",
+        "event_id": "evt_01J9Z6Q4REJECT",
+        "sequence": 6,
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "session_id": "ses_01J9Z6Q4TEST",
+        "run_id": "run_01J9Z6Q4TEST",
+        "type": "run.approval_resolved",
+        "timestamp": "2026-11-04T09:01:00Z",
+        "payload": {
+            "approval_id": "apr_01J9Z6Q4TEST",
+            "status": "rejected",
+            "decided_at": "2026-11-04T09:01:00Z",
+            "reason_code": "APPROVAL_REJECTED"
+        }
+    }
+}

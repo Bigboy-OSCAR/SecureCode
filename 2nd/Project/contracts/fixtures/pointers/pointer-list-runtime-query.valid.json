@@ -1,0 +1,10 @@
+{
+    "schema_ref": "pointers/lifecycle.schema.json#/definitions/PointerListQuery",
+    "expect": "valid",
+    "scenario": "UI-18",
+    "data": {
+        "kind": "runtime",
+        "session_id": "ses_00000001",
+        "limit": 20
+    }
+}

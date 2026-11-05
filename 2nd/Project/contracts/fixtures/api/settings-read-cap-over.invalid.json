@@ -1,0 +1,41 @@
+{
+    "schema_ref": "api/system.schema.json#/definitions/SettingsResponse",
+    "expect": "invalid",
+    "scenario": "UI-32",
+    "data": {
+        "schema_version": "1",
+        "provider": {
+            "provider_id": "anthropic",
+            "model_id": "claude-sonnet-5-5",
+            "configured": false
+        },
+        "budget": {
+            "context_limit_tokens": 200000,
+            "max_output_tokens": 8192,
+            "safety_margin_tokens": 2048,
+            "body_count_mode": null,
+            "final_request_gate": "not_verified"
+        },
+        "limits": {
+            "runtime_pointer_threshold_bytes": 4096,
+            "pointer_preview_bytes": 512,
+            "pointer_read_max_bytes": 32768,
+            "pointer_read_max_tokens": 32768,
+            "approval_review_max_bytes": 16384,
+            "runtime_object_max_bytes": 33554432,
+            "runtime_session_max_bytes": 134217728,
+            "runtime_ttl_seconds": 86400,
+            "source_file_max_bytes": 268435456,
+            "json_parse_max_bytes": 8388608,
+            "pdf_max_bytes": 52428800,
+            "pdf_max_pages": 500
+        },
+        "protections": [
+            {
+                "name": "runtime_pointer_hook",
+                "ready": false,
+                "reason_code": "NOT_IMPLEMENTED"
+            }
+        ]
+    }
+}

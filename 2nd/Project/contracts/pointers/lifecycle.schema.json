@@ -1,0 +1,362 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Public pointer lifecycle contracts",
+    "definitions": {
+        "PointerListQuery": {
+            "title": "PointerListQuery",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["kind"],
+                    "properties": {
+                        "kind": {
+                            "const": "source"
+                        },
+                        "limit": {
+                            "$ref": "../common/pagination.schema.json#/definitions/PageLimit"
+                        },
+                        "cursor": {
+                            "$ref": "../common/primitives.schema.json#/definitions/OpaqueCursor"
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["kind", "session_id"],
+                    "properties": {
+                        "kind": {
+                            "const": "runtime"
+                        },
+                        "session_id": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SessionId"
+                        },
+                        "limit": {
+                            "$ref": "../common/pagination.schema.json#/definitions/PageLimit"
+                        },
+                        "cursor": {
+                            "$ref": "../common/primitives.schema.json#/definitions/OpaqueCursor"
+                        }
+                    }
+                }
+            ]
+        },
+        "PointerListItem": {
+            "title": "PointerListItem",
+            "allOf": [
+                {
+                    "$ref": "pointer.schema.json#/definitions/PointerDescriptor"
+                },
+                {
+                    "type": "object",
+                    "required": ["display_name", "supported_selectors"],
+                    "properties": {
+                        "display_name": {
+                            "$ref": "pointer.schema.json#/definitions/PointerDisplayName"
+                        },
+                        "supported_selectors": {
+                            "$ref": "pointer.schema.json#/definitions/PointerDescriptor/properties/supported_selectors"
+                        }
+                    }
+                }
+            ]
+        },
+        "PointerListResult": {
+            "title": "PointerListResult",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["schema_version", "workspace_id", "items", "page"],
+            "properties": {
+                "schema_version": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                },
+                "workspace_id": {
+                    "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PointerListItem"
+                    },
+                    "minItems": 0,
+                    "maxItems": 100
+                },
+                "page": {
+                    "$ref": "../common/pagination.schema.json#/definitions/PageInfo"
+                }
+            }
+        },
+        "SourceMutationRequest": {
+            "title": "SourceMutationRequest",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["schema_version", "idempotency_key", "operation", "target"],
+                    "properties": {
+                        "schema_version": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                        },
+                        "idempotency_key": {
+                            "$ref": "../common/primitives.schema.json#/definitions/IdempotencyKey"
+                        },
+                        "operation": {
+                            "const": "register"
+                        },
+                        "target": {
+                            "oneOf": [
+                                {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "required": ["location", "kind", "path"],
+                                    "properties": {
+                                        "location": {
+                                            "const": "workspace"
+                                        },
+                                        "kind": {
+                                            "type": "string",
+                                            "enum": ["file", "directory"]
+                                        },
+                                        "path": {
+                                            "$ref": "../common/primitives.schema.json#/definitions/RelativePath"
+                                        }
+                                    }
+                                },
+                                {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "required": ["location", "kind", "path"],
+                                    "properties": {
+                                        "location": {
+                                            "const": "external"
+                                        },
+                                        "kind": {
+                                            "type": "string",
+                                            "enum": ["file", "directory"]
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "minLength": 1,
+                                            "maxLength": 4096,
+                                            "pattern": "^(?!(?:[\\s\\S]*[/\\\\])?\\.\\.(?:[/\\\\]|$))(?:/(?!/)|[A-Za-z]:[/\\\\])[^\\x00-\\x1f\\x7f]+(?![\\s\\S])"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["schema_version", "idempotency_key", "operation", "pointer"],
+                    "properties": {
+                        "schema_version": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                        },
+                        "idempotency_key": {
+                            "$ref": "../common/primitives.schema.json#/definitions/IdempotencyKey"
+                        },
+                        "operation": {
+                            "const": "refresh"
+                        },
+                        "pointer": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SourcePointerUri"
+                        }
+                    }
+                }
+            ]
+        },
+        "SourceMutationResult": {
+            "title": "SourceMutationResult",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["schema_version", "workspace_id", "status", "items", "issues"],
+            "properties": {
+                "schema_version": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                },
+                "workspace_id": {
+                    "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": ["completed", "partial"]
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/PointerListItem"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "kind": {
+                                        "const": "source"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "minItems": 0,
+                    "maxItems": 100
+                },
+                "issues": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": ["relative_path", "code"],
+                        "properties": {
+                            "relative_path": {
+                                "$ref": "../common/primitives.schema.json#/definitions/RelativePath"
+                            },
+                            "code": {
+                                "type": "string",
+                                "enum": [
+                                    "FORBIDDEN",
+                                    "NOT_FOUND",
+                                    "SOURCE_CHANGED",
+                                    "PAYLOAD_TOO_LARGE",
+                                    "UNSUPPORTED_FORMAT"
+                                ]
+                            }
+                        }
+                    },
+                    "minItems": 0,
+                    "maxItems": 100
+                }
+            },
+            "if": {
+                "properties": {
+                    "status": {
+                        "const": "completed"
+                    }
+                }
+            },
+            "then": {
+                "properties": {
+                    "issues": {
+                        "type": "array",
+                        "maxItems": 0
+                    }
+                }
+            },
+            "else": {
+                "properties": {
+                    "issues": {
+                        "type": "array",
+                        "minItems": 1
+                    }
+                }
+            }
+        },
+        "PointerDeleteRequest": {
+            "title": "PointerDeleteRequest",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["schema_version", "idempotency_key", "kind", "pointer", "workspace_id"],
+                    "properties": {
+                        "schema_version": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                        },
+                        "idempotency_key": {
+                            "$ref": "../common/primitives.schema.json#/definitions/IdempotencyKey"
+                        },
+                        "kind": {
+                            "const": "source"
+                        },
+                        "pointer": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SourcePointerUri"
+                        },
+                        "workspace_id": {
+                            "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["schema_version", "idempotency_key", "kind", "pointer", "workspace_id", "session_id"],
+                    "properties": {
+                        "schema_version": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                        },
+                        "idempotency_key": {
+                            "$ref": "../common/primitives.schema.json#/definitions/IdempotencyKey"
+                        },
+                        "kind": {
+                            "const": "runtime"
+                        },
+                        "pointer": {
+                            "$ref": "../common/primitives.schema.json#/definitions/RuntimePointerUri"
+                        },
+                        "workspace_id": {
+                            "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                        },
+                        "session_id": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SessionId"
+                        }
+                    }
+                }
+            ]
+        },
+        "PointerDeleteResult": {
+            "title": "PointerDeleteResult",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["schema_version", "effect", "kind", "pointer", "workspace_id"],
+                    "properties": {
+                        "schema_version": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                        },
+                        "effect": {
+                            "const": "unregistered"
+                        },
+                        "kind": {
+                            "const": "source"
+                        },
+                        "pointer": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SourcePointerUri"
+                        },
+                        "workspace_id": {
+                            "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["schema_version", "effect", "kind", "pointer", "workspace_id", "session_id"],
+                    "properties": {
+                        "schema_version": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                        },
+                        "effect": {
+                            "const": "runtime_deleted"
+                        },
+                        "kind": {
+                            "const": "runtime"
+                        },
+                        "pointer": {
+                            "$ref": "../common/primitives.schema.json#/definitions/RuntimePointerUri"
+                        },
+                        "workspace_id": {
+                            "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                        },
+                        "session_id": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SessionId"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

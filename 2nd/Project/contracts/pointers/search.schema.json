@@ -51,11 +51,15 @@
                 },
                 "content": {
                     "type": "string",
-                    "maxLength": 16384
+                    "maxLength": 16384,
+                    "maxUtf8Bytes": 16384
                 },
                 "byte_offset": {
                     "type": "integer",
                     "minimum": 0
+                },
+                "selection": {
+                    "$ref": "read.schema.json#/definitions/PointerSelection"
                 }
             }
         },

@@ -1,0 +1,25 @@
+{
+    "schema_ref": "api/run.schema.json#/definitions/RunCreateRequest",
+    "expect": "valid",
+    "scenario": "UI-24",
+    "data": {
+        "idempotency_key": "run-range-20261105",
+        "prompt": "선택한 범위만 확인해줘",
+        "context_refs": [
+            {
+                "kind": "runtime",
+                "pointer": "securecode://runtime/ws_01J9Z6Q4TEST/ses_01J9Z6Q4TEST/6f1c2a7e-0d3b-4c55-9b1e-2f3a4b5c6d7e?v=1",
+                "selection": {
+                    "revision": 1,
+                    "content_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                    "range": {
+                        "type": "byte",
+                        "start": 80,
+                        "end": 96
+                    }
+                }
+            }
+        ],
+        "preview_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    }
+}

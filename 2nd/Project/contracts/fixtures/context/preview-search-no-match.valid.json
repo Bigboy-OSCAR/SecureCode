@@ -1,0 +1,23 @@
+{
+    "schema_ref": "context/context.schema.json#/definitions/ContextPreviewResponse",
+    "expect": "valid",
+    "scenario": "UI-09",
+    "data": {
+        "operation": "search",
+        "result": {
+            "schema_version": "1",
+            "workspace_id": "ws_01J9Z6Q4TEST",
+            "index_revision": 3,
+            "candidates": [],
+            "page": {
+                "limit": 10,
+                "next_cursor": null,
+                "has_more": false
+            },
+            "no_match": {
+                "reason_code": "NO_MATCH",
+                "hint": "try_identifier_or_file_name"
+            }
+        }
+    }
+}

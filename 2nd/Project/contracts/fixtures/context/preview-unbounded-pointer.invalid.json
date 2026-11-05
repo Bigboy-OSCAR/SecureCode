@@ -1,0 +1,20 @@
+{
+    "schema_ref": "context/context.schema.json#/definitions/ContextPreviewRequest",
+    "expect": "invalid",
+    "scenario": "UI-23",
+    "data": {
+        "operation": "plan",
+        "input": {
+            "workspace_id": "ws_00000001",
+            "session_id": "ses_00000001",
+            "index_revision": 3,
+            "prompt": "설정 함수와 로그의 선택 범위를 확인해 주세요.",
+            "context_refs": [
+                {
+                    "kind": "source",
+                    "pointer": "securecode://source/ws_00000001/src_01?v=2"
+                }
+            ]
+        }
+    }
+}

@@ -1,7 +1,7 @@
 {
     "schema_ref": "api/approval.schema.json#/definitions/ApprovalDecisionRequest",
     "expect": "valid",
-    "scenario": "UI-11",
+    "scenario": "UI-13",
     "data": {
         "decision": "approve",
         "input_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"

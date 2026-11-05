@@ -1,0 +1,29 @@
+{
+    "schema_ref": "pointers/read.schema.json#/definitions/PointerReadResult",
+    "expect": "invalid",
+    "scenario": "UI-24",
+    "data": {
+        "schema_version": "1",
+        "pointer": "securecode://source/ws_00000001/src_01?v=2",
+        "content": "한글",
+        "provenance": {
+            "display_name": "설계.md",
+            "relative_path": "docs/설계.md",
+            "media_type": "text/markdown",
+            "byte_size": 90000,
+            "revision": 2,
+            "selection": {
+                "revision": 2,
+                "range": {
+                    "type": "byte",
+                    "start": 0,
+                    "end": 6
+                }
+            }
+        },
+        "truncated": true,
+        "next_cursor": "c_abc123",
+        "token_count": 5,
+        "count_mode": "provider_estimate"
+    }
+}

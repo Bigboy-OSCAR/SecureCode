@@ -1,7 +1,7 @@
 {
     "schema_ref": "events/app-event.schema.json#/definitions/AppEvent",
     "expect": "invalid",
-    "scenario": "UI-16",
+    "scenario": "UI-34",
     "data": {
         "schema_version": "1",
         "event_id": "evt_01J9Z6Q4EV0015",

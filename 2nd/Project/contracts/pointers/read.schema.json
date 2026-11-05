@@ -50,7 +50,8 @@
                 },
                 "section": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "maxLength": 256
                 }
             }
         },
@@ -64,7 +65,9 @@
                 },
                 "path": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "maxLength": 512,
+                    "pattern": "^(?:/(?:[^~/\\x00-\\x1f\\x7f]|~[01])*)+(?![\\s\\S])"
                 }
             }
         },
@@ -155,7 +158,8 @@
                 },
                 "content": {
                     "type": "string",
-                    "maxLength": 16384
+                    "maxLength": 16384,
+                    "maxUtf8Bytes": 16384
                 },
                 "provenance": {
                     "type": "object",
@@ -173,6 +177,15 @@
                         "revision": {
                             "type": "integer",
                             "minimum": 1
+                        },
+                        "selection": {
+                            "$ref": "#/definitions/PointerSelection"
+                        },
+                        "display_name": {
+                            "$ref": "pointer.schema.json#/definitions/PointerDisplayName"
+                        },
+                        "relative_path": {
+                            "$ref": "../common/primitives.schema.json#/definitions/RelativePath"
                         }
                     }
                 },
@@ -188,6 +201,71 @@
                 },
                 "count_mode": {
                     "$ref": "../common/token-count.schema.json#/definitions/CountMode"
+                }
+            }
+        },
+        "PointerSelection": {
+            "title": "PointerSelection",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["revision", "content_sha256", "range"],
+            "properties": {
+                "revision": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "content_sha256": {
+                    "$ref": "../common/primitives.schema.json#/definitions/Sha256Hex"
+                },
+                "range": {
+                    "oneOf": [
+                        {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": ["type", "start", "end"],
+                            "properties": {
+                                "type": {
+                                    "const": "byte"
+                                },
+                                "start": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                },
+                                "end": {
+                                    "type": "integer",
+                                    "minimum": 1
+                                }
+                            }
+                        },
+                        {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": ["type", "page", "start", "end", "parser_version"],
+                            "properties": {
+                                "type": {
+                                    "const": "pdf_page"
+                                },
+                                "page": {
+                                    "type": "integer",
+                                    "minimum": 1,
+                                    "maximum": 500
+                                },
+                                "start": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                },
+                                "end": {
+                                    "type": "integer",
+                                    "minimum": 1
+                                },
+                                "parser_version": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                }
+                            }
+                        }
+                    ]
                 }
             }
         }

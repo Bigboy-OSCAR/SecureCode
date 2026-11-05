@@ -1,7 +1,7 @@
 {
     "schema_ref": "api/run.schema.json#/definitions/RunCreateRequest",
     "expect": "invalid",
-    "scenario": "UI-09",
+    "scenario": "UI-23",
     "data": {
         "prompt": "x",
         "idempotency_key": "run-0002-abcdef",

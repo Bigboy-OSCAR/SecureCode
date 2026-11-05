@@ -1,0 +1,11 @@
+{
+    "schema_ref": "pointers/pdf-job.schema.json#/definitions/PdfParseRequest",
+    "expect": "valid",
+    "scenario": "UI-27",
+    "data": {
+        "schema_version": "1",
+        "workspace_id": "ws_00000001",
+        "pointer": "securecode://source/ws_00000001/src_pdf_01?v=2",
+        "idempotency_key": "parse-example-0001"
+    }
+}

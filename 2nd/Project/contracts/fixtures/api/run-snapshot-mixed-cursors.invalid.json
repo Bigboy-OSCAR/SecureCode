@@ -1,0 +1,9 @@
+{
+    "schema_ref": "api/run.schema.json#/definitions/RunSnapshotQuery",
+    "expect": "invalid",
+    "scenario": "UI-12",
+    "data": {
+        "approval_cursor": "prior-decisions-in-snapshot-7",
+        "citation_cursor": "more-evidence-in-snapshot-7"
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "schema_ref": "pointers/lifecycle.schema.json#/definitions/PointerListQuery",
+    "expect": "invalid",
+    "scenario": "UI-18",
+    "data": {
+        "kind": "runtime"
+    }
+}

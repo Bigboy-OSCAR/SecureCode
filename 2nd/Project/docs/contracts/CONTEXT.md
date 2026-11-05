@@ -1,35 +1,39 @@
-# Context Contracts (Task 4.2)
+# Context contracts (4.2)
 
-Schema: `contracts/context/context.schema.json`. Fixtures: `contracts/fixtures/context/`.
+The browser uses the host's same-origin `POST /api/v1/context/preview` for code search, bundle inspection and context previews. These version 1 wire formats are defined for the 2.2 screen specification. The route remains a 501 placeholder until its integration task. [Context schemas](../../contracts/context/context.schema.json)
 
-## Definitions
+## Public request and response
 
-| Name | Purpose |
+Send `ContextPreviewRequest {operation, input}`. A 200 response is a `ContextPreviewResponse {operation, result}` for that same operation. An HTTP failure uses the shared `ErrorResponse`. The host verifies the caller's workspace and session access before resolving references. Browsers call the host with the session cookie.
+
+| Operation | Input | Result and UI behavior |
+|---|---|---|
+| `search` | `SymbolSearchRequest` with a nonblank query, workspace, current index revision and optional page | `SymbolSearchResponse` with scored candidates and provenance metadata. Empty results return HTTP 200, an empty candidate list and a `no_match` hint. |
+| `bundle` | `SymbolBundleRequest` with workspace, candidate, index revision, token cap and optional byte cap | `SymbolBundle` with fragments, omissions and unresolved references. Show the returned lines and source hash. Opening a bundle does not add it to a run. |
+| `plan` | `ContextPlanInput` with `workspace_id`, `session_id`, `index_revision`, a nonblank `prompt` of up to 32,000 characters and `context_refs` (0–32 distinct explicit selections) | `ContextPreviewPlan` for that draft. An empty selection is valid. An explicit pointer ref must include the confirmed read result's revision, hash and actual range. The reference has the same shape in preview and run requests. |
+
+[Search and bundle schemas](../../contracts/symbols/symbol.schema.json) · [Explicit references and run creation](../../contracts/api/run.schema.json) · [Confirmed pointer ranges](POINTERS.md)
+
+## Reading a preview
+
+| Field | How to display it |
 |---|---|
-| `ContextPlan` | Result of context selection: selected candidates, fragments, omissions, budget |
-| `ContextCandidate` | One candidate with score, explicit flag and estimated tokens |
-| `ContextFragment` | Content actually included, with its token count |
-| `ContextOmission` | A candidate left out, with a reason |
-| `ContextBudget` | Budget, used tokens and the token count mode |
+| `selected[].origin` | `explicit` means a user selection, `current_task` means material associated with the current task, and `r0` means a retrieved candidate. These are the priority groups in descending order. Within-group scores are meaningful only within their producing source. Preserve server order and highlight explicit choices. |
+| `fragments[]` | Show the material actually included, with its count and `provenance` (`AnswerCitation`). For a symbol it carries the actual file, lines and hash. For a pointer its selection gives the revision, hash and exact byte range or page range of this fragment. `ref` is the candidate being materialized. For an automatically proposed pointer, the provenance can cover a strict subrange of the candidate. An explicit pointer is included at its confirmed range or omitted. |
+| `fragments[].inclusion` | `full` is the full materialized range. `partial_budget` or `partial_size` means the range was limited by the token budget or the response size, respectively. For an explicit pointer that does not fit, show the omission and ask the user to read and confirm a smaller range. Treat source text as untrusted. |
+| `omitted[]` | Each row gives the candidate ID, origin and a reason from `no_match`, `stale`, `unauthorized`, `over_budget` or `duplicate`. An explicit omission echoes its confirmed `ref` so the UI can identify the user's selection. A duplicate includes its `ref` and identifies the retained candidate via `duplicate_of`. A retrieved symbol fragment and a current-task fragment may resolve to the same confirmed source range. `omissions_truncated=true` means further omissions exist. An unauthorized omission may echo a reference supplied by this caller. Keep other workspaces’ data and identities private. |
+| `budget` | `budget_tokens` is the amount available for fragments and `used_tokens` is their total. `costs` gives the model context limit and separate token counts for system, tool schemas, prompt, retained history, message overhead, reserved output and safety margin. These are counts for the current request. `count_mode` distinguishes a provider estimate from an exact count. |
+| `preview_digest` | Opaque SHA-256 produced by the host for this draft's prompt, refs, scope, index revision, retained history, and model/budget configuration. Echo it unchanged when sending the reviewed draft in `RunCreateRequest.preview_digest`. |
 
-`ref` reuses `ContextRef` from `contracts/api/run.schema.json` (symbol or pointer).
-`count_mode` reuses `CountMode` from `contracts/common/token-count.schema.json`.
+Each plan has up to 64 selected rows, 64 fragments, and 64 omission rows. Fragment text is bounded to 16,384 Unicode characters in the schema. The producer also enforces the materialization budget, counts UTF-8 bytes on the wire, and limits the complete JSON response to 256 KiB before sending it. Omitted rows or partial fragments describe size-limited results. If required metadata would exceed the cap, return `PAYLOAD_TOO_LARGE`.
 
-## Invariants not enforced by JSON Schema
+## Results, failure and recovery
 
-Producers (tasks 4.7 and 4.8) must guarantee these. Consumers may rely on them.
+1. Render a preview only when the response operation, scope, input and index revision still match the current draft. Track each in-flight request locally. Discard a late response after the prompt, selections, history, index or settings changed. Reopen changed source material and obtain a fresh explicit range before selecting it again.
+2. A run carrying a preview digest must revalidate the current inputs and authorized ranges before execution. A mismatch returns `VALIDATION_FAILED` with `details.reason="stale_preview"`. Ask the user to refresh and review the draft. A missing/replaced source can instead return `SOURCE_CHANGED`, and stale index access can return `INDEX_NOT_READY`. A digest never grants permission.
+3. Zero available tokens permits an empty plan. When the fixed costs alone exceed the model cap, return `BUDGET_EXCEEDED` and offer a shorter prompt or new session. An unavailable tokenizer returns `TOKENIZER_UNAVAILABLE`. Do not present a failed count as zero or a successful preview as proof of the run's final outbound limit.
+4. Producers enforce arithmetic and reference invariants beyond JSON Schema. For a successful plan, subtract the seven cost components from `model_context_limit` to get `budget_tokens`. The sum of fragment counts equals `used_tokens` and fits within that budget. Every fragment identifies a selected candidate. Retained and omitted candidate IDs are disjoint, duplicates name retained candidates, and every explicit choice is accounted for. A fragment's source evidence must refer to the same immutable object as its candidate and stay within its authorized range. Never reconstruct provenance from arbitrary answer text.
 
-1. `budget.used_tokens <= budget.budget_tokens`.
-2. The sum of `fragments[].token_count` equals `budget.used_tokens`.
-3. A `candidate_id` appears in at most one of `selected` and `omitted`.
-4. Every fragment's `candidate_id` appears in `selected`.
-5. Explicit (`explicit: true`) candidates are never omitted silently; they are either selected or omitted with a reason.
+The base `ContextPlan` also decodes previously recorded plans that lack the new explanations. A successful public plan preview requires origins, fragment provenance and inclusion, cost breakdown, the digest, index revision and the omission-truncation flag. If an older record lacks these fields, display only the evidence present and request a fresh preview for a new run.
 
-## Omission reasons
-
-The minimal set is `no_match`, `stale`, `unauthorized`, `over_budget`.
-Task 4.7 may extend it. A change must update the schema, the fixtures and this file together.
-
-## Count mode
-
-Only `provider_estimate` is realistic for planning with the 3.1 model, because no exact local tokenizer exists.
+The UI-16 fixtures exercise a candidate search and bundle inspection. UI-09 covers no match. UI-30 covers explicit and empty selections, cost accounting, and duplicate current-task and retrieved ranges matching a retained explicit range. It also covers a partially materialized automatic choice. UI-31 shows an explicit selection omitted when the budget cannot contain it. UI-17 covers stale preview rejection. UI-23 rejects an unbounded pointer or a missing fragment citation. [Preview examples](../../contracts/fixtures/context) · [Budget failure](../../contracts/fixtures/pointers/error-budget-exceeded.valid.json) · [Counting failure](../../contracts/fixtures/common/error-tokenizer-unavailable.valid.json)

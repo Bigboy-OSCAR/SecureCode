@@ -1,7 +1,7 @@
 {
     "schema_ref": "api/workspace.schema.json#/definitions/WorkspaceListResponse",
     "expect": "valid",
-    "scenario": "UI-02",
+    "scenario": "UI-03",
     "data": {
         "schema_version": "1",
         "items": [],

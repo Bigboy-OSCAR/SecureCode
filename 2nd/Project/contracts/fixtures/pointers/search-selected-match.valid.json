@@ -1,0 +1,28 @@
+{
+    "schema_ref": "pointers/search.schema.json#/definitions/PointerSearchResult",
+    "expect": "valid",
+    "scenario": "UI-26",
+    "data": {
+        "schema_version": "1",
+        "pointer": "securecode://runtime/ws_00000001/ses_00000001/ptr_01?v=1",
+        "matches": [
+            {
+                "line": 42,
+                "content": "error: connection refused",
+                "byte_offset": 1893,
+                "selection": {
+                    "revision": 1,
+                    "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "range": {
+                        "type": "byte",
+                        "start": 1893,
+                        "end": 1918
+                    }
+                }
+            }
+        ],
+        "truncated": false,
+        "token_count": 7,
+        "count_mode": "provider_estimate"
+    }
+}

@@ -27,18 +27,26 @@
         },
         "PointerContextRef": {
             "title": "PointerContextRef",
-            "description": "Boundary to 4.2: range selectors for explicit pointer context are added by 4.2 in contracts/pointers.",
+            "description": "Pointer identity for historical or automatically selected metadata. An explicit selection always includes the exact portion returned by read.",
             "type": "object",
             "required": ["kind", "pointer"],
             "additionalProperties": false,
             "properties": {
                 "kind": { "$ref": "../common/primitives.schema.json#/definitions/PointerKind" },
-                "pointer": { "$ref": "../common/primitives.schema.json#/definitions/PointerUri" }
+                "pointer": { "$ref": "../common/primitives.schema.json#/definitions/PointerUri" },
+                "selection": { "$ref": "../pointers/read.schema.json#/definitions/PointerSelection" }
             },
             "if": { "properties": { "kind": { "const": "runtime" } } },
             "then": {
                 "properties": {
-                    "pointer": { "$ref": "../common/primitives.schema.json#/definitions/RuntimePointerUri" }
+                    "pointer": { "$ref": "../common/primitives.schema.json#/definitions/RuntimePointerUri" },
+                    "selection": {
+                        "type": "object",
+                        "properties": {
+                            "revision": { "const": 1 },
+                            "range": { "type": "object", "properties": { "type": { "const": "byte" } } }
+                        }
+                    }
                 }
             },
             "else": {
@@ -64,8 +72,9 @@
                     "description": "User-selected context (explicit). The budget still applies (roadmap 0.7).",
                     "type": "array",
                     "maxItems": 32,
-                    "items": { "$ref": "#/definitions/ContextRef" }
-                }
+                    "items": { "$ref": "#/definitions/ExplicitContextRef" }
+                },
+                "preview_digest": { "$ref": "../common/primitives.schema.json#/definitions/Sha256Hex" }
             }
         },
         "ToolCallPhase": {
@@ -147,8 +156,15 @@
                     "additionalProperties": false,
                     "properties": {
                         "text": { "type": "string", "maxLength": 65536 },
-                        "truncated": { "type": "boolean" }
-                    }
+                        "truncated": { "type": "boolean" },
+                        "citations": {
+                            "type": "array",
+                            "maxItems": 50,
+                            "items": { "$ref": "#/definitions/AnswerCitation" }
+                        },
+                        "citations_page": { "$ref": "../common/pagination.schema.json#/definitions/PageInfo" }
+                    },
+                    "dependencies": { "citations": ["citations_page"], "citations_page": ["citations"] }
                 },
                 "tool_calls": {
                     "type": "array",
@@ -163,7 +179,17 @@
                 },
                 "terminal": {
                     "oneOf": [{ "$ref": "#/definitions/RunTerminal" }, { "type": "null" }]
-                }
+                },
+                "approval_history": {
+                    "type": "array",
+                    "maxItems": 50,
+                    "items": { "$ref": "#/definitions/ApprovalOutcome" }
+                },
+                "approval_history_page": { "$ref": "../common/pagination.schema.json#/definitions/PageInfo" }
+            },
+            "dependencies": {
+                "approval_history": ["approval_history_page"],
+                "approval_history_page": ["approval_history"]
             }
         },
         "RunSummary": {
@@ -187,6 +213,72 @@
                 "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
                 "items": { "type": "array", "maxItems": 100, "items": { "$ref": "#/definitions/RunSummary" } },
                 "page": { "$ref": "../common/pagination.schema.json#/definitions/PageInfo" }
+            }
+        },
+        "SelectedPointerContextRef": {
+            "title": "SelectedPointerContextRef",
+            "allOf": [
+                { "$ref": "#/definitions/PointerContextRef" },
+                {
+                    "type": "object",
+                    "required": ["selection"],
+                    "properties": {
+                        "selection": { "$ref": "../pointers/read.schema.json#/definitions/PointerSelection" }
+                    }
+                }
+            ]
+        },
+        "ExplicitContextRef": {
+            "title": "ExplicitContextRef",
+            "oneOf": [
+                { "$ref": "#/definitions/SymbolContextRef" },
+                { "$ref": "#/definitions/SelectedPointerContextRef" }
+            ]
+        },
+        "RunSnapshotQuery": {
+            "title": "RunSnapshotQuery",
+            "description": "Supply one cursor to page either final approval decisions or answer citations. Omit both for the current snapshot.",
+            "maxProperties": 1,
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "approval_cursor": { "$ref": "../common/primitives.schema.json#/definitions/OpaqueCursor" },
+                "citation_cursor": { "$ref": "../common/primitives.schema.json#/definitions/OpaqueCursor" }
+            }
+        },
+        "AnswerCitation": {
+            "title": "AnswerCitation",
+            "description": "A server-verified input fragment used by the answer. Symbols carry their actual location; pointer references carry only the confirmed exact selection. Contains no raw content.",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["ref", "location"],
+                    "properties": {
+                        "ref": { "$ref": "#/definitions/SymbolContextRef" },
+                        "location": { "$ref": "../symbols/symbol.schema.json#/definitions/SymbolLocation" }
+                    }
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["ref"],
+                    "properties": { "ref": { "$ref": "#/definitions/SelectedPointerContextRef" } }
+                }
+            ]
+        },
+        "ApprovalOutcome": {
+            "title": "ApprovalOutcome",
+            "description": "Final decision at the snapshot sequence. A recorded approval authorizes the tool call; the tool call phase reports execution separately.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["approval_id", "tool_call_id", "tool_name", "status", "decided_at"],
+            "properties": {
+                "approval_id": { "$ref": "../common/primitives.schema.json#/definitions/ApprovalId" },
+                "tool_call_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+                "tool_name": { "type": "string", "minLength": 1, "maxLength": 128 },
+                "status": { "type": "string", "enum": ["approved", "rejected", "expired", "cancelled"] },
+                "decided_at": { "$ref": "../common/primitives.schema.json#/definitions/Timestamp" }
             }
         }
     }

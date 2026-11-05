@@ -27,6 +27,7 @@
 - ID는 접두사가 있는 opaque 문자열이다: `ws_`, `ses_`, `run_`, `apr_`, `req_`, `evt_`, `sym_`, `cand_`. 클라이언트는 비교만 하고 해석하지 않는다. 포인터는 `securecode://(source|runtime)/…` opaque URI이며 **URL path에 넣지 않는다**(본문으로 전달).
 - 응답의 `RelativePath`는 작업 공간 기준 POSIX 상대경로다. 상위 경로 요소(`..`), 절대경로, 역슬래시, ASCII 제어 문자, 빈 경로 요소를 거절한다. `WorkspaceCreateRequest.root_path`는 입력 전용이다.
 - 시간은 RFC 3339 UTC(`Timestamp`)다.
+- `maxUtf8Bytes`는 문자열을 UTF-8로 인코딩한 바이트 수의 상한이다. 공유 Ajv 검증기와 Python 계약 검증기가 같은 규칙을 사용한다. `maxLength`와 함께 있으면 두 조건을 모두 만족해야 한다.
 
 ### 2.1 오류
 
@@ -40,7 +41,7 @@
 | 실행·승인 | `RUN_ALREADY_ACTIVE` 409(retryable), `IDEMPOTENCY_CONFLICT` 409, `APPROVAL_EXPIRED` 410, `APPROVAL_DIGEST_MISMATCH` 409, `APPROVAL_ALREADY_DECIDED` 409, `PROTECTION_UNAVAILABLE` 503 | 3.2 final |
 | 색인·서비스 | `INDEX_NOT_READY` 409, `SERVICE_UNAVAILABLE` 503, `NOT_IMPLEMENTED` 501, `INTERNAL_ERROR` 500 | 3.2 final |
 
-`NO_MATCH`만 `transport: success_body`다. 검색 응답 200의 `no_match` 객체로 전달하고 오류 응답으로 보내지 않는다.
+`NO_MATCH`만 `transport: success_body`다. HTTP 200에서 심볼 검색은 빈 후보와 `no_match` 객체, 포인터 검색은 빈 `matches` 배열을 보낸다.
 
 ### 2.2 pagination·응답 상한
 
@@ -73,13 +74,16 @@
 | `GET /sessions/:session_id` | → `Session` (`active_run_id`로 재연결) | 501 | 3.5 |
 | `GET /sessions/:id/runs` | `?limit&cursor` → `run#RunListResponse` | 501 | 3.5 |
 | `POST /sessions/:id/runs` | `run#RunCreateRequest` → `RunSnapshot` (201, 재전송 200) | 501 | 3.5 |
-| `GET /runs/:run_id` | → `RunSnapshot` | 501 | 3.5 |
+| `GET /runs/:run_id` | `run#RunSnapshotQuery` (선택 query) → `RunSnapshot` | 501 | 3.5 |
 | `GET /runs/:run_id/events` | SSE `AppEvent` ([EVENTS.md](EVENTS.md)) | 501 | 3.5 |
 | `POST /runs/:run_id/cancel` | → `RunSnapshot` (`cancelling` 또는 이미 종료된 상태) | 501 | 3.5 |
 | `POST /runs/:run_id/approvals/:approval_id` | `approval#ApprovalDecisionRequest` → `ApprovalDecisionResponse` | 501 | 3.5 |
-| `GET /workspaces/:id/pointers`, `POST /workspaces/:id/sources`, `POST /pointers/read`, `POST /pointers/search`, `DELETE /pointers` | 4.2 `contracts/pointers` | 501 | 4.2 계약, 4.3~4.6 서비스, 3.6 route |
-| `POST /context/preview` | 4.2 `contracts/context` (+ `symbols` 후보) | 501 | 4.2/4.8, 3.6 |
-| `POST /pdf/parse`, `GET /pdf/jobs/:job_id` | 4.2 | 501 | 4.9, 3.6 |
+| `GET /workspaces/:id/pointers` | `PointerListQuery` (query) → `PointerListResult` | 501 | 4.2 계약, 3.6 연결 |
+| `POST /workspaces/:id/sources` | `SourceMutationRequest` → `SourceMutationResult` (등록·갱신) | 501 | 4.2 계약, 3.6 연결 |
+| `POST /pointers/read`, `POST /pointers/search` | `PointerReadRequest` → `PointerReadResult`, `PointerSearchRequest` → `PointerSearchResult` | 501 | 4.2 계약, 3.6 연결 |
+| `DELETE /pointers` | `PointerDeleteRequest` (JSON 본문) → `PointerDeleteResult` | 501 | 4.2 계약, 3.6 연결 |
+| `POST /context/preview` | `ContextPreviewRequest` → `ContextPreviewResponse`. `operation`은 `plan/search/bundle` 중 하나 | 501 | 4.2/4.8, 3.6 |
+| `POST /pdf/parse`, `GET /pdf/jobs/:job_id` | 등록된 Source의 `PdfParseRequest` → `PdfJobStatus`, job ID로 같은 상태 DTO 조회 | 501 | 4.9, 3.6 |
 
 실제 route 목록은 `apps/host/src/routes/pendingRoutes.ts`다. 시험이 모든 항목의 501 응답과 `owner_task`를 검증한다. 담당 작업은 해당 항목을 지우고 실제 handler를 등록한다.
 
@@ -108,9 +112,33 @@
 - **세션당 활성 run 1개.** 활성 run이 있을 때 새 run은 `RUN_ALREADY_ACTIVE`(retryable, `details.active_run_id`)다.
 - `RunStatus`: `queued → running ⇄ awaiting_approval → (cancelling) → completed | failed | cancelled`. 종료 3종은 한 번 정해지면 바뀌지 않는다. 취소는 `cancelling`을 거쳐 SDK 확인 뒤 `cancelled`가 된다. SDK `start/send`는 실패해도 대개 resolve하므로(3.1 C-05) 상태는 `finishReason`과 Core status로 정한다.
 - **불변식(3.5가 시험):** `status`가 종료 상태이면 `terminal`은 null이 아니고 `terminal.status`와 같다. 그 외에는 `terminal`이 null이다. `pending_approvals`에는 `status=pending` 항목만 있다.
-- `RunSnapshot`은 UI(1.3/1.4)가 새로고침이나 replay 범위 초과 뒤 그리는 서버 상태 전체다. 진행 상태, 답변(64 KiB까지, 넘으면 `truncated`), 도구 요약(원문 없음, 큰 출력은 `output_pointer`), 대기 승인, 종료 정보, `replay{oldest_sequence,last_sequence}`가 들어 있다. 이벤트는 이 snapshot 위의 증분이다.
+- `RunSnapshot`은 UI(1.3/1.4)가 새로고침이나 replay 범위 초과 뒤 그리는 서버 상태 전체다. 진행 상태, 답변(최대 65,536자, 넘으면 `truncated`), 도구 요약(원문 없음, 큰 출력은 `output_pointer`), 대기 승인, 종료 정보, `replay{oldest_sequence,last_sequence}`가 들어 있다. 이벤트는 이 snapshot 위의 증분이다.
 - **승인:** host broker가 `approval_id`, 입력 digest(`sha256:` + canonical JSON의 sha256), 만료를 만든다(3.1 S-01). 결정 요청의 `input_digest`가 다르면 `APPROVAL_DIGEST_MISMATCH`, 만료면 `APPROVAL_EXPIRED`, 이미 결정·취소·세션 종료면 `APPROVAL_ALREADY_DECIDED`다. `review.reviewable=false`(내용이 16 KiB 검토 상한을 넘음)이면 approve를 거절한다. 자동 승인 기본값은 없다. 프로젝트 도구는 commit/push를 실행하지 않는다.
 - **보호 기능:** `runtime_pointer_hook`, `model_request_gate`, `approval_broker`, `tool_allowlist`, `checkpoint_disabled` 중 하나라도 준비되지 않으면 세션·run 시작을 `PROTECTION_UNAVAILABLE`로 막는다(3.1 S-04). settings의 `protections`에 상태가 보인다.
+
+### 명시 선택과 미리보기 확인
+
+실행과 계획 미리보기는 `ExplicitContextRef`를 받는다. 심볼은 `candidate_id/index_revision`, 포인터는 `kind/pointer/selection`을 전달한다. `selection`은 읽기 결과의 `provenance.selection`을 그대로 복사한다. 표시한 UTF-8 바이트 구간, 원본 해시, revision이 포함되며 PDF는 해당 페이지 번호와 파서 버전도 포함한다. 과거 응답에서 `selection`을 얻을 수 없으면 부분 읽기를 다시 요청한다. 서비스는 인증 범위·revision·해시·반환 범위를 재검사하고, 오래된 자료는 `SOURCE_CHANGED`로 거절한다.
+
+`RunCreateRequest.preview_digest`는 사용자가 확인한 미리보기 결과에 있을 때 그대로 돌려주는 SHA-256 값이다. 선택·질문·이력·예산 설정 등이 바뀌어 해당 계획이 만료되면 `VALIDATION_FAILED`와 `details.reason=stale_preview`로 거절한다. UI는 예전 결과를 폐기하고 새 미리보기를 확인받는다. 미리보기를 거치지 않은 요청도 실행 전 서버에서 권한·자료 버전·예산을 검증한다. 응답 유실 시에는 기존 `idempotency_key`와 처음 보낸 본문으로 같은 실행을 확인한다.
+
+### 재연결 후 출처·승인 이력
+
+`GET /runs/:id`의 첫 응답은 최신 `replay.last_sequence`까지를 담는다. `answer.citations`에는 응답에 사용된 근거만 온다. 심볼 항목의 `ref`와 `location`에는 revision 및 파일·줄·해시가, 포인터 항목의 `ref.selection`에는 읽기에서 확인한 범위가 있다. 클라이언트는 자료를 열기 전에 권한·현재 버전을 다시 확인한다. `approval_history`에는 결정된 요청의 `approval_id,tool_call_id,tool_name,status,decided_at`이 있다. `approved/rejected/expired/cancelled`을 구별하고, 도구 실행 결과는 해당 tool call의 상태로 표시한다.
+
+각 목록에는 `citations_page` 또는 `approval_history_page`가 함께 오며 한 번에 최대 50개다. 새 응답은 목록이 비어도 빈 배열과 종료 페이지를 보낸다. 기존에 저장된 snapshot에 두 필드가 함께 없으면 UI는 “이 기록에서 확인할 수 없음”으로 표시한다. `has_more`가 참이면 같은 run의 GET에 `citation_cursor` 또는 `approval_cursor` 중 하나만 query로 보내 그 목록의 다음 페이지를 읽는다. cursor는 사용자 범위·run·목록 종류·최초 조회 시점의 sequence에 묶이며 당시 순서로만 이어간다. 처음부터 재조회하면 현재 snapshot으로 돌아간다. 특정 목록의 이전 페이지를 열어도 현재 run 상태와 SSE 구독 위치는 되돌리지 않는다. 다른 run·목록의 cursor나 만료된 cursor는 `VALIDATION_FAILED`로 거절한다. UI는 현재 snapshot의 첫 페이지부터 다시 조회한다. [복구 응답 예시](../../contracts/fixtures/api/run-snapshot-recovered-evidence.valid.json)
+
+### 화면에 표시할 설정 한도
+
+인증된 `GET /settings`의 `limits`는 해당 host가 제공하는 실제 적용값이다. 숫자는 양의 정수이며 이름에 단위를 붙인다. 제공하지 않은 값은 “미제공”으로 표시한다. 지원되는 기능은 관련 한도를 모두 반환해야 한다. 미구현 기능을 설계 목표값으로 채우지 않는다.
+
+| 기능 | 한도 키 |
+| --- | --- |
+| 도구 결과 보관·보존 | `runtime_pointer_threshold_bytes`, `runtime_object_max_bytes`, `runtime_session_max_bytes`, `runtime_ttl_seconds` |
+| 미리보기·부분 읽기·승인 | `pointer_preview_bytes`, `pointer_read_max_bytes`, `pointer_read_max_tokens`, `approval_review_max_bytes` |
+| 원본·JSON·PDF | `source_file_max_bytes`, `json_parse_max_bytes`, `pdf_max_bytes`, `pdf_max_pages` |
+
+텍스트 바이트는 UTF-8로 센다. 승인 검토 본문의 최대값은 16,384바이트다. 전체 입력이 더 크면 서버는 UTF-8 경계에서 끊고 `content_truncated=true, reviewable=false`로 반환한다. 승인할 때는 서버가 보낸 전체 도구 입력의 digest를 그대로 돌려준다. 서버는 원래 요청과의 digest 일치, 미만료, 결정 대기, 검토 가능 여부를 함께 확인한다. [설정 응답 예시](../../contracts/fixtures/api/settings-effective-limits.valid.json)
 
 ## 7. 색인·작업 공간 의미
 
@@ -122,4 +150,4 @@
 ## 8. 버전·변경 절차
 
 - 첫 릴리스(3.8) 전까지 `schema_version`은 `"1"`로 유지한다. 그 전의 **추가형 변경**(선택 필드, 새 정의)은 같은 버전에서 하되 fixture·생성 타입·이 문서를 함께 바꾼다. 필드 삭제·의미 변경은 소유자 handoff와 영향 작업 목록을 남긴다. 릴리스 뒤의 호환성 깨짐은 `"2"`로 올린다.
-- 4.2의 포인터·컨텍스트 정의는 `contracts/pointers`와 `contracts/context`에 있다. 포인터의 범위·revision을 고정하는 공개 run 계약 및 관련 구현은 [2.2 보완 인계](../handoffs/2.2-ui-behavior-contract-gaps.md)에 남아 있다.
+- 2.2 인계에 따라 공개 run의 명시적 포인터 선택에는 읽기 결과의 확정 범위가 필요하다. 이전의 pointer-only 참조는 기존 계획을 표시할 때 읽을 수 있다. 새로운 실행을 제출하려면 원문 일부를 다시 읽고 선택한다. 출처·승인 페이지가 없는 이전 snapshot은 기존대로 읽을 수 있다. 화면 명세와 영향 범위는 [2.2 인계](../handoffs/2.2-ui-behavior-contract-gaps.md)에 기록한다.

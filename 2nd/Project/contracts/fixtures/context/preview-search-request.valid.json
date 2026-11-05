@@ -1,0 +1,16 @@
+{
+    "schema_ref": "context/context.schema.json#/definitions/ContextPreviewRequest",
+    "expect": "valid",
+    "scenario": "UI-16",
+    "data": {
+        "operation": "search",
+        "input": {
+            "workspace_id": "ws_01J9Z6Q4TEST",
+            "query": "load_config",
+            "page": {
+                "limit": 10
+            },
+            "index_revision": 3
+        }
+    }
+}

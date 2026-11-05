@@ -1,0 +1,15 @@
+{
+    "schema_ref": "pointers/lifecycle.schema.json#/definitions/PointerListResult",
+    "expect": "valid",
+    "scenario": "UI-18",
+    "data": {
+        "schema_version": "1",
+        "workspace_id": "ws_00000001",
+        "items": [],
+        "page": {
+            "limit": 20,
+            "next_cursor": null,
+            "has_more": false
+        }
+    }
+}

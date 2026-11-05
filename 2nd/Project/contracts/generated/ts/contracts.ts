@@ -111,8 +111,28 @@ export type RunStatus =
 export type TerminalRunStatus = "completed" | "failed" | "cancelled";
 export type CandidateId = string;
 export type ContextRef = SymbolContextRef | PointerContextRef;
+export type ExplicitContextRef = SymbolContextRef | SelectedPointerContextRef;
+export type SelectedPointerContextRef = PointerContextRef & {
+    selection: PointerSelection;
+};
 export type ToolCallPhase =
     "requested" | "awaiting_approval" | "running" | "completed" | "failed" | "rejected" | "cancelled";
+/**
+ * A server-verified input fragment used by the answer. Symbols carry their actual location; pointer references carry only the confirmed exact selection. Contains no raw content.
+ */
+export type AnswerCitation =
+    | {
+          ref: SymbolContextRef;
+          location: SymbolLocation;
+      }
+    | {
+          ref: SelectedPointerContextRef;
+      };
+export type SymbolId = string;
+/**
+ * Common R0 symbol categories across supported languages (roadmap 0.1). A type declaration can include its methods.
+ */
+export type SymbolKind = "function" | "async_function" | "class" | "constant";
 export type SessionStatus = "active" | "closed";
 export type HealthStatus = "ok" | "degraded" | "unavailable";
 export type ComponentStatus = "ok" | "degraded" | "unavailable" | "not_configured" | "not_implemented";
@@ -156,11 +176,22 @@ export type AppEvent =
     | RunPointerCreatedEvent
     | RunContextPlannedEvent
     | StreamReplayUnavailableEvent;
-export type SymbolId = string;
-/**
- * Common R0 symbol categories across supported languages (roadmap 0.1). A type declaration can include its methods.
- */
-export type SymbolKind = "function" | "async_function" | "class" | "constant";
+export type PointerListQuery =
+    | {
+          kind: "source";
+          limit?: PageLimit;
+          cursor?: OpaqueCursor;
+      }
+    | {
+          kind: "runtime";
+          session_id: SessionId;
+          limit?: PageLimit;
+          cursor?: OpaqueCursor;
+      };
+export type PointerListItem = PointerDescriptor & {
+    display_name: PointerDisplayName;
+    supported_selectors: SupportedSelectors;
+};
 export type PointerDescriptor = {
     schema_version: SchemaVersion;
     pointer: PointerUri;
@@ -177,7 +208,188 @@ export type PointerDescriptor = {
     available_operations: ["read" | "search", ...("read" | "search")[]];
     provenance: PointerProvenance;
     expires_at?: Timestamp;
+    display_name?: PointerDisplayName;
+    relative_path?: RelativePath;
+    supported_selectors?: SupportedSelectors;
 };
+export type PointerDisplayName = string;
+export type PointerSelectorKind = "line" | "byte" | "section" | "json_path" | "pdf_page";
+/**
+ * @minItems 0
+ * @maxItems 5
+ */
+export type SupportedSelectors = PointerSelectorKind[];
+export type SourceMutationRequest =
+    | {
+          schema_version: SchemaVersion;
+          idempotency_key: IdempotencyKey;
+          operation: "register";
+          target:
+              | {
+                    location: "workspace";
+                    kind: "file" | "directory";
+                    path: RelativePath;
+                }
+              | {
+                    location: "external";
+                    kind: "file" | "directory";
+                    path: string;
+                };
+      }
+    | {
+          schema_version: SchemaVersion;
+          idempotency_key: IdempotencyKey;
+          operation: "refresh";
+          pointer: SourcePointerUri;
+      };
+export type PointerDeleteRequest =
+    | {
+          schema_version: SchemaVersion;
+          idempotency_key: IdempotencyKey;
+          kind: "source";
+          pointer: SourcePointerUri;
+          workspace_id: WorkspaceId;
+      }
+    | {
+          schema_version: SchemaVersion;
+          idempotency_key: IdempotencyKey;
+          kind: "runtime";
+          pointer: RuntimePointerUri;
+          workspace_id: WorkspaceId;
+          session_id: SessionId;
+      };
+export type PointerDeleteResult =
+    | {
+          schema_version: SchemaVersion;
+          effect: "unregistered";
+          kind: "source";
+          pointer: SourcePointerUri;
+          workspace_id: WorkspaceId;
+      }
+    | {
+          schema_version: SchemaVersion;
+          effect: "runtime_deleted";
+          kind: "runtime";
+          pointer: RuntimePointerUri;
+          workspace_id: WorkspaceId;
+          session_id: SessionId;
+      };
+export type PdfJobStatus =
+    | {
+          schema_version: SchemaVersion;
+          job_id: string;
+          workspace_id: WorkspaceId;
+          pointer: SourcePointerUri;
+          state: "queued" | "running";
+      }
+    | {
+          schema_version: SchemaVersion;
+          job_id: string;
+          workspace_id: WorkspaceId;
+          pointer: SourcePointerUri;
+          state: "ready";
+          content_sha256: Sha256Hex;
+          parser_version: string;
+          page_count: number;
+      }
+    | {
+          schema_version: SchemaVersion;
+          job_id: string;
+          workspace_id: WorkspaceId;
+          pointer: SourcePointerUri;
+          state: "partial";
+          content_sha256: Sha256Hex;
+          parser_version: string;
+          page_count: number;
+          /**
+           * @minItems 1
+           * @maxItems 499
+           */
+          excluded_pages: [
+              {
+                  page: number;
+                  reason: "empty_page" | "scanned_page" | "unreadable_page";
+              },
+              ...{
+                  page: number;
+                  reason: "empty_page" | "scanned_page" | "unreadable_page";
+              }[],
+          ];
+      }
+    | {
+          schema_version: SchemaVersion;
+          job_id: string;
+          workspace_id: WorkspaceId;
+          pointer: SourcePointerUri;
+          state: "unsupported";
+          reason:
+              "scanned_document" | "empty_document" | "encrypted" | "page_limit" | "size_limit" | "unsupported_format";
+      }
+    | {
+          schema_version: SchemaVersion;
+          job_id: string;
+          workspace_id: WorkspaceId;
+          pointer: SourcePointerUri;
+          state: "failed";
+          reason: "damaged" | "timeout" | "parse_failed";
+      }
+    | {
+          schema_version: SchemaVersion;
+          job_id: string;
+          workspace_id: WorkspaceId;
+          pointer: SourcePointerUri;
+          state: "stale";
+          reason: "source_changed" | "parser_changed";
+      };
+export type ContextCandidate = {
+    candidate_id: CandidateId;
+    ref: ContextRef;
+    score: number;
+    explicit: boolean;
+    estimated_tokens: number;
+    origin?: "explicit" | "current_task" | "r0";
+};
+export type ContextOmission = {
+    candidate_id: CandidateId;
+    /**
+     * Reason a whole candidate was omitted. Partial materialization is reported by ContextFragment.inclusion.
+     */
+    reason: "no_match" | "stale" | "unauthorized" | "over_budget" | "duplicate";
+    origin?: "explicit" | "current_task" | "r0";
+    duplicate_of?: CandidateId;
+    ref?: ExplicitContextRef;
+};
+export type ContextPreviewRequest =
+    ContextPlanPreviewRequest | ContextSearchPreviewRequest | ContextBundlePreviewRequest;
+export type ContextPreviewCandidate = ContextCandidate & {
+    origin: "explicit" | "current_task" | "r0";
+};
+export type ContextPreviewFragment = ContextFragment & {
+    provenance: AnswerCitation;
+    inclusion: "full" | "partial_budget" | "partial_size";
+};
+export type ContextPreviewOmission =
+    ContextPreviewDuplicate | ContextPreviewExplicitOmission | ContextPreviewAutomaticOmission;
+export type ContextPreviewDuplicate = ContextOmission & {
+    origin: "explicit" | "current_task" | "r0";
+    reason: "duplicate";
+    duplicate_of: CandidateId;
+    ref: ExplicitContextRef;
+};
+export type ContextPreviewExplicitOmission = ContextOmission & {
+    origin: "explicit";
+    reason: "no_match" | "stale" | "unauthorized" | "over_budget";
+    ref: ExplicitContextRef;
+};
+export type ContextPreviewAutomaticOmission = ContextOmission & {
+    origin: "current_task" | "r0";
+    reason: "no_match" | "stale" | "unauthorized" | "over_budget";
+};
+export type ContextPreviewBudget = ContextBudget & {
+    costs: ContextBudgetCosts;
+};
+export type ContextPreviewResponse =
+    ContextPlanPreviewResponse | ContextSearchPreviewResponse | ContextBundlePreviewResponse;
 
 /**
  * Synthetic root that pulls every contract definition into one generated module.
@@ -234,6 +446,11 @@ export interface ContractsIndex {
     RunSnapshot?: RunSnapshot;
     RunSummary?: RunSummary;
     RunListResponse?: RunListResponse;
+    SelectedPointerContextRef?: SelectedPointerContextRef;
+    ExplicitContextRef?: ExplicitContextRef;
+    RunSnapshotQuery?: RunSnapshotQuery;
+    AnswerCitation?: AnswerCitation;
+    ApprovalOutcome?: ApprovalOutcome;
     SessionStatus?: SessionStatus;
     SessionCreateRequest?: SessionCreateRequest;
     Session?: Session;
@@ -249,6 +466,7 @@ export interface ContractsIndex {
     ProtectionName?: ProtectionName;
     ProtectionState?: ProtectionState;
     SettingsResponse?: SettingsResponse;
+    EffectiveLimits?: EffectiveLimits;
     IndexState?: IndexState;
     SupportedLanguage?: SupportedLanguage;
     WorkspaceCreateRequest?: WorkspaceCreateRequest;
@@ -290,10 +508,21 @@ export interface ContractsIndex {
     SymbolOmission?: SymbolOmission;
     UnresolvedReference?: UnresolvedReference;
     SymbolBundle?: SymbolBundle;
+    PointerListQuery?: PointerListQuery;
+    PointerListItem?: PointerListItem;
+    PointerListResult?: PointerListResult;
+    SourceMutationRequest?: SourceMutationRequest;
+    SourceMutationResult?: SourceMutationResult;
+    PointerDeleteRequest?: PointerDeleteRequest;
+    PointerDeleteResult?: PointerDeleteResult;
+    PdfParseRequest?: PdfParseRequest;
+    PdfJobStatus?: PdfJobStatus;
     PointerProvenance?: PointerProvenance;
     PointerDescriptor?: PointerDescriptor;
     SourceRegistration?: SourceRegistration;
     RuntimePutRequest?: RuntimePutRequest;
+    PointerDisplayName?: PointerDisplayName;
+    PointerSelectorKind?: PointerSelectorKind;
     LineSelector?: LineSelector;
     ByteSelector?: ByteSelector;
     SectionSelector?: SectionSelector;
@@ -302,6 +531,7 @@ export interface ContractsIndex {
     PointerSelector?: LineSelector | ByteSelector | SectionSelector | JsonPathSelector | PdfPageSelector;
     PointerReadRequest?: PointerReadRequest;
     PointerReadResult?: PointerReadResult;
+    PointerSelection?: PointerSelection;
     PointerSearchRequest?: PointerSearchRequest;
     PointerSearchMatch?: PointerSearchMatch;
     PointerSearchResult?: PointerSearchResult;
@@ -309,11 +539,21 @@ export interface ContractsIndex {
     ContextCandidate?: ContextCandidate;
     ContextFragment?: ContextFragment;
     /**
-     * Minimal set defined by 4.2. Task 4.7 may extend it and must update the schema, fixtures and docs/contracts/CONTEXT.md together.
+     * Reason a whole candidate was omitted. Partial materialization is reported by ContextFragment.inclusion.
      */
-    ContextOmissionReason?: "no_match" | "stale" | "unauthorized" | "over_budget";
+    ContextOmissionReason?: "no_match" | "stale" | "unauthorized" | "over_budget" | "duplicate";
     ContextOmission?: ContextOmission;
     ContextPlan?: ContextPlan;
+    ContextBudgetCosts?: ContextBudgetCosts;
+    ContextCandidateOrigin?: "explicit" | "current_task" | "r0";
+    ContextPlanInput?: ContextPlanInput;
+    ContextPreviewRequest?: ContextPreviewRequest;
+    ContextPreviewPlan?: ContextPreviewPlan;
+    ContextPreviewResponse?: ContextPreviewResponse;
+    ContextPreviewCandidate?: ContextPreviewCandidate;
+    ContextPreviewFragment?: ContextPreviewFragment;
+    ContextPreviewBudget?: ContextPreviewBudget;
+    ContextPreviewOmission?: ContextPreviewOmission;
 }
 /**
  * Optional machine-readable hints. Scalars only: no paths, keys, tokens or raw content.
@@ -427,11 +667,29 @@ export interface SymbolContextRef {
     index_revision: IndexRevision;
 }
 /**
- * Boundary to 4.2: range selectors for explicit pointer context are added by 4.2 in contracts/pointers.
+ * Pointer identity for historical or automatically selected metadata. An explicit selection always includes the exact portion returned by read.
  */
 export interface PointerContextRef {
     kind: PointerKind;
     pointer: PointerUri;
+    selection?: PointerSelection;
+}
+export interface PointerSelection {
+    revision: number;
+    content_sha256: Sha256Hex;
+    range:
+        | {
+              type: "byte";
+              start: number;
+              end: number;
+          }
+        | {
+              type: "pdf_page";
+              page: number;
+              start: number;
+              end: number;
+              parser_version: string;
+          };
 }
 /**
  * Same idempotency_key + same body returns the first run (200). Same key with a different body is IDEMPOTENCY_CONFLICT. A second active run is RUN_ALREADY_ACTIVE.
@@ -444,7 +702,8 @@ export interface RunCreateRequest {
      *
      * @maxItems 32
      */
-    context_refs?: ContextRef[];
+    context_refs?: ExplicitContextRef[];
+    preview_digest?: Sha256Hex;
 }
 /**
  * Bounded tool status. Raw tool output never appears here; large output is referenced by output_pointer.
@@ -486,6 +745,11 @@ export interface RunSnapshot {
     answer: {
         text: string;
         truncated: boolean;
+        /**
+         * @maxItems 50
+         */
+        citations?: AnswerCitation[];
+        citations_page?: PageInfo;
     };
     /**
      * @maxItems 50
@@ -497,6 +761,33 @@ export interface RunSnapshot {
      */
     pending_approvals: ApprovalRequest[];
     terminal: RunTerminal | null;
+    /**
+     * @maxItems 50
+     */
+    approval_history?: ApprovalOutcome[];
+    approval_history_page?: PageInfo;
+}
+export interface SymbolLocation {
+    symbol_id: SymbolId;
+    qualname: string;
+    kind: SymbolKind;
+    relative_path: RelativePath;
+    /**
+     * 1-based, includes decorators.
+     */
+    start_line: number;
+    end_line: number;
+    content_sha256: Sha256Hex;
+}
+/**
+ * Final decision at the snapshot sequence. A recorded approval authorizes the tool call; the tool call phase reports execution separately.
+ */
+export interface ApprovalOutcome {
+    approval_id: ApprovalId;
+    tool_call_id: string;
+    tool_name: string;
+    status: "approved" | "rejected" | "expired" | "cancelled";
+    decided_at: Timestamp;
 }
 export interface RunSummary {
     run_id: RunId;
@@ -511,6 +802,13 @@ export interface RunListResponse {
      */
     items: RunSummary[];
     page: PageInfo;
+}
+/**
+ * Supply one cursor to page either final approval decisions or answer citations. Omit both for the current snapshot.
+ */
+export interface RunSnapshotQuery {
+    approval_cursor?: OpaqueCursor;
+    citation_cursor?: OpaqueCursor;
 }
 export interface SessionCreateRequest {
     workspace_id: WorkspaceId;
@@ -612,16 +910,28 @@ export interface SettingsResponse {
          */
         final_request_gate: "enforced" | "not_verified" | "unavailable";
     };
-    /**
-     * Product defaults from roadmap 0.7 (bytes unless named otherwise).
-     */
-    limits: {
-        [k: string]: number | undefined;
-    };
+    limits: EffectiveLimits;
     /**
      * @maxItems 16
      */
     protections: ProtectionState[];
+}
+/**
+ * Effective non-secret numeric caps confirmed by the host. An absent value is unknown on this host. Bytes mean UTF-8 bytes for text. Clients display a value only when its named field is present.
+ */
+export interface EffectiveLimits {
+    runtime_pointer_threshold_bytes?: number;
+    pointer_preview_bytes?: number;
+    pointer_read_max_bytes?: number;
+    pointer_read_max_tokens?: number;
+    approval_review_max_bytes?: number;
+    runtime_object_max_bytes?: number;
+    runtime_session_max_bytes?: number;
+    runtime_ttl_seconds?: number;
+    source_file_max_bytes?: number;
+    json_parse_max_bytes?: number;
+    pdf_max_bytes?: number;
+    pdf_max_pages?: number;
 }
 /**
  * root_path is input only. Responses never echo it.
@@ -837,18 +1147,6 @@ export interface StreamReplayUnavailableEvent {
     timestamp: Timestamp;
     payload: StreamReplayUnavailablePayload;
 }
-export interface SymbolLocation {
-    symbol_id: SymbolId;
-    qualname: string;
-    kind: SymbolKind;
-    relative_path: RelativePath;
-    /**
-     * 1-based, includes decorators.
-     */
-    start_line: number;
-    end_line: number;
-    content_sha256: Sha256Hex;
-}
 export interface SymbolSearchRequest {
     workspace_id: WorkspaceId;
     /**
@@ -949,6 +1247,42 @@ export interface PointerProvenance {
     origin: string;
     truncated_before_storage?: boolean;
 }
+export interface PointerListResult {
+    schema_version: SchemaVersion;
+    workspace_id: WorkspaceId;
+    /**
+     * @minItems 0
+     * @maxItems 100
+     */
+    items: PointerListItem[];
+    page: PageInfo;
+}
+export interface SourceMutationResult {
+    schema_version: SchemaVersion;
+    workspace_id: WorkspaceId;
+    status: "completed" | "partial";
+    /**
+     * @minItems 0
+     * @maxItems 100
+     */
+    items: (PointerListItem & {
+        kind?: "source";
+    })[];
+    /**
+     * @minItems 0
+     * @maxItems 100
+     */
+    issues: {
+        relative_path: RelativePath;
+        code: "FORBIDDEN" | "NOT_FOUND" | "SOURCE_CHANGED" | "PAYLOAD_TOO_LARGE" | "UNSUPPORTED_FORMAT";
+    }[];
+}
+export interface PdfParseRequest {
+    schema_version: SchemaVersion;
+    workspace_id: WorkspaceId;
+    pointer: SourcePointerUri;
+    idempotency_key: IdempotencyKey;
+}
 export interface SourceRegistration {
     schema_version: SchemaVersion;
     source_id: string;
@@ -1012,6 +1346,9 @@ export interface PointerReadResult {
         media_type: string;
         byte_size: number;
         revision: number;
+        selection?: PointerSelection;
+        display_name?: PointerDisplayName;
+        relative_path?: RelativePath;
     };
     truncated: boolean;
     next_cursor?: OpaqueCursor;
@@ -1031,6 +1368,7 @@ export interface PointerSearchMatch {
     line: number;
     content: string;
     byte_offset: number;
+    selection?: PointerSelection;
 }
 export interface PointerSearchResult {
     schema_version: SchemaVersion;
@@ -1048,32 +1386,98 @@ export interface ContextBudget {
     budget_tokens: number;
     used_tokens: number;
     count_mode: CountMode;
+    costs?: ContextBudgetCosts;
 }
-export interface ContextCandidate {
-    candidate_id: CandidateId;
-    ref: ContextRef;
-    score: number;
-    explicit: boolean;
-    estimated_tokens: number;
+export interface ContextBudgetCosts {
+    model_context_limit: number;
+    system_tokens: number;
+    tool_schema_tokens: number;
+    prompt_tokens: number;
+    history_tokens: number;
+    message_overhead_tokens: number;
+    reserved_output_tokens: number;
+    safety_margin_tokens: number;
 }
 export interface ContextFragment {
     candidate_id: CandidateId;
     ref: ContextRef;
     content: string;
     token_count: number;
-}
-export interface ContextOmission {
-    candidate_id: CandidateId;
-    /**
-     * Minimal set defined by 4.2. Task 4.7 may extend it and must update the schema, fixtures and docs/contracts/CONTEXT.md together.
-     */
-    reason: "no_match" | "stale" | "unauthorized" | "over_budget";
+    inclusion?: "full" | "partial_budget" | "partial_size";
+    provenance?: AnswerCitation;
 }
 export interface ContextPlan {
     schema_version: SchemaVersion;
+    /**
+     * @maxItems 64
+     */
     selected: ContextCandidate[];
+    /**
+     * @maxItems 64
+     */
     fragments: ContextFragment[];
+    /**
+     * @maxItems 64
+     */
     omitted: ContextOmission[];
     budget: ContextBudget;
     index_revision?: IndexRevision;
+    preview_digest?: Sha256Hex;
+    omissions_truncated?: boolean;
+}
+export interface ContextPlanInput {
+    workspace_id: WorkspaceId;
+    session_id: SessionId;
+    index_revision: IndexRevision;
+    prompt: string;
+    /**
+     * @maxItems 32
+     */
+    context_refs: ExplicitContextRef[];
+}
+export interface ContextPlanPreviewRequest {
+    operation: "plan";
+    input: ContextPlanInput;
+}
+export interface ContextSearchPreviewRequest {
+    operation: "search";
+    input: SymbolSearchRequest & {
+        query: string;
+        index_revision: IndexRevision;
+    };
+}
+export interface ContextBundlePreviewRequest {
+    operation: "bundle";
+    input: SymbolBundleRequest;
+}
+export interface ContextPreviewPlan {
+    schema_version: SchemaVersion;
+    index_revision: IndexRevision;
+    preview_digest: Sha256Hex;
+    omissions_truncated: boolean;
+    /**
+     * @maxItems 64
+     */
+    selected: ContextPreviewCandidate[];
+    /**
+     * @maxItems 64
+     */
+    fragments: ContextPreviewFragment[];
+    /**
+     * @maxItems 64
+     */
+    omitted: ContextPreviewOmission[];
+    budget: ContextPreviewBudget;
+}
+export interface ContextPlanPreviewResponse {
+    operation: "plan";
+    result: ContextPreviewPlan;
+}
+export interface ContextSearchPreviewResponse {
+    operation: "search";
+    result: SymbolSearchResponse;
+}
+export interface ContextBundlePreviewResponse {
+    operation: "bundle";
+    result: SymbolBundle;
 }

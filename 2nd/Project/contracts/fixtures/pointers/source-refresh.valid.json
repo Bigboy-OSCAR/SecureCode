@@ -1,0 +1,11 @@
+{
+    "schema_ref": "pointers/lifecycle.schema.json#/definitions/SourceMutationRequest",
+    "expect": "valid",
+    "scenario": "UI-24",
+    "data": {
+        "operation": "refresh",
+        "pointer": "securecode://source/ws_00000001/src_01?v=2",
+        "schema_version": "1",
+        "idempotency_key": "refresh-20261105"
+    }
+}

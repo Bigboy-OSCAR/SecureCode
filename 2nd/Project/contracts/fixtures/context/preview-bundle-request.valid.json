@@ -1,0 +1,15 @@
+{
+    "schema_ref": "context/context.schema.json#/definitions/ContextPreviewRequest",
+    "expect": "valid",
+    "scenario": "UI-16",
+    "data": {
+        "operation": "bundle",
+        "input": {
+            "workspace_id": "ws_01J9Z6Q4TEST",
+            "candidate_id": "cand_01J9Z6Q4C001",
+            "index_revision": 3,
+            "max_tokens": 2000,
+            "max_bytes": 16384
+        }
+    }
+}

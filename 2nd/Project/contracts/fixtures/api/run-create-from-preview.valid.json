@@ -1,0 +1,25 @@
+{
+    "schema_ref": "api/run.schema.json#/definitions/RunCreateRequest",
+    "expect": "valid",
+    "scenario": "UI-30",
+    "data": {
+        "prompt": "설정 함수와 로그의 선택 범위를 확인해 주세요.",
+        "context_refs": [
+            {
+                "kind": "source",
+                "pointer": "securecode://source/ws_00000001/src_01?v=2",
+                "selection": {
+                    "revision": 2,
+                    "content_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                    "range": {
+                        "type": "byte",
+                        "start": 0,
+                        "end": 6
+                    }
+                }
+            }
+        ],
+        "preview_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "idempotency_key": "reviewed-source-2-2"
+    }
+}

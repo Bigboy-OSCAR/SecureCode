@@ -1,0 +1,88 @@
+{
+    "schema_ref": "context/context.schema.json#/definitions/ContextPreviewResponse",
+    "expect": "valid",
+    "scenario": "UI-30",
+    "data": {
+        "operation": "plan",
+        "result": {
+            "schema_version": "1",
+            "index_revision": 3,
+            "preview_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "selected": [
+                {
+                    "candidate_id": "cand_00000001",
+                    "ref": {
+                        "kind": "source",
+                        "pointer": "securecode://source/ws_00000001/src_auto01?v=1",
+                        "selection": {
+                            "revision": 1,
+                            "content_sha256": "922560981cd843580733dcc94b9e9eefb52181873c60c247a2422f6540a5dc16",
+                            "range": {
+                                "type": "byte",
+                                "start": 0,
+                                "end": 5
+                            }
+                        }
+                    },
+                    "score": 1,
+                    "explicit": false,
+                    "estimated_tokens": 5,
+                    "origin": "current_task"
+                }
+            ],
+            "fragments": [
+                {
+                    "candidate_id": "cand_00000001",
+                    "ref": {
+                        "kind": "source",
+                        "pointer": "securecode://source/ws_00000001/src_auto01?v=1",
+                        "selection": {
+                            "revision": 1,
+                            "content_sha256": "922560981cd843580733dcc94b9e9eefb52181873c60c247a2422f6540a5dc16",
+                            "range": {
+                                "type": "byte",
+                                "start": 0,
+                                "end": 5
+                            }
+                        }
+                    },
+                    "content": "he",
+                    "token_count": 2,
+                    "inclusion": "partial_budget",
+                    "provenance": {
+                        "ref": {
+                            "kind": "source",
+                            "pointer": "securecode://source/ws_00000001/src_auto01?v=1",
+                            "selection": {
+                                "revision": 1,
+                                "content_sha256": "922560981cd843580733dcc94b9e9eefb52181873c60c247a2422f6540a5dc16",
+                                "range": {
+                                    "type": "byte",
+                                    "start": 0,
+                                    "end": 2
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "omitted": [],
+            "omissions_truncated": false,
+            "budget": {
+                "budget_tokens": 2,
+                "used_tokens": 2,
+                "count_mode": "provider_estimate",
+                "costs": {
+                    "model_context_limit": 128,
+                    "system_tokens": 12,
+                    "tool_schema_tokens": 12,
+                    "prompt_tokens": 8,
+                    "history_tokens": 50,
+                    "message_overhead_tokens": 4,
+                    "reserved_output_tokens": 32,
+                    "safety_margin_tokens": 8
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "schema_ref": "pointers/search.schema.json#/definitions/PointerSearchResult",
+    "expect": "valid",
+    "scenario": "UI-26",
+    "data": {
+        "schema_version": "1",
+        "pointer": "securecode://runtime/ws_00000001/ses_00000001/ptr_01?v=1",
+        "matches": [],
+        "truncated": false,
+        "token_count": 0,
+        "count_mode": "provider_estimate"
+    }
+}

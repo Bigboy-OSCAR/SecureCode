@@ -1,0 +1,81 @@
+{
+    "schema_ref": "api/run.schema.json#/definitions/RunSnapshot",
+    "expect": "invalid",
+    "scenario": "UI-15",
+    "data": {
+        "schema_version": "1",
+        "run_id": "run_01J9Z6Q4TEST",
+        "session_id": "ses_01J9Z6Q4TEST",
+        "workspace_id": "ws_01J9Z6Q4TEST",
+        "status": "completed",
+        "created_at": "2026-11-04T09:00:00Z",
+        "updated_at": "2026-11-04T09:05:00Z",
+        "prompt_preview": "테스트를 실행해 실패 원인을 찾아줘",
+        "replay": {
+            "oldest_sequence": 1,
+            "last_sequence": 7
+        },
+        "answer": {
+            "text": "선택한 로그와 코드 범위를 확인했습니다.",
+            "truncated": false,
+            "citations": [
+                {
+                    "ref": {
+                        "kind": "runtime",
+                        "pointer": "securecode://runtime/ws_01J9Z6Q4TEST/ses_01J9Z6Q4TEST/6f1c2a7e-0d3b-4c55-9b1e-2f3a4b5c6d7e?v=1",
+                        "selection": {
+                            "revision": 1,
+                            "content_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                            "range": {
+                                "type": "byte",
+                                "start": 80,
+                                "end": 96
+                            }
+                        }
+                    }
+                },
+                {
+                    "ref": {
+                        "kind": "symbol",
+                        "candidate_id": "cand_01J9Z6Q4C001",
+                        "index_revision": 3
+                    },
+                    "location": {
+                        "symbol_id": "sym_01J9Z6Q4C001",
+                        "qualname": "load_config",
+                        "kind": "function",
+                        "relative_path": "src/config.py",
+                        "start_line": 14,
+                        "end_line": 19,
+                        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                    }
+                }
+            ],
+            "citations_page": {
+                "limit": 50,
+                "next_cursor": null,
+                "has_more": false
+            }
+        },
+        "tool_calls": [],
+        "pending_approvals": [],
+        "terminal": {
+            "status": "completed",
+            "finished_at": "2026-11-04T09:05:00Z"
+        },
+        "approval_history": [
+            {
+                "approval_id": "apr_01J9Z6Q4TEST",
+                "tool_call_id": "toolu_cmd_1",
+                "tool_name": "run_project_command",
+                "status": "pending",
+                "decided_at": "2026-11-04T09:04:00Z"
+            }
+        ],
+        "approval_history_page": {
+            "limit": 1,
+            "next_cursor": "prior-decisions-in-snapshot-7",
+            "has_more": true
+        }
+    }
+}

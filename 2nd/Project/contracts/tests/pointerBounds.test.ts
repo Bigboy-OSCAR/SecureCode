@@ -1,9 +1,26 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { it } from "node:test";
 import { ContractValidator } from "../src/validator.js";
 import { SCHEMA_REFS } from "../src/schemaRefs.js";
 
 const validator = ContractValidator.load();
+
+for (const [fixture, field, limit] of [
+    ["api/approval-korean-content.valid.json", "content", 16384],
+    ["pointers/pointer-descriptor-source.valid.json", "preview", 512],
+] as const) {
+    it(`checks the UTF-8 boundary of ${field} on multibyte input`, () => {
+        const { schema_ref: schemaRef, data } = JSON.parse(
+            readFileSync(new URL(`../fixtures/${fixture}`, import.meta.url), "utf8"),
+        ) as { schema_ref: string; data: Record<string, unknown> };
+        const atLimit = "한".repeat(Math.floor(limit / 3)) + "a".repeat(limit % 3);
+        assert.equal(Buffer.byteLength(atLimit), limit);
+        assert.ok(validator.validate(schemaRef, { ...data, [field]: atLimit }).valid);
+        assert.equal(validator.validate(schemaRef, { ...data, [field]: atLimit + "a" }).valid, false);
+        assert.equal(validator.validate(schemaRef, { ...data, [field]: "\ud800" }).valid, false);
+    });
+}
 
 it("rejects a 101st search match and a single chunk over the maximum read size", () => {
     const result = {

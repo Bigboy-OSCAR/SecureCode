@@ -1,0 +1,11 @@
+{
+    "schema_ref": "api/run.schema.json#/definitions/AnswerCitation",
+    "expect": "invalid",
+    "scenario": "UI-16",
+    "data": {
+        "ref": {
+            "kind": "runtime",
+            "pointer": "securecode://runtime/ws_01J9Z6Q4TEST/ses_01J9Z6Q4TEST/6f1c2a7e-0d3b-4c55-9b1e-2f3a4b5c6d7e?v=1"
+        }
+    }
+}

@@ -19,6 +19,9 @@
                 },
                 "count_mode": {
                     "$ref": "../common/token-count.schema.json#/definitions/CountMode"
+                },
+                "costs": {
+                    "$ref": "#/definitions/ContextBudgetCosts"
                 }
             }
         },
@@ -44,8 +47,50 @@
                 "estimated_tokens": {
                     "type": "integer",
                     "minimum": 0
+                },
+                "origin": {
+                    "$ref": "#/definitions/ContextCandidateOrigin"
                 }
-            }
+            },
+            "allOf": [
+                {
+                    "if": {
+                        "required": ["origin"],
+                        "properties": {
+                            "origin": {
+                                "const": "explicit"
+                            }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "explicit": {
+                                "const": true
+                            },
+                            "ref": {
+                                "$ref": "../api/run.schema.json#/definitions/ExplicitContextRef"
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "required": ["origin"],
+                        "properties": {
+                            "origin": {
+                                "enum": ["current_task", "r0"]
+                            }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "explicit": {
+                                "const": false
+                            }
+                        }
+                    }
+                }
+            ]
         },
         "ContextFragment": {
             "type": "object",
@@ -59,18 +104,26 @@
                     "$ref": "../api/run.schema.json#/definitions/ContextRef"
                 },
                 "content": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 16384
                 },
                 "token_count": {
                     "type": "integer",
                     "minimum": 0
+                },
+                "inclusion": {
+                    "type": "string",
+                    "enum": ["full", "partial_budget", "partial_size"]
+                },
+                "provenance": {
+                    "$ref": "../api/run.schema.json#/definitions/AnswerCitation"
                 }
             }
         },
         "ContextOmissionReason": {
-            "description": "Minimal set defined by 4.2. Task 4.7 may extend it and must update the schema, fixtures and docs/contracts/CONTEXT.md together.",
+            "description": "Reason a whole candidate was omitted. Partial materialization is reported by ContextFragment.inclusion.",
             "type": "string",
-            "enum": ["no_match", "stale", "unauthorized", "over_budget"]
+            "enum": ["no_match", "stale", "unauthorized", "over_budget", "duplicate"]
         },
         "ContextOmission": {
             "type": "object",
@@ -82,8 +135,47 @@
                 },
                 "reason": {
                     "$ref": "#/definitions/ContextOmissionReason"
+                },
+                "origin": {
+                    "$ref": "#/definitions/ContextCandidateOrigin"
+                },
+                "duplicate_of": {
+                    "$ref": "../symbols/symbol.schema.json#/definitions/CandidateId"
+                },
+                "ref": {
+                    "$ref": "../api/run.schema.json#/definitions/ExplicitContextRef"
                 }
-            }
+            },
+            "if": {
+                "properties": {
+                    "reason": {
+                        "const": "duplicate"
+                    }
+                }
+            },
+            "then": {
+                "required": ["duplicate_of", "ref"]
+            },
+            "else": {
+                "not": {
+                    "required": ["duplicate_of"]
+                }
+            },
+            "allOf": [
+                {
+                    "if": {
+                        "required": ["origin"],
+                        "properties": {
+                            "origin": {
+                                "const": "explicit"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": ["ref"]
+                    }
+                }
+            ]
         },
         "ContextPlan": {
             "type": "object",
@@ -97,27 +189,423 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/ContextCandidate"
-                    }
+                    },
+                    "maxItems": 64
                 },
                 "fragments": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/ContextFragment"
-                    }
+                    },
+                    "maxItems": 64
                 },
                 "omitted": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/ContextOmission"
-                    }
+                    },
+                    "maxItems": 64
                 },
                 "budget": {
                     "$ref": "#/definitions/ContextBudget"
                 },
                 "index_revision": {
                     "$ref": "../common/primitives.schema.json#/definitions/IndexRevision"
+                },
+                "preview_digest": {
+                    "$ref": "../common/primitives.schema.json#/definitions/Sha256Hex"
+                },
+                "omissions_truncated": {
+                    "type": "boolean"
                 }
             }
+        },
+        "ContextBudgetCosts": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "model_context_limit",
+                "system_tokens",
+                "tool_schema_tokens",
+                "prompt_tokens",
+                "history_tokens",
+                "message_overhead_tokens",
+                "reserved_output_tokens",
+                "safety_margin_tokens"
+            ],
+            "properties": {
+                "model_context_limit": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "system_tokens": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "tool_schema_tokens": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "prompt_tokens": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "history_tokens": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "message_overhead_tokens": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "reserved_output_tokens": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "safety_margin_tokens": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            }
+        },
+        "ContextCandidateOrigin": {
+            "type": "string",
+            "enum": ["explicit", "current_task", "r0"]
+        },
+        "ContextPlanInput": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["workspace_id", "session_id", "index_revision", "prompt", "context_refs"],
+            "properties": {
+                "workspace_id": {
+                    "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                },
+                "session_id": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SessionId"
+                },
+                "index_revision": {
+                    "$ref": "../common/primitives.schema.json#/definitions/IndexRevision"
+                },
+                "prompt": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 32000,
+                    "pattern": "\\S"
+                },
+                "context_refs": {
+                    "type": "array",
+                    "maxItems": 32,
+                    "items": {
+                        "$ref": "../api/run.schema.json#/definitions/ExplicitContextRef"
+                    },
+                    "uniqueItems": true
+                }
+            }
+        },
+        "ContextPreviewRequest": {
+            "title": "ContextPreviewRequest",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["operation", "input"],
+                    "properties": {
+                        "operation": {
+                            "type": "string",
+                            "const": "plan"
+                        },
+                        "input": {
+                            "$ref": "#/definitions/ContextPlanInput"
+                        }
+                    },
+                    "title": "ContextPlanPreviewRequest"
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["operation", "input"],
+                    "properties": {
+                        "operation": {
+                            "type": "string",
+                            "const": "search"
+                        },
+                        "input": {
+                            "allOf": [
+                                {
+                                    "$ref": "../symbols/symbol.schema.json#/definitions/SymbolSearchRequest"
+                                },
+                                {
+                                    "type": "object",
+                                    "required": ["query", "index_revision"],
+                                    "properties": {
+                                        "query": {
+                                            "type": "string",
+                                            "pattern": "\\S"
+                                        },
+                                        "index_revision": {
+                                            "$ref": "../common/primitives.schema.json#/definitions/IndexRevision"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "title": "ContextSearchPreviewRequest"
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["operation", "input"],
+                    "properties": {
+                        "operation": {
+                            "type": "string",
+                            "const": "bundle"
+                        },
+                        "input": {
+                            "$ref": "../symbols/symbol.schema.json#/definitions/SymbolBundleRequest"
+                        }
+                    },
+                    "title": "ContextBundlePreviewRequest"
+                }
+            ]
+        },
+        "ContextPreviewPlan": {
+            "title": "ContextPreviewPlan",
+            "type": "object",
+            "properties": {
+                "schema_version": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                },
+                "index_revision": {
+                    "$ref": "../common/primitives.schema.json#/definitions/IndexRevision"
+                },
+                "preview_digest": {
+                    "$ref": "../common/primitives.schema.json#/definitions/Sha256Hex"
+                },
+                "omissions_truncated": {
+                    "type": "boolean"
+                },
+                "selected": {
+                    "type": "array",
+                    "maxItems": 64,
+                    "items": {
+                        "$ref": "#/definitions/ContextPreviewCandidate"
+                    }
+                },
+                "fragments": {
+                    "type": "array",
+                    "maxItems": 64,
+                    "items": {
+                        "$ref": "#/definitions/ContextPreviewFragment"
+                    }
+                },
+                "omitted": {
+                    "type": "array",
+                    "maxItems": 64,
+                    "items": {
+                        "$ref": "#/definitions/ContextPreviewOmission"
+                    }
+                },
+                "budget": {
+                    "$ref": "#/definitions/ContextPreviewBudget"
+                }
+            },
+            "required": [
+                "schema_version",
+                "index_revision",
+                "preview_digest",
+                "omissions_truncated",
+                "selected",
+                "fragments",
+                "omitted",
+                "budget"
+            ],
+            "additionalProperties": false
+        },
+        "ContextPreviewResponse": {
+            "title": "ContextPreviewResponse",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["operation", "result"],
+                    "properties": {
+                        "operation": {
+                            "type": "string",
+                            "const": "plan"
+                        },
+                        "result": {
+                            "$ref": "#/definitions/ContextPreviewPlan"
+                        }
+                    },
+                    "title": "ContextPlanPreviewResponse"
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["operation", "result"],
+                    "properties": {
+                        "operation": {
+                            "type": "string",
+                            "const": "search"
+                        },
+                        "result": {
+                            "$ref": "../symbols/symbol.schema.json#/definitions/SymbolSearchResponse"
+                        }
+                    },
+                    "title": "ContextSearchPreviewResponse"
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["operation", "result"],
+                    "properties": {
+                        "operation": {
+                            "type": "string",
+                            "const": "bundle"
+                        },
+                        "result": {
+                            "$ref": "../symbols/symbol.schema.json#/definitions/SymbolBundle"
+                        }
+                    },
+                    "title": "ContextBundlePreviewResponse"
+                }
+            ]
+        },
+        "ContextPreviewCandidate": {
+            "title": "ContextPreviewCandidate",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ContextCandidate"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "origin": {
+                            "$ref": "#/definitions/ContextCandidateOrigin"
+                        }
+                    },
+                    "required": ["origin"]
+                }
+            ]
+        },
+        "ContextPreviewFragment": {
+            "title": "ContextPreviewFragment",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ContextFragment"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "provenance": {
+                            "$ref": "../api/run.schema.json#/definitions/AnswerCitation"
+                        },
+                        "inclusion": {
+                            "type": "string",
+                            "enum": ["full", "partial_budget", "partial_size"]
+                        }
+                    },
+                    "required": ["provenance", "inclusion"]
+                }
+            ]
+        },
+        "ContextPreviewBudget": {
+            "title": "ContextPreviewBudget",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ContextBudget"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "costs": {
+                            "$ref": "#/definitions/ContextBudgetCosts"
+                        }
+                    },
+                    "required": ["costs"]
+                }
+            ]
+        },
+        "ContextPreviewOmission": {
+            "title": "ContextPreviewOmission",
+            "oneOf": [
+                {
+                    "title": "ContextPreviewDuplicate",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/ContextOmission"
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "origin": {
+                                    "$ref": "#/definitions/ContextCandidateOrigin"
+                                },
+                                "reason": {
+                                    "type": "string",
+                                    "const": "duplicate"
+                                },
+                                "duplicate_of": {
+                                    "$ref": "../symbols/symbol.schema.json#/definitions/CandidateId"
+                                },
+                                "ref": {
+                                    "$ref": "../api/run.schema.json#/definitions/ExplicitContextRef"
+                                }
+                            },
+                            "required": ["origin", "reason", "duplicate_of", "ref"]
+                        }
+                    ]
+                },
+                {
+                    "title": "ContextPreviewExplicitOmission",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/ContextOmission"
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "origin": {
+                                    "type": "string",
+                                    "const": "explicit"
+                                },
+                                "reason": {
+                                    "type": "string",
+                                    "enum": ["no_match", "stale", "unauthorized", "over_budget"]
+                                },
+                                "ref": {
+                                    "$ref": "../api/run.schema.json#/definitions/ExplicitContextRef"
+                                }
+                            },
+                            "required": ["origin", "reason", "ref"]
+                        }
+                    ]
+                },
+                {
+                    "title": "ContextPreviewAutomaticOmission",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/ContextOmission"
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "origin": {
+                                    "type": "string",
+                                    "enum": ["current_task", "r0"]
+                                },
+                                "reason": {
+                                    "type": "string",
+                                    "enum": ["no_match", "stale", "unauthorized", "over_budget"]
+                                }
+                            },
+                            "required": ["origin", "reason"]
+                        }
+                    ]
+                }
+            ]
         }
-    }
+    },
+    "description": "Public UI contracts for POST /api/v1/context/preview and the ContextPlan output shared with selection consumers."
 }

@@ -1,0 +1,15 @@
+{
+    "schema_ref": "pointers/read.schema.json#/definitions/PointerReadRequest",
+    "expect": "invalid",
+    "scenario": "UI-25",
+    "data": {
+        "schema_version": "1",
+        "pointer": "securecode://source/ws_00000001/src_01?v=2",
+        "max_bytes": 128,
+        "max_tokens": 128,
+        "selector": {
+            "type": "json_path",
+            "path": "$.items[*]"
+        }
+    }
+}

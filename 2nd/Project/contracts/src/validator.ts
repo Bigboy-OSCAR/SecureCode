@@ -42,6 +42,14 @@ export class ContractValidator {
     static load(contractsRoot: string = resolveContractsRoot()): ContractValidator {
         const ajv = new Ajv({ allErrors: true, strict: true, strictRequired: false, allowUnionTypes: true });
         addFormats(ajv);
+        ajv.addKeyword({
+            keyword: "maxUtf8Bytes",
+            type: "string",
+            schemaType: "number",
+            metaSchema: { type: "integer", minimum: 0 },
+            validate: (limit: number, value: string) =>
+                value.isWellFormed() && Buffer.byteLength(value, "utf8") <= limit,
+        });
         for (const file of loadSchemaFiles(contractsRoot)) {
             ajv.addSchema(file.schema, `${CONTRACT_BASE_URI}${file.relativePath}`);
         }

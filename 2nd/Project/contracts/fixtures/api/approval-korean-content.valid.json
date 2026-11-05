@@ -1,0 +1,12 @@
+{
+    "schema_ref": "api/approval.schema.json#/definitions/ApprovalReview",
+    "expect": "valid",
+    "scenario": "UI-13",
+    "data": {
+        "kind": "command",
+        "summary": "한글 인자 검토",
+        "content": "테스트 실행",
+        "content_truncated": false,
+        "reviewable": true
+    }
+}

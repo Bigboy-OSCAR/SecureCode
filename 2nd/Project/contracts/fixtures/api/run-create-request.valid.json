@@ -13,7 +13,16 @@
             },
             {
                 "kind": "source",
-                "pointer": "securecode://source/ws_01J9Z6Q4TEST/9a8b7c6d-1e2f-4a5b-8c9d-0e1f2a3b4c5d?v=3"
+                "pointer": "securecode://source/ws_01J9Z6Q4TEST/9a8b7c6d-1e2f-4a5b-8c9d-0e1f2a3b4c5d?v=3",
+                "selection": {
+                    "revision": 3,
+                    "content_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                    "range": {
+                        "type": "byte",
+                        "start": 90,
+                        "end": 102
+                    }
+                }
             }
         ]
     }

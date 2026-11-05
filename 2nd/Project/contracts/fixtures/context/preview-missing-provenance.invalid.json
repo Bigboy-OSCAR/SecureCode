@@ -1,0 +1,210 @@
+{
+    "schema_ref": "context/context.schema.json#/definitions/ContextPreviewResponse",
+    "expect": "invalid",
+    "scenario": "UI-23",
+    "data": {
+        "operation": "plan",
+        "result": {
+            "schema_version": "1",
+            "index_revision": 3,
+            "preview_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "selected": [
+                {
+                    "candidate_id": "cand_00000001",
+                    "ref": {
+                        "kind": "source",
+                        "pointer": "securecode://source/ws_00000001/src_01?v=2",
+                        "selection": {
+                            "revision": 2,
+                            "content_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                            "range": {
+                                "type": "byte",
+                                "start": 0,
+                                "end": 6
+                            }
+                        }
+                    },
+                    "score": 1,
+                    "explicit": true,
+                    "estimated_tokens": 5,
+                    "origin": "explicit"
+                },
+                {
+                    "candidate_id": "cand_00000002",
+                    "ref": {
+                        "kind": "runtime",
+                        "pointer": "securecode://runtime/ws_00000001/ses_00000001/ptr_01?v=1",
+                        "selection": {
+                            "revision": 1,
+                            "content_sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+                            "range": {
+                                "type": "byte",
+                                "start": 0,
+                                "end": 2
+                            }
+                        }
+                    },
+                    "score": 1,
+                    "explicit": false,
+                    "estimated_tokens": 2,
+                    "origin": "current_task"
+                },
+                {
+                    "candidate_id": "cand_00000003",
+                    "ref": {
+                        "kind": "symbol",
+                        "candidate_id": "cand_00000003",
+                        "index_revision": 3
+                    },
+                    "score": 0.8,
+                    "explicit": false,
+                    "estimated_tokens": 8,
+                    "origin": "r0"
+                }
+            ],
+            "fragments": [
+                {
+                    "candidate_id": "cand_00000001",
+                    "ref": {
+                        "kind": "source",
+                        "pointer": "securecode://source/ws_00000001/src_01?v=2",
+                        "selection": {
+                            "revision": 2,
+                            "content_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                            "range": {
+                                "type": "byte",
+                                "start": 0,
+                                "end": 6
+                            }
+                        }
+                    },
+                    "content": "한글",
+                    "token_count": 5,
+                    "inclusion": "full"
+                },
+                {
+                    "candidate_id": "cand_00000002",
+                    "ref": {
+                        "kind": "runtime",
+                        "pointer": "securecode://runtime/ws_00000001/ses_00000001/ptr_01?v=1",
+                        "selection": {
+                            "revision": 1,
+                            "content_sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+                            "range": {
+                                "type": "byte",
+                                "start": 0,
+                                "end": 2
+                            }
+                        }
+                    },
+                    "content": "ok",
+                    "token_count": 2,
+                    "inclusion": "full",
+                    "provenance": {
+                        "ref": {
+                            "kind": "runtime",
+                            "pointer": "securecode://runtime/ws_00000001/ses_00000001/ptr_01?v=1",
+                            "selection": {
+                                "revision": 1,
+                                "content_sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+                                "range": {
+                                    "type": "byte",
+                                    "start": 0,
+                                    "end": 2
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "candidate_id": "cand_00000003",
+                    "ref": {
+                        "kind": "symbol",
+                        "candidate_id": "cand_00000003",
+                        "index_revision": 3
+                    },
+                    "content": "def config(): return 3\n",
+                    "token_count": 8,
+                    "inclusion": "full",
+                    "provenance": {
+                        "ref": {
+                            "kind": "symbol",
+                            "candidate_id": "cand_00000003",
+                            "index_revision": 3
+                        },
+                        "location": {
+                            "symbol_id": "sym_00000003",
+                            "qualname": "config",
+                            "kind": "function",
+                            "relative_path": "src/config.py",
+                            "start_line": 1,
+                            "end_line": 1,
+                            "content_sha256": "905790a1a639a8fba3d323d863d6eaea89869babb0d7d5fb6e43cff897c66d8d"
+                        }
+                    }
+                }
+            ],
+            "omitted": [
+                {
+                    "candidate_id": "cand_00000004",
+                    "origin": "current_task",
+                    "reason": "duplicate",
+                    "ref": {
+                        "kind": "source",
+                        "pointer": "securecode://source/ws_00000001/src_01?v=2",
+                        "selection": {
+                            "revision": 2,
+                            "content_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                            "range": {
+                                "type": "byte",
+                                "start": 0,
+                                "end": 6
+                            }
+                        }
+                    },
+                    "duplicate_of": "cand_00000001"
+                },
+                {
+                    "candidate_id": "cand_00000005",
+                    "origin": "r0",
+                    "reason": "duplicate",
+                    "ref": {
+                        "kind": "source",
+                        "pointer": "securecode://source/ws_00000001/src_01?v=2",
+                        "selection": {
+                            "revision": 2,
+                            "content_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                            "range": {
+                                "type": "byte",
+                                "start": 0,
+                                "end": 6
+                            }
+                        }
+                    },
+                    "duplicate_of": "cand_00000001"
+                },
+                {
+                    "candidate_id": "cand_00000006",
+                    "origin": "r0",
+                    "reason": "over_budget"
+                }
+            ],
+            "omissions_truncated": false,
+            "budget": {
+                "budget_tokens": 15,
+                "used_tokens": 15,
+                "count_mode": "provider_estimate",
+                "costs": {
+                    "model_context_limit": 128,
+                    "system_tokens": 12,
+                    "tool_schema_tokens": 12,
+                    "prompt_tokens": 8,
+                    "history_tokens": 37,
+                    "message_overhead_tokens": 4,
+                    "reserved_output_tokens": 32,
+                    "safety_margin_tokens": 8
+                }
+            }
+        }
+    }
+}

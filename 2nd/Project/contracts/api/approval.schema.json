@@ -22,7 +22,7 @@
             "properties": {
                 "kind": { "$ref": "#/definitions/ApprovalReviewKind" },
                 "summary": { "$ref": "../common/primitives.schema.json#/definitions/ShortText" },
-                "content": { "type": "string", "maxLength": 16384 },
+                "content": { "type": "string", "maxLength": 16384, "maxUtf8Bytes": 16384 },
                 "content_truncated": { "type": "boolean" },
                 "reviewable": { "type": "boolean" },
                 "target_paths": {

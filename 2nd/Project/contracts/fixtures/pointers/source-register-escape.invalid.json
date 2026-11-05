@@ -1,0 +1,15 @@
+{
+    "schema_ref": "pointers/lifecycle.schema.json#/definitions/SourceMutationRequest",
+    "expect": "invalid",
+    "scenario": "UI-19",
+    "data": {
+        "schema_version": "1",
+        "operation": "register",
+        "idempotency_key": "register-20261105",
+        "target": {
+            "location": "workspace",
+            "kind": "file",
+            "path": "../private.txt"
+        }
+    }
+}

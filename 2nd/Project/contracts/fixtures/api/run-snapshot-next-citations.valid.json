@@ -1,0 +1,8 @@
+{
+    "schema_ref": "api/run.schema.json#/definitions/RunSnapshotQuery",
+    "expect": "valid",
+    "scenario": "UI-12",
+    "data": {
+        "citation_cursor": "more-evidence-in-snapshot-812"
+    }
+}

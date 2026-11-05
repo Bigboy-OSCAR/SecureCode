@@ -1,0 +1,30 @@
+{
+    "schema_ref": "pointers/read.schema.json#/definitions/PointerReadResult",
+    "expect": "valid",
+    "scenario": "UI-27",
+    "data": {
+        "schema_version": "1",
+        "pointer": "securecode://source/ws_00000001/src_pdf_01?v=2",
+        "content": "둘째 페이지",
+        "provenance": {
+            "media_type": "application/pdf",
+            "byte_size": 83000,
+            "revision": 2,
+            "display_name": "예시.pdf",
+            "selection": {
+                "revision": 2,
+                "content_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                "range": {
+                    "type": "pdf_page",
+                    "page": 2,
+                    "start": 0,
+                    "end": 16,
+                    "parser_version": "pdf-text-v1"
+                }
+            }
+        },
+        "truncated": false,
+        "token_count": 4,
+        "count_mode": "provider_estimate"
+    }
+}

@@ -71,6 +71,7 @@ data: {"schema_version":"1","event_id":"evt_…","sequence":42,…}
 | 대화 목록 | `GET /sessions/:id/runs` | `RunSummary[]` |
 | run 진행·답변·도구·승인·종료 | `GET /runs/:id` + SSE | `RunSnapshot` + `AppEvent` 증분 |
 | 서비스·보호 기능 상태 | `GET /health`, `GET /settings` | `HealthResponse`, `SettingsResponse.protections` |
+| 재구독 후 답변 출처·승인 결과 | `GET /runs/:id` | `answer.citations/citations_page`, `approval_history/approval_history_page`. 각 목록은 같은 run의 별도 cursor로 끝까지 조회한다. |
 
 UI는 이 값을 자체 상태 머신으로 다시 정의하지 않는다(로드맵 1절). 이전 workspace·session·run의 응답이 현재 화면을 덮어쓰지 않도록 ID를 비교한다.
 

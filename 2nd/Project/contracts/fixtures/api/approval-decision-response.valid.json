@@ -1,7 +1,7 @@
 {
     "schema_ref": "api/approval.schema.json#/definitions/ApprovalDecisionResponse",
     "expect": "valid",
-    "scenario": "UI-11",
+    "scenario": "UI-13",
     "data": {
         "schema_version": "1",
         "approval": {

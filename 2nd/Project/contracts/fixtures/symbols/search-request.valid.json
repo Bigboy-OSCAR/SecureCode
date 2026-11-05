@@ -1,7 +1,7 @@
 {
     "schema_ref": "symbols/symbol.schema.json#/definitions/SymbolSearchRequest",
     "expect": "valid",
-    "scenario": "UI-09",
+    "scenario": "UI-16",
     "data": {
         "workspace_id": "ws_01J9Z6Q4TEST",
         "query": "load_config",

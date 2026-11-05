@@ -1,0 +1,14 @@
+{
+    "schema_ref": "pointers/pdf-job.schema.json#/definitions/PdfJobStatus",
+    "expect": "invalid",
+    "scenario": "UI-27",
+    "data": {
+        "schema_version": "1",
+        "job_id": "pdf_00000001",
+        "workspace_id": "ws_00000001",
+        "pointer": "securecode://source/ws_00000001/src_pdf_01?v=2",
+        "state": "ready",
+        "parser_version": "pdf-text-v1",
+        "page_count": 3
+    }
+}

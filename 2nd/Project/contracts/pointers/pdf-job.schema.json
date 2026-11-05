@@ -1,0 +1,267 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Public PDF job status contracts",
+    "definitions": {
+        "PdfParseRequest": {
+            "title": "PdfParseRequest",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["schema_version", "workspace_id", "pointer", "idempotency_key"],
+            "properties": {
+                "schema_version": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                },
+                "workspace_id": {
+                    "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                },
+                "pointer": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SourcePointerUri"
+                },
+                "idempotency_key": {
+                    "$ref": "../common/primitives.schema.json#/definitions/IdempotencyKey"
+                }
+            }
+        },
+        "PdfJobStatus": {
+            "title": "PdfJobStatus",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["schema_version", "job_id", "workspace_id", "pointer", "state"],
+                    "properties": {
+                        "schema_version": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                        },
+                        "job_id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 72,
+                            "pattern": "^pdf_[A-Za-z0-9-]{8,64}$"
+                        },
+                        "workspace_id": {
+                            "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                        },
+                        "pointer": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SourcePointerUri"
+                        },
+                        "state": {
+                            "type": "string",
+                            "enum": ["queued", "running"]
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                        "schema_version",
+                        "job_id",
+                        "workspace_id",
+                        "pointer",
+                        "state",
+                        "content_sha256",
+                        "parser_version",
+                        "page_count"
+                    ],
+                    "properties": {
+                        "schema_version": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                        },
+                        "job_id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 72,
+                            "pattern": "^pdf_[A-Za-z0-9-]{8,64}$"
+                        },
+                        "workspace_id": {
+                            "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                        },
+                        "pointer": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SourcePointerUri"
+                        },
+                        "state": {
+                            "const": "ready"
+                        },
+                        "content_sha256": {
+                            "$ref": "../common/primitives.schema.json#/definitions/Sha256Hex"
+                        },
+                        "parser_version": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                        },
+                        "page_count": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 500
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                        "schema_version",
+                        "job_id",
+                        "workspace_id",
+                        "pointer",
+                        "state",
+                        "content_sha256",
+                        "parser_version",
+                        "page_count",
+                        "excluded_pages"
+                    ],
+                    "properties": {
+                        "schema_version": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                        },
+                        "job_id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 72,
+                            "pattern": "^pdf_[A-Za-z0-9-]{8,64}$"
+                        },
+                        "workspace_id": {
+                            "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                        },
+                        "pointer": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SourcePointerUri"
+                        },
+                        "state": {
+                            "const": "partial"
+                        },
+                        "content_sha256": {
+                            "$ref": "../common/primitives.schema.json#/definitions/Sha256Hex"
+                        },
+                        "parser_version": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                        },
+                        "page_count": {
+                            "type": "integer",
+                            "minimum": 2,
+                            "maximum": 500
+                        },
+                        "excluded_pages": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": ["page", "reason"],
+                                "properties": {
+                                    "page": {
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "maximum": 500
+                                    },
+                                    "reason": {
+                                        "type": "string",
+                                        "enum": ["empty_page", "scanned_page", "unreadable_page"]
+                                    }
+                                }
+                            },
+                            "minItems": 1,
+                            "maxItems": 499
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["schema_version", "job_id", "workspace_id", "pointer", "state", "reason"],
+                    "properties": {
+                        "schema_version": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                        },
+                        "job_id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 72,
+                            "pattern": "^pdf_[A-Za-z0-9-]{8,64}$"
+                        },
+                        "workspace_id": {
+                            "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                        },
+                        "pointer": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SourcePointerUri"
+                        },
+                        "state": {
+                            "const": "unsupported"
+                        },
+                        "reason": {
+                            "type": "string",
+                            "enum": [
+                                "scanned_document",
+                                "empty_document",
+                                "encrypted",
+                                "page_limit",
+                                "size_limit",
+                                "unsupported_format"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["schema_version", "job_id", "workspace_id", "pointer", "state", "reason"],
+                    "properties": {
+                        "schema_version": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                        },
+                        "job_id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 72,
+                            "pattern": "^pdf_[A-Za-z0-9-]{8,64}$"
+                        },
+                        "workspace_id": {
+                            "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                        },
+                        "pointer": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SourcePointerUri"
+                        },
+                        "state": {
+                            "const": "failed"
+                        },
+                        "reason": {
+                            "type": "string",
+                            "enum": ["damaged", "timeout", "parse_failed"]
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["schema_version", "job_id", "workspace_id", "pointer", "state", "reason"],
+                    "properties": {
+                        "schema_version": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                        },
+                        "job_id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 72,
+                            "pattern": "^pdf_[A-Za-z0-9-]{8,64}$"
+                        },
+                        "workspace_id": {
+                            "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId"
+                        },
+                        "pointer": {
+                            "$ref": "../common/primitives.schema.json#/definitions/SourcePointerUri"
+                        },
+                        "state": {
+                            "const": "stale"
+                        },
+                        "reason": {
+                            "type": "string",
+                            "enum": ["source_changed", "parser_changed"]
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

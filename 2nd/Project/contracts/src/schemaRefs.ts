@@ -10,6 +10,8 @@ export const SCHEMA_REFS = {
     serviceHealthResponse: "api/system.schema.json#/definitions/ServiceHealthResponse",
     settingsResponse: "api/system.schema.json#/definitions/SettingsResponse",
     runSnapshot: "api/run.schema.json#/definitions/RunSnapshot",
+    runSnapshotQuery: "api/run.schema.json#/definitions/RunSnapshotQuery",
+    runCreateRequest: "api/run.schema.json#/definitions/RunCreateRequest",
     appEvent: "events/app-event.schema.json#/definitions/AppEvent",
     symbolSearchRequest: "symbols/symbol.schema.json#/definitions/SymbolSearchRequest",
     symbolSearchResponse: "symbols/symbol.schema.json#/definitions/SymbolSearchResponse",
@@ -22,6 +24,17 @@ export const SCHEMA_REFS = {
     pointerReadResult: "pointers/read.schema.json#/definitions/PointerReadResult",
     pointerSearchRequest: "pointers/search.schema.json#/definitions/PointerSearchRequest",
     pointerSearchResult: "pointers/search.schema.json#/definitions/PointerSearchResult",
+    pointerSelection: "pointers/read.schema.json#/definitions/PointerSelection",
+    pointerListQuery: "pointers/lifecycle.schema.json#/definitions/PointerListQuery",
+    pointerListResult: "pointers/lifecycle.schema.json#/definitions/PointerListResult",
+    sourceMutationRequest: "pointers/lifecycle.schema.json#/definitions/SourceMutationRequest",
+    sourceMutationResult: "pointers/lifecycle.schema.json#/definitions/SourceMutationResult",
+    pointerDeleteRequest: "pointers/lifecycle.schema.json#/definitions/PointerDeleteRequest",
+    pointerDeleteResult: "pointers/lifecycle.schema.json#/definitions/PointerDeleteResult",
+    pdfParseRequest: "pointers/pdf-job.schema.json#/definitions/PdfParseRequest",
+    pdfJobStatus: "pointers/pdf-job.schema.json#/definitions/PdfJobStatus",
+    contextPreviewRequest: "context/context.schema.json#/definitions/ContextPreviewRequest",
+    contextPreviewResponse: "context/context.schema.json#/definitions/ContextPreviewResponse",
 } as const;
 
 export type SchemaRefName = keyof typeof SCHEMA_REFS;

@@ -1,7 +1,7 @@
 {
     "schema_ref": "api/approval.schema.json#/definitions/ApprovalRequest",
     "expect": "valid",
-    "scenario": "UI-12",
+    "scenario": "UI-13",
     "data": {
         "approval_id": "apr_01J9Z6Q4TEST",
         "run_id": "run_01J9Z6Q4TEST",

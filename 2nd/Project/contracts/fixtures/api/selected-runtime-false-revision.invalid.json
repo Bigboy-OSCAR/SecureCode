@@ -1,0 +1,18 @@
+{
+    "schema_ref": "api/run.schema.json#/definitions/SelectedPointerContextRef",
+    "expect": "invalid",
+    "scenario": "UI-24",
+    "data": {
+        "kind": "runtime",
+        "pointer": "securecode://runtime/ws_01J9Z6Q4TEST/ses_01J9Z6Q4TEST/6f1c2a7e-0d3b-4c55-9b1e-2f3a4b5c6d7e?v=1",
+        "selection": {
+            "revision": 2,
+            "content_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "range": {
+                "type": "byte",
+                "start": 80,
+                "end": 96
+            }
+        }
+    }
+}

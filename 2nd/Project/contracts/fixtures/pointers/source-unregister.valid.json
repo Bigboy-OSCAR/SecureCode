@@ -1,0 +1,12 @@
+{
+    "schema_ref": "pointers/lifecycle.schema.json#/definitions/PointerDeleteRequest",
+    "expect": "valid",
+    "scenario": "UI-20",
+    "data": {
+        "schema_version": "1",
+        "kind": "source",
+        "pointer": "securecode://source/ws_00000001/src_01?v=2",
+        "workspace_id": "ws_00000001",
+        "idempotency_key": "delete-request-20261105"
+    }
+}

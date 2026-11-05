@@ -51,9 +51,9 @@
 | 실행 기반 (3.1·3.2) | `npm run dev`로 호스트와 Python 서비스를 기동한다. 토큰 없는 내부 요청은 401이며, 서비스 종료 후 호스트는 `degraded`를 반환한다. `npm run stop`은 해당 실행기가 시작한 두 서버의 종료를 확인한다. | 브라우저 인증, 운영 세션·실행·승인·SSE는 3.5에서 연결한다. |
 | R0 (3.3·3.4) | 다섯 언어의 원문·정적 참조를 담은 로컬 JSON을 생성한다. 변경·이동·삭제 뒤 같은 명령을 다시 실행해 갱신할 수 있다. [3.3 검증 기록](docs/progress/tasks/3.3.md) | 작업 공간별 revision 저장·전환, 서비스의 TF-IDF 검색과 예산 내 원문 묶음 읽기 |
 | 포인터 (4.3~4.6) | 인증된 레거시 Runtime API의 세션 격리·부분 읽기, 실제 SDK 훅의 큰 출력 교체, 메모리 Source 등록부의 파일 변경 감지를 검증했다. | 정식 서비스 API, 운영 SDK·SSE 연결, Source 등록부 영속화와 범위 검색 |
-| UI (1.1·2.2) | 화면 사례 34개를 상세 명세에 연결했다. 잘린 승인 내용을 검토 가능으로 표시하는 조합은 계약에서 거절한다. | 2.2는 범위 선택·자료 관리·PDF·미리보기 등의 공개 계약 보완을 기다리는 `BLOCKED` 상태다. [2.2 인계](docs/handoffs/2.2-ui-behavior-contract-gaps.md) |
+| UI (1.1·2.2) | 9개 화면·34개 사례에 표시 항목과 사용자 조작을 정의했다. 범위 선택, 자료 등록·삭제, PDF, 예산 미리보기, 재연결 시 출처·승인 이력 복구를 공개 계약 예시와 대조했다. [2.2 검증 기록](docs/progress/tasks/2.2.md) | 1.1을 마치면 1.2에서 이 사례로 화면을 구현하고, 1.3에서 사용자 행동을 시험한다. |
 
-이번 검토에서 Python 테스트 206개, 호스트 단위 테스트 47개, TypeScript 계약 테스트 142개, 오프라인 SDK 검사 62개가 통과했다. Python 전체 수치에는 Python 계약 시험이 포함된다. 실제 외부 모델 호출과 이번 변경의 Windows 실행 검증은 후속이며 Windows용 Python 정적 타입 검사는 통과했다. [명령별 검증 상태](docs/architecture/ARCHITECTURE.md#7-개발-명령)
+기반 기능과 다섯 언어 색인을 검토했을 때 Python 테스트 206개, 호스트 단위 테스트 47개, TypeScript 계약 테스트 142개, 오프라인 SDK 검사 62개가 통과했다. Python 전체 수치에는 Python 계약 시험이 포함된다. 실제 외부 모델 호출과 이번 변경의 Windows 실행 검증은 후속이며 Windows용 Python 정적 타입 검사는 통과했다. [명령별 검증 상태](docs/architecture/ARCHITECTURE.md#7-개발-명령)
 
 아래 실험 자료는 최초 설계의 출발점이다. 제품에 이식한 범위와 남은 조건은 해당 작업의 검증 기록에서 확인한다.
 
@@ -218,7 +218,7 @@ Project/
 | `GET /api/v1/workspaces/:id/pointers`, `POST /workspaces/:id/sources`, `POST /pointers/read`, `POST /pointers/search`, `DELETE /pointers` | 임우형 서비스 4.3~4.6, 박준형 공개 route 연결 3.6 |
 | `POST /api/v1/context/preview`, `POST /api/v1/pdf/parse`, `GET /api/v1/pdf/jobs/:id` | 임우형 4.8/4.9, 박준형 route 연결 3.6 |
 
-표의 축약 경로는 모두 `/api/v1` 아래다. 현재 호스트에서 동작하는 공개 경로는 health이며, 계획된 업무 경로는 연결 전까지 501을 반환한다. 포인터 URI를 URL path에 직접 붙이지 않는다. `DELETE /pointers`의 JSON 본문은 pointer와 scope를 가지며 호스트/프록시도 해당 계약을 검증한다. Source 삭제는 **등록 해제와 파생 캐시 삭제**이며 사용자 원본 파일을 삭제하지 않는다. Runtime 삭제는 저장한 실행 결과만 지운다. PDF 작업은 job ID로 상태를 조회하도록 계획했다. job 요청·응답과 지원 상태는 2.2 인계 G-05의 보완 대상이다.
+표의 축약 경로는 모두 `/api/v1` 아래다. 현재 호스트에서 동작하는 공개 경로는 health이며, 계획된 업무 경로는 연결 전까지 501을 반환한다. 포인터 URI를 URL path에 직접 붙이지 않는다. `DELETE /pointers`의 JSON 본문은 pointer와 scope를 가지며 호스트/프록시도 해당 계약을 검증한다. Source 삭제는 **등록 해제와 파생 캐시 삭제**이며 사용자 원본 파일을 삭제하지 않는다. Runtime 삭제는 저장한 실행 결과만 지운다. PDF는 PdfParseRequest로 요청하고 job ID로 PdfJobStatus를 조회한다. 2.2는 대기·처리 중·완료·일부 제외·미지원·실패·원본 변경의 화면 동작을 인계한다. [계약과 예시](docs/handoffs/2.2-ui-behavior-contract-gaps.md)
 
 내부 서비스 포트는 `symbols.build_index/search/read_bundle`, `runtime.put/stat/list/read/search/delete/clear_session`, `source.register/stat/list/read/search/unregister`, `context.select`, `pdf.parse/status/read_pages`, 내부 공용 `tokens.count`로 나눈다. Runtime put/세션 정리 같은 관리 기능을 모델에 모두 공개하지 않는다. 모델에는 필요한 검색/부분 조회 도구만 노출한다. 기본 본문 TokenCounter는 3.2가 실행 가능한 구현으로 제공하고, provider framing을 포함한 최종 요청 검사는 4.8이 확장한다. 따라서 포인터/R0 모듈이 후속 Selector를 기다릴 필요가 없다.
 
@@ -648,7 +648,7 @@ docs/progress/tasks/2.1.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **선행 조건: 김찬우 2.1번 + 박준형 3.2번 + 임우형 4.2번 작업이 모두 완료된 이후에 진행.**
 
-- [ ] **2.2 완료** — 구현/설계·검증·증거 기록 후에만 체크
+- [x] **2.2 완료** — 구현/설계·검증·증거 기록 후에만 체크
 
 **왜 필요한가 / 무엇을 하는가:** 화면마다 어떤 내용을 보여 주고 어떤 조작을 허용할지 명확해야 김민지가 별도 해석 없이 구현할 수 있다. 확정된 API와 오류 정보를 사용자의 관점에서 정리한 상세 설계 문서를 만든다. 내부 상태 구조와 실행 코드는 김민지가 결정한다.
 
@@ -656,13 +656,13 @@ docs/progress/tasks/2.1.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** docs/ui/UI_BEHAVIOR.md; docs/ui/SCREEN_SPEC.md 보완; 화면별 사례와 요구 대응표  
 **검증 기록:** `docs/progress/tasks/2.2.md`
 
-**2026-11-05 진행:** 상세 화면 명세·34개 사례 대응을 작성했으나 필수 API 계약 누락을 확인해 **BLOCKED**로 기록했다. [2.2 계약 보완 인계](docs/handoffs/2.2-ui-behavior-contract-gaps.md)의 범위 선택 전달·자료 등록/삭제·PDF job·preview 입력 등을 소유자가 보완한 뒤 재검증한다. 완료 체크는 `[ ]`로 유지한다.
+**2026-11-05 완료 · 3/3.** 9개 화면과 34개 사례에서 표시 필드·입력·버튼·오류·복구 행동을 대조했다. 한글 원문의 선택 범위가 미리보기와 실행 요청까지 일치하며, PDF 7개 상태와 재연결 후 출처·승인 이력도 공개 계약 예시로 확인했다. 1.2의 화면 구현과 1.3의 행동 시험에 사용할 수 있다. [항목별 검증 기록](docs/progress/tasks/2.2.md#4-acceptance_evidence) · [화면별 사례표](docs/ui/UI_BEHAVIOR_CASES.md) · [계약 보완 인계](docs/handoffs/2.2-ui-behavior-contract-gaps.md)
 
 **완료 조건**
 
-- [ ] 모든 화면에 표시 항목·입력 규칙·버튼 활성 조건·오류 문구·복구 행동이 정의돼 있다.
-- [ ] 3.2/4.2 API·이벤트·오류 필드와 화면 표시의 대응이 맞고 빠진 상황이 없다.
-- [ ] 1.2/1.3이 바로 사용할 문서·사례가 있으며 별도 상태 전이 모델이나 상태 관리 코드를 산출물로 요구하지 않는다.
+- [x] 모든 화면에 표시 항목·입력 규칙·버튼 활성 조건·오류 문구·복구 행동이 정의돼 있다.
+- [x] 3.2/4.2 API·이벤트·오류 필드와 화면 표시의 대응이 맞고 빠진 상황이 없다.
+- [x] 1.2/1.3이 바로 사용할 문서·사례가 있으며 별도 상태 전이 모델이나 상태 관리 코드를 산출물로 요구하지 않는다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 

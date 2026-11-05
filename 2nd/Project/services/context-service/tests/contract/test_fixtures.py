@@ -9,6 +9,28 @@ from support.helpers import CONTRACTS_ROOT, ContractCheck
 FIXTURE_PATHS = sorted((CONTRACTS_ROOT / "fixtures").rglob("*.json"))
 
 
+@pytest.mark.parametrize(
+    ("name", "field", "limit"),
+    [
+        ("api/approval-korean-content.valid.json", "content", 16384),
+        ("pointers/pointer-descriptor-source.valid.json", "preview", 512),
+    ],
+)
+def test_utf8_boundaries(name: str, field: str, limit: int, contract_check: ContractCheck) -> None:
+    """
+    함수 이름: test_utf8_boundaries()
+    기능: 한글 입력의 바이트 경계와 잘못된 유니코드를 검사한다.
+    인자: name, field -> 예시 파일과 필드, limit -> 바이트 상한, contract_check -> 계약 검증기
+    반환값: 없음
+    작성 날짜: 2026/11/05
+    """
+    example = json.loads((CONTRACTS_ROOT / "fixtures" / name).read_text(encoding="utf-8"))
+    at_limit = "한" * (limit // 3) + "a" * (limit % 3)
+    for value, valid in [(at_limit, True), (at_limit + "a", False), ("\ud800", False)]:
+        errors = contract_check(example["schema_ref"], {**example["data"], field: value})
+        assert (not errors) == valid
+
+
 def test_fixture_set_is_not_empty() -> None:
     """
     함수 이름: test_fixture_set_is_not_empty()

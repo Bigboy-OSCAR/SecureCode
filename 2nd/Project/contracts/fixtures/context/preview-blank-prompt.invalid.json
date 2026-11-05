@@ -1,0 +1,15 @@
+{
+    "schema_ref": "context/context.schema.json#/definitions/ContextPreviewRequest",
+    "expect": "invalid",
+    "scenario": "UI-30",
+    "data": {
+        "operation": "plan",
+        "input": {
+            "workspace_id": "ws_00000001",
+            "session_id": "ses_00000001",
+            "index_revision": 3,
+            "prompt": "  ",
+            "context_refs": []
+        }
+    }
+}

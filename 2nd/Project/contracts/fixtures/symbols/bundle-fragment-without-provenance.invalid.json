@@ -1,7 +1,7 @@
 {
     "schema_ref": "symbols/symbol.schema.json#/definitions/SymbolBundle",
     "expect": "invalid",
-    "scenario": "UI-09",
+    "scenario": "UI-16",
     "data": {
         "schema_version": "1",
         "candidate_id": "cand_01J9Z6Q4C001",

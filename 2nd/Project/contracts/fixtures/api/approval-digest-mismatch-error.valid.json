@@ -1,7 +1,7 @@
 {
     "schema_ref": "common/api-error.schema.json#/definitions/ErrorResponse",
     "expect": "valid",
-    "scenario": "UI-12",
+    "scenario": "UI-15",
     "data": {
         "schema_version": "1",
         "error": {
