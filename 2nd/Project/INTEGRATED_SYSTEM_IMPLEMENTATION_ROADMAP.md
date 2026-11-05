@@ -629,6 +629,8 @@ docs/progress/tasks/2.1.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** docs/ui/UI_BEHAVIOR.md; docs/ui/SCREEN_SPEC.md 보완; 화면별 사례와 요구 대응표  
 **검증 기록:** `docs/progress/tasks/2.2.md`
 
+**2026-11-05 진행:** 상세 화면 명세·34개 사례 대응을 작성했으나 필수 API 계약 누락을 확인해 **BLOCKED**로 기록했다. [2.2 계약 보완 인계](docs/handoffs/2.2-ui-behavior-contract-gaps.md)의 범위 선택 전달·자료 등록/삭제·PDF job·preview 입력 등을 소유자가 보완한 뒤 재검증한다. 완료 체크는 `[ ]`로 유지한다.
+
 **완료 조건**
 
 - [ ] 모든 화면에 표시 항목·입력 규칙·버튼 활성 조건·오류 문구·복구 행동이 정의돼 있다.
