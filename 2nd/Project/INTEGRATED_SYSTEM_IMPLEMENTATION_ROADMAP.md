@@ -48,8 +48,8 @@
 
 | 영역 | 확인한 동작 | 남은 인수 작업 |
 |---|---|---|
-| 실행 기반 (3.1·3.2) | `npm run dev`로 호스트와 Python 서비스를 기동한다. 토큰 없는 내부 요청은 401이며, 서비스 종료 후 호스트는 `degraded`를 반환한다. `npm run stop`은 해당 실행기가 시작한 두 서버의 종료를 확인한다. | 브라우저 인증, 운영 세션·실행·승인·SSE는 3.5에서 연결한다. |
-| R0 (3.3·3.4) | 다섯 언어의 원문·정적 참조를 담은 로컬 JSON을 생성한다. 변경·이동·삭제 뒤 같은 명령을 다시 실행해 갱신할 수 있다. [3.3 검증 기록](docs/progress/tasks/3.3.md) | 작업 공간별 revision 저장·전환, 서비스의 TF-IDF 검색과 예산 내 원문 묶음 읽기 |
+| 실행 기반 (3.1·3.2·3.5) | `npm run dev`로 호스트와 Python 서비스를 기동하고 일회용 launch code를 표시한다. 브라우저 cookie 인증, 작업 공간·세션·run·승인·취소·SSE replay를 실제 SDK와 scripted provider로 검증했다. 서비스 종료 후 호스트는 `degraded`를 반환한다. [3.5 검증 기록](docs/progress/tasks/3.5.md) | 운영 세션은 4.4/4.8 hook 연결 전까지 `PROTECTION_UNAVAILABLE`이다. index·pointer route와 live provider smoke는 3.6이 연결한다. |
+| R0 (3.3·3.4) | 다섯 언어의 원문·정적 참조를 로컬 JSON 또는 작업 공간별 revision으로 생성한다. 변경·이동·삭제 뒤 새 revision으로 원자적으로 전환하고, 이전 revision과 바뀐 파일의 원문 요청은 `SOURCE_CHANGED`로 거부한다. [3.3 검증 기록](docs/progress/tasks/3.3.md) | Python `R0SymbolService`의 TF-IDF 검색·예산 내 원문 묶음과 `ready` 전환은 완료했다. [3.4 검증 기록](docs/progress/tasks/3.4.md). 내부 route·host·index API 연결(3.5/3.6)이 남았다. |
 | 포인터 (4.3~4.6) | 인증된 레거시 Runtime API의 세션 격리·부분 읽기, 실제 SDK 훅의 큰 출력 교체, 메모리 Source 등록부의 파일 변경 감지를 검증했다. | 정식 서비스 API, 운영 SDK·SSE 연결, Source 등록부 영속화와 범위 검색 |
 | UI (1.1·2.2) | 9개 화면·34개 사례에 표시 항목과 사용자 조작을 정의했다. 범위 선택, 자료 등록·삭제, PDF, 예산 미리보기, 재연결 시 출처·승인 이력 복구를 공개 계약 예시와 대조했다. [2.2 검증 기록](docs/progress/tasks/2.2.md) | 1.1을 마치면 1.2에서 이 사례로 화면을 구현하고, 1.3에서 사용자 행동을 시험한다. |
 
@@ -868,7 +868,7 @@ docs/progress/tasks/3.2.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **선행 조건: 박준형 3.2번 + 임우형 4.2번 작업이 모두 완료된 이후에 진행.**
 
-- [ ] **3.3 완료** — 구현/설계·검증·증거 기록 후에만 체크
+- [x] **3.3 완료** — 구현/설계·검증·증거 기록 후에만 체크
 
 **왜 필요한가 / 무엇을 하는가:** R0는 질문 전에 원문과 참조 관계를 준비해야 한다. 기존 실험 파서를 제품 모듈로 옮기고 변경된 코드와 오래된 줄 번호가 섞이지 않도록 revision 단위 색인을 만든다.
 
@@ -876,15 +876,15 @@ docs/progress/tasks/3.2.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** services/context-service/src/securecode_context/symbols/{parser,index,graph}; 심볼 fixture/시험  
 **검증 기록:** [3.3 로컬 색인과 혼합 프로젝트 시험](docs/progress/tasks/3.3.md)
 
-**2026-11-05 반영 범위** — 로컬 색인 생성은 `services/context-service`에서 `uv run python -m securecode_context.symbols <프로젝트_경로> --out <색인.json>`으로 실행한다. 심볼 원문과 최대 깊이 3의 정적 참조 묶음은 R0 검색 후보가 된다. 작업 공간별 revision 저장·전환, 서비스 검색 API, 웹 화면과 SDK 연결은 각각 3.3~3.6의 후속 인수 대상이다. 기존 Python 벤치마크의 고정 입력·결과는 재현용으로 보존한다.
+**2026-11-05 반영 범위** — 로컬 색인 생성은 `services/context-service`에서 `uv run python -m securecode_context.symbols <프로젝트_경로> --out <색인.json>`으로 실행한다. 심볼 원문과 최대 깊이 3의 정적 참조 묶음은 R0 검색 후보가 된다. `--store <데이터_경로> --workspace-id <ws_ID>`는 작업 공간별 revision을 만들고 `current.json`으로 원자적으로 전환한다. 검색 벡터 준비 전이므로 revision 상태는 `parsed`다. 서비스 검색 API·`ready` 전환은 3.4, 웹 화면과 SDK 연결은 3.5/3.6의 인수 대상이다. 기존 Python 벤치마크의 고정 입력·결과는 재현용으로 보존한다.
 
 로컬 참조 검증에는 Python의 표준 `src/` 배치와 JavaScript의 `require("./lib.cjs").size` 직접 호출·별칭을 포함한다. 같은 저장소에서도 서로 다른 Python 프로젝트의 동명 심볼은 구분한다. 기존 Python 프로젝트 7개를 다시 색인한 결과, R0 후보 314개의 필드와 순서가 고정 결과와 일치했다.
 
 **완료 조건**
 
-- [ ] 다섯 언어 각각에서 심볼 원문·정적 참조와 출처/hash가 정확하고 파싱 실패가 파일별로 격리된다.
-- [ ] 변경/삭제/이동 시 새 revision으로 원자적으로 전환하고 stale 자료를 정상 반환하지 않는다.
-- [ ] 실험 코드 runtime 의존·요약 생성·전체 index 전송이 없고 3.4 입력 계약이 준비됐다.
+- [x] 다섯 언어 각각에서 심볼 원문·정적 참조와 출처/hash가 정확하고 파싱 실패가 파일별로 격리된다.
+- [x] 변경/삭제/이동 시 새 revision으로 원자적으로 전환하고 stale 자료를 정상 반환하지 않는다.
+- [x] 실험 코드 runtime 의존·요약 생성·전체 index 전송이 없고 3.4 입력 계약이 준비됐다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 
@@ -925,21 +925,21 @@ docs/progress/tasks/3.3.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **선행 조건: 박준형 3.3번 작업이 모두 완료된 이후에 진행.**
 
-- [ ] **3.4 완료** — 구현/설계·검증·증거 기록 후에만 체크
+- [x] **3.4 완료** — 구현/설계·검증·증거 기록 후에만 체크
 
 **왜 필요한가 / 무엇을 하는가:** 전체 주소록을 LLM에게 주지 않으려면 서버가 질문과 관련된 원문을 먼저 선택해야 한다. R0의 원문·참조 묶음 검색을 그대로 살리되 무결과와 중복·크기 제한을 제품 계약으로 드러낸다.
 
 **담당:** 박준형  
 **주요 산출물·수정 범위:** symbols/{retrieval,bundle}; SymbolService 구현; R0 회귀 fixture/시험  
-**검증 기록:** `docs/progress/tasks/3.4.md`
+**검증 기록:** [3.4 TF-IDF 검색과 Symbol Bundle 시험](docs/progress/tasks/3.4.md)
 
-로컬 JSON의 `raw`를 기존 R0 실험 검색기에 넣었을 때 다섯 언어 각각의 식별자 검색에서 해당 심볼이 1위였다. 3.4에서는 같은 입력으로 서비스의 `search`와 `read_bundle`을 검증하고 revision·예산·출처를 함께 확인한다. [선행 시험](docs/progress/tasks/3.3.md)
+**2026-11-05 반영 범위** — Python `R0SymbolService`가 `search`와 `read_bundle`을 제공한다. 기존 실험 Retriever와 상위 10개 순위·점수가 질문 104개에서 일치했다. 색인 빌드가 TF-IDF 벡터까지 준비한 revision만 `ready`로 게시한다. 0점 후보는 반환하지 않고 HTTP 200 NO_MATCH 본문으로 안내한다(실험의 0점 채움과 다름). 내부 HTTP route와 host 연결은 3.6, 작업 공간 루트 등록부는 3.5에서 연결한다. [선행 시험](docs/progress/tasks/3.3.md)
 
 **완료 조건**
 
-- [ ] 다섯 언어에서 원문 atomic/깊이 3 bundle의 TF-IDF 검색과 안정적 순위가 기존 R0 논리를 재현한다.
-- [ ] 관련 원문·출처만 제한된 크기로 반환하고 무결과/큰 후보/중복/stale을 처리한다.
-- [ ] READY는 벡터 준비까지 포함하며 요약·LLM selector·전체 index 전송이 없다.
+- [x] 다섯 언어에서 원문 atomic/깊이 3 bundle의 TF-IDF 검색과 안정적 순위가 기존 R0 논리를 재현한다.
+- [x] 관련 원문·출처만 제한된 크기로 반환하고 무결과/큰 후보/중복/stale을 처리한다.
+- [x] READY는 벡터 준비까지 포함하며 요약·LLM selector·전체 index 전송이 없다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 
@@ -980,19 +980,21 @@ docs/progress/tasks/3.4.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **선행 조건: 박준형 3.2번 + 임우형 4.2번 작업이 모두 완료된 이후에 진행.**
 
-- [ ] **3.5 완료** — 구현/설계·검증·증거 기록 후에만 체크
+- [x] **3.5 완료** — 구현/설계·검증·증거 기록 후에만 체크
 
 **왜 필요한가 / 무엇을 하는가:** 박준형의 LLM 연결 역할에는 SDK를 감싸는 것뿐 아니라 UI가 사용할 실행 수명주기를 제공하는 일도 포함된다. 심볼·포인터 완성을 기다리지 않고 계약 포트를 통해 먼저 실행 가능한 호스트를 만든다.
 
 **담당:** 박준형  
 **주요 산출물·수정 범위:** apps/host/src/{app,routes,cline,context-client,config}; host 계약/통합 시험  
-**검증 기록:** `docs/progress/tasks/3.5.md`
+**검증 기록:** [3.5 SDK host·실행 API 시험](docs/progress/tasks/3.5.md) · [인계](docs/handoffs/3.5-host-api-and-fixtures.md)
+
+**2026-11-05 반영 범위** — host가 설치 `@cline/sdk` ClineCore로 세션·run·승인·취소·SSE를 제공한다. 실제 SDK + scripted provider 시험이 통과했다. 운영 host는 4.4/4.8 hook이 등록될 때까지 세션을 `PROTECTION_UNAVAILABLE`로 거절한다. 시험은 fixture hook만 주입한다. index·pointer·context·PDF route와 live provider smoke는 3.6이 연결한다.
 
 **완료 조건**
 
-- [ ] 실제 SDK host의 실행/스트림/승인/취소와 UI API 계약이 통과한다.
-- [ ] 세션·이벤트·중복 요청·재시작 처리가 정의되고 앱에서 SDK로 직접 결합되지 않는다.
-- [ ] 포인터 hook/예산 포트와 로컬 도구 제한이 작동하며 자동 commit/push/checkpoint가 없다.
+- [x] 실제 SDK host의 실행/스트림/승인/취소와 UI API 계약이 통과한다.
+- [x] 세션·이벤트·중복 요청·재시작 처리가 정의되고 앱에서 SDK로 직접 결합되지 않는다.
+- [x] 포인터 hook/예산 포트와 로컬 도구 제한이 작동하며 자동 commit/push/checkpoint가 없다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 
@@ -1039,7 +1041,9 @@ docs/progress/tasks/3.5.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **담당:** 박준형  
 **주요 산출물·수정 범위:** apps/host/src/app 조립; context-client; routes; cline/tools/plugins; 서비스 API 조립; 통합 fixture  
-**검증 기록:** `docs/progress/tasks/3.6.md`
+**검증 기록:** [3.6 BLOCKED 기록](docs/progress/tasks/3.6.md)
+
+**2026-11-05 상태: BLOCKED** — 선행 4.4·4.6·4.8·4.9가 미완료다(체크 `[ ]`, 증거 파일 없음, Python `context/`·`pdf/` 패키지 없음). provider 키도 없어 live smoke를 할 수 없다. 코드는 바꾸지 않았다. 재개 조건은 검증 기록에 있다.
 
 **완료 조건**
 

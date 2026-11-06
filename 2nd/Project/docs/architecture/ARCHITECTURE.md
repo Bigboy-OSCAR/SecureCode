@@ -14,8 +14,9 @@
 Node host (apps/host, 127.0.0.1:8787)                                │
   app/        서버 조립·수명주기                                      │
   security/   Host·Origin·Sec-Fetch-Site 검사 (3.2), bootstrap cookie (3.5)
-  routes/     /api/v1 (health 구현, 나머지는 501 + owner_task)
-  cline/      SDK 어댑터·plugins·tools·events·permissions (3.5/3.6)
+  routes/     /api/v1 (3.5: auth·settings·workspaces·sessions·runs·approvals·SSE, 3.6 경로는 501 + owner_task)
+              runs/ 상태 머신·이벤트 로그·snapshot·재시작 복구, shared/ 본문 상한·idempotency·페이지
+  cline/      SDK 어댑터·tools·events·permissions (3.5). routes는 SDK 없는 AgentRuntime 포트만 사용
   context-client/ ContextServiceClient (bearer 내부 토큰)
   pointer-hooks/  ToolResultTransformer 구현 (4.4)
         │ http://127.0.0.1:8788  Authorization: Bearer <기동마다 새 토큰>
@@ -25,6 +26,8 @@ Python context-service (services/context-service, FastAPI)
   api/      /internal/v1 (health, tokens/count 구현)
   common/   오류·redaction·tokens(TokenCounter)
   symbols/  R0 (3.3/3.4)   pointers/ runtime·source (4.3~4.6)
+    parser/ graph/ index/  언어별 파서·참조 그래프·revision 저장 (3.3)
+    retrieval/ bundle/     TF-IDF 검색·예산 안 원문 묶음 (3.4)
   context/  선택·예산 (4.7/4.8)   pdf/ (4.9)
 ```
 
@@ -66,9 +69,10 @@ SDK와 독립된 TypeScript 인터페이스다. 구현 담당은 이 시그니�
 | --- | --- | --- | --- |
 | `ContextServiceClient` | `apps/host/src/context-client/ports.ts` | `HttpContextServiceClient` (3.2: health·tokens 구현) | `/internal/v1/*`, 응답은 `ContractValidator`로 검증 |
 | `TokenCounter` | 같은 파일 | context-service `tokens.count` (3.2 구현) | `TokenCountRequest/Result`, 실패 `TOKENIZER_UNAVAILABLE` |
-| `SymbolService` | 같은 파일 (+ Python `symbols/ports.py`) | 3.3/3.4. 지금은 `NOT_IMPLEMENTED`(owner 3.4) | `contracts/symbols` |
+| `SymbolService` | 같은 파일 (+ Python `symbols/ports.py`) | Python `symbols/symbol_service.py`의 `R0SymbolService`(3.4). 내부 HTTP route와 host 연결 전까지 host는 `NOT_IMPLEMENTED`(owner 3.6) | `contracts/symbols` |
 | `PointerService` | 같은 파일 | 4.3~4.6. 지금은 `NOT_IMPLEMENTED`(owner 4.3/4.6) | 연산 이름만 고정. payload는 4.2 `contracts/pointers` |
 | `ToolResultTransformer` | `apps/host/src/cline/adapter/ports.ts` | 4.4 (`pointer-hooks/`) | afterTool `result` 교체. 실패 시 throw |
+| `AgentRuntime` | `apps/host/src/cline/adapter/runtimePort.ts` | `ClineAgentRuntime`(3.5, 설치 `@cline/sdk` ClineCore) | run service가 쓰는 SDK 독립 포트. 시험은 `tests/support/fakeRuntime.ts` |
 | `ModelRequestGate` | 같은 파일 | 4.8 | `ClineCoreOptions.fetch` 최종 gate. `BUDGET_EXCEEDED`/`TOKENIZER_UNAVAILABLE` |
 
 TokenCounter는 Python 한 곳에만 구현한다. TypeScript는 `ContextServiceClient.tokens`로 같은 구현을 재사용하므로, 두 언어가 서로 다른 계수 결과를 내지 않는다. 3.1이 고른 모델(`claude-sonnet-5-5`)에는 공개 로컬 tokenizer가 없다. 그래서 provider `count_tokens`를 호출하고 `count_mode: provider_estimate`로 표시한다. 키가 없으면 `TOKENIZER_UNAVAILABLE`을 돌려주며 길이/4 같은 추정은 하지 않는다. 계수에는 사용자 메시지 1개의 최소 framing이 포함된다(`framing: single_user_message`). 요청 전체의 provider framing과 총 요청 gate는 4.8 범위다.

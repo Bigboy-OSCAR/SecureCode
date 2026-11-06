@@ -9,7 +9,7 @@ from securecode_context.common.tokens import TokenCounter
 
 SERVICE_VERSION = "0.1.0"
 PENDING_COMPONENTS = (
-    ("symbols", "3.4"),
+    ("symbols", "3.6"),
     ("pointers", "4.3"),
     ("context_selector", "4.8"),
     ("pdf", "4.9"),

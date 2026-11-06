@@ -10,12 +10,11 @@ export const PENDING_SUITES: readonly PendingSuite[] = [
     { command: "dev", name: "web UI", ownerTask: "1.1", detail: "UI package pending" },
     { command: "check", name: "UI lint and types", ownerTask: "1.1", detail: "UI package pending" },
     { command: "unit", name: "UI behaviour tests", ownerTask: "1.3", detail: "UI package pending" },
-    { command: "integration", name: "SDK session/run/approval/SSE", ownerTask: "3.5", detail: "host run API pending" },
     {
         command: "integration",
         name: "R0 workspace search/bundle",
-        ownerTask: "3.3/3.4",
-        detail: "local index available; service integration pending",
+        ownerTask: "3.6",
+        detail: "Python R0SymbolService ready (3.4); host route connection pending",
     },
     {
         command: "integration",
@@ -31,7 +30,7 @@ export const PENDING_SUITES: readonly PendingSuite[] = [
     },
     { command: "integration", name: "PDF parse/read", ownerTask: "4.9", detail: "PDF service pending" },
     { command: "e2e", name: "UI end-to-end flows", ownerTask: "1.6", detail: "browser workflow pending" },
-    { command: "live", name: "SDK run against provider", ownerTask: "3.6", detail: "host run API pending" },
+    { command: "live", name: "SDK run against provider", ownerTask: "3.6", detail: "live provider smoke pending" },
     { command: "build", name: "UI production build", ownerTask: "1.1", detail: "UI package pending" },
     { command: "build", name: "local packaging", ownerTask: "3.7", detail: "distribution pending" },
 ];

@@ -57,27 +57,27 @@
 
 ## 3. 공개 API (`/api/v1`)
 
-상태: **구현** = 3.2에서 동작, **501** = 계약 확정·route 등록, 지금은 `NOT_IMPLEMENTED`와 `details.owner_task` 반환.
+상태: **구현** = 동작(3.2 health, 3.5 실행 API), **501** = 계약 확정·route 등록, 지금은 `NOT_IMPLEMENTED`와 `details.owner_task` 반환. health·bootstrap 외 모든 경로(501 포함)는 bootstrap cookie가 필요하며 없으면 `UNAUTHENTICATED`(401)다.
 
 | Method·Path | 요청 → 응답 스키마 | 상태 | 담당 |
 | --- | --- | --- | --- |
 | `GET /health` | → `system#HealthResponse` (bootstrap 전에는 `schema_version,status`만) | **구현** | 3.2 |
-| `POST /auth/bootstrap` | `system#BootstrapRequest` → `BootstrapResponse` + `Set-Cookie` (HttpOnly, SameSite=Strict, Path=/api) | 501 | 3.5 |
-| `GET /settings` | → `system#SettingsResponse` (키 없음, `configured`만) | 501 | 3.5 |
-| `GET /workspaces` | `?limit&cursor` → `workspace#WorkspaceListResponse` | 501 | 3.5 (H-02 목록 복구용, 3.2 추가) |
-| `POST /workspaces` | `WorkspaceCreateRequest` → `Workspace` | 501 | 3.5 |
-| `GET /workspaces/:workspace_id` | → `Workspace` | 501 | 3.5 |
+| `POST /auth/bootstrap` | `system#BootstrapRequest` → `BootstrapResponse` + `Set-Cookie` (HttpOnly, SameSite=Strict, Path=/api) | **구현** | 3.5 |
+| `GET /settings` | → `system#SettingsResponse` (키 없음, `configured`만) | **구현** | 3.5 |
+| `GET /workspaces` | `?limit&cursor` → `workspace#WorkspaceListResponse` | **구현** | 3.5 (H-02 목록 복구용, 3.2 추가) |
+| `POST /workspaces` | `WorkspaceCreateRequest` → `Workspace` | **구현** | 3.5 |
+| `GET /workspaces/:workspace_id` | → `Workspace` | **구현** | 3.5 |
 | `POST /workspaces/:id/index` | `IndexRequest` → `IndexStatusResponse` (202) | 501 | 3.6 (+3.3) |
 | `GET /workspaces/:id/index` | → `IndexStatusResponse` | 501 | 3.6 |
-| `GET /workspaces/:id/sessions` | `?limit&cursor` → `session#SessionListResponse` | 501 | 3.5 (H-04 세션 복구용, 3.2 추가) |
-| `POST /sessions` | `SessionCreateRequest` → `Session` | 501 | 3.5 |
-| `GET /sessions/:session_id` | → `Session` (`active_run_id`로 재연결) | 501 | 3.5 |
-| `GET /sessions/:id/runs` | `?limit&cursor` → `run#RunListResponse` | 501 | 3.5 |
-| `POST /sessions/:id/runs` | `run#RunCreateRequest` → `RunSnapshot` (201, 재전송 200) | 501 | 3.5 |
-| `GET /runs/:run_id` | `run#RunSnapshotQuery` (선택 query) → `RunSnapshot` | 501 | 3.5 |
-| `GET /runs/:run_id/events` | SSE `AppEvent` ([EVENTS.md](EVENTS.md)) | 501 | 3.5 |
-| `POST /runs/:run_id/cancel` | → `RunSnapshot` (`cancelling` 또는 이미 종료된 상태) | 501 | 3.5 |
-| `POST /runs/:run_id/approvals/:approval_id` | `approval#ApprovalDecisionRequest` → `ApprovalDecisionResponse` | 501 | 3.5 |
+| `GET /workspaces/:id/sessions` | `?limit&cursor` → `session#SessionListResponse` | **구현** | 3.5 (H-04 세션 복구용, 3.2 추가) |
+| `POST /sessions` | `SessionCreateRequest` → `Session` | **구현** | 3.5 |
+| `GET /sessions/:session_id` | → `Session` (`active_run_id`로 재연결) | **구현** | 3.5 |
+| `GET /sessions/:id/runs` | `?limit&cursor` → `run#RunListResponse` | **구현** | 3.5 |
+| `POST /sessions/:id/runs` | `run#RunCreateRequest` → `RunSnapshot` (201, 재전송 200) | **구현** | 3.5 |
+| `GET /runs/:run_id` | `run#RunSnapshotQuery` (선택 query) → `RunSnapshot` | **구현** | 3.5 |
+| `GET /runs/:run_id/events` | SSE `AppEvent` ([EVENTS.md](EVENTS.md)) | **구현** | 3.5 |
+| `POST /runs/:run_id/cancel` | → `RunSnapshot` (`cancelling` 또는 이미 종료된 상태) | **구현** | 3.5 |
+| `POST /runs/:run_id/approvals/:approval_id` | `approval#ApprovalDecisionRequest` → `ApprovalDecisionResponse` | **구현** | 3.5 |
 | `GET /workspaces/:id/pointers` | `PointerListQuery` (query) → `PointerListResult` | 501 | 4.2 계약, 3.6 연결 |
 | `POST /workspaces/:id/sources` | `SourceMutationRequest` → `SourceMutationResult` (등록·갱신) | 501 | 4.2 계약, 3.6 연결 |
 | `POST /pointers/read`, `POST /pointers/search` | `PointerReadRequest` → `PointerReadResult`, `PointerSearchRequest` → `PointerSearchResult` | 501 | 4.2 계약, 3.6 연결 |
@@ -86,6 +86,16 @@
 | `POST /pdf/parse`, `GET /pdf/jobs/:job_id` | 등록된 Source의 `PdfParseRequest` → `PdfJobStatus`, job ID로 같은 상태 DTO 조회 | 501 | 4.9, 3.6 |
 
 실제 route 목록은 `apps/host/src/routes/pendingRoutes.ts`다. 시험이 모든 항목의 501 응답과 `owner_task`를 검증한다. 담당 작업은 해당 항목을 지우고 실제 handler를 등록한다.
+
+### 3.5 구현 세부
+
+- **bootstrap:** launcher(`npm run dev`)가 시작마다 일회용 코드를 만들어 host에 넘기고 로컬 터미널에만 표시한다. 코드는 10분 유효하며 한 번만 교환된다. 20회 틀리면 잠긴다(`RATE_LIMITED`). 성공하면 `Set-Cookie: securecode_session=…; HttpOnly; SameSite=Strict; Path=/api; Max-Age=43200`이다. 세션 토큰은 host 메모리에만 있으므로 host를 다시 시작하면 다시 bootstrap한다.
+- **개발 proxy:** UI(1.1)는 `scripts/dev/viteProxy.ts`의 `createViteApiProxy()`를 Vite `server.proxy`로 쓴다. Host 헤더는 host 주소로 바뀌고 브라우저 Origin(UI 개발 origin, host가 허용)은 유지되어 cookie와 SSE가 same-origin으로 동작한다.
+- **본문 상한:** JSON 본문은 64 KiB(run 생성은 256 KiB)를 넘으면 `PAYLOAD_TOO_LARGE`, JSON이 아니거나 계약과 다르면 `VALIDATION_FAILED`다.
+- **작업 공간:** `root_path`는 존재하는 절대 디렉터리여야 하고 링크·정션·파일시스템 최상위는 거절한다(`FORBIDDEN`, `details.reason`). `SECURECODE_ALLOWED_WORKSPACE_ROOTS`가 있으면 그 아래만 허용한다. 같은 실제 경로를 다시 등록하면 처음 workspace를 돌려준다. `index_status`는 3.6이 색인 API를 연결하기 전까지 `not_indexed`다.
+- **명시 컨텍스트:** `RunCreateRequest.context_refs`·`preview_digest`가 있으면 3.6 연결 전까지 `NOT_IMPLEMENTED`(`owner_task=3.6`)로 거절한다. 조용히 무시하지 않는다.
+- **도구:** 모델은 `read_file`·`list_files`(자동 승인), `write_file`·`run_command`(사용자 승인)만 본다. 경로는 작업 공간 밖·링크·`.git`·`.securecode`를 거절한다. `git commit/push/rebase/reset/merge/tag/am/cherry-pick`은 승인 요청 없이 거절한다.
+- **재시작:** host가 멈출 때 끝나지 않은 run은 다음 시작에서 `failed`(`reason_code=SERVICE_UNAVAILABLE`)가 된다. 세션의 `active_run_id`는 비워진다. idempotency 키는 디스크에 24시간 보존된다. 이전 SDK 대화 이력은 이어지지 않고 다음 run은 새 SDK 세션으로 시작한다.
 
 ## 4. 내부 API (`/internal/v1`, context-service)
 

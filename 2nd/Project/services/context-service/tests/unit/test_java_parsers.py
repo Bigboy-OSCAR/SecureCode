@@ -7,9 +7,9 @@ import tree_sitter_javascript
 from tree_sitter import Language, Parser
 
 from securecode_context.symbols.index import build_index
-from securecode_context.symbols.java import parse_java
-from securecode_context.symbols.javascript import parse_javascript
-from securecode_context.symbols.model import Declaration
+from securecode_context.symbols.parser.java import parse_java
+from securecode_context.symbols.parser.javascript import parse_javascript
+from securecode_context.symbols.parser.model import Declaration
 
 
 def _parse_js(path: str, text: str) -> dict[str, Declaration]:

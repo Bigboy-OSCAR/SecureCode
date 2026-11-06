@@ -23,7 +23,8 @@ try {
         onOutput: (source, chunk) => process.stdout.write(`[${source}] ${chunk}`),
     });
     console.log(
-        `SecureCode host: ${services.hostUrl}/api/v1/health. Web UI and bootstrap are pending. Ctrl+C or npm run stop to stop.`,
+        `SecureCode host: ${services.hostUrl}/api/v1/health. Launch code (single use, 10 min): ${services.bootstrapCode}. ` +
+            "Web UI is pending (1.1). Ctrl+C or npm run stop to stop.",
     );
     if (!controller.signal.aborted) {
         for (const child of [services.host, services.service]) {

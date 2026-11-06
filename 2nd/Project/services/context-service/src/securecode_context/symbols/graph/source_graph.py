@@ -4,7 +4,7 @@ from collections import Counter, defaultdict, deque
 from typing import NotRequired, TypedDict
 from urllib.parse import quote
 
-from .model import Declaration, Reference
+from ..parser.model import Declaration, Reference
 
 MAX_CANDIDATE_BYTES = 1024 * 1024
 MAX_FILE_FRAGMENT_BYTES = 16 * 1024 * 1024
@@ -164,17 +164,48 @@ class SourceGraph:
         반환값: 없음
         작성 날짜: 2026/11/05
         """
+        resolved: dict[str, set[str]] = {}
+        ambiguous: dict[str, list[tuple[str, set[str]]]] = {}
         for uri, references in self.references.items():
-            deps: set[str] = set()
-            unresolved: set[str] = set()
+            resolved[uri] = set()
+            ambiguous[uri] = []
             for ref in references:
                 matches = {target for key in ref.keys for target in self.keys.get(key, ())}
                 if len(matches) == 1:
-                    deps.update(matches)
+                    resolved[uri].update(matches)
                 else:
-                    unresolved.add(ref.name)
-            self.nodes[uri]["deps"] = sorted(deps - {uri})
+                    ambiguous[uri].append((ref.name, matches))
+        for uri, pending in ambiguous.items():
+            unresolved: set[str] = set()
+            for name, matches in pending:
+                target = self._same_function(matches, resolved)
+                if target is None:
+                    unresolved.add(name)
+                else:
+                    resolved[uri].add(target)
+            self.nodes[uri]["deps"] = sorted(resolved[uri] - {uri})
             self.nodes[uri]["unresolved_reference"] = sorted(unresolved)
+
+    def _same_function(self, matches: set[str], resolved: dict[str, set[str]]) -> str | None:
+        """
+        함수 이름: _same_function()
+        기능: C/C++ 후보가 헤더 원형과 그 원형이 유일하게 가리키는 구현뿐이면 구현 하나로 확정한다.
+            구현 파일이 자기 헤더를 포함하고 같은 함수를 부를 때만 해당하며 그 외 모호성은 유지한다.
+        인자: matches -> 같은 참조의 후보 집합, resolved -> 1차로 확정된 참조
+        반환값: 확정된 구현 심볼 ID, 아니면 None
+        작성 날짜: 2026/11/05
+        """
+        if len(matches) != 2:
+            return None
+        nodes = [self.nodes[target] for target in sorted(matches)]
+        if any(
+            node["language"] not in {"c", "cpp"} or node["kind"] != "function" for node in nodes
+        ):
+            return None
+        for prototype, implementation in ((nodes[0], nodes[1]), (nodes[1], nodes[0])):
+            if resolved.get(prototype["id"]) == {implementation["id"]}:
+                return implementation["id"]
+        return None
 
 
 def raw_candidates(nodes: dict[str, SourceNode]) -> list[RawCandidate]:

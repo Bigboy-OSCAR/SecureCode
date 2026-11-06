@@ -20,6 +20,8 @@ export interface Services {
     hostUrl: string;
     serviceUrl: string;
     internalToken: string;
+    /** One-time browser launch code (POST /api/v1/auth/bootstrap); shown on the local terminal only. */
+    bootstrapCode: string;
     stopService(): Promise<void>;
     stopAll(): Promise<void>;
 }
@@ -100,9 +102,11 @@ export async function startServices(options: StartOptions): Promise<Services> {
         throw new Error("context-service environment missing: run uv sync --frozen in services/context-service");
     mkdirSync(join(dataDir, "run"), { recursive: true, mode: 0o700 });
     const internalToken = randomBytes(32).toString("hex");
+    const bootstrapCode = randomBytes(18).toString("base64url").replaceAll("_", "-");
     const env = {
         ...process.env,
         SECURECODE_INTERNAL_TOKEN: internalToken,
+        SECURECODE_BOOTSTRAP_CODE: bootstrapCode,
         SECURECODE_DATA_DIR: dataDir,
         SECURECODE_CONTEXT_SERVICE_HOST: "127.0.0.1",
         SECURECODE_HOST_PORT: String(hostPort),
@@ -140,6 +144,7 @@ export async function startServices(options: StartOptions): Promise<Services> {
                         host: host.child,
                         service: service.child,
                         internalToken,
+                        bootstrapCode,
                         hostUrl,
                         serviceUrl,
                         stopAll,

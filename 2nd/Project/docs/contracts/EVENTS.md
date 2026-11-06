@@ -88,3 +88,11 @@ UI는 이 값을 자체 상태 머신으로 다시 정의하지 않는다(로드
 | beforeModel/fetch gate 결과 | `run.context_planned` |
 | `finishReason=completed` / `error` / `aborted` + Core `completed`/`cancelled` | `run.status_changed{completed|failed|cancelled, terminal}` |
 | `session_snapshot`, `ended`, 기타 | 내부 상태 갱신에만 쓰고 전달하지 않음 |
+
+**3.5 구현 확인 (설치 0.2.0 실측):**
+
+- 답변 텍스트는 `agent_event`의 `content_start(contentType=text).text` 조각으로 온다. `iteration_start`마다 `message_id`가 바뀐다(`<run_id>-m<n>`).
+- 도구는 `content_start/content_end(contentType=tool)`의 `toolCallId`·`toolName`·`error`만 쓴다. `content_end.output`은 읽지 않는다. summary는 도구 이름·상태·바이트 수다.
+- 승인 대기 중 Core status는 `pending`이지만 상태는 broker 요청으로 정한다. Core status 값은 상태 전이에 쓰지 않는다.
+- 취소는 `run.status_changed{cancelling}` 뒤 SDK abort를 먼저 걸고 대기 승인을 `cancelled`로 정리한다. 취소 요청 뒤 SDK가 턴을 끝내도 종료 상태는 `cancelled`다.
+- 늦은 SDK 사실은 종료 뒤 버린다. 종료 뒤 로그는 닫히고 10분 뒤 replay 버퍼가 비워진다. 재시작한 host에는 이전 run의 이벤트가 없으므로 `Last-Event-ID < last_sequence`이면 `stream.replay_unavailable`을 보낸 뒤 스트림을 닫는다.

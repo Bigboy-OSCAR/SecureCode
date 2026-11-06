@@ -2,7 +2,8 @@
  * HTTP implementation of ContextServiceClient over authenticated loopback.
  * Every response is validated against the contract schema before use.
  * Symbol and pointer operations report NOT_IMPLEMENTED until their owners
- * (3.3/3.4, 4.3-4.6) add the service routes; they never return fake data.
+ * (3.6 for symbols: the Python R0SymbolService exists since 3.4; 4.3-4.6 for pointers)
+ * add the service routes; they never return fake data.
  */
 import {
     SCHEMA_REFS,
@@ -44,8 +45,8 @@ export class HttpContextServiceClient implements ContextServiceClient {
         this.options = options;
         this.tokens = { count: (text, signal) => this.countTokens(text, signal) };
         this.symbols = {
-            search: pendingOperation("symbols.search", "3.4"),
-            readBundle: pendingOperation("symbols.read_bundle", "3.4"),
+            search: pendingOperation("symbols.search", "3.6"),
+            readBundle: pendingOperation("symbols.read_bundle", "3.6"),
         };
         this.pointers = {
             stat: pendingOperation("pointers.stat", "4.3"),

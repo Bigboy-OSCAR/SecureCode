@@ -163,7 +163,7 @@ describe("HttpContextServiceClient", () => {
     it("reports NOT_IMPLEMENTED with the owner task for symbol and pointer ports", async () => {
         await assert.rejects(
             client.symbols.search({ workspace_id: "ws_0123456789", query: "x" }),
-            (error: unknown) => error instanceof ContextServiceError && error.details?.owner_task === "3.4",
+            (error: unknown) => error instanceof ContextServiceError && error.details?.owner_task === "3.6",
         );
         await assert.rejects(
             client.pointers.read({}),
