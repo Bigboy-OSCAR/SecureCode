@@ -1,149 +1,240 @@
-"""메모리 기반 세션별 Runtime Pointer 저장소."""
+"""Runtime Pointer 저장소.
 
-import time
+작성일: 2026-11-06
+"""
+
+import sqlite3
+import threading
 import uuid
-from dataclasses import dataclass
-from threading import RLock
+from datetime import UTC, datetime, timedelta
+from pathlib import Path
+from typing import Any
 
-from securecode_context.pointers.limits import (
-    DEFAULT_TTL_SECONDS,
-    MAX_READ_BYTES,
-    check_read_limit,
-    check_ttl,
-    utf8_prefix,
+from ..models.runtime import (
+    InvalidSelector,
+    PointerExpired,
+    PointerNotFound,
+    QuotaExceeded,
+    ReadResult,
+    RuntimeDescriptor,
+    RuntimePut,
+    ScopeForbidden,
 )
+from .blob import BlobStore
+from .search import search_blob
+
+MAX_OBJECT_BYTES = 32 * 1024 * 1024
+MAX_SESSION_BYTES = 128 * 1024 * 1024
+MAX_PREVIEW_BYTES = 512
 
 
-@dataclass(frozen=True)
-class RuntimeItem:
-    """클래스 이름: RuntimeItem
-    기능: 한 세션에서 생성한 원문과 수명 정보를 담는다.
-    작성 날짜: 2026/11/05
-    """
-
-    content: str
-    workspace_id: str
-    session_id: str
-    created_at: float
-    expires_at: float
+def _utc_now() -> datetime:
+    return datetime.now(UTC)
 
 
 class RuntimeStore:
-    """클래스 이름: RuntimeStore
-    기능: 작업 공간·세션 권한을 확인한 뒤 런타임 결과를 읽고 정리한다.
-    작성 날짜: 2026/11/05
-    """
+    def __init__(self, root: Path) -> None:
+        self._root = root
+        self._db_path = root / "runtime.sqlite3"
+        self._blobs = BlobStore(root / "blobs")
+        self._lock = threading.RLock()
+        self._db_path.parent.mkdir(parents=True, exist_ok=True)
+        self._connection = sqlite3.connect(self._db_path, check_same_thread=False)
+        self._connection.row_factory = sqlite3.Row
+        self._connection.execute("PRAGMA journal_mode=WAL")
+        self._connection.execute("PRAGMA busy_timeout=5000")
+        self._connection.execute("""
+            CREATE TABLE IF NOT EXISTS runtime_pointers (
+                pointer_id TEXT PRIMARY KEY,
+                workspace_id TEXT NOT NULL,
+                session_id TEXT NOT NULL,
+                media_type TEXT NOT NULL,
+                byte_size INTEGER NOT NULL,
+                checksum TEXT NOT NULL,
+                blob_path TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                expires_at TEXT NOT NULL,
+                preview TEXT NOT NULL
+            )
+        """)
+        self._connection.execute(
+            "CREATE INDEX IF NOT EXISTS idx_runtime_scope ON runtime_pointers(workspace_id, session_id)"
+        )
+        self._connection.commit()
 
-    def __init__(self, default_ttl_seconds: int = DEFAULT_TTL_SECONDS) -> None:
-        """함수 이름: __init__()
-        기능: 빈 저장소와 세션 작업을 보호하는 잠금을 만든다.
-        인자: default_ttl_seconds -> 기본 수명(초)
-        반환값: 없음
-        작성 날짜: 2026/11/05
-        """
-        check_ttl(default_ttl_seconds)
-        self.items: dict[str, RuntimeItem] = {}
-        self.default_ttl_seconds = default_ttl_seconds
-        self._lock = RLock()
-        self._sweep_at = 0.0
+    @staticmethod
+    def _validate_scope(workspace_id: str, session_id: str) -> None:
+        if not workspace_id or not session_id:
+            raise ScopeForbidden("workspace_id와 session_id는 필수입니다")
 
-    def put(
-        self,
-        content: str,
-        workspace_id: str,
-        session_id: str,
-        ttl_seconds: int | None = None,
-    ) -> str:
-        """함수 이름: put()
-        기능: 현재 세션에 새 원문을 저장한다.
-        인자: content -> 원문, workspace_id/session_id -> 범위, ttl_seconds -> 수명
-        반환값: 새 런타임 ID
-        작성 날짜: 2026/11/05
-        """
-        ttl = self.default_ttl_seconds if ttl_seconds is None else ttl_seconds
-        check_ttl(ttl)
-        pointer_id = str(uuid.uuid4())
+    def _preview(self, content: bytes) -> str:
+        return content[:MAX_PREVIEW_BYTES].decode("utf-8", errors="replace")
+
+    def put(self, request: RuntimePut) -> RuntimeDescriptor:
+        self._validate_scope(request.workspace_id, request.session_id)
+        if len(request.content) > MAX_OBJECT_BYTES:
+            raise QuotaExceeded("객체 용량 한도를 초과했습니다")
+        if request.ttl_seconds <= 0:
+            raise InvalidSelector("TTL은 양수여야 합니다")
         with self._lock:
-            now = time.time()
-            if now >= self._sweep_at:
-                self._remove_expired(now)
-                self._sweep_at = now + 60
-            self.items[pointer_id] = RuntimeItem(content, workspace_id, session_id, now, now + ttl)
-        return pointer_id
+            row = self._connection.execute(
+                "SELECT COALESCE(SUM(byte_size), 0) FROM runtime_pointers WHERE workspace_id = ? AND session_id = ?",
+                (request.workspace_id, request.session_id),
+            ).fetchone()
+            if int(row[0]) + len(request.content) > MAX_SESSION_BYTES:
+                raise QuotaExceeded("세션 용량 한도를 초과했습니다")
+            pointer_id = str(uuid.uuid4())
+            now = _utc_now()
+            expires_at = now + timedelta(seconds=request.ttl_seconds)
+            blob_path, checksum = self._blobs.write(
+                request.workspace_id, request.session_id, pointer_id, request.content
+            )
+            self._connection.execute(
+                """INSERT INTO runtime_pointers (
+                    pointer_id, workspace_id, session_id, media_type, byte_size,
+                    checksum, blob_path, created_at, expires_at, preview
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (
+                    pointer_id,
+                    request.workspace_id,
+                    request.session_id,
+                    request.media_type,
+                    len(request.content),
+                    checksum,
+                    str(blob_path),
+                    now.isoformat(),
+                    expires_at.isoformat(),
+                    self._preview(request.content),
+                ),
+            )
+            self._connection.commit()
+        return self.stat(request.workspace_id, request.session_id, pointer_id)
+
+    def _load(self, workspace_id: str, session_id: str, pointer_id: str) -> Any:
+        self._validate_scope(workspace_id, session_id)
+        row = self._connection.execute(
+            """SELECT * FROM runtime_pointers WHERE pointer_id = ? AND workspace_id = ? AND session_id = ?""",
+            (pointer_id, workspace_id, session_id),
+        ).fetchone()
+        if row is None:
+            raise PointerNotFound("포인터를 찾을 수 없습니다")
+        if datetime.fromisoformat(row["expires_at"]) <= _utc_now():
+            raise PointerExpired("포인터가 만료되었습니다")
+        return row
+
+    def stat(self, workspace_id: str, session_id: str, pointer_id: str) -> RuntimeDescriptor:
+        row = self._load(workspace_id, session_id, pointer_id)
+        return RuntimeDescriptor(
+            pointer=f"securecode://runtime/{workspace_id}/{session_id}/{pointer_id}?v=1",
+            workspace_id=row["workspace_id"],
+            session_id=row["session_id"],
+            media_type=row["media_type"],
+            byte_size=row["byte_size"],
+            checksum=row["checksum"],
+            created_at=datetime.fromisoformat(row["created_at"]),
+            expires_at=datetime.fromisoformat(row["expires_at"]),
+            preview=row["preview"],
+        )
+
+    def list(
+        self, workspace_id: str, session_id: str, limit: int = 100, cursor: str | None = None
+    ) -> dict[str, Any]:
+        self._validate_scope(workspace_id, session_id)
+        query = "SELECT pointer_id FROM runtime_pointers WHERE workspace_id = ? AND session_id = ? AND expires_at > ?"
+        params: list[Any] = [workspace_id, session_id, _utc_now().isoformat()]
+        if cursor:
+            query += " AND pointer_id > ?"
+            params.append(cursor)
+        query += " ORDER BY pointer_id LIMIT ?"
+        params.append(limit + 1)
+        rows = self._connection.execute(query, params).fetchall()
+        has_more = len(rows) > limit
+        ids = [row["pointer_id"] for row in rows[:limit]]
+        return {
+            "pointers": [self.stat(workspace_id, session_id, pid).to_dict() for pid in ids],
+            "has_more": has_more,
+            "next_cursor": ids[-1] if has_more and ids else None,
+        }
 
     def read(
         self,
-        pointer_id: str,
         workspace_id: str,
         session_id: str,
-        max_bytes: int = MAX_READ_BYTES,
-    ) -> str:
-        """함수 이름: read()
-        기능: 범위와 만료를 확인한 뒤 UTF-8 경계까지 반환한다.
-        인자: pointer_id -> ID, workspace_id/session_id -> 범위, max_bytes -> 바이트 상한
-        반환값: 원문의 앞부분
-        작성 날짜: 2026/11/05
-        """
-        check_read_limit(max_bytes)
-        with self._lock:
-            item = self.items.get(pointer_id)
-            if item is None:
-                raise KeyError("runtime pointer not found")
-            if item.workspace_id != workspace_id or item.session_id != session_id:
-                raise PermissionError("pointer scope mismatch")
-            if time.time() >= item.expires_at:
-                del self.items[pointer_id]
-                raise TimeoutError("runtime pointer expired")
-            return utf8_prefix(item.content[:max_bytes].encode()[:max_bytes])[0]
+        pointer_id: str,
+        offset: int = 0,
+        max_bytes: int = 16_384,
+    ) -> ReadResult:
+        if offset < 0 or max_bytes <= 0:
+            raise InvalidSelector("offset과 max_bytes가 올바르지 않습니다")
+        row = self._load(workspace_id, session_id, pointer_id)
+        content = self._blobs.read(Path(row["blob_path"]))
+        end = min(offset + max_bytes, len(content))
+        chunk = content[offset:end]
+        return ReadResult(
+            content=chunk.decode("utf-8", errors="replace"),
+            byte_size=len(chunk),
+            truncated=end < len(content),
+            next_cursor=str(end) if end < len(content) else None,
+        )
 
-    def list(self, workspace_id: str, session_id: str) -> list[str]:
-        """함수 이름: list()
-        기능: 만료 항목을 정리하고 현재 세션의 ID를 가져온다.
-        인자: workspace_id/session_id -> 범위
-        반환값: ID 목록
-        작성 날짜: 2026/11/05
-        """
-        with self._lock:
-            self._remove_expired(time.time())
-            return [
-                pid
-                for pid, item in self.items.items()
-                if item.workspace_id == workspace_id and item.session_id == session_id
-            ]
+    def search(
+        self,
+        workspace_id: str,
+        session_id: str,
+        pointer_id: str,
+        pattern: str,
+        max_matches: int = 100,
+        max_scan_bytes: int = 1_048_576,
+    ) -> dict[str, Any]:
+        if not pattern:
+            raise InvalidSelector("검색 패턴이 비어 있습니다")
+        row = self._load(workspace_id, session_id, pointer_id)
+        content = self._blobs.read(Path(row["blob_path"]))
+        return search_blob(content, pattern, max_matches, max_scan_bytes)
 
-    def delete(self, pointer_id: str, workspace_id: str, session_id: str) -> bool:
-        """함수 이름: delete()
-        기능: 범위가 일치하는 항목만 삭제한다.
-        인자: pointer_id -> ID, workspace_id/session_id -> 범위
-        반환값: 삭제 성공 여부
-        작성 날짜: 2026/11/05
-        """
+    def delete(self, workspace_id: str, session_id: str, pointer_id: str) -> None:
+        self._validate_scope(workspace_id, session_id)
         with self._lock:
-            item = self.items.get(pointer_id)
-            if item is None or item.workspace_id != workspace_id or item.session_id != session_id:
-                return False
-            del self.items[pointer_id]
-            return True
+            row = self._connection.execute(
+                "SELECT blob_path FROM runtime_pointers WHERE pointer_id = ? AND workspace_id = ? AND session_id = ?",
+                (pointer_id, workspace_id, session_id),
+            ).fetchone()
+            if row is None:
+                return
+            self._blobs.delete(Path(row["blob_path"]))
+            self._connection.execute(
+                "DELETE FROM runtime_pointers WHERE pointer_id = ?", (pointer_id,)
+            )
+            self._connection.commit()
 
     def clear_session(self, workspace_id: str, session_id: str) -> int:
-        """함수 이름: clear_session()
-        기능: 하나의 임계 영역에서 세션 항목을 정리한다.
-        인자: workspace_id/session_id -> 범위
-        반환값: 삭제한 항목 수
-        작성 날짜: 2026/11/05
-        """
+        self._validate_scope(workspace_id, session_id)
         with self._lock:
-            pointer_ids = self.list(workspace_id, session_id)
-            for pointer_id in pointer_ids:
-                del self.items[pointer_id]
-            return len(pointer_ids)
+            rows = self._connection.execute(
+                "SELECT pointer_id, blob_path FROM runtime_pointers WHERE workspace_id = ? AND session_id = ?",
+                (workspace_id, session_id),
+            ).fetchall()
+            for row in rows:
+                self._blobs.delete(Path(row["blob_path"]))
+            self._connection.execute(
+                "DELETE FROM runtime_pointers WHERE workspace_id = ? AND session_id = ?",
+                (workspace_id, session_id),
+            )
+            self._connection.commit()
+            self._blobs.remove_session(workspace_id, session_id)
+            return len(rows)
 
-    def _remove_expired(self, now: float) -> None:
-        """함수 이름: _remove_expired()
-        기능: 잠금을 보유한 호출자가 만료된 원문을 정리한다.
-        인자: now -> 현재 시각
-        반환값: 없음
-        작성 날짜: 2026/11/05
-        """
-        for pointer_id in [pid for pid, item in self.items.items() if now >= item.expires_at]:
-            del self.items[pointer_id]
+    def sweep_expired(self) -> int:
+        now = _utc_now().isoformat()
+        with self._lock:
+            rows = self._connection.execute(
+                "SELECT pointer_id, blob_path FROM runtime_pointers WHERE expires_at <= ?", (now,)
+            ).fetchall()
+            for row in rows:
+                self._blobs.delete(Path(row["blob_path"]))
+            self._connection.execute("DELETE FROM runtime_pointers WHERE expires_at <= ?", (now,))
+            self._connection.commit()
+            return len(rows)
+
+    def close(self) -> None:
+        self._connection.close()
