@@ -1594,9 +1594,9 @@ docs/progress/tasks/4.7.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **완료 조건**
 
-- [ ] 선택→부분 원문 조회→계수·중복 제거→제한된 ContextPlan 반환이 동작한다.
-- [ ] SDK 실제 outbound 경계에서 검증된 예산을 지키고 미지원 정확 계수는 차단한다.
-- [ ] 0/음수 예산·여러 turn·권한/stale·중복에서 재현 가능한 결과와 누락 사유가 있다.
+- [x] 선택→부분 원문 조회→계수·중복 제거→제한된 ContextPlan 반환이 동작한다.
+- [x] SDK 실제 outbound 경계에서 검증된 예산을 지키고 미지원 정확 계수는 차단한다.
+- [x] 0/음수 예산·여러 turn·권한/stale·중복에서 재현 가능한 결과와 누락 사유가 있다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 
@@ -1647,9 +1647,9 @@ docs/progress/tasks/4.8.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **완료 조건**
 
-- [ ] 텍스트 PDF가 페이지 캐시와 Source Pointer로 연결되고 전체 본문을 반환하지 않는다.
-- [ ] 실제 PDF 도구 계약과 SKILL.md 사용 지침·등록 export가 일치한다.
-- [ ] 한글/페이지 범위/출처/캐시 갱신/미지원/손상·취소 시험이 통과한다.
+- [x] 텍스트 PDF가 페이지 캐시와 Source Pointer로 연결되고 전체 본문을 반환하지 않는다.
+- [x] 실제 PDF 도구 계약과 SKILL.md 사용 지침·등록 export가 일치한다.
+- [x] 한글/페이지 범위/출처/캐시 갱신/미지원/손상·취소 시험이 통과한다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 
@@ -1700,9 +1700,9 @@ docs/progress/tasks/4.9.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **완료 조건**
 
-- [ ] SDK 통합 경로에서 Runtime·Source·예산·PDF 수명주기와 오류 경로가 통과한다.
-- [ ] 모델/history/SSE에 큰 원문이 없고 예산·scope·revision·부분 읽기 불변식이 유지된다.
-- [ ] 실 provider 증거와 복구/지원 범위 안내가 있어 후속 인수 작업이 재현 가능하다.
+- [x] SDK 통합 경로에서 Runtime·Source·예산·PDF 수명주기와 오류 경로가 통과한다.
+- [x] 모델/history/SSE에 큰 원문이 없고 예산·scope·revision·부분 읽기 불변식이 유지된다.
+- [x] 실 provider 증거와 복구/지원 범위 안내가 있어 후속 인수 작업이 재현 가능하다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 
