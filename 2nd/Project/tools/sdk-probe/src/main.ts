@@ -11,6 +11,8 @@ import { runHookFailureScenario } from "./scenarios/hook-failure.js";
 import { runLifecycleScenario } from "./scenarios/lifecycle.js";
 import { runOutboundGateScenario } from "./scenarios/outbound-gate.js";
 import { runPointerReplacementScenario } from "./scenarios/pointer-replacement.js";
+import { runRuntimeReadScenario } from "./scenarios/runtime-read.js";
+import { runRuntimeSearchScenario } from "./scenarios/runtime-search.js";
 import { runToolRestrictionScenario } from "./scenarios/tool-restriction.js";
 import { readRepositoryGitState, writeEvidence } from "./support/evidence-writer.js";
 import type { ScenarioResult } from "./support/scenario-result.js";
@@ -18,6 +20,8 @@ import type { ScenarioResult } from "./support/scenario-result.js";
 const scenarioRunners: Record<string, () => Promise<ScenarioResult>> = {
     lifecycle: runLifecycleScenario,
     "pointer-replacement": runPointerReplacementScenario,
+    "runtime-read": runRuntimeReadScenario,
+    "runtime-search": runRuntimeSearchScenario,
     approval: runApprovalScenario,
     "hook-failure": runHookFailureScenario,
     "before-model": runBeforeModelScenario,

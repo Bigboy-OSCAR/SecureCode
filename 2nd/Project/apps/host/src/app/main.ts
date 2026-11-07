@@ -14,6 +14,7 @@ import { HttpContextServiceClient } from "../context-client/httpContextServiceCl
 import { createLogger } from "../logging/logger.js";
 import { Redactor } from "../logging/redaction.js";
 import { assembleHost } from "./hostAssembly.js";
+import { createLoopbackRuntimeStore, createRuntimeToolResultTransformer } from "../pointer-hooks/runtimeToolResultTransformer.js";
 
 const SHUTDOWN_TIMEOUT_MS = 5000;
 const workRoot = join(fileURLToPath(import.meta.url), "..", "..", "..", "..", "..");
@@ -56,7 +57,12 @@ async function main(): Promise<void> {
         runtimeFactory: (options) => clineAdapter.ClineAgentRuntime.create(options),
         // 4.4 (ToolResultTransformer) and 4.8 (ModelRequestGate) are not registered yet:
         // protections stay unavailable and sessions are refused with PROTECTION_UNAVAILABLE.
-        transformer: null,
+        transformer: createRuntimeToolResultTransformer(
+            createLoopbackRuntimeStore({
+                baseUrl: hostConfig.contextServiceUrl,
+                internalToken: hostConfig.internalToken,
+            }),
+        ),
         gate: null,
     });
     const missing = host.runtime.protections().filter((state) => !state.ready);

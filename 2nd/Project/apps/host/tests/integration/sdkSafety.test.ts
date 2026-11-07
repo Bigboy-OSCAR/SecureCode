@@ -4,7 +4,7 @@
  * SSE resumes after Last-Event-ID, sessions stay isolated with one active run
  * each, idempotent run creation, and no checkpoint touches the Git repository.
  */
-import "../../../../tools/sdk-probe/src/env/isolated-cline-home.js";
+import "../../../../tools/sdk-probe/src/support/isolated-cline-home.js";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, writeFileSync } from "node:fs";

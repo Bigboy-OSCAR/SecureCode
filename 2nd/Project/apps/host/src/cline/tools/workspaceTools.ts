@@ -8,6 +8,7 @@ import type { AgentTool } from "@cline/sdk";
 import type { ApprovalReview } from "@securecode/contracts";
 import { refuseCommand } from "../permissions/commandPolicy.js";
 import { runCommand } from "./commandRunner.js";
+import { readRuntimePointer, type RuntimePointerHookOptions } from "../../pointer-hooks/runtimePointerHook.js";
 import { resolveForRead, resolveForWrite, toRelative } from "./workspacePaths.js";
 
 export const REVIEW_MAX_BYTES = 16 * 1024;
@@ -30,6 +31,7 @@ export interface ProjectTool {
 export interface WorkspaceToolOptions {
     root: string;
     commandTimeoutMs: number;
+    pointer: Pick<RuntimePointerHookOptions, "baseUrl" | "internalToken" | "workspaceId" | "sessionId">;
 }
 
 function field(input: unknown, name: string, required: true): string;
@@ -185,11 +187,77 @@ function runCommandTool(options: WorkspaceToolOptions): ProjectTool {
     };
 }
 
+
+function runtimeReadTool(pointer: WorkspaceToolOptions["pointer"]): ProjectTool {
+    return {
+        requiresApproval: false,
+        review: () => review("other", "read runtime pointer", ""),
+        refuse: () => null,
+        tool: {
+            name: "runtime_read",
+            description: "Read a bounded slice of a Runtime Pointer owned by this session.",
+            inputSchema: objectSchema(
+                {
+                    pointer: { type: "string" },
+                    offset: { type: "integer", minimum: 0 },
+                    max_bytes: { type: "integer", minimum: 1, maximum: 16384 },
+                },
+                ["pointer"],
+            ),
+            execute: async (input) => {
+                const record = input as { pointer?: string; offset?: number; max_bytes?: number };
+                const result = await readRuntimePointer(
+                    field(record, "pointer", true),
+                    pointer,
+                    Number.isSafeInteger(record.offset) ? (record.offset ?? 0) : 0,
+                    Number.isSafeInteger(record.max_bytes) ? (record.max_bytes ?? 16384) : 16384,
+                );
+                return JSON.stringify(result);
+            },
+        },
+    };
+}
+
+function runtimeSearchTool(pointer: WorkspaceToolOptions["pointer"]): ProjectTool {
+    return {
+        requiresApproval: false,
+        review: () => review("other", "search runtime pointer", ""),
+        refuse: () => null,
+        tool: {
+            name: "runtime_search",
+            description: "Search a Runtime Pointer owned by this session and return matching line numbers.",
+            inputSchema: objectSchema(
+                {
+                    pointer: { type: "string" },
+                    query: { type: "string" },
+                },
+                ["pointer", "query"],
+            ),
+            execute: async (input) => {
+                const record = input as { pointer?: string; query?: string };
+                const result = await readRuntimePointer(field(record, "pointer", true), pointer);
+                const query = field(record, "query", true).toLowerCase();
+                const lines = result.content.split("\n");
+                const matches: { line: number; text: string }[] = [];
+                for (let index = 0; index < lines.length; index += 1) {
+                    const line = lines[index] ?? "";
+                    if (line.toLowerCase().includes(query)) {
+                        matches.push({ line: index + 1, text: line });
+                    }
+                }
+                return JSON.stringify({ matches, byte_size: result.byteSize, truncated: result.truncated });
+            },
+        },
+    };
+}
+
 export function createWorkspaceTools(options: WorkspaceToolOptions): ProjectTool[] {
     return [
         readFileTool(options.root),
         listFilesTool(options.root),
         writeFileTool(options.root),
         runCommandTool(options),
+        runtimeReadTool(options.pointer),
+        runtimeSearchTool(options.pointer),
     ];
 }

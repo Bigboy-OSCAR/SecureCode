@@ -56,7 +56,7 @@ export class ClineAgentRuntime implements AgentRuntime {
     }
 
     static async create(options: ClineRuntimeOptions): Promise<ClineAgentRuntime> {
-        const allowedTools = new Set(["read_file", "list_files", "write_file", "run_command"]);
+        const allowedTools = new Set(["read_file", "list_files", "write_file", "run_command", "runtime_read", "runtime_search"]);
         const runtime: { instance?: ClineAgentRuntime } = {};
         const core = await ClineCore.create({
             clientName: "securecode-host",
@@ -190,6 +190,12 @@ export class ClineAgentRuntime implements AgentRuntime {
             const tools = createWorkspaceTools({
                 root: request.workspaceRoot,
                 commandTimeoutMs: this.options.commandTimeoutMs,
+                pointer: {
+                    baseUrl: this.options.baseUrl ?? undefined,
+                    internalToken: process.env.SECURECODE_INTERNAL_TOKEN,
+                    workspaceId: request.workspaceId,
+                    sessionId: request.sessionId,
+                },
             });
             session = {
                 started: false,

@@ -9,6 +9,7 @@ from securecode_context.api.error_responses import register_error_handlers
 from securecode_context.api.health import SERVICE_VERSION
 from securecode_context.api.health import router as health_router
 from securecode_context.api.middleware import install_middleware
+from securecode_context.api.runtime_pointers import router as runtime_pointers_router
 from securecode_context.api.tokens import router as tokens_router
 from securecode_context.app.settings import ServiceSettings
 from securecode_context.common.tokens import (
@@ -17,6 +18,7 @@ from securecode_context.common.tokens import (
     UnavailableTokenCounter,
 )
 from securecode_context.common.tokens.anthropic_counter import DEFAULT_BASE_URL
+from securecode_context.pointers.runtime.store import RuntimeStore
 
 
 def build_token_counter(settings: ServiceSettings) -> TokenCounter:
@@ -62,12 +64,16 @@ def create_app(settings: ServiceSettings, token_counter: TokenCounter | None = N
         if not hasattr(app.state, "token_counter"):
             app.state.token_counter = build_token_counter(settings)
         counter = app.state.token_counter
+        if not hasattr(app.state, "pointer_store"):
+            app.state.pointer_store = RuntimeStore(settings.data_dir / "runtime")
         try:
             yield
         finally:
             if token_counter is None and isinstance(counter, AnthropicTokenCounter):
                 counter.close()
                 del app.state.token_counter
+            app.state.pointer_store.close()
+            del app.state.pointer_store
 
     app = FastAPI(
         lifespan=lifespan,
@@ -78,6 +84,7 @@ def create_app(settings: ServiceSettings, token_counter: TokenCounter | None = N
         openapi_url=None,
     )
     app.state.settings = settings
+    app.state.pointer_store = RuntimeStore(settings.data_dir / "runtime")
     app.state.token_counter = (
         token_counter if token_counter is not None else build_token_counter(settings)
     )
@@ -86,4 +93,5 @@ def create_app(settings: ServiceSettings, token_counter: TokenCounter | None = N
     register_error_handlers(app)
     app.include_router(health_router)
     app.include_router(tokens_router)
+    app.include_router(runtime_pointers_router)
     return app
