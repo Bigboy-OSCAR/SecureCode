@@ -1433,9 +1433,9 @@ docs/progress/tasks/4.4.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **완료 조건**
 
-- [ ] Source 등록/목록/stat/등록 해제가 디스크 registry로 동작하고 scope가 격리된다.
-- [ ] 경로 이탈·원본 변경/삭제·중복 등록·재시작에 대한 상태가 정확하다.
-- [ ] 등록 해제 뒤 원본 파일이 존재하며 provenance/resolve 계약이 준비됐다.
+- [x] Source 등록/목록/stat/등록 해제가 디스크 registry로 동작하고 scope가 격리된다.
+- [x] 경로 이탈·원본 변경/삭제·중복 등록·재시작에 대한 상태가 정확하다.
+- [x] 등록 해제 뒤 원본 파일이 존재하며 provenance/resolve 계약이 준비됐다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 
@@ -1488,9 +1488,9 @@ docs/progress/tasks/4.5.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **완료 조건**
 
-- [ ] 텍스트 반복 범위 읽기가 실제 bounded I/O이며 계측 근거가 있다.
-- [ ] UTF-8/한글/긴 줄/검색/JSON 제한과 bytes/token cap·cursor가 작동한다.
-- [ ] 읽기 도중 변경·stale cursor·경로 이탈을 거부하고 정확한 출처를 반환한다.
+- [x] 텍스트 반복 범위 읽기가 실제 bounded I/O이며 계측 근거가 있다.
+- [x] UTF-8/한글/긴 줄/검색/JSON 제한과 bytes/token cap·cursor가 작동한다.
+- [x] 읽기 도중 변경·stale cursor·경로 이탈을 거부하고 정확한 출처를 반환한다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 
@@ -1541,9 +1541,9 @@ docs/progress/tasks/4.6.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **완료 조건**
 
-- [ ] 우선순위·중복·score·materialize·총 요청 예산·실패 정책이 완결돼 있다.
-- [ ] 명시 선택/0 예산/무결과/권한/대형 후보의 기대 결과 fixture가 있다.
-- [ ] host와 Selector의 책임이 겹치지 않고 새 검색·요약 기법을 추가하지 않는다.
+- [x] 우선순위·중복·score·materialize·총 요청 예산·실패 정책이 완결돼 있다.
+- [x] 명시 선택/0 예산/무결과/권한/대형 후보의 기대 결과 fixture가 있다.
+- [x] host와 Selector의 책임이 겹치지 않고 새 검색·요약 기법을 추가하지 않는다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 
