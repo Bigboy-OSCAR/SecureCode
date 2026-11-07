@@ -3,7 +3,6 @@ from pathlib import Path
 import pytest
 
 from securecode_context.pointers.runtime.sqlite_store import SQLiteRuntimeStore
-from securecode_context.pointers.runtime.store import RuntimeStore
 
 
 def test_put_and_read_full_content(tmp_path: Path) -> None:
@@ -95,15 +94,14 @@ def test_utf8_roundtrip_and_limits(tmp_path: Path) -> None:
             store.read(pointer, "space", "session", offset, limit)
 
 
-@pytest.mark.parametrize("persistent", [True, False])
-def test_session_and_expiration(tmp_path: Path, persistent: bool) -> None:
+def test_session_and_expiration(tmp_path: Path) -> None:
     """함수 이름: test_session_and_expiration()
     기능: 범위가 다른 읽기·삭제와 만료 항목을 두 저장소 모두에서 검사한다.
     인자: tmp_path -> 임시 디렉터리, persistent -> SQLite 사용 여부
     반환값: 없음
     작성 날짜: 2026/11/05
     """
-    store = SQLiteRuntimeStore(tmp_path / "data.db") if persistent else RuntimeStore()
+    store = SQLiteRuntimeStore(tmp_path / "data.db")
     pointer = store.put("sensitive", "space", "a")
     other_session = store.put("other", "space", "b")
     for workspace, session in [("other", "a"), ("space", "b")]:

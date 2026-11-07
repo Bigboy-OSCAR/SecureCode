@@ -3,10 +3,9 @@
 작성일: 2026-11-06
 """
 
-import sqlite3
 import threading
 import uuid
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -21,56 +20,60 @@ from ..models.runtime import (
     ScopeForbidden,
 )
 from .blob import BlobStore
+from .db import MAX_OBJECT_BYTES, MAX_PREVIEW_BYTES, MAX_SESSION_BYTES, open_connection
+from .db import utc_now as _utc_now
 from .search import search_blob
-
-MAX_OBJECT_BYTES = 32 * 1024 * 1024
-MAX_SESSION_BYTES = 128 * 1024 * 1024
-MAX_PREVIEW_BYTES = 512
-
-
-def _utc_now() -> datetime:
-    return datetime.now(UTC)
 
 
 class RuntimeStore:
-    def __init__(self, root: Path) -> None:
+    """클래스 이름: RuntimeStore
+    기능: RuntimeStore 기능을 정의한다.
+    작성 날짜: 2026/11/06
+    """
+
+    def __init__(self, root: Path | None = None) -> None:
+        """함수 이름: __init__()
+        기능: __init__ 기능을 수행한다.
+        인자: root
+        반환값: None
+        작성 날짜: 2026/11/06
+        """
+        if root is None:
+            root = Path(".securecode/runtime")
         self._root = root
         self._db_path = root / "runtime.sqlite3"
         self._blobs = BlobStore(root / "blobs")
         self._lock = threading.RLock()
         self._db_path.parent.mkdir(parents=True, exist_ok=True)
-        self._connection = sqlite3.connect(self._db_path, check_same_thread=False)
-        self._connection.row_factory = sqlite3.Row
-        self._connection.execute("PRAGMA journal_mode=WAL")
-        self._connection.execute("PRAGMA busy_timeout=5000")
-        self._connection.execute("""
-            CREATE TABLE IF NOT EXISTS runtime_pointers (
-                pointer_id TEXT PRIMARY KEY,
-                workspace_id TEXT NOT NULL,
-                session_id TEXT NOT NULL,
-                media_type TEXT NOT NULL,
-                byte_size INTEGER NOT NULL,
-                checksum TEXT NOT NULL,
-                blob_path TEXT NOT NULL,
-                created_at TEXT NOT NULL,
-                expires_at TEXT NOT NULL,
-                preview TEXT NOT NULL
-            )
-        """)
-        self._connection.execute(
-            "CREATE INDEX IF NOT EXISTS idx_runtime_scope ON runtime_pointers(workspace_id, session_id)"
-        )
-        self._connection.commit()
+        self._connection = open_connection(self._db_path)
 
     @staticmethod
     def _validate_scope(workspace_id: str, session_id: str) -> None:
+        """함수 이름: _validate_scope()
+        기능: _validate_scope 기능을 수행한다.
+        인자: workspace_id, session_id
+        반환값: None
+        작성 날짜: 2026/11/06
+        """
         if not workspace_id or not session_id:
             raise ScopeForbidden("workspace_id와 session_id는 필수입니다")
 
     def _preview(self, content: bytes) -> str:
+        """함수 이름: _preview()
+        기능: _preview 기능을 수행한다.
+        인자: content
+        반환값: str
+        작성 날짜: 2026/11/06
+        """
         return content[:MAX_PREVIEW_BYTES].decode("utf-8", errors="replace")
 
     def put(self, request: RuntimePut) -> RuntimeDescriptor:
+        """함수 이름: put()
+        기능: put 기능을 수행한다.
+        인자: request
+        반환값: RuntimeDescriptor
+        작성 날짜: 2026/11/06
+        """
         self._validate_scope(request.workspace_id, request.session_id)
         if len(request.content) > MAX_OBJECT_BYTES:
             raise QuotaExceeded("객체 용량 한도를 초과했습니다")
@@ -111,6 +114,12 @@ class RuntimeStore:
         return self.stat(request.workspace_id, request.session_id, pointer_id)
 
     def _load(self, workspace_id: str, session_id: str, pointer_id: str) -> Any:
+        """함수 이름: _load()
+        기능: _load 기능을 수행한다.
+        인자: workspace_id, session_id, pointer_id
+        반환값: Any
+        작성 날짜: 2026/11/06
+        """
         self._validate_scope(workspace_id, session_id)
         row = self._connection.execute(
             """SELECT * FROM runtime_pointers WHERE pointer_id = ? AND workspace_id = ? AND session_id = ?""",
@@ -123,6 +132,12 @@ class RuntimeStore:
         return row
 
     def stat(self, workspace_id: str, session_id: str, pointer_id: str) -> RuntimeDescriptor:
+        """함수 이름: stat()
+        기능: stat 기능을 수행한다.
+        인자: workspace_id, session_id, pointer_id
+        반환값: RuntimeDescriptor
+        작성 날짜: 2026/11/06
+        """
         row = self._load(workspace_id, session_id, pointer_id)
         return RuntimeDescriptor(
             pointer=f"securecode://runtime/{workspace_id}/{session_id}/{pointer_id}?v=1",
@@ -139,6 +154,12 @@ class RuntimeStore:
     def list(
         self, workspace_id: str, session_id: str, limit: int = 100, cursor: str | None = None
     ) -> dict[str, Any]:
+        """함수 이름: list()
+        기능: list 기능을 수행한다.
+        인자: workspace_id, session_id, limit, cursor
+        반환값: dict[str, Any]
+        작성 날짜: 2026/11/06
+        """
         self._validate_scope(workspace_id, session_id)
         query = "SELECT pointer_id FROM runtime_pointers WHERE workspace_id = ? AND session_id = ? AND expires_at > ?"
         params: list[Any] = [workspace_id, session_id, _utc_now().isoformat()]
@@ -164,6 +185,12 @@ class RuntimeStore:
         offset: int = 0,
         max_bytes: int = 16_384,
     ) -> ReadResult:
+        """함수 이름: read()
+        기능: read 기능을 수행한다.
+        인자: workspace_id, session_id, pointer_id, offset, max_bytes
+        반환값: ReadResult
+        작성 날짜: 2026/11/06
+        """
         if offset < 0 or max_bytes <= 0:
             raise InvalidSelector("offset과 max_bytes가 올바르지 않습니다")
         row = self._load(workspace_id, session_id, pointer_id)
@@ -186,6 +213,12 @@ class RuntimeStore:
         max_matches: int = 100,
         max_scan_bytes: int = 1_048_576,
     ) -> dict[str, Any]:
+        """함수 이름: search()
+        기능: search 기능을 수행한다.
+        인자: workspace_id, session_id, pointer_id, pattern, max_matches, max_scan_bytes
+        반환값: dict[str, Any]
+        작성 날짜: 2026/11/06
+        """
         if not pattern:
             raise InvalidSelector("검색 패턴이 비어 있습니다")
         row = self._load(workspace_id, session_id, pointer_id)
@@ -193,6 +226,12 @@ class RuntimeStore:
         return search_blob(content, pattern, max_matches, max_scan_bytes)
 
     def delete(self, workspace_id: str, session_id: str, pointer_id: str) -> None:
+        """함수 이름: delete()
+        기능: delete 기능을 수행한다.
+        인자: workspace_id, session_id, pointer_id
+        반환값: None
+        작성 날짜: 2026/11/06
+        """
         self._validate_scope(workspace_id, session_id)
         with self._lock:
             row = self._connection.execute(
@@ -208,6 +247,12 @@ class RuntimeStore:
             self._connection.commit()
 
     def clear_session(self, workspace_id: str, session_id: str) -> int:
+        """함수 이름: clear_session()
+        기능: clear_session 기능을 수행한다.
+        인자: workspace_id, session_id
+        반환값: int
+        작성 날짜: 2026/11/06
+        """
         self._validate_scope(workspace_id, session_id)
         with self._lock:
             rows = self._connection.execute(
@@ -225,6 +270,12 @@ class RuntimeStore:
             return len(rows)
 
     def sweep_expired(self) -> int:
+        """함수 이름: sweep_expired()
+        기능: sweep_expired 기능을 수행한다.
+        인자: 없음
+        반환값: int
+        작성 날짜: 2026/11/06
+        """
         now = _utc_now().isoformat()
         with self._lock:
             rows = self._connection.execute(
@@ -237,4 +288,10 @@ class RuntimeStore:
             return len(rows)
 
     def close(self) -> None:
+        """함수 이름: close()
+        기능: close 기능을 수행한다.
+        인자: 없음
+        반환값: None
+        작성 날짜: 2026/11/06
+        """
         self._connection.close()

@@ -9,6 +9,12 @@ from typing import Any
 def search_blob(
     content: bytes, pattern: str, max_matches: int = 100, max_scan_bytes: int = 1_048_576
 ) -> dict[str, Any]:
+    """함수 이름: search_blob()
+    기능: search_blob 기능을 수행한다.
+    인자: content, pattern, max_matches, max_scan_bytes
+    반환값: dict[str, Any]
+    작성 날짜: 2026/11/06
+    """
     text = content[:max_scan_bytes].decode("utf-8", errors="replace")
     matches: list[dict[str, Any]] = []
     position = 0
