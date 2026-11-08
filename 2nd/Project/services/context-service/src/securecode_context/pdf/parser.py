@@ -41,7 +41,7 @@ class PdfParser:
             # 텍스트 추출 (TJ / Tj 바이트 스트림 파싱)
             extracted_texts = []
             text_blocks = re.findall(rb"\((.*?)\)\s*Tj", content_bytes)
-            combined_text = " ".join([b.decode("utf-8", errors="replace") for b in text_blocks]) or "Sample PDF Page Text"
+            combined_text = " ".join([b.decode("utf-8", errors="replace") for b in text_blocks]) or ""
 
             # 페이지 분할 바운딩
             for i in range(total_pages):
@@ -58,3 +58,8 @@ class PdfParser:
             if isinstance(e, (ValueError, PdfParseError)):
                 raise e
             raise PdfParseError(f"PARSE_FAILED: Failed to parse PDF file: {str(e)}")
+
+
+    def extract_text(self, content_bytes: bytes) -> str:
+        pages = self.parse_pages(content_bytes) if hasattr(self, 'parse_pages') else []
+        return "\n".join(pages) if pages else ""

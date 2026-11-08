@@ -81,3 +81,11 @@ class ContextSelectorPolicy:
             remaining_tokens=available_tokens - current_used,
             count_mode="estimated"
         )
+
+
+class ModelRequestGate:
+    def __init__(self, policy):
+        self.policy = policy
+
+    def check(self, candidate_refs, available_tokens):
+        return self.policy.select(candidate_refs, available_tokens)
