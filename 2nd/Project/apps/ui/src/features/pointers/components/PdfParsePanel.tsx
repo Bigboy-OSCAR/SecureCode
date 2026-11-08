@@ -1,24 +1,16 @@
 /** Displays PDF parsing progress, partial failures, expiry, and source changes. */
 import type { PdfJobStatus } from "@securecode/contracts";
-import { useState, type FormEvent } from "react";
 import { Alert, Button, InputField, StatusBadge } from "../../../components/index.js";
 import { fixtureAdapter } from "../../../api/fixtureAdapter.js";
-import { isPdfPathValid } from "../model/pointerForm.js";
+import { usePdfWorkflow } from "../hooks/usePdfWorkflow.js";
 
-export function PdfParsePanel(): React.JSX.Element {
-    const [pdfPath, setPdfPath] = useState("");
-    const [submitted, setSubmitted] = useState(false);
-    const job = fixtureAdapter.pdfJobs.find((status) => status.state === "partial");
-    if (!job || job.state !== "partial") {
-        throw new Error("The partial PDF fixture is missing.");
-    }
+export interface PdfParsePanelProps {
+    canMutate: boolean;
+}
 
-    function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-        event.preventDefault();
-        if (isPdfPathValid(pdfPath)) {
-            setSubmitted(true);
-        }
-    }
+export function PdfParsePanel({ canMutate }: PdfParsePanelProps): React.JSX.Element {
+    const workflow = usePdfWorkflow();
+    const { job } = workflow;
 
     return (
         <section className="feature-card" aria-labelledby="pdf-heading" data-testid="screen-pdf">
@@ -26,28 +18,39 @@ export function PdfParsePanel(): React.JSX.Element {
                 <h2 id="pdf-heading">PDF 텍스트 추출</h2>
                 <StatusBadge label={getPdfStateLabel(job.state)} tone="warning" />
             </div>
-            <p>
-                페이지 {job.page_count}개 중 {job.excluded_pages.length}개 제외
-            </p>
-            <ul className="compact-list">
-                {job.excluded_pages.map((page) => (
-                    <li key={page.page}>
-                        {page.page}쪽 ·{" "}
-                        {page.reason === "empty_page"
-                            ? "텍스트 없음"
-                            : page.reason === "scanned_page"
-                              ? "스캔 이미지"
-                              : "페이지 읽기 실패"}
-                    </li>
-                ))}
-            </ul>
+            {job.state === "ready" || job.state === "partial" ? (
+                <p>
+                    페이지 {job.page_count}개{job.state === "partial" ? ` 중 ${job.excluded_pages.length}개 제외` : ""}
+                </p>
+            ) : (
+                <p>페이지 정보를 확인하는 중입니다.</p>
+            )}
+            {job.state === "partial" ? (
+                <ul className="compact-list">
+                    {job.excluded_pages.map((page) => (
+                        <li key={page.page}>
+                            {page.page}쪽 ·{" "}
+                            {page.reason === "empty_page"
+                                ? "텍스트 없음"
+                                : page.reason === "scanned_page"
+                                  ? "스캔 이미지"
+                                  : "페이지 읽기 실패"}
+                        </li>
+                    ))}
+                </ul>
+            ) : null}
             <div className="state-picker" role="group" aria-label="PDF 계약 상태">
-                {fixtureAdapter.pdfJobs.map((status) => (
-                    <StatusBadge
+                {fixtureAdapter.pdfJobs.map((status, position) => (
+                    <Button
                         key={`${status.job_id}-${status.state}`}
-                        label={getPdfStateLabel(status.state)}
-                        tone="neutral"
-                    />
+                        type="button"
+                        variant={workflow.selectedPosition === position ? "primary" : "secondary"}
+                        aria-pressed={workflow.selectedPosition === position}
+                        onClick={() => workflow.selectJob(position)}
+                        data-testid={`pdf-state-${status.state}`}
+                    >
+                        {getPdfStateLabel(status.state)}
+                    </Button>
                 ))}
             </div>
             {fixtureAdapter.pdfJobs.filter(isStalePdfJob).map((status) => (
@@ -57,24 +60,23 @@ export function PdfParsePanel(): React.JSX.Element {
                         : "처리기를 확인한 뒤 다시 처리하세요."}
                 </Alert>
             ))}
-            <form onSubmit={handleSubmit} className="stack-form">
+            <form onSubmit={workflow.submit} className="stack-form">
                 <InputField
                     id="pdf-path"
                     label="로컬 PDF 경로"
-                    value={pdfPath}
+                    value={workflow.path}
                     maxLength={4096}
-                    onChange={(event) => {
-                        setPdfPath(event.currentTarget.value);
-                        setSubmitted(false);
-                    }}
+                    disabled={!canMutate}
+                    onChange={(event) => workflow.setPath(event.currentTarget.value)}
                     data-testid="pdf-path"
                 />
-                <Button type="submit" disabled={!isPdfPathValid(pdfPath)} data-testid="pdf-parse">
+                <Button type="submit" disabled={!canMutate || !workflow.canSubmit} data-testid="pdf-parse">
                     등록 후 텍스트 추출 예시
                 </Button>
             </form>
-            {submitted ? (
-                <p role="status">PDF 입력을 확인했습니다. 실제 파일을 읽거나 추출 요청을 보내지 않았습니다.</p>
+            {!canMutate ? <p role="status">연결을 복구한 뒤 PDF 처리 상태를 다시 확인하세요.</p> : null}
+            {workflow.submitted ? (
+                <p role="status">PDF 경로 형식만 확인했습니다. 실제 파일을 읽거나 추출 요청을 보내지 않았습니다.</p>
             ) : null}
             <details>
                 <summary>등록한 PDF가 없는 경우</summary>

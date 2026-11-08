@@ -1,60 +1,43 @@
 /** Renders the one-time local connection flow from public bootstrap fixtures. */
-import { useState, type FormEvent } from "react";
 import { Alert, Button, InputField, StatusBadge } from "../../../components/index.js";
 import { fixtureAdapter } from "../../../api/fixtureAdapter.js";
-import { isBootstrapCodeValid } from "../model/inputValidation.js";
+import { useConnectionWorkflow } from "../hooks/useConnectionWorkflow.js";
 
 export function ConnectionPanel(): React.JSX.Element {
-    const [code, setCode] = useState("");
-    const [showExpired, setShowExpired] = useState(true);
-    const [submitted, setSubmitted] = useState(false);
-
-    function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-        event.preventDefault();
-        if (isBootstrapCodeValid(code)) {
-            setSubmitted(true);
-        }
-    }
+    const workflow = useConnectionWorkflow();
+    const showExpired = workflow.status === "expired";
 
     return (
         <section className="feature-card" aria-labelledby="connection-heading" data-testid="screen-connection">
             <div className="feature-heading">
                 <h2 id="connection-heading">로컬 서비스 연결</h2>
-                <StatusBadge label="연결 대기" tone="neutral" />
+                <StatusBadge label={workflow.status === "validated" ? "코드 형식 확인" : "연결 대기"} tone="neutral" />
             </div>
             <p>실행 창에 표시된 일회용 연결 코드를 입력하세요.</p>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={workflow.submit}>
                 <InputField
                     id="connection-code"
                     label="연결 코드"
-                    value={code}
+                    value={workflow.code}
                     maxLength={64}
-                    pattern="[A-Za-z0-9-]{8,64}"
-                    onChange={(event) => {
-                        setCode(event.currentTarget.value);
-                        setSubmitted(false);
-                    }}
+                    pattern="(?:[A-Za-z0-9]|-){8,64}"
+                    onChange={(event) => workflow.setCode(event.currentTarget.value)}
                     autoComplete="off"
                     data-testid="connection-code"
                 />
-                <Button
-                    type="submit"
-                    variant="primary"
-                    disabled={!isBootstrapCodeValid(code)}
-                    data-testid="connect-submit"
-                >
+                <Button type="submit" variant="primary" disabled={!workflow.canSubmit} data-testid="connect-submit">
                     연결
                 </Button>
             </form>
-            {submitted ? (
+            {workflow.status === "validated" ? (
                 <Alert title="연결 예시를 확인했습니다" variant="info">
-                    fixture 화면이며 실제 서비스에 연결하지 않았습니다.
+                    코드 형식만 확인했습니다. 실제 서비스에 연결하거나 코드를 저장하지 않았습니다.
                 </Alert>
             ) : null}
             {showExpired ? (
                 <Alert title="접속 코드가 만료되었습니다" variant="warning">
                     {fixtureAdapter.bootstrapExpired.error.message}
-                    <Button type="button" onClick={() => setShowExpired(false)} data-testid="dismiss-expired">
+                    <Button type="button" onClick={workflow.dismissExpired} data-testid="dismiss-expired">
                         새 코드 입력
                     </Button>
                 </Alert>

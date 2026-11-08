@@ -4,3 +4,4 @@ export { Button, type ButtonProps } from "./Button.js";
 export { InputField, type InputFieldProps } from "./InputField.js";
 export { Modal, type ModalProps } from "./Modal.js";
 export { StatusBadge, type StatusBadgeProps } from "./StatusBadge.js";
+export { TextAreaField, type TextAreaFieldProps } from "./TextAreaField.js";
