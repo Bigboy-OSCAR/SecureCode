@@ -8,6 +8,16 @@ import { ContractValidator } from "@securecode/contracts";
 import screenCases from "../../../tests/fixtures/ui/screen-cases.json";
 import { App } from "../src/app/App.js";
 import { Alert, Button, InputField, StatusBadge } from "../src/components/index.js";
+import { fixtureAdapter } from "../src/api/fixtureAdapter.js";
+import { FixtureRunClient } from "../src/api/fixtureRunClient.js";
+import { ApprovalCard } from "../src/features/approvals/components/ApprovalCard.js";
+import { ConversationPanel } from "../src/features/chat/components/ConversationPanel.js";
+import { RunController } from "../src/features/chat/model/runController.js";
+import { shouldSubmitQuestionOnEnter } from "../src/features/chat/model/questionInput.js";
+import { ProjectPanel } from "../src/features/project/components/ProjectPanel.js";
+import { PointerPanel } from "../src/features/pointers/components/PointerPanel.js";
+import { PointerReadPanel } from "../src/features/pointers/components/PointerReadPanel.js";
+import { PdfParsePanel } from "../src/features/pointers/components/PdfParsePanel.js";
 import { isBootstrapCodeValid } from "../src/features/settings/model/inputValidation.js";
 import { isProjectFormValid } from "../src/features/project/model/projectForm.js";
 import { isPdfPathValid, isSourcePathValid } from "../src/features/pointers/model/pointerForm.js";
@@ -34,6 +44,11 @@ test("all feature screens render their stable identifiers", () => {
         assert.ok(markup.includes(`data-testid="screen-${screen}"`), `Expected ${screen} screen to render.`);
     }
     assert.ok(markup.includes('href="#main-content"'));
+    const identifiers = [...markup.matchAll(/data-testid="([^"]+)"/g)].map((match) => match[1]);
+    assert.equal(new Set(identifiers).size, identifiers.length, "data-testid values should be unique per screen.");
+    const codePattern = markup.match(/id="connection-code"[^>]*pattern="([^"]+)"/)?.[1];
+    assert.ok(codePattern);
+    assert.doesNotThrow(() => new RegExp(codePattern, "v"));
 });
 
 test("shared components render accessible labels and status text", () => {
@@ -124,10 +139,64 @@ test("forms reject blank input and bounded previews never retain long source tex
     assert.equal(boundedPreview("short", 120), "short");
 });
 
-test("rendered UI keeps actions distinct, labeled, and free of opaque pointer URLs", () => {
-    const markup = render(createElement(App));
+test("question keyboard handling preserves IME composition and Shift+Enter", () => {
+    assert.equal(shouldSubmitQuestionOnEnter("Enter", false, false, 13), true);
+    assert.equal(shouldSubmitQuestionOnEnter("Enter", true, false, 13), false);
+    assert.equal(shouldSubmitQuestionOnEnter("Enter", false, true, 13), false);
+    assert.equal(shouldSubmitQuestionOnEnter("Enter", false, false, 229), false);
+});
 
-    for (const label of ["승인 검토", "거절 검토", "취소 요청", "등록 해제", "저장 결과 삭제", "질문 입력"]) {
+test("disconnection disables project, pointer, read, and PDF operations", () => {
+    const markup = render(
+        createElement(
+            "div",
+            null,
+            createElement(ProjectPanel, { canMutate: false }),
+            createElement(PointerPanel, { canMutate: false }),
+            createElement(PointerReadPanel, { canRead: false }),
+            createElement(PdfParsePanel, { canMutate: false }),
+        ),
+    );
+
+    for (const testId of [
+        "project-register",
+        "source-register",
+        "source-unregister",
+        "runtime-delete",
+        "read-next",
+        "pdf-parse",
+    ]) {
+        assert.match(markup, new RegExp(`disabled=""[^>]*data-testid="${testId}"`), `${testId} must be disabled.`);
+    }
+    assert.ok(markup.includes("연결을 복구한 뒤 등록·삭제 요청을 다시 시도하세요."));
+    assert.ok(markup.includes("연결 복구 후 범위를 다시 조회하세요."));
+});
+
+test("rendered UI keeps actions distinct, labeled, and free of opaque pointer URLs", () => {
+    const snapshot = fixtureAdapter.runs[0]!;
+    const controller = new RunController(
+        new FixtureRunClient(),
+        snapshot.session_id,
+        snapshot.workspace_id,
+        () => "ui-test-idempotency-key",
+        () => Date.parse("2026-11-04T09:01:00Z"),
+    );
+    controller.restore(snapshot);
+    const markup = [
+        render(createElement(App)),
+        render(createElement(ConversationPanel, { controller, state: controller.getSnapshot() })),
+        render(createElement(ApprovalCard, { controller, state: controller.getSnapshot() })),
+    ].join("");
+
+    for (const label of [
+        "승인 검토",
+        "거절 검토",
+        "취소 요청",
+        "등록 해제",
+        "저장 결과 삭제",
+        "질문 입력",
+        "Shift+Enter로 줄 바꿈",
+    ]) {
         assert.ok(markup.includes(label), `Expected accessible action "${label}".`);
     }
     assert.ok(markup.includes('aria-live="polite"'));
@@ -147,4 +216,50 @@ test("rendered UI keeps actions distinct, labeled, and free of opaque pointer UR
     }
     assert.equal(markup.includes("securecode://"), false);
     assert.equal(markup.includes("root_path"), false);
+    controller.dispose();
+});
+
+test("failed run snapshot renders a terminal failure without hiding the interrupted answer", () => {
+    const completed = fixtureAdapter.runs[1]!;
+    const failed = {
+        ...completed,
+        status: "failed" as const,
+        terminal: {
+            ...completed.terminal!,
+            status: "failed" as const,
+            reason_code: "PROVIDER_ERROR" as const,
+            message: "모델 요청에 실패했습니다.",
+        },
+    };
+    const controller = new RunController(
+        new FixtureRunClient(),
+        failed.session_id,
+        failed.workspace_id,
+        () => "ui-test-idempotency-key",
+        () => Date.parse("2026-11-04T09:01:00Z"),
+    );
+    controller.restore(failed);
+    const markup = render(createElement(ConversationPanel, { controller, state: controller.getSnapshot() }));
+
+    assert.ok(markup.includes("실패"));
+    assert.ok(markup.includes("중단 전 결과"));
+    assert.ok(markup.includes("모델 요청에 실패했습니다."));
+    controller.dispose();
+});
+
+test("completed run snapshot renders its successful terminal state", () => {
+    const completed = fixtureAdapter.runs[1]!;
+    const controller = new RunController(
+        new FixtureRunClient(),
+        completed.session_id,
+        completed.workspace_id,
+        () => "ui-test-idempotency-key",
+        () => Date.parse("2026-11-04T09:01:00Z"),
+    );
+    controller.restore(completed);
+    const markup = render(createElement(ConversationPanel, { controller, state: controller.getSnapshot() }));
+
+    assert.ok(markup.includes("완료"));
+    assert.ok(markup.includes("질문"));
+    controller.dispose();
 });

@@ -1,9 +1,8 @@
 /** Renders project registration and indexing states from workspace contracts. */
-import { useState, type FormEvent } from "react";
 import type { IndexDiagnostic, IndexState } from "@securecode/contracts";
 import { Alert, Button, InputField, StatusBadge } from "../../../components/index.js";
 import { fixtureAdapter } from "../../../api/fixtureAdapter.js";
-import { isProjectFormValid } from "../model/projectForm.js";
+import { useProjectWorkflow } from "../hooks/useProjectWorkflow.js";
 
 const stateLabels: Record<IndexState, string> = {
     not_indexed: "색인 없음",
@@ -25,21 +24,14 @@ const diagnosticLabels: Record<IndexDiagnostic["reason_code"], string> = {
     path_rejected: "허용되지 않은 경로",
 };
 
-export function ProjectPanel(): React.JSX.Element {
-    const [displayName, setDisplayName] = useState("");
-    const [rootPath, setRootPath] = useState("");
-    const [submitted, setSubmitted] = useState(false);
-    const [indexState, setIndexState] = useState(1);
-    const index = fixtureAdapter.indexStates[indexState]!;
-    const formValid = isProjectFormValid(displayName, rootPath);
-    const diagnosticCount = index.diagnostics.length;
+export interface ProjectPanelProps {
+    canMutate: boolean;
+}
 
-    function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-        event.preventDefault();
-        if (formValid) {
-            setSubmitted(true);
-        }
-    }
+export function ProjectPanel({ canMutate }: ProjectPanelProps): React.JSX.Element {
+    const workflow = useProjectWorkflow();
+    const { displayName, rootPath, index, indexPosition } = workflow;
+    const diagnosticCount = index.diagnostics.length;
 
     return (
         <section className="feature-card" aria-labelledby="project-heading" data-testid="screen-project">
@@ -48,13 +40,13 @@ export function ProjectPanel(): React.JSX.Element {
                 <StatusBadge label={fixtureAdapter.workspace.display_name} tone="neutral" />
             </div>
             <p>지원 색인 언어: {fixtureAdapter.workspace.supported_languages.join(", ")}</p>
-            <form onSubmit={handleSubmit} className="stack-form">
+            <form onSubmit={workflow.submit} className="stack-form">
                 <InputField
                     id="project-display-name"
                     label="표시 이름"
                     value={displayName}
                     maxLength={120}
-                    onChange={(event) => setDisplayName(event.currentTarget.value)}
+                    onChange={(event) => workflow.setDisplayName(event.currentTarget.value)}
                     data-testid="project-name"
                 />
                 <InputField
@@ -62,14 +54,22 @@ export function ProjectPanel(): React.JSX.Element {
                     label="로컬 프로젝트 경로"
                     value={rootPath}
                     maxLength={4096}
-                    onChange={(event) => setRootPath(event.currentTarget.value)}
+                    onChange={(event) => workflow.setRootPath(event.currentTarget.value)}
                     data-testid="project-path"
                 />
-                <Button type="submit" variant="primary" disabled={!formValid} data-testid="project-register">
+                <Button
+                    type="submit"
+                    variant="primary"
+                    disabled={!workflow.formValid || !canMutate}
+                    data-testid="project-register"
+                >
                     프로젝트 등록 예시
                 </Button>
             </form>
-            {submitted ? <p role="status">입력 값이 유효합니다. 실제 등록 요청은 보내지 않았습니다.</p> : null}
+            {!canMutate ? <p role="status">연결을 복구한 뒤 프로젝트 등록을 다시 시도하세요.</p> : null}
+            {workflow.registrationValidated ? (
+                <p role="status">입력 값이 유효합니다. 실제 등록 요청은 보내지 않았습니다.</p>
+            ) : null}
             <div className="feature-heading">
                 <h3>색인 상태</h3>
                 <StatusBadge
@@ -86,10 +86,10 @@ export function ProjectPanel(): React.JSX.Element {
                     <Button
                         key={`${status.index_status}-${status.index_revision ?? "none"}`}
                         type="button"
-                        variant={indexState === position ? "primary" : "secondary"}
-                        aria-pressed={indexState === position}
-                        onClick={() => setIndexState(position)}
-                        data-testid={`index-state-${status.index_status}`}
+                        variant={indexPosition === position ? "primary" : "secondary"}
+                        aria-pressed={indexPosition === position}
+                        onClick={() => workflow.selectIndex(position)}
+                        data-testid={`index-state-${status.index_status}-${position}`}
                     >
                         {status.index_status === "indexing"
                             ? "진행 중"

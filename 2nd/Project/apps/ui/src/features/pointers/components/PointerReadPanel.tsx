@@ -2,6 +2,7 @@
 import { Alert, Button } from "../../../components/index.js";
 import { fixtureAdapter } from "../../../api/fixtureAdapter.js";
 import { boundedPreview } from "../../shared/model/boundedPreview.js";
+import { usePointerReadWorkflow } from "../hooks/usePointerReadWorkflow.js";
 
 const rangeLabels: Record<string, string> = {
     byte: "바이트 범위",
@@ -11,8 +12,13 @@ const rangeLabels: Record<string, string> = {
     pdf_page: "페이지",
 };
 
-export function PointerReadPanel(): React.JSX.Element {
+export interface PointerReadPanelProps {
+    canRead: boolean;
+}
+
+export function PointerReadPanel({ canRead }: PointerReadPanelProps): React.JSX.Element {
     const reading = fixtureAdapter.pointerRead;
+    const workflow = usePointerReadWorkflow();
 
     return (
         <section className="feature-card" aria-labelledby="pointer-read-heading" data-testid="screen-pointer-read">
@@ -28,10 +34,12 @@ export function PointerReadPanel(): React.JSX.Element {
                 {boundedPreview(reading.content, 120)}
             </pre>
             {reading.next_cursor ? (
-                <Button type="button" data-testid="read-next">
+                <Button type="button" disabled={!canRead} onClick={workflow.readNext} data-testid="read-next">
                     다음 부분
                 </Button>
             ) : null}
+            {workflow.nextMessage ? <p role="status">{workflow.nextMessage}</p> : null}
+            {!canRead ? <p role="status">연결 복구 후 범위를 다시 조회하세요.</p> : null}
             <Alert title="원본이 변경됐습니다" variant="warning">
                 {fixtureAdapter.pointerSourceChanged.error.message}
             </Alert>

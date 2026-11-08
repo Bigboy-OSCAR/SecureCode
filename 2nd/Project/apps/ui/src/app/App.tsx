@@ -9,8 +9,20 @@ import { ProjectPanel } from "../features/project/components/ProjectPanel.js";
 import { ConnectionPanel } from "../features/settings/components/ConnectionPanel.js";
 import { SettingsPanel } from "../features/settings/components/SettingsPanel.js";
 import { StatusBadge } from "../components/index.js";
+import { fixtureRunClient } from "../api/fixtureRunClient.js";
+import { fixtureAdapter } from "../api/fixtureAdapter.js";
+import { useRunController } from "../features/chat/hooks/useRunController.js";
+
+const fixtureNow = (): number => Date.parse("2026-11-04T09:01:00Z");
 
 export function App(): React.JSX.Element {
+    const { controller, state } = useRunController(
+        fixtureRunClient,
+        fixtureAdapter.runs[0]!.session_id,
+        fixtureAdapter.workspace.workspace_id,
+        fixtureNow,
+    );
+
     return (
         <>
             <a className="skip-link" href="#main-content">
@@ -35,7 +47,7 @@ export function App(): React.JSX.Element {
 
                 <div className="workspace-grid">
                     <nav className="project-sidebar" aria-label="프로젝트 및 화면">
-                        <ProjectPanel />
+                        <ProjectPanel canMutate={state.connection === "connected"} />
                         <div className="sidebar-links" aria-label="작업 영역">
                             <a className="sidebar-link sidebar-link-active" href="#screen-chat">
                                 대화
@@ -59,16 +71,16 @@ export function App(): React.JSX.Element {
                         </div>
                         <div className="feature-stack">
                             <ConnectionPanel />
-                            <ConversationPanel />
-                            <ApprovalCard />
+                            <ConversationPanel controller={controller} state={state} />
+                            <ApprovalCard controller={controller} state={state} />
                         </div>
                     </main>
 
                     <aside className="context-sidebar" aria-label="컨텍스트와 포인터">
                         <ContextPanel />
-                        <PointerPanel />
-                        <PointerReadPanel />
-                        <PdfParsePanel />
+                        <PointerPanel canMutate={state.connection === "connected"} />
+                        <PointerReadPanel canRead={state.connection === "connected"} />
+                        <PdfParsePanel canMutate={state.connection === "connected"} />
                         <SettingsPanel />
                     </aside>
                 </div>

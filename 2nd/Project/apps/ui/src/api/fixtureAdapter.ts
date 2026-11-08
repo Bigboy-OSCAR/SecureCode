@@ -1,6 +1,7 @@
 /** Supplies contract-backed examples to the UI without making network requests. */
 import type {
     AppEvent,
+    ApprovalDecisionResponse,
     BootstrapResponse,
     ContextPreviewResponse,
     ErrorResponse,
@@ -43,6 +44,9 @@ import contextPreviewFixture from "../../../../contracts/fixtures/context/previe
 import contextStaleFixture from "../../../../contracts/fixtures/context/preview-stale-error.valid.json";
 import outputDeltaFixture from "../../../../contracts/fixtures/events/run-output-delta-korean.valid.json";
 import approvalRejectedFixture from "../../../../contracts/fixtures/events/run-approval-rejected.valid.json";
+import runStatusCancelledFixture from "../../../../contracts/fixtures/events/run-status-cancelled-terminal.valid.json";
+import runStatusRunningFixture from "../../../../contracts/fixtures/events/run-status-running.valid.json";
+import approvalDecisionResponseFixture from "../../../../contracts/fixtures/api/approval-decision-response.valid.json";
 import symbolBundleFixture from "../../../../contracts/fixtures/symbols/bundle.valid.json";
 import symbolNoMatchFixture from "../../../../contracts/fixtures/symbols/search-no-match.valid.json";
 import symbolSearchFixture from "../../../../contracts/fixtures/symbols/search-response.valid.json";
@@ -88,6 +92,9 @@ const runs = [
 ];
 const outputDelta = outputDeltaFixture.data as AppEvent;
 const approvalRejected = approvalRejectedFixture.data as AppEvent;
+const runStatusCancelled = runStatusCancelledFixture.data as AppEvent;
+const runStatusRunning = runStatusRunningFixture.data as AppEvent;
+const approvalDecisionResponse = approvalDecisionResponseFixture.data as ApprovalDecisionResponse;
 const settings = settingsFixture.data as SettingsResponse;
 const protectionUnavailable = protectionUnavailableFixture.data as ErrorResponse;
 const symbolSearch = symbolSearchFixture.data as SymbolSearchResponse;
@@ -132,6 +139,9 @@ export const fixtureAdapter = {
     approvalDigestError,
     outputDelta,
     approvalRejected,
+    runStatusCancelled,
+    runStatusRunning,
+    approvalDecisionResponse,
     settings,
     protectionUnavailable,
     symbolSearch,
