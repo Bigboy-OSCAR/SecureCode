@@ -1,0 +1,133 @@
+[
+    { "screen": "SC-01", "state": "loading", "fixture": "contracts/fixtures/api/health-preauth-minimal.valid.json" },
+    { "screen": "SC-01", "state": "empty", "fixture": null },
+    {
+        "screen": "SC-01",
+        "state": "error",
+        "fixture": "contracts/fixtures/api/bootstrap-code-expired-error.valid.json"
+    },
+    {
+        "screen": "SC-01",
+        "state": "expired",
+        "fixture": "contracts/fixtures/api/bootstrap-code-expired-error.valid.json"
+    },
+    { "screen": "SC-02", "state": "empty", "fixture": "contracts/fixtures/api/workspace-list-page.valid.json" },
+    { "screen": "SC-02", "state": "selected", "fixture": "contracts/fixtures/api/workspace.valid.json" },
+    { "screen": "SC-02", "state": "loading", "fixture": "contracts/fixtures/api/index-status-indexing.valid.json" },
+    {
+        "screen": "SC-02",
+        "state": "error",
+        "fixture": "contracts/fixtures/api/workspace-path-rejected-error.valid.json"
+    },
+    { "screen": "SC-02", "state": "partial", "fixture": "contracts/fixtures/api/index-status-partial.valid.json" },
+    { "screen": "SC-02", "state": "ready", "fixture": "contracts/fixtures/api/index-status-ready.valid.json" },
+    { "screen": "SC-02", "state": "no_match", "fixture": "contracts/fixtures/api/index-status-zero-files.valid.json" },
+    { "screen": "SC-02", "state": "source_changed", "fixture": "contracts/fixtures/api/index-status-stale.valid.json" },
+    { "screen": "SC-03", "state": "empty", "fixture": null },
+    {
+        "screen": "SC-03",
+        "state": "loading",
+        "fixture": "contracts/fixtures/api/run-snapshot-awaiting-approval.valid.json"
+    },
+    {
+        "screen": "SC-03",
+        "state": "streaming",
+        "fixture": "contracts/fixtures/events/run-output-delta-korean.valid.json"
+    },
+    { "screen": "SC-03", "state": "error", "fixture": "contracts/fixtures/api/run-already-active-error.valid.json" },
+    { "screen": "SC-03", "state": "no_match", "fixture": "contracts/fixtures/symbols/search-no-match.valid.json" },
+    { "screen": "SC-03", "state": "cancelled", "fixture": "contracts/fixtures/api/run-snapshot-cancelled.valid.json" },
+    { "screen": "SC-03", "state": "completed", "fixture": "contracts/fixtures/api/run-snapshot-completed.valid.json" },
+    { "screen": "SC-04", "state": "loading", "fixture": "contracts/fixtures/api/approval-request-command.valid.json" },
+    { "screen": "SC-04", "state": "empty", "fixture": "contracts/fixtures/api/run-snapshot-completed.valid.json" },
+    {
+        "screen": "SC-04",
+        "state": "pending",
+        "fixture": "contracts/fixtures/api/run-snapshot-awaiting-approval.valid.json"
+    },
+    {
+        "screen": "SC-04",
+        "state": "error",
+        "fixture": "contracts/fixtures/api/approval-digest-mismatch-error.valid.json"
+    },
+    { "screen": "SC-04", "state": "expired", "fixture": "contracts/fixtures/api/approval-expired-error.valid.json" },
+    { "screen": "SC-04", "state": "rejected", "fixture": "contracts/fixtures/events/run-approval-rejected.valid.json" },
+    { "screen": "SC-05", "state": "loading", "fixture": "contracts/fixtures/symbols/search-response.valid.json" },
+    { "screen": "SC-05", "state": "selected", "fixture": "contracts/fixtures/symbols/bundle.valid.json" },
+    { "screen": "SC-05", "state": "empty", "fixture": "contracts/fixtures/symbols/search-no-match.valid.json" },
+    { "screen": "SC-05", "state": "error", "fixture": "contracts/fixtures/context/preview-stale-error.valid.json" },
+    { "screen": "SC-05", "state": "expired", "fixture": "contracts/fixtures/pointers/error-expired.valid.json" },
+    {
+        "screen": "SC-05",
+        "state": "source_changed",
+        "fixture": "contracts/fixtures/pointers/error-source-changed.valid.json"
+    },
+    { "screen": "SC-05", "state": "no_match", "fixture": "contracts/fixtures/symbols/search-no-match.valid.json" },
+    {
+        "screen": "SC-05",
+        "state": "budget_exceeded",
+        "fixture": "contracts/fixtures/context/preview-explicit-over-budget.valid.json"
+    },
+    { "screen": "SC-06", "state": "empty", "fixture": "contracts/fixtures/pointers/pointer-list-empty.valid.json" },
+    { "screen": "SC-06", "state": "loading", "fixture": "contracts/fixtures/pointers/pointer-list.valid.json" },
+    {
+        "screen": "SC-06",
+        "state": "runtime",
+        "fixture": "contracts/fixtures/pointers/pointer-descriptor-runtime.valid.json"
+    },
+    {
+        "screen": "SC-06",
+        "state": "error",
+        "fixture": "contracts/fixtures/pointers/error-forbidden-session.valid.json"
+    },
+    { "screen": "SC-06", "state": "expired", "fixture": "contracts/fixtures/pointers/error-expired.valid.json" },
+    {
+        "screen": "SC-06",
+        "state": "source_changed",
+        "fixture": "contracts/fixtures/pointers/error-source-changed.valid.json"
+    },
+    { "screen": "SC-07", "state": "loading", "fixture": "contracts/fixtures/pointers/read-selected-utf8.valid.json" },
+    { "screen": "SC-07", "state": "preview", "fixture": "contracts/fixtures/context/preview-plan-response.valid.json" },
+    { "screen": "SC-07", "state": "empty", "fixture": null },
+    { "screen": "SC-07", "state": "error", "fixture": "contracts/fixtures/pointers/error-invalid-selector.valid.json" },
+    { "screen": "SC-07", "state": "expired", "fixture": "contracts/fixtures/pointers/error-expired.valid.json" },
+    {
+        "screen": "SC-07",
+        "state": "source_changed",
+        "fixture": "contracts/fixtures/pointers/error-source-changed.valid.json"
+    },
+    { "screen": "SC-07", "state": "no_match", "fixture": "contracts/fixtures/pointers/search-no-matches.valid.json" },
+    {
+        "screen": "SC-07",
+        "state": "budget_exceeded",
+        "fixture": "contracts/fixtures/pointers/error-budget-exceeded.valid.json"
+    },
+    { "screen": "SC-08", "state": "queued", "fixture": "contracts/fixtures/pointers/pdf-job-queued.valid.json" },
+    { "screen": "SC-08", "state": "running", "fixture": "contracts/fixtures/pointers/pdf-job-running.valid.json" },
+    { "screen": "SC-08", "state": "ready", "fixture": "contracts/fixtures/pointers/pdf-job-ready.valid.json" },
+    { "screen": "SC-08", "state": "partial", "fixture": "contracts/fixtures/pointers/pdf-job-partial.valid.json" },
+    { "screen": "SC-08", "state": "error", "fixture": "contracts/fixtures/pointers/pdf-job-failed.valid.json" },
+    { "screen": "SC-08", "state": "source_changed", "fixture": "contracts/fixtures/pointers/pdf-job-stale.valid.json" },
+    {
+        "screen": "SC-08",
+        "state": "unsupported",
+        "fixture": "contracts/fixtures/pointers/pdf-job-unsupported.valid.json"
+    },
+    { "screen": "SC-09", "state": "loading", "fixture": "contracts/fixtures/api/settings-not-configured.valid.json" },
+    { "screen": "SC-09", "state": "empty", "fixture": null },
+    {
+        "screen": "SC-09",
+        "state": "not_configured",
+        "fixture": "contracts/fixtures/api/settings-not-configured.valid.json"
+    },
+    {
+        "screen": "SC-09",
+        "state": "error",
+        "fixture": "contracts/fixtures/api/protection-unavailable-error.valid.json"
+    },
+    {
+        "screen": "SC-09",
+        "state": "budget_exceeded",
+        "fixture": "contracts/fixtures/context/preview-explicit-over-budget.valid.json"
+    }
+]

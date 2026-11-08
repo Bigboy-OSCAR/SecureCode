@@ -98,6 +98,10 @@
     padding: var(--space-5);
 }
 
+.project-sidebar {
+    padding: var(--space-3);
+}
+
 .project-sidebar h1,
 .conversation h2,
 .context-sidebar h2 {
@@ -122,9 +126,15 @@
 }
 
 .sidebar-link {
+    display: block;
     border-radius: var(--radius-sm);
     padding: var(--space-2) var(--space-3);
     color: var(--color-text-muted);
+    text-decoration: none;
+}
+
+.sidebar-link:hover {
+    color: var(--color-accent);
 }
 
 .sidebar-link-active {
@@ -136,6 +146,11 @@
 .conversation {
     min-height: 38rem;
     padding: var(--space-6);
+}
+
+.feature-stack {
+    display: grid;
+    gap: var(--space-4);
 }
 
 .conversation-heading {
