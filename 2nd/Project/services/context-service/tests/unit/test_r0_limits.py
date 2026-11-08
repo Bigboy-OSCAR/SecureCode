@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from securecode_context.symbols import graph
+from securecode_context.symbols.graph import source_graph as graph
 from securecode_context.symbols.index import build_index
 
 

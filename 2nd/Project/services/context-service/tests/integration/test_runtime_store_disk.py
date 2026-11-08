@@ -10,10 +10,22 @@ from securecode_context.pointers.runtime.store import RuntimeStore
 
 
 def _pid(descriptor):
+    """함수 이름: _pid()
+    기능: _pid 기능을 수행한다.
+    인자: descriptor
+    반환값: 없음
+    작성 날짜: 2026/11/06
+    """
     return descriptor.pointer.split("/")[-1].split("?")[0]
 
 
 def test_restart_recovery(tmp_path):
+    """함수 이름: test_restart_recovery()
+    기능: test_restart_recovery 기능을 수행한다.
+    인자: tmp_path
+    반환값: 없음
+    작성 날짜: 2026/11/06
+    """
     root = tmp_path / ".securecode" / "runtime"
     first = RuntimeStore(root)
     d = first.put(RuntimePut("ws-1", "session-1", "text/plain", b"persistent data"))
@@ -26,9 +38,21 @@ def test_restart_recovery(tmp_path):
 
 
 def test_concurrent_puts(tmp_path):
+    """함수 이름: test_concurrent_puts()
+    기능: test_concurrent_puts 기능을 수행한다.
+    인자: tmp_path
+    반환값: 없음
+    작성 날짜: 2026/11/06
+    """
     store = RuntimeStore(tmp_path / ".securecode" / "runtime")
 
     def save(index):
+        """함수 이름: save()
+        기능: save 기능을 수행한다.
+        인자: index
+        반환값: 없음
+        작성 날짜: 2026/11/06
+        """
         return store.put(
             RuntimePut("ws-1", "session-1", "text/plain", f"value-{index}".encode())
         ).pointer
@@ -41,6 +65,12 @@ def test_concurrent_puts(tmp_path):
 
 
 def test_many_pointers_and_session_clear(tmp_path):
+    """함수 이름: test_many_pointers_and_session_clear()
+    기능: test_many_pointers_and_session_clear 기능을 수행한다.
+    인자: tmp_path
+    반환값: 없음
+    작성 날짜: 2026/11/06
+    """
     store = RuntimeStore(tmp_path / ".securecode" / "runtime")
     request = RuntimePut("ws-1", "session-1", "text/plain", b"x")
     for _ in range(10_001):

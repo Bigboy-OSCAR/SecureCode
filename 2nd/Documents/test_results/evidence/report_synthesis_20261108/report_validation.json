@@ -1,0 +1,75 @@
+{
+  "status": "PASS",
+  "review_date_kst": "2026-11-08",
+  "report_path": "/Users/oscar/Desktop/SecureCode/2nd/Documents/Md_Files/2026-11-08_데이터셋_선정과_R0_QASPER_모델교체_실험보고서.md",
+  "report_sha256": "d9703c6bfcb149a4c18cf4ad3fd3eab002cdb2537844ce4e5ea0f9f24658668d",
+  "main_sections": [
+    "1. 검토한 데이터셋 7가지",
+    "2. QASPER를 선택한 이유",
+    "3. Qwen2.5를 사용한 기존 구조와 R0의 QASPER 실험",
+    "4. Qwen3.8로 모델을 교체한 후의 결과"
+  ],
+  "checks": [
+    "Four requested topics present",
+    "Saved QASPER replacement responses independently rescored for all 984 tasks",
+    "Original four-arm table agrees with final summary",
+    "Replacement F1, cluster confidence interval, input tokens and call times agree with recomputation",
+    "Call-only time explicitly distinguished from query time",
+    "Replacement-model A/B/FULL results not claimed",
+    "No new LLM inference in this writing task",
+    "Model size, quantization, runtime and tokenizer changes disclosed",
+    "All local references exist",
+    "Original reports and experiment input artifacts unchanged",
+    "Supplementary code score totals and three repeat counts match archive"
+  ],
+  "source_check": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/report_synthesis_20261108/qasper_model_comparison_check.json",
+  "supplementary_code_record_counts": {
+    "small": {
+      "unique_questions": 96,
+      "repeats": 3,
+      "old_correct_sum": 78,
+      "new_correct_sum": 186,
+      "old_correct_per_repeat": 26,
+      "new_correct_per_repeat": 62
+    },
+    "large": {
+      "unique_questions": 96,
+      "repeats": 3,
+      "old_correct_sum": 75,
+      "new_correct_sum": 183,
+      "old_correct_per_repeat": 25,
+      "new_correct_per_repeat": 61
+    }
+  },
+  "local_links_checked": [
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/document_benchmarks_20261027/data_manifest.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/research_papers.md",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/input_eligibility.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/data_manifest.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/run_experiment.py",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/03_현재색인_A와_파일간확장_B_재실험_비교보고서.md",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/protocol.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/analysis_plan.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/summary.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/verification.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qwen3_8_27b_20261106.zip",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/report_synthesis_20261108/qasper_model_comparison_check.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/04_Qwen2.5_Qwen3.8_성능비교.md",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/document_benchmarks/research_sources.md",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/qasper_benchmark/research_papers.md",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/summary.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/protocol.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/verification.json",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qwen3_8_27b_20261106.zip",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/report_synthesis_20261108/qasper_model_comparison_check.json"
+  ],
+  "external_source_links": [
+    "https://aclanthology.org/2022.emnlp-main.823/",
+    "https://huggingface.co/datasets/zai-org/LongBench/blob/5e628be450b7e67fb7ae6e201bd6d8f7056f7672/README.md",
+    "https://aclanthology.org/2021.naacl-main.365/",
+    "https://aclanthology.org/2022.tacl-1.31/",
+    "https://proceedings.iclr.cc/paper_files/paper/2024/file/8a2acd174940dbca361a6398a4f9df91-Paper-Conference.pdf",
+    "https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct",
+    "https://huggingface.co/Qwen/Qwen3.8-27B"
+  ]
+}

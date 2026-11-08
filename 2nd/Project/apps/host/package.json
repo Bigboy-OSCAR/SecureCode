@@ -16,7 +16,9 @@
         "plugin:test": "node --import tsx --test tests/integration/runtimePointerPlugin.test.ts",
         "cline:test": "npm run probe -w @securecode/sdk-probe -- --no-evidence lifecycle",
         "session:test": "npm run probe -w @securecode/sdk-probe -- --no-evidence lifecycle approval",
-        "pipeline:test": "npm run hook:test && npm run plugin:test"
+        "pipeline:test": "npm run hook:test && npm run plugin:test",
+        "host:test": "node --import tsx --test tests/integration/sdkRuns.test.ts tests/integration/sdkSafety.test.ts",
+        "api:test": "node --import tsx --test tests/unit/hostServer.test.ts tests/unit/runLifecycle.test.ts tests/unit/devProxy.test.ts tests/unit/permissions.test.ts"
     },
     "dependencies": {
         "@cline/sdk": "0.2.0",

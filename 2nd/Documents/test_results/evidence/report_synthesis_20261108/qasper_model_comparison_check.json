@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "scope": "Saved QASPER R0 record reconciliation and F1/bootstrap recomputation; no inference and no replacement-model retokenization.",
+  "archive_sha256": "66768afe4e6e6ebf5cfb61bb8b35e7642bf3f56dead995005b2318db258174c9",
+  "questions": 984,
+  "source_contexts": 273,
+  "model_identity": {
+    "model": "/Users/oscar/.lmstudio/models/lmstudio-community/Qwen3.8-27B-MLX-5bit",
+    "revision": "b9ad7b92aa2fd07b041f4b8b3aa459941f8abbf7",
+    "bits": 5,
+    "hardware": {
+      "device_name": "Apple M3 Pro",
+      "max_recommended_working_set_size": 30150672384,
+      "memory_size": 38654705664,
+      "architecture": "applegpu_g15s",
+      "max_buffer_length": 22613000192,
+      "resource_limit": 499000
+    },
+    "temperature": 0,
+    "seed": 1,
+    "thinking": false,
+    "prompt_cache": false,
+    "batch_size": 1,
+    "packages": {
+      "mlx": "0.32.4",
+      "mlx-metal": "0.32.4",
+      "mlx-lm": "0.32.2",
+      "transformers": "5.22.1"
+    }
+  },
+  "old_f1": 34.13032529374357,
+  "new_f1": 36.45465269183099,
+  "delta_points": 2.3243273980874193,
+  "ci95_points": [
+    0.5719803527626462,
+    4.170061408224226
+  ],
+  "bootstrap_seed": 1,
+  "bootstrap_draws": 10000,
+  "higher": 192,
+  "equal": 603,
+  "lower": 189,
+  "old_input_tokens_mean": 1154.625,
+  "new_input_tokens_mean": 1161.9308943089432,
+  "new_input_tokens_max": 1245,
+  "old_output_tokens_mean": 7.5182926829268295,
+  "new_output_tokens_mean": 8.177845528455284,
+  "old_call_seconds_mean": 3.687515803187125,
+  "new_call_seconds_mean": 12.693685019340762,
+  "call_time_ratio": 3.4423405069531072,
+  "call_time_increase_pct": 244.2340506953107,
+  "finish_reasons": {
+    "stop": 984
+  },
+  "new_peak_memory_gb_recorded_max": 21.27208561,
+  "checks": [
+    "Archive ZIP CRC checks",
+    "984 unique task IDs match full original R0 population",
+    "273 source context IDs and cluster IDs match",
+    "Original prompt SHA matches archived Qwen2.5 actual request",
+    "Replacement formatted prompt SHA equals original prompt plus non-thinking prefix",
+    "984 old/new F1 scores recomputed from every reference answer",
+    "Old input/output tokens and call times match archived requests",
+    "Replacement saved input counts/return codes/context reserve/output limits checked",
+    "Aggregate score, direction counts and call times match archived summary",
+    "Paired context-cluster bootstrap reproduced with archived report seed 1"
+  ],
+  "input_artifacts": {
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qwen3_8_27b_20261106.zip": "66768afe4e6e6ebf5cfb61bb8b35e7642bf3f56dead995005b2318db258174c9",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/summary.json": "7bc85143f1d79e4b5e9ad2596054ca14c6e048c08b6134f80738bd694c16f472",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/verification.json": "e26e1b6f4c81c2de65d7153b04cb16ede6a538d00e7bb9b549d4d1054ce922d3",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/tasks.jsonl": "2e06b09fc53507f1e8eff3daaf0f2fc105b5f3c8ca4e216e2d29fbc72164349d",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qasper_benchmark_20261027/results.jsonl": "5e7cc13d4cb2b3ca68e9efcf3bccde0a1a51d6cdee88a968652b318d235f1cf2",
+    "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/04_Qwen2.5_Qwen3.8_성능비교.md": "a75c39366d52ab5f0614cac88ba04ed2baabac2dfda88094d3e0080da51481b2"
+  }
+}

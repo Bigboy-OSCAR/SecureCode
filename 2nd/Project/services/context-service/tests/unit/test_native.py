@@ -7,9 +7,9 @@ import tree_sitter_cpp
 from tree_sitter import Language, Parser
 
 from securecode_context.symbols.graph import SourceGraph
-from securecode_context.symbols.model import Declaration
-from securecode_context.symbols.native import parse_native
 from securecode_context.symbols.parser import parse_source
+from securecode_context.symbols.parser.model import Declaration
+from securecode_context.symbols.parser.native import parse_native
 
 
 def declarations(path: str, source: str, *, cpp: bool = False) -> list[Declaration]:

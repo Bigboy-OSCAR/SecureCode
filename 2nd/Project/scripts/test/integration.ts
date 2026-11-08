@@ -1,7 +1,9 @@
 /**
  * `npm run test:integration`: real processes on loopback. Covers the service
- * process test and the host -> context-service health chain, including the
- * degraded path when the service stops. Unbuilt suites are PENDING.
+ * process test, the real-SDK host suites (scripted provider), the host ->
+ * context-service health chain with browser auth and the production refusal
+ * while required hooks are missing, and the degraded path when the service
+ * stops. Unbuilt suites are PENDING.
  */
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -16,6 +18,51 @@ const validator = ContractValidator.load();
 
 function expectStep(name: string, passed: boolean, detail: string): StepResult {
     return { name, status: passed ? "PASS" : "FAIL", detail };
+}
+
+/** The real host process: cookie auth, then sessions refused while 4.4/4.8 hooks are not registered. */
+async function productionGuardSteps(hostUrl: string, bootstrapCode: string, dataDir: string): Promise<StepResult[]> {
+    const results: StepResult[] = [];
+    const json = { origin: hostUrl, "content-type": "application/json" };
+    const anonymous = await fetch(`${hostUrl}/api/v1/sessions`, { method: "POST", headers: json, body: "{}" });
+    results.push(
+        expectStep("chain: API needs the launch cookie", anonymous.status === 401, `HTTP ${anonymous.status}`),
+    );
+    const login = await fetch(`${hostUrl}/api/v1/auth/bootstrap`, {
+        method: "POST",
+        headers: json,
+        body: JSON.stringify({ code: bootstrapCode }),
+    });
+    const cookie = (login.headers.get("set-cookie") ?? "").split(";", 1)[0] ?? "";
+    results.push(
+        expectStep(
+            "chain: bootstrap sets HttpOnly cookie",
+            login.status === 200 && cookie !== "",
+            `HTTP ${login.status}`,
+        ),
+    );
+    const authed = { ...json, cookie };
+    const root = mkdtempSync(join(dataDir, "ws-"));
+    const workspace = await fetch(`${hostUrl}/api/v1/workspaces`, {
+        method: "POST",
+        headers: authed,
+        body: JSON.stringify({ display_name: "it", root_path: root, idempotency_key: "it-workspace-key" }),
+    });
+    const workspaceBody = (await workspace.json()) as { workspace_id?: string };
+    const session = await fetch(`${hostUrl}/api/v1/sessions`, {
+        method: "POST",
+        headers: authed,
+        body: JSON.stringify({ workspace_id: workspaceBody.workspace_id, idempotency_key: "it-session-key" }),
+    });
+    const sessionBody = (await session.json()) as { error?: { code?: string } };
+    results.push(
+        expectStep(
+            "chain: sessions refused until 4.4/4.8 hooks are registered",
+            workspace.status === 201 && session.status === 503 && sessionBody.error?.code === "PROTECTION_UNAVAILABLE",
+            `workspace HTTP ${workspace.status}, session HTTP ${session.status} ${sessionBody.error?.code ?? ""}`,
+        ),
+    );
+    return results;
 }
 
 async function hostServiceChainSteps(): Promise<StepResult[]> {
@@ -48,11 +95,7 @@ async function hostServiceChainSteps(): Promise<StepResult[]> {
             expectStep("chain: service rejects no token", anonymous.status === 401, `HTTP ${anonymous.status}`),
         );
 
-        const pending = await fetch(`${services.hostUrl}/api/v1/sessions`, {
-            method: "POST",
-            headers: { origin: services.hostUrl },
-        });
-        results.push(expectStep("chain: unbuilt route is 501", pending.status === 501, `HTTP ${pending.status}`));
+        results.push(...(await productionGuardSteps(services.hostUrl, services.bootstrapCode, dataDir)));
 
         await services.stopService();
         const degradedBody: unknown = await (await fetch(`${services.hostUrl}/api/v1/health`)).json();
@@ -71,7 +114,7 @@ async function hostServiceChainSteps(): Promise<StepResult[]> {
 await runAndExit("test:integration", [
     async () => [await uvStep("service process (pytest -m integration)", ["pytest", "-q", "-m", "integration"])],
     async () => [
-        await toolStep("SDK pointer replacement", process.execPath, [
+        await toolStep("SDK host: pointer plugin, runs, approvals, cancel, SSE", process.execPath, [
             "--import",
             "tsx",
             "--test",

@@ -24,6 +24,16 @@ Python은 프로젝트 루트와 표준 `src/` 배치에서 로컬 import를 찾
 
 파일 하나와 후보 하나의 상한은 각각 1 MiB다. 원문·import·위치가 선언마다 반복되어 한 파일의 단일 후보 텍스트 합이 16 MiB를 넘으면 해당 파일에 `too_large`를 기록한다. 참조 묶음은 최대 64개 심볼을 포함하며, 상한으로 참조를 생략하면 후보에 `truncated`를 표시한다. 작업 공간의 전체 단일 원문 텍스트 또는 전체 검색 후보 텍스트가 각각 128 MiB를 넘으면 생성을 중단한다. 이 경우 더 작은 소스 디렉터리를 지정해 다시 실행할 수 있다.
 
+### 작업 공간 revision으로 생성
+
+`--out` 대신 `--store`를 쓰면 작업 공간별 revision을 저장한다. 출력은 원문 없는 `IndexStatusResponse` JSON이다.
+
+```bash
+uv run python -m securecode_context.symbols /path/to/project --store ../../.securecode/workspaces --workspace-id ws_01J9Z6Q4TEST
+```
+
+실행할 때마다 `<store>/<workspace_id>/symbols/revisions/<번호>.json`을 완성한 뒤 `current.json`을 교체한다. 최근 2개 revision만 남긴다. 각 revision에는 파일 manifest와 크기·수정 시각, 이전 revision 대비 추가·수정·삭제·이동, 다시 만들 후보 ID와 bundle·IDF 재계산 필요 여부가 들어 있다. 검색 벡터는 3.4에서 준비하므로 상태는 `parsed`, `searchable=false`다. 이전 revision 번호로 요청하거나 색인 뒤 바뀐 파일의 원문을 요청하면 `SOURCE_CHANGED`를 반환한다.
+
 ## 레거시 Runtime Pointer API
 
 기존 호스트 훅을 시험할 때는 이 폴더에서 별도로 실행한다. 기동 시 서버와 호스트에 동일한 `SECURECODE_INTERNAL_TOKEN`을 설정하고 서버의 `SECURECODE_DATA_DIR`에 전용 데이터 디렉터리를 지정한다.
