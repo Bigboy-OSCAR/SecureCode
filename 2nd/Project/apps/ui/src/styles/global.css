@@ -1,0 +1,48 @@
+@import "./tokens.css";
+@import "./components.css";
+
+:root {
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background: var(--color-canvas);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    font-size: var(--font-size-body);
+    line-height: 1.5;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button,
+a,
+input,
+select,
+textarea,
+dialog {
+    -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+}
+
+::selection {
+    color: var(--color-on-accent);
+    background: var(--color-accent);
+}

@@ -20,7 +20,7 @@ export default tseslint.config(
     },
     js.configs.recommended,
     {
-        files: ["**/*.ts"],
+        files: ["**/*.ts", "**/*.tsx"],
         extends: [...tseslint.configs.recommendedTypeChecked],
         languageOptions: {
             globals: { ...globals.node },
@@ -51,6 +51,7 @@ export default tseslint.config(
                 "error",
                 { selector: "default", format: ["camelCase"], leadingUnderscore: "allow" },
                 { selector: "variable", format: ["camelCase", "UPPER_CASE"] },
+                { selector: "function", format: ["PascalCase"], filter: { regex: "^[A-Z]", match: true } },
                 { selector: "function", format: ["camelCase"] },
                 { selector: "typeLike", format: ["PascalCase"] },
                 { selector: "enumMember", format: ["PascalCase"] },
