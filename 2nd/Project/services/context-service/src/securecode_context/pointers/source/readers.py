@@ -1,66 +1,77 @@
-MAX_LINE_BYTES = 65536
-MAX_TOTAL_BYTES = 1048576
-MAX_BOUNDED_LINES = 1000
-MAX_BOUNDED_BYTES = 16384
-"""Source Pointer Bounded Reader.
+"""Source file reader implementation with bounded line and memory limits."""
 
-작성일: 2026-11-07
-"""
-
+import os
 import json
 from typing import Any, Dict, Optional
-from securecode_context.pointers.source.index import LineIndexer
-from securecode_context.pointers.source.registry import SourceRegistry
 
+MAX_LINE_BYTES = 65536      # 64 KB per line limit
+MAX_TOTAL_BYTES = 1048576   # 1 MB total read limit
 
 class BoundedSourceReader:
-    """seek 기반 Bounded I/O Reader."""
+    """Bounded line and byte reader for workspace source files."""
 
-    def __init__(self, registry: SourceRegistry):
+    def __init__(self, registry: Any = None):
         self.registry = registry
 
-    def read_range(self, pointer: str, start_line: Optional[int] = None, end_line: Optional[int] = None, max_bytes: int = 16384) -> Dict[str, Any]:
+    def read_range(self, pointer: str, start_line: int = 1, end_line: int = 100, max_bytes: int = MAX_TOTAL_BYTES) -> Dict[str, Any]:
+        """
+        D3, D5 fix: Bounded read with pointer verification & change check.
+        """
+        if not self.registry:
+            raise ValueError("Registry not configured")
+
         desc = self.registry.stat(pointer)
-        real_p = desc.real_path
+        file_path = desc.real_path
 
-        indexer = LineIndexer(real_p)
-        total_lines = len(indexer.line_offsets) - 1
+        current_mtime = os.path.getmtime(file_path) if os.path.exists(file_path) else 0
+        if hasattr(desc, 'mtime') and desc.mtime and current_mtime != desc.mtime:
+            raise ValueError("SOURCE_CHANGED")
 
-        s_line = start_line or 1
-        e_line = end_line or total_lines
-        if s_line > e_line or s_line < 1 or e_line > total_lines:
-            raise ValueError(f"INVALID_SELECTOR: Line range [{s_line}, {e_line}] invalid")
+        lines = []
+        total_bytes_read = 0
 
-        start_bytes, _ = indexer.get_line_bounds(s_line)
-        _, end_bytes = indexer.get_line_bounds(e_line)
-        target_len = min(end_bytes - start_bytes, max_bytes)
+        with open(file_path, "rb") as f:
+            current_line = 1
+            for raw_line in f:
+                if current_line > end_line:
+                    break
+                if current_line >= start_line:
+                    chunk = raw_line[:MAX_LINE_BYTES]
+                    total_bytes_read += len(chunk)
 
-        with open(real_p, "rb") as f:
-            f.seek(start_bytes)
-            content_bytes = f.read(target_len)
-            bytes_read = len(content_bytes)
+                    if total_bytes_read > max_bytes:
+                        break
 
-        self.registry.stat(pointer)
-        content_text = content_bytes.decode("utf-8", errors="replace")
-        truncated = (end_bytes - start_bytes) > max_bytes
+                    lines.append(chunk.decode("utf-8", errors="replace").rstrip("\r\n"))
+                current_line += 1
+
+        content = "\n".join(lines)
 
         return {
-            "content": content_text,
             "pointer": pointer,
-            "revision": desc.revision,
-            "truncated": truncated,
-            "bytes_read": bytes_read,
-            "start_line": s_line,
-            "end_line": e_line
+            "lines": lines,
+            "content": content,
+            "bytes_read": total_bytes_read,
+            "truncated": total_bytes_read >= max_bytes
         }
 
-    def read_json_path(self, pointer: str, json_path: str) -> Dict[str, Any]:
-        desc = self.registry.stat(pointer)
-        if desc.byte_size > 8 * 1024 * 1024:
-            raise ValueError("EXCEEDED: JSON file exceeds 8 MiB limit")
-
-        with open(desc.real_path, "r", encoding="utf-8") as f:
+    def read_json_path(self, file_path: str, json_path: Optional[str] = None) -> Any:
+        """
+        D4 fix: Query JSON content by path instead of returning entire 500KB file.
+        """
+        with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
-        self.registry.stat(pointer)
-        return {"pointer": pointer, "json_path": json_path, "data": data}
+        if not json_path or json_path == "$":
+            return data
+
+        keys = [k for k in json_path.strip("$. ").split(".") if k]
+        curr = data
+        for k in keys:
+            if isinstance(curr, dict) and k in curr:
+                curr = curr[k]
+            else:
+                return None
+        return curr
+
+SourceReader = BoundedSourceReader

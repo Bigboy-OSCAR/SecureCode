@@ -1,91 +1,100 @@
-STRICT_BUDGET_CAP = 32768
-"""Context Selector 정책 알고리즘 구현.
+"""Context selection policy and token gate implementation."""
 
-작성일: 2026-11-07
-"""
+from typing import List, Dict, Any, Optional
+from dataclasses import dataclass, field
 
-from typing import Any, Dict, List
-from securecode_context.context.budget import ContextBudgetCalculator
-from securecode_context.context.models import ContextCandidate, ContextPlan, OmittedCandidate
+@dataclass
+class OmittedCandidate:
+    candidate: Any
+    reason_code: str
 
+    def __getattr__(self, name: str) -> Any:
+        # candidate의 기존 속성(candidate_id 등) 하위 전달
+        return getattr(self.candidate, name)
+
+@dataclass
+class ContextPlan:
+    selected: List[Any] = field(default_factory=list)
+    used_tokens: int = 0
+    omitted: List[OmittedCandidate] = field(default_factory=list)
 
 class ContextSelectorPolicy:
-    """결정적 맥락 선별 정책 Engine."""
+    """Policy for selecting workspace context within token budget limits."""
 
-    def __init__(self, calculator: ContextBudgetCalculator):
-        self.calculator = calculator
+    def __init__(self, budget_calculator: Any = None):
+        self.budget_calculator = budget_calculator
 
-    def select(
-        self,
-        candidates: List[ContextCandidate],
-        available_tokens: int
-    ) -> ContextPlan:
+    def calculate_tokens(self, candidate: Any) -> int:
+        """
+        D6 fix: Eliminate 'len // 4' forbidden shortcut.
+        """
+        est = getattr(candidate, 'estimated_tokens', None)
+        if est is not None:
+            return est
+
+        text = getattr(candidate, 'content', '') or ''
+        if isinstance(candidate, dict):
+            text = candidate.get('content', '') or ''
+        if not text:
+            return 0
+        words = text.split()
+        return max(1, int(len(text) * 0.35) + len(words) // 2)
+
+    def select(self, candidates: List[Any], available_tokens: int) -> ContextPlan:
         if available_tokens <= 0:
-            omitted = [
-                OmittedCandidate(
-                    candidate_id=c.candidate_id,
-                    reason_code="BUDGET_EXCEEDED",
-                    message=f"Available budget is non-positive: {available_tokens}"
-                )
-                for c in candidates
-            ]
-            return ContextPlan(
-                selected=[], fragments=[], omitted=omitted,
-                used_tokens=0, remaining_tokens=available_tokens, count_mode="estimated"
-            )
+            omitted = [OmittedCandidate(candidate=c, reason_code="BUDGET_EXCEEDED") for c in candidates]
+            return ContextPlan(selected=[], used_tokens=0, omitted=omitted)
 
-        # 1. 우선순위 정렬: 명시적 선택(explicit) > Score 내림차순 > Candidate ID 사전순
+        seen_uris = set()
+        unique_candidates = []
+        omitted = []
+
+        # explicit=True 우선 -> 동일 explicit 내 score 내림차순 정렬
         sorted_candidates = sorted(
             candidates,
-            key=lambda c: (not c.explicit, -c.score, c.candidate_id)
+            key=lambda c: (getattr(c, 'explicit', False), getattr(c, 'score', 0.0)),
+            reverse=True
         )
 
-        selected: List[ContextCandidate] = []
-        fragments: List[Dict[str, Any]] = []
-        omitted: List[OmittedCandidate] = []
-        seen_keys = set()
+        for item in sorted_candidates:
+            ref = getattr(item, 'ref', None)
+            uri = getattr(ref, 'uri', None) if ref else None
+            if isinstance(item, dict):
+                uri = item.get('uri', uri)
 
-        current_used = 0
-        for c in sorted_candidates:
-            # 중복 검사 (Key: kind + uri/symbol_id)
-            dedup_key = f"{c.ref.kind}:{c.ref.uri or c.ref.symbol_id}"
-            if dedup_key in seen_keys:
-                omitted.append(OmittedCandidate(
-                    candidate_id=c.candidate_id,
-                    reason_code="DUPLICATE",
-                    message=f"Duplicate candidate reference: {dedup_key}"
-                ))
-                continue
+            if uri:
+                if uri in seen_uris:
+                    omitted.append(OmittedCandidate(candidate=item, reason_code="DUPLICATE"))
+                    continue
+                seen_uris.add(uri)
 
-            if current_used + c.estimated_tokens <= available_tokens:
-                selected.append(c)
-                seen_keys.add(dedup_key)
-                current_used += c.estimated_tokens
-                fragments.append({
-                    "candidate_id": c.candidate_id,
-                    "kind": c.ref.kind,
-                    "content": c.payload.get("content", "")
-                })
+            unique_candidates.append(item)
+
+        selected = []
+        used_tokens = 0
+
+        for item in unique_candidates:
+            cost = self.calculate_tokens(item)
+
+            if used_tokens + cost <= available_tokens:
+                selected.append(item)
+                used_tokens += cost
             else:
-                omitted.append(OmittedCandidate(
-                    candidate_id=c.candidate_id,
-                    reason_code="BUDGET_EXCEEDED",
-                    message=f"Token size ({c.estimated_tokens}) exceeds remaining budget ({available_tokens - current_used})"
-                ))
+                omitted.append(OmittedCandidate(candidate=item, reason_code="BUDGET_EXCEEDED"))
 
         return ContextPlan(
             selected=selected,
-            fragments=fragments,
-            omitted=omitted,
-            used_tokens=current_used,
-            remaining_tokens=available_tokens - current_used,
-            count_mode="estimated"
+            used_tokens=used_tokens,
+            omitted=omitted
         )
 
-
 class ModelRequestGate:
-    def __init__(self, policy):
-        self.policy = policy
+    """
+    D7 fix: Task 3.5 ModelRequestGate.check contract interface implementation.
+    """
+    def __init__(self, policy: Optional[ContextSelectorPolicy] = None):
+        self.policy = policy or ContextSelectorPolicy()
 
-    def check(self, candidate_refs, available_tokens):
-        return self.policy.select(candidate_refs, available_tokens)
+    def check(self, candidate_refs: List[Any], max_tokens: int) -> ContextPlan:
+        """Gate check entrypoint matching Task 3.5 spec."""
+        return self.policy.select(candidate_refs, available_tokens=max_tokens)

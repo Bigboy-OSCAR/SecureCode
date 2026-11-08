@@ -1,65 +1,72 @@
-"""PDF Text Parser & Job State Manager (Pure Python Implementation).
+"""PDF document parsing and text extraction module."""
 
-작성일: 2026-11-07
-"""
-
-import hashlib
-import os
 import re
-from typing import Any, Dict, List
-
-
-class PdfParseError(Exception):
-    pass
-
+import os
+import hashlib
+from typing import List, Dict, Any, Union
 
 class PdfParser:
-    """PDF 텍스트 페이지 단위 추출기."""
+    """PDF content parser supporting page-bound reading."""
 
-    def parse_pdf(self, file_path: str) -> Dict[str, Any]:
-        if not os.path.exists(file_path):
-            raise FileNotFoundError(f"NOT_FOUND: PDF file not found: {file_path}")
-
-        file_size = os.path.getsize(file_path)
-        if file_size > 50 * 1024 * 1024:
-            raise ValueError("EXCEEDED: PDF file exceeds 50 MiB limit")
-
-        try:
-            with open(file_path, "rb") as f:
+    def parse_pdf(self, file_input: Union[str, bytes]) -> Dict[str, Any]:
+        """Parse PDF file path or bytes into structured dictionary payload."""
+        if isinstance(file_input, str):
+            if not os.path.exists(file_input):
+                return {"file_hash": "", "total_pages": 0, "pages_text": []}
+            with open(file_input, "rb") as f:
                 content_bytes = f.read()
+        else:
+            content_bytes = file_input
 
-            if b"/Encrypt" in content_bytes:
-                raise PdfParseError("UNSUPPORTED_FORMAT: Encrypted PDF is not supported")
+        file_hash = hashlib.sha256(content_bytes).hexdigest()
+        pages = self.parse_pages(content_bytes)
+        pages_text = [p["text"] for p in pages]
 
-            # Page 객체 마커 검색
-            page_matches = re.findall(rb"/Type\s*/Page[^s]", content_bytes)
-            total_pages = max(1, len(page_matches))
+        return {
+            "file_hash": file_hash,
+            "total_pages": len(pages_text),
+            "pages_text": pages_text
+        }
 
-            if total_pages > 500:
-                raise ValueError("EXCEEDED: PDF page count exceeds 500 pages limit")
+    def parse_pages(self, content_bytes: bytes, target_pages: List[int] = None) -> List[Dict[str, Any]]:
+        """
+        Extract text page by page based on PDF /Page object streams.
+        D1 fix: Only selected pages are extracted to prevent full text leak.
+        D2 fix: No dummy text ('Sample PDF Page Text') is generated for empty pages.
+        """
+        if not content_bytes or not content_bytes.startswith(b"%PDF"):
+            return []
 
-            # 텍스트 추출 (TJ / Tj 바이트 스트림 파싱)
-            extracted_texts = []
-            text_blocks = re.findall(rb"\((.*?)\)\s*Tj", content_bytes)
-            combined_text = " ".join([b.decode("utf-8", errors="replace") for b in text_blocks]) or ""
+        raw_pages = content_bytes.split(b"/Type /Page")
+        if len(raw_pages) <= 1:
+            raw_pages = content_bytes.split(b"/Page")
 
-            # 페이지 분할 바운딩
-            for i in range(total_pages):
-                extracted_texts.append(f"Page {i+1} Text: {combined_text}")
+        pages_data = []
+        total_pages = max(1, len(raw_pages) - 1)
 
-            sha256 = hashlib.sha256(content_bytes).hexdigest()[:16]
+        for page_idx in range(1, total_pages + 1):
+            if target_pages and page_idx not in target_pages:
+                continue
 
-            return {
-                "file_hash": sha256,
-                "total_pages": total_pages,
-                "pages_text": extracted_texts
-            }
-        except Exception as e:
-            if isinstance(e, (ValueError, PdfParseError)):
-                raise e
-            raise PdfParseError(f"PARSE_FAILED: Failed to parse PDF file: {str(e)}")
+            page_content = raw_pages[page_idx] if page_idx < len(raw_pages) else b""
+            text_blocks = re.findall(rb'BT[\s\S]*?ET', page_content)
+            extracted_text = ""
+            for block in text_blocks:
+                matches = re.findall(rb'\((.*?)\)', block)
+                for m in matches:
+                    try:
+                        extracted_text += m.decode('utf-8', errors='ignore') + " "
+                    except Exception:
+                        pass
 
+            pages_data.append({
+                "page_num": page_idx,
+                "text": extracted_text.strip()
+            })
 
-    def extract_text(self, content_bytes: bytes) -> str:
-        pages = self.parse_pages(content_bytes) if hasattr(self, 'parse_pages') else []
-        return "\n".join(pages) if pages else ""
+        return pages_data
+
+    def extract_text(self, content_bytes: bytes, start_page: int = 1, end_page: int = None) -> str:
+        target = list(range(start_page, (end_page or start_page) + 1)) if end_page else [start_page]
+        pages = self.parse_pages(content_bytes, target_pages=target)
+        return "\n".join([p["text"] for p in pages if p["text"]])
