@@ -1,3 +1,4 @@
+STRICT_BUDGET_CAP = 32768
 """Context Selector 정책 알고리즘 구현.
 
 작성일: 2026-11-07

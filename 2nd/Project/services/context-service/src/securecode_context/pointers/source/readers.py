@@ -1,3 +1,5 @@
+MAX_BOUNDED_LINES = 1000
+MAX_BOUNDED_BYTES = 16384
 """Source Pointer Bounded Reader.
 
 작성일: 2026-11-07
