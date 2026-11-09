@@ -1,4 +1,4 @@
-"""Source file reader implementation with bounded line and memory limits."""
+"""Bounded source file reader with line & byte memory limits."""
 
 import os
 import json
@@ -14,14 +14,22 @@ class BoundedSourceReader:
         self.registry = registry
 
     def read_range(self, pointer: str, start_line: int = 1, end_line: int = 100, max_bytes: int = MAX_TOTAL_BYTES) -> Dict[str, Any]:
-        """
-        D3, D5 fix: Bounded read with pointer verification & change check.
-        """
         if not self.registry:
             raise ValueError("Registry not configured")
 
         desc = self.registry.stat(pointer)
         file_path = desc.real_path
+
+        real_abs_path = os.path.realpath(file_path)
+        if hasattr(self.registry, 'workspace_roots'):
+            in_workspace = False
+            for ws_root in self.registry.workspace_roots.values():
+                real_ws_root = os.path.realpath(ws_root)
+                if real_abs_path.startswith(real_ws_root):
+                    in_workspace = True
+                    break
+            if not in_workspace:
+                raise ValueError("WORKSPACE_ESCAPE_FORBIDDEN")
 
         current_mtime = os.path.getmtime(file_path) if os.path.exists(file_path) else 0
         if hasattr(desc, 'mtime') and desc.mtime and current_mtime != desc.mtime:
@@ -37,11 +45,14 @@ class BoundedSourceReader:
                     break
                 if current_line >= start_line:
                     chunk = raw_line[:MAX_LINE_BYTES]
-                    total_bytes_read += len(chunk)
-
-                    if total_bytes_read > max_bytes:
+                    if total_bytes_read + len(chunk) > max_bytes:
+                        allowed = max_bytes - total_bytes_read
+                        if allowed > 0:
+                            lines.append(chunk[:allowed].decode("utf-8", errors="replace"))
+                            total_bytes_read += allowed
                         break
 
+                    total_bytes_read += len(chunk)
                     lines.append(chunk.decode("utf-8", errors="replace").rstrip("\r\n"))
                 current_line += 1
 
@@ -55,10 +66,11 @@ class BoundedSourceReader:
             "truncated": total_bytes_read >= max_bytes
         }
 
-    def read_json_path(self, file_path: str, json_path: Optional[str] = None) -> Any:
-        """
-        D4 fix: Query JSON content by path instead of returning entire 500KB file.
-        """
+    def read_json_path(self, file_path: str, json_path: Optional[str] = None, max_bytes: int = 524288) -> Any:
+        file_size = os.path.getsize(file_path) if os.path.exists(file_path) else 0
+        if file_size > max_bytes:
+            raise ValueError("JSON_EXCEEDS_MAX_BYTES")
+
         with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
 

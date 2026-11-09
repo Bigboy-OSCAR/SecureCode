@@ -1,4 +1,4 @@
-"""PDF document parsing and text extraction module."""
+"""PDF document parsing module with strict page isolation."""
 
 import re
 import os
@@ -6,10 +6,9 @@ import hashlib
 from typing import List, Dict, Any, Union
 
 class PdfParser:
-    """PDF content parser supporting page-bound reading."""
+    """PDF content parser enforcing strict page boundaries."""
 
     def parse_pdf(self, file_input: Union[str, bytes]) -> Dict[str, Any]:
-        """Parse PDF file path or bytes into structured dictionary payload."""
         if isinstance(file_input, str):
             if not os.path.exists(file_input):
                 return {"file_hash": "", "total_pages": 0, "pages_text": []}
@@ -29,26 +28,23 @@ class PdfParser:
         }
 
     def parse_pages(self, content_bytes: bytes, target_pages: List[int] = None) -> List[Dict[str, Any]]:
-        """
-        Extract text page by page based on PDF /Page object streams.
-        D1 fix: Only selected pages are extracted to prevent full text leak.
-        D2 fix: No dummy text ('Sample PDF Page Text') is generated for empty pages.
-        """
         if not content_bytes or not content_bytes.startswith(b"%PDF"):
             return []
 
-        raw_pages = content_bytes.split(b"/Type /Page")
+        # /Page 객체 인덱스 기반 분할
+        raw_pages = re.split(rb'/Type\s*/Page\b|/Page\b', content_bytes)
         if len(raw_pages) <= 1:
-            raw_pages = content_bytes.split(b"/Page")
+            raw_pages = [content_bytes]
+        else:
+            raw_pages = raw_pages[1:]
 
+        total_pages = len(raw_pages)
         pages_data = []
-        total_pages = max(1, len(raw_pages) - 1)
 
-        for page_idx in range(1, total_pages + 1):
-            if target_pages and page_idx not in target_pages:
+        for idx, page_content in enumerate(raw_pages, start=1):
+            if target_pages and idx not in target_pages:
                 continue
 
-            page_content = raw_pages[page_idx] if page_idx < len(raw_pages) else b""
             text_blocks = re.findall(rb'BT[\s\S]*?ET', page_content)
             extracted_text = ""
             for block in text_blocks:
@@ -60,13 +56,13 @@ class PdfParser:
                         pass
 
             pages_data.append({
-                "page_num": page_idx,
+                "page_num": idx,
                 "text": extracted_text.strip()
             })
 
         return pages_data
 
     def extract_text(self, content_bytes: bytes, start_page: int = 1, end_page: int = None) -> str:
-        target = list(range(start_page, (end_page or start_page) + 1)) if end_page else [start_page]
+        target = list(range(start_page, (end_page or start_page) + 1))
         pages = self.parse_pages(content_bytes, target_pages=target)
         return "\n".join([p["text"] for p in pages if p["text"]])
