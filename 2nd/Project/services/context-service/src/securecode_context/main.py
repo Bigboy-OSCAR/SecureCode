@@ -1,11 +1,9 @@
-"""Context Service Fast API Entry Point exposing D8 REST Routes."""
+"""Context Service Fast API Entry Point exposing REST Routes for D8 & Host SDK."""
 
-from fastapi import FastAPI, HTTPException, Header, Depends
+from fastapi import FastAPI, HTTPException, Header
 from typing import List, Dict, Any, Optional
 from pydantic import BaseModel
-from securecode_context.context.policy import ContextSelectorPolicy, ContextPlan
-from securecode_context.pointers.source.readers import BoundedSourceReader
-from securecode_context.pdf.parser import PdfParser
+from securecode_context.context.policy import ContextSelectorPolicy
 
 app = FastAPI(title="SecureCode Context Service", version="1.0.0")
 

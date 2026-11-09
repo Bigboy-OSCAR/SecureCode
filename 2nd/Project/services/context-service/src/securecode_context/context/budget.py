@@ -1,7 +1,7 @@
 """Context token budget estimation module."""
 
 class ContextBudgetCalculator:
-    """Accurate token budget estimator eliminating heuristic len/4 logic."""
+    """Accurate token budget estimator removing legacy len/4 heuristics."""
 
     def __init__(self, model_limit: int = 10000, reserved_output: int = 1000, safety_margin: int = 500):
         self.model_limit = model_limit
