@@ -74,7 +74,7 @@ class BoundedSourceReader:
             desc = self.registry.stat(file_path)
             file_path = desc.real_path
         elif not file_path.startswith("securecode://") and self.registry:
-            raise ValueError("INVALID_POINTER")
+            raise KeyError("NOT_FOUND")
 
         file_size = os.path.getsize(file_path) if os.path.exists(file_path) else 0
         if file_size > max_bytes:
