@@ -15,18 +15,30 @@ export function useApprovalActions(
     close: () => void;
     confirm: () => void;
 } {
-    const [intent, setIntent] = useState<ApprovalIntent | null>(null);
-    const approvalId = state.snapshot?.pending_approvals[0]?.approval_id ?? null;
+    const [reviewed, setReviewed] = useState<{
+        intent: ApprovalIntent;
+        approvalId: ApprovalId;
+        inputDigest: string;
+    } | null>(null);
+    const approval = state.snapshot?.pending_approvals[0];
+    const currentReview =
+        approval?.approval_id === reviewed?.approvalId && approval?.input_digest === reviewed?.inputDigest
+            ? reviewed
+            : null;
 
     return {
-        intent,
-        approvalId,
-        open: setIntent,
-        close: () => setIntent(null),
+        intent: currentReview?.intent ?? null,
+        approvalId: currentReview?.approvalId ?? null,
+        open: (intent) => {
+            if (approval) {
+                setReviewed({ intent, approvalId: approval.approval_id, inputDigest: approval.input_digest });
+            }
+        },
+        close: () => setReviewed(null),
         confirm: () => {
-            if (intent && approvalId) {
-                void controller.decideApproval(approvalId, intent);
-                setIntent(null);
+            if (currentReview) {
+                void controller.decideApproval(currentReview.approvalId, currentReview.intent);
+                setReviewed(null);
             }
         },
     };

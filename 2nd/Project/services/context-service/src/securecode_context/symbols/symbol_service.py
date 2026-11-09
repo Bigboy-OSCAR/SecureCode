@@ -10,6 +10,7 @@ from securecode_context.common.tokens.counter import TokenCounter
 from .bundle import MAX_BUNDLE_BYTES, BundleBudget, assemble_bundle, candidate_wire
 from .index import IndexRevisionRecord, SymbolIndexService
 from .ports import WorkspaceRootPort
+from .public_ids import symbol_id
 from .retrieval import (
     RankedCandidate,
     decode_cursor,
@@ -134,6 +135,7 @@ class R0SymbolService:
             raise ServiceError(ErrorCode.VALIDATION_FAILED, "예산 값이 올바르지 않습니다.")
         record, prepared = self.index.prepared(workspace_id)
         self.index.require_revision(workspace_id, revision)
+        self.index.require_revision(workspace_id, record["index_revision"])
         if prepared is None:
             raise ServiceError(ErrorCode.INDEX_NOT_READY, "검색 색인을 준비하는 중입니다.")
         raw_id = prepared.raw_by_public_id.get(str(request["candidate_id"]))
@@ -143,7 +145,15 @@ class R0SymbolService:
         root = self.roots.root_for(workspace_id)
         verified = self.index.verified_symbols(workspace_id, root, revision, info.members)
         budget = BundleBudget(max_tokens, max_bytes)
-        return assemble_bundle(info, record["nodes"], verified, self.counter, budget, revision)
+        bundle = assemble_bundle(info, record["nodes"], verified, self.counter, budget, revision)
+        included = {fragment["symbol_id"] for fragment in bundle["fragments"]}
+        members = [uri for uri in info.members if symbol_id(uri) in included]
+        fresh = self.index.verified_symbols(workspace_id, root, revision, members)
+        if any(checked is None for checked in fresh.values()):
+            raise ServiceError(
+                ErrorCode.SOURCE_CHANGED, "원문 조회 중 파일이 바뀌었습니다. 다시 색인하세요."
+            )
+        return bundle
 
     def _page(
         self,
@@ -187,7 +197,7 @@ class R0SymbolService:
         }
         if truncated:
             page["truncated_by_bytes"] = True
-        return {
+        response = {
             "schema_version": "1",
             "workspace_id": workspace_id,
             "index_revision": revision,
@@ -195,3 +205,17 @@ class R0SymbolService:
             "page": page,
             "no_match": None,
         }
+        # cursor와 JSON envelope도 응답 상한에 포함한다.
+        while len(json.dumps(response, ensure_ascii=False).encode()) > MAX_SEARCH_RESPONSE_BYTES:
+            if not items:
+                raise ServiceError(ErrorCode.QUOTA_EXCEEDED, "검색 응답 크기 상한을 초과했습니다.")
+            items.pop()
+            page.update(
+                next_cursor=encode_cursor(revision, query, offset + len(items)),
+                has_more=True,
+                truncated_by_bytes=True,
+            )
+        if not items and page["has_more"]:
+            raise ServiceError(ErrorCode.QUOTA_EXCEEDED, "검색 후보 크기 상한을 초과했습니다.")
+        self.index.require_revision(workspace_id, revision)
+        return response

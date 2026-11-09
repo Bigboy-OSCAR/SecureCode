@@ -57,6 +57,8 @@ export async function assembleHost(options: HostAssemblyOptions): Promise<Assemb
         modelId: hostConfig.modelId,
         apiKey: options.credentials.apiKey,
         baseUrl: runtimeConfig.providerBaseUrl,
+        contextServiceUrl: hostConfig.contextServiceUrl,
+        internalToken: hostConfig.internalToken,
         maxOutputTokens: runtimeConfig.maxOutputTokens,
         hookTimeoutMs: runtimeConfig.hookTimeoutMs,
         commandTimeoutMs: runtimeConfig.commandTimeoutMs,

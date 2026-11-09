@@ -44,6 +44,9 @@ test("all feature screens render their stable identifiers", () => {
         assert.ok(markup.includes(`data-testid="screen-${screen}"`), `Expected ${screen} screen to render.`);
     }
     assert.ok(markup.includes('href="#main-content"'));
+    for (const match of markup.matchAll(/href="#([^"]+)"/g)) {
+        assert.ok(markup.includes(`id="${match[1]}"`), `Navigation target ${match[1]} must exist.`);
+    }
     const identifiers = [...markup.matchAll(/data-testid="([^"]+)"/g)].map((match) => match[1]);
     assert.equal(new Set(identifiers).size, identifiers.length, "data-testid values should be unique per screen.");
     const codePattern = markup.match(/id="connection-code"[^>]*pattern="([^"]+)"/)?.[1];
@@ -261,5 +264,28 @@ test("completed run snapshot renders its successful terminal state", () => {
 
     assert.ok(markup.includes("완료"));
     assert.ok(markup.includes("질문"));
+    controller.dispose();
+});
+
+test("approval review shows the complete bounded command before enabling approval", () => {
+    const snapshot = fixtureAdapter.runs[0]!;
+    const approval = snapshot.pending_approvals[0]!;
+    const content = `reviewed-prefix ${"safe preview ".repeat(30)} COMMAND_TAIL_REQUIRES_REVIEW`;
+    const controller = new RunController(
+        new FixtureRunClient(),
+        snapshot.session_id,
+        snapshot.workspace_id,
+        undefined,
+        () => Date.parse("2026-11-04T09:01:00Z"),
+    );
+    controller.restore({
+        ...snapshot,
+        pending_approvals: [
+            { ...approval, review: { ...approval.review, content, reviewable: true, content_truncated: false } },
+        ],
+    });
+    const markup = render(createElement(ApprovalCard, { controller, state: controller.getSnapshot() }));
+    assert.equal(controller.canDecideApproval(approval.approval_id, "approve"), true);
+    assert.ok(markup.includes(content), "Approval must never hide an executable command suffix.");
     controller.dispose();
 });

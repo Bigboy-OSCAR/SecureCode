@@ -16,7 +16,12 @@ export function PointerPanel({ canMutate }: PointerPanelProps): React.JSX.Elemen
     const modalTitle = actions.intent === "source" ? "자료 등록을 해제하시겠습니까?" : "저장 결과를 삭제하시겠습니까?";
 
     return (
-        <section className="feature-card" aria-labelledby="pointers-heading" data-testid="screen-pointers">
+        <section
+            id="screen-pointers"
+            className="feature-card"
+            aria-labelledby="pointers-heading"
+            data-testid="screen-pointers"
+        >
             <div className="feature-heading">
                 <h2 id="pointers-heading">등록 자료 · 실행 결과</h2>
                 <StatusBadge label="부분 미리보기" tone="neutral" />

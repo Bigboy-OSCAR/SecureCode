@@ -8,7 +8,7 @@ import os
 import tempfile
 from pathlib import Path
 
-from ..models.runtime import RuntimeStoreError
+from ..models.runtime import InvalidSelector, RuntimeStoreError
 
 
 class BlobStore:
@@ -64,6 +64,37 @@ class BlobStore:
             return path.read_bytes()
         except FileNotFoundError as exc:
             raise RuntimeStoreError("RUNTIME_BLOB_MISSING") from exc
+
+    def read_range(self, path: Path, offset: int, max_bytes: int) -> bytes:
+        """함수 이름: read_range()
+        기능: 전체 blob을 메모리에 올리지 않고 지정 바이트 범위만 읽는다.
+        인자: path -> blob 경로, offset -> 시작 위치, max_bytes -> 읽기 상한
+        반환값: 읽은 바이트
+        작성 날짜: 2026/11/09
+        """
+        try:
+            with path.open("rb") as stream:
+                stream.seek(offset)
+                return stream.read(max_bytes)
+        except FileNotFoundError as exc:
+            raise RuntimeStoreError("RUNTIME_BLOB_MISSING") from exc
+
+    def read_utf8_range(self, path: Path, offset: int, max_bytes: int) -> tuple[str, int]:
+        """함수 이름: read_utf8_range()
+        기능: UTF-8 문자를 자르지 않는 범위와 다음 커서의 소비 바이트를 반환한다.
+        인자: path -> blob 경로, offset -> 시작 위치, max_bytes -> 읽기 상한
+        반환값: 텍스트와 소비한 바이트 수
+        작성 날짜: 2026/11/09
+        """
+        chunk = self.read_range(path, offset, max_bytes)
+        try:
+            text = chunk.decode("utf-8")
+        except UnicodeDecodeError as error:
+            if error.reason != "unexpected end of data" or error.start == 0:
+                raise InvalidSelector("UTF-8 문자 경계와 조회 크기를 확인하세요") from error
+            chunk = chunk[: error.start]
+            text = chunk.decode("utf-8")
+        return text, len(chunk)
 
     def delete(self, path: Path) -> None:
         """함수 이름: delete()

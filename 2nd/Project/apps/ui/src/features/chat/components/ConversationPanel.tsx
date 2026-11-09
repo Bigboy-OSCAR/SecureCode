@@ -42,7 +42,12 @@ export function ConversationPanel({ controller, state }: ConversationPanelProps)
               : null;
 
     return (
-        <section className="feature-card" aria-labelledby="conversation-heading" data-testid="screen-chat">
+        <section
+            id="screen-chat"
+            className="feature-card"
+            aria-labelledby="conversation-heading"
+            data-testid="screen-chat"
+        >
             <div className="feature-heading">
                 <h2 id="conversation-heading">대화 · 실행 이력</h2>
                 <StatusBadge label={currentStatus} tone={run ? "warning" : "neutral"} />

@@ -1,50 +1,50 @@
 {
-  "version": "1.0.0",
-  "samples": [
-    {
-      "sample_id": "explicit_and_r0_success",
-      "description": "명시 선택 자료와 R0 심볼이 예산 내에 정상 선택되는 케이스",
-      "budget": {
-        "model_context_limit": 128000,
-        "available_tokens": 16000,
-        "used_tokens": 4200,
-        "count_mode": "estimated"
-      },
-      "selected_candidates": [
+    "version": "1.0.0",
+    "samples": [
         {
-          "candidate_id": "cand_source_1",
-          "ref": {"kind": "source", "uri": "securecode://source/ws_1/src1?v=a1b2"},
-          "score": 1.0,
-          "explicit": true,
-          "estimated_tokens": 1200
+            "sample_id": "explicit_and_r0_success",
+            "description": "명시 선택 자료와 R0 심볼이 예산 내에 정상 선택되는 케이스",
+            "budget": {
+                "model_context_limit": 128000,
+                "available_tokens": 16000,
+                "used_tokens": 4200,
+                "count_mode": "estimated"
+            },
+            "selected_candidates": [
+                {
+                    "candidate_id": "cand_source_1",
+                    "ref": { "kind": "source", "uri": "securecode://source/ws_1/src1?v=a1b2" },
+                    "score": 1.0,
+                    "explicit": true,
+                    "estimated_tokens": 1200
+                },
+                {
+                    "candidate_id": "cand_r0_1",
+                    "ref": { "kind": "symbol", "symbol_id": "sym_main" },
+                    "score": 0.85,
+                    "explicit": false,
+                    "estimated_tokens": 3000
+                }
+            ],
+            "omitted": []
         },
         {
-          "candidate_id": "cand_r0_1",
-          "ref": {"kind": "symbol", "symbol_id": "sym_main"},
-          "score": 0.85,
-          "explicit": false,
-          "estimated_tokens": 3000
+            "sample_id": "budget_exceeded_rejection",
+            "description": "예산 초과 시 자동 요약 없이 차단되는 케이스",
+            "budget": {
+                "model_context_limit": 32000,
+                "available_tokens": 500,
+                "used_tokens": 0,
+                "count_mode": "estimated"
+            },
+            "selected_candidates": [],
+            "omitted": [
+                {
+                    "candidate_id": "cand_large_1",
+                    "reason_code": "BUDGET_EXCEEDED",
+                    "message": "Candidate token size (2000) exceeds available context budget (500)"
+                }
+            ]
         }
-      ],
-      "omitted": []
-    },
-    {
-      "sample_id": "budget_exceeded_rejection",
-      "description": "예산 초과 시 자동 요약 없이 차단되는 케이스",
-      "budget": {
-        "model_context_limit": 32000,
-        "available_tokens": 500,
-        "used_tokens": 0,
-        "count_mode": "estimated"
-      },
-      "selected_candidates": [],
-      "omitted": [
-        {
-          "candidate_id": "cand_large_1",
-          "reason_code": "BUDGET_EXCEEDED",
-          "message": "Candidate token size (2000) exceeds available context budget (500)"
-        }
-      ]
-    }
-  ]
+    ]
 }

@@ -13,6 +13,8 @@ import { pendingResults } from "../lib/pendingSuites.js";
 import { runAndExit, type StepResult } from "../lib/report.js";
 import { findFreePorts, startServices } from "../lib/services.js";
 import { toolStep, uvStep } from "../lib/processes.js";
+import { readRuntimePointer } from "../../apps/host/src/pointer-hooks/runtimePointerHook.js";
+import { createLoopbackRuntimeStore } from "../../apps/host/src/pointer-hooks/runtimeToolResultTransformer.js";
 
 const validator = ContractValidator.load();
 
@@ -96,6 +98,30 @@ async function hostServiceChainSteps(): Promise<StepResult[]> {
         );
 
         results.push(...(await productionGuardSteps(services.hostUrl, services.bootstrapCode, dataDir)));
+
+        const scope = { workspaceId: "ws_review1234", sessionId: "ses_review1234" };
+        const pointerOptions = {
+            baseUrl: services.serviceUrl,
+            internalToken: services.internalToken,
+            api: "internal" as const,
+        };
+        const content = "가나다 runtime output\n".repeat(1000);
+        const stored = await createLoopbackRuntimeStore(pointerOptions).store(
+            content,
+            scope,
+            new AbortController().signal,
+        );
+        const read = await readRuntimePointer(stored.pointerUri, { ...pointerOptions, ...scope }, 0, 9);
+        results.push(
+            expectStep(
+                "chain: runtime transport stores and reads through the real service",
+                read.content === "가나다" &&
+                    read.truncated &&
+                    read.byteSize === Buffer.byteLength(content) &&
+                    read.nextCursor === 9,
+                "internal API, scoped pointer and bounded UTF-8 cursor",
+            ),
+        );
 
         await services.stopService();
         const degradedBody: unknown = await (await fetch(`${services.hostUrl}/api/v1/health`)).json();

@@ -157,32 +157,37 @@ export class RunController {
 
     private async recoverSnapshot(runId: RunSnapshot["run_id"], epoch: number): Promise<boolean> {
         const sessionId = this.state.sessionId;
-        this.publish({ ...this.state, connection: "recovering", operation: null, error: null });
+        this.publish({ ...this.state, connection: "recovering", error: null });
         try {
             const snapshot = await this.client.getRun(runId);
             if (
                 !this.isCurrent(epoch) ||
+                this.state.snapshot?.run_id !== runId ||
                 snapshot.run_id !== runId ||
                 snapshot.session_id !== sessionId ||
                 snapshot.workspace_id !== this.state.workspaceId
             ) {
-                if (this.isCurrent(epoch)) {
+                if (this.isCurrent(epoch) && this.state.snapshot?.run_id === runId) {
                     this.publish({
                         ...this.state,
                         connection: "disconnected",
-                        operation: null,
                         error: "최신 실행 상태의 범위가 일치하지 않습니다.",
                     });
                 }
                 return false;
             }
+            // A live event may have advanced the view while this snapshot was in flight.
+            if (snapshot.replay.last_sequence < this.state.lastSequence) {
+                this.publish({ ...this.state, connection: "connected", error: null });
+                this.attach(runId, this.state.lastSequence);
+                return true;
+            }
             return this.restore(snapshot);
         } catch {
-            if (this.isCurrent(epoch)) {
+            if (this.isCurrent(epoch) && this.state.snapshot?.run_id === runId) {
                 this.publish({
                     ...this.state,
                     connection: "disconnected",
-                    operation: null,
                     error: "최신 실행 상태를 불러오지 못했습니다.",
                 });
             }

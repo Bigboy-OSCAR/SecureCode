@@ -26,6 +26,19 @@ describe("command policy", () => {
             words("echo", "a", "&&", "git", "commit"),
             words("/usr/bin/git", "--no-pager", "reset", "--hard"),
             words("npm", "test;", "git", "rebase", "main"),
+            words('"git"', '"push"'),
+            words("g'it'", "co'mmit'", "-m", "x"),
+            words("g\\it", "pu\\sh"),
+            words("git", "-C", '"repo with spaces"', "push"),
+            words("LANG=C", "git", "push"),
+            words("env", "-u", "HOME", "LANG=C", "git", "push"),
+            words("command", "--", "git", "push"),
+            words("sudo", "-u", "test", "git", "push"),
+            words("sh", "-c", "'git", "push'"),
+            words("cmd.exe", "/c", '"git', 'push"'),
+            words("git", "-c", "alias.upload=push", "upload"),
+            words("git", "-calias.upload=push", "upload"),
+            words("git", "--config-env=alias.upload=ACTION", "upload"),
         ]) {
             assert.ok(refuseCommand(command), command);
         }
@@ -34,6 +47,9 @@ describe("command policy", () => {
             words("git", "diff"),
             words("npm", "test"),
             words("echo", "commit"),
+            words("echo", '"git', 'push"'),
+            words("env", "LANG=C", "git", "status"),
+            words("git", "-c", "color.ui=false", "diff"),
         ]) {
             assert.equal(refuseCommand(command), null, command);
         }

@@ -74,7 +74,7 @@ export function applyRunSnapshot(state: RunViewState, snapshot: RunSnapshot): Ru
         snapshot,
         lastSequence: snapshot.replay.last_sequence,
         connection: "connected",
-        operation: null,
+        operation: sameRun ? state.operation : null,
         error: null,
         contextPlan: sameRun ? state.contextPlan : null,
         pointerCreated: sameRun ? state.pointerCreated : null,

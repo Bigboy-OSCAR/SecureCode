@@ -26,6 +26,8 @@ class FakeRunClient implements RunClient {
     recoverySnapshot: RunSnapshot = fixtureAdapter.runs[0]!;
     createGate: Promise<RunSnapshot> | null = null;
     cancelGate: Promise<RunSnapshot> | null = null;
+    recoveryGate: Promise<RunSnapshot> | null = null;
+    decisionGate: Promise<void> | null = null;
     decisionFails = false;
     readonly subscribedAt: Sequence[] = [];
     private readonly eventHandlers = new Map<RunId, (event: AppEvent) => void>();
@@ -41,7 +43,7 @@ class FakeRunClient implements RunClient {
     async getRun(runId: RunId): Promise<RunSnapshot> {
         this.snapshotReads += 1;
         assert.equal(runId, this.recoverySnapshot.run_id);
-        return this.recoverySnapshot;
+        return this.recoveryGate ?? this.recoverySnapshot;
     }
 
     async cancelRun(runId: RunId): Promise<RunSnapshot> {
@@ -56,6 +58,7 @@ class FakeRunClient implements RunClient {
         request: ApprovalDecisionRequest,
     ): Promise<ApprovalDecisionResponse> {
         this.decisionCalls += 1;
+        await this.decisionGate;
         assert.equal(runId, fixtureAdapter.runs[0]!.run_id);
         assert.equal(approvalId, fixtureAdapter.runs[0]!.pending_approvals[0]!.approval_id);
         assert.equal(request.input_digest, fixtureAdapter.runs[0]!.pending_approvals[0]!.input_digest);
@@ -393,5 +396,64 @@ test("completed snapshots remain terminal and failure state is representable", (
     assert.equal(failedController.restore(failed), true);
     assert.equal(failedController.getSnapshot().snapshot?.terminal?.status, "failed");
     failedController.dispose();
+    controller.dispose();
+});
+
+test("snapshot recovery keeps an in-flight approval locked against duplicate decisions", async () => {
+    const client = new FakeRunClient();
+    let finishDecision: (() => void) | undefined;
+    client.decisionGate = new Promise((resolve) => {
+        finishDecision = resolve;
+    });
+    const controller = createController(client);
+    controller.restore(fixtureAdapter.runs[0]!);
+    const approvalId = fixtureAdapter.runs[0]!.pending_approvals[0]!.approval_id;
+    const decision = controller.decideApproval(approvalId, "approve");
+    await controller.reconnect();
+    assert.equal(controller.getSnapshot().operation?.kind, "deciding_approval");
+    assert.equal(await controller.decideApproval(approvalId, "approve"), false);
+    assert.equal(client.decisionCalls, 1);
+    finishDecision?.();
+    assert.equal(await decision, true);
+    controller.dispose();
+});
+
+test("a delayed snapshot behind live events does not leave the run recovering forever", async () => {
+    const client = new FakeRunClient();
+    let finishRecovery: ((snapshot: RunSnapshot) => void) | undefined;
+    client.recoveryGate = new Promise((resolve) => {
+        finishRecovery = resolve;
+    });
+    const controller = createController(client);
+    const initial = snapshotAt(fixtureAdapter.runs[0]!, 1, "");
+    controller.restore(initial);
+    const recovery = controller.reconnect();
+    const output = fixtureAdapter.outputDelta;
+    assert.equal(output.type, "run.output_delta");
+    if (output.type !== "run.output_delta") return;
+    controller.receiveEvent(makeOutputEvent(output, 2));
+    finishRecovery?.(initial);
+    assert.equal(await recovery, true);
+    assert.equal(controller.getSnapshot().connection, "connected");
+    assert.equal(controller.getSnapshot().snapshot?.answer.text, output.payload.text);
+    assert.equal(client.subscribedAt.at(-1), 2);
+    controller.dispose();
+});
+
+test("a delayed previous-run snapshot cannot replace a newer completed run", async () => {
+    const client = new FakeRunClient();
+    let finishRecovery: ((snapshot: RunSnapshot) => void) | undefined;
+    client.recoveryGate = new Promise((resolve) => {
+        finishRecovery = resolve;
+    });
+    const controller = createController(client);
+    const first = fixtureAdapter.runs[1]!;
+    controller.restore(first);
+    const recovery = controller.reconnect();
+    const second = { ...first, run_id: `${first.run_id}2` };
+    controller.restore(second);
+    finishRecovery?.(first);
+    assert.equal(await recovery, false);
+    assert.equal(controller.getSnapshot().snapshot?.run_id, second.run_id);
     controller.dispose();
 });

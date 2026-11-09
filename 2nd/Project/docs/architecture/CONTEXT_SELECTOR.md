@@ -14,7 +14,7 @@ Context Selector는 R0 Symbol Bundle, Source Pointer, Runtime Pointer 자료 간
 ## 2. 예산 계산 모델 (Budget Formula)
 로컬 컨텍스트 예산은 아래 공식으로 계산한다:
 
-$$available\_context = model\_context\_limit - (tokens(system + tool\_schema + user + history + overhead) + reserved\_output - safety\_margin)$$
+$$available\_context = model\_context\_limit - (tokens(system + tool\_schema + user + history + overhead) + reserved\_output + safety\_margin)$$
 
 - **system / tool_schema / user**: 기본 시스템 지침 및 사용 도구 메타데이터, 사용자 요청 문자열
 - **history**: 기존 대화 이력 (ToolCall - ToolResult 쌍 필수 유지)

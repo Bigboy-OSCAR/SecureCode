@@ -12,6 +12,7 @@ import {
     pythonStaticSteps,
     pythonUnitSteps,
     typecheckSteps,
+    uiUnitSteps,
 } from "../lib/steps.js";
 import { structureResults } from "./structure.js";
 
@@ -23,6 +24,7 @@ await runAndExit("check", [
     generatedTypesSteps,
     pythonStaticSteps,
     hostUnitSteps,
+    uiUnitSteps,
     pythonUnitSteps,
     () => Promise.resolve(pendingResults("check")),
 ]);

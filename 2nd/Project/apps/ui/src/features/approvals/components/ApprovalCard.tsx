@@ -1,6 +1,5 @@
 import { Alert, Button, Modal, StatusBadge } from "../../../components/index.js";
 import { fixtureAdapter } from "../../../api/fixtureAdapter.js";
-import { boundedPreview } from "../../shared/model/boundedPreview.js";
 import { useApprovalActions } from "../hooks/useApprovalActions.js";
 import type { RunController } from "../../chat/model/runController.js";
 import type { RunViewState } from "../../chat/model/runState.js";
@@ -28,7 +27,7 @@ export function ApprovalCard({ controller, state }: ApprovalCardProps): React.JS
             {approval ? (
                 <>
                     <p>{approval.review.summary}</p>
-                    <pre className="bounded-code">{boundedPreview(approval.review.content, 180)}</pre>
+                    <pre className="bounded-code">{approval.review.content}</pre>
                     {approval.review.content_truncated || !approval.review.reviewable ? (
                         <Alert title="전체 작업 내용을 확인할 수 없어 승인할 수 없습니다" variant="error">
                             더 작은 작업을 요청하거나 이 요청을 거절하세요.

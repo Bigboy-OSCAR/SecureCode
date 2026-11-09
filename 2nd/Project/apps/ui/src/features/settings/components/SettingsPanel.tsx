@@ -12,7 +12,12 @@ export function SettingsPanel(): React.JSX.Element {
               : "입력 한도 검증 전";
 
     return (
-        <section className="feature-card" aria-labelledby="settings-panel-heading" data-testid="screen-settings">
+        <section
+            id="screen-settings"
+            className="feature-card"
+            aria-labelledby="settings-panel-heading"
+            data-testid="screen-settings"
+        >
             <div className="feature-heading">
                 <h2 id="settings-panel-heading">모델·예산 상태</h2>
                 <StatusBadge label={provider.configured ? "모델 설정됨" : "모델 미설정"} tone="warning" />

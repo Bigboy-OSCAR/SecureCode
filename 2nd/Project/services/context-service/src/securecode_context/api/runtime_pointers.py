@@ -189,12 +189,16 @@ async def read_pointer(request: Request) -> dict[str, object]:
             body.offset,
             body.max_bytes,
         )
+        descriptor = await run_in_threadpool(
+            _store(request).stat, body.workspace_id, body.session_id, pointer_id
+        )
     except RuntimeStoreError as error:
         raise _translate(error) from None
     return {
         "pointer": body.pointer,
         "content": result.content,
         "byte_size": result.byte_size,
+        "total_bytes": descriptor.byte_size,
         "truncated": result.truncated,
         "next_cursor": result.next_cursor,
         "revision": result.revision,

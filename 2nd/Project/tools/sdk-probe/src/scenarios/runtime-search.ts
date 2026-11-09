@@ -12,17 +12,17 @@ import { ScenarioRecorder, type ScenarioResult } from "../support/scenario-resul
 
 function createSearchTool(store: MemoryPointerFixture) {
     return {
-    name: "runtime_search",
-    description: "Search a Runtime Pointer and return matching line numbers.",
-    inputSchema: {
-        type: "object",
-        properties: {
-            pointer: { type: "string" },
-            query: { type: "string" },
+        name: "runtime_search",
+        description: "Search a Runtime Pointer and return matching line numbers.",
+        inputSchema: {
+            type: "object",
+            properties: {
+                pointer: { type: "string" },
+                query: { type: "string" },
+            },
+            required: ["pointer", "query"],
+            additionalProperties: false,
         },
-        required: ["pointer", "query"],
-        additionalProperties: false,
-    },
         execute: async (input: unknown) => {
             const record = input as { pointer?: string; query?: string };
             const pointer = typeof record.pointer === "string" ? record.pointer : "";
@@ -50,11 +50,13 @@ export async function runRuntimeSearchScenario(): Promise<ScenarioResult> {
     const pointer = stored.pointer;
     const scriptedFetch = new ScriptedProviderFetch([
         {
-            toolUses: [{
-                toolUseId: "toolu_search_1",
-                toolName: "runtime_search",
-                input: { pointer, query: "needle" },
-            }],
+            toolUses: [
+                {
+                    toolUseId: "toolu_search_1",
+                    toolName: "runtime_search",
+                    input: { pointer, query: "needle" },
+                },
+            ],
         },
         { text: "Done." },
     ]);
@@ -63,15 +65,21 @@ export async function runRuntimeSearchScenario(): Promise<ScenarioResult> {
     const unsubscribe = core.subscribe((event: CoreSessionEvent) => events.push(JSON.stringify(event)));
 
     try {
-        const started = await core.start(buildProbeStartInput({
-            cwd: workspaceDir,
-            prompt: "Search the stored pointer.",
-            extraTools: [createSearchTool(store)],
-            hooks: {},
-        }));
+        const started = await core.start(
+            buildProbeStartInput({
+                cwd: workspaceDir,
+                prompt: "Search the stored pointer.",
+                extraTools: [createSearchTool(store)],
+                hooks: {},
+            }),
+        );
         const requests = scriptedFetch.capturedRequests;
         recorder.check("two provider requests captured", requests.length === 2, `requests=${requests.length}`);
-        recorder.check("search returned line 2", requests[1]?.bodyText.includes("runtime_search") ?? false, "request#2 scanned");
+        recorder.check(
+            "search returned line 2",
+            requests[1]?.bodyText.includes("runtime_search") ?? false,
+            "request#2 scanned",
+        );
         recorder.check("full content not exposed", !requests[1]?.bodyText.includes(content), "raw content absent");
         recorder.check("session started", started.sessionId.length > 0, `session=${started.sessionId}`);
         recorder.observe("request_count", requests.length);

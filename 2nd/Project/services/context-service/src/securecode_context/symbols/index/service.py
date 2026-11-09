@@ -170,9 +170,11 @@ class SymbolIndexService:
         if any(uri not in record["nodes"] for uri in wanted):
             raise ServiceError(ErrorCode.NOT_FOUND, "심볼을 찾을 수 없습니다.")
         resolved = self.root_policy.resolve(root)
-        return verify_symbols(
+        verified = verify_symbols(
             workspace_id, index_revision, resolved, record["nodes"], wanted, self.source_registry
         )
+        self.require_revision(workspace_id, index_revision)
+        return verified
 
     def verified_symbol(
         self, workspace_id: str, root: Path, index_revision: int, symbol_id: str
