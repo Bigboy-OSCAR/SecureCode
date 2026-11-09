@@ -1,4 +1,4 @@
-"""PDF document parsing module with strict /Contents stream resolution & error handling."""
+"""PDF document parsing module with strict /Contents object stream resolution and exception handling."""
 
 import re
 import os
@@ -6,7 +6,7 @@ import hashlib
 from typing import List, Dict, Any, Union
 
 class PdfParser:
-    """PDF content parser enforcing strict object graph and /Contents stream resolution."""
+    """PDF parser enforcing strict object graph and /Contents stream resolution."""
 
     def parse_pdf(self, file_input: Union[str, bytes]) -> Dict[str, Any]:
         if isinstance(file_input, str):
@@ -42,13 +42,13 @@ class PdfParser:
 
         pages_data = []
 
-        # 1. 모든 PDF obj (n 0 obj ... endobj) 인덱싱
+        # 1. PDF Indirect Objects (n 0 obj ... endobj) 인덱싱
         objects = {}
         for m in re.finditer(rb'(\d+)\s+(\d+)\s+obj([\s\S]*?)endobj', content_bytes):
             obj_id = int(m.group(1))
             objects[obj_id] = m.group(3)
 
-        # 2. /Type /Page 객체 수집
+        # 2. /Type /Page 객체 추적
         page_obj_ids = []
         for obj_id, body in objects.items():
             if re.search(rb'/Type\s*/Page\b', body) and not re.search(rb'/Type\s*/Pages\b', body):
@@ -57,7 +57,7 @@ class PdfParser:
         page_obj_ids.sort()
         total_pages = len(page_obj_ids)
 
-        # obj 구조가 없는 단순 Mock 바이너리 분기 지원
+        # obj 구조가 없는 단순 Mock 바이너리 테스트 fallback 지원
         if total_pages == 0:
             page_matches = list(re.finditer(rb'/Type\s*/Page\b', content_bytes))
             for idx in range(len(page_matches)):
@@ -71,6 +71,7 @@ class PdfParser:
                 pages_data.append({"page_num": page_num, "text": text})
             return pages_data
 
+        # 3. 정식 /Contents Stream 참조 추적
         for idx, obj_id in enumerate(page_obj_ids, start=1):
             if target_pages and idx not in target_pages:
                 continue

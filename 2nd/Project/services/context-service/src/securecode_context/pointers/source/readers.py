@@ -44,7 +44,6 @@ class BoundedSourceReader:
                 if current_line > end_line:
                     break
 
-                # start_line 이전 줄은 메모리 누적 없이 패스 (D4 I/O 낭비 해결)
                 if current_line >= start_line:
                     total_bytes_read += len(raw_line)
                     if total_bytes_read > max_bytes:
