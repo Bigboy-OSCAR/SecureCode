@@ -59,7 +59,7 @@ function isBoundedRead(toolName: string): boolean {
 }
 
 export function createLoopbackRuntimeStore(
-    options: Pick<RuntimePointerHookOptions, "baseUrl" | "internalToken">,
+    options: Pick<RuntimePointerHookOptions, "baseUrl" | "internalToken" | "api">,
 ): RuntimePointerStore {
     return {
         async store(content, scope) {
@@ -67,6 +67,7 @@ export function createLoopbackRuntimeStore(
                 workspaceId: scope.workspaceId,
                 sessionId: scope.sessionId,
                 thresholdBytes: 1,
+                ...(options.api !== undefined ? { api: options.api } : {}),
                 ...(options.baseUrl !== undefined ? { baseUrl: options.baseUrl } : {}),
                 ...(options.internalToken !== undefined ? { internalToken: options.internalToken } : {}),
             };

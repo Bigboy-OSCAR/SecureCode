@@ -1,12 +1,12 @@
 /**
  * `npm run build`: verifies generated contracts, type-checks the host for
- * production and builds the context-service wheel. The UI build and local
- * packaging are PENDING, so the command exits 3 until 1.1/3.7 land.
+ * production, builds the UI and the context-service wheel. Local packaging
+ * remains PENDING until 3.7 lands.
  */
 import { pendingResults } from "./lib/pendingSuites.js";
 import { nodeBin, toolStep, uvCommand, isUvAvailable, SERVICE_DIR } from "./lib/processes.js";
 import { runAndExit, type StepResult } from "./lib/report.js";
-import { generatedTypesSteps } from "./lib/steps.js";
+import { generatedTypesSteps, uiBuildSteps } from "./lib/steps.js";
 import { join } from "node:path";
 
 async function hostBuildSteps(): Promise<StepResult[]> {
@@ -25,6 +25,7 @@ async function serviceBuildSteps(): Promise<StepResult[]> {
 await runAndExit("build", [
     generatedTypesSteps,
     hostBuildSteps,
+    uiBuildSteps,
     serviceBuildSteps,
     () => Promise.resolve(pendingResults("build")),
 ]);

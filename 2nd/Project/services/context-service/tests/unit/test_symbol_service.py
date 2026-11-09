@@ -9,6 +9,7 @@ import pytest
 
 from securecode_context.common.errors import ErrorCode, ServiceError
 from securecode_context.common.tokens.models import TokenCount
+from securecode_context.symbols import symbol_service as symbol_service_module
 from securecode_context.symbols.index import RevisionStore, SymbolIndexService
 from securecode_context.symbols.ports import StaticWorkspaceRoots
 from securecode_context.symbols.public_ids import candidate_id, symbol_id
@@ -288,6 +289,36 @@ def test_stale_sources_are_not_returned(setup) -> None:
     assert fresh["index_revision"] == 2 and _bundle(service, fresh)["fragments"]
 
 
+def test_source_edit_during_bundle_count_is_rejected(setup, monkeypatch) -> None:
+    """
+    함수 이름: test_source_edit_during_bundle_count_is_rejected()
+    기능: 재색인 없이 토큰 계수 도중 원본만 변경되어도 오래된 원문 반환을 거부한다.
+    인자: setup -> 서비스 묶음, monkeypatch -> 계수 중 파일 변경 주입
+    반환값: 없음
+    작성 날짜: 2026/11/09
+    """
+    service, root, counter = setup
+    candidate = _search(service, "compute")["candidates"][0]
+    original_count = counter.count
+
+    def edit_on_count(text, model_id=None):
+        """
+        함수 이름: edit_on_count()
+        기능: 첫 토큰 계수에서 원본 파일만 수정한다.
+        인자: text -> 본문, model_id -> 모델
+        반환값: 계수 결과
+        작성 날짜: 2026/11/09
+        """
+        monkeypatch.setattr(counter, "count", original_count)
+        (root / "pkg/service.py").write_text("def compute():\n    return 42\n")
+        return original_count(text, model_id)
+
+    monkeypatch.setattr(counter, "count", edit_on_count)
+    with pytest.raises(ServiceError) as changed:
+        _bundle(service, candidate)
+    assert changed.value.code is ErrorCode.SOURCE_CHANGED
+
+
 def test_pagination_cursor_and_caps(setup, contract_check) -> None:
     """
     함수 이름: test_pagination_cursor_and_caps()
@@ -369,3 +400,68 @@ def test_no_llm_selector_or_summary(setup) -> None:
         assert not (modules | roots) & banned, source.name
         names = {node.name.lower() for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)}
         assert not any("summar" in name or "embed" in name for name in names), source.name
+
+
+def test_search_cap_includes_envelope_and_cursor(setup, monkeypatch, contract_check) -> None:
+    """
+    함수 이름: test_search_cap_includes_envelope_and_cursor()
+    기능: 후보만으로 상한을 채워도 전체 JSON과 cursor가 상한 안이며 다음 페이지가 진행하는지 확인한다.
+    인자: setup -> 서비스 묶음, monkeypatch -> 작은 상한 주입, contract_check -> 계약 검사
+    반환값: 없음
+    작성 날짜: 2026/11/09
+    """
+    service, _, _ = setup
+    expected = _search(service, "helper run", page={"limit": 100})["candidates"]
+    cap = sum(len(json.dumps(item, ensure_ascii=False).encode()) for item in expected[:2])
+    monkeypatch.setattr(symbol_service_module, "MAX_SEARCH_RESPONSE_BYTES", cap)
+    seen = []
+    cursor = None
+    while True:
+        page = {"limit": 100, **({"cursor": cursor} if cursor else {})}
+        response = _search(service, "helper run", page=page)
+        assert contract_check(SEARCH_SCHEMA, response) == []
+        assert len(json.dumps(response, ensure_ascii=False).encode()) <= cap
+        assert response["candidates"]
+        seen.extend(response["candidates"])
+        if not response["page"]["has_more"]:
+            break
+        assert response["page"]["truncated_by_bytes"] is True
+        next_cursor = response["page"]["next_cursor"]
+        assert next_cursor != cursor
+        cursor = next_cursor
+    assert seen == expected
+
+
+@pytest.mark.parametrize("operation", ["search", "bundle"])
+def test_reindex_during_token_count_rejects_old_response(setup, monkeypatch, operation) -> None:
+    """
+    함수 이름: test_reindex_during_token_count_rejects_old_response()
+    기능: 계수기 대기 중 새 revision이 게시되면 이전 검색 결과나 원문 묶음을 반환하지 않는다.
+    인자: setup -> 서비스 묶음, monkeypatch -> 계수 중 갱신 주입, operation -> 읽기 종류
+    반환값: 없음
+    작성 날짜: 2026/11/09
+    """
+    service, root, counter = setup
+    candidate = _search(service, "compute")["candidates"][0]
+    original_count = counter.count
+
+    def reindex_on_count(text, model_id=None):
+        """
+        함수 이름: reindex_on_count()
+        기능: 첫 토큰 계수에서 원문을 바꾸고 새 revision을 게시한다.
+        인자: text -> 본문, model_id -> 모델
+        반환값: 계수 결과
+        작성 날짜: 2026/11/09
+        """
+        monkeypatch.setattr(counter, "count", original_count)
+        (root / "pkg/service.py").write_text("def compute():\n    return 42\n")
+        service.index.build(WORKSPACE_ID, root)
+        return original_count(text, model_id)
+
+    monkeypatch.setattr(counter, "count", reindex_on_count)
+    with pytest.raises(ServiceError) as superseded:
+        if operation == "search":
+            _search(service, "compute")
+        else:
+            _bundle(service, candidate)
+    assert superseded.value.code is ErrorCode.SOURCE_CHANGED

@@ -1,0 +1,4 @@
+{
+    "before": "대화 · 실행 이력\n승인 대기 중\n\n세션 ses_01J9Z6Q4TEST · 실행 run_01J9Z6Q4TEST2 · 이력 1건\n\n질문\n\nload_config의 실패 원인을 확인해줘 검토용 질문\n\n답변\n\n테스트를 실행하겠습니다.\n\n실행 도구 이력\n로그 읽기\n64 KiB 로그를 Runtime Pointer로 저장\n65,536 bytes 저장\n취소 요청\n질문 입력\n\nEnter로 전송 · Shift+Enter로 줄 바꿈\n\n질문 fixture 실행\n빈 대화·오류·무결과 예시\n완료·취소된 실행 예시",
+    "after": "대화 · 실행 이력\n취소됨\n\n세션 ses_01J9Z6Q4TEST · 실행 run_01J9Z6Q4TEST2 · 이력 1건\n\n질문\n\n테스트를 실행해 실패 원인을 찾아줘\n\n답변\n\n테스트를 실행하겠습니다.\n\n중단 전 결과: 테스트를 실행하겠습니다.\n\n실행 도구 이력\n로그 읽기\n64 KiB 로그를 Runtime Pointer로 저장\n65,536 bytes 저장\n취소 요청\n\n사용자가 실행을 취소했습니다. · CANCELLED\n\n질문 입력\n\nEnter로 전송 · Shift+Enter로 줄 바꿈\n\n질문 fixture 실행\n빈 대화·오류·무결과 예시\n완료·취소된 실행 예시"
+}

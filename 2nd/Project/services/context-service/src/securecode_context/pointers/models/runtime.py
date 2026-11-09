@@ -50,7 +50,7 @@ class QuotaExceeded(RuntimeStoreError):  # noqa: N818
     작성 날짜: 2026/11/06
     """
 
-    code = "BUDGET_EXCEEDED"
+    code = "QUOTA_EXCEEDED"
 
 
 class InvalidSelector(RuntimeStoreError):  # noqa: N818

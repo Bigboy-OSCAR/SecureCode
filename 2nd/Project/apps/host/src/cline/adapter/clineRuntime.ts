@@ -23,6 +23,8 @@ export interface ClineRuntimeOptions {
     modelId: string;
     apiKey: string | null;
     baseUrl: string | null;
+    contextServiceUrl: string;
+    internalToken: string;
     maxOutputTokens: number;
     hookTimeoutMs: number;
     commandTimeoutMs: number;
@@ -56,7 +58,14 @@ export class ClineAgentRuntime implements AgentRuntime {
     }
 
     static async create(options: ClineRuntimeOptions): Promise<ClineAgentRuntime> {
-        const allowedTools = new Set(["read_file", "list_files", "write_file", "run_command", "runtime_read", "runtime_search"]);
+        const allowedTools = new Set([
+            "read_file",
+            "list_files",
+            "write_file",
+            "run_command",
+            "runtime_read",
+            "runtime_search",
+        ]);
         const runtime: { instance?: ClineAgentRuntime } = {};
         const core = await ClineCore.create({
             clientName: "securecode-host",
@@ -191,8 +200,9 @@ export class ClineAgentRuntime implements AgentRuntime {
                 root: request.workspaceRoot,
                 commandTimeoutMs: this.options.commandTimeoutMs,
                 pointer: {
-                    baseUrl: this.options.baseUrl ?? undefined,
-                    internalToken: process.env.SECURECODE_INTERNAL_TOKEN,
+                    baseUrl: this.options.contextServiceUrl,
+                    internalToken: this.options.internalToken,
+                    api: "internal",
                     workspaceId: request.workspaceId,
                     sessionId: request.sessionId,
                 },

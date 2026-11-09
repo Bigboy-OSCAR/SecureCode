@@ -3,6 +3,7 @@
 작성일: 2026-11-06
 """
 
+import re
 import threading
 import uuid
 from datetime import datetime, timedelta
@@ -55,17 +56,11 @@ class RuntimeStore:
         반환값: None
         작성 날짜: 2026/11/06
         """
-        if not workspace_id or not session_id:
+        if not all(
+            re.fullmatch(r"[A-Za-z0-9_-][A-Za-z0-9_.-]{0,127}", value)
+            for value in (workspace_id, session_id)
+        ):
             raise ScopeForbidden("workspace_id와 session_id는 필수입니다")
-
-    def _preview(self, content: bytes) -> str:
-        """함수 이름: _preview()
-        기능: _preview 기능을 수행한다.
-        인자: content
-        반환값: str
-        작성 날짜: 2026/11/06
-        """
-        return content[:MAX_PREVIEW_BYTES].decode("utf-8", errors="replace")
 
     def put(self, request: RuntimePut) -> RuntimeDescriptor:
         """함수 이름: put()
@@ -107,7 +102,7 @@ class RuntimeStore:
                     str(blob_path),
                     now.isoformat(),
                     expires_at.isoformat(),
-                    self._preview(request.content),
+                    request.content[:MAX_PREVIEW_BYTES].decode("utf-8", errors="ignore"),
                 ),
             )
             self._connection.commit()
@@ -161,6 +156,8 @@ class RuntimeStore:
         작성 날짜: 2026/11/06
         """
         self._validate_scope(workspace_id, session_id)
+        if not 1 <= limit <= 100:
+            raise InvalidSelector("목록 limit은 1~100이어야 합니다")
         query = "SELECT pointer_id FROM runtime_pointers WHERE workspace_id = ? AND session_id = ? AND expires_at > ?"
         params: list[Any] = [workspace_id, session_id, _utc_now().isoformat()]
         if cursor:
@@ -191,17 +188,16 @@ class RuntimeStore:
         반환값: ReadResult
         작성 날짜: 2026/11/06
         """
-        if offset < 0 or max_bytes <= 0:
+        if offset < 0 or not 1 <= max_bytes <= 16_384:
             raise InvalidSelector("offset과 max_bytes가 올바르지 않습니다")
         row = self._load(workspace_id, session_id, pointer_id)
-        content = self._blobs.read(Path(row["blob_path"]))
-        end = min(offset + max_bytes, len(content))
-        chunk = content[offset:end]
+        text, byte_size = self._blobs.read_utf8_range(Path(row["blob_path"]), offset, max_bytes)
+        end = offset + byte_size
         return ReadResult(
-            content=chunk.decode("utf-8", errors="replace"),
-            byte_size=len(chunk),
-            truncated=end < len(content),
-            next_cursor=str(end) if end < len(content) else None,
+            content=text,
+            byte_size=byte_size,
+            truncated=end < row["byte_size"],
+            next_cursor=str(end) if end < row["byte_size"] else None,
         )
 
     def search(
@@ -219,11 +215,14 @@ class RuntimeStore:
         반환값: dict[str, Any]
         작성 날짜: 2026/11/06
         """
-        if not pattern:
-            raise InvalidSelector("검색 패턴이 비어 있습니다")
+        if not pattern or not 1 <= max_matches <= 100 or not 1 <= max_scan_bytes <= 1_048_576:
+            raise InvalidSelector("검색 패턴과 검색 상한을 확인하세요")
         row = self._load(workspace_id, session_id, pointer_id)
-        content = self._blobs.read(Path(row["blob_path"]))
-        return search_blob(content, pattern, max_matches, max_scan_bytes)
+        content = self._blobs.read_range(Path(row["blob_path"]), 0, max_scan_bytes)
+        result = search_blob(content, pattern, max_matches, max_scan_bytes)
+        if row["byte_size"] > len(content):
+            result["truncated"] = True
+        return result
 
     def delete(self, workspace_id: str, session_id: str, pointer_id: str) -> None:
         """함수 이름: delete()

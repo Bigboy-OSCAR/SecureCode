@@ -71,12 +71,12 @@ Runtime limits:
 | Policy | Default |
 |---|---|
 | Runtime TTL | 24 hours |
-| Runtime objects per session | 10,000 |
 | Pointer preview | 512 UTF-8 bytes |
-| Raw tool-result payload cap | 16 KiB |
-| Read token cap | 32 KiB tokens |
-| Runtime quota per session | 32 MiB |
-| Runtime quota per workspace | 128 MiB |
+| Tool-result replacement threshold | 4,096 UTF-8 bytes |
+| Partial-read byte cap | 16,384 bytes |
+| Partial-read token cap | 32,768 tokens; both byte and token caps apply |
+| Runtime object quota | 32 MiB |
+| Runtime quota per session | 128 MiB |
 
 ## Source Pointer lifecycle
 
@@ -98,13 +98,15 @@ Source protection policy:
 - PDF parsed text is a derived cache and may be rebuilt from the original PDF.
 - Source roots use real-path resolution.
 - Symlink traversal and dot-dot escapes outside the workspace source root are rejected.
-- Fingerprint and revision detect external modification.
+- Fingerprint and revision detect external modification. Revalidate the open file identity and revision before and after every read.
+- Cache fingerprints by file identity, size and high-resolution modification metadata; unchanged repeated range reads must not rehash the entire file. Invalidate cached offsets and fingerprints on change.
+- External paths must come from explicit user registration and remain scoped to the authorized workspace. Unregister removes access and the derived cache, never the original file.
 
 Source limits:
 
 | Policy | Default |
 |---|---|
-| Source quota per workspace | 256 MiB |
+| Source file size limit | 256 MiB |
 | JSON source size limit | 8 MiB |
 | PDF size limit | 50 MiB |
 | PDF page limit | 500 pages |
@@ -150,13 +152,14 @@ ToolResultTransformer runs in the SDK host through afterTool.
 - If the SDK truncated the result before the hook, the service stores only available content and marks provenance as truncated.
 - If output exceeds the threshold, the service creates a Runtime Pointer.
 - The service returns a compact PointerDescriptor.
-- The SDK appends the descriptor to canonical history through appendContext.
+- The hook replaces `afterTool.result`; `appendContext` alone is not replacement. Verify the large original is absent from canonical history, the next provider request and sanitized SSE.
+- Project-owned executors should stream large results to storage before the SDK can truncate them. Bounded read tools are not wrapped again; they enforce their own caps.
 
 ### ModelRequestGate
 
-ModelRequestGate runs in the SDK host through beforeModel.
+ModelRequestGate performs an early check in `beforeModel` and a final check on the serialized outbound body through the verified `ClineCoreOptions.fetch` boundary. `beforeModel` alone does not account for provider message conversion and framing.
 
-- It materializes selected pointer fragments into the outbound provider payload.
+- The Context Selector resolves and materializes fragments. The host inserts them exactly once; the gate counts and checks the complete outbound payload without adding duplicate material.
 - It enforces the model context budget.
 - It accounts for system prompt, tool schemas, user messages, retained history, message overhead, reserved output tokens, and safety margin.
 - If exact tokenization is unavailable, it fails closed with TOKENIZER_UNAVAILABLE.
@@ -166,10 +169,10 @@ ModelRequestGate runs in the SDK host through beforeModel.
 
 | Condition | Required behavior |
 |---|---|
-| Hook timeout | Follow configured hookErrorMode; throw blocks the turn |
-| Hook error | Never fabricate a pointer; follow hookErrorMode |
-| Context Service unavailable | Do not claim pointer creation; surface SDK_UNAVAILABLE or configured fallback |
-| Pointer registration missing | Do not append a descriptor; record failure |
+| Hook timeout | Apply an explicit storage deadline and cancellation signal; stop the turn without forwarding the original |
+| Hook error | Configure `hookErrorMode: "throw"`; never forward raw fallback or fabricate a pointer |
+| Context Service unavailable | Fail closed; never forward the original as fallback |
+| Pointer or budget hook registration missing | Block session/run startup with PROTECTION_UNAVAILABLE |
 | Original result truncated before hook | Store available content only and mark provenance truncated |
 | Tokenizer unavailable | Fail closed with TOKENIZER_UNAVAILABLE |
 | Budget exceeded | Return BUDGET_EXCEEDED |
@@ -252,6 +255,10 @@ Checks:
 - Runtime, Source, and PDF lifecycles are consistent.
 - URI scope matches workspace and session isolation.
 - Storage, deletion, TTL, quota, and cleanup policies do not conflict.
-- SDK hook failure modes define explicit blocking or fallback behavior.
+- SDK hook failure modes define explicit fail-closed behavior without raw fallback.
 - Minimum service operations and dependencies for 3.2 are identified.
 - No RAPTOR, summarization tree, H LLM selector, embedding, or Self-Extend is introduced.
+
+## 2026-11-09 review corrections
+
+Quota units, result replacement, the final outbound gate and missing-hook behavior now match roadmap sections 0.4 and 0.7. This is the target design; implementation acceptance remains tracked separately in tasks 4.3–4.9.

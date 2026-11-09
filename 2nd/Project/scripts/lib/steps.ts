@@ -1,4 +1,5 @@
-import { nodeBin, toolStep, uvStep } from "./processes.js";
+import { join } from "node:path";
+import { nodeBin, toolStep, uvStep, WORK_ROOT } from "./processes.js";
 import type { StepResult } from "./report.js";
 
 export async function lintSteps(): Promise<StepResult[]> {
@@ -16,7 +17,7 @@ function withArgs(tool: string, args: string[]): [string, string[]] {
 
 export async function typecheckSteps(): Promise<StepResult[]> {
     const results: StepResult[] = [];
-    for (const project of ["contracts", "apps/host", "tools/sdk-probe", "scripts"]) {
+    for (const project of ["contracts", "apps/host", "apps/ui", "tools/sdk-probe", "scripts"]) {
         results.push(await toolStep(`types: ${project}`, ...withArgs("typescript/bin/tsc", ["-p", project])));
     }
     return results;
@@ -50,6 +51,23 @@ export async function hostUnitSteps(): Promise<StepResult[]> {
             "--test",
             "apps/host/tests/unit/**/*.test.ts",
         ]),
+    ];
+}
+
+export async function uiUnitSteps(): Promise<StepResult[]> {
+    return [
+        await toolStep(
+            "unit: UI rendering and behaviour",
+            process.execPath,
+            ["--import", "tsx", "--test", "tests/*.test.ts", "tests/*.test.tsx"],
+            { cwd: join(WORK_ROOT, "apps/ui") },
+        ),
+    ];
+}
+
+export async function uiBuildSteps(): Promise<StepResult[]> {
+    return [
+        await toolStep("build: UI", ...withArgs("vite/bin/vite.js", ["build"]), { cwd: join(WORK_ROOT, "apps/ui") }),
     ];
 }
 

@@ -3,11 +3,12 @@
  * the only tools the model sees. Reads are bounded and auto-approved; writes
  * and commands need a user approval whose review shows the exact input.
  */
-import { lstatSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { lstatSync, readdirSync, writeFileSync } from "node:fs";
 import type { AgentTool } from "@cline/sdk";
 import type { ApprovalReview } from "@securecode/contracts";
 import { refuseCommand } from "../permissions/commandPolicy.js";
 import { runCommand } from "./commandRunner.js";
+import { readBoundedUtf8 } from "./boundedFileRead.js";
 import { readRuntimePointer, type RuntimePointerHookOptions } from "../../pointer-hooks/runtimePointerHook.js";
 import { resolveForRead, resolveForWrite, toRelative } from "./workspacePaths.js";
 
@@ -31,7 +32,7 @@ export interface ProjectTool {
 export interface WorkspaceToolOptions {
     root: string;
     commandTimeoutMs: number;
-    pointer: Pick<RuntimePointerHookOptions, "baseUrl" | "internalToken" | "workspaceId" | "sessionId">;
+    pointer: Pick<RuntimePointerHookOptions, "baseUrl" | "internalToken" | "api" | "workspaceId" | "sessionId">;
 }
 
 function field(input: unknown, name: string, required: true): string;
@@ -95,10 +96,7 @@ function readFileTool(root: string): ProjectTool {
                     READ_MAX_BYTES,
                     Number.isSafeInteger(record.max_bytes) ? (record.max_bytes ?? 1) : READ_DEFAULT_BYTES,
                 );
-                const bytes = readFileSync(target);
-                const slice = clipUtf8(bytes.subarray(offset).toString("utf8"), limit);
-                const end = offset + Buffer.byteLength(slice.text, "utf8");
-                return `${slice.text}${end < bytes.length ? `\n[read_file: bytes ${offset}-${end} of ${bytes.length}; call again with offset_bytes=${end}]` : ""}`;
+                return readBoundedUtf8(target, offset, limit);
             },
         },
     };
@@ -186,7 +184,6 @@ function runCommandTool(options: WorkspaceToolOptions): ProjectTool {
         },
     };
 }
-
 
 function runtimeReadTool(pointer: WorkspaceToolOptions["pointer"]): ProjectTool {
     return {

@@ -1,16 +1,29 @@
 """Bounded source file reader with line & byte memory limits."""
 
-import os
 import json
-from typing import Any, Dict, Optional
+from typing import Any
 
-MAX_LINE_BYTES = 65536      # 64 KB per line limit
-MAX_TOTAL_BYTES = 1048576   # 1 MB total read limit
+from securecode_context.pointers.source.registry import SourceRegistry
+
+MAX_LINE_BYTES = 65_536
+MAX_TOTAL_BYTES = 16_384
+MAX_SCAN_BYTES = 1_048_576
+MAX_JSON_BYTES = 8 * 1_048_576
+
 
 class BoundedSourceReader:
-    """Bounded line and byte reader for workspace source files."""
+    """클래스 이름: BoundedSourceReader
+    기능: 등록된 파일을 제한된 메모리로 읽고 조회 전후 revision을 확인한다.
+    작성 날짜: 2026/11/09
+    """
 
-    def __init__(self, registry: Any = None):
+    def __init__(self, registry: SourceRegistry | None = None) -> None:
+        """함수 이름: __init__()
+        기능: 조회 권한과 revision을 검증할 등록부를 보관한다.
+        인자: registry -> Source 등록부
+        반환값: 없음
+        작성 날짜: 2026/11/09
+        """
         self.registry = registry
 
     def read_range(self, pointer: str, start_line: int = 1, end_line: int = 100, max_bytes: int = MAX_TOTAL_BYTES) -> Dict[str, Any]:
@@ -61,9 +74,9 @@ class BoundedSourceReader:
         return {
             "pointer": pointer,
             "lines": lines,
-            "content": content,
-            "bytes_read": total_bytes_read,
-            "truncated": total_bytes_read >= max_bytes
+            "content": "\n".join(lines),
+            "bytes_read": scanned,
+            "truncated": truncated,
         }
 
     def read_json_path(self, file_path: str, json_path: Optional[str] = None, max_bytes: int = 524288) -> Any:
@@ -74,16 +87,5 @@ class BoundedSourceReader:
         with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
-        if not json_path or json_path == "$":
-            return data
-
-        keys = [k for k in json_path.strip("$. ").split(".") if k]
-        curr = data
-        for k in keys:
-            if isinstance(curr, dict) and k in curr:
-                curr = curr[k]
-            else:
-                return None
-        return curr
 
 SourceReader = BoundedSourceReader

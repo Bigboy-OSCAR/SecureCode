@@ -8,8 +8,6 @@ interface PendingSuite {
 }
 export const PENDING_SUITES: readonly PendingSuite[] = [
     { command: "dev", name: "web UI", ownerTask: "1.1", detail: "UI package pending" },
-    { command: "check", name: "UI lint and types", ownerTask: "1.1", detail: "UI package pending" },
-    { command: "unit", name: "UI behaviour tests", ownerTask: "1.3", detail: "UI package pending" },
     {
         command: "integration",
         name: "R0 workspace search/bundle",
@@ -31,7 +29,6 @@ export const PENDING_SUITES: readonly PendingSuite[] = [
     { command: "integration", name: "PDF parse/read", ownerTask: "4.9", detail: "PDF service pending" },
     { command: "e2e", name: "UI end-to-end flows", ownerTask: "1.6", detail: "browser workflow pending" },
     { command: "live", name: "SDK run against provider", ownerTask: "3.6", detail: "live provider smoke pending" },
-    { command: "build", name: "UI production build", ownerTask: "1.1", detail: "UI package pending" },
     { command: "build", name: "local packaging", ownerTask: "3.7", detail: "distribution pending" },
 ];
 export function pendingResults(command: string): StepResult[] {

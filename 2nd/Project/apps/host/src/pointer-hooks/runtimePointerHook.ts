@@ -1,9 +1,10 @@
-/** Legacy Runtime Pointer transport. Use the authenticated loopback API with an explicit session scope. */
+/** Authenticated Runtime Pointer transport; legacy probes opt into the original API by default. */
 import { requestLoopbackJson } from "../context-client/loopbackHttp.js";
 
 export interface RuntimePointerHookOptions {
     baseUrl?: string;
     internalToken?: string;
+    api?: "legacy" | "internal";
     workspaceId: string;
     sessionId: string;
     thresholdBytes?: number;
@@ -63,7 +64,8 @@ export async function storeRuntimePointer(
     if (!/^ws_[A-Za-z0-9-]{8,64}$/.test(options.workspaceId) || !/^ses_[A-Za-z0-9-]{8,64}$/.test(options.sessionId)) {
         throw new Error("invalid runtime pointer creation scope");
     }
-    const record = await requestPointer(options, "/api/v1/pointers/runtime", { content: toolResult.content });
+    const path = options.api === "internal" ? "/internal/v1/runtime/pointers" : "/api/v1/pointers/runtime";
+    const record = await requestPointer(options, path, { content: toolResult.content });
     const id = record.pointer_id;
     if (typeof id !== "string" || !UUID.test(id)) throw new Error("invalid runtime pointer response");
     const pointerUri = `securecode://runtime/${options.workspaceId}/${options.sessionId}/${id}?v=1`;
@@ -94,12 +96,24 @@ export async function readRuntimePointer(
     ) {
         throw new Error("invalid runtime pointer read range or scope");
     }
-    const record = await requestPointer(options, "/api/v1/pointers/runtime/read", {
-        pointer_id: id,
-        cursor,
-        max_bytes: maxBytes,
-    });
-    const { content, byte_size: byteSize, truncated, next_cursor: nextCursor } = record;
+    const record =
+        options.api === "internal"
+            ? await requestPointer(options, "/internal/v1/runtime/pointers/read", {
+                  pointer: pointerUri,
+                  offset: cursor,
+                  max_bytes: maxBytes,
+              })
+            : await requestPointer(options, "/api/v1/pointers/runtime/read", {
+                  pointer_id: id,
+                  cursor,
+                  max_bytes: maxBytes,
+              });
+    const { content, truncated } = record;
+    const byteSize = options.api === "internal" ? record.total_bytes : record.byte_size;
+    const nextCursor =
+        options.api === "internal" && typeof record.next_cursor === "string" && /^\d+$/.test(record.next_cursor)
+            ? Number(record.next_cursor)
+            : record.next_cursor;
     if (
         typeof content !== "string" ||
         !content.isWellFormed() ||

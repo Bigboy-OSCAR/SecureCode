@@ -49,7 +49,14 @@ it("completes a run that reads a workspace file, streaming contract events", asy
         const firstTools = (host.provider.capturedRequests[0]?.body.tools as { name: string }[])
             .map((tool) => tool.name)
             .sort();
-        assert.deepEqual(firstTools, ["list_files", "read_file", "run_command", "runtime_read", "runtime_search", "write_file"]);
+        assert.deepEqual(firstTools, [
+            "list_files",
+            "read_file",
+            "run_command",
+            "runtime_read",
+            "runtime_search",
+            "write_file",
+        ]);
         assert.match(outboundText(host), /hello from the workspace/);
         assert.equal(host.transformer.inputs.length, 1);
         const session = await host.client.send("GET", `/api/v1/sessions/${sessionId}`);

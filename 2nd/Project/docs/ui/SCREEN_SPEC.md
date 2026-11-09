@@ -1,14 +1,16 @@
 # 제품 화면·사용 흐름 설계
 
-> 작업: 2.1 → 2.2 보완 · 담당: 김찬우 · 문서 버전: 2 · 작성일: 2026-10-30 · 보완일: 2026-11-05 (Asia/Seoul)
+> 작업: 2.1 → 2.2 → 2.3 검토 보완 · 담당: 김찬우 · 문서 버전: 3 · 작성일: 2026-10-30 · 보완일: 2026-11-09 (Asia/Seoul)
 >
 > 상태: 화면 설계. 실행 가능한 UI나 확정 API 스키마를 의미하지 않는다.
 >
 > 기준: [로드맵 0절·2.1절](../../INTEGRATED_SYSTEM_IMPLEMENTATION_ROADMAP.md), [코딩컨벤션](../../CODING_CONVENTIONS.md)
 
-이 문서는 화면 구조·와이어프레임·지원 범위의 정본이다. 화면 ID는 `SC-01`, 사용자 시나리오 ID는 `UI-01`, 계약 요청 ID는 `H-01` 형식으로 유지한다. [사용자 시나리오](USER_SCENARIOS.md)와 [2.1 계약 인계](../handoffs/2.1-ui-contract-requirements.md)는 초기 요구를 보존한다. 확정된 필드·입력 검증·버튼·문구는 [UI_BEHAVIOR](UI_BEHAVIOR.md), 실제 fixture와의 대응은 [UI_BEHAVIOR_CASES](UI_BEHAVIOR_CASES.md)를 따른다. 구현 화면 인수표는 2.3의 범위다.
+이 문서는 화면 구조·와이어프레임·지원 범위의 정본이다. 화면 ID는 `SC-01`, 사용자 시나리오 ID는 `UI-01`, 계약 요청 ID는 `H-01` 형식으로 유지한다. [사용자 시나리오](USER_SCENARIOS.md)와 [2.1 계약 인계](../handoffs/2.1-ui-contract-requirements.md)는 초기 요구를 보존한다. 확정된 필드·입력 검증·버튼·문구는 [UI_BEHAVIOR](UI_BEHAVIOR.md), 실제 fixture와의 대응은 [UI_BEHAVIOR_CASES](UI_BEHAVIOR_CASES.md)를 따른다. 구현 화면의 검토 결과와 최종 인수 절차는 [ACCEPTANCE](ACCEPTANCE.md)에 기록한다.
 
 **2.2 인계.** 9개 화면의 표시·입력·복구 규칙은 [상세 명세](UI_BEHAVIOR.md), 계약 예시와 사용자 행동의 대응은 [34개 사례](UI_BEHAVIOR_CASES.md)에 있다. 호스트가 501을 반환할 때는 해당 기능을 준비 중으로 표시한다.
+
+**2.3 검토 기준.** fixture 화면은 설계의 표시 예시와 일부 사용자 동작을 검토하기 위한 입력이다. 서로 다른 오류 예시를 펼쳐 보는 것은 해당 오류의 실제 발생·복구 검증이 아니다. 표본 상태는 현재 작업 상태와 명확하게 구별하고, 같은 자료의 정상 결과에 무결과·만료·원본 변경을 동시에 붙이지 않는다. 인수표의 fixture 검토 결과와 1.4/1.5의 실제 연결 및 1.6/3.8의 최종 제품 통과는 구분한다. 미구현 조작은 [2.3 수정 요청](../handoffs/2.3-ui-review-fixes.md)에 인계하며 문서 요구를 제거해 통과시키지 않는다.
 
 ## 1. 사용자 목적과 범위
 
@@ -240,7 +242,7 @@
 | --- | --- |
 | 입력 | `PointerReadRequest`의 pointer·selector·caps·cursor. 자료의 `available_operations`로 읽기·검색 가능 여부를 확인하고 `supported_selectors`가 허용한 범위 입력만 제공한다. 단위·경계·입력 상한은 상세 SC-07을 따른다. |
 | 출력 | content·truncated·next_cursor·token_count/count_mode를 표시한다. 실제 반환 범위와 원본 해시·revision은 provenance.selection에서 가져온다. 해당 정보가 없는 응답은 열람만 제공한다. |
-| 성공·부분 | 제한된 텍스트만 표시한다. `truncated` 또는 다음 cursor가 있으면 “일부 반환됨”과 다음 부분 조작을 제공한다. 다음 부분은 사용자 요청 때 읽고 이전 원문을 무제한 누적하지 않는다. |
+| 성공·부분 | 제한된 텍스트만 표시한다. `truncated` 또는 다음 cursor가 있으면 “일부 반환됨”을 표시한다. 다음 부분 조작은 현재 포인터·revision에 유효한 cursor가 있을 때만 제공한다. `truncated=true`지만 cursor가 없으면 범위 수정을 안내한다. 다음 부분은 사용자 요청 때 읽고 이전 원문을 무제한 누적하지 않는다. |
 | 실패·변경 | 잘못된 범위는 입력 수정, `SOURCE_CHANGED`는 이전 원문·cursor·명시 선택을 무효화하고 갱신 후 다시 선택한다. 만료/삭제/권한 거부는 읽기 불가와 대체 자료 선택을 안내한다. |
 | 인수 | UI-23, UI-24, UI-25, UI-26 |
 
@@ -291,7 +293,7 @@ OCR·암호 해제·자동 외부 업로드는 제공하지 않는다. 파싱 �
 | 예산·오류 | 명시 선택도 초과할 수 없다. 범위 축소·선택 해제·새 대화를 안내한다. 이력이 이미 초과하면 `BUDGET_EXCEEDED`로 중단하고 자동 요약하지 않는다. 계수 미지원은 `TOKENIZER_UNAVAILABLE`/명시적 미지원으로 실행을 차단한다. |
 | 인수 | UI-30, UI-31, UI-32 |
 
-예산 계산은 로드맵 0.7을 따른다. 모델 한도에서 system·tool schema·user·retained history·message overhead, 출력 예약, 여유분을 뺀 나머지가 자료 예산이다. preview의 계수와 provider 최종 직렬화 검증은 구분한다. 최종 outbound payload/framing까지 검증됐다는 서버 근거가 없으면 “추정”이며 `exact` 또는 “한도 보장”으로 표시하지 않는다. preview 성공이 실행 승인이거나 최종 예산 통과인 것은 아니다. 질문·선택·이력·버전·설정이 달라지면 미리보기 갱신이 필요하고 host가 전송 직전에 다시 검사한다.
+예산 계산은 로드맵 0.7을 따른다. 모델 한도에서 system·tool schema·user·retained history·message overhead, 출력 예약, 여유분을 뺀 나머지가 자료 예산이다. preview의 계수와 provider 최종 직렬화 검증은 구분한다. 본문의 `count_mode`는 그대로 구별해 exact는 “동일 토크나이저로 계수”, provider_estimate는 “제공자 추정값”, provider_reported는 “제공자가 응답 후 보고한 값”으로 표시한다. 이 본문 계수 표시와 최종 요청 gate 상태는 별개다. 최종 outbound payload/framing까지 검증됐다는 서버 근거가 없으면 “전송 전 검사 미검증/사용 불가”를 표시하고 “전체 요청 한도 보장”으로 확대하지 않는다. preview 성공이 실행 승인이거나 최종 예산 통과인 것은 아니다. 질문·선택·이력·버전·설정이 달라지면 미리보기 갱신이 필요하고 host가 전송 직전에 다시 검사한다.
 
 포인터 읽기·검색의 요청 상한은 16 KiB와 32,768토큰이다. 서버가 더 작은 값을 설정하면 SettingsResponse.limits의 반환값을 사용하며 누락된 값은 “제공되지 않음”으로 표시한다.
 
