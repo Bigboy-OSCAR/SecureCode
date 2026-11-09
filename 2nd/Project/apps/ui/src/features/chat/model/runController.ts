@@ -9,6 +9,7 @@ import type {
 } from "@securecode/contracts";
 import type { RunClient } from "../../../api/runClient.js";
 import { createIdempotencyKey } from "../../../api/runClient.js";
+import { formatApiFailure } from "../../../api/apiErrors.js";
 import { RunCommands } from "./runCommands.js";
 import { applyRunEvent, applyRunSnapshot, createRunViewState, type RunViewState } from "./runState.js";
 
@@ -113,9 +114,13 @@ export class RunController {
         }
     }
 
-    markDisconnected(): void {
+    markDisconnected(error?: Error): void {
         if (!this.disposed) {
-            this.publish({ ...this.state, connection: "disconnected" });
+            this.publish({
+                ...this.state,
+                connection: "disconnected",
+                error: error ? formatApiFailure(error, "이벤트 스트림 연결이 끊겼습니다.") : this.state.error,
+            });
         }
     }
 
@@ -183,12 +188,12 @@ export class RunController {
                 return true;
             }
             return this.restore(snapshot);
-        } catch {
+        } catch (error) {
             if (this.isCurrent(epoch) && this.state.snapshot?.run_id === runId) {
                 this.publish({
                     ...this.state,
                     connection: "disconnected",
-                    error: "최신 실행 상태를 불러오지 못했습니다.",
+                    error: formatApiFailure(error, "최신 실행 상태를 불러오지 못했습니다."),
                 });
             }
             return false;
@@ -201,7 +206,12 @@ export class RunController {
             runId,
             sequence,
             (event) => this.receiveEvent(event),
-            () => this.markDisconnected(),
+            (error) => this.markDisconnected(error),
+            () => {
+                if (!this.disposed && this.state.snapshot?.run_id === runId) {
+                    this.publish({ ...this.state, connection: "connected", error: null });
+                }
+            },
         );
     }
 

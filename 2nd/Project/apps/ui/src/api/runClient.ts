@@ -24,7 +24,8 @@ export interface RunClient {
         runId: RunId,
         afterSequence: Sequence,
         onEvent: (event: AppEvent) => void,
-        onDisconnect: () => void,
+        onDisconnect: (error?: Error) => void,
+        onReconnect?: () => void,
     ): () => void;
 }
 

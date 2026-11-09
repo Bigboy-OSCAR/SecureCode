@@ -7,9 +7,10 @@ import type { RunViewState } from "../../chat/model/runState.js";
 export interface ApprovalCardProps {
     controller: RunController;
     state: RunViewState;
+    fixtureMode?: boolean;
 }
 
-export function ApprovalCard({ controller, state }: ApprovalCardProps): React.JSX.Element {
+export function ApprovalCard({ controller, state, fixtureMode = true }: ApprovalCardProps): React.JSX.Element {
     const actions = useApprovalActions(controller, state);
     const approval = state.snapshot?.pending_approvals[0] ?? null;
     const expired = approval ? controller.isApprovalExpired(approval.approval_id) : false;
@@ -81,26 +82,28 @@ export function ApprovalCard({ controller, state }: ApprovalCardProps): React.JS
                     {approvalStatusLabel(item.status)} · {item.tool_name}
                 </p>
             ))}
-            <details>
-                <summary>빈 승인·오류·만료·거절 예시</summary>
-                <p>
-                    {fixtureAdapter.runs[1]!.pending_approvals.length === 0
-                        ? "검토할 승인 요청이 없습니다."
-                        : "승인 요청이 있습니다."}
-                </p>
-                <Alert title="승인 확인이 일치하지 않습니다" variant="error">
-                    {fixtureAdapter.approvalDigestError.error.message}
-                </Alert>
-                <Alert title="승인 시간이 만료됐습니다" variant="warning">
-                    {fixtureAdapter.approvalExpired.error.message}
-                </Alert>
-                <p>
-                    {fixtureAdapter.approvalRejected.type === "run.approval_resolved" &&
-                    fixtureAdapter.approvalRejected.payload.status === "rejected"
-                        ? "요청된 작업이 거절된 예시입니다."
-                        : "결정 결과를 확인할 수 없습니다."}
-                </p>
-            </details>
+            {fixtureMode ? (
+                <details>
+                    <summary>빈 승인·오류·만료·거절 예시</summary>
+                    <p>
+                        {fixtureAdapter.runs[1]!.pending_approvals.length === 0
+                            ? "검토할 승인 요청이 없습니다."
+                            : "승인 요청이 있습니다."}
+                    </p>
+                    <Alert title="승인 확인이 일치하지 않습니다" variant="error">
+                        {fixtureAdapter.approvalDigestError.error.message}
+                    </Alert>
+                    <Alert title="승인 시간이 만료됐습니다" variant="warning">
+                        {fixtureAdapter.approvalExpired.error.message}
+                    </Alert>
+                    <p>
+                        {fixtureAdapter.approvalRejected.type === "run.approval_resolved" &&
+                        fixtureAdapter.approvalRejected.payload.status === "rejected"
+                            ? "요청된 작업이 거절된 예시입니다."
+                            : "결정 결과를 확인할 수 없습니다."}
+                    </p>
+                </details>
+            ) : null}
             <Modal open={actions.intent !== null} title={modalTitle} onRequestClose={actions.close}>
                 <p>
                     {actions.intent === "approve"

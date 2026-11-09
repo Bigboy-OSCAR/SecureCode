@@ -25,7 +25,12 @@ export interface SdkHost extends TestHost {
 
 export async function startSdkHost(
     turns: ScriptedTurn[],
-    options: { approvalTimeoutMs?: number; dataDir?: string; workspaceRoot?: string } = {},
+    options: {
+        approvalTimeoutMs?: number;
+        dataDir?: string;
+        workspaceRoot?: string;
+        initializeWorkspace?: boolean;
+    } = {},
 ): Promise<SdkHost> {
     const provider = new ScriptedProviderFetch(turns);
     const transformer = new FixtureTransformer();
@@ -40,13 +45,16 @@ export async function startSdkHost(
     });
     const workspaceRoot = options.workspaceRoot ?? mkdtempSync(join(tmpdir(), "securecode-sdk-ws-"));
     writeFileSync(join(workspaceRoot, "notes.txt"), "hello from the workspace\n");
-    await test.client.bootstrap();
-    const workspace = await test.client.send("POST", "/api/v1/workspaces", {
-        display_name: "sdk",
-        root_path: workspaceRoot,
-        idempotency_key: "sdk-workspace-key",
-    });
-    const workspaceId = (workspace.body as Workspace).workspace_id;
+    let workspaceId = "";
+    if (options.initializeWorkspace !== false) {
+        await test.client.bootstrap();
+        const workspace = await test.client.send("POST", "/api/v1/workspaces", {
+            display_name: "sdk",
+            root_path: workspaceRoot,
+            idempotency_key: "sdk-workspace-key",
+        });
+        workspaceId = (workspace.body as Workspace).workspace_id;
+    }
     return { ...test, provider, transformer, gate, workspaceRoot, workspaceId };
 }
 

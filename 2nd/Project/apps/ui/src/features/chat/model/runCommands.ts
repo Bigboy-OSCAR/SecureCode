@@ -10,6 +10,7 @@ import type {
 } from "@securecode/contracts";
 import type { RunClient } from "../../../api/runClient.js";
 import { createIdempotencyKey } from "../../../api/runClient.js";
+import { formatApiFailure } from "../../../api/apiErrors.js";
 import { isTerminalRunStatus, type RunViewState } from "./runState.js";
 
 interface PendingCreate {
@@ -90,12 +91,15 @@ export class RunCommands {
                 this.pendingCreate = null;
                 return true;
             })
-            .catch(() => {
+            .catch((error: unknown) => {
                 if (this.host.isCurrent(epoch)) {
                     this.host.publish({
                         ...this.host.getState(),
                         operation: null,
-                        error: "요청 결과를 확인하지 못했습니다. 같은 질문으로 다시 확인하세요.",
+                        error: formatApiFailure(
+                            error,
+                            "요청 결과를 확인하지 못했습니다. 같은 질문으로 다시 확인하세요.",
+                        ),
                     });
                 }
                 return false;
@@ -128,9 +132,13 @@ export class RunCommands {
                 return false;
             }
             return this.host.restore(updated);
-        } catch {
+        } catch (error) {
             if (this.host.isCurrent(epoch)) {
-                this.host.publish({ ...this.host.getState(), operation: null, error: "취소 결과 확인이 필요합니다." });
+                this.host.publish({
+                    ...this.host.getState(),
+                    operation: null,
+                    error: formatApiFailure(error, "취소 결과 확인이 필요합니다."),
+                });
                 await this.host.recoverSnapshot(snapshot.run_id, epoch);
             }
             return false;
@@ -183,13 +191,13 @@ export class RunCommands {
             }
             this.applyApprovalResponse(result.approval);
             return true;
-        } catch {
+        } catch (error) {
             if (this.host.isCurrent(epoch)) {
                 this.host.publish({
                     ...this.host.getState(),
                     operation: null,
                     connection: "recovering",
-                    error: "결정 결과 확인 중입니다.",
+                    error: formatApiFailure(error, "결정 결과 확인 중입니다."),
                 });
                 await this.host.recoverSnapshot(snapshot.run_id, epoch);
             }

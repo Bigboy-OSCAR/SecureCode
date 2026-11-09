@@ -28,7 +28,7 @@ function render(element: ReactNode): string {
 }
 
 test("all feature screens render their stable identifiers", () => {
-    const markup = render(createElement(App));
+    const markup = render(createElement(App, { mode: "fixture" }));
 
     for (const screen of [
         "connection",
@@ -52,6 +52,17 @@ test("all feature screens render their stable identifiers", () => {
     const codePattern = markup.match(/id="connection-code"[^>]*pattern="([^"]+)"/)?.[1];
     assert.ok(codePattern);
     assert.doesNotThrow(() => new RegExp(codePattern, "v"));
+});
+
+test("live application uses host auth and labels unfinished index and pointer APIs as unavailable", () => {
+    const markup = render(createElement(App, { mode: "live" }));
+
+    assert.ok(markup.includes("same-origin bootstrap 요청"));
+    assert.ok(markup.includes("R0 색인 API가 아직 연결되지 않았습니다"));
+    assert.ok(markup.includes("Source Pointer, Runtime Pointer"));
+    assert.ok(markup.includes("provider API 키와 내부 서비스 토큰은 브라우저에 전달되지 않습니다"));
+    assert.equal(markup.includes("fixture 기반 화면 · 실제 API 호출 없음"), false);
+    assert.equal(markup.includes("hello from the workspace"), false);
 });
 
 test("shared components render accessible labels and status text", () => {
