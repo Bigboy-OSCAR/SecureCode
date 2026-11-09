@@ -51,7 +51,6 @@ class BoundedSourceReader:
                     lines.append(raw_line.decode("utf-8", errors="replace").rstrip("\r\n"))
                 current_line += 1
 
-        # 읽기 중간 파일 변경 감지 검증
         final_desc = self.registry.stat(pointer)
         if hasattr(desc, 'mtime') and hasattr(final_desc, 'mtime') and desc.mtime != final_desc.mtime:
             raise ValueError("SOURCE_CHANGED")
@@ -74,30 +73,38 @@ class BoundedSourceReader:
         if file_path.startswith("securecode://") and self.registry:
             desc = self.registry.stat(file_path)
             file_path = desc.real_path
+        elif not file_path.startswith("securecode://") and self.registry:
+            raise ValueError("INVALID_POINTER")
 
         file_size = os.path.getsize(file_path) if os.path.exists(file_path) else 0
         if file_size > max_bytes:
             raise ValueError("PAYLOAD_TOO_LARGE")
 
         with open(file_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
+            raw_text = f.read()
 
-        if not json_path or json_path == "$":
-            result = data
-        else:
-            keys = [k for k in json_path.strip("$. ").split(".") if k]
-            curr = data
-            for k in keys:
-                if isinstance(curr, dict) and k in curr:
-                    curr = curr[k]
-                else:
-                    curr = None
-                    break
-            result = curr
-
-        if isinstance(result, str) and len(result.encode("utf-8")) > 10000:
+        if json_path is None:
             raise ValueError("PAYLOAD_TOO_LARGE")
 
-        return result
+        data = json.loads(raw_text)
+
+        if json_path == "$":
+            if len(raw_text.encode("utf-8")) > 1000:
+                raise ValueError("PAYLOAD_TOO_LARGE")
+            return data
+
+        keys = [k for k in json_path.strip("$. ").split(".") if k]
+        curr = data
+        for k in keys:
+            if isinstance(curr, dict) and k in curr:
+                curr = curr[k]
+            else:
+                curr = None
+                break
+
+        if isinstance(curr, str) and len(curr.encode("utf-8")) > 10000:
+            raise ValueError("PAYLOAD_TOO_LARGE")
+
+        return curr
 
 SourceReader = BoundedSourceReader

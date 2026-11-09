@@ -20,6 +20,10 @@ class ContextPlan:
     total_tokens: int
     selected: List[Any] = field(default_factory=list)
 
+    @property
+    def used_tokens(self) -> int:
+        return self.total_tokens
+
 class ContextBudgetCalculator:
     def __init__(self, model_limit: int = 10000, reserved_output: int = 1000, safety_margin: int = 500):
         self.model_limit = model_limit
