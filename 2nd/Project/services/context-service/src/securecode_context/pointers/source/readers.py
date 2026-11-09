@@ -32,27 +32,33 @@ class BoundedSourceReader:
             if not in_workspace:
                 raise ValueError("WORKSPACE_ESCAPE_FORBIDDEN")
 
-        current_mtime = os.path.getmtime(file_path) if os.path.exists(file_path) else 0
-        if hasattr(desc, 'mtime') and desc.mtime and current_mtime != desc.mtime:
-            raise ValueError("SOURCE_CHANGED")
-
         lines = []
         total_bytes_read = 0
 
         with open(file_path, "rb") as f:
             current_line = 1
             for raw_line in f:
+                if len(raw_line) > MAX_LINE_BYTES:
+                    raise ValueError("cap exceeded")
+
                 if current_line > end_line:
                     break
                 if current_line >= start_line:
-                    chunk = raw_line[:MAX_LINE_BYTES]
-                    total_bytes_read += len(chunk)
-
+                    total_bytes_read += len(raw_line)
                     if total_bytes_read > max_bytes:
-                        break
+                        raise ValueError("cap exceeded")
 
-                    lines.append(chunk.decode("utf-8", errors="replace").rstrip("\r\n"))
+                    lines.append(raw_line.decode("utf-8", errors="replace").rstrip("\r\n"))
                 current_line += 1
+
+        # 읽기 중간 파일 변경 감지 검증
+        final_desc = self.registry.stat(pointer)
+        if hasattr(desc, 'mtime') and hasattr(final_desc, 'mtime') and desc.mtime != final_desc.mtime:
+            raise ValueError("SOURCE_CHANGED")
+
+        current_mtime = os.path.getmtime(file_path) if os.path.exists(file_path) else 0
+        if hasattr(desc, 'mtime') and desc.mtime and current_mtime != desc.mtime:
+            raise ValueError("SOURCE_CHANGED")
 
         content = "\n".join(lines)
 
@@ -71,21 +77,27 @@ class BoundedSourceReader:
 
         file_size = os.path.getsize(file_path) if os.path.exists(file_path) else 0
         if file_size > max_bytes:
-            raise ValueError("JSON_EXCEEDS_MAX_BYTES")
+            raise ValueError("PAYLOAD_TOO_LARGE")
 
         with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
         if not json_path or json_path == "$":
-            return data
+            result = data
+        else:
+            keys = [k for k in json_path.strip("$. ").split(".") if k]
+            curr = data
+            for k in keys:
+                if isinstance(curr, dict) and k in curr:
+                    curr = curr[k]
+                else:
+                    curr = None
+                    break
+            result = curr
 
-        keys = [k for k in json_path.strip("$. ").split(".") if k]
-        curr = data
-        for k in keys:
-            if isinstance(curr, dict) and k in curr:
-                curr = curr[k]
-            else:
-                return None
-        return curr
+        if isinstance(result, str) and len(result.encode("utf-8")) > 10000:
+            raise ValueError("PAYLOAD_TOO_LARGE")
+
+        return result
 
 SourceReader = BoundedSourceReader

@@ -7,6 +7,11 @@ from typing import List, Dict, Any, Optional
 class OmittedCandidate:
     uri: str
     reason: str
+    reason_code: str = ""
+
+    def __post_init__(self):
+        if not self.reason_code:
+            self.reason_code = self.reason
 
 @dataclass
 class ContextPlan:
@@ -56,11 +61,11 @@ class ModelRequestGate:
                 est_tokens = self.token_counter.estimate_tokens(content)
 
             if uri in seen_uris:
-                omitted.append(OmittedCandidate(uri=uri, reason="DUPLICATE"))
+                omitted.append(OmittedCandidate(uri=uri, reason="DUPLICATE", reason_code="DUPLICATE"))
                 continue
 
             if current_tokens + est_tokens > max_tokens or max_tokens < 0:
-                omitted.append(OmittedCandidate(uri=uri, reason="BUDGET_EXCEEDED"))
+                omitted.append(OmittedCandidate(uri=uri, reason="BUDGET_EXCEEDED", reason_code="BUDGET_EXCEEDED"))
                 continue
 
             seen_uris.add(uri)
