@@ -1,0 +1,14 @@
+{
+  "at_utc": "2026-11-09T07:24:49.204739+00:00",
+  "driver_sha256": "661ea434b8ddb5c295a182d9f930be7e281e86cc5a2473d01989bf1576ea2e22",
+  "evalplus_version": "0.3.1",
+  "memory_limit_env": "EVALPLUS_MAX_MEMORY_BYTES=-1",
+  "find_zero_bookkeeping_fix": {
+    "official_module_sha256": "76857b678cddca08dcaf54d7927b9a77826715cf657654ca5baf6c2b267f4c34",
+    "before": "assert abs(_poly(*inp, out)) <= atol\n                            continue",
+    "after": "assert abs(_poly(*inp, out)) <= atol\n                            details[i] = True\n                            progress.value += 1\n                            continue",
+    "patched_function_sha256": "8b1952bc6490d0f32eb027dbbc6a24ba8b5a5593f10b303e7a9fc6ddf4ff4afe"
+  },
+  "upstream_fix_source": "https://github.com/evalplus/evalplus/blob/master/evalplus/eval/__init__.py",
+  "reason": "Before any model generation, canonical controls failed: Darwin resource.setrlimit ValueError; then HumanEval/32 success records missing. No acceptance criterion changed."
+}

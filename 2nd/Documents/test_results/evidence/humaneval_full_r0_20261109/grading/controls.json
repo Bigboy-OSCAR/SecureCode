@@ -1,0 +1,2933 @@
+{
+  "at_utc": "2026-11-09T07:24:48.546741+00:00",
+  "all_pass": false,
+  "unexpected_failures": [],
+  "verified": true,
+  "known_reference_solver_failure": {
+    "task_id": "HumanEval/32",
+    "atol": 0.0001,
+    "invalid_roots": [
+      {
+        "input_index": 119,
+        "input": [
+          [
+            9450000,
+            9,
+            -7,
+            3,
+            2,
+            6,
+            1,
+            -4,
+            -10,
+            6,
+            17,
+            -1
+          ]
+        ],
+        "reference_output": 17.3124550475086,
+        "polynomial_residual": -0.0023150274059275944
+      },
+      {
+        "input_index": 177,
+        "input": [
+          [
+            9,
+            -6,
+            20999,
+            2,
+            8,
+            -4,
+            -10,
+            26,
+            6,
+            5,
+            -1,
+            8
+          ]
+        ],
+        "reference_output": -4.4399586099514305,
+        "polynomial_residual": -111705260.2034939
+      },
+      {
+        "input_index": 399,
+        "input": [
+          [
+            26,
+            1,
+            -2,
+            3,
+            -4,
+            6,
+            -6,
+            7,
+            21000,
+            -8,
+            9,
+            -10
+          ]
+        ],
+        "reference_output": 13.091719521058346,
+        "polynomial_residual": 0.0023935606772145235
+      },
+      {
+        "input_index": 616,
+        "input": [
+          [
+            -300,
+            21000,
+            -630001,
+            9450000,
+            -78840000,
+            -8,
+            -1186740000,
+            1935360000,
+            -1663750000,
+            725760000,
+            9450000,
+            -630000
+          ]
+        ],
+        "reference_output": 0.08512267698253775,
+        "polynomial_residual": -1781.2028187863482
+      },
+      {
+        "input_index": 650,
+        "input": [
+          [
+            -1663750000,
+            10,
+            10,
+            -1663750001,
+            26,
+            -1663750001,
+            -1,
+            -1663750001,
+            -1,
+            26
+          ]
+        ],
+        "reference_output": 7999.418311588738,
+        "polynomial_residual": 2.811130718384961e+20
+      },
+      {
+        "input_index": 694,
+        "input": [
+          [
+            -3,
+            -2,
+            3,
+            3,
+            -6,
+            -3,
+            5,
+            -6,
+            37,
+            3,
+            -630001,
+            -38,
+            9,
+            -10,
+            3,
+            -10,
+            9,
+            3
+          ]
+        ],
+        "reference_output": 5.466421282858954,
+        "polynomial_residual": 0.001629622516601259
+      }
+    ],
+    "scoring": "Official polynomial-residual oracle retained; canonical outputs are not the comparison target for this task; no test/task excluded."
+  },
+  "records": [
+    {
+      "task_id": "HumanEval/0",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 999,
+        "tests": 999,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/1",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 83,
+        "tests": 83,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/2",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 971,
+        "tests": 971,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/3",
+      "base": {
+        "status": "pass",
+        "checked": 6,
+        "tests": 6,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 898,
+        "tests": 898,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/4",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 785,
+        "tests": 785,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/5",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 153,
+        "tests": 153,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/6",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 66,
+        "tests": 66,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/7",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 178,
+        "tests": 178,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/8",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/9",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 959,
+        "tests": 959,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/10",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 780,
+        "tests": 780,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/11",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 405,
+        "tests": 405,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/12",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 933,
+        "tests": 933,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/13",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 987,
+        "tests": 987,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/14",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 903,
+        "tests": 903,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/15",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 134,
+        "tests": 134,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/16",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/17",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 215,
+        "tests": 215,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/18",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/19",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 128,
+        "tests": 128,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/20",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/21",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 999,
+        "tests": 999,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/22",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 953,
+        "tests": 953,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/23",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 964,
+        "tests": 964,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/24",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 168,
+        "tests": 168,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/25",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 138,
+        "tests": 138,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/26",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 862,
+        "tests": 862,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/27",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 973,
+        "tests": 973,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/28",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 861,
+        "tests": 861,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/29",
+      "base": {
+        "status": "pass",
+        "checked": 2,
+        "tests": 2,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 996,
+        "tests": 996,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/30",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 999,
+        "tests": 999,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/31",
+      "base": {
+        "status": "pass",
+        "checked": 13,
+        "tests": 13,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 154,
+        "tests": 154,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/32",
+      "base": {
+        "status": "pass",
+        "checked": 100,
+        "tests": 100,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "fail",
+        "checked": 120,
+        "tests": 788,
+        "first_failure": 119
+      },
+      "base_pass": true,
+      "plus_pass": false
+    },
+    {
+      "task_id": "HumanEval/33",
+      "base": {
+        "status": "pass",
+        "checked": 10,
+        "tests": 10,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 955,
+        "tests": 955,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/34",
+      "base": {
+        "status": "pass",
+        "checked": 1,
+        "tests": 1,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 903,
+        "tests": 903,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/35",
+      "base": {
+        "status": "pass",
+        "checked": 2,
+        "tests": 2,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 938,
+        "tests": 938,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/36",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 148,
+        "tests": 148,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/37",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 974,
+        "tests": 974,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/38",
+      "base": {
+        "status": "pass",
+        "checked": 100,
+        "tests": 100,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 999,
+        "tests": 999,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/39",
+      "base": {
+        "status": "pass",
+        "checked": 10,
+        "tests": 10,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 2,
+        "tests": 2,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/40",
+      "base": {
+        "status": "pass",
+        "checked": 9,
+        "tests": 9,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 979,
+        "tests": 979,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/41",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 78,
+        "tests": 78,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/42",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 999,
+        "tests": 999,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/43",
+      "base": {
+        "status": "pass",
+        "checked": 9,
+        "tests": 9,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 974,
+        "tests": 974,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/44",
+      "base": {
+        "status": "pass",
+        "checked": 12,
+        "tests": 12,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 466,
+        "tests": 466,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/45",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/46",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 132,
+        "tests": 132,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/47",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 995,
+        "tests": 995,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/48",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 989,
+        "tests": 989,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/49",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 983,
+        "tests": 983,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/50",
+      "base": {
+        "status": "pass",
+        "checked": 100,
+        "tests": 100,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/51",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 997,
+        "tests": 997,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/52",
+      "base": {
+        "status": "pass",
+        "checked": 6,
+        "tests": 6,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 419,
+        "tests": 419,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/53",
+      "base": {
+        "status": "pass",
+        "checked": 105,
+        "tests": 105,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 866,
+        "tests": 866,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/54",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 999,
+        "tests": 999,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/55",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 45,
+        "tests": 45,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/56",
+      "base": {
+        "status": "pass",
+        "checked": 12,
+        "tests": 12,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/57",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 971,
+        "tests": 971,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/58",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 985,
+        "tests": 985,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/59",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 174,
+        "tests": 174,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/60",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 159,
+        "tests": 159,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/61",
+      "base": {
+        "status": "pass",
+        "checked": 12,
+        "tests": 12,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 999,
+        "tests": 999,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/62",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 948,
+        "tests": 948,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/63",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 63,
+        "tests": 63,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/64",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 992,
+        "tests": 992,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/65",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 982,
+        "tests": 982,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/66",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/67",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 341,
+        "tests": 341,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/68",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/69",
+      "base": {
+        "status": "pass",
+        "checked": 25,
+        "tests": 25,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/70",
+      "base": {
+        "status": "pass",
+        "checked": 9,
+        "tests": 9,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 975,
+        "tests": 975,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/71",
+      "base": {
+        "status": "pass",
+        "checked": 9,
+        "tests": 9,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/72",
+      "base": {
+        "status": "pass",
+        "checked": 6,
+        "tests": 6,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 691,
+        "tests": 691,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/73",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 962,
+        "tests": 962,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/74",
+      "base": {
+        "status": "pass",
+        "checked": 9,
+        "tests": 9,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 977,
+        "tests": 977,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/75",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 93,
+        "tests": 93,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/76",
+      "base": {
+        "status": "pass",
+        "checked": 10,
+        "tests": 10,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 897,
+        "tests": 897,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/77",
+      "base": {
+        "status": "pass",
+        "checked": 16,
+        "tests": 16,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 157,
+        "tests": 157,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/78",
+      "base": {
+        "status": "pass",
+        "checked": 13,
+        "tests": 13,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/79",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 198,
+        "tests": 198,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/80",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 941,
+        "tests": 941,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/81",
+      "base": {
+        "status": "pass",
+        "checked": 6,
+        "tests": 6,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/82",
+      "base": {
+        "status": "pass",
+        "checked": 16,
+        "tests": 16,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 962,
+        "tests": 962,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/83",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 104,
+        "tests": 104,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/84",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 211,
+        "tests": 211,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/85",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 994,
+        "tests": 994,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/86",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/87",
+      "base": {
+        "status": "pass",
+        "checked": 6,
+        "tests": 6,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 207,
+        "tests": 207,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/88",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/89",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/90",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 822,
+        "tests": 822,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/91",
+      "base": {
+        "status": "pass",
+        "checked": 6,
+        "tests": 6,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/92",
+      "base": {
+        "status": "pass",
+        "checked": 10,
+        "tests": 10,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/93",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/94",
+      "base": {
+        "status": "pass",
+        "checked": 9,
+        "tests": 9,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/95",
+      "base": {
+        "status": "pass",
+        "checked": 14,
+        "tests": 14,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 510,
+        "tests": 510,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/96",
+      "base": {
+        "status": "pass",
+        "checked": 10,
+        "tests": 10,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 180,
+        "tests": 180,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/97",
+      "base": {
+        "status": "pass",
+        "checked": 16,
+        "tests": 16,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 969,
+        "tests": 969,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/98",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/99",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 710,
+        "tests": 710,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/100",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 112,
+        "tests": 112,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/101",
+      "base": {
+        "status": "pass",
+        "checked": 6,
+        "tests": 6,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/102",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 944,
+        "tests": 944,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/103",
+      "base": {
+        "status": "pass",
+        "checked": 12,
+        "tests": 12,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 939,
+        "tests": 939,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/104",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 999,
+        "tests": 999,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/105",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 999,
+        "tests": 999,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/106",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 104,
+        "tests": 104,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/107",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 169,
+        "tests": 169,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/108",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/109",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 953,
+        "tests": 953,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/110",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/111",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 655,
+        "tests": 655,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/112",
+      "base": {
+        "status": "pass",
+        "checked": 9,
+        "tests": 9,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 997,
+        "tests": 997,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/113",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 983,
+        "tests": 983,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/114",
+      "base": {
+        "status": "pass",
+        "checked": 12,
+        "tests": 12,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/115",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 801,
+        "tests": 801,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/116",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 722,
+        "tests": 722,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/117",
+      "base": {
+        "status": "pass",
+        "checked": 14,
+        "tests": 14,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/118",
+      "base": {
+        "status": "pass",
+        "checked": 13,
+        "tests": 13,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/119",
+      "base": {
+        "status": "pass",
+        "checked": 12,
+        "tests": 12,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 648,
+        "tests": 648,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/120",
+      "base": {
+        "status": "pass",
+        "checked": 11,
+        "tests": 11,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/121",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 998,
+        "tests": 998,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/122",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/123",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 139,
+        "tests": 139,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/124",
+      "base": {
+        "status": "pass",
+        "checked": 16,
+        "tests": 16,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 985,
+        "tests": 985,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/125",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 804,
+        "tests": 804,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/126",
+      "base": {
+        "status": "pass",
+        "checked": 13,
+        "tests": 13,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 999,
+        "tests": 999,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/127",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 580,
+        "tests": 580,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/128",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 995,
+        "tests": 995,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/129",
+      "base": {
+        "status": "pass",
+        "checked": 10,
+        "tests": 10,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 189,
+        "tests": 189,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/130",
+      "base": {
+        "status": "pass",
+        "checked": 10,
+        "tests": 10,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 115,
+        "tests": 115,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/131",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 230,
+        "tests": 230,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/132",
+      "base": {
+        "status": "pass",
+        "checked": 14,
+        "tests": 14,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/133",
+      "base": {
+        "status": "pass",
+        "checked": 12,
+        "tests": 12,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 998,
+        "tests": 998,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/134",
+      "base": {
+        "status": "pass",
+        "checked": 10,
+        "tests": 10,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 991,
+        "tests": 991,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/135",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 970,
+        "tests": 970,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/136",
+      "base": {
+        "status": "pass",
+        "checked": 11,
+        "tests": 11,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 998,
+        "tests": 998,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/137",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/138",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 113,
+        "tests": 113,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/139",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 127,
+        "tests": 127,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/140",
+      "base": {
+        "status": "pass",
+        "checked": 5,
+        "tests": 5,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/141",
+      "base": {
+        "status": "pass",
+        "checked": 26,
+        "tests": 26,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/142",
+      "base": {
+        "status": "pass",
+        "checked": 11,
+        "tests": 11,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 997,
+        "tests": 997,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/143",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/144",
+      "base": {
+        "status": "pass",
+        "checked": 13,
+        "tests": 13,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 998,
+        "tests": 998,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/145",
+      "base": {
+        "status": "pass",
+        "checked": 6,
+        "tests": 6,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/146",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 988,
+        "tests": 988,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/147",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 115,
+        "tests": 115,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/148",
+      "base": {
+        "status": "pass",
+        "checked": 11,
+        "tests": 11,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 971,
+        "tests": 971,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/149",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 979,
+        "tests": 979,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/150",
+      "base": {
+        "status": "pass",
+        "checked": 10,
+        "tests": 10,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 998,
+        "tests": 998,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/151",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 999,
+        "tests": 999,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/152",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/153",
+      "base": {
+        "status": "pass",
+        "checked": 9,
+        "tests": 9,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 194,
+        "tests": 194,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/154",
+      "base": {
+        "status": "pass",
+        "checked": 6,
+        "tests": 6,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/155",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 249,
+        "tests": 249,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/156",
+      "base": {
+        "status": "pass",
+        "checked": 14,
+        "tests": 14,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 206,
+        "tests": 206,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/157",
+      "base": {
+        "status": "pass",
+        "checked": 11,
+        "tests": 11,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/158",
+      "base": {
+        "status": "pass",
+        "checked": 10,
+        "tests": 10,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 897,
+        "tests": 897,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/159",
+      "base": {
+        "status": "pass",
+        "checked": 6,
+        "tests": 6,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 976,
+        "tests": 976,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/160",
+      "base": {
+        "status": "pass",
+        "checked": 3,
+        "tests": 3,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 449,
+        "tests": 449,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/161",
+      "base": {
+        "status": "pass",
+        "checked": 8,
+        "tests": 8,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 983,
+        "tests": 983,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/162",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 1000,
+        "tests": 1000,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/163",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 982,
+        "tests": 982,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    }
+  ]
+}

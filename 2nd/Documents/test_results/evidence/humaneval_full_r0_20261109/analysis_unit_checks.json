@@ -1,0 +1,9 @@
+{
+  "checked_at_utc": "2026-11-09T07:41:21.655899+00:00",
+  "status": "PASS",
+  "tests": 3,
+  "scope": "Known paired outcome counts, exact token/time savings, identical-pair bootstrap interval, report number rendering and metric-purpose explanations. Synthetic fixtures only; no model predictions graded or altered.",
+  "test_sha256": "f16f191d5c762222958281cf407aa7d623e4302a39a3f00bb3c9747fe24f959c",
+  "analysis_sha256": "1de6804dfa9eed0c494314dda6e6826e1c4c69fef89f6350efdbae2c15c9171e",
+  "log_sha256": "90a74c2e32de1f43fdb9ee5b728e5790f85cc937d92f830bd789c33f44bdb29d"
+}

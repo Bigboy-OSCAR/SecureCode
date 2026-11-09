@@ -1,0 +1,50 @@
+{
+  "HumanEval/0": {
+    "base": {
+      "status": "fail",
+      "checked": 1,
+      "tests": 7,
+      "first_failure": 0
+    },
+    "plus": {
+      "status": "fail",
+      "checked": 9,
+      "tests": 999,
+      "first_failure": 8
+    },
+    "base_pass": false,
+    "plus_pass": false
+  },
+  "HumanEval/32": {
+    "base": {
+      "status": "fail",
+      "checked": 1,
+      "tests": 100,
+      "first_failure": 0
+    },
+    "plus": {
+      "status": "fail",
+      "checked": 1,
+      "tests": 788,
+      "first_failure": 0
+    },
+    "base_pass": false,
+    "plus_pass": false
+  },
+  "known_valid_root_positive_control": {
+    "base": {
+      "status": "pass",
+      "checked": 1,
+      "tests": 1,
+      "first_failure": null
+    },
+    "plus": {
+      "status": "pass",
+      "checked": 1,
+      "tests": 1,
+      "first_failure": null
+    },
+    "base_pass": true,
+    "plus_pass": true
+  }
+}

@@ -1,0 +1,986 @@
+[
+  {
+    "task_id": "HumanEval/0",
+    "entry_point": "has_close_elements",
+    "path": "task_000.py",
+    "question": "Implement the function `has_close_elements` in file `task_000.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/1",
+    "entry_point": "separate_paren_groups",
+    "path": "task_001.py",
+    "question": "Implement the function `separate_paren_groups` in file `task_001.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/2",
+    "entry_point": "truncate_number",
+    "path": "task_002.py",
+    "question": "Implement the function `truncate_number` in file `task_002.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/3",
+    "entry_point": "below_zero",
+    "path": "task_003.py",
+    "question": "Implement the function `below_zero` in file `task_003.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/4",
+    "entry_point": "mean_absolute_deviation",
+    "path": "task_004.py",
+    "question": "Implement the function `mean_absolute_deviation` in file `task_004.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/5",
+    "entry_point": "intersperse",
+    "path": "task_005.py",
+    "question": "Implement the function `intersperse` in file `task_005.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/6",
+    "entry_point": "parse_nested_parens",
+    "path": "task_006.py",
+    "question": "Implement the function `parse_nested_parens` in file `task_006.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/7",
+    "entry_point": "filter_by_substring",
+    "path": "task_007.py",
+    "question": "Implement the function `filter_by_substring` in file `task_007.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/8",
+    "entry_point": "sum_product",
+    "path": "task_008.py",
+    "question": "Implement the function `sum_product` in file `task_008.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/9",
+    "entry_point": "rolling_max",
+    "path": "task_009.py",
+    "question": "Implement the function `rolling_max` in file `task_009.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/10",
+    "entry_point": "make_palindrome",
+    "path": "task_010.py",
+    "question": "Implement the function `make_palindrome` in file `task_010.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/11",
+    "entry_point": "string_xor",
+    "path": "task_011.py",
+    "question": "Implement the function `string_xor` in file `task_011.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/12",
+    "entry_point": "longest",
+    "path": "task_012.py",
+    "question": "Implement the function `longest` in file `task_012.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/13",
+    "entry_point": "greatest_common_divisor",
+    "path": "task_013.py",
+    "question": "Implement the function `greatest_common_divisor` in file `task_013.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/14",
+    "entry_point": "all_prefixes",
+    "path": "task_014.py",
+    "question": "Implement the function `all_prefixes` in file `task_014.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/15",
+    "entry_point": "string_sequence",
+    "path": "task_015.py",
+    "question": "Implement the function `string_sequence` in file `task_015.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/16",
+    "entry_point": "count_distinct_characters",
+    "path": "task_016.py",
+    "question": "Implement the function `count_distinct_characters` in file `task_016.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/17",
+    "entry_point": "parse_music",
+    "path": "task_017.py",
+    "question": "Implement the function `parse_music` in file `task_017.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/18",
+    "entry_point": "how_many_times",
+    "path": "task_018.py",
+    "question": "Implement the function `how_many_times` in file `task_018.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/19",
+    "entry_point": "sort_numbers",
+    "path": "task_019.py",
+    "question": "Implement the function `sort_numbers` in file `task_019.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/20",
+    "entry_point": "find_closest_elements",
+    "path": "task_020.py",
+    "question": "Implement the function `find_closest_elements` in file `task_020.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/21",
+    "entry_point": "rescale_to_unit",
+    "path": "task_021.py",
+    "question": "Implement the function `rescale_to_unit` in file `task_021.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/22",
+    "entry_point": "filter_integers",
+    "path": "task_022.py",
+    "question": "Implement the function `filter_integers` in file `task_022.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/23",
+    "entry_point": "strlen",
+    "path": "task_023.py",
+    "question": "Implement the function `strlen` in file `task_023.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/24",
+    "entry_point": "largest_divisor",
+    "path": "task_024.py",
+    "question": "Implement the function `largest_divisor` in file `task_024.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/25",
+    "entry_point": "factorize",
+    "path": "task_025.py",
+    "question": "Implement the function `factorize` in file `task_025.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/26",
+    "entry_point": "remove_duplicates",
+    "path": "task_026.py",
+    "question": "Implement the function `remove_duplicates` in file `task_026.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/27",
+    "entry_point": "flip_case",
+    "path": "task_027.py",
+    "question": "Implement the function `flip_case` in file `task_027.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/28",
+    "entry_point": "concatenate",
+    "path": "task_028.py",
+    "question": "Implement the function `concatenate` in file `task_028.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/29",
+    "entry_point": "filter_by_prefix",
+    "path": "task_029.py",
+    "question": "Implement the function `filter_by_prefix` in file `task_029.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/30",
+    "entry_point": "get_positive",
+    "path": "task_030.py",
+    "question": "Implement the function `get_positive` in file `task_030.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/31",
+    "entry_point": "is_prime",
+    "path": "task_031.py",
+    "question": "Implement the function `is_prime` in file `task_031.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/32",
+    "entry_point": "find_zero",
+    "path": "task_032.py",
+    "question": "Implement the function `find_zero` in file `task_032.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/33",
+    "entry_point": "sort_third",
+    "path": "task_033.py",
+    "question": "Implement the function `sort_third` in file `task_033.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/34",
+    "entry_point": "unique",
+    "path": "task_034.py",
+    "question": "Implement the function `unique` in file `task_034.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/35",
+    "entry_point": "max_element",
+    "path": "task_035.py",
+    "question": "Implement the function `max_element` in file `task_035.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/36",
+    "entry_point": "fizz_buzz",
+    "path": "task_036.py",
+    "question": "Implement the function `fizz_buzz` in file `task_036.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/37",
+    "entry_point": "sort_even",
+    "path": "task_037.py",
+    "question": "Implement the function `sort_even` in file `task_037.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/38",
+    "entry_point": "decode_cyclic",
+    "path": "task_038.py",
+    "question": "Implement the function `decode_cyclic` in file `task_038.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/39",
+    "entry_point": "prime_fib",
+    "path": "task_039.py",
+    "question": "Implement the function `prime_fib` in file `task_039.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/40",
+    "entry_point": "triples_sum_to_zero",
+    "path": "task_040.py",
+    "question": "Implement the function `triples_sum_to_zero` in file `task_040.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/41",
+    "entry_point": "car_race_collision",
+    "path": "task_041.py",
+    "question": "Implement the function `car_race_collision` in file `task_041.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/42",
+    "entry_point": "incr_list",
+    "path": "task_042.py",
+    "question": "Implement the function `incr_list` in file `task_042.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/43",
+    "entry_point": "pairs_sum_to_zero",
+    "path": "task_043.py",
+    "question": "Implement the function `pairs_sum_to_zero` in file `task_043.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/44",
+    "entry_point": "change_base",
+    "path": "task_044.py",
+    "question": "Implement the function `change_base` in file `task_044.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/45",
+    "entry_point": "triangle_area",
+    "path": "task_045.py",
+    "question": "Implement the function `triangle_area` in file `task_045.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/46",
+    "entry_point": "fib4",
+    "path": "task_046.py",
+    "question": "Implement the function `fib4` in file `task_046.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/47",
+    "entry_point": "median",
+    "path": "task_047.py",
+    "question": "Implement the function `median` in file `task_047.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/48",
+    "entry_point": "is_palindrome",
+    "path": "task_048.py",
+    "question": "Implement the function `is_palindrome` in file `task_048.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/49",
+    "entry_point": "modp",
+    "path": "task_049.py",
+    "question": "Implement the function `modp` in file `task_049.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/50",
+    "entry_point": "decode_shift",
+    "path": "task_050.py",
+    "question": "Implement the function `decode_shift` in file `task_050.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/51",
+    "entry_point": "remove_vowels",
+    "path": "task_051.py",
+    "question": "Implement the function `remove_vowels` in file `task_051.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/52",
+    "entry_point": "below_threshold",
+    "path": "task_052.py",
+    "question": "Implement the function `below_threshold` in file `task_052.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/53",
+    "entry_point": "add",
+    "path": "task_053.py",
+    "question": "Implement the function `add` in file `task_053.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/54",
+    "entry_point": "same_chars",
+    "path": "task_054.py",
+    "question": "Implement the function `same_chars` in file `task_054.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/55",
+    "entry_point": "fib",
+    "path": "task_055.py",
+    "question": "Implement the function `fib` in file `task_055.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/56",
+    "entry_point": "correct_bracketing",
+    "path": "task_056.py",
+    "question": "Implement the function `correct_bracketing` in file `task_056.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/57",
+    "entry_point": "monotonic",
+    "path": "task_057.py",
+    "question": "Implement the function `monotonic` in file `task_057.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/58",
+    "entry_point": "common",
+    "path": "task_058.py",
+    "question": "Implement the function `common` in file `task_058.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/59",
+    "entry_point": "largest_prime_factor",
+    "path": "task_059.py",
+    "question": "Implement the function `largest_prime_factor` in file `task_059.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/60",
+    "entry_point": "sum_to_n",
+    "path": "task_060.py",
+    "question": "Implement the function `sum_to_n` in file `task_060.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/61",
+    "entry_point": "correct_bracketing",
+    "path": "task_061.py",
+    "question": "Implement the function `correct_bracketing` in file `task_061.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/62",
+    "entry_point": "derivative",
+    "path": "task_062.py",
+    "question": "Implement the function `derivative` in file `task_062.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/63",
+    "entry_point": "fibfib",
+    "path": "task_063.py",
+    "question": "Implement the function `fibfib` in file `task_063.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/64",
+    "entry_point": "vowels_count",
+    "path": "task_064.py",
+    "question": "Implement the function `vowels_count` in file `task_064.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/65",
+    "entry_point": "circular_shift",
+    "path": "task_065.py",
+    "question": "Implement the function `circular_shift` in file `task_065.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/66",
+    "entry_point": "digitSum",
+    "path": "task_066.py",
+    "question": "Implement the function `digitSum` in file `task_066.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/67",
+    "entry_point": "fruit_distribution",
+    "path": "task_067.py",
+    "question": "Implement the function `fruit_distribution` in file `task_067.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/68",
+    "entry_point": "pluck",
+    "path": "task_068.py",
+    "question": "Implement the function `pluck` in file `task_068.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/69",
+    "entry_point": "search",
+    "path": "task_069.py",
+    "question": "Implement the function `search` in file `task_069.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/70",
+    "entry_point": "strange_sort_list",
+    "path": "task_070.py",
+    "question": "Implement the function `strange_sort_list` in file `task_070.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/71",
+    "entry_point": "triangle_area",
+    "path": "task_071.py",
+    "question": "Implement the function `triangle_area` in file `task_071.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/72",
+    "entry_point": "will_it_fly",
+    "path": "task_072.py",
+    "question": "Implement the function `will_it_fly` in file `task_072.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/73",
+    "entry_point": "smallest_change",
+    "path": "task_073.py",
+    "question": "Implement the function `smallest_change` in file `task_073.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/74",
+    "entry_point": "total_match",
+    "path": "task_074.py",
+    "question": "Implement the function `total_match` in file `task_074.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/75",
+    "entry_point": "is_multiply_prime",
+    "path": "task_075.py",
+    "question": "Implement the function `is_multiply_prime` in file `task_075.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/76",
+    "entry_point": "is_simple_power",
+    "path": "task_076.py",
+    "question": "Implement the function `is_simple_power` in file `task_076.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/77",
+    "entry_point": "iscube",
+    "path": "task_077.py",
+    "question": "Implement the function `iscube` in file `task_077.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/78",
+    "entry_point": "hex_key",
+    "path": "task_078.py",
+    "question": "Implement the function `hex_key` in file `task_078.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/79",
+    "entry_point": "decimal_to_binary",
+    "path": "task_079.py",
+    "question": "Implement the function `decimal_to_binary` in file `task_079.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/80",
+    "entry_point": "is_happy",
+    "path": "task_080.py",
+    "question": "Implement the function `is_happy` in file `task_080.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/81",
+    "entry_point": "numerical_letter_grade",
+    "path": "task_081.py",
+    "question": "Implement the function `numerical_letter_grade` in file `task_081.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/82",
+    "entry_point": "prime_length",
+    "path": "task_082.py",
+    "question": "Implement the function `prime_length` in file `task_082.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/83",
+    "entry_point": "starts_one_ends",
+    "path": "task_083.py",
+    "question": "Implement the function `starts_one_ends` in file `task_083.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/84",
+    "entry_point": "solve",
+    "path": "task_084.py",
+    "question": "Implement the function `solve` in file `task_084.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/85",
+    "entry_point": "add",
+    "path": "task_085.py",
+    "question": "Implement the function `add` in file `task_085.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/86",
+    "entry_point": "anti_shuffle",
+    "path": "task_086.py",
+    "question": "Implement the function `anti_shuffle` in file `task_086.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/87",
+    "entry_point": "get_row",
+    "path": "task_087.py",
+    "question": "Implement the function `get_row` in file `task_087.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/88",
+    "entry_point": "sort_array",
+    "path": "task_088.py",
+    "question": "Implement the function `sort_array` in file `task_088.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/89",
+    "entry_point": "encrypt",
+    "path": "task_089.py",
+    "question": "Implement the function `encrypt` in file `task_089.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/90",
+    "entry_point": "next_smallest",
+    "path": "task_090.py",
+    "question": "Implement the function `next_smallest` in file `task_090.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/91",
+    "entry_point": "is_bored",
+    "path": "task_091.py",
+    "question": "Implement the function `is_bored` in file `task_091.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/92",
+    "entry_point": "any_int",
+    "path": "task_092.py",
+    "question": "Implement the function `any_int` in file `task_092.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/93",
+    "entry_point": "encode",
+    "path": "task_093.py",
+    "question": "Implement the function `encode` in file `task_093.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/94",
+    "entry_point": "skjkasdkd",
+    "path": "task_094.py",
+    "question": "Implement the function `skjkasdkd` in file `task_094.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/95",
+    "entry_point": "check_dict_case",
+    "path": "task_095.py",
+    "question": "Implement the function `check_dict_case` in file `task_095.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/96",
+    "entry_point": "count_up_to",
+    "path": "task_096.py",
+    "question": "Implement the function `count_up_to` in file `task_096.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/97",
+    "entry_point": "multiply",
+    "path": "task_097.py",
+    "question": "Implement the function `multiply` in file `task_097.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/98",
+    "entry_point": "count_upper",
+    "path": "task_098.py",
+    "question": "Implement the function `count_upper` in file `task_098.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/99",
+    "entry_point": "closest_integer",
+    "path": "task_099.py",
+    "question": "Implement the function `closest_integer` in file `task_099.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/100",
+    "entry_point": "make_a_pile",
+    "path": "task_100.py",
+    "question": "Implement the function `make_a_pile` in file `task_100.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/101",
+    "entry_point": "words_string",
+    "path": "task_101.py",
+    "question": "Implement the function `words_string` in file `task_101.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/102",
+    "entry_point": "choose_num",
+    "path": "task_102.py",
+    "question": "Implement the function `choose_num` in file `task_102.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/103",
+    "entry_point": "rounded_avg",
+    "path": "task_103.py",
+    "question": "Implement the function `rounded_avg` in file `task_103.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/104",
+    "entry_point": "unique_digits",
+    "path": "task_104.py",
+    "question": "Implement the function `unique_digits` in file `task_104.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/105",
+    "entry_point": "by_length",
+    "path": "task_105.py",
+    "question": "Implement the function `by_length` in file `task_105.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/106",
+    "entry_point": "f",
+    "path": "task_106.py",
+    "question": "Implement the function `f` in file `task_106.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/107",
+    "entry_point": "even_odd_palindrome",
+    "path": "task_107.py",
+    "question": "Implement the function `even_odd_palindrome` in file `task_107.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/108",
+    "entry_point": "count_nums",
+    "path": "task_108.py",
+    "question": "Implement the function `count_nums` in file `task_108.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/109",
+    "entry_point": "move_one_ball",
+    "path": "task_109.py",
+    "question": "Implement the function `move_one_ball` in file `task_109.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/110",
+    "entry_point": "exchange",
+    "path": "task_110.py",
+    "question": "Implement the function `exchange` in file `task_110.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/111",
+    "entry_point": "histogram",
+    "path": "task_111.py",
+    "question": "Implement the function `histogram` in file `task_111.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/112",
+    "entry_point": "reverse_delete",
+    "path": "task_112.py",
+    "question": "Implement the function `reverse_delete` in file `task_112.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/113",
+    "entry_point": "odd_count",
+    "path": "task_113.py",
+    "question": "Implement the function `odd_count` in file `task_113.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/114",
+    "entry_point": "minSubArraySum",
+    "path": "task_114.py",
+    "question": "Implement the function `minSubArraySum` in file `task_114.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/115",
+    "entry_point": "max_fill",
+    "path": "task_115.py",
+    "question": "Implement the function `max_fill` in file `task_115.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/116",
+    "entry_point": "sort_array",
+    "path": "task_116.py",
+    "question": "Implement the function `sort_array` in file `task_116.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/117",
+    "entry_point": "select_words",
+    "path": "task_117.py",
+    "question": "Implement the function `select_words` in file `task_117.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/118",
+    "entry_point": "get_closest_vowel",
+    "path": "task_118.py",
+    "question": "Implement the function `get_closest_vowel` in file `task_118.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/119",
+    "entry_point": "match_parens",
+    "path": "task_119.py",
+    "question": "Implement the function `match_parens` in file `task_119.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/120",
+    "entry_point": "maximum",
+    "path": "task_120.py",
+    "question": "Implement the function `maximum` in file `task_120.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/121",
+    "entry_point": "solution",
+    "path": "task_121.py",
+    "question": "Implement the function `solution` in file `task_121.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/122",
+    "entry_point": "add_elements",
+    "path": "task_122.py",
+    "question": "Implement the function `add_elements` in file `task_122.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/123",
+    "entry_point": "get_odd_collatz",
+    "path": "task_123.py",
+    "question": "Implement the function `get_odd_collatz` in file `task_123.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/124",
+    "entry_point": "valid_date",
+    "path": "task_124.py",
+    "question": "Implement the function `valid_date` in file `task_124.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/125",
+    "entry_point": "split_words",
+    "path": "task_125.py",
+    "question": "Implement the function `split_words` in file `task_125.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/126",
+    "entry_point": "is_sorted",
+    "path": "task_126.py",
+    "question": "Implement the function `is_sorted` in file `task_126.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/127",
+    "entry_point": "intersection",
+    "path": "task_127.py",
+    "question": "Implement the function `intersection` in file `task_127.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/128",
+    "entry_point": "prod_signs",
+    "path": "task_128.py",
+    "question": "Implement the function `prod_signs` in file `task_128.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/129",
+    "entry_point": "minPath",
+    "path": "task_129.py",
+    "question": "Implement the function `minPath` in file `task_129.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/130",
+    "entry_point": "tri",
+    "path": "task_130.py",
+    "question": "Implement the function `tri` in file `task_130.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/131",
+    "entry_point": "digits",
+    "path": "task_131.py",
+    "question": "Implement the function `digits` in file `task_131.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/132",
+    "entry_point": "is_nested",
+    "path": "task_132.py",
+    "question": "Implement the function `is_nested` in file `task_132.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/133",
+    "entry_point": "sum_squares",
+    "path": "task_133.py",
+    "question": "Implement the function `sum_squares` in file `task_133.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/134",
+    "entry_point": "check_if_last_char_is_a_letter",
+    "path": "task_134.py",
+    "question": "Implement the function `check_if_last_char_is_a_letter` in file `task_134.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/135",
+    "entry_point": "can_arrange",
+    "path": "task_135.py",
+    "question": "Implement the function `can_arrange` in file `task_135.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/136",
+    "entry_point": "largest_smallest_integers",
+    "path": "task_136.py",
+    "question": "Implement the function `largest_smallest_integers` in file `task_136.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/137",
+    "entry_point": "compare_one",
+    "path": "task_137.py",
+    "question": "Implement the function `compare_one` in file `task_137.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/138",
+    "entry_point": "is_equal_to_sum_even",
+    "path": "task_138.py",
+    "question": "Implement the function `is_equal_to_sum_even` in file `task_138.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/139",
+    "entry_point": "special_factorial",
+    "path": "task_139.py",
+    "question": "Implement the function `special_factorial` in file `task_139.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/140",
+    "entry_point": "fix_spaces",
+    "path": "task_140.py",
+    "question": "Implement the function `fix_spaces` in file `task_140.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/141",
+    "entry_point": "file_name_check",
+    "path": "task_141.py",
+    "question": "Implement the function `file_name_check` in file `task_141.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/142",
+    "entry_point": "sum_squares",
+    "path": "task_142.py",
+    "question": "Implement the function `sum_squares` in file `task_142.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/143",
+    "entry_point": "words_in_sentence",
+    "path": "task_143.py",
+    "question": "Implement the function `words_in_sentence` in file `task_143.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/144",
+    "entry_point": "simplify",
+    "path": "task_144.py",
+    "question": "Implement the function `simplify` in file `task_144.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/145",
+    "entry_point": "order_by_points",
+    "path": "task_145.py",
+    "question": "Implement the function `order_by_points` in file `task_145.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/146",
+    "entry_point": "specialFilter",
+    "path": "task_146.py",
+    "question": "Implement the function `specialFilter` in file `task_146.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/147",
+    "entry_point": "get_max_triples",
+    "path": "task_147.py",
+    "question": "Implement the function `get_max_triples` in file `task_147.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/148",
+    "entry_point": "bf",
+    "path": "task_148.py",
+    "question": "Implement the function `bf` in file `task_148.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/149",
+    "entry_point": "sorted_list_sum",
+    "path": "task_149.py",
+    "question": "Implement the function `sorted_list_sum` in file `task_149.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/150",
+    "entry_point": "x_or_y",
+    "path": "task_150.py",
+    "question": "Implement the function `x_or_y` in file `task_150.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/151",
+    "entry_point": "double_the_difference",
+    "path": "task_151.py",
+    "question": "Implement the function `double_the_difference` in file `task_151.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/152",
+    "entry_point": "compare",
+    "path": "task_152.py",
+    "question": "Implement the function `compare` in file `task_152.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/153",
+    "entry_point": "Strongest_Extension",
+    "path": "task_153.py",
+    "question": "Implement the function `Strongest_Extension` in file `task_153.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/154",
+    "entry_point": "cycpattern_check",
+    "path": "task_154.py",
+    "question": "Implement the function `cycpattern_check` in file `task_154.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/155",
+    "entry_point": "even_odd_count",
+    "path": "task_155.py",
+    "question": "Implement the function `even_odd_count` in file `task_155.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/156",
+    "entry_point": "int_to_mini_roman",
+    "path": "task_156.py",
+    "question": "Implement the function `int_to_mini_roman` in file `task_156.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/157",
+    "entry_point": "right_angle_triangle",
+    "path": "task_157.py",
+    "question": "Implement the function `right_angle_triangle` in file `task_157.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/158",
+    "entry_point": "find_max",
+    "path": "task_158.py",
+    "question": "Implement the function `find_max` in file `task_158.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/159",
+    "entry_point": "eat",
+    "path": "task_159.py",
+    "question": "Implement the function `eat` in file `task_159.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/160",
+    "entry_point": "do_algebra",
+    "path": "task_160.py",
+    "question": "Implement the function `do_algebra` in file `task_160.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/161",
+    "entry_point": "solve",
+    "path": "task_161.py",
+    "question": "Implement the function `solve` in file `task_161.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/162",
+    "entry_point": "string_to_md5",
+    "path": "task_162.py",
+    "question": "Implement the function `string_to_md5` in file `task_162.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  },
+  {
+    "task_id": "HumanEval/163",
+    "entry_point": "generate_integers",
+    "path": "task_163.py",
+    "question": "Implement the function `generate_integers` in file `task_163.py`. Follow that file's docstring exactly. Return a self-contained Python solution defining the requested function and any needed imports or helper functions. Do not implement the other files."
+  }
+]

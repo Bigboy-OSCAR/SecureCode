@@ -1,0 +1,57 @@
+{
+  "at_utc": "2026-11-09T07:20:24.930015+00:00",
+  "all_pass": false,
+  "records": [
+    {
+      "task_id": "HumanEval/0",
+      "base": {
+        "status": "pass",
+        "checked": 7,
+        "tests": 7,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 999,
+        "tests": 999,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/1",
+      "base": {
+        "status": "pass",
+        "checked": 4,
+        "tests": 4,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "pass",
+        "checked": 83,
+        "tests": 83,
+        "first_failure": null
+      },
+      "base_pass": true,
+      "plus_pass": true
+    },
+    {
+      "task_id": "HumanEval/32",
+      "base": {
+        "status": "fail",
+        "checked": 0,
+        "tests": 100,
+        "first_failure": null
+      },
+      "plus": {
+        "status": "fail",
+        "checked": 1,
+        "tests": 788,
+        "first_failure": 0
+      },
+      "base_pass": false,
+      "plus_pass": false
+    }
+  ]
+}

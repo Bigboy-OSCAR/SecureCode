@@ -1,0 +1,1491 @@
+{
+  "created_at_utc": "2026-11-09T07:18:56.123792+00:00",
+  "tasks": 164,
+  "base_tests": 1570,
+  "extra_tests": 122683,
+  "corpus_chars": 73894,
+  "full_context_tokens": 24599,
+  "source_nodes": 169,
+  "dependency_edges": 0,
+  "raw_candidates": 169,
+  "data_preparation_seconds": 0.09857254199596355,
+  "index_build_seconds": 0.021326791997125838,
+  "checks": [
+    {
+      "task_id": "HumanEval/0",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1106,
+      "r0_context_tokens": 1009,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/1",
+      "full_input_tokens": 24697,
+      "r0_input_tokens": 1123,
+      "r0_context_tokens": 1024,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/2",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1097,
+      "r0_context_tokens": 1001,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/3",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1120,
+      "r0_context_tokens": 1024,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/4",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1102,
+      "r0_context_tokens": 1004,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/5",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1106,
+      "r0_context_tokens": 1010,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/6",
+      "full_input_tokens": 24697,
+      "r0_input_tokens": 1108,
+      "r0_context_tokens": 1009,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/7",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1094,
+      "r0_context_tokens": 996,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/8",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1117,
+      "r0_context_tokens": 1021,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/9",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1111,
+      "r0_context_tokens": 1015,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/10",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1102,
+      "r0_context_tokens": 1005,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 8
+    },
+    {
+      "task_id": "HumanEval/11",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1094,
+      "r0_context_tokens": 998,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/12",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1117,
+      "r0_context_tokens": 1021,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/13",
+      "full_input_tokens": 24697,
+      "r0_input_tokens": 1115,
+      "r0_context_tokens": 1016,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 8
+    },
+    {
+      "task_id": "HumanEval/14",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1118,
+      "r0_context_tokens": 1021,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/15",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1116,
+      "r0_context_tokens": 1020,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/16",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1110,
+      "r0_context_tokens": 1012,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/17",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1112,
+      "r0_context_tokens": 1016,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/18",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1103,
+      "r0_context_tokens": 1006,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/19",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1118,
+      "r0_context_tokens": 1022,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/20",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1121,
+      "r0_context_tokens": 1023,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/21",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1108,
+      "r0_context_tokens": 1010,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/22",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1107,
+      "r0_context_tokens": 1010,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 8
+    },
+    {
+      "task_id": "HumanEval/23",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1103,
+      "r0_context_tokens": 1008,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/24",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1096,
+      "r0_context_tokens": 998,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/25",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1113,
+      "r0_context_tokens": 1017,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/26",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1096,
+      "r0_context_tokens": 1000,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/27",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1109,
+      "r0_context_tokens": 1013,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/28",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1118,
+      "r0_context_tokens": 1022,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/29",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1093,
+      "r0_context_tokens": 996,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/30",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1120,
+      "r0_context_tokens": 1024,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/31",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1113,
+      "r0_context_tokens": 1017,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/32",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1091,
+      "r0_context_tokens": 995,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/33",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1102,
+      "r0_context_tokens": 1006,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/34",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1118,
+      "r0_context_tokens": 1023,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/35",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1098,
+      "r0_context_tokens": 1002,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/36",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1101,
+      "r0_context_tokens": 1003,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/37",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1105,
+      "r0_context_tokens": 1009,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/38",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1110,
+      "r0_context_tokens": 1013,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 8
+    },
+    {
+      "task_id": "HumanEval/39",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1112,
+      "r0_context_tokens": 1015,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 8
+    },
+    {
+      "task_id": "HumanEval/40",
+      "full_input_tokens": 24697,
+      "r0_input_tokens": 1120,
+      "r0_context_tokens": 1021,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/41",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1105,
+      "r0_context_tokens": 1008,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/42",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1115,
+      "r0_context_tokens": 1019,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/43",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1116,
+      "r0_context_tokens": 1018,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/44",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1116,
+      "r0_context_tokens": 1020,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/45",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1120,
+      "r0_context_tokens": 1024,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 8
+    },
+    {
+      "task_id": "HumanEval/46",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1113,
+      "r0_context_tokens": 1017,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/47",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1090,
+      "r0_context_tokens": 995,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/48",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1108,
+      "r0_context_tokens": 1011,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 8
+    },
+    {
+      "task_id": "HumanEval/49",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1120,
+      "r0_context_tokens": 1024,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/50",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1119,
+      "r0_context_tokens": 1023,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 8
+    },
+    {
+      "task_id": "HumanEval/51",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1118,
+      "r0_context_tokens": 1020,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/52",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1108,
+      "r0_context_tokens": 1012,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/53",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1100,
+      "r0_context_tokens": 1005,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 8
+    },
+    {
+      "task_id": "HumanEval/54",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1095,
+      "r0_context_tokens": 999,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/55",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1117,
+      "r0_context_tokens": 1022,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/56",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1101,
+      "r0_context_tokens": 1003,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/57",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1106,
+      "r0_context_tokens": 1009,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/58",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1103,
+      "r0_context_tokens": 1008,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/59",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1119,
+      "r0_context_tokens": 1021,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/60",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1121,
+      "r0_context_tokens": 1024,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/61",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1101,
+      "r0_context_tokens": 1003,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/62",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1114,
+      "r0_context_tokens": 1018,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/63",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1103,
+      "r0_context_tokens": 1007,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/64",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1103,
+      "r0_context_tokens": 1005,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/65",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1092,
+      "r0_context_tokens": 995,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/66",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1100,
+      "r0_context_tokens": 1004,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/67",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1113,
+      "r0_context_tokens": 1017,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/68",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1105,
+      "r0_context_tokens": 1010,
+      "r0_has_target": true,
+      "r0_target_rank": 3,
+      "r0_source_count": 5
+    },
+    {
+      "task_id": "HumanEval/69",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1114,
+      "r0_context_tokens": 1019,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/70",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1113,
+      "r0_context_tokens": 1015,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/71",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1120,
+      "r0_context_tokens": 1024,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 8
+    },
+    {
+      "task_id": "HumanEval/72",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1104,
+      "r0_context_tokens": 1006,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/73",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1109,
+      "r0_context_tokens": 1012,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/74",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1115,
+      "r0_context_tokens": 1019,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/75",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1119,
+      "r0_context_tokens": 1022,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 8
+    },
+    {
+      "task_id": "HumanEval/76",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1093,
+      "r0_context_tokens": 996,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/77",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1115,
+      "r0_context_tokens": 1019,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/78",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1097,
+      "r0_context_tokens": 1001,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 5
+    },
+    {
+      "task_id": "HumanEval/79",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1102,
+      "r0_context_tokens": 1005,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/80",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1103,
+      "r0_context_tokens": 1006,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/81",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1118,
+      "r0_context_tokens": 1020,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/82",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1117,
+      "r0_context_tokens": 1021,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/83",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1107,
+      "r0_context_tokens": 1010,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/84",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1117,
+      "r0_context_tokens": 1022,
+      "r0_has_target": true,
+      "r0_target_rank": 2,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/85",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1100,
+      "r0_context_tokens": 1005,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 8
+    },
+    {
+      "task_id": "HumanEval/86",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1115,
+      "r0_context_tokens": 1019,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/87",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1108,
+      "r0_context_tokens": 1012,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/88",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1093,
+      "r0_context_tokens": 997,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/89",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1112,
+      "r0_context_tokens": 1017,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/90",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1107,
+      "r0_context_tokens": 1010,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/91",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1114,
+      "r0_context_tokens": 1017,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/92",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1114,
+      "r0_context_tokens": 1018,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/93",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1111,
+      "r0_context_tokens": 1016,
+      "r0_has_target": true,
+      "r0_target_rank": 2,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/94",
+      "full_input_tokens": 24697,
+      "r0_input_tokens": 1107,
+      "r0_context_tokens": 1008,
+      "r0_has_target": true,
+      "r0_target_rank": 3,
+      "r0_source_count": 5
+    },
+    {
+      "task_id": "HumanEval/95",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1119,
+      "r0_context_tokens": 1022,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/96",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1112,
+      "r0_context_tokens": 1015,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/97",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1103,
+      "r0_context_tokens": 1008,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/98",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1110,
+      "r0_context_tokens": 1014,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/99",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1096,
+      "r0_context_tokens": 1000,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/100",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1093,
+      "r0_context_tokens": 995,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/101",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1098,
+      "r0_context_tokens": 1002,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/102",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1110,
+      "r0_context_tokens": 1014,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/103",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1103,
+      "r0_context_tokens": 1007,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/104",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1107,
+      "r0_context_tokens": 1011,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 8
+    },
+    {
+      "task_id": "HumanEval/105",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1114,
+      "r0_context_tokens": 1018,
+      "r0_has_target": true,
+      "r0_target_rank": 2,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/106",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1105,
+      "r0_context_tokens": 1010,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/107",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1119,
+      "r0_context_tokens": 1021,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/108",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1109,
+      "r0_context_tokens": 1013,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/109",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1110,
+      "r0_context_tokens": 1013,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/110",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1118,
+      "r0_context_tokens": 1023,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/111",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1106,
+      "r0_context_tokens": 1010,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/112",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1115,
+      "r0_context_tokens": 1019,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/113",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1110,
+      "r0_context_tokens": 1014,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/114",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1102,
+      "r0_context_tokens": 1004,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/115",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1109,
+      "r0_context_tokens": 1013,
+      "r0_has_target": true,
+      "r0_target_rank": 2,
+      "r0_source_count": 5
+    },
+    {
+      "task_id": "HumanEval/116",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1093,
+      "r0_context_tokens": 997,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/117",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1104,
+      "r0_context_tokens": 1008,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/118",
+      "full_input_tokens": 24697,
+      "r0_input_tokens": 1122,
+      "r0_context_tokens": 1023,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/119",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1115,
+      "r0_context_tokens": 1017,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/120",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1117,
+      "r0_context_tokens": 1022,
+      "r0_has_target": true,
+      "r0_target_rank": 2,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/121",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1105,
+      "r0_context_tokens": 1010,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/122",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1083,
+      "r0_context_tokens": 987,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 8
+    },
+    {
+      "task_id": "HumanEval/123",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1093,
+      "r0_context_tokens": 995,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/124",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1094,
+      "r0_context_tokens": 998,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 5
+    },
+    {
+      "task_id": "HumanEval/125",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1111,
+      "r0_context_tokens": 1015,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/126",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1117,
+      "r0_context_tokens": 1021,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/127",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1099,
+      "r0_context_tokens": 1004,
+      "r0_has_target": true,
+      "r0_target_rank": 2,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/128",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1105,
+      "r0_context_tokens": 1008,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/129",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1096,
+      "r0_context_tokens": 1000,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 5
+    },
+    {
+      "task_id": "HumanEval/130",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1108,
+      "r0_context_tokens": 1013,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/131",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1116,
+      "r0_context_tokens": 1021,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/132",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1113,
+      "r0_context_tokens": 1017,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/133",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1094,
+      "r0_context_tokens": 997,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/134",
+      "full_input_tokens": 24699,
+      "r0_input_tokens": 1098,
+      "r0_context_tokens": 997,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/135",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1116,
+      "r0_context_tokens": 1019,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/136",
+      "full_input_tokens": 24698,
+      "r0_input_tokens": 1100,
+      "r0_context_tokens": 1000,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/137",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1094,
+      "r0_context_tokens": 998,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/138",
+      "full_input_tokens": 24697,
+      "r0_input_tokens": 1117,
+      "r0_context_tokens": 1018,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/139",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1116,
+      "r0_context_tokens": 1019,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/140",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1088,
+      "r0_context_tokens": 992,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/141",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1107,
+      "r0_context_tokens": 1010,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/142",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1094,
+      "r0_context_tokens": 997,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/143",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1107,
+      "r0_context_tokens": 1010,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/144",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1106,
+      "r0_context_tokens": 1010,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/145",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1107,
+      "r0_context_tokens": 1010,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/146",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1109,
+      "r0_context_tokens": 1013,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/147",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1117,
+      "r0_context_tokens": 1019,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/148",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1098,
+      "r0_context_tokens": 1003,
+      "r0_has_target": true,
+      "r0_target_rank": 3,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/149",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1115,
+      "r0_context_tokens": 1018,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/150",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1103,
+      "r0_context_tokens": 1006,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/151",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1121,
+      "r0_context_tokens": 1024,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/152",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1117,
+      "r0_context_tokens": 1022,
+      "r0_has_target": true,
+      "r0_target_rank": 3,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/153",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1120,
+      "r0_context_tokens": 1022,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/154",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1110,
+      "r0_context_tokens": 1012,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/155",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1115,
+      "r0_context_tokens": 1018,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/156",
+      "full_input_tokens": 24697,
+      "r0_input_tokens": 1119,
+      "r0_context_tokens": 1020,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/157",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1113,
+      "r0_context_tokens": 1016,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/158",
+      "full_input_tokens": 24694,
+      "r0_input_tokens": 1100,
+      "r0_context_tokens": 1004,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/159",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1105,
+      "r0_context_tokens": 1010,
+      "r0_has_target": true,
+      "r0_target_rank": 3,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/160",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1114,
+      "r0_context_tokens": 1017,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 6
+    },
+    {
+      "task_id": "HumanEval/161",
+      "full_input_tokens": 24693,
+      "r0_input_tokens": 1113,
+      "r0_context_tokens": 1018,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/162",
+      "full_input_tokens": 24696,
+      "r0_input_tokens": 1102,
+      "r0_context_tokens": 1004,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    },
+    {
+      "task_id": "HumanEval/163",
+      "full_input_tokens": 24695,
+      "r0_input_tokens": 1112,
+      "r0_context_tokens": 1015,
+      "r0_has_target": true,
+      "r0_target_rank": 1,
+      "r0_source_count": 7
+    }
+  ]
+}

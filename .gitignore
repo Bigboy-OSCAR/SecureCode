@@ -225,3 +225,6 @@ __marimo__/
 node_modules/
 *.db
 .DS_Store
+
+# Generated grading caches can exceed GitHub file size limits.
+/2nd/Documents/test_results/evidence/**/grading/groundtruth.pkl

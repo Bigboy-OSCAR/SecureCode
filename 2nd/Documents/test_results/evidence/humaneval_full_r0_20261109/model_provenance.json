@@ -1,0 +1,106 @@
+{
+  "verified_at_utc": "2026-11-09T07:45:05.544034+00:00",
+  "model_id": "lmstudio-community/Qwen3.8-27B-MLX-5bit",
+  "revision": "b9ad7b92aa2fd07b041f4b8b3aa459941f8abbf7",
+  "verification_basis": "Local model pre-run hashes and metadata matched every entry of the archived Hugging Face repository tree from the previous model download. No remote model re-download or new inference.",
+  "archive": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/evidence/qwen3_8_27b_20261106.zip",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "expected": "52373fe24473b1aa44333d318f578ae6bf04b49b",
+      "actual": "52373fe24473b1aa44333d318f578ae6bf04b49b",
+      "method": "Git blob SHA1 recomputed for small metadata file"
+    },
+    {
+      "path": "README.md",
+      "expected": "6077a591f8ad3d3f57766eb7d8a1e818860f2ac0",
+      "actual": "6077a591f8ad3d3f57766eb7d8a1e818860f2ac0",
+      "method": "Git blob SHA1 recomputed for small metadata file"
+    },
+    {
+      "path": "chat_template.jinja",
+      "expected": "c0c686f9c38d70d179fb7b5f5aa7530bc913dda3",
+      "actual": "c0c686f9c38d70d179fb7b5f5aa7530bc913dda3",
+      "method": "Git blob SHA1 recomputed for small metadata file"
+    },
+    {
+      "path": "config.json",
+      "expected": "0fe67ac4c3521a9ac2a1102bd31755b662e369c7",
+      "actual": "0fe67ac4c3521a9ac2a1102bd31755b662e369c7",
+      "method": "Git blob SHA1 recomputed for small metadata file"
+    },
+    {
+      "path": "generation_config.json",
+      "expected": "023756cfadf88e5bf69eefeee3e172f38c448d64",
+      "actual": "023756cfadf88e5bf69eefeee3e172f38c448d64",
+      "method": "Git blob SHA1 recomputed for small metadata file"
+    },
+    {
+      "path": "model-00001-of-00004.safetensors",
+      "expected": "3c4997be63f785b63ad72618c1c6ccb7316bfc14301e09c876be535ec768a2cc",
+      "actual": "3c4997be63f785b63ad72618c1c6ccb7316bfc14301e09c876be535ec768a2cc",
+      "method": "Recorded pre-run SHA256 compared to archived Git LFS oid"
+    },
+    {
+      "path": "model-00002-of-00004.safetensors",
+      "expected": "35b1008562a7a549eca56d6e099f149c1dc65c7c7302338561576829b5d5c137",
+      "actual": "35b1008562a7a549eca56d6e099f149c1dc65c7c7302338561576829b5d5c137",
+      "method": "Recorded pre-run SHA256 compared to archived Git LFS oid"
+    },
+    {
+      "path": "model-00003-of-00004.safetensors",
+      "expected": "42fe3a9e4478dc29ebb70b9aa9cad7db28bcaec9b61cbc2190fc83744e00c53f",
+      "actual": "42fe3a9e4478dc29ebb70b9aa9cad7db28bcaec9b61cbc2190fc83744e00c53f",
+      "method": "Recorded pre-run SHA256 compared to archived Git LFS oid"
+    },
+    {
+      "path": "model-00004-of-00004.safetensors",
+      "expected": "04d51bf6cee3dd19a406a15b7e99a897d5665a360184b23b2df7180fd63c67bb",
+      "actual": "04d51bf6cee3dd19a406a15b7e99a897d5665a360184b23b2df7180fd63c67bb",
+      "method": "Recorded pre-run SHA256 compared to archived Git LFS oid"
+    },
+    {
+      "path": "model.safetensors.index.json",
+      "expected": "8927fcbba122ec6df89b5b058b86b137dc2f737f",
+      "actual": "8927fcbba122ec6df89b5b058b86b137dc2f737f",
+      "method": "Git blob SHA1 recomputed for small metadata file"
+    },
+    {
+      "path": "preprocessor_config.json",
+      "expected": "2ea84a437d448ff71b08df68fdd949d5cc4ebb64",
+      "actual": "2ea84a437d448ff71b08df68fdd949d5cc4ebb64",
+      "method": "Git blob SHA1 recomputed for small metadata file"
+    },
+    {
+      "path": "processor_config.json",
+      "expected": "8f29fe38a79a9d8367009ebebd25c35b1f3c4e40",
+      "actual": "8f29fe38a79a9d8367009ebebd25c35b1f3c4e40",
+      "method": "Git blob SHA1 recomputed for small metadata file"
+    },
+    {
+      "path": "tokenizer.json",
+      "expected": "06b9509352d2af50381ab2247e083b80d32d5c0aba91c272ca9ff729b6a0e523",
+      "actual": "06b9509352d2af50381ab2247e083b80d32d5c0aba91c272ca9ff729b6a0e523",
+      "method": "Recorded pre-run SHA256 compared to archived Git LFS oid"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "expected": "e3e0db7dfbf98a6537db964d8821812652f07fd0",
+      "actual": "e3e0db7dfbf98a6537db964d8821812652f07fd0",
+      "method": "Git blob SHA1 recomputed for small metadata file"
+    },
+    {
+      "path": "video_preprocessor_config.json",
+      "expected": "3ba673a5ad7d4d13f54155ecd38b2a94a6dac8fe",
+      "actual": "3ba673a5ad7d4d13f54155ecd38b2a94a6dac8fe",
+      "method": "Git blob SHA1 recomputed for small metadata file"
+    },
+    {
+      "path": "vocab.json",
+      "expected": "0aa0ce0658d60ac4a5d609f4eadb0e8e43514176",
+      "actual": "0aa0ce0658d60ac4a5d609f4eadb0e8e43514176",
+      "method": "Git blob SHA1 recomputed for small metadata file"
+    }
+  ],
+  "status": "PASS"
+}

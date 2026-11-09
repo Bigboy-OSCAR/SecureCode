@@ -1,0 +1,33 @@
+{
+  "recorded_at_utc": "2026-11-09T07:51:39.656449+00:00",
+  "generation_exec_session_id": 86436,
+  "completion_exec_session_id": 80403,
+  "generation_pid": 86432,
+  "completion_pid": 87971,
+  "goal_complete": false,
+  "report_path": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/Md_Files/2026-11-09_HumanEval+_Full_file_R0_비교_실험보고서.md",
+  "next_actions": [
+    "Poll exact live exec sessions; do not restart while they are alive.",
+    "On completion inspect grading, summary, verification and report.",
+    "Independently review report and requirement-by-requirement evidence; amend analysis/report only if justified, preserve generation.",
+    "Only then mark goal complete."
+  ],
+  "notes": [
+    "All 328 generations are planned; do not shrink to pilot.",
+    "No correctness results have been used to tune generation.",
+    "FULL includes all 164 prompt files; R0 unchanged original functions, budget 1024.",
+    "Evaluator uses upstream find_zero bookkeeping fix and official Darwin memory-limit environment switch.",
+    "Canonical control: 163 pass; task32 reference Newton solver fails 6 extra inputs; official special oracle and all tests preserved.",
+    "Prior Nov8 report user modification left untouched.",
+    "Nov 9 continuation: independent known-answer aggregation/report tests passed (3); pinned model revision verified against archived repository tree for all 16 files. Generation and completion watcher both polled live."
+  ],
+  "last_verified_live_sessions": [
+    86436,
+    80403
+  ],
+  "generation_completed_calls_at_snapshot": 8,
+  "additional_evidence": {
+    "analysis_unit_checks": "analysis_unit_checks.json",
+    "model_identity_check": "model_provenance.json"
+  }
+}
