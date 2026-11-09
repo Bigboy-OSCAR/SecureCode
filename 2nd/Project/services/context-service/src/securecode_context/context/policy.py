@@ -18,7 +18,6 @@ class ContextBudgetCalculator:
     def estimate_tokens(self, text: str) -> int:
         if not text:
             return 0
-        # len // 4 산식 완전 제거: 토큰 단위 정확 계산
         return len(text.encode("utf-8"))
 
 class ModelRequestGate:
@@ -31,7 +30,6 @@ class ModelRequestGate:
         current_tokens = 0
         seen_uris = set()
 
-        # explicit 우선 정렬
         sorted_candidates = sorted(candidate_refs, key=lambda x: not x.get("explicit", False))
 
         for cand in sorted_candidates:
@@ -52,3 +50,11 @@ class ModelRequestGate:
             current_tokens += tokens
 
         return ContextPlan(selected_uris=selected, omitted=omitted, total_tokens=current_tokens)
+
+# 기존 테스트 호환성을 위한 alias 및 클래스 선언
+class ContextSelectorPolicy:
+    def __init__(self, token_counter: Optional[Any] = None):
+        self.gate = ModelRequestGate(token_counter)
+
+    def select(self, candidate_refs: List[Dict[str, Any]], max_tokens: int = 4000) -> ContextPlan:
+        return self.gate.check(candidate_refs, max_tokens)
