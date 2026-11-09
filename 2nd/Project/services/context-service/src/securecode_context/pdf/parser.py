@@ -40,6 +40,8 @@ class PdfParser:
         if not content_bytes or not content_bytes.startswith(b"%PDF"):
             return []
 
+        pages_data = []
+
         # 1. 모든 PDF obj (n 0 obj ... endobj) 인덱싱
         objects = {}
         for m in re.finditer(rb'(\d+)\s+(\d+)\s+obj([\s\S]*?)endobj', content_bytes):
@@ -69,13 +71,11 @@ class PdfParser:
                 pages_data.append({"page_num": page_num, "text": text})
             return pages_data
 
-        pages_data = []
         for idx, obj_id in enumerate(page_obj_ids, start=1):
             if target_pages and idx not in target_pages:
                 continue
 
             body = objects.get(obj_id, b"")
-            # /Contents 4 0 R 객체 추적
             contents_match = re.search(rb'/Contents\s*(?:\[([^\]]+)\]|(\d+)\s+\d+\s+R)', body)
             stream_bytes = b""
 
