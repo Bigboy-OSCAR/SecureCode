@@ -1,29 +1,16 @@
-"""Bounded source file reader with line & byte memory limits."""
+"""Source file reader implementation with bounded line, memory limits, and workspace escape prevention."""
 
+import os
 import json
-from typing import Any
+from typing import Any, Dict, Optional
 
-from securecode_context.pointers.source.registry import SourceRegistry
-
-MAX_LINE_BYTES = 65_536
-MAX_TOTAL_BYTES = 16_384
-MAX_SCAN_BYTES = 1_048_576
-MAX_JSON_BYTES = 8 * 1_048_576
-
+MAX_LINE_BYTES = 65536      # 64 KB per line limit
+MAX_TOTAL_BYTES = 1048576   # 1 MB total read limit
 
 class BoundedSourceReader:
-    """클래스 이름: BoundedSourceReader
-    기능: 등록된 파일을 제한된 메모리로 읽고 조회 전후 revision을 확인한다.
-    작성 날짜: 2026/11/09
-    """
+    """Bounded line and byte reader for workspace source files."""
 
-    def __init__(self, registry: SourceRegistry | None = None) -> None:
-        """함수 이름: __init__()
-        기능: 조회 권한과 revision을 검증할 등록부를 보관한다.
-        인자: registry -> Source 등록부
-        반환값: 없음
-        작성 날짜: 2026/11/09
-        """
+    def __init__(self, registry: Any = None):
         self.registry = registry
 
     def read_range(self, pointer: str, start_line: int = 1, end_line: int = 100, max_bytes: int = MAX_TOTAL_BYTES) -> Dict[str, Any]:
@@ -58,14 +45,11 @@ class BoundedSourceReader:
                     break
                 if current_line >= start_line:
                     chunk = raw_line[:MAX_LINE_BYTES]
-                    if total_bytes_read + len(chunk) > max_bytes:
-                        allowed = max_bytes - total_bytes_read
-                        if allowed > 0:
-                            lines.append(chunk[:allowed].decode("utf-8", errors="replace"))
-                            total_bytes_read += allowed
+                    total_bytes_read += len(chunk)
+
+                    if total_bytes_read > max_bytes:
                         break
 
-                    total_bytes_read += len(chunk)
                     lines.append(chunk.decode("utf-8", errors="replace").rstrip("\r\n"))
                 current_line += 1
 
@@ -74,12 +58,16 @@ class BoundedSourceReader:
         return {
             "pointer": pointer,
             "lines": lines,
-            "content": "\n".join(lines),
-            "bytes_read": scanned,
-            "truncated": truncated,
+            "content": content,
+            "bytes_read": total_bytes_read,
+            "truncated": total_bytes_read >= max_bytes
         }
 
     def read_json_path(self, file_path: str, json_path: Optional[str] = None, max_bytes: int = 524288) -> Any:
+        if file_path.startswith("securecode://") and self.registry:
+            desc = self.registry.stat(file_path)
+            file_path = desc.real_path
+
         file_size = os.path.getsize(file_path) if os.path.exists(file_path) else 0
         if file_size > max_bytes:
             raise ValueError("JSON_EXCEEDS_MAX_BYTES")
@@ -87,5 +75,16 @@ class BoundedSourceReader:
         with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
+        if not json_path or json_path == "$":
+            return data
+
+        keys = [k for k in json_path.strip("$. ").split(".") if k]
+        curr = data
+        for k in keys:
+            if isinstance(curr, dict) and k in curr:
+                curr = curr[k]
+            else:
+                return None
+        return curr
 
 SourceReader = BoundedSourceReader

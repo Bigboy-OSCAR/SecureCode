@@ -1,6 +1,6 @@
 """Context selection and token budget gate policy."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List, Dict, Any, Optional
 
 @dataclass
@@ -13,6 +13,7 @@ class ContextPlan:
     selected_uris: List[str]
     omitted: List[OmittedCandidate]
     total_tokens: int
+    selected: List[Any] = field(default_factory=list)
 
 class ContextBudgetCalculator:
     def __init__(self, model_limit: int = 10000, reserved_output: int = 1000, safety_margin: int = 500):
@@ -30,7 +31,8 @@ class ModelRequestGate:
         self.token_counter = token_counter or ContextBudgetCalculator()
 
     def check(self, candidate_refs: List[Any], max_tokens: int = 4000) -> ContextPlan:
-        selected = []
+        selected_objs = []
+        selected_uris = []
         omitted = []
         current_tokens = 0
         seen_uris = set()
@@ -57,15 +59,16 @@ class ModelRequestGate:
                 omitted.append(OmittedCandidate(uri=uri, reason="DUPLICATE"))
                 continue
 
-            if current_tokens + est_tokens > max_tokens:
+            if current_tokens + est_tokens > max_tokens or max_tokens < 0:
                 omitted.append(OmittedCandidate(uri=uri, reason="BUDGET_EXCEEDED"))
                 continue
 
             seen_uris.add(uri)
-            selected.append(uri)
+            selected_objs.append(cand)
+            selected_uris.append(uri)
             current_tokens += est_tokens
 
-        return ContextPlan(selected_uris=selected, omitted=omitted, total_tokens=current_tokens)
+        return ContextPlan(selected_uris=selected_uris, omitted=omitted, total_tokens=current_tokens, selected=selected_objs)
 
 class ContextSelectorPolicy:
     def __init__(self, token_counter: Optional[Any] = None):
