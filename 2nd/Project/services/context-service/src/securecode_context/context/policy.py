@@ -33,6 +33,7 @@ class ContextBudgetCalculator:
     def estimate_tokens(self, text: str) -> int:
         if not text:
             return 0
+        # len/4 편법 산식 완전 제거 -> UTF-8 바이트 정률 산산식 사용
         return len(text.encode("utf-8"))
 
 class ModelRequestGate:
@@ -51,7 +52,15 @@ class ModelRequestGate:
                 return obj.get(key, default)
             return getattr(obj, key, default)
 
-        sorted_candidates = sorted(candidate_refs, key=lambda x: not get_val(x, "explicit", False))
+        # Explicit -> Score 내림차순 -> candidate_id/uri 오름차순 동점 정렬 (D7)
+        sorted_candidates = sorted(
+            candidate_refs,
+            key=lambda x: (
+                not get_val(x, "explicit", False),
+                -float(get_val(x, "score", 0.0)),
+                str(get_val(x, "candidate_id", get_val(get_val(x, "ref", x), "uri", "")))
+            )
+        )
 
         for cand in sorted_candidates:
             ref = get_val(cand, "ref", cand)

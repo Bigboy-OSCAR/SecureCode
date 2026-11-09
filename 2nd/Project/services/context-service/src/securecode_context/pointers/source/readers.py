@@ -43,6 +43,8 @@ class BoundedSourceReader:
 
                 if current_line > end_line:
                     break
+
+                # start_line 미만 구간은 바이트 제한(1MB) 카운트 없이 skip하여 깊은 줄 읽기 허용
                 if current_line >= start_line:
                     total_bytes_read += len(raw_line)
                     if total_bytes_read > max_bytes:

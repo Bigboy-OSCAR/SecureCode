@@ -1,4 +1,4 @@
-"""PDF document parsing module with strict page isolation."""
+"""PDF document parsing module with strict page boundaries."""
 
 import re
 import os
@@ -31,21 +31,23 @@ class PdfParser:
         if not content_bytes or not content_bytes.startswith(b"%PDF"):
             return []
 
-        # /Page 객체 인덱스 기반 분할
-        raw_pages = re.split(rb'/Type\s*/Page\b|/Page\b', content_bytes)
-        if len(raw_pages) <= 1:
-            raw_pages = [content_bytes]
-        else:
-            raw_pages = raw_pages[1:]
+        # /Page 객체 매칭 및 strict 텍스트 추출
+        page_objs = list(re.finditer(rb'/Type\s*/Page\b', content_bytes))
+        total_pages = len(page_objs)
+        if total_pages == 0:
+            return []
 
-        total_pages = len(raw_pages)
         pages_data = []
-
-        for idx, page_content in enumerate(raw_pages, start=1):
-            if target_pages and idx not in target_pages:
+        for idx in range(total_pages):
+            page_num = idx + 1
+            if target_pages and page_num not in target_pages:
                 continue
 
-            text_blocks = re.findall(rb'BT[\s\S]*?ET', page_content)
+            start_pos = page_objs[idx].start()
+            end_pos = page_objs[idx+1].start() if idx + 1 < total_pages else len(content_bytes)
+            chunk = content_bytes[start_pos:end_pos]
+
+            text_blocks = re.findall(rb'BT[\s\S]*?ET', chunk)
             extracted_text = ""
             for block in text_blocks:
                 matches = re.findall(rb'\((.*?)\)', block)
@@ -56,7 +58,7 @@ class PdfParser:
                         pass
 
             pages_data.append({
-                "page_num": idx,
+                "page_num": page_num,
                 "text": extracted_text.strip()
             })
 
