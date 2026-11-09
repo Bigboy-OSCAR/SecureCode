@@ -6,6 +6,7 @@ from typing import Any, Dict, Optional
 
 MAX_LINE_BYTES = 65536      # 64 KB per line limit
 MAX_TOTAL_BYTES = 1048576   # 1 MB total read limit
+MAX_SCAN_BYTES = 1048576    # 1 MB scan limit for search operations
 
 class BoundedSourceReader:
     """Bounded line and byte reader for workspace source files."""
