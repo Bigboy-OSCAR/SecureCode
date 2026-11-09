@@ -1,4 +1,4 @@
-"""Context Service Fast API Entry Point exposing REST Routes for D8 & Host SDK."""
+"""Context Service FastAPI Entry Point exposing REST Routes for D8 & Host SDK."""
 
 from fastapi import FastAPI, HTTPException, Header
 from typing import List, Dict, Any, Optional

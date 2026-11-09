@@ -1,4 +1,4 @@
-"""PDF document parsing module with strict /Contents object stream resolution."""
+"""PDF document parsing module with strict /Contents stream resolution & error handling."""
 
 import re
 import os
@@ -6,7 +6,7 @@ import hashlib
 from typing import List, Dict, Any, Union
 
 class PdfParser:
-    """PDF parser enforcing strict object graph and /Contents stream resolution."""
+    """PDF content parser enforcing strict object graph and /Contents stream resolution."""
 
     def parse_pdf(self, file_input: Union[str, bytes]) -> Dict[str, Any]:
         if isinstance(file_input, str):
@@ -57,7 +57,7 @@ class PdfParser:
         page_obj_ids.sort()
         total_pages = len(page_obj_ids)
 
-        # obj 구조가 없는 Mock 바이너리 예외 지원
+        # obj 구조가 없는 단순 Mock 바이너리 분기 지원
         if total_pages == 0:
             page_matches = list(re.finditer(rb'/Type\s*/Page\b', content_bytes))
             for idx in range(len(page_matches)):
