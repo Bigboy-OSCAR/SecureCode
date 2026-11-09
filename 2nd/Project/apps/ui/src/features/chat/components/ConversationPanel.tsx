@@ -23,16 +23,23 @@ const statusLabels = {
 export interface ConversationPanelProps {
     controller: RunController;
     state: RunViewState;
+    fixtureMode?: boolean;
 }
 
-export function ConversationPanel({ controller, state }: ConversationPanelProps): React.JSX.Element {
-    const actions = useConversationActions(controller, state);
+export function ConversationPanel({
+    controller,
+    state,
+    fixtureMode = true,
+}: ConversationPanelProps): React.JSX.Element {
+    const actions = useConversationActions(controller, state, fixtureMode);
     const run = state.snapshot;
     const runCanContinue = !run || run.status === "completed" || run.status === "failed" || run.status === "cancelled";
-    const displayRun = run ?? fixtureAdapter.runs[0]!;
+    const displayRun = run ?? (fixtureMode ? fixtureAdapter.runs[0]! : null);
     const streamText =
         run?.answer.text ??
-        (fixtureAdapter.outputDelta.type === "run.output_delta" ? fixtureAdapter.outputDelta.payload.text : "");
+        (fixtureMode && fixtureAdapter.outputDelta.type === "run.output_delta"
+            ? fixtureAdapter.outputDelta.payload.text
+            : "");
     const currentStatus = run ? statusLabels[run.status] : "질문을 입력해 시작하세요";
     const operationLabel =
         state.operation?.kind === "cancelling"
@@ -54,10 +61,14 @@ export function ConversationPanel({ controller, state }: ConversationPanelProps)
             </div>
             {run ? (
                 <p>
-                    세션 {run.session_id} · 실행 {run.run_id} · 이력 {fixtureAdapter.runList.items.length}건
+                    세션 {run.session_id} · 실행 {run.run_id}
                 </p>
             ) : (
-                <p>질문을 입력해 fixture 실행 동작을 확인하세요. 실제 API 요청은 보내지 않습니다.</p>
+                <p>
+                    {fixtureMode
+                        ? "질문을 입력해 fixture 실행 동작을 확인하세요. 실제 API 요청은 보내지 않습니다."
+                        : "호스트 SDK에 질문을 보내고 상태를 이벤트 스트림으로 받습니다."}
+                </p>
             )}
             {state.connection === "disconnected" ? (
                 <Alert title="연결이 끊겼습니다" variant="warning">
@@ -89,14 +100,14 @@ export function ConversationPanel({ controller, state }: ConversationPanelProps)
             </article>
             <div className="tool-history">
                 <h3>실행 도구 이력</h3>
-                {displayRun.tool_calls.map((tool) => (
+                {displayRun?.tool_calls.map((tool) => (
                     <div className="tool-row" key={tool.tool_call_id}>
                         <strong>{toolLabels[tool.tool_name] ?? "작업 도구"}</strong>
                         <span>{tool.summary}</span>
                         <span>{tool.output_bytes?.toLocaleString() ?? 0} bytes 저장</span>
                     </div>
                 ))}
-                {displayRun.tool_calls_truncated ? <p>도구 이력 일부만 표시됩니다.</p> : null}
+                {displayRun?.tool_calls_truncated ? <p>도구 이력 일부만 표시됩니다.</p> : null}
                 {!run ? <p>현재 실행의 도구 이력은 실행 후 확인할 수 있습니다.</p> : null}
             </div>
             {run ? (
@@ -135,30 +146,34 @@ export function ConversationPanel({ controller, state }: ConversationPanelProps)
                     disabled={!actions.canSubmit || !runCanContinue}
                     data-testid="question-submit"
                 >
-                    질문 fixture 실행
+                    {fixtureMode ? "질문 fixture 실행" : "호스트에 질문 보내기"}
                 </Button>
             </form>
-            <details>
-                <summary>빈 대화·오류·무결과 예시</summary>
-                <p>질문을 입력해 시작하세요.</p>
-                <p>답변을 받는 중… {boundedPreview(streamText, 280)}</p>
-                <Alert title="현재 실행 중인 작업이 있습니다" variant="warning">
-                    {fixtureAdapter.runAlreadyActive.error.message}
-                </Alert>
-                {fixtureAdapter.symbolNoMatch.no_match ? (
-                    <Alert title="관련 코드 근거를 찾지 못했습니다" variant="info">
-                        질문에 식별자나 파일 이름을 포함해 다시 요청하세요.
+            {fixtureMode ? (
+                <details>
+                    <summary>빈 대화·오류·무결과 예시</summary>
+                    <p>질문을 입력해 시작하세요.</p>
+                    <p>답변을 받는 중… {boundedPreview(streamText, 280)}</p>
+                    <Alert title="현재 실행 중인 작업이 있습니다" variant="warning">
+                        {fixtureAdapter.runAlreadyActive.error.message}
                     </Alert>
-                ) : null}
-            </details>
-            <details>
-                <summary>완료·취소된 실행 예시</summary>
-                <p>
-                    {fixtureAdapter.runs[1]!.terminal?.status ?? fixtureAdapter.runs[1]!.status} ·{" "}
-                    {fixtureAdapter.runs[1]!.answer.truncated ? "일부 표시" : "답변 완료"}
-                </p>
-                <p>{fixtureAdapter.runs[2]!.terminal?.status ?? fixtureAdapter.runs[2]!.status}</p>
-            </details>
+                    {fixtureAdapter.symbolNoMatch.no_match ? (
+                        <Alert title="관련 코드 근거를 찾지 못했습니다" variant="info">
+                            질문에 식별자나 파일 이름을 포함해 다시 요청하세요.
+                        </Alert>
+                    ) : null}
+                </details>
+            ) : null}
+            {fixtureMode ? (
+                <details>
+                    <summary>완료·취소된 실행 예시</summary>
+                    <p>
+                        {fixtureAdapter.runs[1]!.terminal?.status ?? fixtureAdapter.runs[1]!.status} ·{" "}
+                        {fixtureAdapter.runs[1]!.answer.truncated ? "일부 표시" : "답변 완료"}
+                    </p>
+                    <p>{fixtureAdapter.runs[2]!.terminal?.status ?? fixtureAdapter.runs[2]!.status}</p>
+                </details>
+            ) : null}
         </section>
     );
 }

@@ -1,4 +1,5 @@
-/** Composes the feature screens over contract-backed fixture data. */
+/** Selects the live application or explicitly requested contract-fixture screens. */
+import { LiveApp } from "./LiveApp.js";
 import { ApprovalCard } from "../features/approvals/components/ApprovalCard.js";
 import { ConversationPanel } from "../features/chat/components/ConversationPanel.js";
 import { ContextPanel } from "../features/context/components/ContextPanel.js";
@@ -15,7 +16,19 @@ import { useRunController } from "../features/chat/hooks/useRunController.js";
 
 const fixtureNow = (): number => Date.parse("2026-11-04T09:01:00Z");
 
-export function App(): React.JSX.Element {
+export interface AppProps {
+    mode?: "fixture" | "live";
+}
+
+export function App({ mode = "fixture" }: AppProps): React.JSX.Element {
+    if (mode === "live") {
+        return <LiveApp />;
+    }
+
+    return <FixtureApp />;
+}
+
+function FixtureApp(): React.JSX.Element {
     const { controller, state } = useRunController(
         fixtureRunClient,
         fixtureAdapter.runs[0]!.session_id,

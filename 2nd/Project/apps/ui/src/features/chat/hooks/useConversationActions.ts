@@ -7,6 +7,7 @@ import type { RunViewState } from "../model/runState.js";
 export function useConversationActions(
     controller: RunController,
     state: RunViewState,
+    fixtureMode = true,
 ): {
     prompt: string;
     setPrompt: (prompt: string) => void;
@@ -16,7 +17,7 @@ export function useConversationActions(
     onPromptKeyDown: (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     reconnect: () => void;
 } {
-    const [prompt, setPrompt] = useState(fixtureAdapter.runs[0]!.prompt_preview);
+    const [prompt, setPrompt] = useState(fixtureMode ? fixtureAdapter.runs[0]!.prompt_preview : "");
     const submit = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         void controller.createRun(prompt);

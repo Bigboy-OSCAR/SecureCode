@@ -12,6 +12,7 @@ import type {
     SessionId,
 } from "@securecode/contracts";
 import { ContractValidator } from "@securecode/contracts";
+import replayUnavailableFixture from "../../../contracts/fixtures/events/stream-replay-unavailable.valid.json";
 import { fixtureAdapter } from "../src/api/fixtureAdapter.js";
 import { FixtureRunClient } from "../src/api/fixtureRunClient.js";
 import type { RunClient } from "../src/api/runClient.js";
@@ -216,6 +217,24 @@ test("out-of-order events trigger a snapshot refresh and resume after its sequen
     controller.dispose();
 });
 
+test("replay expiration restores the authoritative snapshot and resumes at its last sequence", async () => {
+    const client = new FakeRunClient();
+    const controller = createController(client);
+    const initial = snapshotAt(fixtureAdapter.runs[0]!, 2, "before replay expiration");
+    client.recoverySnapshot = snapshotAt(fixtureAdapter.runs[0]!, 812, "recovered snapshot");
+    controller.restore(initial);
+
+    controller.receiveEvent(replayUnavailableFixture.data as AppEvent);
+    await new Promise((resolve) => setImmediate(resolve));
+
+    assert.equal(client.snapshotReads, 1);
+    assert.equal(controller.getSnapshot().snapshot?.answer.text, "recovered snapshot");
+    assert.equal(controller.getSnapshot().lastSequence, 812);
+    assert.equal(client.subscribedAt.at(-1), 812);
+    assert.equal(controller.getSnapshot().connection, "connected");
+    controller.dispose();
+});
+
 test("approval rejection removes only that pending request and does not finish the run", async () => {
     const client = new FakeRunClient();
     const controller = createController(client);
@@ -297,6 +316,7 @@ test("disconnect blocks mutation and reconnect restores the run snapshot", async
     client.disconnect(snapshot.run_id);
 
     assert.equal(controller.getSnapshot().connection, "disconnected");
+    assert.equal(client.cancelCalls, 0, "a stream disconnect must not cancel the server run");
     assert.equal(await controller.createRun("새 질문"), false);
     assert.equal(controller.canDecideApproval(snapshot.pending_approvals[0]!.approval_id, "reject"), false);
     assert.equal(await controller.reconnect(), true);
