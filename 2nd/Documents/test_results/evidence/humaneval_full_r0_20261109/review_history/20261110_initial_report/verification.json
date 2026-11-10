@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "verified_at_utc": "2026-11-10T03:22:46.388440+00:00",
+  "tasks": 164,
+  "paired_calls": 328,
+  "checks": [
+    "Every corpus file equals public dataset prompt",
+    "No gold/test field in generation task records",
+    "Original R0 AST, candidates, ranking and packing independently recomputed",
+    "Every FULL prompt contains all 164 unchanged files",
+    "Every model input retokenized",
+    "All prompt/solution/call hashes match",
+    "Balanced paired schedule and no missing/extra calls",
+    "Quality outcomes match official test statuses and test counts",
+    "Evaluation controls audited",
+    "Every local model file hash rechecked",
+    "Protocol and original source files unchanged"
+  ],
+  "session_count": 2,
+  "interrupted_attempts": 1,
+  "preserved_pre_interruption_calls_verified": [
+    15
+  ],
+  "report_driver_sha256": "150caf8aa5e94158ec53f6bebe2472661d803dc85c00ede1d577ee230a25cd7c"
+}

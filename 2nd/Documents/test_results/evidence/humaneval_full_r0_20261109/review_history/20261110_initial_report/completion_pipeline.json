@@ -1,0 +1,18 @@
+{
+  "created_at_utc": "2026-11-09T12:16:20.069204+00:00",
+  "revision": "resume-01-report-interruption-accounting",
+  "sources_sha256": {
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/humaneval_benchmark/evaluate_solutions.py": "661ea434b8ddb5c295a182d9f930be7e281e86cc5a2473d01989bf1576ea2e22",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/humaneval_benchmark/analyze_and_report.py": "150caf8aa5e94158ec53f6bebe2472661d803dc85c00ede1d577ee230a25cd7c",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/humaneval_benchmark/finish_when_ready.py": "24560d15fdc18e12b7a804f41bda6b91c1652aadc0059766fd0ea7d386d34e05"
+  },
+  "stages": [
+    "wait_for_exact_generation_completion",
+    "grade_all_328_solutions",
+    "verify_all_inputs_outputs_and_scores",
+    "save_markdown_report"
+  ],
+  "quality_results_seen_at_freeze": false,
+  "changes_since_previous": "Add preserved-response hash audit, disclosure of interrupted attempts, session counts and supplementary timing summary excluding only cross-session pairs. Primary analysis keeps all 164 pairs. Generation and grading unchanged.",
+  "previous_manifest": "recovery/20261109_resume_01/completion_pipeline.json.before"
+}

@@ -1,0 +1,22 @@
+{
+  "at_utc": "2026-11-10T03:21:47.156796+00:00",
+  "status": "PASS",
+  "completed_calls": 328,
+  "tasks": 164,
+  "arms": {
+    "FULL": 164,
+    "R0": 164
+  },
+  "generation_exit_code": 0,
+  "backup_exit_code": 0,
+  "backup_status": "saving_completed_responses",
+  "all_call_hashes_match_generation_manifest_and_external_backup": true,
+  "pre_pause_response_hashes_preserved": 15,
+  "git_stash_response_hashes_preserved": 4,
+  "original_progress_ledger_preserved": true,
+  "ordered_ledger": "progress_ordered.jsonl",
+  "finish_reasons": {
+    "stop": 326,
+    "length": 2
+  }
+}

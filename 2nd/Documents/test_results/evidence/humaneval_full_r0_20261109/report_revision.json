@@ -1,0 +1,10 @@
+{
+  "at_utc": "2026-11-10T03:35:15.610538+00:00",
+  "reason": "After all generation and grading: clarify measurement purposes and boundaries, uncertainty, cache condition, original-byte Git recovery, and six deterministic case explanations. No change to generation, grading, verification, aggregation, bootstrap, task set, or numeric results. Original pre-result pipeline remains archived.",
+  "initial_analysis_sha256": "150caf8aa5e94158ec53f6bebe2472661d803dc85c00ede1d577ee230a25cd7c",
+  "final_analysis_sha256": "b95efb26dc567f26a210995ecfcae275dfbba61d1b7fff6cea0620548f0746cc",
+  "case_notes_sha256": "364840277c012b300189cc2ffaef57b7580ae8088dfff5fb0240eb2af3c9d49c",
+  "all_non_report_functions_ast_unchanged": true,
+  "original_pipeline": "review_history/20261110_initial_report/completion_pipeline.json",
+  "generation_and_grading_rerun": false
+}

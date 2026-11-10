@@ -66,6 +66,25 @@ class KnownOutcomeTests(unittest.TestCase):
         self.assertEqual(summary["paired"]["full_only"]["count"], 0)
         self.assertEqual(summary["paired"]["r0_only"]["count"], 0)
 
+    def test_restart_timing_sensitivity_keeps_all_primary_quality_results(self):
+        rows, scores = self.fixture()
+        for row in rows:
+            if row["task_id"] == "HumanEval/120":
+                if row["arm"] == "FULL":
+                    row["query_seconds"] = 110
+                else:
+                    row["session"] = "SYNTHETIC_RESTART_SESSION"
+        summary, _ = analysis.summarize(rows, scores)
+        self.assertEqual(summary["cross_session_pairs"], ["HumanEval/120"])
+        sensitivity = summary["same_session_timing_sensitivity"]
+        self.assertEqual(sensitivity["pairs"], 163)
+        self.assertEqual(sensitivity["FULL_mean_seconds"], 10)
+        self.assertEqual(sensitivity["R0_mean_seconds"], 2)
+        self.assertEqual(sensitivity["reduction_percent"], 80)
+        self.assertAlmostEqual(summary["arms"]["FULL"]["query_seconds"]["mean"], (1630 + 110) / 164)
+        self.assertEqual(summary["arms"]["FULL"]["plus_correct"], 120)
+        self.assertEqual(summary["arms"]["R0"]["plus_correct"], 130)
+
     def test_report_uses_the_computed_counts_and_explains_metrics(self):
         summary, keyed = analysis.summarize(*self.fixture())
         analysis.run.dump(analysis.OUT / "preflight.json", {
@@ -81,6 +100,26 @@ class KnownOutcomeTests(unittest.TestCase):
             self.assertIn(expected, text)
         manifest = json.loads((analysis.OUT / "report_manifest.json").read_text())
         self.assertEqual(manifest["report_sha256"], analysis.run.sha(analysis.REPORT))
+
+    def test_report_discloses_interruption_without_reducing_primary_scope(self):
+        rows, scores = self.fixture()
+        for row in rows:
+            if row["task_id"] == "HumanEval/120" and row["arm"] == "R0":
+                row["session"] = "SYNTHETIC_RESTART_SESSION"
+        history = analysis.OUT / "recovery/synthetic_only"
+        history.mkdir(parents=True)
+        (history / "recovery.json").write_text('{"fixture":"synthetic only"}\n')
+        summary, keyed = analysis.summarize(rows, scores)
+        analysis.run.dump(analysis.OUT / "preflight.json", {
+            "base_tests": 1570, "extra_tests": 122683, "source_nodes": 169,
+            "dependency_edges": 0, "index_build_seconds": 0.02,
+        })
+        analysis.run.dump(analysis.OUT / "verification.json", {"fixture": "SYNTHETIC_TEST_ONLY"})
+        problems = {f"HumanEval/{i}": {"entry_point": f"fixture_{i}"} for i in range(164)}
+        analysis.report(summary, keyed, problems)
+        text = analysis.REPORT.read_text()
+        for expected in ["2개 세션", "중단 시도 **1건**", "163쌍", "모든 164쌍", "120/164", "130/164"]:
+            self.assertIn(expected, text)
 
 
 if __name__ == "__main__":

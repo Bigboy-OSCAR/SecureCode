@@ -1,0 +1,91 @@
+{
+  "status": "PASS",
+  "at_utc": "2026-11-10T03:28:17.155554+00:00",
+  "method": "Independent aggregation from raw calls and official grading records; Python statistics and explicit linear quantiles; bootstrap aggregated with Python loops using the frozen random draws; does not import the report generator.",
+  "summary_sha256": "b661c66db7e1f9b30ff8863038d5f9b07c838e6909529361ff0b0bbfea32e582",
+  "grading_results_sha256": "86955d1085cc5cda427c8f0daaceb12c5134e0a21a05b9221178bedda94a15e3",
+  "case_diagnostics_sha256": "9de998e1a18a6a42c7a6cebc70a78b4fd6afbc17bdb4f3b4b1ea8aa2b8311f01",
+  "arms": {
+    "FULL": {
+      "base_correct": 151,
+      "plus_correct": 142,
+      "extra_tests_reject_base_pass": 9,
+      "target_included": 164,
+      "syntax_errors": 1,
+      "missing_entrypoint": 1,
+      "length_limited": 1,
+      "mean_input_tokens": 24694.59756097561,
+      "mean_query_seconds": 299.1427561923723
+    },
+    "R0": {
+      "base_correct": 156,
+      "plus_correct": 148,
+      "extra_tests_reject_base_pass": 8,
+      "target_included": 164,
+      "syntax_errors": 1,
+      "missing_entrypoint": 1,
+      "length_limited": 1,
+      "mean_input_tokens": 1108.1341463414635,
+      "mean_query_seconds": 46.996699506805044
+    }
+  },
+  "paired_counts": {
+    "both_pass": 138,
+    "full_only": 4,
+    "r0_only": 10,
+    "neither_pass": 12
+  },
+  "contrasts": {
+    "plus_pass_difference_pp": {
+      "estimate": 3.658536585365854,
+      "ci95": [
+        -0.6097560975609756,
+        7.926829268292683
+      ]
+    },
+    "base_pass_difference_pp": {
+      "estimate": 3.048780487804878,
+      "ci95": [
+        -0.6097560975609756,
+        7.317073170731708
+      ]
+    },
+    "query_seconds_difference": {
+      "estimate": -252.1460566855673,
+      "ci95": [
+        -257.05256902160437,
+        -247.1433999155911
+      ]
+    },
+    "input_token_reduction_percent": {
+      "estimate": 95.51264545370593,
+      "ci95": [
+        95.50734543490405,
+        95.51820603793865
+      ]
+    },
+    "query_time_reduction_percent": {
+      "estimate": 84.28954118595388,
+      "ci95": [
+        82.64751138897479,
+        85.63728806078109
+      ]
+    }
+  },
+  "same_session_pairs": 163,
+  "checks": [
+    "All 328 score-to-solution hashes",
+    "Every reported numerical summary for nine numeric fields",
+    "All quality counts and paired task memberships",
+    "All five paired bootstrap estimates and intervals",
+    "Supplementary same-session timing",
+    "Six deterministically selected case diagnostics and original solution hashes"
+  ],
+  "final_summary_equality_check": {
+    "at_utc": "2026-11-10T03:37:05.567358+00:00",
+    "prior_summary_sha256": "da377e5d484a9c26dcdc25945c41e25b9bcbde3986362418038896b9b15635d1",
+    "current_summary_sha256": "b661c66db7e1f9b30ff8863038d5f9b07c838e6909529361ff0b0bbfea32e582",
+    "only_changed_field": "created_at_utc",
+    "all_numerical_and_non_timestamp_values_identical": true
+  }
+}

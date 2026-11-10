@@ -1,17 +1,12 @@
 {
-  "recorded_at_utc": "2026-11-09T07:51:39.656449+00:00",
-  "generation_exec_session_id": 86436,
-  "completion_exec_session_id": 80403,
-  "generation_pid": 86432,
-  "completion_pid": 87971,
-  "goal_complete": false,
-  "report_path": "/Users/oscar/Desktop/SecureCode/2nd/Documents/test_results/Md_Files/2026-11-09_HumanEval+_Full_file_R0_비교_실험보고서.md",
-  "next_actions": [
-    "Poll exact live exec sessions; do not restart while they are alive.",
-    "On completion inspect grading, summary, verification and report.",
-    "Independently review report and requirement-by-requirement evidence; amend analysis/report only if justified, preserve generation.",
-    "Only then mark goal complete."
-  ],
+  "recorded_at_utc": "2026-11-10T03:37:18.396068+00:00",
+  "generation_exec_session_id": 2651,
+  "completion_exec_session_id": 83166,
+  "generation_pid": 9515,
+  "completion_pid": 10595,
+  "goal_complete": true,
+  "report_path": "/Users/oscar/Desktop/SecureCode/2nd/Documents/Md_Files/2026-11-09_HumanEval+_Full_file_R0_비교_실험보고서.md",
+  "next_actions": [],
   "notes": [
     "All 328 generations are planned; do not shrink to pilot.",
     "No correctness results have been used to tune generation.",
@@ -19,15 +14,28 @@
     "Evaluator uses upstream find_zero bookkeeping fix and official Darwin memory-limit environment switch.",
     "Canonical control: 163 pass; task32 reference Newton solver fails 6 extra inputs; official special oracle and all tests preserved.",
     "Prior Nov8 report user modification left untouched.",
-    "Nov 9 continuation: independent known-answer aggregation/report tests passed (3); pinned model revision verified against archived repository tree for all 16 files. Generation and completion watcher both polled live."
+    "Nov 9 continuation: independent known-answer aggregation/report tests passed (3); pinned model revision verified against archived repository tree for all 16 files. Generation and completion watcher both polled live.",
+    "User paused/resumed. Old processes were verified absent via ps. Recovery/resume_01 preserves 15 completed hashes and archived the uncommitted FULL HumanEval/80 intent. Same generator resumed; new handles 2651 and 83166. Reporting pipeline now discloses partial compute loss and includes supplemental timing excluding cross-session pairs, while all 164 primary pairs remain. Four aggregation/report tests passed.",
+    "Resume validated after completed call 15: all 15 older response hashes preserved, FULL context and token count unchanged, both sessions have identical hardware/package records. analysis_unit_checks now 5 passing tests.",
+    "User confirmed git pull attempt caused stash/reset at 21:28:45 KST. Targeted restore from stash f38eba27676a3fc7c0b8536211f6578f0c70b145 recovered calls 015-018 and 21 other experiment files without regeneration; stash left intact. Current calls are contiguous again. Progress events 015-018 were appended as a backfill; always sort by index or count calls, not the last progress line. Backup daemon separately copies completed responses outside Git."
   ],
-  "last_verified_live_sessions": [
-    86436,
-    80403
-  ],
-  "generation_completed_calls_at_snapshot": 8,
+  "last_verified_live_sessions": [],
+  "generation_completed_calls_at_snapshot": 328,
   "additional_evidence": {
     "analysis_unit_checks": "analysis_unit_checks.json",
-    "model_identity_check": "model_provenance.json"
-  }
+    "model_identity_check": "model_provenance.json",
+    "final_review": "final_review.json",
+    "final_report_manifest": "report_manifest.json",
+    "independent_stats_review": "independent_stats_review.json"
+  },
+  "independent_backup": "/private/tmp/securecode-humaneval-preservation-20261109",
+  "backup_exec_session_id": 16451,
+  "backup_pid": 18122,
+  "active_monitor_cell_id": null,
+  "active_monitor_note": "All generation, backup, grading, and report processes exited 0. Final report and evidence review PASS. Do not rerun generation.",
+  "active_monitor_started_at_utc": "2026-11-10T02:46:10.667834+00:00",
+  "generation_exit_code": 0,
+  "backup_exit_code": 0,
+  "completion_exit_code": 0,
+  "goal_status": "complete"
 }

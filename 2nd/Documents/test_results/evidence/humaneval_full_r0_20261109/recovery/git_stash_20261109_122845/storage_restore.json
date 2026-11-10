@@ -1,0 +1,149 @@
+{
+  "at_utc": "2026-11-09T12:42:23.917352+00:00",
+  "cause": "User confirmed git pull attempt; stash backup before rebase at 2026-11-09 21:28:45 KST restored earlier tracked state and removed new untracked responses.",
+  "stash_commit": "f38eba27676a3fc7c0b8536211f6578f0c70b145",
+  "restored": [
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/analysis_unit_checks.json",
+      "sha256": "0fe20fc2ebdd1f1279f6daaf4f40fc6a960dffbd73c8cdd6cb45873211896397",
+      "git_blob": "e7a57cee16c1874b3e42019cf12d59d9066863dc"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/completion_pipeline.json",
+      "sha256": "9529b4868372fee18ea4909814a191236543b3cb795ce1f8b9e6dbf0a468e214",
+      "git_blob": "11c3d6d1b6453d88b58ae7b754688fbd3cc03588"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/continuation_state.json",
+      "sha256": "acf36b4d86d342fcaadfae224c3f50afb0a9b060276929b9d7e2b22e15f02e61",
+      "git_blob": "7461731a7d4c214713d4ee4eb08f3829dc404026"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/generation.lock",
+      "sha256": "97de5a5009f134465e4ff7b0c45cc1c1bbee27d1309b631a7265de958d558da0",
+      "git_blob": "61a553daf528b9188f8119e93ba4f990d99061a2"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/intents/015_FULL_HumanEval_80.json",
+      "sha256": "d75245cba9956abd4772bb67862c01a8cd356f6712b9b4e8b2a697760713bc1f",
+      "git_blob": "70f8aa47833354d03bd3f88548f91303b870fc1d"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/source_snapshot/2nd/experiments/humaneval_benchmark/analyze_and_report.py",
+      "sha256": "150caf8aa5e94158ec53f6bebe2472661d803dc85c00ede1d577ee230a25cd7c",
+      "git_blob": "a48a85ce859ee92095b4adc13f9eb064537bc09d"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/source_snapshot/2nd/experiments/humaneval_benchmark/test_analysis.py",
+      "sha256": "2ff9c62005adf40ca39807b7bd1177d2ac526ab4fcfa2eb6227356bd9f155e11",
+      "git_blob": "199fa9cbd854ed136f4291394e5abb3562cec669"
+    },
+    {
+      "path": "2nd/experiments/humaneval_benchmark/analyze_and_report.py",
+      "sha256": "150caf8aa5e94158ec53f6bebe2472661d803dc85c00ede1d577ee230a25cd7c",
+      "git_blob": "a48a85ce859ee92095b4adc13f9eb064537bc09d"
+    },
+    {
+      "path": "2nd/experiments/humaneval_benchmark/test_analysis.py",
+      "sha256": "2ff9c62005adf40ca39807b7bd1177d2ac526ab4fcfa2eb6227356bd9f155e11",
+      "git_blob": "199fa9cbd854ed136f4291394e5abb3562cec669"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/calls/015_FULL_HumanEval_80.json.gz",
+      "sha256": "6bc2239daeb31ec8011ebce2136ad0193f87054db7a7cda178e11b82268901f9",
+      "git_blob": "5f1e818040d418d11a2e4c4daca77cf9c25b55bd"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/calls/016_FULL_HumanEval_145.json.gz",
+      "sha256": "0ca97d8b2e77b89ee34448745207e6affab5a2a15afeda8966dc19c3eb23e77d",
+      "git_blob": "e208036dffca9a9be12c411ee574068230dcc0bf"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/calls/017_R0_HumanEval_145.json.gz",
+      "sha256": "abb0c94ea56b41e4b1359417e4ab1660b1c19cdd97c790c66c8a0bd9ccfcb1b7",
+      "git_blob": "7fdac1bb95aeac04729726f11c4067e8c875d395"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/calls/018_R0_HumanEval_85.json.gz",
+      "sha256": "a16be7d33fb96c3426a3052c5757b732b10ffc69f10b4ad566872cdf9d7da2ce",
+      "git_blob": "12dcbae3f2a3522c0b4775027a8e41805947c860"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/intents/016_FULL_HumanEval_145.json",
+      "sha256": "0b24b007c09f14d76efe0b10d515a6db3212935bd6bd50c87bde2293b00a83c6",
+      "git_blob": "3e231beeae5b8082fcd784e354c30077cd72a258"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/intents/017_R0_HumanEval_145.json",
+      "sha256": "7a2d8ecb39715aa28f13920fefbce126d30ac4c83ba28c9a9a9da8e8f57a613e",
+      "git_blob": "7493085d0efade30e11ecd386afa3ffb9f781563"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/intents/018_R0_HumanEval_85.json",
+      "sha256": "7f29ddfc18b2136acf93138a09a5ce3b336f40a30dfa465ba90f485354486520",
+      "git_blob": "a1a4a0a184f9418feb39d72d2df31ddc0bcb8036"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/intents/019_FULL_HumanEval_85.json",
+      "sha256": "cc729adbadb20985364b4a0296fd5d274c95d3a3e126c20b35c7509060fb0071",
+      "git_blob": "6ea75c24b8c1bbac5fc881cc1ff99ebb9b61f92e"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/recovery/20261109_resume_01/015_FULL_HumanEval_80.json",
+      "sha256": "f5b0a8b836330c9848035605a14ae9541f73397441795e6ea4253c225cd8c309",
+      "git_blob": "1a254efacc261645123661b83ae9d49b07829d6e"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/recovery/20261109_resume_01/analyze_and_report.py.before",
+      "sha256": "1de6804dfa9eed0c494314dda6e6826e1c4c69fef89f6350efdbae2c15c9171e",
+      "git_blob": "4f52c4e8602d1ff6bb21009b7f5e64cf2408bf80"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/recovery/20261109_resume_01/completion_pipeline.json.before",
+      "sha256": "7af64d7a0efa2d1eab63395d1f1ad3b09373287e55bb2cc8296d540ee6e71013",
+      "git_blob": "67f660f0ab4921b48d5da5863fd80d23bbd44238"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/recovery/20261109_resume_01/completion_status_before_resume.json",
+      "sha256": "ed72fd08e442efbfd3bd8093fa8328fb8b018fa91871de96828b30295775ddca",
+      "git_blob": "8f81065757ec8a8aff6a86d79e1693312d6af468"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/recovery/20261109_resume_01/recovery.json",
+      "sha256": "f2dab8b60f6b1166363358b9e31a9257d32d4498839c5fe3dbfbfecaaa0e32e7",
+      "git_blob": "8f6dc18fc21538082dca914c4b66bebe1df85480"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/recovery/20261109_resume_01/resume_validation.json",
+      "sha256": "c1ffc1dca3b2a34ed0042df3147a5608e3b2554075e3bed9bfb90c776b2d9db3",
+      "git_blob": "22317c2a83ac139c50a67205e0d0f3274356da69"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/recovery/20261109_resume_01/test_analysis.py.before",
+      "sha256": "f16f191d5c762222958281cf407aa7d623e4302a39a3f00bb3c9747fe24f959c",
+      "git_blob": "d8dbf984874327e80cb3bf2a74852ca9718da2dc"
+    },
+    {
+      "path": "2nd/Documents/test_results/evidence/humaneval_full_r0_20261109/sessions/2026-11-09T12-13-45.225086+00-00.json",
+      "sha256": "84a36d0ee323f8261f3f47eb180d096f4d6dcca3de19ed5ad45ebaa154f03f59",
+      "git_blob": "893e569ae32ac8626254adab42e29dc73b700db1"
+    }
+  ],
+  "restored_completed_indices": [
+    15,
+    16,
+    17,
+    18
+  ],
+  "regenerated_responses": 0,
+  "progress_append_backfill_indices": [
+    15,
+    16,
+    17,
+    18
+  ],
+  "progress_note": "Original events from stash appended after newer live events; sort by index for execution order. No generated response changed.",
+  "pipeline_hashes": "PASS",
+  "git_stash_retained": true,
+  "independent_backup": "/private/tmp/securecode-humaneval-preservation-20261109"
+}

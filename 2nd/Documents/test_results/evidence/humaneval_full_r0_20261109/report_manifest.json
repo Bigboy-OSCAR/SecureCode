@@ -1,0 +1,10 @@
+{
+  "created_at_utc": "2026-11-10T03:35:59.029541+00:00",
+  "report": "/Users/oscar/Desktop/SecureCode/2nd/Documents/Md_Files/2026-11-09_HumanEval+_Full_file_R0_비교_실험보고서.md",
+  "report_sha256": "f838d85a3719768765072acf639f29f74112c0baefe096c901ed67626d08f666",
+  "summary_sha256": "b661c66db7e1f9b30ff8863038d5f9b07c838e6909529361ff0b0bbfea32e582",
+  "verification_sha256": "2c08ddeaa70bc6b928b96c66f7946df1ae6d5c11f8c1b0138e27091aafdf339d",
+  "analysis_code_sha256": "b95efb26dc567f26a210995ecfcae275dfbba61d1b7fff6cea0620548f0746cc",
+  "case_notes_sha256": "364840277c012b300189cc2ffaef57b7580ae8088dfff5fb0240eb2af3c9d49c",
+  "case_diagnostics_sha256": "9de998e1a18a6a42c7a6cebc70a78b4fd6afbc17bdb4f3b4b1ea8aa2b8311f01"
+}

@@ -1,0 +1,9 @@
+{
+  "checked_at_utc": "2026-11-09T12:19:39.041745+00:00",
+  "status": "PASS",
+  "tests": 5,
+  "scope": "Known paired counts, reduction arithmetic, identical-pair bootstrap, report rendering, and cross-session timing sensitivity preserving all primary results. Synthetic fixtures only. Interruption disclosure rendering checked with a synthetic two-session fixture.",
+  "test_sha256": "2ff9c62005adf40ca39807b7bd1177d2ac526ab4fcfa2eb6227356bd9f155e11",
+  "analysis_sha256": "150caf8aa5e94158ec53f6bebe2472661d803dc85c00ede1d577ee230a25cd7c",
+  "log_sha256": "f2f923927c00767a4b249b5f72c64f3ccc14e71a9a840545462e05e02a9dd7ce"
+}

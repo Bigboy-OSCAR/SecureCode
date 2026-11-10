@@ -1,0 +1,23 @@
+{
+  "index": 264,
+  "task_id": "HumanEval/34",
+  "arm": "R0",
+  "call_sha256": "ce4dd4ae312607f9a4b0783740aa6ed551844ffb0c249bf396fc8a2b88c565d4",
+  "solution_sha256": "d7a22ad847f3888e43c426a88dc27ea13bfa322c01342298af9a247bc3cdddd3",
+  "base": {
+    "status": "pass",
+    "checked": 1,
+    "tests": 1,
+    "first_failure": null
+  },
+  "plus": {
+    "status": "pass",
+    "checked": 903,
+    "tests": 903,
+    "first_failure": null
+  },
+  "base_pass": true,
+  "plus_pass": true,
+  "graded_at_utc": "2026-11-10T03:21:49.918655+00:00",
+  "grading_seconds": 0.20268254200345837
+}

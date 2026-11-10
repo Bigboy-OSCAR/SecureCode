@@ -1,0 +1,152 @@
+{
+  "at_utc": "2026-11-10T03:26:48.789645+00:00",
+  "purpose": "Post-evaluation explanation of the first three discordant tasks in each direction; original generation and grading records unchanged. Single-input diagnostics for code already inspected, each in a separate bounded subprocess; syntax-only inspection for truncated output.",
+  "records": [
+    {
+      "task_id": "HumanEval/89",
+      "entry_point": "encrypt",
+      "failing_arm": "FULL",
+      "test_group": "plus",
+      "test_index_zero_based": 3,
+      "arms": {
+        "FULL": {
+          "actual": "xiwxijk",
+          "matches_expected_on_this_input": false,
+          "solution_sha256": "12b443fc062f1e42bd439348de0a02eee74e0a95d0e3affde3c3fd5c4fe95b6c"
+        },
+        "R0": {
+          "actual": "xiwx123",
+          "matches_expected_on_this_input": true,
+          "solution_sha256": "6eba2cfa39c8b63d7bc1dc05358b85b2667c52991b91050b69f298c7b9fa08e6"
+        }
+      },
+      "input": [
+        "test123"
+      ],
+      "expected": "xiwx123"
+    },
+    {
+      "task_id": "HumanEval/93",
+      "entry_point": "encode",
+      "failing_arm": "FULL",
+      "test_group": "base",
+      "test_index_zero_based": 0,
+      "arms": {
+        "FULL": {
+          "actual": "tGst",
+          "matches_expected_on_this_input": false,
+          "solution_sha256": "514ed416ad241e576550a15e37ae073305a0b56f85f8094a075ad278b27b9130"
+        },
+        "R0": {
+          "actual": "tgst",
+          "matches_expected_on_this_input": true,
+          "solution_sha256": "00202d67852d28b3ba275c9a4a294d75b001151049cbb559cd4bb1b010afe576"
+        }
+      },
+      "input": [
+        "TEST"
+      ],
+      "expected": "tgst"
+    },
+    {
+      "task_id": "HumanEval/99",
+      "entry_point": "closest_integer",
+      "failing_arm": "FULL",
+      "test_group": "base",
+      "test_index_zero_based": 1,
+      "arms": {
+        "FULL": {
+          "actual": 14,
+          "matches_expected_on_this_input": false,
+          "solution_sha256": "0660aaefd610578a056ab54a76650b7056cc4bee4cc63ed256679f9595a3c585"
+        },
+        "R0": {
+          "actual": 15,
+          "matches_expected_on_this_input": true,
+          "solution_sha256": "5fbf5e8f82be22759660889de393e54f1125d1fcd9df2bb54c4a031acfa4078e"
+        }
+      },
+      "input": [
+        "14.5"
+      ],
+      "expected": 15
+    },
+    {
+      "task_id": "HumanEval/62",
+      "entry_point": "derivative",
+      "failing_arm": "R0",
+      "test_group": "base",
+      "test_index_zero_based": 4,
+      "arms": {
+        "FULL": {
+          "actual": [],
+          "matches_expected_on_this_input": true,
+          "solution_sha256": "9c10f983b8d5e50912bca234e45d8693421694486ccb4472c728bb5d59d228eb"
+        },
+        "R0": {
+          "actual": [
+            0
+          ],
+          "matches_expected_on_this_input": false,
+          "solution_sha256": "261905c352a4381ec9c6491ca1630a73def3da8943ce2669ec9f4f1e1ef47b71"
+        }
+      },
+      "input": [
+        [
+          1
+        ]
+      ],
+      "expected": []
+    },
+    {
+      "task_id": "HumanEval/127",
+      "entry_point": "intersection",
+      "failing_arm": "R0",
+      "test_group": "base",
+      "test_index_zero_based": 1,
+      "arms": {
+        "FULL": {
+          "actual": "NO",
+          "matches_expected_on_this_input": true,
+          "solution_sha256": "527e3c61c765e1e4f5497c43512eb0ffb4fde1eea3efaf7fe2919a32e4964a6f"
+        },
+        "R0": {
+          "actual": "YES",
+          "matches_expected_on_this_input": false,
+          "solution_sha256": "974fed59960f2d11f450cc01e81990c62d43abef6e71b42b271f0a16ca1b4ea3"
+        }
+      },
+      "input": [
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          4
+        ]
+      ],
+      "expected": "NO"
+    },
+    {
+      "task_id": "HumanEval/129",
+      "entry_point": "minPath",
+      "failing_arm": "R0",
+      "test_group": "base",
+      "test_index_zero_based": null,
+      "arms": {
+        "R0": {
+          "finish_reason": "length",
+          "output_tokens": 2048,
+          "last_line": "            if best_paths[i][j]",
+          "solution_sha256": "8847019df2dc0569b6aa70b8d6e8836d0bbb93cb3d158f57f276b6f62b5a74af"
+        }
+      },
+      "syntax_failure": {
+        "type": "SyntaxError",
+        "line": 1,
+        "message": "invalid syntax"
+      }
+    }
+  ]
+}

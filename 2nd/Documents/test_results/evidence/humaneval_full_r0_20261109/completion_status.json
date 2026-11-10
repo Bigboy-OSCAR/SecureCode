@@ -1,7 +1,10 @@
 {
-  "stage": "waiting_for_generation",
-  "at_utc": "2026-11-09T08:05:22.606659+00:00",
-  "pid": 87971,
-  "completed_calls": 15,
-  "planned_calls": 328
+  "stage": "completed_verified",
+  "at_utc": "2026-11-10T03:37:05.567358+00:00",
+  "report": "/Users/oscar/Desktop/SecureCode/2nd/Documents/Md_Files/2026-11-09_HumanEval+_Full_file_R0_비교_실험보고서.md",
+  "report_sha256": "f838d85a3719768765072acf639f29f74112c0baefe096c901ed67626d08f666",
+  "final_review_sha256": "6e2bbaedb944edc6030684147090c7e960082b150a56dd06b73eca3ed93c573a",
+  "generation_exit_code": 0,
+  "grading_and_initial_report_exit_code": 0,
+  "final_analysis_exit_code": 0
 }

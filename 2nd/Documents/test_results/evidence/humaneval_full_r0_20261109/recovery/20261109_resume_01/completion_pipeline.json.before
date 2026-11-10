@@ -1,0 +1,15 @@
+{
+  "created_at_utc": "2026-11-09T07:33:52.241465+00:00",
+  "sources_sha256": {
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/humaneval_benchmark/evaluate_solutions.py": "661ea434b8ddb5c295a182d9f930be7e281e86cc5a2473d01989bf1576ea2e22",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/humaneval_benchmark/analyze_and_report.py": "1de6804dfa9eed0c494314dda6e6826e1c4c69fef89f6350efdbae2c15c9171e",
+    "/Users/oscar/Desktop/SecureCode/2nd/experiments/humaneval_benchmark/finish_when_ready.py": "24560d15fdc18e12b7a804f41bda6b91c1652aadc0059766fd0ea7d386d34e05"
+  },
+  "stages": [
+    "wait_for_exact_generation_completion",
+    "grade_all_328_solutions",
+    "verify_all_inputs_outputs_and_scores",
+    "save_markdown_report"
+  ],
+  "quality_results_seen_at_freeze": false
+}

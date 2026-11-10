@@ -1,0 +1,34 @@
+{
+  "at_utc": "2026-11-09T12:12:30.013238+00:00",
+  "reason": "User paused and resumed goal; previous tool handles are absent and ps -p 86432,87971 returned no running processes. Exact terminating signal was not observed.",
+  "completed_preserved": 15,
+  "completed_sha256": {
+    "000_FULL_HumanEval_28.json.gz": "87757d3d4b17abc7f5a891052b42dbe5fd1888a4897effadb55f7758d22bc31f",
+    "001_R0_HumanEval_28.json.gz": "52f8813a59d849975a1119ec104248b44367e9416e46d3e5a6416a964505c5ad",
+    "002_FULL_HumanEval_33.json.gz": "7846b2260904f7aa78985802593d504a59118dfc3eb5b561adb7b384caa0078a",
+    "003_R0_HumanEval_33.json.gz": "3e91bba55db412e69cfbf896c7b5ac12389a11e6a2fafa23d6db46903de8fb61",
+    "004_R0_HumanEval_150.json.gz": "3be321b4743573e39a8fc1553d998d49c2b3386385c0ea8d9f9fb5d03fb44ca4",
+    "005_FULL_HumanEval_150.json.gz": "3643f170644173563ffdca5ed7602d380b281cfc9f354fbee4326f91d2c403d9",
+    "006_FULL_HumanEval_4.json.gz": "dc24bf8cb85611cef599db95fea6dbf73dc841041cb6b7abbb88cda217faf0b4",
+    "007_R0_HumanEval_4.json.gz": "2e40d90917bc236404e8178d667a364a7c4af608174db3cbbd5fbace18483919",
+    "008_FULL_HumanEval_1.json.gz": "e0a8955dbec3d1ad7e6744c67489cb8e00c098333a5244bf7e74899922cf5f33",
+    "009_R0_HumanEval_1.json.gz": "0eabfdb9d8100e35c9368202be25f40162347bba097f305152c8f2bbdc01ad33",
+    "010_FULL_HumanEval_37.json.gz": "17c2eeb90a141bb8d41e63044dccbad473aef5fb80918c1f97671303cc4409db",
+    "011_R0_HumanEval_37.json.gz": "6b9df15960a473b28d27da195ec7e15bd42c464edeb795081c3961778626125c",
+    "012_FULL_HumanEval_106.json.gz": "b795c47abd9e5d0256163a34975422f01e5187bd79b7bb3b61f88d600daebdfc",
+    "013_R0_HumanEval_106.json.gz": "4486d2468996291db7f0f2fcbbb421145054027710103a226e5f0762cacb84fe",
+    "014_R0_HumanEval_80.json.gz": "094f2bfc4e588bef49a88bca69e34df5c69a9d60ecceb0ebcce323eefa462dcb"
+  },
+  "unfinished_attempt": {
+    "index": 15,
+    "task_id": "HumanEval/80",
+    "arm": "FULL",
+    "session": "2026-11-09T07-25-21.740697+00-00",
+    "started_at_utc": "2026-11-09T08:05:08.847230+00:00",
+    "pid": 86432
+  },
+  "partial_response_recovered": false,
+  "resume_policy": "Preserve all completed calls; archive unresolved intent for the terminated call; regenerate only that uncommitted call and then continue the fixed schedule. No correctness results inspected and no parameter changes.",
+  "model_files_rechecked": 16,
+  "report_note": "One interrupted attempt has unmeasured partial compute cost. Task HumanEval/80 has its R0 result before the interruption and its FULL result after restart; disclose this cross-session pair and report a sensitivity summary excluding that pair for timing only."
+}

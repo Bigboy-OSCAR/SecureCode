@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "at_utc": "2026-11-10T03:37:05.567358+00:00",
+  "report": "/Users/oscar/Desktop/SecureCode/2nd/Documents/Md_Files/2026-11-09_HumanEval+_Full_file_R0_비교_실험보고서.md",
+  "report_sha256": "f838d85a3719768765072acf639f29f74112c0baefe096c901ed67626d08f666",
+  "report_manifest_sha256": "75b75b9a90914a74562a5c08091ae1b558a9256357de20a3224c917cb12f566d",
+  "scope": {
+    "dataset": "HumanEvalPlus-v0.1.10",
+    "tasks": 164,
+    "arms": [
+      "FULL",
+      "R0"
+    ],
+    "completed_and_graded_solutions": 328
+  },
+  "checks": [
+    "Human-reviewed full Korean Markdown: purposes of metrics and practical meaning of all main result changes are explicit.",
+    "All raw responses, scores, generation conditions, and statistical results remain unchanged during report-only edits.",
+    "Final summary equals independently audited initial summary except its creation timestamp.",
+    "All report manifest hashes, current pipeline hashes, and report source snapshots match.",
+    "All 18 local report links point to existing files or folders.",
+    "Quality uncertainty, artificial workspace, exact timing boundaries, no prompt-cache reuse, interruptions, Git recovery, and six actual case explanations are disclosed.",
+    "All 328 reconstructed inputs, tokens, R0 choices, solution hashes, grades, and local model hashes passed full verification.",
+    "All five existing aggregation/report tests passed after final explanation changes."
+  ],
+  "local_links_checked": 18,
+  "evidence_sha256": {
+    "verification.json": "2c08ddeaa70bc6b928b96c66f7946df1ae6d5c11f8c1b0138e27091aafdf339d",
+    "generation_storage_audit.json": "c2173dc72259dc6f3ddc79627503e171eb67a0f5a8d62d634545feb4d00ee423",
+    "independent_stats_review.json": "6a89ccead84cc98c4f703a5d68989fa3ce4caa7a82288a1b11402fb80218c029",
+    "case_diagnostics.json": "9de998e1a18a6a42c7a6cebc70a78b4fd6afbc17bdb4f3b4b1ea8aa2b8311f01",
+    "analysis_unit_checks.json": "13c1071e32a5036e51f7c0255fbd2de7517b741d8c52a6719ca37c78aceaec60",
+    "generation_complete.json": "3dbe678faba8f7d40e6e325b413b056f997ff6fdfa59e5fdcaab362178f866ca",
+    "grading/complete.json": "452a7648d1c90a877c1bfd6b3fdd72e7f474dec32dc377d809bfe740ba4e30ec",
+    "report_revision.json": "cdafeb7981458885f0225d74e631027164d60b225376cec4b20890cc9d11a488"
+  }
+}

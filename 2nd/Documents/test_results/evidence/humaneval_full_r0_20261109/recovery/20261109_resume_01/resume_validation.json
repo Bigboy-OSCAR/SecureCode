@@ -1,0 +1,9 @@
+{
+  "at_utc": "2026-11-09T12:23:12.792204+00:00",
+  "status": "PASS",
+  "old_completed_calls_preserved": 15,
+  "resumed_completed_index": 15,
+  "input_matches_preflight": true,
+  "all_files_context_unchanged": true,
+  "hardware_and_packages_identical_between_sessions": true
+}
