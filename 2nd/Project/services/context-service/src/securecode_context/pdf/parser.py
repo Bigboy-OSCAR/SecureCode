@@ -1,12 +1,13 @@
-"""PDF document parsing module with strict /Contents object stream resolution and exception handling."""
+"""PDF document parser with strict object graph, FlateDecode decompression, target page isolation, and zero mock fallbacks."""
 
 import re
 import os
+import zlib
 import hashlib
 from typing import List, Dict, Any, Union
 
 class PdfParser:
-    """PDF parser enforcing strict object graph and /Contents stream resolution."""
+    """Production PDF parser strictly rejecting non-PDF inputs, eliminating all mock fallbacks, and isolating page streams."""
 
     def parse_pdf(self, file_input: Union[str, bytes]) -> Dict[str, Any]:
         if isinstance(file_input, str):
@@ -21,7 +22,7 @@ class PdfParser:
             raise ValueError("EMPTY_OR_INVALID_PDF")
 
         if not content_bytes.startswith(b"%PDF"):
-            raise ValueError("INVALID_PDF_HEADER")
+            raise ValueError("NOT_A_PDF_FILE")
 
         if b"/Encrypt" in content_bytes:
             raise ValueError("ENCRYPTED_PDF_NOT_SUPPORTED")
@@ -38,17 +39,14 @@ class PdfParser:
 
     def parse_pages(self, content_bytes: bytes, target_pages: List[int] = None) -> List[Dict[str, Any]]:
         if not content_bytes or not content_bytes.startswith(b"%PDF"):
-            return []
+            raise ValueError("NOT_A_PDF_FILE")
 
-        pages_data = []
-
-        # 1. PDF Indirect Objects (n 0 obj ... endobj) 인덱싱
+        # PDF Indirect Objects (n 0 obj ... endobj) 인덱싱 (Mock fallback 전면 제거)
         objects = {}
         for m in re.finditer(rb'(\d+)\s+(\d+)\s+obj([\s\S]*?)endobj', content_bytes):
             obj_id = int(m.group(1))
             objects[obj_id] = m.group(3)
 
-        # 2. /Type /Page 객체 추적
         page_obj_ids = []
         for obj_id, body in objects.items():
             if re.search(rb'/Type\s*/Page\b', body) and not re.search(rb'/Type\s*/Pages\b', body):
@@ -57,21 +55,10 @@ class PdfParser:
         page_obj_ids.sort()
         total_pages = len(page_obj_ids)
 
-        # obj 구조가 없는 단순 Mock 바이너리 테스트 fallback 지원
         if total_pages == 0:
-            page_matches = list(re.finditer(rb'/Type\s*/Page\b', content_bytes))
-            for idx in range(len(page_matches)):
-                page_num = idx + 1
-                if target_pages and page_num not in target_pages:
-                    continue
-                start_pos = page_matches[idx].start()
-                end_pos = page_matches[idx + 1].start() if idx + 1 < len(page_matches) else len(content_bytes)
-                chunk = content_bytes[start_pos:end_pos]
-                text = self._extract_bt_et(chunk)
-                pages_data.append({"page_num": page_num, "text": text})
-            return pages_data
+            raise ValueError("INVALID_PDF_NO_PAGE_OBJECTS")
 
-        # 3. 정식 /Contents Stream 참조 추적
+        pages_data = []
         for idx, obj_id in enumerate(page_obj_ids, start=1):
             if target_pages and idx not in target_pages:
                 continue
@@ -84,24 +71,35 @@ class PdfParser:
                 if contents_match.group(2):
                     ref_id = int(contents_match.group(2))
                     c_body = objects.get(ref_id, b"")
-                    s_m = re.search(rb'stream[\r\n]+([\s\S]*?)[\r\n]+endstream', c_body)
-                    if s_m:
-                        stream_bytes = s_m.group(1)
+                    stream_bytes = self._decode_stream(c_body)
                 elif contents_match.group(1):
                     refs = re.findall(rb'(\d+)\s+\d+\s+R', contents_match.group(1))
                     for r in refs:
                         c_body = objects.get(int(r), b"")
-                        s_m = re.search(rb'stream[\r\n]+([\s\S]*?)[\r\n]+endstream', c_body)
-                        if s_m:
-                            stream_bytes += s_m.group(1) + b"\n"
+                        stream_bytes += self._decode_stream(c_body) + b"\n"
 
             if not stream_bytes:
-                stream_bytes = body
+                stream_bytes = self._decode_stream(body)
 
             extracted_text = self._extract_bt_et(stream_bytes)
             pages_data.append({"page_num": idx, "text": extracted_text})
 
         return pages_data
+
+    def _decode_stream(self, body_or_obj: bytes) -> bytes:
+        s_m = re.search(rb'stream[\r\n]+([\s\S]*?)[\r\n]+endstream', body_or_obj)
+        if not s_m:
+            return b""
+        raw_stream = s_m.group(1)
+        if b"/Filter" in body_or_obj and b"/FlateDecode" in body_or_obj:
+            try:
+                return zlib.decompress(raw_stream)
+            except Exception:
+                try:
+                    return zlib.decompress(raw_stream, -zlib.MAX_WBITS)
+                except Exception:
+                    return raw_stream
+        return raw_stream
 
     def _extract_bt_et(self, data: bytes) -> str:
         text_blocks = re.findall(rb'BT[\s\S]*?ET', data)
