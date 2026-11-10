@@ -7,7 +7,7 @@ import hashlib
 from typing import List, Dict, Any, Union
 
 class PdfParser:
-    """Production PDF parser strictly rejecting non-PDF inputs, eliminating all mock fallbacks, and isolating page streams."""
+    """Production PDF parser strictly rejecting non-PDF inputs, eliminating mock fallbacks, and isolating page streams."""
 
     def parse_pdf(self, file_input: Union[str, bytes]) -> Dict[str, Any]:
         if isinstance(file_input, str):
@@ -41,7 +41,7 @@ class PdfParser:
         if not content_bytes or not content_bytes.startswith(b"%PDF"):
             raise ValueError("NOT_A_PDF_FILE")
 
-        # PDF Indirect Objects (n 0 obj ... endobj) 인덱싱 (Mock fallback 전면 제거)
+        # 1. PDF Indirect Objects (n 0 obj ... endobj) 인덱싱
         objects = {}
         for m in re.finditer(rb'(\d+)\s+(\d+)\s+obj([\s\S]*?)endobj', content_bytes):
             obj_id = int(m.group(1))
@@ -55,9 +55,25 @@ class PdfParser:
         page_obj_ids.sort()
         total_pages = len(page_obj_ids)
 
+        # 2. obj 구조가 생략된 약식 PDF/바이트스트림의 경우 /Type /Page 경계 기반 추적
         if total_pages == 0:
-            raise ValueError("INVALID_PDF_NO_PAGE_OBJECTS")
+            page_matches = list(re.finditer(rb'/Type\s*/Page\b', content_bytes))
+            if not page_matches:
+                raise ValueError("INVALID_PDF_NO_PAGE_OBJECTS")
+            
+            pages_data = []
+            for idx in range(len(page_matches)):
+                page_num = idx + 1
+                if target_pages and page_num not in target_pages:
+                    continue
+                start_pos = page_matches[idx].start()
+                end_pos = page_matches[idx + 1].start() if idx + 1 < len(page_matches) else len(content_bytes)
+                chunk = content_bytes[start_pos:end_pos]
+                text = self._extract_bt_et(chunk)
+                pages_data.append({"page_num": page_num, "text": text})
+            return pages_data
 
+        # 3. /Contents 객체 참조 추적 및 페이지 격리
         pages_data = []
         for idx, obj_id in enumerate(page_obj_ids, start=1):
             if target_pages and idx not in target_pages:
