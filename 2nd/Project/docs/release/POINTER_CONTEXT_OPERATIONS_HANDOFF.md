@@ -1,5 +1,7 @@
 # Pointer / Context Selector / PDF 운용 인계 문서
 
+> 2026-11-11: 이 문서는 대체됐다. 현재 운용 기준은 [4.10 운용 안내](../handoffs/4.10-pointer-operations.md)와 [RUNBOOK](RUNBOOK.md)이다. 아래는 2026-11-07 기록으로 남긴다.
+
 > 2026-11-09 재검토: 인수 준비 미완료. 아래 상한은 목표 정책이며 전부 구현·검증된 값이 아니다. 4.3~4.9 재개방 및 4.10 BLOCKED. [현재 판정](../progress/ROADMAP_REVIEW_2026-11-09.md)을 먼저 확인한다.
 
 - **작성일**: 2026-11-07

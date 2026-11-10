@@ -121,9 +121,9 @@
             }
         },
         "ContextOmissionReason": {
-            "description": "Reason a whole candidate was omitted. Partial materialization is reported by ContextFragment.inclusion.",
+            "description": "Reason a whole candidate was omitted (policy: docs/architecture/CONTEXT_SELECTOR.md 6). in_history: the same object range is already in the retained history. large_fragment: the candidate cannot be split and exceeds the per-fragment cap. Partial materialization is reported by ContextFragment.inclusion.",
             "type": "string",
-            "enum": ["no_match", "stale", "unauthorized", "over_budget", "duplicate"]
+            "enum": ["no_match", "stale", "unauthorized", "over_budget", "duplicate", "in_history", "large_fragment"]
         },
         "ContextOmission": {
             "type": "object",
@@ -572,7 +572,14 @@
                                 },
                                 "reason": {
                                     "type": "string",
-                                    "enum": ["no_match", "stale", "unauthorized", "over_budget"]
+                                    "enum": [
+                                        "no_match",
+                                        "stale",
+                                        "unauthorized",
+                                        "over_budget",
+                                        "in_history",
+                                        "large_fragment"
+                                    ]
                                 },
                                 "ref": {
                                     "$ref": "../api/run.schema.json#/definitions/ExplicitContextRef"
@@ -597,7 +604,14 @@
                                 },
                                 "reason": {
                                     "type": "string",
-                                    "enum": ["no_match", "stale", "unauthorized", "over_budget"]
+                                    "enum": [
+                                        "no_match",
+                                        "stale",
+                                        "unauthorized",
+                                        "over_budget",
+                                        "in_history",
+                                        "large_fragment"
+                                    ]
                                 }
                             },
                             "required": ["origin", "reason"]
@@ -605,6 +619,114 @@
                     ]
                 }
             ]
+        },
+        "ContextSelectCosts": {
+            "title": "ContextSelectCosts",
+            "description": "Internal (host to context-service). Fixed-cost inputs for the selector budget (CONTEXT_SELECTOR.md 3.1). The service counts the texts with its TokenCounter; history holds one serialized message per item.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "model_context_limit",
+                "reserved_output_tokens",
+                "safety_margin_tokens",
+                "message_overhead_tokens",
+                "system",
+                "tool_schema",
+                "history"
+            ],
+            "properties": {
+                "model_context_limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10000000
+                },
+                "reserved_output_tokens": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "safety_margin_tokens": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "message_overhead_tokens": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "system": {
+                    "type": "string",
+                    "maxLength": 1048576
+                },
+                "tool_schema": {
+                    "type": "string",
+                    "maxLength": 1048576
+                },
+                "history": {
+                    "type": "array",
+                    "maxItems": 1024,
+                    "items": {
+                        "type": "string",
+                        "maxLength": 1048576
+                    }
+                }
+            }
+        },
+        "ContextSelectRequest": {
+            "title": "ContextSelectRequest",
+            "description": "Internal POST /internal/v1/context/select. current_task_refs are newest first. history_refs are ranges whose raw text already sits in this session's history (earlier fragments and pointer reads).",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["schema_version", "input", "costs"],
+            "properties": {
+                "schema_version": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                },
+                "input": {
+                    "$ref": "#/definitions/ContextPlanInput"
+                },
+                "current_task_refs": {
+                    "type": "array",
+                    "maxItems": 64,
+                    "items": {
+                        "$ref": "../api/run.schema.json#/definitions/PointerContextRef"
+                    }
+                },
+                "history_refs": {
+                    "type": "array",
+                    "maxItems": 256,
+                    "items": {
+                        "$ref": "../api/run.schema.json#/definitions/ExplicitContextRef"
+                    }
+                },
+                "costs": {
+                    "$ref": "#/definitions/ContextSelectCosts"
+                }
+            }
+        },
+        "ContextSelectResponse": {
+            "title": "ContextSelectResponse",
+            "description": "Internal context.select result. run_create_error is the error a run created from this plan must return (first explicit omission other than in_history/duplicate), or null.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["schema_version", "plan", "run_create_error"],
+            "properties": {
+                "schema_version": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                },
+                "plan": {
+                    "$ref": "#/definitions/ContextPreviewPlan"
+                },
+                "run_create_error": {
+                    "oneOf": [
+                        {
+                            "type": "null"
+                        },
+                        {
+                            "type": "string",
+                            "enum": ["BUDGET_EXCEEDED", "SOURCE_CHANGED", "FORBIDDEN", "NOT_FOUND"]
+                        }
+                    ]
+                }
+            }
         }
     },
     "description": "Public UI contracts for POST /api/v1/context/preview and the ContextPlan output shared with selection consumers."

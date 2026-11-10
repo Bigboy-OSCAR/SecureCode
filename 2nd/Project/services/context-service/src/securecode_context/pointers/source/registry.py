@@ -1,253 +1,280 @@
-"""Source Pointer 디스크 저장소 및 경로 검증 Registry.
+"""Source Pointer 디스크 등록부: 등록·갱신·stat·resolve·목록·등록 해제와 provenance 조회 포트."""
 
-작성일: 2026-11-07
-"""
+from pathlib import Path
+from threading import RLock
+from types import TracebackType
+from typing import Self
 
-import hashlib
-import os
-import sqlite3
-import time
-
-from securecode_context.pointers.source.models import SourceDescriptor, SourceRegistrationRequest
+from securecode_context.common.errors import ErrorCode, ServiceError
+from securecode_context.pointers.source.derived import DerivedCachePort, check_cache_key
+from securecode_context.pointers.source.lifecycle import SourceLifecycle
+from securecode_context.pointers.source.models import (
+    ResolvedSource,
+    SourceIssue,
+    SourceLocation,
+    SourceMutation,
+    SourcePage,
+    SourceRecord,
+    SourceTarget,
+)
+from securecode_context.pointers.source.paths import check_inside, forbidden
+from securecode_context.pointers.source.ports import ISSUE_CODES, SourceRootPort
+from securecode_context.pointers.source.registration import RegistrationPlanner
+from securecode_context.pointers.source.registry_db import SourceDb
+from securecode_context.pointers.source.uri import (
+    check_workspace_id,
+    decode_cursor,
+    encode_cursor,
+    parse_source_uri,
+)
 
 
 class SourceRegistry:
-    """클래스 이름: SourceRegistry
-    기능: workspace의 등록 원본 경로와 revision을 SQLite로 관리한다.
-    작성 날짜: 2026/11/09
+    """
+    클래스 이름: SourceRegistry
+    기능: workspace 범위 Source 등록부. 경로는 매번 허용 root에서 다시 해석하고, 원본은 지우지 않는다.
+    작성 날짜: 2026/11/10
     """
 
     def __init__(
-        self, db_path: str = ":memory:", workspace_roots: dict[str, str] | None = None
+        self,
+        db_path: Path,
+        roots: SourceRootPort,
+        cache: DerivedCachePort | None = None,
+        forbidden_roots: tuple[Path, ...] = (),
     ) -> None:
-        """함수 이름: __init__()
-        기능: 저장소 경로와 workspace 허용 root를 설정한다.
-        인자: db_path, workspace_roots
-        반환값: 없음
-        작성 날짜: 2026/11/09
         """
-        self.db_path = db_path
-        self.workspace_roots = workspace_roots or {}
-        self.allowed_external_paths: list[str] = []
-        if self.db_path != ":memory:":
-            os.makedirs(os.path.dirname(os.path.abspath(self.db_path)), exist_ok=True)
-            self.conn = sqlite3.connect(self.db_path)
-        else:
-            self.conn = sqlite3.connect(":memory:")
-        self._init_db()
+        함수 이름: __init__()
+        기능: SQLite 등록부를 열고 root 포트·파생 캐시·서비스 소유 경로를 보관한다.
+        인자: db_path -> 등록부 파일, roots -> workspace root 포트,
+            cache -> 파생 캐시 삭제 포트, forbidden_roots -> 외부 등록을 막을 서비스 폴더
+        반환값: 없음
+        작성 날짜: 2026/11/10
+        """
+        self._db = SourceDb(db_path)
+        self._roots = roots
+        owned = (db_path.parent, *forbidden_roots)
+        self._lock = RLock()
+        self._life = SourceLifecycle(self._db, self._lock, cache)
+        self._planner = RegistrationPlanner(
+            self._db, self._lock, self._workspace_root, tuple(path.resolve() for path in owned)
+        )
 
-    def _init_db(self) -> None:
-        """함수 이름: _init_db()
-        기능: 등록 메타데이터 테이블을 준비한다.
+    def __enter__(self) -> Self:
+        """
+        함수 이름: __enter__()
+        기능: with 문에서 등록부를 사용한다.
+        인자: 없음
+        반환값: 자기 자신
+        작성 날짜: 2026/11/10
+        """
+        return self
+
+    def __exit__(
+        self,
+        kind: type[BaseException] | None,
+        error: BaseException | None,
+        trace: TracebackType | None,
+    ) -> None:
+        """
+        함수 이름: __exit__()
+        기능: with 문이 끝나면 DB 연결을 닫는다.
+        인자: kind/error/trace -> 예외 정보
+        반환값: 없음
+        작성 날짜: 2026/11/10
+        """
+        self.close()
+
+    def close(self) -> None:
+        """
+        함수 이름: close()
+        기능: SQLite 연결을 닫는다.
         인자: 없음
         반환값: 없음
-        작성 날짜: 2026/11/09
+        작성 날짜: 2026/11/10
         """
-        with self.conn:
-            self.conn.execute("""
-                CREATE TABLE IF NOT EXISTS source_pointers (
-                    pointer TEXT PRIMARY KEY,
-                    workspace_id TEXT NOT NULL,
-                    real_path TEXT NOT NULL,
-                    revision TEXT NOT NULL,
-                    media_type TEXT NOT NULL,
-                    byte_size INTEGER NOT NULL,
-                    preview TEXT NOT NULL,
-                    created_at REAL NOT NULL
-                )
-            """)
+        self._db.close()
 
-    def add_allowed_external_path(self, path: str) -> None:
-        """함수 이름: add_allowed_external_path()
-        기능: 사용자가 명시한 외부 파일의 실경로를 허용 목록에 추가한다.
-        인자: path
+    def register(self, workspace_id: str, target: SourceTarget) -> SourceMutation:
+        """
+        함수 이름: register()
+        기능: 파일 하나 또는 디렉터리 아래 파일을 등록한다. 같은 원본은 같은 등록을 재사용한다.
+        인자: workspace_id -> 인증된 범위, target -> 요청 대상
+        반환값: SourceMutation(디렉터리는 파일별 issue 포함)
+        작성 날짜: 2026/11/10
+        """
+        check_workspace_id(workspace_id)
+        plan = self._planner.plan(workspace_id, target)
+        result = SourceMutation(workspace_id, issues=list(plan.issues))
+        for relative in plan.files:
+            try:
+                result.items.append(
+                    self._life.save(workspace_id, plan.location, plan.grant_id, plan.root, relative)
+                )
+            except ServiceError as error:
+                if not plan.is_directory or error.code.value not in ISSUE_CODES:
+                    self._planner.release_grant(plan.grant_id)
+                    raise
+                shown = relative.relative_to(plan.prefix).as_posix()
+                result.issues.append(SourceIssue(shown, error.code.value))
+        if not result.items:
+            self._planner.release_grant(plan.grant_id)
+        return result
+
+    def refresh(self, workspace_id: str, pointer: str) -> SourceRecord:
+        """
+        함수 이름: refresh()
+        기능: 권한을 다시 확인하고 원본이 바뀌었으면 revision을 올린다. 이전 revision 포인터는 무효다.
+        인자: workspace_id -> 범위, pointer -> 어느 revision이든 같은 등록의 URI
+        반환값: 현재 SourceRecord
+        작성 날짜: 2026/11/10
+        """
+        record = self._get(workspace_id, pointer)
+        root = self._root_of(record)
+        return self._life.save(
+            workspace_id, record.location, record.grant_id, root, record.relative_path
+        )
+
+    def stat(self, workspace_id: str, pointer: str) -> SourceRecord:
+        """
+        함수 이름: stat()
+        기능: 범위·revision·경로·내용을 확인한다. identity가 같으면 재해시하지 않는다.
+        인자: workspace_id -> 범위, pointer -> 현재 revision URI
+        반환값: 변경되지 않은 SourceRecord
+        작성 날짜: 2026/11/10
+        """
+        return self.resolve(workspace_id, pointer).record
+
+    def resolve(self, workspace_id: str, pointer: str) -> ResolvedSource:
+        """
+        함수 이름: resolve()
+        기능: 4.6/4.9 포트. 검증한 레코드와 허용 root·실제 경로를 돌려준다. 읽기 전후 재확인은 호출자 몫이다.
+        인자: workspace_id -> 범위, pointer -> 현재 revision URI
+        반환값: ResolvedSource
+        작성 날짜: 2026/11/10
+        """
+        uri = parse_source_uri(pointer, workspace_id)
+        record = self._get(workspace_id, pointer)
+        if uri.revision != record.revision:
+            raise ServiceError(
+                ErrorCode.SOURCE_CHANGED,
+                "원본이 갱신됐습니다. 새 포인터로 다시 읽으세요.",
+                {"current_revision": record.revision},
+            )
+        root = self._root_of(record)
+        record = self._life.verify(record, root)
+        return ResolvedSource(record, root, check_inside(root, record.relative_path))
+
+    def list_sources(
+        self, workspace_id: str, limit: int = 20, cursor: str | None = None
+    ) -> SourcePage:
+        """
+        함수 이름: list_sources()
+        기능: 등록 메타데이터를 source_id 순서로 최대 100개씩 돌려준다. 원본은 읽지 않는다.
+        인자: workspace_id -> 범위, limit -> 1~100, cursor -> 이전 페이지 cursor
+        반환값: SourcePage
+        작성 날짜: 2026/11/10
+        """
+        check_workspace_id(workspace_id)
+        if not 1 <= limit <= 100:
+            raise ServiceError(ErrorCode.VALIDATION_FAILED, "limit은 1~100입니다.")
+        after = decode_cursor(cursor, workspace_id)
+        with self._lock:
+            rows = self._db.page(workspace_id, after, limit + 1)
+        items = rows[:limit]
+        next_cursor = (
+            encode_cursor(workspace_id, items[-1].source_id) if len(rows) > limit else None
+        )
+        return SourcePage(workspace_id, items, limit, next_cursor)
+
+    def unregister(self, workspace_id: str, pointer: str) -> None:
+        """
+        함수 이름: unregister()
+        기능: 등록·파생 캐시 참조·쓰지 않는 외부 허용을 지운다. 원본 파일은 보존한다. 없어도 같은 결과다.
+        인자: workspace_id -> 범위, pointer -> 어느 revision이든 같은 등록의 URI
         반환값: 없음
-        작성 날짜: 2026/11/09
+        작성 날짜: 2026/11/10
         """
-        real_p = os.path.realpath(path)
-        if real_p not in self.allowed_external_paths:
-            self.allowed_external_paths.append(real_p)
+        uri = parse_source_uri(pointer, workspace_id)
+        with self._lock, self._db.transaction():
+            record = self._db.get(workspace_id, uri.source_id)
+            if record is None:
+                return
+            self._db.delete(workspace_id, uri.source_id)
+            released = self._db.links.release_refs(uri.source_id)
+            if record.grant_id is not None:
+                self._db.links.drop_unused_grant(record.grant_id)
+        self._life.delete_caches(released)
 
-    def validate_path(
-        self, workspace_id: str, target_path: str, allow_external: bool = False
-    ) -> str:
-        """함수 이름: validate_path()
-        기능: 실경로가 workspace 또는 외부 허용 범위 안인지 확인한다.
-        인자: workspace_id, target_path, allow_external
-        반환값: 허용된 실경로
-        작성 날짜: 2026/11/09
+    def attach_derived(self, workspace_id: str, pointer: str, cache_key: str) -> None:
         """
-        real_target = os.path.realpath(target_path)
-        ws_root = self.workspace_roots.get(workspace_id)
-
-        if ws_root:
-            real_ws_root = os.path.realpath(ws_root)
-            if os.path.commonpath([real_target, real_ws_root]) == real_ws_root:
-                return real_target
-
-        if allow_external:
-            for ext_p in self.allowed_external_paths:
-                if os.path.commonpath([real_target, ext_p]) == ext_p:
-                    return real_target
-
-        raise ValueError(f"FORBIDDEN: Path outside allowed root: {target_path}")
-
-    def compute_file_hash(self, file_path: str) -> str:
-        """함수 이름: compute_file_hash()
-        기능: 고정 크기 청크로 파일의 내용 revision을 계산한다.
-        인자: file_path
-        반환값: 내용 hash 접두어
-        작성 날짜: 2026/11/09
+        함수 이름: attach_derived()
+        기능: 현재 revision의 파생 캐시 참조를 기록한다. revision이 바뀌거나 해제되면 참조가 풀린다.
+        인자: workspace_id -> 범위, pointer -> 현재 URI, cache_key -> 캐시 키
+        반환값: 없음
+        작성 날짜: 2026/11/10
         """
-        sha256 = hashlib.sha256()
-        with open(file_path, "rb") as f:
-            while chunk := f.read(65536):
-                sha256.update(chunk)
-        return sha256.hexdigest()[:16]
+        check_cache_key(cache_key)
+        record = self.stat(workspace_id, pointer)
+        with self._lock:
+            self._db.links.add_ref(record.source_id, cache_key)
 
-    def register(self, req: SourceRegistrationRequest) -> SourceDescriptor:
-        """함수 이름: register()
-        기능: 크기와 경로를 검증한 원본을 등록하고 제한된 미리보기를 저장한다.
-        인자: req
-        반환값: Source descriptor
-        작성 날짜: 2026/11/09
+    def lookup(self, workspace_id: str, relative_path: str, content_sha256: str) -> str | None:
         """
-        real_p = self.validate_path(req.workspace_id, req.target_path, req.allow_external)
-        if not os.path.isfile(real_p):
-            raise FileNotFoundError(f"NOT_FOUND: Source file does not exist: {real_p}")
+        함수 이름: lookup()
+        기능: symbols SourceRegistryPort. 같은 경로·내용의 ready 등록이 있으면 URI를 돌려준다.
+        인자: workspace_id -> 범위, relative_path -> 작업 공간 상대 경로, content_sha256 -> 내용 해시
+        반환값: Source Pointer URI 또는 None
+        작성 날짜: 2026/11/10
+        """
+        with self._lock:
+            record = self._db.find_fingerprint(workspace_id, relative_path, content_sha256)
+        return record.pointer if record else None
 
-        stat = os.stat(real_p)
-        limit_bytes = 256 * 1024 * 1024
-        if stat.st_size > limit_bytes:
-            raise ValueError("EXCEEDED: Source file size exceeds 256 MiB limit")
-
-        rev = self.compute_file_hash(real_p)
-        source_id = hashlib.md5(f"{req.workspace_id}:{real_p}".encode()).hexdigest()[:12]
-        pointer = f"securecode://source/{req.workspace_id}/{source_id}?v={rev}"
-
-        preview = ""
+    def _workspace_root(self, workspace_id: str) -> Path:
+        """
+        함수 이름: _workspace_root()
+        기능: root 포트의 작업 공간 root를 실제 경로로 확인한다.
+        인자: workspace_id -> 범위
+        반환값: 실제 root
+        작성 날짜: 2026/11/10
+        """
+        root = self._roots.root_for(workspace_id)
+        if root.is_symlink() or root.is_junction():
+            raise forbidden("workspace_root_is_link")
         try:
-            with open(real_p, "rb") as f:
-                preview = f.read(512).decode("utf-8", errors="ignore")
-        except Exception:
-            preview = "<binary content>"
+            return root.resolve(strict=True)
+        except OSError as error:
+            raise ServiceError(ErrorCode.NOT_FOUND, "작업 공간 root가 없습니다.") from error
 
-        media_type = req.media_type or "text/plain"
-        desc = SourceDescriptor(
-            pointer=pointer,
-            kind="source",
-            workspace_id=req.workspace_id,
-            revision=rev,
-            media_type=media_type,
-            byte_size=stat.st_size,
-            preview=preview,
-            available_operations=["read", "search", "stat"],
-            real_path=real_p,
-            created_at=time.time(),
-        )
-
-        with self.conn:
-            self.conn.execute(
-                """
-                INSERT OR REPLACE INTO source_pointers
-                (pointer, workspace_id, real_path, revision, media_type, byte_size, preview, created_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-                (
-                    desc.pointer,
-                    desc.workspace_id,
-                    desc.real_path,
-                    desc.revision,
-                    desc.media_type,
-                    desc.byte_size,
-                    desc.preview,
-                    desc.created_at,
-                ),
-            )
-
-        return desc
-
-    def stat(self, pointer: str) -> SourceDescriptor:
-        """함수 이름: stat()
-        기능: 등록 메타데이터와 현재 경로·내용 revision을 검증한다.
-        인자: pointer
-        반환값: 변경되지 않은 Source descriptor
-        작성 날짜: 2026/11/09
+    def _root_of(self, record: SourceRecord) -> Path:
         """
-        cur = self.conn.cursor()
-        cur.execute(
-            "SELECT pointer, workspace_id, real_path, revision, media_type, byte_size, preview, "
-            "created_at FROM source_pointers WHERE pointer = ?",
-            (pointer,),
-        )
-        row = cur.fetchone()
-        if not row:
-            raise KeyError(f"NOT_FOUND: Source pointer not found: {pointer}")
-
-        p, ws_id, real_p, stored_rev, m_type, b_size, prev, c_at = row
-        if not os.path.exists(real_p):
-            raise FileNotFoundError(f"SOURCE_CHANGED: Original file deleted: {real_p}")
-
-        self.validate_path(ws_id, real_p, allow_external=True)
-        curr_rev = self.compute_file_hash(real_p)
-        if curr_rev != stored_rev:
-            raise ValueError(
-                f"SOURCE_CHANGED: File hash modified. Stored={stored_rev}, Current={curr_rev}"
-            )
-
-        return SourceDescriptor(
-            pointer=p,
-            kind="source",
-            workspace_id=ws_id,
-            revision=stored_rev,
-            media_type=m_type,
-            byte_size=b_size,
-            preview=prev,
-            available_operations=["read", "search", "stat"],
-            real_path=real_p,
-            created_at=c_at,
-        )
-
-    def list_sources(self, workspace_id: str) -> list[SourceDescriptor]:
-        """함수 이름: list_sources()
-        기능: workspace에 등록된 Source 메타데이터를 조회한다.
-        인자: workspace_id
-        반환값: Source descriptor 목록
-        작성 날짜: 2026/11/09
+        함수 이름: _root_of()
+        기능: 재시작 뒤에도 매번 workspace root 또는 외부 허용 항목을 다시 확인한다.
+        인자: record -> 등록 레코드
+        반환값: 실제 허용 root
+        작성 날짜: 2026/11/10
         """
-        cur = self.conn.cursor()
-        cur.execute(
-            "SELECT pointer, workspace_id, real_path, revision, media_type, byte_size, preview, "
-            "created_at FROM source_pointers WHERE workspace_id = ?",
-            (workspace_id,),
-        )
-        rows = cur.fetchall()
-        res = []
-        for r in rows:
-            res.append(
-                SourceDescriptor(
-                    pointer=r[0],
-                    kind="source",
-                    workspace_id=r[1],
-                    revision=r[3],
-                    media_type=r[4],
-                    byte_size=r[5],
-                    preview=r[6],
-                    available_operations=["read", "search", "stat"],
-                    real_path=r[2],
-                    created_at=r[7],
-                )
-            )
-        return res
+        if record.location is SourceLocation.WORKSPACE:
+            return self._workspace_root(record.workspace_id)
+        grant = self._db.links.grant(record.workspace_id, record.grant_id or "")
+        if grant is None:
+            raise forbidden("external_grant_missing")
+        if grant.file_name is not None and record.relative_path.as_posix() != grant.file_name:
+            raise forbidden("outside_external_grant")
+        return self._planner.verify_grant_root(grant.real_root)
 
-    def unregister(self, pointer: str) -> bool:
-        """함수 이름: unregister()
-        기능: 등록 정보만 지우고 사용자 원본 파일은 보존한다.
-        인자: pointer
-        반환값: 등록이 삭제됐으면 True
-        작성 날짜: 2026/11/09
+    def _get(self, workspace_id: str, pointer: str) -> SourceRecord:
         """
-        with self.conn:
-            cur = self.conn.cursor()
-            cur.execute("DELETE FROM source_pointers WHERE pointer = ?", (pointer,))
-            return cur.rowcount > 0
+        함수 이름: _get()
+        기능: URI를 검사하고 같은 workspace의 등록 행을 읽는다.
+        인자: workspace_id -> 범위, pointer -> URI
+        반환값: SourceRecord
+        작성 날짜: 2026/11/10
+        """
+        uri = parse_source_uri(pointer, workspace_id)
+        with self._lock:
+            record = self._db.get(workspace_id, uri.source_id)
+        if record is None:
+            raise ServiceError(ErrorCode.NOT_FOUND, "등록된 원본을 찾을 수 없습니다.")
+        return record

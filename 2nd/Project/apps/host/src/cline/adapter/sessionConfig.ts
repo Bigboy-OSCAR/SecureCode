@@ -23,6 +23,7 @@ export interface SessionStartOptions {
     apiKey: string;
     baseUrl: string | null;
     maxOutputTokens: number;
+    systemPrompt: string;
     tools: AgentTool[];
     toolPolicies: Record<string, ToolPolicyEntry>;
     hooks: AgentHooks;
@@ -43,7 +44,7 @@ export function buildStartInput(options: SessionStartOptions): ClineCoreStartInp
             cwd: options.workspaceRoot,
             workspaceRoot: options.workspaceRoot,
             mode: "act",
-            systemPrompt: SYSTEM_PROMPT,
+            systemPrompt: options.systemPrompt,
             maxTokensPerTurn: options.maxOutputTokens,
             // false removes built-in tools and the provider web_search tool; extraTools stay (3.1 C-04).
             enableTools: false,

@@ -1,23 +1,18 @@
-/** Transform actual SDK tool results in afterTool, before persistence. Configure the SDK with hookErrorMode: "throw". */
-import type { AgentHooks, AgentPlugin } from "@cline/sdk";
-import { storeRuntimePointer, type RuntimePointerHookOptions } from "../../pointer-hooks/runtimePointerHook.js";
+/**
+ * Runtime Pointer hook registration (4.4). The only afterTool hook the host registers: it maps the
+ * SDK result onto the ToolResultTransformer port, so large output is replaced before the SDK
+ * persists it or sends it to the model. Use with hookErrorMode "throw" (sessionConfig) so a
+ * transformer failure stops the run instead of forwarding the raw output.
+ */
+import type { AgentHooks } from "@cline/sdk";
+import type { ToolResultTransformer } from "../adapter/ports.js";
+import { createAfterToolHook } from "../adapter/toolResultHook.js";
+import type { ActiveTurn } from "../adapter/turnContext.js";
 
-export function createRuntimePointerPlugin(options: RuntimePointerHookOptions): AgentPlugin {
-    // SDK conversationId is generated independently of the host session id. Scope this
-    // plugin instance to one start() call and use its authenticated host context.
-    const scope = { ...options };
-    const afterTool: NonNullable<AgentHooks["afterTool"]> = async ({ result }) => {
-        const content = typeof result.output === "string" ? result.output : JSON.stringify(result.output);
-        if (typeof content !== "string") throw new Error("tool output cannot be serialized");
-        const stored = await storeRuntimePointer({ content }, scope);
-        if (!stored.stored) return undefined;
-        return {
-            result: {
-                output: { kind: "runtime", pointer: stored.pointerUri, byte_size: stored.byteSize },
-                isError: result.isError ?? false,
-                metadata: { securecode_pointerized: true },
-            },
-        };
-    };
-    return { name: "securecode-runtime-pointer", manifest: { capabilities: ["hooks"] }, hooks: { afterTool } };
+export function createRuntimePointerHooks(
+    transformer: ToolResultTransformer,
+    currentTurn: () => ActiveTurn | null,
+    timeoutMs: number,
+): AgentHooks {
+    return { afterTool: createAfterToolHook(transformer, currentTurn, timeoutMs) };
 }

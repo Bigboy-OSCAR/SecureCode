@@ -67,8 +67,8 @@
 | `GET /workspaces` | `?limit&cursor` → `workspace#WorkspaceListResponse` | **구현** | 3.5 (H-02 목록 복구용, 3.2 추가) |
 | `POST /workspaces` | `WorkspaceCreateRequest` → `Workspace` | **구현** | 3.5 |
 | `GET /workspaces/:workspace_id` | → `Workspace` | **구현** | 3.5 |
-| `POST /workspaces/:id/index` | `IndexRequest` → `IndexStatusResponse` (202) | 501 | 3.6 (+3.3) |
-| `GET /workspaces/:id/index` | → `IndexStatusResponse` | 501 | 3.6 |
+| `POST /workspaces/:id/index` | `IndexRequest` → `IndexStatusResponse` (202) | **구현** | 3.6 (+3.3). 백그라운드 색인 |
+| `GET /workspaces/:id/index` | → `IndexStatusResponse` | **구현** | 3.6 |
 | `GET /workspaces/:id/sessions` | `?limit&cursor` → `session#SessionListResponse` | **구현** | 3.5 (H-04 세션 복구용, 3.2 추가) |
 | `POST /sessions` | `SessionCreateRequest` → `Session` | **구현** | 3.5 |
 | `GET /sessions/:session_id` | → `Session` (`active_run_id`로 재연결) | **구현** | 3.5 |
@@ -78,12 +78,12 @@
 | `GET /runs/:run_id/events` | SSE `AppEvent` ([EVENTS.md](EVENTS.md)) | **구현** | 3.5 |
 | `POST /runs/:run_id/cancel` | → `RunSnapshot` (`cancelling` 또는 이미 종료된 상태) | **구현** | 3.5 |
 | `POST /runs/:run_id/approvals/:approval_id` | `approval#ApprovalDecisionRequest` → `ApprovalDecisionResponse` | **구현** | 3.5 |
-| `GET /workspaces/:id/pointers` | `PointerListQuery` (query) → `PointerListResult` | 501 | 4.2 계약, 3.6 연결 |
-| `POST /workspaces/:id/sources` | `SourceMutationRequest` → `SourceMutationResult` (등록·갱신) | 501 | 4.2 계약, 3.6 연결 |
-| `POST /pointers/read`, `POST /pointers/search` | `PointerReadRequest` → `PointerReadResult`, `PointerSearchRequest` → `PointerSearchResult` | 501 | 4.2 계약, 3.6 연결 |
-| `DELETE /pointers` | `PointerDeleteRequest` (JSON 본문) → `PointerDeleteResult` | 501 | 4.2 계약, 3.6 연결 |
-| `POST /context/preview` | `ContextPreviewRequest` → `ContextPreviewResponse`. `operation`은 `plan/search/bundle` 중 하나 | 501 | 4.2/4.8, 3.6 |
-| `POST /pdf/parse`, `GET /pdf/jobs/:job_id` | 등록된 Source의 `PdfParseRequest` → `PdfJobStatus`, job ID로 같은 상태 DTO 조회 | 501 | 4.9, 3.6 |
+| `GET /workspaces/:id/pointers` | `PointerListQuery` (query) → `PointerListResult` | **구현** | 3.6 (runtime은 세션 소속 확인) |
+| `POST /workspaces/:id/sources` | `SourceMutationRequest` → `SourceMutationResult` (등록·갱신) | **구현** | 3.6 |
+| `POST /pointers/read`, `POST /pointers/search` | `PointerReadRequest` → `PointerReadResult`, `PointerSearchRequest` → `PointerSearchResult` | **구현** | 3.6. URI의 작업 공간·세션을 host가 확인, 상한은 서비스 |
+| `DELETE /pointers` | `PointerDeleteRequest` (JSON 본문) → `PointerDeleteResult` | **구현** | 3.6 |
+| `POST /context/preview` | `ContextPreviewRequest` → `ContextPreviewResponse`. `operation`은 `plan/search/bundle` 중 하나 | **구현** | 3.6. plan은 run 생성과 같은 입력이라 `preview_digest`가 같다 |
+| `POST /pdf/parse`, `GET /pdf/jobs/:job_id` | | **구현** | 3.6 (서비스·도구 4.9) |
 
 실제 route 목록은 `apps/host/src/routes/pendingRoutes.ts`다. 시험이 모든 항목의 501 응답과 `owner_task`를 검증한다. 담당 작업은 해당 항목을 지우고 실제 handler를 등록한다.
 
@@ -93,8 +93,8 @@
 - **개발 proxy:** UI(1.1)는 `scripts/dev/viteProxy.ts`의 `createViteApiProxy()`를 Vite `server.proxy`로 쓴다. Host 헤더는 host 주소로 바뀌고 브라우저 Origin(UI 개발 origin, host가 허용)은 유지되어 cookie와 SSE가 same-origin으로 동작한다.
 - **본문 상한:** JSON 본문은 64 KiB(run 생성은 256 KiB)를 넘으면 `PAYLOAD_TOO_LARGE`, JSON이 아니거나 계약과 다르면 `VALIDATION_FAILED`다.
 - **작업 공간:** `root_path`는 존재하는 절대 디렉터리여야 하고 링크·정션·파일시스템 최상위는 거절한다(`FORBIDDEN`, `details.reason`). `SECURECODE_ALLOWED_WORKSPACE_ROOTS`가 있으면 그 아래만 허용한다. 같은 실제 경로를 다시 등록하면 처음 workspace를 돌려준다. `index_status`는 3.6이 색인 API를 연결하기 전까지 `not_indexed`다.
-- **명시 컨텍스트:** `RunCreateRequest.context_refs`·`preview_digest`가 있으면 3.6 연결 전까지 `NOT_IMPLEMENTED`(`owner_task=3.6`)로 거절한다. 조용히 무시하지 않는다.
-- **도구:** 모델은 `read_file`·`list_files`(자동 승인), `write_file`·`run_command`(사용자 승인)만 본다. 경로는 작업 공간 밖·링크·`.git`·`.securecode`를 거절한다. `git commit/push/rebase/reset/merge/tag/am/cherry-pick`은 승인 요청 없이 거절한다.
+- **명시 컨텍스트 (3.6):** run 생성은 매번 `context.select`로 계획한다(R0 자동 후보 + `context_refs`). `preview_digest`가 다르면 422 `VALIDATION_FAILED(stale_preview)`, 쓸 수 없는 명시 선택은 계획의 `run_create_error`(예: `SOURCE_CHANGED`, `BUDGET_EXCEEDED`)로 모델 호출 전에 거절한다. fragment는 첫 사용자 메시지에 한 번만 넣는다. 예제는 [3.6 UI 연동 예제](../handoffs/3.6-ui-integration-examples.md).
+- **도구 (3.6):** 모델은 `read_file`·`search_file`(Source adapter), `code_search`·`code_read`(R0), `list_files`, `runtime_read`·`runtime_search`, `pdf_parse`·`pdf_status`·`pdf_search`·`pdf_read_pages`(자동 승인), `write_file`·`run_command`(사용자 승인)만 본다. 목록은 `cline/tools/sessionTools.ts`의 `ALLOWED_TOOL_NAMES`이고 fetch gate가 같은 목록으로 막는다. host는 파일 본문을 직접 읽지 않는다. 경로는 작업 공간 밖·링크·`.git`·`.securecode`를 거절한다.
 - **재시작:** host가 멈출 때 끝나지 않은 run은 다음 시작에서 `failed`(`reason_code=SERVICE_UNAVAILABLE`)가 된다. 세션의 `active_run_id`는 비워진다. idempotency 키는 디스크에 24시간 보존된다. 이전 SDK 대화 이력은 이어지지 않고 다음 run은 새 SDK 세션으로 시작한다.
 
 ## 4. 내부 API (`/internal/v1`, context-service)
@@ -104,9 +104,19 @@
 | `GET /health` | → `system#ServiceHealthResponse`. 구성요소별 `ok/not_configured/not_implemented(owner_task)` | **구현** |
 | `POST /tokens/count` | `token-count#TokenCountRequest` → `TokenCountResult` | **구현** (live 미검증, 5절) |
 | `POST /symbols/search`, `POST /symbols/bundle` | `symbol#SymbolSearchRequest/Response`, `SymbolBundleRequest/SymbolBundle` | 3.3/3.4 |
-| `runtime.*`, `source.*`, `context.select`, `pdf.*` | 4.2 계약 | 4.3~4.9 |
+| `POST /source/register`, `/source/refresh` | 본문 `workspace_id` + `lifecycle#SourceMutationRequest`(operation별) → `SourceMutationResult` | **구현** (4.5). host가 인증한 workspace를 넣는다 |
+| `POST /source/stat`, `/source/list`, `/source/unregister` | `{workspace_id, pointer}` → `PointerListItem` / `{workspace_id, limit?, cursor?}` → `PointerListResult` / `PointerDeleteRequest(kind=source)` → `PointerDeleteResult` | **구현** (4.5). workspace root 포트는 3.6이 연결하며, 연결 전에는 `NOT_FOUND(workspace_root_unconnected)` |
+| `POST /source/read`, `/source/search` | 본문 `workspace_id` + `read#PointerReadRequest` → `PointerReadResult` / `search#PointerSearchRequest` → `PointerSearchResult` | **구현** (4.6). line/byte/section은 원본 구간을 seek로 읽고 `provenance.selection`(revision·원본 SHA-256·byte 구간)을 준다. json_path는 8 MiB 이하 전체 파싱이며 selection이 없다. 검색은 요청당 scan 8 MiB·2초 상한, 넘으면 `truncated`+`next_cursor`. 토큰 수는 `tokens.count`와 같은 TokenCounter로 세며 계수기가 없으면 `TOKENIZER_UNAVAILABLE` |
+| `POST /runtime/pointers` | `{workspace_id, session_id, content, media_type?, origin?, truncated_before_storage?}` → `{pointer_id, pointer_uri, byte_size, descriptor(PointerListItem)}` | **구현** (4.3). 객체 32 MiB·세션 128 MiB 초과는 `QUOTA_EXCEEDED`(오래된 출력을 지우지 않음). `origin`이 제한된 읽기 도구(`runtime_read` 등)이면 `VALIDATION_FAILED(bounded_read)` |
+| `POST /runtime/read`, `/runtime/search`, `/runtime/list` | 범위 + `read#PointerReadRequest` / `search#PointerSearchRequest` / `PointerListQuery(kind=runtime)` → `PointerReadResult` / `PointerSearchResult` / `PointerListResult` | **구현** (4.3). Source와 같은 selector·상한·cursor 규칙. 읽는 64 KiB 청크마다 저장 checksum을 확인한다. 목록 응답은 100개·64 KiB 이하 |
+| `POST /runtime/pointers/delete`, `/runtime/sessions/clear` | 범위 + pointer / 범위 → `{deleted}` | **구현** (4.3). 멱등. 이후 조회는 `NOT_FOUND(deleted|session_cleared)`, 만료는 `EXPIRED` |
+| `POST /runtime/stream` | 헤더 `x-securecode-workspace-id`·`-session-id`·`-origin`·`-media-type`·`-truncated` + `application/octet-stream` 청크 본문 → `/runtime/pointers`와 같은 응답 | **구현** (4.4). host 명령 executor가 출력을 받는 대로 보낸다. 연결이 끊기면 부분 객체를 남기지 않는다 |
+| `POST /tokens/request` | `token-count#RequestTokenCountRequest`(outbound 요청 JSON 그대로) → `TokenCountResult`(`framing: provider_request`) | **구현** (4.8). host 요청 gate 전용. framing은 Anthropic Messages(`anthropic`)와 OpenAI 호환 chat(`openai-compatible`, 로컬 llama.cpp: `/apply-template`+`/tokenize`, `exact`) 두 가지다. 모르는 필드·계수기와 다른 provider는 `TOKENIZER_UNAVAILABLE`. 본문 16 MiB 상한 |
+| `POST /context/select` | `context#ContextSelectRequest` → `ContextSelectResponse`(`ContextPreviewPlan` + `run_create_error`) | **구현** (4.8). 정책은 [CONTEXT_SELECTOR.md](../architecture/CONTEXT_SELECTOR.md). 비용 텍스트는 서비스가 세고, 음수 예산이면 `BUDGET_EXCEEDED`, 계수기가 없으면 `TOKENIZER_UNAVAILABLE`. R0 후보는 3.6이 색인을 연결한 뒤 생긴다 |
+| `POST /pdf/parse`, `/pdf/status`, `/pdf/cancel` | `pdf-job#PdfParseRequest` → `PdfJobStatus` / `{workspace_id, job_id}` → `PdfJobStatus` / `{cancelled: true}` | **구현** (4.9). 응답에 추출 본문 없음. 같은 원본 해시·파서 버전은 같은 job(멱등). 끝난 job은 원본 변경 시 `stale`. 파싱은 격리 프로세스(50 MiB·500쪽·60초) |
+| `POST /source/read` (`selector.type=pdf_page`), `/source/search` (PDF) | `read#PointerReadRequest` / `search#PointerSearchRequest` → `PointerReadResult` / `PointerSearchResult` | **구현** (4.9). 한 번에 한 페이지 구간, `pdf_page` selection(페이지·페이지 텍스트 바이트 구간·파서 버전). 파싱 전 `INDEX_NOT_READY(pdf_not_parsed)`, 범위 밖·제외 페이지 `INVALID_SELECTOR` |
 
-내부 포트 이름(로드맵 0.6)과 경로의 대응: `symbols.search/read_bundle` → `/symbols/search|bundle`, `tokens.count` → `/tokens/count`. 포인터·컨텍스트·PDF 경로는 4.2가 같은 규칙(`/internal/v1/<영역>/<연산>`, 본문 JSON)으로 정한다.
+내부 포트 이름(로드맵 0.6)과 경로의 대응: `symbols.search/read_bundle` → `/symbols/search|bundle`, `tokens.count` → `/tokens/count`, `tokens.request` → `/tokens/request`, `context.select` → `/context/select`, `source.register/stat/list/unregister` → `/source/register|refresh|stat|list|unregister`. `idempotency_key`는 형식만 검사하며, 같은 키 재전송의 결과 재생과 충돌 판정은 host 공개 route(3.6)가 맡는다. 등록·해제 자체는 같은 원본에 대해 멱등이다. 포인터·컨텍스트·PDF 경로는 4.2가 같은 규칙(`/internal/v1/<영역>/<연산>`, 본문 JSON)으로 정한다.
 
 ## 5. tokens.count (본문 계수)
 

@@ -2,10 +2,10 @@
     "name": "securecode",
     "version": "0.0.0",
     "private": true,
-    "description": "SecureCode local coding assistant (Cline SDK host + Python context service). Root commands are owned by task 3.2.",
+    "description": "SecureCode local coding assistant (Cline SDK host + Python context service + Vite UI). Root commands: 3.2, completed in 3.7.",
     "type": "module",
     "engines": {
-        "node": "^22.12.0 || ^24.0.0"
+        "node": "^22.12.0 || ^24.0.0 || ^26.0.0"
     },
     "workspaces": [
         "apps/ui",
@@ -27,6 +27,7 @@
         "test:integration": "tsx scripts/test/integration.ts",
         "test:e2e": "tsx scripts/test/e2e.ts",
         "test:live": "tsx scripts/test/live.ts",
+        "test:install": "tsx scripts/test/install.ts",
         "build": "tsx scripts/build.ts",
         "probe:sdk": "npm run probe -w @securecode/sdk-probe --"
     },

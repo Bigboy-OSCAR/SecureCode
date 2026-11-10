@@ -10,22 +10,23 @@ TEST_TOKEN = "test-token"
 
 
 @pytest.fixture
-def client() -> Iterator[TestClient]:
+def client(tmp_path: Path) -> Iterator[TestClient]:
     """
     함수 이름: client()
-    기능: 시험용 앱 client를 만든다.
-    인자: 없음
+    기능: 임시 데이터 폴더와 시험 계수기를 쓰는 앱 client를 만든다.
+    인자: tmp_path -> 임시 폴더
     반환값: TestClient
-    작성 날짜: 2026/11/07
+    작성 날짜: 2026/11/10
     """
     from securecode_context.app.factory import create_app
     from securecode_context.app.settings import ServiceSettings
+    from support.helpers import FixedTokenCounter
 
     settings = ServiceSettings(
         host="127.0.0.1",
         port=8788,
         internal_token=TEST_TOKEN,
-        data_dir=Path("/tmp/runtime_pointer_test_data"),
+        data_dir=tmp_path / "data",
         provider_id="anthropic",
         model_id="claude-sonnet-5-5",
         api_key=None,
@@ -33,7 +34,7 @@ def client() -> Iterator[TestClient]:
         token_count_timeout_seconds=1.0,
         log_level="info",
     )
-    with TestClient(create_app(settings)) as test_client:
+    with TestClient(create_app(settings, token_counter=FixedTokenCounter())) as test_client:
         yield test_client
 
 
@@ -57,13 +58,13 @@ def test_put_read_and_resume(client: TestClient) -> None:
     assert created.status_code == 200, created.text
     pointer = created.json()["pointer_uri"]
     first = client.post(
-        "/internal/v1/runtime/pointers/read",
+        "/internal/v1/runtime/read",
         headers=AUTH,
         json={
+            "schema_version": "1",
             "workspace_id": "ws_12345678",
             "session_id": "ses_12345678",
             "pointer": pointer,
-            "offset": 0,
             "max_bytes": 10,
         },
     )
@@ -71,22 +72,22 @@ def test_put_read_and_resume(client: TestClient) -> None:
     first_body = first.json()
     assert first_body["content"] == content[:10]
     assert first_body["truncated"] is True
-    assert first_body["next_cursor"] == "10"
     resumed = client.post(
-        "/internal/v1/runtime/pointers/read",
+        "/internal/v1/runtime/read",
         headers=AUTH,
         json={
+            "schema_version": "1",
             "workspace_id": "ws_12345678",
             "session_id": "ses_12345678",
             "pointer": pointer,
-            "offset": 10,
+            "cursor": first_body["next_cursor"],
         },
     )
     assert resumed.status_code == 200, resumed.text
     resumed_body = resumed.json()
     assert resumed_body["content"] == content[10:]
     assert resumed_body["truncated"] is False
-    assert resumed_body["next_cursor"] is None
+    assert "next_cursor" not in resumed_body
 
 
 def test_scope_and_uri_are_enforced(client: TestClient) -> None:
@@ -104,16 +105,22 @@ def test_scope_and_uri_are_enforced(client: TestClient) -> None:
     ).json()
     pointer = created["pointer_uri"]
     other_session = client.post(
-        "/internal/v1/runtime/pointers/read",
+        "/internal/v1/runtime/read",
         headers=AUTH,
-        json={"workspace_id": "ws_12345678", "session_id": "ses_99999999", "pointer": pointer},
+        json={
+            "schema_version": "1",
+            "workspace_id": "ws_12345678",
+            "session_id": "ses_99999999",
+            "pointer": pointer,
+        },
     )
     assert other_session.status_code == 403
     assert other_session.json()["error"]["code"] == "FORBIDDEN"
     malformed = client.post(
-        "/internal/v1/runtime/pointers/read",
+        "/internal/v1/runtime/read",
         headers=AUTH,
         json={
+            "schema_version": "1",
             "workspace_id": "ws_12345678",
             "session_id": "ses_12345678",
             "pointer": "https://example.invalid",
@@ -145,9 +152,14 @@ def test_delete_and_session_clear(client: TestClient) -> None:
     assert deleted.status_code == 200
     assert deleted.json() == {"deleted": True}
     missing = client.post(
-        "/internal/v1/runtime/pointers/read",
+        "/internal/v1/runtime/read",
         headers=AUTH,
-        json={"workspace_id": "ws_12345678", "session_id": "ses_12345678", "pointer": pointer},
+        json={
+            "schema_version": "1",
+            "workspace_id": "ws_12345678",
+            "session_id": "ses_12345678",
+            "pointer": pointer,
+        },
     )
     assert missing.status_code == 404
     assert missing.json()["error"]["code"] == "NOT_FOUND"
@@ -172,9 +184,10 @@ def test_search_returns_line_and_requires_auth(client: TestClient) -> None:
     ).json()
     pointer = created["pointer_uri"]
     result = client.post(
-        "/internal/v1/runtime/pointers/search",
+        "/internal/v1/runtime/search",
         headers=AUTH,
         json={
+            "schema_version": "1",
             "workspace_id": "ws_12345678",
             "session_id": "ses_12345678",
             "pointer": pointer,
@@ -184,8 +197,9 @@ def test_search_returns_line_and_requires_auth(client: TestClient) -> None:
     assert result.status_code == 200, result.text
     assert result.json()["matches"][0]["line"] == 2
     unauthenticated = client.post(
-        "/internal/v1/runtime/pointers/search",
+        "/internal/v1/runtime/search",
         json={
+            "schema_version": "1",
             "workspace_id": "ws_12345678",
             "session_id": "ses_12345678",
             "pointer": pointer,

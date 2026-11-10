@@ -13,11 +13,12 @@ import { loadRuntimeConfig, readProviderCredentials } from "../config/runtimeCon
 import { HttpContextServiceClient } from "../context-client/httpContextServiceClient.js";
 import { createLogger } from "../logging/logger.js";
 import { Redactor } from "../logging/redaction.js";
+import { SYSTEM_PROMPT } from "../cline/adapter/sessionConfig.js";
+import { loadPdfPointerSkill, withSkills } from "../cline/skills/pdfPointerSkill.js";
 import { assembleHost } from "./hostAssembly.js";
-import {
-    createLoopbackRuntimeStore,
-    createRuntimeToolResultTransformer,
-} from "../pointer-hooks/runtimeToolResultTransformer.js";
+import { createModelRequestGate } from "../pointer-hooks/modelRequestGate.js";
+import { createRuntimeClient } from "../pointer-hooks/runtimeClient.js";
+import { createRuntimeToolResultTransformer } from "../pointer-hooks/runtimeToolResultTransformer.js";
 
 const SHUTDOWN_TIMEOUT_MS = 5000;
 const workRoot = join(fileURLToPath(import.meta.url), "..", "..", "..", "..", "..");
@@ -46,27 +47,35 @@ async function main(): Promise<void> {
     prepareClineHome(runtimeConfig.clineHome);
     // Imported after prepareClineHome so the SDK only ever sees the app-only home (3.1 C-02).
     const clineAdapter = await import("../cline/adapter/clineRuntime.js");
+    const runtimePointers = createRuntimeClient({
+        baseUrl: hostConfig.contextServiceUrl,
+        internalToken: hostConfig.internalToken,
+        validator: ContractValidator.load(),
+    });
+    const contextClient = new HttpContextServiceClient({
+        baseUrl: hostConfig.contextServiceUrl,
+        internalToken: hostConfig.internalToken,
+        validator: ContractValidator.load(),
+    });
     const host = await assembleHost({
         hostConfig,
         runtimeConfig,
         credentials,
-        contextClient: new HttpContextServiceClient({
-            baseUrl: hostConfig.contextServiceUrl,
-            internalToken: hostConfig.internalToken,
-            validator: ContractValidator.load(),
-        }),
+        contextClient,
         validator: ContractValidator.load(),
         logger,
         runtimeFactory: (options) => clineAdapter.ClineAgentRuntime.create(options),
-        // 4.8's verified request gate is still unavailable, so sessions remain blocked.
-        transformer: createRuntimeToolResultTransformer(
-            createLoopbackRuntimeStore({
-                baseUrl: hostConfig.contextServiceUrl,
-                internalToken: hostConfig.internalToken,
-                api: "internal",
-            }),
-        ),
-        gate: null,
+        // The PDF pointer skill is exported explicitly into the system prompt (4.9 registration fixture).
+        systemPrompt: withSkills(SYSTEM_PROMPT, [loadPdfPointerSkill(workRoot)]),
+        transformer: createRuntimeToolResultTransformer(runtimePointers),
+        runtimePointers,
+        // 4.8: every provider call is counted as sent and checked against the window before it leaves.
+        gate: createModelRequestGate({
+            counter: contextClient.tokens,
+            contextLimitTokens: runtimeConfig.contextLimitTokens,
+            safetyMarginTokens: runtimeConfig.safetyMarginTokens,
+            requireExactCount: runtimeConfig.requireExactTokenCount,
+        }),
     });
     const missing = host.runtime.protections().filter((state) => !state.ready);
     if (missing.length > 0) {

@@ -12,13 +12,13 @@
         "TokenCountMethod": {
             "title": "TokenCountMethod",
             "type": "string",
-            "enum": ["anthropic_count_tokens"]
+            "enum": ["anthropic_count_tokens", "llama_cpp_tokenize"]
         },
         "TokenCountFraming": {
             "title": "TokenCountFraming",
-            "description": "What surrounds the counted text. single_user_message = one user message holding one text block; the count includes that minimal framing.",
+            "description": "What surrounds the counted text. single_user_message = one user message holding one text block; the count includes that minimal framing. provider_request = the input part (system, messages, tools, tool_choice, thinking) of one serialized provider request as sent (4.8 gate). plain_text = the text alone with no message framing (local llama.cpp tokenizer).",
             "type": "string",
-            "enum": ["single_user_message"]
+            "enum": ["single_user_message", "provider_request", "plain_text"]
         },
         "TokenCountRequest": {
             "title": "TokenCountRequest",
@@ -38,6 +38,19 @@
                     "minLength": 1,
                     "maxLength": 128
                 }
+            }
+        },
+        "RequestTokenCountRequest": {
+            "title": "RequestTokenCountRequest",
+            "description": "Internal POST /internal/v1/tokens/request (4.8). request is the exact outbound provider JSON object. Only verified framings are counted; anything else is TOKENIZER_UNAVAILABLE.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["schema_version", "provider_id", "model_id", "request"],
+            "properties": {
+                "schema_version": { "$ref": "primitives.schema.json#/definitions/SchemaVersion" },
+                "provider_id": { "type": "string", "minLength": 1, "maxLength": 64 },
+                "model_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+                "request": { "type": "object" }
             }
         },
         "TokenCountResult": {

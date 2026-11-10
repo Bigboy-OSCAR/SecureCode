@@ -15,6 +15,8 @@ export function registerWorkspaceRoutes(router: Router, services: RouteServices)
             SCHEMA_REFS.workspaceCreateRequest,
         );
         const [workspace, created] = services.workspaces.create(body);
+        // Best effort: Source/R0/PDF calls register again before they need the root.
+        await services.serviceWorkspaces.tryEnsure(workspace.workspace_id);
         sendJson(response, created ? 201 : 200, workspace);
     };
     const list: RouteHandler = async ({ request, response }) => {

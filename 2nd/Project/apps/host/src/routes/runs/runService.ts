@@ -13,6 +13,8 @@ import type {
     RunSnapshot,
 } from "@securecode/contracts";
 import type { AgentRuntime, TurnOutcome, TurnSignal } from "../../cline/adapter/runtimePort.js";
+import type { ContextAssembler } from "../../cline/context/contextAssembler.js";
+import type { SessionContextStore } from "../../cline/context/sessionContext.js";
 import type { ApprovalBroker } from "../../cline/permissions/approvalBroker.js";
 import { missingProtections } from "../../cline/permissions/protections.js";
 import { clipText, isoTime, newId, type Clock } from "../../security/ids.js";
@@ -36,6 +38,9 @@ export interface RunServiceDependencies {
     idempotency: IdempotencyStore;
     runsDirectory: string;
     clock: Clock;
+    /** Plans each run's context (context.select) and returns the prompt with fragments inserted once. */
+    assembler: ContextAssembler;
+    sessionContext: SessionContextStore;
 }
 
 export function requireProtections(states: readonly ProtectionState[]): void {
@@ -51,6 +56,8 @@ export class RunService {
     private readonly recorders = new Map<string, RunRecorder>();
     private readonly store: JsonFileStore<RunRecord>;
     private readonly pendingWrites = new Map<string, NodeJS.Timeout>();
+    /** Sessions whose run is being planned (context.select) before its record exists. */
+    private readonly planning = new Set<string>();
 
     constructor(private readonly deps: RunServiceDependencies) {
         this.store = new JsonFileStore<RunRecord>(deps.runsDirectory);
@@ -62,24 +69,29 @@ export class RunService {
         });
     }
 
-    create(sessionId: string, request: RunCreateRequest): { snapshot: RunSnapshot; created: boolean } {
+    async create(sessionId: string, request: RunCreateRequest): Promise<{ snapshot: RunSnapshot; created: boolean }> {
         const session = this.deps.sessions.get(sessionId);
         const lookup = this.deps.idempotency.lookup(`runs:${sessionId}`, request.idempotency_key, request);
         if (lookup.kind === "replay") return { snapshot: this.snapshot(lookup.resultId), created: false };
         requireProtections(this.deps.runtime.protections());
         if (session.status !== "active") throw new RouteFailure("VALIDATION_FAILED", "session is closed");
-        if (session.active_run_id) {
+        if (session.active_run_id || this.planning.has(sessionId)) {
             throw new RouteFailure("RUN_ALREADY_ACTIVE", "this session already has an active run", {
-                active_run_id: session.active_run_id,
-            });
-        }
-        if ((request.context_refs?.length ?? 0) > 0 || request.preview_digest) {
-            // Explicit symbol/pointer context is assembled by 3.6; refusing beats silently ignoring it.
-            throw new RouteFailure("NOT_IMPLEMENTED", "explicit context selection is connected in 3.6", {
-                owner_task: "3.6",
+                ...(session.active_run_id ? { active_run_id: session.active_run_id } : {}),
             });
         }
         const workspaceRoot = this.deps.workspaces.rootFor(session.workspace_id);
+        this.planning.add(sessionId);
+        let prompt: string;
+        try {
+            // Selection → bounded reads → counted plan; explicit choices that cannot be used refuse the run.
+            prompt = (await this.deps.assembler.forRun(session.workspace_id, sessionId, request)).prompt;
+        } finally {
+            this.planning.delete(sessionId);
+        }
+        if (this.deps.sessions.get(sessionId).active_run_id) {
+            throw new RouteFailure("RUN_ALREADY_ACTIVE", "this session already has an active run");
+        }
         const now = isoTime(this.deps.clock());
         const record: RunRecord = {
             run_id: newId("run"),
@@ -103,7 +115,7 @@ export class RunService {
         this.persist(record, true);
         this.deps.sessions.setActiveRun(sessionId, record.run_id);
         this.deps.idempotency.remember(`runs:${sessionId}`, request.idempotency_key, lookup.bodyDigest, record.run_id);
-        void this.execute(recorder, workspaceRoot, request.prompt);
+        void this.execute(recorder, workspaceRoot, prompt);
         return { snapshot: this.snapshot(record.run_id), created: true };
     }
 
@@ -126,7 +138,7 @@ export class RunService {
         const recorder = this.requireRun(runId);
         if (!recorder.terminal && recorder.record.status !== "cancelling") {
             recorder.setStatus("cancelling");
-            await this.deps.runtime.abortTurn(recorder.record.session_id, "cancelled by user");
+            await this.deps.runtime.abortTurn(recorder.record.session_id, "cancelled by user", runId);
         }
         return this.snapshot(runId);
     }
@@ -182,6 +194,7 @@ export class RunService {
                 });
                 return;
             case "pointer_created":
+                this.deps.sessionContext.pointerCreated(recorder.record.session_id, signal.pointer);
                 recorder.pointerCreated(signal.toolCallId, signal.pointer, signal.byteSize);
                 return;
         }

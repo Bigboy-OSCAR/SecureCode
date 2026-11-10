@@ -7,39 +7,37 @@ import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { AddressInfo } from "node:net";
-import { ContractValidator, type AppEvent, type RunSnapshot, type ServiceHealthResponse } from "@securecode/contracts";
+import { ContractValidator, type AppEvent, type RunSnapshot } from "@securecode/contracts";
 import { assembleHost, type AssembledHost, type HostAssemblyOptions } from "../../src/app/hostAssembly.js";
 import type { HostConfig } from "../../src/config/hostConfig.js";
 import type { RuntimeConfig } from "../../src/config/runtimeConfig.js";
 import type { ContextServiceClient } from "../../src/context-client/ports.js";
 import { createLogger } from "../../src/logging/logger.js";
+import { createFixtureContextClient } from "./fixtureContextClient.js";
+import { FixtureRuntimeService } from "./fixtureHooks.js";
 import { Redactor } from "../../src/logging/redaction.js";
 
 export const validator = ContractValidator.load();
 
-export const fakeContextClient = {
-    health: () =>
-        Promise.resolve<ServiceHealthResponse>({
-            schema_version: "1",
-            service: "context-service",
-            status: "ok",
-            version: "0.1.0",
-            components: [
-                { name: "token_counter", status: "ok" },
-                { name: "data_dir", status: "ok" },
-            ],
-        }),
-} as unknown as ContextServiceClient;
+/** Test-only context-service stand-in (fixtureContextClient.ts); real-service tests pass their own client. */
+export { createFixtureContextClient } from "./fixtureContextClient.js";
 
 export interface TestHostOptions {
     runtimeFactory: HostAssemblyOptions["runtimeFactory"];
     transformer: HostAssemblyOptions["transformer"];
     gate: HostAssemblyOptions["gate"];
+    /** Defaults to the in-memory fixture store. */
+    runtimePointers?: HostAssemblyOptions["runtimePointers"];
     providerFetch?: typeof fetch;
     dataDir?: string;
     approvalTimeoutMs?: number;
     allowedWorkspaceRoots?: string[];
     apiKey?: string | null;
+    /** Provider identity and base URL the SDK is configured with (default anthropic). */
+    provider?: { providerId: string; modelId: string; baseUrl: string | null };
+    /** Real HttpContextServiceClient for tests that start the context-service. */
+    contextClient?: ContextServiceClient;
+    systemPrompt?: string;
 }
 
 export interface TestHost {
@@ -63,8 +61,8 @@ export async function startTestHost(options: TestHostOptions): Promise<TestHost>
         allowedOrigins: [],
         allowedHosts: [],
         logLevel: "error",
-        providerId: "anthropic",
-        modelId: "claude-sonnet-5-5",
+        providerId: options.provider?.providerId ?? "anthropic",
+        modelId: options.provider?.modelId ?? "claude-sonnet-5-5",
         providerConfigured: true,
     };
     const runtimeConfig: RuntimeConfig = {
@@ -74,7 +72,8 @@ export async function startTestHost(options: TestHostOptions): Promise<TestHost>
         contextLimitTokens: 200000,
         maxOutputTokens: 1024,
         safetyMarginTokens: 2048,
-        providerBaseUrl: null,
+        requireExactTokenCount: false,
+        providerBaseUrl: options.provider?.baseUrl ?? null,
         bootstrapCode: "test-launch-code-0123456789",
         allowedWorkspaceRoots: options.allowedWorkspaceRoots ?? [],
         commandTimeoutMs: 5000,
@@ -83,12 +82,14 @@ export async function startTestHost(options: TestHostOptions): Promise<TestHost>
         hostConfig,
         runtimeConfig,
         credentials: { apiKey: options.apiKey === undefined ? "fixture-not-a-secret" : options.apiKey },
-        contextClient: fakeContextClient,
+        contextClient: options.contextClient ?? createFixtureContextClient(),
+        ...(options.systemPrompt ? { systemPrompt: options.systemPrompt } : {}),
         validator,
         logger: createLogger("error", new Redactor(), () => undefined),
         runtimeFactory: options.runtimeFactory,
         transformer: options.transformer,
         gate: options.gate,
+        runtimePointers: options.runtimePointers === undefined ? new FixtureRuntimeService() : options.runtimePointers,
         ...(options.providerFetch ? { providerFetch: options.providerFetch } : {}),
         sseKeepAliveMs: 200,
     });

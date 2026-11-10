@@ -14,18 +14,8 @@ export interface PendingRoute {
     ownerTask: string;
 }
 
-export const PENDING_ROUTES: readonly PendingRoute[] = [
-    { method: "POST", path: "/api/v1/workspaces/:workspace_id/index", ownerTask: "3.6" },
-    { method: "GET", path: "/api/v1/workspaces/:workspace_id/index", ownerTask: "3.6" },
-    { method: "GET", path: "/api/v1/workspaces/:workspace_id/pointers", ownerTask: "3.6" },
-    { method: "POST", path: "/api/v1/workspaces/:workspace_id/sources", ownerTask: "3.6" },
-    { method: "POST", path: "/api/v1/pointers/read", ownerTask: "3.6" },
-    { method: "POST", path: "/api/v1/pointers/search", ownerTask: "3.6" },
-    { method: "DELETE", path: "/api/v1/pointers", ownerTask: "3.6" },
-    { method: "POST", path: "/api/v1/context/preview", ownerTask: "3.6" },
-    { method: "POST", path: "/api/v1/pdf/parse", ownerTask: "3.6" },
-    { method: "GET", path: "/api/v1/pdf/jobs/:job_id", ownerTask: "3.6" },
-];
+/** Every contracted route is connected since 3.6; new contract routes start here until their task lands. */
+export const PENDING_ROUTES: readonly PendingRoute[] = [];
 
 export function registerPendingRoutes(router: Router): void {
     for (const route of PENDING_ROUTES) {

@@ -20,6 +20,10 @@ import { registerRunRoutes } from "../routes/runs/runRoutes.js";
 import { registerSessionRoutes } from "../routes/sessions/sessionRoutes.js";
 import { createSettingsRoute } from "../routes/settings/settingsRoute.js";
 import { RouteFailure } from "../routes/shared/routeFailure.js";
+import { registerPreviewRoute } from "../routes/context/previewRoute.js";
+import { registerPdfRoutes } from "../routes/pdf/pdfRoutes.js";
+import { registerIndexRoutes } from "../routes/projects/indexRoutes.js";
+import { registerPointerRoutes } from "../routes/pointers/pointerRoutes.js";
 import { checkRequestOrigin, type OriginPolicy } from "../security/originGuard.js";
 
 export interface HostServerDependencies {
@@ -59,6 +63,10 @@ export function buildRouter(dependencies: HostServerDependencies): Router {
     registerRunRoutes(router, services);
     registerRunEventsRoute(router, services);
     registerApprovalRoutes(router, services);
+    registerIndexRoutes(router, services);
+    registerPointerRoutes(router, services);
+    registerPreviewRoute(router, services);
+    registerPdfRoutes(router, services);
     registerPendingRoutes(router);
     return router;
 }

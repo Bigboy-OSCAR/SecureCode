@@ -6,6 +6,9 @@ export const SCHEMA_REFS = {
     errorResponse: "common/api-error.schema.json#/definitions/ErrorResponse",
     tokenCountRequest: "common/token-count.schema.json#/definitions/TokenCountRequest",
     tokenCountResult: "common/token-count.schema.json#/definitions/TokenCountResult",
+    requestTokenCountRequest: "common/token-count.schema.json#/definitions/RequestTokenCountRequest",
+    contextSelectRequest: "context/context.schema.json#/definitions/ContextSelectRequest",
+    contextSelectResponse: "context/context.schema.json#/definitions/ContextSelectResponse",
     healthResponse: "api/system.schema.json#/definitions/HealthResponse",
     serviceHealthResponse: "api/system.schema.json#/definitions/ServiceHealthResponse",
     settingsResponse: "api/system.schema.json#/definitions/SettingsResponse",
@@ -47,6 +50,8 @@ export const SCHEMA_REFS = {
     pdfJobStatus: "pointers/pdf-job.schema.json#/definitions/PdfJobStatus",
     contextPreviewRequest: "context/context.schema.json#/definitions/ContextPreviewRequest",
     contextPreviewResponse: "context/context.schema.json#/definitions/ContextPreviewResponse",
+    indexRequest: "api/workspace.schema.json#/definitions/IndexRequest",
+    indexStatusResponse: "api/workspace.schema.json#/definitions/IndexStatusResponse",
 } as const;
 
 export type SchemaRefName = keyof typeof SCHEMA_REFS;

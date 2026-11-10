@@ -25,6 +25,18 @@ export interface GatedFetchOptions {
     maxOutputTokens: number;
     /** Tool names the model may see; any other tool in the outbound body blocks the request (3.1 C-04). */
     allowedToolNames: ReadonlySet<string>;
+    /** Sees each allowed body as it leaves (the Selector's history cost source). */
+    onOutbound?: (sessionId: string, body: string) => void;
+}
+
+/** Tool name in Anthropic ({name}) or OpenAI-compatible ({type:"function", function:{name}}) framing. */
+function toolName(tool: unknown): unknown {
+    if (typeof tool !== "object" || tool === null) return undefined;
+    const entry = tool as { name?: unknown; type?: unknown; function?: { name?: unknown } };
+    if (entry.type === "function" && typeof entry.function === "object" && entry.function !== null) {
+        return entry.function.name;
+    }
+    return entry.name;
 }
 
 /** Returns the first tool name that is not on the allow list, or null. */
@@ -39,7 +51,7 @@ export function unexpectedToolName(body: string, allowed: ReadonlySet<string>): 
     if (tools === undefined) return null;
     if (!Array.isArray(tools)) return "<tools is not a list>";
     for (const tool of tools as unknown[]) {
-        const name = typeof tool === "object" && tool !== null ? (tool as { name?: unknown }).name : undefined;
+        const name = toolName(tool);
         if (typeof name !== "string" || !allowed.has(name)) return typeof name === "string" ? name : "<unnamed tool>";
     }
     return null;
@@ -90,6 +102,7 @@ export function createGatedFetch(options: GatedFetchOptions): typeof fetch {
             recordFailure(turn, { code: decision.code, message: decision.message.slice(0, 500) });
             throw new GateBlockedError(decision.code, decision.message);
         }
+        if (turn) options.onOutbound?.(turn.sessionId, body);
         return options.baseFetch(input, init);
     };
 }

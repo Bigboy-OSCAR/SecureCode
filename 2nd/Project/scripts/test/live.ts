@@ -1,13 +1,16 @@
 /**
- * `npm run test:live`: opt-in smoke against the real provider. Requires
- * SECURECODE_LIVE_SMOKE=1 and ANTHROPIC_API_KEY in the server environment (.env).
- * Without them the run is SKIPPED (exit 3), never PASS. The 3.2 live check is
- * tokens.count on the shared Unicode vectors; SDK runs are PENDING for 3.6.
+ * `npm run test:live`: opt-in smoke against the real provider. Requires SECURECODE_LIVE_SMOKE=1 and
+ * the provider settings in the server environment (.env). Without them the run is SKIPPED (exit 3),
+ * never PASS. Anthropic: tokens.count on the shared Unicode vectors (3.2). Local llama.cpp
+ * (SECURECODE_TOKEN_COUNTER=llama-cpp): request count vs the server's usage.prompt_tokens.
+ * SDK runs are PENDING for 3.6.
  */
 import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ContractValidator, SCHEMA_REFS, type TokenCountResult } from "@securecode/contracts";
+import { liveLlamaCppSteps } from "../lib/liveLlamaCpp.js";
+import { liveSdkSmokeSteps } from "../lib/liveSdkSmoke.js";
 import { pendingResults } from "../lib/pendingSuites.js";
 import { WORK_ROOT } from "../lib/processes.js";
 import { runAndExit, type StepResult } from "../lib/report.js";
@@ -36,6 +39,7 @@ function liveGate(): StepResult | null {
 }
 
 async function liveTokenCountSteps(): Promise<StepResult[]> {
+    if ((process.env.SECURECODE_PROVIDER_ID?.trim() || "anthropic") !== "anthropic") return [];
     const gate = liveGate();
     if (gate) {
         return [gate];
@@ -85,4 +89,9 @@ async function liveTokenCountSteps(): Promise<StepResult[]> {
     return results;
 }
 
-await runAndExit("test:live", [liveTokenCountSteps, () => Promise.resolve(pendingResults("live"))]);
+await runAndExit("test:live", [
+    liveTokenCountSteps,
+    liveLlamaCppSteps,
+    liveSdkSmokeSteps,
+    () => Promise.resolve(pendingResults("live")),
+]);

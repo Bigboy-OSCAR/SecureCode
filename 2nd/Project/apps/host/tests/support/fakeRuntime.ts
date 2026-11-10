@@ -30,6 +30,10 @@ export class FakeRuntime implements AgentRuntime {
 
     async closeSession(): Promise<void> {}
 
+    promptCosts(): { system: string; toolSchema: string } {
+        return { system: "fixture system prompt", toolSchema: "[]" };
+    }
+
     async dispose(): Promise<void> {
         this.finish({ finish: "aborted", text: "" });
     }

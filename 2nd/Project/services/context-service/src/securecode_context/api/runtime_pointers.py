@@ -1,4 +1,7 @@
-"""내부 Runtime Pointer 경로. host의 afterTool hook이 큰 도구 출력을 저장·조회한다(4.3 RuntimeStore 연결)."""
+"""내부 Runtime Pointer 저장·삭제 경로. host의 afterTool hook이 큰 도구 출력을 저장한다(4.3 RuntimeStore).
+
+계약형 부분 읽기·검색·목록은 runtime_reads.py, 스트리밍 저장은 runtime_stream.py에 있다.
+"""
 
 import re
 
@@ -6,6 +9,7 @@ from fastapi import APIRouter, Request
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from starlette.concurrency import run_in_threadpool
 
+from securecode_context.api.runtime_errors import translate
 from securecode_context.common.errors import ErrorCode, ServiceError
 from securecode_context.pointers.models.runtime import RuntimePut, RuntimeStoreError
 from securecode_context.pointers.runtime.db import MAX_OBJECT_BYTES
@@ -13,7 +17,6 @@ from securecode_context.pointers.runtime.store import RuntimeStore
 
 # One input byte can occupy six JSON bytes (e.g. an escaped control character).
 MAX_ENVELOPE_BYTES = 6 * MAX_OBJECT_BYTES + 4096
-MAX_READ_BYTES = 16 * 1024
 _SEGMENT = r"[A-Za-z0-9_-][A-Za-z0-9_.-]{0,127}"
 _URI = re.compile(
     rf"securecode://runtime/(?P<workspace>{_SEGMENT})/(?P<session>{_SEGMENT})/"
@@ -39,12 +42,14 @@ class ScopeBody(BaseModel):
 class PutBody(ScopeBody):
     """
     클래스 이름: PutBody
-    기능: 도구 출력 원문 저장 요청.
-    작성 날짜: 2026/11/07
+    기능: 계약 RuntimePutRequest. origin은 출력을 만든 도구 이름이며 제한된 읽기 도구는 거절된다.
+    작성 날짜: 2026/11/10
     """
 
     content: str
     media_type: str = Field(default="text/plain", min_length=1, max_length=128)
+    origin: str = Field(default="tool_output", min_length=1, max_length=64)
+    truncated_before_storage: bool = False
 
 
 class PointerBody(ScopeBody):
@@ -57,53 +62,16 @@ class PointerBody(ScopeBody):
     pointer: str = Field(min_length=1, max_length=512)
 
 
-class ReadBody(PointerBody):
-    """
-    클래스 이름: ReadBody
-    기능: 바이트 오프셋 기반 부분 조회 요청.
-    작성 날짜: 2026/11/07
-    """
-
-    offset: int = Field(default=0, ge=0)
-    max_bytes: int = Field(default=MAX_READ_BYTES, ge=1, le=MAX_READ_BYTES)
-
-
-class SearchBody(PointerBody):
-    """
-    클래스 이름: SearchBody
-    기능: 포인터 원문 안의 문자열 검색 요청.
-    작성 날짜: 2026/11/07
-    """
-
-    query: str = Field(min_length=1, max_length=256)
-    limit: int = Field(default=100, ge=1, le=100)
-
-
 def _store(request: Request) -> RuntimeStore:
     """
     함수 이름: _store()
-    기능: 앱이 구성한 4.3 RuntimeStore를 꺼낸다.
+    기능: 앱이 구성한 RuntimeStore를 꺼낸다.
     인자: request -> 현재 요청
     반환값: RuntimeStore
     작성 날짜: 2026/11/07
     """
     store: RuntimeStore = request.app.state.pointer_store
     return store
-
-
-def _translate(error: RuntimeStoreError) -> ServiceError:
-    """
-    함수 이름: _translate()
-    기능: 저장소 오류 코드를 공용 ErrorCode로 옮긴다. 알 수 없는 코드는 내부 오류로 처리한다.
-    인자: error -> 4.3 저장소 오류
-    반환값: ServiceError
-    작성 날짜: 2026/11/07
-    """
-    try:
-        code = ErrorCode(error.code)
-    except ValueError:
-        code = ErrorCode.INTERNAL_ERROR
-    return ServiceError(code, str(error))
 
 
 async def _read_body[Body: BaseModel](request: Request, model: type[Body], limit: int) -> Body:
@@ -150,84 +118,31 @@ def _pointer_id(body: PointerBody) -> str:
 async def put_pointer(request: Request) -> dict[str, object]:
     """
     함수 이름: put_pointer()
-    기능: 도구 출력 원문을 세션 범위에 저장하고 ID와 크기를 돌려준다.
+    기능: 도구 출력 원문을 세션 범위에 저장하고 ID·크기·descriptor를 돌려준다.
     인자: request -> 인증된 요청
-    반환값: pointer_id, pointer_uri, byte_size
-    작성 날짜: 2026/11/07
+    반환값: pointer_id, pointer_uri, byte_size, descriptor
+    작성 날짜: 2026/11/10
     """
     body = await _read_body(request, PutBody, MAX_ENVELOPE_BYTES)
     try:
         content = body.content.encode("utf-8")
     except UnicodeEncodeError:
         raise ServiceError(ErrorCode.VALIDATION_FAILED, "올바른 UTF-8 텍스트가 아닙니다.") from None
-    put = RuntimePut(body.workspace_id, body.session_id, body.media_type, content)
+    put = RuntimePut(
+        body.workspace_id, body.session_id, body.media_type, content,
+        origin=body.origin, truncated_before_storage=body.truncated_before_storage,
+    )  # fmt: skip
     try:
         descriptor = await run_in_threadpool(_store(request).put, put)
     except RuntimeStoreError as error:
-        raise _translate(error) from None
+        raise translate(error) from None
     pointer_id = descriptor.pointer.split("/")[-1].split("?", 1)[0]
-    return {"pointer_id": pointer_id, "pointer_uri": descriptor.pointer, "byte_size": len(content)}
-
-
-@router.post("/pointers/read")
-async def read_pointer(request: Request) -> dict[str, object]:
-    """
-    함수 이름: read_pointer()
-    기능: 포인터 원문의 일부를 바이트 오프셋 기준으로 조회한다.
-    인자: request -> 인증된 요청
-    반환값: 원문 조각과 다음 커서
-    작성 날짜: 2026/11/07
-    """
-    body = await _read_body(request, ReadBody, 64 * 1024)
-    pointer_id = _pointer_id(body)
-    try:
-        result = await run_in_threadpool(
-            _store(request).read,
-            body.workspace_id,
-            body.session_id,
-            pointer_id,
-            body.offset,
-            body.max_bytes,
-        )
-        descriptor = await run_in_threadpool(
-            _store(request).stat, body.workspace_id, body.session_id, pointer_id
-        )
-    except RuntimeStoreError as error:
-        raise _translate(error) from None
     return {
-        "pointer": body.pointer,
-        "content": result.content,
-        "byte_size": result.byte_size,
-        "total_bytes": descriptor.byte_size,
-        "truncated": result.truncated,
-        "next_cursor": result.next_cursor,
-        "revision": result.revision,
+        "pointer_id": pointer_id,
+        "pointer_uri": descriptor.pointer,
+        "byte_size": len(content),
+        "descriptor": descriptor.to_dict(),
     }
-
-
-@router.post("/pointers/search")
-async def search_pointer(request: Request) -> dict[str, object]:
-    """
-    함수 이름: search_pointer()
-    기능: 포인터 원문에서 문자열을 찾아 줄 번호와 함께 돌려준다.
-    인자: request -> 인증된 요청
-    반환값: 포인터와 검색 결과
-    작성 날짜: 2026/11/07
-    """
-    body = await _read_body(request, SearchBody, 64 * 1024)
-    pointer_id = _pointer_id(body)
-    try:
-        result = await run_in_threadpool(
-            _store(request).search,
-            body.workspace_id,
-            body.session_id,
-            pointer_id,
-            body.query,
-            body.limit,
-        )
-    except RuntimeStoreError as error:
-        raise _translate(error) from None
-    return {"pointer": body.pointer, **result}
 
 
 @router.post("/pointers/delete")
@@ -246,7 +161,7 @@ async def delete_pointer(request: Request) -> dict[str, bool]:
             _store(request).delete, body.workspace_id, body.session_id, pointer_id
         )
     except RuntimeStoreError as error:
-        raise _translate(error) from None
+        raise translate(error) from None
     return {"deleted": True}
 
 
@@ -265,5 +180,5 @@ async def clear_session(request: Request) -> dict[str, int]:
             _store(request).clear_session, body.workspace_id, body.session_id
         )
     except RuntimeStoreError as error:
-        raise _translate(error) from None
+        raise translate(error) from None
     return {"deleted": count}

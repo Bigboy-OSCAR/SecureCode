@@ -4,102 +4,37 @@
  * and commands need a user approval whose review shows the exact input.
  */
 import { lstatSync, readdirSync, writeFileSync } from "node:fs";
-import type { AgentTool } from "@cline/sdk";
-import type { ApprovalReview } from "@securecode/contracts";
+import type { ExecutorCapture, RuntimePointerService, RuntimeScope } from "../adapter/ports.js";
 import { refuseCommand } from "../permissions/commandPolicy.js";
+import { describeStoredOutput } from "../../pointer-hooks/runtimeDescriptor.js";
 import { runCommand } from "./commandRunner.js";
-import { readBoundedUtf8 } from "./boundedFileRead.js";
-import { readRuntimePointer, type RuntimePointerHookOptions } from "../../pointer-hooks/runtimePointerHook.js";
+import { OutputCapture } from "./outputCapture.js";
+import { runtimeReadTool, runtimeSearchTool } from "./runtimeTools.js";
+import { field, objectSchema, review, type ProjectTool } from "./toolSupport.js";
 import { resolveForRead, resolveForWrite, toRelative } from "./workspacePaths.js";
 
-export const REVIEW_MAX_BYTES = 16 * 1024;
-const READ_DEFAULT_BYTES = 16 * 1024;
-const READ_MAX_BYTES = 64 * 1024;
+export type { ProjectTool } from "./toolSupport.js";
+
 const WRITE_MAX_BYTES = 1024 * 1024;
 const COMMAND_MAX_CHARS = 4000;
-const COMMAND_OUTPUT_MAX_BYTES = 1024 * 1024;
 const LIST_MAX_ENTRIES = 500;
 const LIST_SKIPPED = new Set([".git", ".securecode", "node_modules"]);
 
-export interface ProjectTool {
-    tool: AgentTool;
-    requiresApproval: boolean;
-    review(input: unknown): ApprovalReview;
-    /** Non-null reason means the host refuses without asking the user. */
-    refuse(input: unknown): string | null;
+/** Runtime store binding for the command executor and the runtime read/search tools. */
+export interface WorkspaceRuntimeOptions {
+    service: RuntimePointerService;
+    scope: RuntimeScope;
+    thresholdBytes: number;
+    maxStoredBytes: number;
+    timeoutMs: number;
+    /** Tells the afterTool hook that this tool call's output is already a stored pointer. */
+    recordCapture(toolCallId: string, capture: ExecutorCapture): void;
 }
 
 export interface WorkspaceToolOptions {
     root: string;
     commandTimeoutMs: number;
-    pointer: Pick<RuntimePointerHookOptions, "baseUrl" | "internalToken" | "api" | "workspaceId" | "sessionId">;
-}
-
-function field(input: unknown, name: string, required: true): string;
-function field(input: unknown, name: string, required: false): string | undefined;
-function field(input: unknown, name: string, required: boolean): string | undefined {
-    const value = typeof input === "object" && input !== null ? (input as Record<string, unknown>)[name] : undefined;
-    if (value === undefined && !required) return undefined;
-    if (typeof value !== "string") throw new Error(`tool input field "${name}" must be a string`);
-    return value;
-}
-
-/** Cuts text to a UTF-8 byte budget without splitting a character. */
-export function clipUtf8(text: string, maxBytes: number): { text: string; truncated: boolean } {
-    const bytes = Buffer.from(text, "utf8");
-    if (bytes.length <= maxBytes) return { text, truncated: false };
-    let end = maxBytes;
-    while (end > 0 && ((bytes[end] ?? 0) & 0xc0) === 0x80) end -= 1;
-    return { text: bytes.subarray(0, end).toString("utf8"), truncated: true };
-}
-
-function review(kind: ApprovalReview["kind"], summary: string, content: string, paths?: string[]): ApprovalReview {
-    const clipped = clipUtf8(content, REVIEW_MAX_BYTES);
-    return {
-        kind,
-        summary: summary.slice(0, 500),
-        content: clipped.text,
-        content_truncated: clipped.truncated,
-        reviewable: !clipped.truncated,
-        ...(paths ? { target_paths: paths } : {}),
-    };
-}
-
-const objectSchema = (properties: Record<string, unknown>, required: string[]): AgentTool["inputSchema"] => ({
-    type: "object",
-    properties,
-    required,
-    additionalProperties: false,
-});
-
-function readFileTool(root: string): ProjectTool {
-    return {
-        requiresApproval: false,
-        review: (input) => review("other", `read ${field(input, "path", true)}`, ""),
-        refuse: () => null,
-        tool: {
-            name: "read_file",
-            description: "Read part of a UTF-8 text file inside the workspace (at most 64 KiB per call).",
-            inputSchema: objectSchema(
-                {
-                    path: { type: "string" },
-                    offset_bytes: { type: "integer", minimum: 0 },
-                    max_bytes: { type: "integer", minimum: 1, maximum: READ_MAX_BYTES },
-                },
-                ["path"],
-            ),
-            execute: async (input) => {
-                const target = resolveForRead(root, field(input, "path", true));
-                const record = input as { offset_bytes?: number; max_bytes?: number };
-                const offset = Number.isSafeInteger(record.offset_bytes) ? Math.max(0, record.offset_bytes ?? 0) : 0;
-                const limit = Math.min(
-                    READ_MAX_BYTES,
-                    Number.isSafeInteger(record.max_bytes) ? (record.max_bytes ?? 1) : READ_DEFAULT_BYTES,
-                );
-                return readBoundedUtf8(target, offset, limit);
-            },
-        },
-    };
+    runtime: WorkspaceRuntimeOptions;
 }
 
 function listFilesTool(root: string): ProjectTool {
@@ -171,90 +106,76 @@ function runCommandTool(options: WorkspaceToolOptions): ProjectTool {
             execute: async (input, context) => {
                 const refusal = refuse(input);
                 if (refusal) throw new Error(refusal);
-                const result = await runCommand(field(input, "command", true), {
-                    cwd: options.root,
-                    timeoutMs: options.commandTimeoutMs,
-                    maxOutputBytes: COMMAND_OUTPUT_MAX_BYTES,
-                    signal: context.signal,
-                });
-                if (result.aborted) throw new Error("command aborted");
-                const status = result.timedOut ? "timed out" : `exit code ${result.exitCode ?? "none"}`;
-                return `${result.output}${result.truncated ? "\n[output truncated at 1 MiB]" : ""}\n[run_command: ${status}]`;
+                return runCaptured(field(input, "command", true), options, context);
             },
         },
     };
 }
 
-function runtimeReadTool(pointer: WorkspaceToolOptions["pointer"]): ProjectTool {
-    return {
-        requiresApproval: false,
-        review: () => review("other", "read runtime pointer", ""),
-        refuse: () => null,
-        tool: {
-            name: "runtime_read",
-            description: "Read a bounded slice of a Runtime Pointer owned by this session.",
-            inputSchema: objectSchema(
-                {
-                    pointer: { type: "string" },
-                    offset: { type: "integer", minimum: 0 },
-                    max_bytes: { type: "integer", minimum: 1, maximum: 16384 },
-                },
-                ["pointer"],
-            ),
-            execute: async (input) => {
-                const record = input as { pointer?: string; offset?: number; max_bytes?: number };
-                const result = await readRuntimePointer(
-                    field(record, "pointer", true),
-                    pointer,
-                    Number.isSafeInteger(record.offset) ? (record.offset ?? 0) : 0,
-                    Number.isSafeInteger(record.max_bytes) ? (record.max_bytes ?? 16384) : 16384,
-                );
-                return JSON.stringify(result);
-            },
-        },
-    };
+/** Streams command output into the Runtime store once it reaches the threshold (4.4 streaming policy). */
+async function runCaptured(
+    command: string,
+    options: WorkspaceToolOptions,
+    context: { signal?: AbortSignal | undefined; toolCallId?: string | undefined },
+): Promise<string> {
+    const { runtime } = options;
+    const signal = context.signal ?? new AbortController().signal;
+    const meta = { origin: "run_command", mediaType: "text/plain", truncatedBeforeStorage: false };
+    const capture = new OutputCapture({
+        thresholdBytes: runtime.thresholdBytes,
+        maxStoredBytes: runtime.maxStoredBytes,
+        open: () => runtime.service.openUpload(runtime.scope, meta, signal),
+    });
+    let status: string;
+    try {
+        const result = await runCommand(command, {
+            cwd: options.root,
+            timeoutMs: options.commandTimeoutMs,
+            signal: context.signal,
+            onOutput: (text) => capture.append(text),
+        });
+        if (result.aborted) throw new Error("command aborted");
+        const exit = result.timedOut ? "timed out" : `exit code ${result.exitCode ?? "none"}`;
+        status = `[run_command: ${exit}]`;
+    } catch (error) {
+        capture.abort();
+        throw error;
+    }
+    const outcome = await capture.finish(status).catch((error: unknown) => {
+        capture.abort();
+        throw error;
+    });
+    if (outcome.kind === "inline") return outcome.text;
+    if (context.toolCallId) {
+        runtime.recordCapture(context.toolCallId, {
+            pointer: outcome.stored.pointer,
+            byteSize: outcome.stored.byteSize,
+            producedBytes: outcome.producedBytes,
+            truncated: outcome.truncated,
+        });
+    }
+    return describeStoredOutput({
+        toolName: "run_command",
+        pointer: outcome.stored.pointer,
+        byteSize: outcome.stored.byteSize,
+        preview: outcome.preview,
+        status,
+        facts: {},
+        isError: false,
+        truncation: outcome.truncated ? { producedBytes: outcome.producedBytes } : null,
+    });
 }
 
-function runtimeSearchTool(pointer: WorkspaceToolOptions["pointer"]): ProjectTool {
-    return {
-        requiresApproval: false,
-        review: () => review("other", "search runtime pointer", ""),
-        refuse: () => null,
-        tool: {
-            name: "runtime_search",
-            description: "Search a Runtime Pointer owned by this session and return matching line numbers.",
-            inputSchema: objectSchema(
-                {
-                    pointer: { type: "string" },
-                    query: { type: "string" },
-                },
-                ["pointer", "query"],
-            ),
-            execute: async (input) => {
-                const record = input as { pointer?: string; query?: string };
-                const result = await readRuntimePointer(field(record, "pointer", true), pointer);
-                const query = field(record, "query", true).toLowerCase();
-                const lines = result.content.split("\n");
-                const matches: { line: number; text: string }[] = [];
-                for (let index = 0; index < lines.length; index += 1) {
-                    const line = lines[index] ?? "";
-                    if (line.toLowerCase().includes(query)) {
-                        matches.push({ line: index + 1, text: line });
-                    }
-                }
-                return JSON.stringify({ matches, byte_size: result.byteSize, truncated: result.truncated });
-            },
-        },
-    };
+function runtimeToolOptions(runtime: WorkspaceRuntimeOptions): Parameters<typeof runtimeReadTool>[0] {
+    return { service: runtime.service, scope: runtime.scope, timeoutMs: runtime.timeoutMs };
 }
 
 export function createWorkspaceTools(options: WorkspaceToolOptions): ProjectTool[] {
     return [
-        readFileTool(options.root),
         listFilesTool(options.root),
         writeFileTool(options.root),
         runCommandTool(options),
-        runtimeReadTool(options.pointer),
-        runtimeSearchTool(options.pointer),
+        runtimeReadTool(runtimeToolOptions(options.runtime)),
+        runtimeSearchTool(runtimeToolOptions(options.runtime)),
     ];
 }

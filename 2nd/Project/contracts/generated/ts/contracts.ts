@@ -96,11 +96,11 @@ export type ShortText = string;
  * exact = local tokenizer identical to the provider (none exists for the 3.1 model). provider_estimate = provider count_tokens API (documented as an estimate). provider_reported = usage returned after a real request.
  */
 export type CountMode = "exact" | "provider_estimate" | "provider_reported";
-export type TokenCountMethod = "anthropic_count_tokens";
+export type TokenCountMethod = "anthropic_count_tokens" | "llama_cpp_tokenize";
 /**
- * What surrounds the counted text. single_user_message = one user message holding one text block; the count includes that minimal framing.
+ * What surrounds the counted text. single_user_message = one user message holding one text block; the count includes that minimal framing. provider_request = the input part (system, messages, tools, tool_choice, thinking) of one serialized provider request as sent (4.8 gate). plain_text = the text alone with no message framing (local llama.cpp tokenizer).
  */
-export type TokenCountFraming = "single_user_message";
+export type TokenCountFraming = "single_user_message" | "provider_request" | "plain_text";
 export type ApprovalStatus = "pending" | "approved" | "rejected" | "expired" | "cancelled";
 export type ApprovalReviewKind = "command" | "file_change" | "other";
 /**
@@ -352,9 +352,9 @@ export type ContextCandidate = {
 export type ContextOmission = {
     candidate_id: CandidateId;
     /**
-     * Reason a whole candidate was omitted. Partial materialization is reported by ContextFragment.inclusion.
+     * Reason a whole candidate was omitted (policy: docs/architecture/CONTEXT_SELECTOR.md 6). in_history: the same object range is already in the retained history. large_fragment: the candidate cannot be split and exceeds the per-fragment cap. Partial materialization is reported by ContextFragment.inclusion.
      */
-    reason: "no_match" | "stale" | "unauthorized" | "over_budget" | "duplicate";
+    reason: "no_match" | "stale" | "unauthorized" | "over_budget" | "duplicate" | "in_history" | "large_fragment";
     origin?: "explicit" | "current_task" | "r0";
     duplicate_of?: CandidateId;
     ref?: ExplicitContextRef;
@@ -378,12 +378,12 @@ export type ContextPreviewDuplicate = ContextOmission & {
 };
 export type ContextPreviewExplicitOmission = ContextOmission & {
     origin: "explicit";
-    reason: "no_match" | "stale" | "unauthorized" | "over_budget";
+    reason: "no_match" | "stale" | "unauthorized" | "over_budget" | "in_history" | "large_fragment";
     ref: ExplicitContextRef;
 };
 export type ContextPreviewAutomaticOmission = ContextOmission & {
     origin: "current_task" | "r0";
-    reason: "no_match" | "stale" | "unauthorized" | "over_budget";
+    reason: "no_match" | "stale" | "unauthorized" | "over_budget" | "in_history" | "large_fragment";
 };
 export type ContextPreviewBudget = ContextBudget & {
     costs: ContextBudgetCosts;
@@ -425,6 +425,7 @@ export interface ContractsIndex {
     TokenCountMethod?: TokenCountMethod;
     TokenCountFraming?: TokenCountFraming;
     TokenCountRequest?: TokenCountRequest;
+    RequestTokenCountRequest?: RequestTokenCountRequest;
     TokenCountResult?: TokenCountResult;
     TokenCountSummary?: TokenCountSummary;
     ApprovalStatus?: ApprovalStatus;
@@ -539,9 +540,10 @@ export interface ContractsIndex {
     ContextCandidate?: ContextCandidate;
     ContextFragment?: ContextFragment;
     /**
-     * Reason a whole candidate was omitted. Partial materialization is reported by ContextFragment.inclusion.
+     * Reason a whole candidate was omitted (policy: docs/architecture/CONTEXT_SELECTOR.md 6). in_history: the same object range is already in the retained history. large_fragment: the candidate cannot be split and exceeds the per-fragment cap. Partial materialization is reported by ContextFragment.inclusion.
      */
-    ContextOmissionReason?: "no_match" | "stale" | "unauthorized" | "over_budget" | "duplicate";
+    ContextOmissionReason?:
+        "no_match" | "stale" | "unauthorized" | "over_budget" | "duplicate" | "in_history" | "large_fragment";
     ContextOmission?: ContextOmission;
     ContextPlan?: ContextPlan;
     ContextBudgetCosts?: ContextBudgetCosts;
@@ -554,6 +556,9 @@ export interface ContractsIndex {
     ContextPreviewFragment?: ContextPreviewFragment;
     ContextPreviewBudget?: ContextPreviewBudget;
     ContextPreviewOmission?: ContextPreviewOmission;
+    ContextSelectCosts?: ContextSelectCosts;
+    ContextSelectRequest?: ContextSelectRequest;
+    ContextSelectResponse?: ContextSelectResponse;
 }
 /**
  * Optional machine-readable hints. Scalars only: no paths, keys, tokens or raw content.
@@ -598,6 +603,15 @@ export interface TokenCountRequest {
      * Optional; must equal the configured model. Omit to use it.
      */
     model_id?: string;
+}
+/**
+ * Internal POST /internal/v1/tokens/request (4.8). request is the exact outbound provider JSON object. Only verified framings are counted; anything else is TOKENIZER_UNAVAILABLE.
+ */
+export interface RequestTokenCountRequest {
+    schema_version: SchemaVersion;
+    provider_id: string;
+    model_id: string;
+    request: {};
 }
 export interface TokenCountResult {
     schema_version: SchemaVersion;
@@ -1480,4 +1494,43 @@ export interface ContextSearchPreviewResponse {
 export interface ContextBundlePreviewResponse {
     operation: "bundle";
     result: SymbolBundle;
+}
+/**
+ * Internal (host to context-service). Fixed-cost inputs for the selector budget (CONTEXT_SELECTOR.md 3.1). The service counts the texts with its TokenCounter; history holds one serialized message per item.
+ */
+export interface ContextSelectCosts {
+    model_context_limit: number;
+    reserved_output_tokens: number;
+    safety_margin_tokens: number;
+    message_overhead_tokens: number;
+    system: string;
+    tool_schema: string;
+    /**
+     * @maxItems 1024
+     */
+    history: string[];
+}
+/**
+ * Internal POST /internal/v1/context/select. current_task_refs are newest first. history_refs are ranges whose raw text already sits in this session's history (earlier fragments and pointer reads).
+ */
+export interface ContextSelectRequest {
+    schema_version: SchemaVersion;
+    input: ContextPlanInput;
+    /**
+     * @maxItems 64
+     */
+    current_task_refs?: PointerContextRef[];
+    /**
+     * @maxItems 256
+     */
+    history_refs?: ExplicitContextRef[];
+    costs: ContextSelectCosts;
+}
+/**
+ * Internal context.select result. run_create_error is the error a run created from this plan must return (first explicit omission other than in_history/duplicate), or null.
+ */
+export interface ContextSelectResponse {
+    schema_version: SchemaVersion;
+    plan: ContextPreviewPlan;
+    run_create_error: null | ("BUDGET_EXCEEDED" | "SOURCE_CHANGED" | "FORBIDDEN" | "NOT_FOUND");
 }

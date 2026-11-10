@@ -1,0 +1,141 @@
+{
+    "schema_ref": "context/context.schema.json#/definitions/ContextPreviewResponse",
+    "expect": "valid",
+    "scenario": "4.7",
+    "data": {
+        "operation": "plan",
+        "result": {
+            "schema_version": "1",
+            "index_revision": 3,
+            "preview_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "omissions_truncated": false,
+            "selected": [
+                {
+                    "candidate_id": "cand_exp-00001",
+                    "ref": {
+                        "kind": "source",
+                        "pointer": "securecode://source/ws_00000001/src_a-0001?v=1",
+                        "selection": {
+                            "revision": 1,
+                            "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                            "range": {
+                                "type": "byte",
+                                "start": 0,
+                                "end": 100
+                            }
+                        }
+                    },
+                    "score": 1,
+                    "explicit": true,
+                    "estimated_tokens": 100,
+                    "origin": "explicit"
+                },
+                {
+                    "candidate_id": "cand_task-overl1",
+                    "ref": {
+                        "kind": "source",
+                        "pointer": "securecode://source/ws_00000001/src_a-0001?v=1"
+                    },
+                    "score": 1,
+                    "explicit": false,
+                    "estimated_tokens": 100,
+                    "origin": "current_task"
+                }
+            ],
+            "fragments": [
+                {
+                    "candidate_id": "cand_exp-00001",
+                    "ref": {
+                        "kind": "source",
+                        "pointer": "securecode://source/ws_00000001/src_a-0001?v=1",
+                        "selection": {
+                            "revision": 1,
+                            "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                            "range": {
+                                "type": "byte",
+                                "start": 0,
+                                "end": 100
+                            }
+                        }
+                    },
+                    "content": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                    "token_count": 100,
+                    "inclusion": "full",
+                    "provenance": {
+                        "ref": {
+                            "kind": "source",
+                            "pointer": "securecode://source/ws_00000001/src_a-0001?v=1",
+                            "selection": {
+                                "revision": 1,
+                                "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                                "range": {
+                                    "type": "byte",
+                                    "start": 0,
+                                    "end": 100
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "candidate_id": "cand_task-overl1",
+                    "ref": {
+                        "kind": "source",
+                        "pointer": "securecode://source/ws_00000001/src_a-0001?v=1"
+                    },
+                    "content": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                    "token_count": 100,
+                    "inclusion": "full",
+                    "provenance": {
+                        "ref": {
+                            "kind": "source",
+                            "pointer": "securecode://source/ws_00000001/src_a-0001?v=1",
+                            "selection": {
+                                "revision": 1,
+                                "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                                "range": {
+                                    "type": "byte",
+                                    "start": 50,
+                                    "end": 150
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "omitted": [
+                {
+                    "candidate_id": "cand_task-seen01",
+                    "origin": "current_task",
+                    "reason": "in_history"
+                },
+                {
+                    "candidate_id": "cand_r0-inside01",
+                    "origin": "r0",
+                    "reason": "duplicate",
+                    "ref": {
+                        "kind": "symbol",
+                        "candidate_id": "cand_r0-inside01",
+                        "index_revision": 3
+                    },
+                    "duplicate_of": "cand_exp-00001"
+                }
+            ],
+            "budget": {
+                "budget_tokens": 200,
+                "used_tokens": 200,
+                "count_mode": "provider_estimate",
+                "costs": {
+                    "model_context_limit": 1000,
+                    "system_tokens": 100,
+                    "tool_schema_tokens": 100,
+                    "prompt_tokens": 50,
+                    "history_tokens": 200,
+                    "message_overhead_tokens": 20,
+                    "reserved_output_tokens": 300,
+                    "safety_margin_tokens": 30
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,699 @@
+{
+    "$comment": "4.7 Context Selector policy scenarios (docs/architecture/CONTEXT_SELECTOR.md). Inputs are compact; expected results are hand-computed. Token counts equal byte counts here (test counter, count_mode provider_estimate). services/context-service/tests/contract/test_context_selector_policy.py re-derives every expected result from the input with the written policy, builds the full ContextPreviewPlan and validates it against the contract.",
+    "schema_version": "1",
+    "policy": {
+        "fragment_cap_tokens": 100,
+        "min_partial_tokens": 10,
+        "max_candidates": {
+            "explicit": 32,
+            "current_task": 16,
+            "r0": 16
+        }
+    },
+    "base_costs": {
+        "model_context_limit": 1000,
+        "system_tokens": 100,
+        "tool_schema_tokens": 100,
+        "prompt_tokens": 50,
+        "history_tokens": 200,
+        "message_overhead_tokens": 20,
+        "reserved_output_tokens": 300,
+        "safety_margin_tokens": 30
+    },
+    "objects": {
+        "src-a": {
+            "kind": "source",
+            "id": "src_a-0001",
+            "path": "pkg/a.py",
+            "revision": 1,
+            "sha": "aa"
+        },
+        "src-b": {
+            "kind": "source",
+            "id": "src_b-0001",
+            "path": "docs/guide.md",
+            "revision": 3,
+            "sha": "bb"
+        },
+        "src-c": {
+            "kind": "source",
+            "id": "src_c-0001",
+            "path": "pkg/c.py",
+            "revision": 2,
+            "sha": "cc"
+        },
+        "rt-1": {
+            "kind": "runtime",
+            "id": "11111111-1111-4111-8111-111111111111",
+            "sha": "d1"
+        },
+        "rt-2": {
+            "kind": "runtime",
+            "id": "22222222-2222-4222-8222-222222222222",
+            "sha": "d2"
+        },
+        "rt-9": {
+            "kind": "runtime",
+            "id": "99999999-9999-4999-8999-999999999999",
+            "sha": "d9"
+        },
+        "rt-other": {
+            "kind": "runtime",
+            "id": "33333333-3333-4333-8333-333333333333",
+            "sha": "d3",
+            "foreign": true
+        }
+    },
+    "scenarios": [
+        {
+            "id": "S1-priority-and-partial",
+            "description": "Order is explicit (request order) > current_task (newest first) > r0 (score desc). The large automatic runtime output is cut to the fragment cap (partial_size); symbols that no longer fit are omitted, never cut.",
+            "candidates": [
+                {
+                    "candidate_id": "cand_r0-low-001",
+                    "origin": "r0",
+                    "kind": "symbol",
+                    "object": "src-c",
+                    "range": [0, 40],
+                    "lines": [1, 4],
+                    "score": 0.4,
+                    "tokens": 40
+                },
+                {
+                    "candidate_id": "cand_r0-high-01",
+                    "origin": "r0",
+                    "kind": "symbol",
+                    "object": "src-a",
+                    "range": [0, 50],
+                    "lines": [1, 5],
+                    "score": 0.9,
+                    "tokens": 50
+                },
+                {
+                    "candidate_id": "cand_task-old-1",
+                    "origin": "current_task",
+                    "kind": "runtime",
+                    "object": "rt-1",
+                    "range": [0, 300],
+                    "recency": 1,
+                    "score": 1,
+                    "tokens": 300
+                },
+                {
+                    "candidate_id": "cand_task-new-1",
+                    "origin": "current_task",
+                    "kind": "runtime",
+                    "object": "rt-2",
+                    "range": [0, 30],
+                    "recency": 0,
+                    "score": 1,
+                    "tokens": 30
+                },
+                {
+                    "candidate_id": "cand_exp-00001",
+                    "origin": "explicit",
+                    "kind": "source",
+                    "object": "src-b",
+                    "range": [0, 60],
+                    "position": 0,
+                    "score": 1,
+                    "tokens": 60
+                }
+            ],
+            "expected": {
+                "budget_tokens": 200,
+                "order": ["cand_exp-00001", "cand_task-new-1", "cand_task-old-1", "cand_r0-high-01", "cand_r0-low-001"],
+                "fragments": [
+                    {
+                        "candidate_id": "cand_exp-00001",
+                        "token_count": 60,
+                        "inclusion": "full",
+                        "range": [0, 60]
+                    },
+                    {
+                        "candidate_id": "cand_task-new-1",
+                        "token_count": 30,
+                        "inclusion": "full",
+                        "range": [0, 30]
+                    },
+                    {
+                        "candidate_id": "cand_task-old-1",
+                        "token_count": 100,
+                        "inclusion": "partial_size",
+                        "range": [0, 100]
+                    }
+                ],
+                "omitted": [
+                    {
+                        "candidate_id": "cand_r0-high-01",
+                        "reason": "over_budget"
+                    },
+                    {
+                        "candidate_id": "cand_r0-low-001",
+                        "reason": "over_budget"
+                    }
+                ],
+                "used_tokens": 190
+            }
+        },
+        {
+            "id": "S2-explicit-over-budget",
+            "description": "An explicit selection is never cut: one that fits the fragment cap but not the remaining budget is omitted as over_budget (the run must not start until the user narrows or removes it), while a later automatic candidate that fits is still selected.",
+            "candidates": [
+                {
+                    "candidate_id": "cand_exp-00001",
+                    "origin": "explicit",
+                    "kind": "source",
+                    "object": "src-a",
+                    "range": [0, 100],
+                    "position": 0,
+                    "score": 1,
+                    "tokens": 100
+                },
+                {
+                    "candidate_id": "cand_exp-00002",
+                    "origin": "explicit",
+                    "kind": "source",
+                    "object": "src-b",
+                    "range": [0, 60],
+                    "position": 1,
+                    "score": 1,
+                    "tokens": 60
+                },
+                {
+                    "candidate_id": "cand_exp-00003",
+                    "origin": "explicit",
+                    "kind": "source",
+                    "object": "src-c",
+                    "range": [0, 50],
+                    "position": 2,
+                    "score": 1,
+                    "tokens": 50
+                },
+                {
+                    "candidate_id": "cand_r0-fit-001",
+                    "origin": "r0",
+                    "kind": "symbol",
+                    "object": "src-a",
+                    "range": [200, 240],
+                    "lines": [20, 23],
+                    "score": 0.7,
+                    "tokens": 40
+                }
+            ],
+            "expected": {
+                "budget_tokens": 200,
+                "order": ["cand_exp-00001", "cand_exp-00002", "cand_exp-00003", "cand_r0-fit-001"],
+                "fragments": [
+                    {
+                        "candidate_id": "cand_exp-00001",
+                        "token_count": 100,
+                        "inclusion": "full",
+                        "range": [0, 100]
+                    },
+                    {
+                        "candidate_id": "cand_exp-00002",
+                        "token_count": 60,
+                        "inclusion": "full",
+                        "range": [0, 60]
+                    },
+                    {
+                        "candidate_id": "cand_r0-fit-001",
+                        "token_count": 40,
+                        "inclusion": "full",
+                        "range": [200, 240]
+                    }
+                ],
+                "omitted": [
+                    {
+                        "candidate_id": "cand_exp-00003",
+                        "reason": "over_budget"
+                    }
+                ],
+                "used_tokens": 200,
+                "run_create_error": "BUDGET_EXCEEDED"
+            }
+        },
+        {
+            "id": "S3-zero-budget",
+            "description": "Fixed costs use the whole window exactly: an empty plan is valid and every candidate is over_budget.",
+            "costs": {
+                "reserved_output_tokens": 500
+            },
+            "candidates": [
+                {
+                    "candidate_id": "cand_exp-00001",
+                    "origin": "explicit",
+                    "kind": "source",
+                    "object": "src-a",
+                    "range": [0, 10],
+                    "position": 0,
+                    "score": 1,
+                    "tokens": 10
+                },
+                {
+                    "candidate_id": "cand_r0-small-1",
+                    "origin": "r0",
+                    "kind": "symbol",
+                    "object": "src-c",
+                    "range": [0, 10],
+                    "lines": [1, 1],
+                    "score": 0.5,
+                    "tokens": 10
+                }
+            ],
+            "expected": {
+                "budget_tokens": 0,
+                "order": ["cand_exp-00001", "cand_r0-small-1"],
+                "fragments": [],
+                "omitted": [
+                    {
+                        "candidate_id": "cand_exp-00001",
+                        "reason": "over_budget"
+                    },
+                    {
+                        "candidate_id": "cand_r0-small-1",
+                        "reason": "over_budget"
+                    }
+                ],
+                "used_tokens": 0,
+                "run_create_error": "BUDGET_EXCEEDED"
+            }
+        },
+        {
+            "id": "S4-fixed-costs-exceed",
+            "description": "System, tools, prompt, history, overhead, output reserve and margin already exceed the window: no plan, BUDGET_EXCEEDED with guidance to shorten the prompt or start a new session. History is never trimmed or summarized.",
+            "costs": {
+                "history_tokens": 1000
+            },
+            "candidates": [
+                {
+                    "candidate_id": "cand_r0-small-1",
+                    "origin": "r0",
+                    "kind": "symbol",
+                    "object": "src-c",
+                    "range": [0, 10],
+                    "lines": [1, 1],
+                    "score": 0.5,
+                    "tokens": 10
+                }
+            ],
+            "expected": {
+                "error": "BUDGET_EXCEEDED"
+            }
+        },
+        {
+            "id": "S5-no-match",
+            "description": "R0 found nothing (no r0 candidates) and the explicit symbol is not in the current index revision: no_match, empty plan.",
+            "candidates": [
+                {
+                    "candidate_id": "cand_exp-sym-01",
+                    "origin": "explicit",
+                    "kind": "symbol",
+                    "object": "src-a",
+                    "range": [0, 20],
+                    "lines": [1, 2],
+                    "position": 0,
+                    "score": 1,
+                    "tokens": 20,
+                    "status": "no_match"
+                }
+            ],
+            "expected": {
+                "budget_tokens": 200,
+                "order": ["cand_exp-sym-01"],
+                "fragments": [],
+                "omitted": [
+                    {
+                        "candidate_id": "cand_exp-sym-01",
+                        "reason": "no_match"
+                    }
+                ],
+                "used_tokens": 0,
+                "run_create_error": "NOT_FOUND"
+            }
+        },
+        {
+            "id": "S6-unauthorized-and-stale",
+            "description": "Scope is checked before anything else (a foreign pointer is unauthorized even if it would fit); changed sources, expired runtime outputs and old index revisions are stale. Only the valid candidate is materialized.",
+            "candidates": [
+                {
+                    "candidate_id": "cand_exp-foreign",
+                    "origin": "explicit",
+                    "kind": "runtime",
+                    "object": "rt-other",
+                    "range": [0, 10],
+                    "position": 0,
+                    "score": 1,
+                    "tokens": 10,
+                    "status": "unauthorized"
+                },
+                {
+                    "candidate_id": "cand_exp-changed",
+                    "origin": "explicit",
+                    "kind": "source",
+                    "object": "src-b",
+                    "range": [0, 10],
+                    "position": 1,
+                    "score": 1,
+                    "tokens": 10,
+                    "status": "stale"
+                },
+                {
+                    "candidate_id": "cand_task-expire",
+                    "origin": "current_task",
+                    "kind": "runtime",
+                    "object": "rt-1",
+                    "range": [0, 10],
+                    "recency": 0,
+                    "score": 1,
+                    "tokens": 10,
+                    "status": "stale"
+                },
+                {
+                    "candidate_id": "cand_r0-old-rev1",
+                    "origin": "r0",
+                    "kind": "symbol",
+                    "object": "src-a",
+                    "range": [0, 10],
+                    "lines": [1, 1],
+                    "score": 0.9,
+                    "tokens": 10,
+                    "status": "stale"
+                },
+                {
+                    "candidate_id": "cand_r0-valid-01",
+                    "origin": "r0",
+                    "kind": "symbol",
+                    "object": "src-c",
+                    "range": [0, 40],
+                    "lines": [1, 4],
+                    "score": 0.6,
+                    "tokens": 40
+                }
+            ],
+            "expected": {
+                "budget_tokens": 200,
+                "order": [
+                    "cand_exp-foreign",
+                    "cand_exp-changed",
+                    "cand_task-expire",
+                    "cand_r0-old-rev1",
+                    "cand_r0-valid-01"
+                ],
+                "fragments": [
+                    {
+                        "candidate_id": "cand_r0-valid-01",
+                        "token_count": 40,
+                        "inclusion": "full",
+                        "range": [0, 40]
+                    }
+                ],
+                "omitted": [
+                    {
+                        "candidate_id": "cand_exp-foreign",
+                        "reason": "unauthorized"
+                    },
+                    {
+                        "candidate_id": "cand_exp-changed",
+                        "reason": "stale"
+                    },
+                    {
+                        "candidate_id": "cand_task-expire",
+                        "reason": "stale"
+                    },
+                    {
+                        "candidate_id": "cand_r0-old-rev1",
+                        "reason": "stale"
+                    }
+                ],
+                "used_tokens": 40,
+                "run_create_error": "FORBIDDEN"
+            }
+        },
+        {
+            "id": "S7-large-fragment",
+            "description": "Units that cannot be split (explicit confirmed ranges, symbols) above the per-fragment cap are large_fragment; an automatic pointer is cut to the cap (partial_size). No whole-file fallback.",
+            "candidates": [
+                {
+                    "candidate_id": "cand_exp-huge-01",
+                    "origin": "explicit",
+                    "kind": "source",
+                    "object": "src-b",
+                    "range": [0, 150],
+                    "position": 0,
+                    "score": 1,
+                    "tokens": 150
+                },
+                {
+                    "candidate_id": "cand_task-log-01",
+                    "origin": "current_task",
+                    "kind": "runtime",
+                    "object": "rt-1",
+                    "range": [0, 150],
+                    "recency": 0,
+                    "score": 1,
+                    "tokens": 150
+                },
+                {
+                    "candidate_id": "cand_r0-bigsym1",
+                    "origin": "r0",
+                    "kind": "symbol",
+                    "object": "src-a",
+                    "range": [0, 120],
+                    "lines": [1, 12],
+                    "score": 0.8,
+                    "tokens": 120
+                }
+            ],
+            "expected": {
+                "budget_tokens": 200,
+                "order": ["cand_exp-huge-01", "cand_task-log-01", "cand_r0-bigsym1"],
+                "fragments": [
+                    {
+                        "candidate_id": "cand_task-log-01",
+                        "token_count": 100,
+                        "inclusion": "partial_size",
+                        "range": [0, 100]
+                    }
+                ],
+                "omitted": [
+                    {
+                        "candidate_id": "cand_exp-huge-01",
+                        "reason": "large_fragment"
+                    },
+                    {
+                        "candidate_id": "cand_r0-bigsym1",
+                        "reason": "large_fragment"
+                    }
+                ],
+                "used_tokens": 100,
+                "run_create_error": "BUDGET_EXCEEDED"
+            }
+        },
+        {
+            "id": "S8-duplicates-and-history",
+            "description": "Duplicates are judged on the same object (source hash/runtime pointer) and a contained byte range, not on the URI alone. A range already in the retained history is in_history; a range inside a retained candidate is duplicate; a partial overlap is kept.",
+            "history_refs": [
+                {
+                    "object": "rt-9",
+                    "range": [0, 500]
+                }
+            ],
+            "candidates": [
+                {
+                    "candidate_id": "cand_exp-00001",
+                    "origin": "explicit",
+                    "kind": "source",
+                    "object": "src-a",
+                    "range": [0, 100],
+                    "position": 0,
+                    "score": 1,
+                    "tokens": 100
+                },
+                {
+                    "candidate_id": "cand_task-seen01",
+                    "origin": "current_task",
+                    "kind": "runtime",
+                    "object": "rt-9",
+                    "range": [100, 200],
+                    "recency": 0,
+                    "score": 1,
+                    "tokens": 100
+                },
+                {
+                    "candidate_id": "cand_task-overl1",
+                    "origin": "current_task",
+                    "kind": "source",
+                    "object": "src-a",
+                    "range": [50, 150],
+                    "recency": 1,
+                    "score": 1,
+                    "tokens": 100
+                },
+                {
+                    "candidate_id": "cand_r0-inside01",
+                    "origin": "r0",
+                    "kind": "symbol",
+                    "object": "src-a",
+                    "range": [20, 60],
+                    "lines": [3, 6],
+                    "score": 0.9,
+                    "tokens": 40
+                }
+            ],
+            "expected": {
+                "budget_tokens": 200,
+                "order": ["cand_exp-00001", "cand_task-seen01", "cand_task-overl1", "cand_r0-inside01"],
+                "fragments": [
+                    {
+                        "candidate_id": "cand_exp-00001",
+                        "token_count": 100,
+                        "inclusion": "full",
+                        "range": [0, 100]
+                    },
+                    {
+                        "candidate_id": "cand_task-overl1",
+                        "token_count": 100,
+                        "inclusion": "full",
+                        "range": [50, 150]
+                    }
+                ],
+                "omitted": [
+                    {
+                        "candidate_id": "cand_task-seen01",
+                        "reason": "in_history"
+                    },
+                    {
+                        "candidate_id": "cand_r0-inside01",
+                        "reason": "duplicate",
+                        "duplicate_of": "cand_exp-00001"
+                    }
+                ],
+                "used_tokens": 200
+            }
+        },
+        {
+            "id": "S9-stable-tie",
+            "description": "Equal R0 scores are ordered by candidate_id ascending, independent of input order.",
+            "candidates": [
+                {
+                    "candidate_id": "cand_r0-bbbb-01",
+                    "origin": "r0",
+                    "kind": "symbol",
+                    "object": "src-a",
+                    "range": [0, 90],
+                    "lines": [1, 6],
+                    "score": 0.5,
+                    "tokens": 90
+                },
+                {
+                    "candidate_id": "cand_r0-aaaa-01",
+                    "origin": "r0",
+                    "kind": "symbol",
+                    "object": "src-c",
+                    "range": [0, 90],
+                    "lines": [1, 6],
+                    "score": 0.5,
+                    "tokens": 90
+                },
+                {
+                    "candidate_id": "cand_r0-cccc-01",
+                    "origin": "r0",
+                    "kind": "symbol",
+                    "object": "src-b",
+                    "range": [0, 90],
+                    "lines": [1, 6],
+                    "score": 0.5,
+                    "tokens": 90
+                }
+            ],
+            "expected": {
+                "budget_tokens": 200,
+                "order": ["cand_r0-aaaa-01", "cand_r0-bbbb-01", "cand_r0-cccc-01"],
+                "fragments": [
+                    {
+                        "candidate_id": "cand_r0-aaaa-01",
+                        "token_count": 90,
+                        "inclusion": "full",
+                        "range": [0, 90]
+                    },
+                    {
+                        "candidate_id": "cand_r0-bbbb-01",
+                        "token_count": 90,
+                        "inclusion": "full",
+                        "range": [0, 90]
+                    }
+                ],
+                "omitted": [
+                    {
+                        "candidate_id": "cand_r0-cccc-01",
+                        "reason": "over_budget"
+                    }
+                ],
+                "used_tokens": 180
+            }
+        },
+        {
+            "id": "S10-min-partial",
+            "description": "When less than min_partial_tokens remain, an automatic pointer is omitted instead of producing a tiny fragment.",
+            "candidates": [
+                {
+                    "candidate_id": "cand_exp-00001",
+                    "origin": "explicit",
+                    "kind": "source",
+                    "object": "src-a",
+                    "range": [0, 95],
+                    "position": 0,
+                    "score": 1,
+                    "tokens": 95
+                },
+                {
+                    "candidate_id": "cand_exp-00002",
+                    "origin": "explicit",
+                    "kind": "source",
+                    "object": "src-b",
+                    "range": [0, 100],
+                    "position": 1,
+                    "score": 1,
+                    "tokens": 100
+                },
+                {
+                    "candidate_id": "cand_task-log-01",
+                    "origin": "current_task",
+                    "kind": "runtime",
+                    "object": "rt-1",
+                    "range": [0, 50],
+                    "recency": 0,
+                    "score": 1,
+                    "tokens": 50
+                }
+            ],
+            "expected": {
+                "budget_tokens": 200,
+                "order": ["cand_exp-00001", "cand_exp-00002", "cand_task-log-01"],
+                "fragments": [
+                    {
+                        "candidate_id": "cand_exp-00001",
+                        "token_count": 95,
+                        "inclusion": "full",
+                        "range": [0, 95]
+                    },
+                    {
+                        "candidate_id": "cand_exp-00002",
+                        "token_count": 100,
+                        "inclusion": "full",
+                        "range": [0, 100]
+                    }
+                ],
+                "omitted": [
+                    {
+                        "candidate_id": "cand_task-log-01",
+                        "reason": "over_budget"
+                    }
+                ],
+                "used_tokens": 195
+            }
+        }
+    ]
+}

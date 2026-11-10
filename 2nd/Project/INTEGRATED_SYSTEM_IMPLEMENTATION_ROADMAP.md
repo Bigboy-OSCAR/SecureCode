@@ -1035,21 +1035,21 @@ docs/progress/tasks/3.5.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **선행 조건: 박준형 3.4번 + 박준형 3.5번 + 임우형 4.4번 + 임우형 4.6번 + 임우형 4.8번 + 임우형 4.9번 작업이 모두 완료된 이후에 진행.**
 
-- [ ] **3.6 완료** — 구현/설계·검증·증거 기록 후에만 체크
+- [x] **3.6 완료** — 구현/설계·검증·증거 기록 후에만 체크
 
 **왜 필요한가 / 무엇을 하는가:** 각 서비스가 별도로 성공해도 모델에 실제로 전달되는 자료가 잘못되면 세 기술의 효과가 없다. SDK host 조립의 책임자가 모든 포트를 실제 구현으로 연결하고 요청 payload 기준으로 작동을 증명한다.
 
 **담당:** 박준형  
 **주요 산출물·수정 범위:** apps/host/src/app 조립; context-client; routes; cline/tools/plugins; 서비스 API 조립; 통합 fixture  
-**검증 기록:** [3.6 BLOCKED 기록](docs/progress/tasks/3.6.md)
+**검증 기록:** `docs/progress/tasks/3.6.md`
 
-**2026-11-05 상태: BLOCKED** — 선행 4.4·4.6·4.8·4.9가 미완료다(체크 `[ ]`, 증거 파일 없음, Python `context/`·`pdf/` 패키지 없음). provider 키도 없어 live smoke를 할 수 없다. 코드는 바꾸지 않았다. 재개 조건은 검증 기록에 있다.
+**2026-11-10 상태: DONE** (재실행). R0 색인·검색, Source/Runtime/PDF 도구와 공개 경로, `context.select` 기반 run 생성(미리보기 digest, fragment 한 번 삽입), 4.8 gate, PDF skill prompt를 운영 SDK 경로에 연결했다. 501과 mock 경로는 없어졌다. 설치 SDK 누출 시험에서 무관 파일 1,000개·2.2 MB 로그·PDF 미선택 페이지가 provider 요청과 대화 기록에 없음을 확인했다. 로컬 qwen(llama.cpp) live smoke는 12/12 PASS다(R0 근거 답, 명령 승인·포인터 부분 재조회, PDF 쪽 인용, 취소, 차단). [3.6 검증 기록](docs/progress/tasks/3.6.md) · [UI 예제](docs/handoffs/3.6-ui-integration-examples.md)
 
 **완료 조건**
 
-- [ ] 세 기능·PDF·Selector가 실제 SDK production 경로에 연결되고 mock 경로가 남지 않는다.
-- [ ] provider payload/history에서 전체 index·큰 원문·미선택 페이지 유출이 없다.
-- [ ] 실제 provider smoke·승인·취소·실패 차단 증거와 UI 연동 예제가 있다.
+- [x] 세 기능·PDF·Selector가 실제 SDK production 경로에 연결되고 mock 경로가 남지 않는다.
+- [x] provider payload/history에서 전체 index·큰 원문·미선택 페이지 유출이 없다.
+- [x] 실제 provider smoke·승인·취소·실패 차단 증거와 UI 연동 예제가 있다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 
@@ -1099,11 +1099,13 @@ docs/progress/tasks/3.6.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** scripts; 루트 검사/빌드 설정; tests/integration; README.md; docs/release/RUNBOOK.md  
 **검증 기록:** `docs/progress/tasks/3.7.md`
 
+**2026-11-11 상태: IN_PROGRESS.** dev 3단 기동·정리, 구조 검사(순환·mock·비밀값·금지 기법·미구현), 패키징, 새 폴더 설치 smoke, RUNBOOK을 마쳤다. integration·contracts·build·install은 PASS, live는 12/12 PASS다. `npm run check`는 UI fixture 경로(1.5 담당) 18건이 KNOWN으로 남아 exit 3이라 조건 2와 '3.7 완료'를 체크하지 않았다. [3.7 기록](docs/progress/tasks/3.7.md)
+
 **완료 조건**
 
-- [ ] 설치/기동/종료/빌드/검사 명령과 RUNBOOK이 다른 팀원에게 재현 가능하다.
+- [x] 설치/기동/종료/빌드/검사 명령과 RUNBOOK이 다른 팀원에게 재현 가능하다.
 - [ ] 백엔드·SDK·계약·구조 검사가 통과하며 무의미한 no-op 검사가 없다.
-- [ ] 지원 범위·실 provider 설정·데이터 정리·오류 대응이 문서화돼 있다.
+- [x] 지원 범위·실 provider 설정·데이터 정리·오류 대응이 문서화돼 있다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 
@@ -1319,7 +1321,7 @@ docs/progress/tasks/4.2.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** pointers/runtime, registry, models; runtime API; 저장소 단위/통합 시험  
 **검증 기록:** `docs/progress/tasks/4.3.md`
 
-**재사용할 구현** — 별도로 기동하는 레거시 FastAPI와 SQLite 저장소에서 Bearer 인증, 작업 공간·세션 격리, TTL, UTF-8 바이트 단위 이어 읽기를 검증했다. 새 Runtime URI는 `?v=1`로 발급한다. 정식 서비스 API, 세션 합산 용량, 검색·정리와 대량 발급 검증은 이 작업에 남아 있다. [레거시 API 실행 안내](services/context-service/README.md#레거시-runtime-pointer-api)
+**2026-11-10 상태: DONE** (팀 합의로 박준형이 재작업). 저장은 예약 후 쓰기 잠금 안에서 세션 용량 검사·완료로 원자적이고, 다중 인스턴스에서도 원자성을 시험했다. 64 KiB 청크 checksum 검증 읽기, 스트리밍 writer(4.4 포트), 재시작 복구(예약·잃은 행·고아 파일)를 구현했다. tombstone 상태와 계약형 read/search/list(공용 텍스트 엔진·bytes/token cap·범위 cursor)를 제공한다. 10,001개 발급을 실디스크에서 검증했다. host는 4.4 전까지 호환 offset 경로를 쓴다. [4.3 검증 기록](docs/progress/tasks/4.3.md)
 
 **완료 조건**
 
@@ -1374,7 +1376,7 @@ docs/progress/tasks/4.3.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** apps/host/src/pointer-hooks; 프로젝트 소유 command executor 연결; Runtime SDK 통합 시험  
 **검증 기록:** `docs/progress/tasks/4.4.md`
 
-**재사용할 구현** — 설치된 SDK의 `afterTool`에서 64 KiB 출력을 한 번 저장하고, 그 원문 대신 포인터가 다음 모델 요청 본문과 SDK 대화 기록에 들어가는 것을 오프라인으로 확인했다. 3.5 운영 세션과 4.3 정식 저장소에 연결한 뒤 승인된 명령, 취소·저장 실패, SSE까지 검증한다. [SDK 통합 시험](apps/host/tests/integration/runtimePointerPlugin.test.ts)
+**2026-11-10 상태: DONE** (팀 합의로 박준형이 재작업). afterTool 등록점(`createRuntimePointerHooks`)을 4.3 정식 저장소 client에 연결했다. 명령 출력은 프로젝트 executor가 4 KiB 이후 스트리밍으로 저장하고, host 메모리에는 앞부분만 둔다. 다음 정책을 적용했다. <br>- 이미 잘린 결과: 범위 표시 <br>- 제한된 읽기: 재포장하지 않음 <br>- 매 turn 전: store 준비 확인 <br>설치 SDK와 실제 context-service로 검증한 내용은 다음과 같다. <br>- provider payload·SSE·SDK history에 원문 없음 <br>- line/search/byte 재조회 <br>- 거절·미등록·도달 불가·저장 실패/시간 초과·업로드 실패·취소·만료/세션 종료 <br>운영 세션은 4.8 gate 전까지 차단된다. [4.4 검증 기록](docs/progress/tasks/4.4.md) · [SDK 통합 시험](apps/host/tests/integration/runtimePointerSdk.test.ts)
 
 **완료 조건**
 
@@ -1429,7 +1431,7 @@ docs/progress/tasks/4.4.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** pointers/source의 registry/lifecycle; Source API; 파일 정책 시험  
 **검증 기록:** `docs/progress/tasks/4.5.md`
 
-**재사용할 구현** — 현재 Source 등록부는 메모리에서 작업 공간별 파일 등록·중복 처리·등록 해제를 수행하고, 등록한 파일이 교체되면 기존 ID의 읽기를 거절한다. 디스크 등록부, 재시작 복구, 공개 등록·해제 계약은 후속 범위다. [등록부 회귀 시험](services/context-service/tests/unit/test_source_store.py)
+**2026-11-10 상태: DONE** (팀 합의로 박준형이 재작업). 등록부는 SQLite 디스크 등록부다. 외부 허용 목록은 workspace 범위로 분리되어 있다. revision은 refresh/재등록 때만 올라가며, 경로는 재시작 뒤에도 매번 다시 확인한다. resolve/lookup 포트와 `/internal/v1/source/*` 경로가 있다. POSIX 실행 경로는 미실행이며 3.7에서 확인한다. [4.5 검증 기록](docs/progress/tasks/4.5.md) · [정책 시험](services/context-service/tests/unit/test_source_policy.py)
 
 **완료 조건**
 
@@ -1484,7 +1486,7 @@ docs/progress/tasks/4.5.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** pointers/source/{readers,index,search} 등 기능별 모듈; bounded I/O 시험  
 **검증 기록:** `docs/progress/tasks/4.6.md`
 
-현재 Source 텍스트 읽기는 파일을 작은 단위로 순차 스캔하고 UTF-8 바이트 한도를 지킨다. 뒤쪽 줄을 반복 조회할 때의 seek 인덱스, 검색·JSON 선택자, 토큰 한도와 revision에 묶인 cursor는 이 작업에서 구현·계측한다.
+**2026-11-10 상태: DONE** (팀 합의로 박준형이 재작업). 줄 오프셋 색인·seek와 Markdown section을 구현했다. JSON Pointer는 8 MiB 이하 전체 파싱이다. 검색은 요청당 8 MiB·2초 scan 상한과 cursor를 쓴다. bytes/token cap이 있으며, cursor는 revision·fingerprint에 묶었다. 67.5 MB fixture에서 반복 줄 조회는 회당 128 KiB 이하만 읽는다(최초 색인은 순차 1회). POSIX 열기 경로와 실제 provider 계수는 미검증이다. [4.6 검증 기록](docs/progress/tasks/4.6.md)
 
 **완료 조건**
 
@@ -1580,6 +1582,8 @@ docs/progress/tasks/4.7.md에 task_id/owner/status/시각/선행 증거/변경 �
 마지막 응답에는 완료 범위, 검증 결과, 남은 문제, 다음 시작 가능한 작업을 짧게 보고하라. commit/push는 하지 않았다고 명시하라.
 ```
 
+**2026-11-10 상태: DONE** (팀 합의로 박준형이 재작업). 정책 2.0에서 정한 내용은 다음과 같다. <br>- 예산 식·계수 모드, 처리 순서(범위→버전→해석→이력·후보 중복→크기→예산), 그룹 순서·그룹 안 점수 <br>- 같은 대상+포함 구간 중복, 누락 이유와 run 생성 오류, resolver별 materialize 상한 <br>- host/Selector/gate 책임 <br>손계산 시나리오 S1~S10(명시·0 예산·무결과·권한·대형 후보 포함)을 기준 함수로 재계산하고, 계약과 불변식을 검증했다. 제품 구현과 gate는 4.8 범위다. [4.7 검증 기록](docs/progress/tasks/4.7.md) · [정책](docs/architecture/CONTEXT_SELECTOR.md)
+
 ### 4.8 Context Selector와 최종 모델 요청 예산 게이트 구현하기
 
 **선행 조건: 임우형 4.7번 + 박준형 3.4번 + 임우형 4.4번 + 임우형 4.6번 작업이 모두 완료된 이후에 진행.**
@@ -1632,6 +1636,8 @@ git commit과 git push는 팀원이 직접 한다. 두 명령을 직접/SDK/스�
 docs/progress/tasks/4.8.md에 task_id/owner/status/시각/선행 증거/변경 파일/실제 명령과 결과/인수 근거/제한/다음 인계를 기록하라. 모든 조건이 충족될 때만 로드맵 4.8절의 조건 및 '4.8 완료'를 [x]로 바꿔라. 미충족이면 [ ]를 유지하고 원인·재개 방법을 기록하라. 다른 담당자의 체크는 수정하지 마라.
 마지막 응답에는 완료 범위, 검증 결과, 남은 문제, 다음 시작 가능한 작업을 짧게 보고하라. commit/push는 하지 않았다고 명시하라.
 ```
+
+**2026-11-10 상태: DONE** (팀 합의로 박준형이 재작업). context-service에 다음을 구현했다. <br>- 순수 선택 함수, resolver 실행, 예산 계산 <br>- `POST /internal/v1/context/select`: Source·Runtime·R0 상한 읽기, 실계수, 같은 대상+구간 중복·이력 제외 <br>- `POST /internal/v1/tokens/request`: 직렬화 provider 요청 전체 계수 <br>host `ModelRequestGate`를 `main.ts` fetch 경계에 연결했다. 설치 SDK 시험은 다음을 확인했다. <br>- 매 호출 본문을 그대로 세어 창 안인지 확인한다 <br>- 다음 turn 초과는 provider 호출 없이 `BUDGET_EXCEEDED`다 <br>- hard-cap 모드의 추정 계수는 `TOKENIZER_UNAVAILABLE`이다 <br>live provider 계수와 로컬 qwen 계수기는 미검증이다. [4.8 검증 기록](docs/progress/tasks/4.8.md)
 
 ### 4.9 PDF 파싱·Source Pointer 연동·Skill 도구 구현하기
 
@@ -1686,17 +1692,21 @@ docs/progress/tasks/4.9.md에 task_id/owner/status/시각/선행 증거/변경 �
 마지막 응답에는 완료 범위, 검증 결과, 남은 문제, 다음 시작 가능한 작업을 짧게 보고하라. commit/push는 하지 않았다고 명시하라.
 ```
 
+**2026-11-10 상태: DONE** (팀 합의로 박준형이 재작업). `pypdf` 6.21.4로 텍스트 PDF를 격리 프로세스에서 파싱한다(50 MiB·500쪽·60초, 시간 초과·취소 시 kill). 다음을 구현했다. <br>- 원본 해시+파서 버전 키 페이지 캐시. 4.5 파생 캐시로 연결해 해제·revision 변경 때 지운다 <br>- 멱등 job, 원본 변경 시 `stale` <br>- `/source/read`의 `pdf_page` 한 페이지 구간 읽기와 페이지 검색 <br>- 4.8 Selector PDF resolver <br>host 도구 `pdf_parse/status/search/read_pages`, `SKILL.md` v2를 만들었다. 도구 레지스트리와 SKILL.md를 비교해 prompt에 붙이는 export와 3.6 등록 fixture도 있다. 생성 fixture(한글·여러 페이지·빈·스캔·손상·암호화·페이지 초과)만 시험했고 실제 문서와 세션 등록은 미검증이다. [4.9 검증 기록](docs/progress/tasks/4.9.md)
+
 ### 4.10 포인터·예산·PDF의 실제 SDK 통합 회귀 검증 완료하기
 
 **선행 조건: 박준형 3.6번 + 임우형 4.8번 + 임우형 4.9번 작업이 모두 완료된 이후에 진행.**
 
-- [ ] **4.10 완료 (3.6 선행 블로킹)** — 구현/설계·검증·증거 기록 후에만 체크
+- [x] **4.10 완료 (3.6 선행 블로킹)** — 구현/설계·검증·증거 기록 후에만 체크
 
 **왜 필요한가 / 무엇을 하는가:** 포인터 기능은 오류가 나도 원문을 그대로 보내면 겉으로는 답변이 성공할 수 있다. 임우형이 실제 통합 경로에서 저장·조회·교체·예산 불변식을 끝까지 확인해 자신의 기능 범위를 닫는다.
 
 **담당:** 임우형  
 **주요 산출물·수정 범위:** services/context-service tests; tests/integration의 pointer/context/PDF 시나리오; 운용 인계 문서  
 **검증 기록:** `docs/progress/tasks/4.10.md`
+
+**2026-11-11 상태: DONE** (팀 합의로 박준형이 진행). SDK 수명주기 시험(원문/포인터, 여러 turn, 다른 세션 차단, Source 변경, 재시작, skill 등록, hook 미등록 차단), Runtime TTL 정리 결함 수정, 운용 안내를 마쳤다. 현재 코드의 live smoke가 2026-11-11 01:45 KST에 12/12 PASS했다(포인터 도구 조회, PDF 쪽 인용 포함). [4.10 기록](docs/progress/tasks/4.10.md)
 
 **완료 조건**
 

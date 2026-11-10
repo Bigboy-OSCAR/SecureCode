@@ -1,0 +1,30 @@
+{
+    "description": "4.9 → 3.6: the PDF tools and skill text the host must register. 3.6 checks that the session tool list contains these tools with these inputs and that the system prompt contains the skill section with this sha256 (apps/host/tests/unit/pdfPointerSkill.test.ts keeps it in sync).",
+    "skill_id": "pdf-pointer",
+    "version": "2.0.0",
+    "file": "skills/pdf-pointer/SKILL.md",
+    "sha256": "f70da585dcae5022a7b183a4f7e009e8b3dcd1e50e358c6218f4a1d28f91ce6b",
+    "prompt_marker": "<skill name=\"pdf-pointer\" version=\"2.0.0\">",
+    "tools": [
+        {
+            "name": "pdf_parse",
+            "required": ["pointer"],
+            "properties": ["pointer"]
+        },
+        {
+            "name": "pdf_status",
+            "required": ["job_id"],
+            "properties": ["job_id"]
+        },
+        {
+            "name": "pdf_search",
+            "required": ["pointer", "query"],
+            "properties": ["pointer", "query", "limit"]
+        },
+        {
+            "name": "pdf_read_pages",
+            "required": ["pointer", "start_page"],
+            "properties": ["pointer", "start_page", "end_page", "max_bytes", "cursor"]
+        }
+    ]
+}

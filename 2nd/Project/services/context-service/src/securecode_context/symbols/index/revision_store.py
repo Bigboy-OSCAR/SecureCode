@@ -3,6 +3,8 @@
 import json
 import os
 import re
+import time
+from collections.abc import Callable
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import Any, cast
@@ -24,6 +26,38 @@ class RevisionStoreError(RuntimeError):
     """
 
 
+# Windows: os.replace와 읽기가 겹치면 공유 위반이 PermissionError로 난다(3.6에서 재현). 잠깐 다시 시도한다.
+_SHARING_RETRIES = 50
+_SHARING_DELAY_SECONDS = 0.01
+
+
+def _retry_sharing[T](action: Callable[[], T]) -> T:
+    """
+    함수 이름: _retry_sharing()
+    기능: 다른 스레드의 교체·읽기와 겹친 PermissionError만 짧게 다시 시도한다(최대 약 0.5초).
+    인자: action -> 파일 읽기 또는 교체
+    반환값: action 결과
+    작성 날짜: 2026/11/10
+    """
+    for _attempt in range(_SHARING_RETRIES - 1):
+        try:
+            return action()
+        except PermissionError:
+            time.sleep(_SHARING_DELAY_SECONDS)
+    return action()
+
+
+def _read_json(path: Path) -> Any:
+    """
+    함수 이름: _read_json()
+    기능: JSON 파일을 읽는다. 교체 중 공유 위반은 다시 시도한다.
+    인자: path -> 파일 경로
+    반환값: JSON 값
+    작성 날짜: 2026/11/10
+    """
+    return json.loads(_retry_sharing(lambda: path.read_text(encoding="utf-8")))
+
+
 def _write_atomic(path: Path, value: object) -> None:
     """
     함수 이름: _write_atomic()
@@ -41,7 +75,8 @@ def _write_atomic(path: Path, value: object) -> None:
             json.dump(value, temporary, ensure_ascii=False, separators=(",", ":"))
             temporary.flush()
             os.fsync(temporary.fileno())
-        os.replace(temp_path, path)
+        source = temp_path
+        _retry_sharing(lambda: os.replace(source, path))
         temp_path = None
     finally:
         if temp_path is not None:
@@ -91,7 +126,7 @@ class RevisionStore:
         """
         path = self.symbols_dir(workspace_id) / _CURRENT_FILE
         try:
-            pointer = json.loads(path.read_text(encoding="utf-8"))
+            pointer = _read_json(path)
         except FileNotFoundError:
             return None
         revision = pointer.get("index_revision")
@@ -120,7 +155,7 @@ class RevisionStore:
         작성 날짜: 2026/11/05
         """
         path = self._revision_path(workspace_id, revision)
-        record = cast(dict[str, Any], json.loads(path.read_text(encoding="utf-8")))
+        record = cast(dict[str, Any], _read_json(path))
         if (
             record.get("workspace_id") != workspace_id
             or record.get("index_revision") != revision

@@ -157,13 +157,15 @@ host는 SDK를 import하기 전에 `CLINE_DIR`/`CLINE_DATA_DIR`를 앱 전용 �
 | 변수 | 의미 | 비고 |
 | --- | --- | --- |
 | `ANTHROPIC_API_KEY` | provider 키. 서버 프로세스에만 둔다 | VITE_ 접두사 금지, 로그 redaction |
+| `SECURECODE_PROVIDER_API_KEY` | anthropic 외 provider 키(로컬 llama.cpp는 `--api-key` 값). 서버 프로세스에만 둔다 | `openai-compatible`일 때 host·service가 읽는다. 로그 redaction |
+| `SECURECODE_TOKEN_COUNTER` | `llama-cpp`면 service가 로컬 llama.cpp `/apply-template`+`/tokenize`로 센다(`exact`) | `openai-compatible`+loopback base URL 필요. `npm run test:live`로 서버 `usage.prompt_tokens`와 대조 |
 | `SECURECODE_PROVIDER_ID` | SDK `providerId` | 검증값 `anthropic` |
 | `SECURECODE_MODEL_ID` | SDK `modelId` | 검증값 `claude-sonnet-5-5` |
 | `SECURECODE_PROVIDER_BASE_URL` | 선택. 프록시/게이트웨이 base URL | 비우면 SDK 기본 |
 | `SECURECODE_MODEL_CONTEXT_LIMIT` | 제품이 쓰는 입력 한도(token) | catalog 값 이하 |
 | `SECURECODE_MAX_OUTPUT_TOKENS` | `config.maxTokensPerTurn` = 출력 예약 | beforeModel options로 바꾸지 않음 |
-| `SECURECODE_CONTEXT_SAFETY_MARGIN_TOKENS` | estimate 오차 여유분 | 4.8 확정 |
-| `SECURECODE_REQUIRE_FINAL_TOKEN_COUNT` | hard-cap 보장 모드. 계수 불가 시 차단 | 기본 true 권장 |
+| `SECURECODE_CONTEXT_SAFETY_MARGIN_TOKENS` | estimate 오차 여유분 | 4.8: 추정 계수는 max(이 값, 1024, 창의 2%)를 적용 |
+| `SECURECODE_REQUIRE_FINAL_TOKEN_COUNT` | hard-cap 보장 모드. 4.8 gate는 `exact` 계수만 허용하고 추정은 `TOKENIZER_UNAVAILABLE`로 막는다. 계수 불가는 모드와 무관하게 항상 차단 | 기본 true. `exact`는 로컬 llama.cpp 계수기(`SECURECODE_TOKEN_COUNTER=llama-cpp`)뿐이고, Anthropic은 추정이라 이 모드에서 막힌다. false면 추정+마진으로 허용 |
 | `SECURECODE_CLINE_HOME` | host가 SDK import 전에 `CLINE_DIR`/`CLINE_DATA_DIR`로 설정할 앱 전용 경로 | 사용자 `~/.cline`과 분리 |
 | `SECURECODE_APPROVAL_TIMEOUT_MS` | 승인 대기 만료 | broker가 강제 |
 | `SECURECODE_HOOK_TIMEOUT_MS` | pointer/budget hook 자체 timeout | SDK timeout 없음(S-04) |

@@ -1,7 +1,7 @@
 """시험 공용 도구: 작업 루트 경로, 계약 스키마 registry, 공용 벡터, 고정 계수기."""
 
 import json
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from pathlib import Path
 from typing import Any
 
@@ -11,6 +11,7 @@ from referencing.jsonschema import DRAFT7
 from securecode_context.common.errors import ErrorCode, ServiceError
 from securecode_context.common.tokens import CounterStatus, CountMode, TokenCount
 from securecode_context.common.tokens.counter import measure_countable_text
+from securecode_context.common.tokens.request_framing import anthropic_input, openai_input
 
 WORK_ROOT = Path(__file__).resolve().parents[4]
 CONTRACTS_ROOT = WORK_ROOT / "contracts"
@@ -44,6 +45,10 @@ class FixedTokenCounter:
     작성 날짜: 2026/11/04
     """
 
+    request_mode = CountMode.PROVIDER_ESTIMATE
+    request_framing = "anthropic_messages"
+    model_id = "claude-sonnet-5-5"
+
     def count(self, text: str, model_id: str | None = None) -> TokenCount:
         """
         함수 이름: count()
@@ -64,6 +69,33 @@ class FixedTokenCounter:
             method="anthropic_count_tokens",
             framing="single_user_message",
             text_bytes=text_bytes,
+        )
+
+    def count_request(self, request: Mapping[str, Any], model_id: str) -> TokenCount:
+        """
+        함수 이름: count_request()
+        기능: 4.8 gate 시험용. 실제 계수기와 같은 framing 검사 뒤 입력 부분 JSON의 UTF-8 바이트를 센다.
+        인자: request -> outbound 요청 JSON, model_id -> 요청 모델
+        반환값: framing=provider_request인 TokenCount(count_mode는 이 계수기의 모드)
+        작성 날짜: 2026/11/10
+        """
+        if model_id != self.model_id or request.get("model") != model_id:
+            raise ServiceError(ErrorCode.TOKENIZER_UNAVAILABLE, "unsupported model")
+        framed = (
+            openai_input(request)
+            if self.request_framing == "openai_chat"
+            else anthropic_input(request)
+        )
+        body = json.dumps(framed, ensure_ascii=False, sort_keys=True)
+        size = len(body.encode("utf-8"))
+        return TokenCount(
+            token_count=size,
+            count_mode=self.request_mode,
+            provider_id="anthropic",
+            model_id=model_id,
+            method="anthropic_count_tokens",
+            framing="provider_request",
+            text_bytes=size,
         )
 
     def describe(self) -> CounterStatus:

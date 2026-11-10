@@ -4,17 +4,21 @@ import hashlib
 import json
 import threading
 from collections import OrderedDict
+from collections.abc import Mapping
+from typing import Any
 
 import httpx
 
 from securecode_context.common.errors import ErrorCode, ServiceError
 from securecode_context.common.tokens.counter import CounterStatus, measure_countable_text
 from securecode_context.common.tokens.models import CountMode, TokenCount
+from securecode_context.common.tokens.request_framing import anthropic_input
 
 DEFAULT_BASE_URL = "https://api.anthropic.com"
 ANTHROPIC_VERSION = "2023-06-01"
 COUNT_METHOD = "anthropic_count_tokens"
 COUNT_FRAMING = "single_user_message"
+REQUEST_FRAMING = "provider_request"
 
 
 class AnthropicTokenCounter:
@@ -23,6 +27,8 @@ class AnthropicTokenCounter:
     기능: 설정 모델 하나에 대해 count_tokens API로 본문을 계수하고 결과를 메모리 LRU에 보관한다.
     작성 날짜: 2026/11/04
     """
+
+    request_framing = "anthropic_messages"
 
     def __init__(
         self,
@@ -116,10 +122,33 @@ class AnthropicTokenCounter:
                 self._cache.popitem(last=False)
         return result
 
+    def count_request(self, request: Mapping[str, Any], model_id: str) -> TokenCount:
+        """
+        함수 이름: count_request()
+        기능: 4.8 gate용. 직렬화된 provider 요청의 입력 부분(system·messages·tools 등)을
+            그대로 count_tokens에 보내 센다. 요청 단위라 캐시하지 않는다.
+        인자: request -> outbound 요청 JSON, model_id -> 요청 모델(설정 모델만 허용)
+        반환값: framing=provider_request, count_mode=provider_estimate인 TokenCount
+        작성 날짜: 2026/11/10
+        """
+        if model_id != self.model_id or request.get("model") != self.model_id:
+            raise _unavailable("model_not_configured", retryable=False)
+        body = {"model": self.model_id, **anthropic_input(request)}
+        text_bytes = len(json.dumps(body, ensure_ascii=False).encode("utf-8"))
+        return TokenCount(
+            token_count=self._post(body),
+            count_mode=CountMode.PROVIDER_ESTIMATE,
+            provider_id="anthropic",
+            model_id=self.model_id,
+            method=COUNT_METHOD,
+            framing=REQUEST_FRAMING,
+            text_bytes=text_bytes,
+        )
+
     def _request_count(self, text: str) -> int:
         """
         함수 이름: _request_count()
-        기능: count_tokens API를 한 번 호출하고 오류를 TOKENIZER_UNAVAILABLE 계열로 바꾼다.
+        기능: 본문 하나를 단일 사용자 메시지로 감싸 count_tokens를 호출한다.
         인자: text -> 이미 검사한 본문
         반환값: input_tokens 값
         작성 날짜: 2026/11/04
@@ -128,6 +157,16 @@ class AnthropicTokenCounter:
             "model": self.model_id,
             "messages": [{"role": "user", "content": [{"type": "text", "text": text}]}],
         }
+        return self._post(body)
+
+    def _post(self, body: Mapping[str, Any]) -> int:
+        """
+        함수 이름: _post()
+        기능: count_tokens API를 한 번 호출하고 오류를 TOKENIZER_UNAVAILABLE 계열로 바꾼다.
+        인자: body -> count_tokens 요청 본문
+        반환값: input_tokens 값
+        작성 날짜: 2026/11/10
+        """
         headers = {
             "x-api-key": self._api_key,
             "anthropic-version": ANTHROPIC_VERSION,

@@ -5,7 +5,76 @@
  * budget code never imports the SDK. Both ports fail closed: they throw
  * instead of passing raw content through (3.1 S-03/S-04/S-05).
  */
-import type { CountMode, ErrorCode, PointerUri } from "@securecode/contracts";
+import type {
+    CountMode,
+    ErrorCode,
+    PointerReadRequest,
+    PointerReadResult,
+    PointerSearchRequest,
+    PointerSearchResult,
+    PointerUri,
+} from "@securecode/contracts";
+
+/** Workspace and session that own Runtime Pointers. */
+export interface RuntimeScope {
+    workspaceId: string;
+    sessionId: string;
+}
+
+/** What produced an output and whether bytes were dropped before it reached storage. */
+export interface RuntimeOutputMeta {
+    origin: string;
+    mediaType: string;
+    truncatedBeforeStorage: boolean;
+}
+
+export interface StoredRuntimeOutput {
+    pointer: PointerUri;
+    byteSize: number;
+}
+
+/** Streaming upload: write() resolves when the chunk was accepted (backpressure); abort() discards everything. */
+export interface RuntimeUpload {
+    write(chunk: Uint8Array): Promise<void>;
+    finish(): Promise<StoredRuntimeOutput>;
+    abort(): void;
+}
+
+/**
+ * 4.3 Runtime store as seen by the host (context-service /internal/v1/runtime/*).
+ * Every call is scoped; failures throw ContextServiceError and never return raw content.
+ */
+export interface RuntimePointerService {
+    store(
+        scope: RuntimeScope,
+        content: string,
+        meta: RuntimeOutputMeta,
+        signal: AbortSignal,
+    ): Promise<StoredRuntimeOutput>;
+    openUpload(scope: RuntimeScope, meta: RuntimeOutputMeta, signal: AbortSignal): RuntimeUpload;
+    read(
+        scope: RuntimeScope,
+        request: Omit<PointerReadRequest, "schema_version">,
+        signal: AbortSignal,
+    ): Promise<PointerReadResult>;
+    search(
+        scope: RuntimeScope,
+        request: Omit<PointerSearchRequest, "schema_version">,
+        signal: AbortSignal,
+    ): Promise<PointerSearchResult>;
+    /** Cheap authenticated call proving the store is reachable for this scope. */
+    probe(scope: RuntimeScope, signal: AbortSignal): Promise<void>;
+    clearSession(scope: RuntimeScope, signal: AbortSignal): Promise<number>;
+}
+
+/** Output the project executor already streamed into the store before afterTool ran. */
+export interface ExecutorCapture {
+    pointer: PointerUri;
+    byteSize: number;
+    /** Bytes the command produced; larger than byteSize when the capture cap cut it. */
+    producedBytes: number;
+    truncated: boolean;
+}
 
 /** Input of afterTool after the adapter extracts the local tool result. */
 export interface ToolResultInput {
@@ -19,6 +88,10 @@ export interface ToolResultInput {
     outputBytes: number;
     /** true when a project executor already stored/limited the output before the hook. */
     preLimitedByExecutor: boolean;
+    /** The tool reported an error; kept in the descriptor when the output is replaced. */
+    isError?: boolean;
+    /** Set when the executor streamed the output itself; the transformer must not store it again. */
+    executorStored?: ExecutorCapture;
 }
 
 export type ToolResultOutput =
@@ -30,6 +103,8 @@ export type ToolResultOutput =
  */
 export interface ToolResultTransformer {
     transform(input: ToolResultInput, signal: AbortSignal): Promise<ToolResultOutput>;
+    /** Throws unless storage for this scope is reachable; the adapter calls it before each SDK turn. */
+    ready?(scope: RuntimeScope, signal: AbortSignal): Promise<void>;
 }
 
 /** Final serialized provider request seen by the fetch gate (after SDK framing). */

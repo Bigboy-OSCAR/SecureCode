@@ -5,7 +5,7 @@
     "description": "Node Cline SDK host: public /api/v1, SDK session assembly, internal context-service client.",
     "type": "module",
     "engines": {
-        "node": "^22.12.0 || ^24.0.0"
+        "node": "^22.12.0 || ^24.0.0 || ^26.0.0"
     },
     "scripts": {
         "start": "tsx src/app/main.ts",

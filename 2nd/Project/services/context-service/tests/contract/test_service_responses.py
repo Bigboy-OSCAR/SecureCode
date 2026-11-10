@@ -43,7 +43,7 @@ def counting_client(service_settings: ServiceSettings) -> Iterator[TestClient]:
 def test_health_matches_contract(client: TestClient, contract_check: ContractCheck) -> None:
     """
     함수 이름: test_health_matches_contract()
-    기능: health가 ServiceHealthResponse이고 미구현 기능을 not_implemented로 표시하는지 확인한다.
+    기능: health가 ServiceHealthResponse이고 구현된 기능을 실제 상태(ok)로 표시하는지 확인한다.
     인자: client -> 앱 client
         contract_check -> 계약 검사 함수
     반환값: 없음
@@ -55,7 +55,9 @@ def test_health_matches_contract(client: TestClient, contract_check: ContractChe
     assert contract_check("api/system.schema.json#/definitions/ServiceHealthResponse", body) == []
     statuses = {component["name"]: component["status"] for component in body["components"]}
     assert statuses["token_counter"] == "not_configured"
-    assert statuses["symbols"] == "not_implemented"
+    for name in ("symbols", "pointers", "context_selector", "pdf"):
+        assert statuses[name] == "ok", name
+    assert "not_implemented" not in statuses.values()
     assert response.headers["X-Request-Id"].startswith("req_")
 
 

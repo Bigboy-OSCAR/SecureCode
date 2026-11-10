@@ -1,21 +1,33 @@
 /**
  * HTTP implementation of ContextServiceClient over authenticated loopback.
  * Every response is validated against the contract schema before use.
- * Symbol and pointer operations report NOT_IMPLEMENTED until their owners
- * (3.6 for symbols: the Python R0SymbolService exists since 3.4; 4.3-4.6 for pointers)
- * add the service routes; they never return fake data.
+ * The capability clients (R0, workspaces, Source, Runtime admin, PDF) share these options.
  */
 import {
     SCHEMA_REFS,
+    type ContextSelectRequest,
+    type ContextSelectResponse,
     type ContractValidator,
     type ErrorResponse,
+    type RequestTokenCountRequest,
     type ServiceHealthResponse,
     type TokenCountRequest,
     type TokenCountResult,
 } from "@securecode/contracts";
 import { ContextServiceError } from "./contextServiceError.js";
 import { requestLoopbackJson } from "./loopbackHttp.js";
-import type { ContextServiceClient, PointerService, SymbolService, TokenCounter } from "./ports.js";
+import { createPdfClient, type PdfService } from "./pdfClient.js";
+import type { ContextSelector, ContextServiceClient, TokenCounter } from "./ports.js";
+import {
+    createRuntimeAdminService,
+    createSourceService,
+    createSymbolService,
+    createWorkspaceService,
+    type RuntimeAdminService,
+    type SourceService,
+    type SymbolService,
+    type WorkspaceService,
+} from "./workspaceServices.js";
 
 export interface HttpContextServiceClientOptions {
     baseUrl: string;
@@ -26,35 +38,28 @@ export interface HttpContextServiceClientOptions {
 
 const DEFAULT_TIMEOUT_MS = 15000;
 
-function pendingOperation(operation: string, ownerTask: string): () => Promise<never> {
-    return () =>
-        Promise.reject(
-            new ContextServiceError("NOT_IMPLEMENTED", `${operation} is not implemented yet`, false, {
-                owner_task: ownerTask,
-            }),
-        );
-}
-
 export class HttpContextServiceClient implements ContextServiceClient {
     readonly tokens: TokenCounter;
+    readonly context: ContextSelector;
     readonly symbols: SymbolService;
-    readonly pointers: PointerService;
+    readonly workspaces: WorkspaceService;
+    readonly sources: SourceService;
+    readonly runtime: RuntimeAdminService;
+    readonly pdf: PdfService;
     private readonly options: HttpContextServiceClientOptions;
 
     constructor(options: HttpContextServiceClientOptions) {
         this.options = options;
-        this.tokens = { count: (text, signal) => this.countTokens(text, signal) };
-        this.symbols = {
-            search: pendingOperation("symbols.search", "3.6"),
-            readBundle: pendingOperation("symbols.read_bundle", "3.6"),
+        this.tokens = {
+            count: (text, signal) => this.countTokens(text, signal),
+            countRequest: (request, signal) => this.countRequest(request, signal),
         };
-        this.pointers = {
-            stat: pendingOperation("pointers.stat", "4.3"),
-            list: pendingOperation("pointers.list", "4.3"),
-            read: pendingOperation("pointers.read", "4.3"),
-            search: pendingOperation("pointers.search", "4.6"),
-            remove: pendingOperation("pointers.delete", "4.3"),
-        };
+        this.context = { select: (request, signal) => this.selectContext(request, signal) };
+        this.symbols = createSymbolService(options);
+        this.workspaces = createWorkspaceService(options);
+        this.sources = createSourceService(options);
+        this.runtime = createRuntimeAdminService(options);
+        this.pdf = createPdfClient(options);
     }
 
     async health(signal?: AbortSignal): Promise<ServiceHealthResponse> {
@@ -85,6 +90,21 @@ export class HttpContextServiceClient implements ContextServiceClient {
             throw new ContextServiceError("SERVICE_UNAVAILABLE", "token result input size mismatch", true);
         }
         return count;
+    }
+
+    private async countRequest(request: RequestTokenCountRequest, signal?: AbortSignal): Promise<TokenCountResult> {
+        const body = await this.request("/internal/v1/tokens/request", request, signal);
+        const count = this.options.validator.parse<TokenCountResult>(SCHEMA_REFS.tokenCountResult, body);
+        if (count.framing !== "provider_request") {
+            throw new ContextServiceError("SERVICE_UNAVAILABLE", "request count used an unexpected framing", true);
+        }
+        return count;
+    }
+
+    private async selectContext(request: ContextSelectRequest, signal?: AbortSignal): Promise<ContextSelectResponse> {
+        this.options.validator.parse<ContextSelectRequest>(SCHEMA_REFS.contextSelectRequest, request);
+        const body = await this.request("/internal/v1/context/select", request, signal);
+        return this.options.validator.parse<ContextSelectResponse>(SCHEMA_REFS.contextSelectResponse, body);
     }
 
     private async request(path: string, payload: unknown, signal?: AbortSignal): Promise<unknown> {

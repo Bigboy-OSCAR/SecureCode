@@ -54,6 +54,17 @@ export async function hostUnitSteps(): Promise<StepResult[]> {
     ];
 }
 
+export async function scriptUnitSteps(): Promise<StepResult[]> {
+    return [
+        await toolStep("unit: structure rules", process.execPath, [
+            "--import",
+            "tsx",
+            "--test",
+            "scripts/test/structureRules.test.ts",
+        ]),
+    ];
+}
+
 export async function uiUnitSteps(): Promise<StepResult[]> {
     return [
         await toolStep(

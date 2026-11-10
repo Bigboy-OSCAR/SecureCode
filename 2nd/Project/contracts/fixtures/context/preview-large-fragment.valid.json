@@ -1,0 +1,94 @@
+{
+    "schema_ref": "context/context.schema.json#/definitions/ContextPreviewResponse",
+    "expect": "valid",
+    "scenario": "4.7",
+    "data": {
+        "operation": "plan",
+        "result": {
+            "schema_version": "1",
+            "index_revision": 3,
+            "preview_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "omissions_truncated": false,
+            "selected": [
+                {
+                    "candidate_id": "cand_task-log-01",
+                    "ref": {
+                        "kind": "runtime",
+                        "pointer": "securecode://runtime/ws_00000001/ses_00000001/11111111-1111-4111-8111-111111111111?v=1"
+                    },
+                    "score": 1,
+                    "explicit": false,
+                    "estimated_tokens": 150,
+                    "origin": "current_task"
+                }
+            ],
+            "fragments": [
+                {
+                    "candidate_id": "cand_task-log-01",
+                    "ref": {
+                        "kind": "runtime",
+                        "pointer": "securecode://runtime/ws_00000001/ses_00000001/11111111-1111-4111-8111-111111111111?v=1"
+                    },
+                    "content": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                    "token_count": 100,
+                    "inclusion": "partial_size",
+                    "provenance": {
+                        "ref": {
+                            "kind": "runtime",
+                            "pointer": "securecode://runtime/ws_00000001/ses_00000001/11111111-1111-4111-8111-111111111111?v=1",
+                            "selection": {
+                                "revision": 1,
+                                "content_sha256": "d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1",
+                                "range": {
+                                    "type": "byte",
+                                    "start": 0,
+                                    "end": 100
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "omitted": [
+                {
+                    "candidate_id": "cand_exp-huge-01",
+                    "origin": "explicit",
+                    "reason": "large_fragment",
+                    "ref": {
+                        "kind": "source",
+                        "pointer": "securecode://source/ws_00000001/src_b-0001?v=3",
+                        "selection": {
+                            "revision": 3,
+                            "content_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                            "range": {
+                                "type": "byte",
+                                "start": 0,
+                                "end": 150
+                            }
+                        }
+                    }
+                },
+                {
+                    "candidate_id": "cand_r0-bigsym1",
+                    "origin": "r0",
+                    "reason": "large_fragment"
+                }
+            ],
+            "budget": {
+                "budget_tokens": 200,
+                "used_tokens": 100,
+                "count_mode": "provider_estimate",
+                "costs": {
+                    "model_context_limit": 1000,
+                    "system_tokens": 100,
+                    "tool_schema_tokens": 100,
+                    "prompt_tokens": 50,
+                    "history_tokens": 200,
+                    "message_overhead_tokens": 20,
+                    "reserved_output_tokens": 300,
+                    "safety_margin_tokens": 30
+                }
+            }
+        }
+    }
+}

@@ -1,9 +1,9 @@
 /**
  * `npm run build`: verifies generated contracts, type-checks the host for
- * production, builds the UI and the context-service wheel. Local packaging
- * remains PENDING until 3.7 lands.
+ * production, builds the UI and the context-service wheel, then checks both
+ * artifacts and writes the local release manifest (3.7). Nothing is deployed.
  */
-import { pendingResults } from "./lib/pendingSuites.js";
+import { packagingSteps } from "./lib/packaging.js";
 import { nodeBin, toolStep, uvCommand, isUvAvailable, SERVICE_DIR } from "./lib/processes.js";
 import { runAndExit, type StepResult } from "./lib/report.js";
 import { generatedTypesSteps, uiBuildSteps } from "./lib/steps.js";
@@ -22,10 +22,4 @@ async function serviceBuildSteps(): Promise<StepResult[]> {
     return [await toolStep("build: context-service wheel", uvCommand(), ["build"], { cwd: SERVICE_DIR })];
 }
 
-await runAndExit("build", [
-    generatedTypesSteps,
-    hostBuildSteps,
-    uiBuildSteps,
-    serviceBuildSteps,
-    () => Promise.resolve(pendingResults("build")),
-]);
+await runAndExit("build", [generatedTypesSteps, hostBuildSteps, uiBuildSteps, serviceBuildSteps, packagingSteps]);

@@ -8,6 +8,7 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { it } from "node:test";
+import { ALLOWED_TOOL_NAMES } from "../../src/cline/tools/sessionTools.js";
 import { SCHEMA_REFS, type ApprovalDecisionResponse, type RunSnapshot } from "@securecode/contracts";
 import { validator } from "../support/hostHarness.js";
 import {
@@ -49,14 +50,8 @@ it("completes a run that reads a workspace file, streaming contract events", asy
         const firstTools = (host.provider.capturedRequests[0]?.body.tools as { name: string }[])
             .map((tool) => tool.name)
             .sort();
-        assert.deepEqual(firstTools, [
-            "list_files",
-            "read_file",
-            "run_command",
-            "runtime_read",
-            "runtime_search",
-            "write_file",
-        ]);
+        // 3.6: the complete session tool set, exactly the gate's allow list (no SDK built-ins).
+        assert.deepEqual(firstTools, [...ALLOWED_TOOL_NAMES].sort());
         assert.match(outboundText(host), /hello from the workspace/);
         assert.equal(host.transformer.inputs.length, 1);
         const session = await host.client.send("GET", `/api/v1/sessions/${sessionId}`);
@@ -167,6 +162,26 @@ it("cancels a run while an approval waits; the late approval is refused and noth
         const { events, ids } = await host.client.events(run.run_id);
         assertEventStream(events, ids, run.run_id);
         assert.equal(events.at(-1)?.type, "run.status_changed");
+    } finally {
+        await host.close();
+    }
+});
+
+it("cancels a run requested right after creation, before the SDK turn starts (3.6 live)", async () => {
+    const host = await startSdkHost([
+        toolUse("toolu_cmd", "run_command", { command: "echo ran > ran.txt" }),
+        { text: "unused" },
+    ]);
+    try {
+        const sessionId = await createSession(host);
+        const run = await createRun(host, sessionId, "run a command");
+        await host.client.send("POST", `/api/v1/runs/${run.run_id}/cancel`);
+        const done = await host.client.waitFor(run.run_id, isFinished);
+        assert.equal(done.status, "cancelled");
+        assert.deepEqual(done.pending_approvals, []);
+        assert.equal(existsSync(join(host.workspaceRoot, "ran.txt")), false);
+        const next = await createRun(host, sessionId, "next run", "run-after-cancel-1");
+        assert.ok(["queued", "running"].includes(next.status), "the session accepts the next run");
     } finally {
         await host.close();
     }

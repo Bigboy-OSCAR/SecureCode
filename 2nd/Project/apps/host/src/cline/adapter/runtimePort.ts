@@ -38,11 +38,18 @@ export interface TurnOutcome {
     message?: string;
 }
 
+/** Fixed request parts every session sends: system prompt and tool definitions (Selector costs). */
+export interface PromptCosts {
+    system: string;
+    toolSchema: string;
+}
+
 export interface AgentRuntime {
+    promptCosts(): PromptCosts;
     /** Runs one user turn; resolves (never rejects) with the outcome derived from finishReason. */
     runTurn(request: TurnRequest, listener: TurnListener): Promise<TurnOutcome>;
     /** Aborts the current turn only; the SDK session stays usable. */
-    abortTurn(sessionId: string, reason: string): Promise<void>;
+    abortTurn(sessionId: string, reason: string, runId?: string): Promise<void>;
     closeSession(sessionId: string): Promise<void>;
     dispose(): Promise<void>;
     protections(): ProtectionState[];

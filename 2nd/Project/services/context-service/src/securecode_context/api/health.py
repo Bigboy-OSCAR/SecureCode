@@ -1,4 +1,4 @@
-"""GET /internal/v1/health: 프로세스 생존과 구성요소별 준비 상태. 미구현 기능은 not_implemented로 숨기지 않는다."""
+"""GET /internal/v1/health: 프로세스 생존과 구성요소별 준비 상태. 구성요소는 실제 app.state 객체 유무로 판정한다."""
 
 import os
 from pathlib import Path
@@ -8,11 +8,12 @@ from fastapi import APIRouter, Request
 from securecode_context.common.tokens import TokenCounter
 
 SERVICE_VERSION = "0.1.0"
-PENDING_COMPONENTS = (
-    ("symbols", "3.6"),
-    ("pointers", "4.3"),
-    ("context_selector", "4.8"),
-    ("pdf", "4.9"),
+# 계약 구성요소 이름 -> 서비스 수명 동안 그 기능을 제공하는 app.state 속성들(3.7: 고정 not_implemented 제거)
+FEATURE_COMPONENTS = (
+    ("symbols", ("symbols",)),
+    ("pointers", ("pointer_store", "runtime_reader", "source_adapter")),
+    ("context_selector", ("token_counter", "source_adapter", "symbols")),
+    ("pdf", ("pdf",)),
 )
 
 router = APIRouter(prefix="/internal/v1", tags=["system"])
@@ -49,6 +50,25 @@ def describe_token_counter(token_counter: TokenCounter) -> dict[str, object]:
     }
 
 
+def describe_features(state: object) -> list[dict[str, object]]:
+    """
+    함수 이름: describe_features()
+    기능: 기능 구성요소마다 필요한 app.state 객체가 모두 있으면 ok, 하나라도 없으면 unavailable로 표시한다.
+    인자: state -> FastAPI app.state
+    반환값: ComponentHealth 사전 목록
+    작성 날짜: 2026/11/11
+    """
+    components: list[dict[str, object]] = []
+    for name, attributes in FEATURE_COMPONENTS:
+        if all(hasattr(state, attribute) for attribute in attributes):
+            components.append({"name": name, "status": "ok"})
+        else:
+            components.append(
+                {"name": name, "status": "unavailable", "reason_code": "SERVICE_UNAVAILABLE"}
+            )
+    return components
+
+
 @router.get("/health")
 def read_health(request: Request) -> dict[str, object]:
     """
@@ -63,10 +83,7 @@ def read_health(request: Request) -> dict[str, object]:
         data_dir_health,
         describe_token_counter(request.app.state.token_counter),
     ]
-    components.extend(
-        {"name": name, "status": "not_implemented", "owner_task": owner_task}
-        for name, owner_task in PENDING_COMPONENTS
-    )
+    components.extend(describe_features(request.app.state))
     return {
         "schema_version": "1",
         "service": "context-service",

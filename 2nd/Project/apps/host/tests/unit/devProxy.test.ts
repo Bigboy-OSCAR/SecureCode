@@ -96,6 +96,7 @@ it("starts SDK sessions with MCP, plugins, spawn agents, teams, checkpoints and 
         apiKey: "k",
         baseUrl: null,
         maxOutputTokens: 1024,
+        systemPrompt: "system",
         tools: [],
         toolPolicies: {},
         hooks: {},

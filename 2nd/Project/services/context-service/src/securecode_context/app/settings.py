@@ -37,6 +37,35 @@ class ServiceSettings:
     provider_base_url: str | None
     token_count_timeout_seconds: float
     log_level: str
+    # 본문 계수기 선택. ""은 provider 기본(anthropic만), "llama-cpp"는 로컬 llama.cpp server의 tokenizer.
+    token_counter: str = ""
+
+
+def _api_key(environ: Mapping[str, str]) -> str | None:
+    """
+    함수 이름: _api_key()
+    기능: provider 키를 읽는다. anthropic은 ANTHROPIC_API_KEY, 그 밖은 SECURECODE_PROVIDER_API_KEY다.
+    인자: environ -> 환경변수 사전
+    반환값: 키 또는 None
+    작성 날짜: 2026/11/10
+    """
+    provider = environ.get("SECURECODE_PROVIDER_ID", "anthropic").strip() or "anthropic"
+    name = "ANTHROPIC_API_KEY" if provider == "anthropic" else "SECURECODE_PROVIDER_API_KEY"
+    return environ.get(name, "").strip() or None
+
+
+def _token_counter(environ: Mapping[str, str]) -> str:
+    """
+    함수 이름: _token_counter()
+    기능: SECURECODE_TOKEN_COUNTER를 읽는다. 지원 값은 빈 값과 llama-cpp뿐이다.
+    인자: environ -> 환경변수 사전
+    반환값: 계수기 이름
+    작성 날짜: 2026/11/10
+    """
+    value = environ.get("SECURECODE_TOKEN_COUNTER", "").strip().lower()
+    if value not in ("", "llama-cpp"):
+        raise SettingsError("SECURECODE_TOKEN_COUNTER must be empty or llama-cpp")
+    return value
 
 
 def _read_int(environ: Mapping[str, str], name: str, default: int, low: int, high: int) -> int:
@@ -132,8 +161,9 @@ def load_settings(environ: Mapping[str, str]) -> ServiceSettings:
         data_dir=data_dir,
         provider_id=environ.get("SECURECODE_PROVIDER_ID", "anthropic").strip() or "anthropic",
         model_id=model_id,
-        api_key=environ.get("ANTHROPIC_API_KEY", "").strip() or None,
+        api_key=_api_key(environ),
         provider_base_url=_provider_url(environ.get("SECURECODE_PROVIDER_BASE_URL", "").strip()),
         token_count_timeout_seconds=timeout_ms / 1000,
         log_level=log_level,
+        token_counter=_token_counter(environ),
     )

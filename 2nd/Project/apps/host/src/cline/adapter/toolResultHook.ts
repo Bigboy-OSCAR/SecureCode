@@ -46,6 +46,7 @@ export function createAfterToolHook(
         if (!turn) throw new Error("tool result arrived outside an active run");
         const output = serializeOutput(result.output);
         const outputBytes = Buffer.byteLength(output, "utf8");
+        const executorStored = turn.executorCaptures.get(toolCall.toolCallId);
         const controller = new AbortController();
         let transformed;
         try {
@@ -60,6 +61,8 @@ export function createAfterToolHook(
                         output,
                         outputBytes,
                         preLimitedByExecutor: false,
+                        isError: result.isError ?? false,
+                        ...(executorStored ? { executorStored } : {}),
                     },
                     controller.signal,
                 ),

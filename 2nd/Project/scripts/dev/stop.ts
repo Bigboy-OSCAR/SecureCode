@@ -12,7 +12,7 @@ if (!state) {
         process.kill(state.launcherPid, 0);
     } catch (error) {
         if ((error as NodeJS.ErrnoException).code !== "ESRCH") throw error;
-        throw new Error("launcher is gone; check both servers before removing the stale dev-processes.json", {
+        throw new Error("launcher is gone; check the servers before removing the stale dev-processes.json", {
             cause: error,
         });
     }

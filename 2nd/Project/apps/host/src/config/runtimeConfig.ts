@@ -13,6 +13,8 @@ export interface RuntimeConfig {
     contextLimitTokens: number;
     maxOutputTokens: number;
     safetyMarginTokens: number;
+    /** Hard-cap mode (4.8): model requests need an exact count; estimates are TOKENIZER_UNAVAILABLE. */
+    requireExactTokenCount: boolean;
     providerBaseUrl: string | null;
     /** One-time browser code from the launcher; null lets the host generate and print one. */
     bootstrapCode: string | null;
@@ -33,6 +35,14 @@ function readInteger(env: NodeJS.ProcessEnv, name: string, fallback: number, min
         throw new ConfigError(`${name} must be an integer between ${min} and ${max}`);
     }
     return value;
+}
+
+function readBoolean(env: NodeJS.ProcessEnv, name: string, fallback: boolean): boolean {
+    const raw = env[name]?.trim().toLowerCase();
+    if (!raw) return fallback;
+    if (raw === "true" || raw === "1") return true;
+    if (raw === "false" || raw === "0") return false;
+    throw new ConfigError(`${name} must be true or false`);
 }
 
 function readBaseUrl(env: NodeJS.ProcessEnv): string | null {
@@ -85,6 +95,7 @@ export function loadRuntimeConfig(env: NodeJS.ProcessEnv, dataDir: string): Runt
         contextLimitTokens,
         maxOutputTokens,
         safetyMarginTokens: readInteger(env, "SECURECODE_CONTEXT_SAFETY_MARGIN_TOKENS", 2048, 0, 100000),
+        requireExactTokenCount: readBoolean(env, "SECURECODE_REQUIRE_FINAL_TOKEN_COUNT", true),
         providerBaseUrl: readBaseUrl(env),
         bootstrapCode: readBootstrapCode(env),
         allowedWorkspaceRoots: readAllowedRoots(env),
@@ -92,7 +103,13 @@ export function loadRuntimeConfig(env: NodeJS.ProcessEnv, dataDir: string): Runt
     };
 }
 
+/**
+ * Provider key: ANTHROPIC_API_KEY for anthropic, SECURECODE_PROVIDER_API_KEY otherwise (for a local
+ * llama.cpp server this is its --api-key, so other local processes cannot use the model).
+ */
 export function readProviderCredentials(env: NodeJS.ProcessEnv): ProviderCredentials {
-    const apiKey = env.ANTHROPIC_API_KEY?.trim();
+    const provider = env.SECURECODE_PROVIDER_ID?.trim() || "anthropic";
+    const raw = provider === "anthropic" ? env.ANTHROPIC_API_KEY : env.SECURECODE_PROVIDER_API_KEY;
+    const apiKey = raw?.trim();
     return { apiKey: apiKey ? apiKey : null };
 }

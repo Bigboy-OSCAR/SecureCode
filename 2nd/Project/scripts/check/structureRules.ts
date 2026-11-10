@@ -2,6 +2,8 @@
  * Structure rules from roadmap 0.5 and docs/conventions/TYPESCRIPT_REACT.md.
  * Each rule inspects one tracked file (path + text) and returns violations.
  */
+import { checkOutOfScope, checkPlaceholders, checkProductionMocks } from "./contentRules.js";
+
 export interface Violation {
     path: string;
     rule: string;
@@ -24,22 +26,6 @@ const SERVICE_PACKAGES = ["app", "api", "common", "symbols", "pointers", "contex
 // or argv arrays that would execute the command count; prose in comments does not.
 const GIT_MUTATION = new RegExp(["[\"'`]", "git", "\\s+", "(commit|push)\\b"].join(""));
 const GIT_ARGV_MUTATION = new RegExp(["\\[\\s*['\"]", "(commit|push)", "['\"]"].join(""));
-const FORBIDDEN_IMPORTS = new RegExp(
-    [
-        "experiments/",
-        "symbol_raptor",
-        "runtime_pointer_bench",
-        "source_pointer_bench",
-        "symbol_bench",
-        "sentence_transformers",
-        "faiss",
-        "chromadb",
-        "\\braptor\\b",
-        "sys\\.path\\.(insert|append)",
-    ].join("|"),
-    "i",
-);
-
 export function isTestPath(path: string): boolean {
     return /(^|\/)tests\//.test(path) || /\.test\.tsx?$/.test(path) || /(^|\/)test_[^/]+\.py$/.test(path);
 }
@@ -85,13 +71,6 @@ function checkSourceContent(file: FileUnderCheck): Violation[] {
     if (GIT_MUTATION.test(file.text) || GIT_ARGV_MUTATION.test(file.text)) {
         violations.push({ path: file.path, rule: "git-mutation", message: "source must not run git commit/push" });
     }
-    if (/^(apps|services)\//.test(file.path) && FORBIDDEN_IMPORTS.test(file.text)) {
-        violations.push({
-            path: file.path,
-            rule: "forbidden-dependency",
-            message: "experiment import, sys.path hack or out-of-scope retrieval library",
-        });
-    }
     if (file.path.startsWith("apps/ui/") && /@cline\/|\/internal\/v1|:8788\b/.test(file.text)) {
         violations.push({ path: file.path, rule: "ui-boundary", message: "UI must call only the host /api/v1" });
     }
@@ -120,4 +99,12 @@ function checkEnvExample(file: FileUnderCheck): Violation[] {
     return violations;
 }
 
-export const STRUCTURE_RULES = [checkLineLimit, checkPlacement, checkSourceContent, checkEnvExample];
+export const STRUCTURE_RULES = [
+    checkLineLimit,
+    checkPlacement,
+    checkSourceContent,
+    checkEnvExample,
+    checkPlaceholders,
+    checkProductionMocks,
+    checkOutOfScope,
+];

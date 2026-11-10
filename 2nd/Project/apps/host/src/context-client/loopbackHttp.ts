@@ -4,13 +4,8 @@ import { ContextServiceError } from "./contextServiceError.js";
 
 const RESPONSE_LIMIT_BYTES = 256 * 1024;
 
-export async function requestLoopbackJson(
-    baseUrl: string,
-    path: string,
-    token: string,
-    payload: unknown,
-    signal: AbortSignal,
-): Promise<{ status: number; ok: boolean; body: unknown }> {
+/** Checks that the service URL is a bare loopback http origin and the token is usable; returns the origin. */
+export function loopbackOrigin(baseUrl: string, path: string, token: string): string {
     const base = new URL(baseUrl);
     if (
         base.protocol !== "http:" ||
@@ -28,9 +23,19 @@ export async function requestLoopbackJson(
     if (!isValidInternalToken(token)) {
         throw new Error("internal service token is unavailable");
     }
+    return base.origin;
+}
 
+export async function requestLoopbackJson(
+    baseUrl: string,
+    path: string,
+    token: string,
+    payload: unknown,
+    signal: AbortSignal,
+): Promise<{ status: number; ok: boolean; body: unknown }> {
+    const origin = loopbackOrigin(baseUrl, path, token);
     try {
-        const response = await fetch(base.origin + path, {
+        const response = await fetch(origin + path, {
             method: payload === undefined ? "GET" : "POST",
             headers: {
                 authorization: `Bearer ${token}`,

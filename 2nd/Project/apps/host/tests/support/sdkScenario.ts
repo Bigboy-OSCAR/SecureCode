@@ -58,7 +58,10 @@ export async function startSdkHost(
     return { ...test, provider, transformer, gate, workspaceRoot, workspaceId };
 }
 
-export async function createSession(host: SdkHost, key = `session-${Date.now()}`): Promise<string> {
+export async function createSession(
+    host: Pick<SdkHost, "client" | "workspaceId">,
+    key = `session-${Date.now()}`,
+): Promise<string> {
     const response = await host.client.send("POST", "/api/v1/sessions", {
         workspace_id: host.workspaceId,
         idempotency_key: key,
@@ -68,7 +71,7 @@ export async function createSession(host: SdkHost, key = `session-${Date.now()}`
 }
 
 export async function createRun(
-    host: SdkHost,
+    host: Pick<SdkHost, "client">,
     sessionId: string,
     prompt: string,
     key = `run-${Date.now()}-${Math.random()}`,

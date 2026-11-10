@@ -1,7 +1,7 @@
 /**
  * GET /api/v1/health (H-01). Before bootstrap only schema_version and status
- * are public; an authenticated browser also sees component states, with
- * unbuilt parts reported as not_implemented and their owner task.
+ * are public; an authenticated browser also sees component states. Feature
+ * components (symbols, pointers, selector, PDF) are the context-service's own report.
  */
 import type { ComponentHealth, HealthResponse, HealthStatus, ServiceHealthResponse } from "@securecode/contracts";
 import type { ContextServiceClient } from "../../context-client/ports.js";
@@ -47,10 +47,10 @@ function components(service: ServiceHealthResponse | null, providerConfigured: b
             : { name: "model_provider", status: "not_configured", reason_code: "PROVIDER_ERROR" },
         fromService("token_counter"),
         fromService("data_dir"),
-        { name: "symbols", status: "not_implemented", owner_task: "3.6" },
-        { name: "pointers", status: "not_implemented", owner_task: "4.3" },
-        { name: "context_selector", status: "not_implemented", owner_task: "4.8" },
-        { name: "pdf", status: "not_implemented", owner_task: "4.9" },
+        fromService("symbols"),
+        fromService("pointers"),
+        fromService("context_selector"),
+        fromService("pdf"),
     ];
 }
 

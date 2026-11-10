@@ -1,135 +1,109 @@
-"""PDF document parser with strict object graph, FlateDecode decompression, target page isolation, and zero mock fallbacks."""
+"""텍스트 PDF 페이지 추출(4.9). pypdf로 page tree 순서대로 페이지별 텍스트를 뽑는다.
 
-import re
-import os
-import zlib
-import hashlib
-from typing import List, Dict, Any, Union
+OCR·암호 해제는 하지 않는다. 이 모듈은 격리된 worker 프로세스 안에서만 실행한다(worker.py).
+"""
 
-class PdfParser:
-    """Production PDF parser strictly rejecting non-PDF inputs, eliminating mock fallbacks, and isolating page streams."""
+import logging
+from dataclasses import dataclass
+from pathlib import Path
 
-    def parse_pdf(self, file_input: Union[str, bytes]) -> Dict[str, Any]:
-        if isinstance(file_input, str):
-            if not os.path.exists(file_input):
-                raise FileNotFoundError(f"PDF file not found: {file_input}")
-            with open(file_input, "rb") as f:
-                content_bytes = f.read()
-        else:
-            content_bytes = file_input
+from pypdf import PdfReader
 
-        if not content_bytes or len(content_bytes) < 8:
-            raise ValueError("EMPTY_OR_INVALID_PDF")
+from securecode_context.pdf.limits import MAX_PAGE_TEXT_BYTES
 
-        if not content_bytes.startswith(b"%PDF"):
-            raise ValueError("NOT_A_PDF_FILE")
 
-        if b"/Encrypt" in content_bytes:
-            raise ValueError("ENCRYPTED_PDF_NOT_SUPPORTED")
+class PdfRejectedError(Exception):
+    """
+    클래스 이름: PdfRejectedError
+    기능: 문서 전체를 읽을 수 없는 결과. state는 unsupported 또는 failed, reason은 계약 PdfJobStatus 값이다.
+    작성 날짜: 2026/11/10
+    """
 
-        file_hash = hashlib.sha256(content_bytes).hexdigest()
-        pages = self.parse_pages(content_bytes)
-        pages_text = [p["text"] for p in pages]
+    def __init__(self, state: str, reason: str) -> None:
+        """
+        함수 이름: __init__()
+        기능: 상태와 이유를 저장한다.
+        인자: state -> unsupported/failed, reason -> 계약 이유
+        반환값: 없음
+        작성 날짜: 2026/11/10
+        """
+        super().__init__(f"{state}:{reason}")
+        self.state = state
+        self.reason = reason
 
-        return {
-            "file_hash": file_hash,
-            "total_pages": len(pages_text),
-            "pages_text": pages_text
-        }
 
-    def parse_pages(self, content_bytes: bytes, target_pages: List[int] = None) -> List[Dict[str, Any]]:
-        if not content_bytes or not content_bytes.startswith(b"%PDF"):
-            raise ValueError("NOT_A_PDF_FILE")
+@dataclass(frozen=True)
+class ExtractedPage:
+    """
+    클래스 이름: ExtractedPage
+    기능: 페이지 하나의 텍스트 또는 제외 이유(empty_page·scanned_page·unreadable_page).
+    작성 날짜: 2026/11/10
+    """
 
-        # 1. PDF Indirect Objects (n 0 obj ... endobj) 인덱싱
-        objects = {}
-        for m in re.finditer(rb'(\d+)\s+(\d+)\s+obj([\s\S]*?)endobj', content_bytes):
-            obj_id = int(m.group(1))
-            objects[obj_id] = m.group(3)
+    number: int
+    text: str | None
+    excluded: str | None = None
 
-        page_obj_ids = []
-        for obj_id, body in objects.items():
-            if re.search(rb'/Type\s*/Page\b', body) and not re.search(rb'/Type\s*/Pages\b', body):
-                page_obj_ids.append(obj_id)
 
-        page_obj_ids.sort()
-        total_pages = len(page_obj_ids)
+def _has_images(page: object) -> bool:
+    """
+    함수 이름: _has_images()
+    기능: 페이지 리소스에 이미지가 있는지 본다(스캔 페이지 판정용). 읽을 수 없으면 False다.
+    인자: page -> pypdf PageObject
+    반환값: 이미지가 있으면 True
+    작성 날짜: 2026/11/10
+    """
+    try:
+        return len(page.images) > 0  # type: ignore[attr-defined]
+    except Exception:
+        return False
 
-        # 2. obj 구조가 생략된 약식 PDF/바이트스트림의 경우 /Type /Page 경계 기반 추적
-        if total_pages == 0:
-            page_matches = list(re.finditer(rb'/Type\s*/Page\b', content_bytes))
-            if not page_matches:
-                raise ValueError("INVALID_PDF_NO_PAGE_OBJECTS")
-            
-            pages_data = []
-            for idx in range(len(page_matches)):
-                page_num = idx + 1
-                if target_pages and page_num not in target_pages:
-                    continue
-                start_pos = page_matches[idx].start()
-                end_pos = page_matches[idx + 1].start() if idx + 1 < len(page_matches) else len(content_bytes)
-                chunk = content_bytes[start_pos:end_pos]
-                text = self._extract_bt_et(chunk)
-                pages_data.append({"page_num": page_num, "text": text})
-            return pages_data
 
-        # 3. /Contents 객체 참조 추적 및 페이지 격리
-        pages_data = []
-        for idx, obj_id in enumerate(page_obj_ids, start=1):
-            if target_pages and idx not in target_pages:
-                continue
+def _page(number: int, page: object) -> ExtractedPage:
+    """
+    함수 이름: _page()
+    기능: 페이지 텍스트를 뽑고 비었으면 이미지 유무로 빈/스캔 페이지를 가린다.
+    인자: number -> 1부터 시작하는 페이지 번호, page -> pypdf PageObject
+    반환값: ExtractedPage
+    작성 날짜: 2026/11/10
+    """
+    try:
+        text = page.extract_text() or ""  # type: ignore[attr-defined]
+        size = len(text.encode("utf-8"))
+    except Exception:
+        return ExtractedPage(number, None, "unreadable_page")
+    if size > MAX_PAGE_TEXT_BYTES:
+        return ExtractedPage(number, None, "unreadable_page")
+    if not text.strip():
+        return ExtractedPage(number, None, "scanned_page" if _has_images(page) else "empty_page")
+    return ExtractedPage(number, text)
 
-            body = objects.get(obj_id, b"")
-            contents_match = re.search(rb'/Contents\s*(?:\[([^\]]+)\]|(\d+)\s+\d+\s+R)', body)
-            stream_bytes = b""
 
-            if contents_match:
-                if contents_match.group(2):
-                    ref_id = int(contents_match.group(2))
-                    c_body = objects.get(ref_id, b"")
-                    stream_bytes = self._decode_stream(c_body)
-                elif contents_match.group(1):
-                    refs = re.findall(rb'(\d+)\s+\d+\s+R', contents_match.group(1))
-                    for r in refs:
-                        c_body = objects.get(int(r), b"")
-                        stream_bytes += self._decode_stream(c_body) + b"\n"
-
-            if not stream_bytes:
-                stream_bytes = self._decode_stream(body)
-
-            extracted_text = self._extract_bt_et(stream_bytes)
-            pages_data.append({"page_num": idx, "text": extracted_text})
-
-        return pages_data
-
-    def _decode_stream(self, body_or_obj: bytes) -> bytes:
-        s_m = re.search(rb'stream[\r\n]+([\s\S]*?)[\r\n]+endstream', body_or_obj)
-        if not s_m:
-            return b""
-        raw_stream = s_m.group(1)
-        if b"/Filter" in body_or_obj and b"/FlateDecode" in body_or_obj:
-            try:
-                return zlib.decompress(raw_stream)
-            except Exception:
-                try:
-                    return zlib.decompress(raw_stream, -zlib.MAX_WBITS)
-                except Exception:
-                    return raw_stream
-        return raw_stream
-
-    def _extract_bt_et(self, data: bytes) -> str:
-        text_blocks = re.findall(rb'BT[\s\S]*?ET', data)
-        text = ""
-        for block in text_blocks:
-            matches = re.findall(rb'\((.*?)\)', block)
-            for m in matches:
-                try:
-                    text += m.decode('utf-8', errors='ignore') + " "
-                except Exception:
-                    pass
-        return text.strip()
-
-    def extract_text(self, content_bytes: bytes, start_page: int = 1, end_page: int = None) -> str:
-        target = list(range(start_page, (end_page or start_page) + 1))
-        pages = self.parse_pages(content_bytes, target_pages=target)
-        return "\n".join([p["text"] for p in pages if p["text"]])
+def extract_pages(path: Path, page_limit: int) -> list[ExtractedPage]:
+    """
+    함수 이름: extract_pages()
+    기능: PDF를 열어 암호화·페이지 수를 확인하고 page tree 순서로 페이지를 추출한다.
+        읽을 수 있는 페이지가 하나도 없으면 scanned_document/empty_document로 거절한다.
+    인자: path -> 서비스가 복사한 원본, page_limit -> 최대 페이지 수
+    반환값: 페이지 목록
+    작성 날짜: 2026/11/10
+    """
+    logging.getLogger("pypdf").setLevel(logging.CRITICAL)
+    try:
+        reader = PdfReader(path, strict=False)
+        if reader.is_encrypted:
+            raise PdfRejectedError("unsupported", "encrypted")
+        pages = list(reader.pages)
+    except PdfRejectedError:
+        raise
+    except Exception as error:
+        raise PdfRejectedError("failed", "damaged") from error
+    if not pages:
+        raise PdfRejectedError("unsupported", "empty_document")
+    if len(pages) > page_limit:
+        raise PdfRejectedError("unsupported", "page_limit")
+    extracted = [_page(index + 1, page) for index, page in enumerate(pages)]
+    if all(page.text is None for page in extracted):
+        scanned = any(page.excluded == "scanned_page" for page in extracted)
+        raise PdfRejectedError("unsupported", "scanned_document" if scanned else "empty_document")
+    return extracted

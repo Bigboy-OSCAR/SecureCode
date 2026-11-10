@@ -34,7 +34,7 @@ export function registerRunRoutes(router: Router, services: RouteServices): void
             SCHEMA_REFS.runCreateRequest,
             RUN_BODY_LIMIT_BYTES,
         );
-        const result = services.runs.create(params.session_id ?? "", body);
+        const result = await services.runs.create(params.session_id ?? "", body);
         sendJson(response, result.created ? 201 : 200, result.snapshot);
     };
     const list: RouteHandler = async ({ request, response, params }) => {

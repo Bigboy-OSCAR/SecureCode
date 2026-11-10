@@ -1,14 +1,14 @@
 /**
- * Runs one approved shell command in the workspace root with a timeout, an
- * output cap and the SDK's abort signal. Secrets and SDK paths are removed
- * from the child environment so commands cannot read them.
+ * Runs one approved shell command in the workspace root with a timeout and the SDK's abort signal.
+ * Output is decoded per stream and handed to onOutput as it arrives; the child's pipes are paused
+ * until onOutput settles, so a slow sink applies backpressure instead of buffering the whole output.
+ * Secrets and SDK paths are removed from the child environment.
  */
-import { spawn } from "node:child_process";
+import { spawn, type ChildProcess } from "node:child_process";
+import type { Readable } from "node:stream";
 
 export interface CommandResult {
     exitCode: number | null;
-    output: string;
-    truncated: boolean;
     timedOut: boolean;
     aborted: boolean;
 }
@@ -16,8 +16,9 @@ export interface CommandResult {
 export interface CommandOptions {
     cwd: string;
     timeoutMs: number;
-    maxOutputBytes: number;
     signal?: AbortSignal | undefined;
+    /** Receives decoded output in arrival order; a rejection stops the command. */
+    onOutput: (text: string) => Promise<void>;
 }
 
 const SECRET_ENV = /^(ANTHROPIC_API_KEY|SECURECODE_INTERNAL_TOKEN|SECURECODE_BOOTSTRAP_CODE|CLINE_.*)$/;
@@ -31,6 +32,26 @@ export function commandEnvironment(env: NodeJS.ProcessEnv = process.env): NodeJS
     return clean;
 }
 
+/**
+ * Ends the command and everything it started. With shell: true the direct child is only the shell,
+ * so killing it alone would leave the real process holding the pipes open.
+ */
+function killTree(child: ChildProcess): void {
+    if (child.pid === undefined || child.exitCode !== null || child.signalCode !== null) return;
+    if (process.platform === "win32") {
+        spawn("taskkill", ["/pid", String(child.pid), "/T", "/F"], { windowsHide: true, stdio: "ignore" }).once(
+            "error",
+            () => child.kill(),
+        );
+        return;
+    }
+    try {
+        process.kill(-child.pid, "SIGKILL");
+    } catch {
+        child.kill("SIGKILL");
+    }
+}
+
 export function runCommand(command: string, options: CommandOptions): Promise<CommandResult> {
     return new Promise((resolve, reject) => {
         if (options.signal?.aborted) {
@@ -42,29 +63,38 @@ export function runCommand(command: string, options: CommandOptions): Promise<Co
             shell: true,
             env: commandEnvironment(),
             windowsHide: true,
+            // POSIX: own process group so killTree can end grandchildren too.
+            detached: process.platform !== "win32",
             stdio: ["ignore", "pipe", "pipe"],
         });
-        const chunks: Buffer[] = [];
-        let size = 0;
-        let truncated = false;
+        const streams: Readable[] = [child.stdout, child.stderr];
+        let chain = Promise.resolve();
+        let sinkError: unknown = null;
+        let pending = 0;
         let timedOut = false;
         let aborted = false;
-        const collect = (chunk: Buffer): void => {
-            if (size >= options.maxOutputBytes) {
-                truncated = true;
-                return;
-            }
-            const room = options.maxOutputBytes - size;
-            const kept = chunk.length > room ? chunk.subarray(0, room) : chunk;
-            truncated ||= kept.length < chunk.length;
-            chunks.push(kept);
-            size += kept.length;
+        const stop = (): void => killTree(child);
+        const deliver = (text: string): void => {
+            if (text === "" || sinkError !== null) return;
+            pending += 1;
+            for (const stream of streams) stream.pause();
+            chain = chain
+                .then(() => options.onOutput(text))
+                .catch((error: unknown) => {
+                    sinkError ??= error;
+                    stop();
+                })
+                .finally(() => {
+                    pending -= 1;
+                    // After a sink failure keep draining (and dropping) so the child cannot block on a full pipe.
+                    if (pending === 0 || sinkError !== null) for (const stream of streams) stream.resume();
+                });
         };
-        child.stdout.on("data", collect);
-        child.stderr.on("data", collect);
-        const stop = (): void => {
-            child.kill("SIGTERM");
-        };
+        const decoders = streams.map((stream) => {
+            const decoder = new TextDecoder("utf-8");
+            stream.on("data", (chunk: Buffer) => deliver(decoder.decode(chunk, { stream: true })));
+            return decoder;
+        });
         const timer = setTimeout(() => {
             timedOut = true;
             stop();
@@ -74,16 +104,22 @@ export function runCommand(command: string, options: CommandOptions): Promise<Co
             stop();
         };
         options.signal?.addEventListener("abort", onAbort, { once: true });
-        child.once("error", (error) => {
+        const cleanup = (): void => {
             clearTimeout(timer);
             options.signal?.removeEventListener("abort", onAbort);
+        };
+        child.once("error", (error) => {
+            cleanup();
             reject(error);
         });
         child.once("close", (exitCode) => {
-            clearTimeout(timer);
-            options.signal?.removeEventListener("abort", onAbort);
-            const output = new TextDecoder("utf-8").decode(Buffer.concat(chunks));
-            resolve({ exitCode, output, truncated, timedOut, aborted });
+            cleanup();
+            for (const decoder of decoders) deliver(decoder.decode());
+            void chain.then(() => {
+                if (sinkError !== null)
+                    reject(sinkError instanceof Error ? sinkError : new Error("output sink failed"));
+                else resolve({ exitCode, timedOut, aborted });
+            });
         });
     });
 }
