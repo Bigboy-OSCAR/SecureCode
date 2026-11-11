@@ -168,7 +168,11 @@
                 "start_line": { "type": "integer", "minimum": 1 },
                 "end_line": { "type": "integer", "minimum": 1 },
                 "content": { "type": "string", "maxLength": 32768 },
-                "provenance": { "$ref": "#/definitions/SourceProvenance" }
+                "provenance": { "$ref": "#/definitions/SourceProvenance" },
+                "location": {
+                    "description": "Verified identity and file location of this returned fragment. Readers can cite a direct bundle read without relying on prior search results.",
+                    "$ref": "#/definitions/SymbolLocation"
+                }
             }
         },
         "SymbolOmission": {

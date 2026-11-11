@@ -16,6 +16,15 @@
                     "pointer": null,
                     "relative_path": "app/config.py",
                     "content_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                },
+                "location": {
+                    "symbol_id": "sym_01J9Z6Q4S001",
+                    "qualname": "load_config",
+                    "kind": "function",
+                    "relative_path": "app/config.py",
+                    "start_line": 12,
+                    "end_line": 30,
+                    "content_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
                 }
             }
         ],

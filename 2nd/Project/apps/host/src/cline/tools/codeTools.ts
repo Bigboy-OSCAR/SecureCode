@@ -3,7 +3,7 @@
  * text) and code_read returns one candidate's bundle within byte and token caps, with the verified
  * file hash and lines. No other code-search technique is offered to the model.
  */
-import type { AnswerCitation, ExplicitContextRef, SymbolLocation } from "@securecode/contracts";
+import type { AnswerCitation, ExplicitContextRef } from "@securecode/contracts";
 import { ContextServiceError } from "../../context-client/contextServiceError.js";
 import type { SymbolService } from "../../context-client/workspaceServices.js";
 import { recordStaleCodeRead, STALE_CODE_READ_GUIDANCE } from "../adapter/staleCodeReadGuard.js";
@@ -52,8 +52,6 @@ function signalFor(options: CodeToolOptions, signal: AbortSignal | undefined): A
 }
 
 export function codeTools(options: CodeToolOptions): ProjectTool[] {
-    // Locations from code_search, so a code_read can be cited with its symbol, file and lines.
-    const located = new Map<string, SymbolLocation>();
     const search: ProjectTool = {
         requiresApproval: false,
         review: () => review("other", "search code", ""),
@@ -81,7 +79,6 @@ export function codeTools(options: CodeToolOptions): ProjectTool[] {
                     ),
                 );
                 if (result.no_match) return JSON.stringify({ candidates: [], hint: result.no_match.hint ?? null });
-                for (const candidate of result.candidates) located.set(candidate.candidate_id, candidate.primary);
                 const candidates = result.candidates.map((candidate) => ({
                     candidate_id: candidate.candidate_id,
                     index_revision: candidate.index_revision,
@@ -130,10 +127,17 @@ export function codeTools(options: CodeToolOptions): ProjectTool[] {
                         ),
                     { candidateId, revision, toolCallId: context.toolCallId },
                 );
-                const ref = { kind: "symbol", candidate_id: candidateId, index_revision: revision } as const;
-                options.recordShown(ref);
-                const location = located.get(candidateId);
-                if (location) options.recordCited({ ref, location });
+                const ref = {
+                    kind: "symbol",
+                    candidate_id: bundle.candidate_id,
+                    index_revision: bundle.index_revision,
+                } as const;
+                if (bundle.fragments.length > 0) options.recordShown(ref);
+                // Cite only source fragments actually returned and verified in this read. Search
+                // metadata may be absent after restart, or belong to a superseded index revision.
+                for (const fragment of bundle.fragments) {
+                    if (fragment.location) options.recordCited({ ref, location: fragment.location });
+                }
                 return JSON.stringify({
                     fragments: bundle.fragments.map((fragment) => ({
                         path: fragment.provenance.relative_path,

@@ -1261,6 +1261,22 @@ export interface SymbolFragment {
     end_line: number;
     content: string;
     provenance: SourceProvenance;
+    location?: SymbolLocation1;
+}
+/**
+ * Verified identity and file location of this returned fragment. Readers can cite a direct bundle read without relying on prior search results.
+ */
+export interface SymbolLocation1 {
+    symbol_id: SymbolId;
+    qualname: string;
+    kind: SymbolKind;
+    relative_path: RelativePath;
+    /**
+     * 1-based, includes decorators.
+     */
+    start_line: number;
+    end_line: number;
+    content_sha256: Sha256Hex;
 }
 export interface SymbolOmission {
     symbol_id: SymbolId;

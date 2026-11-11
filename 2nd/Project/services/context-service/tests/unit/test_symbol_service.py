@@ -1,6 +1,7 @@
 """R0SymbolService의 다섯 언어 검색·원문 묶음·무결과·중복·예산·stale·페이지 계약 시험."""
 
 import ast
+import hashlib
 import json
 from pathlib import Path
 from typing import Any
@@ -152,6 +153,15 @@ def test_identifier_search_per_language(setup, contract_check, language: str) ->
         assert fragment["content"] in content
         start = content.index(fragment["content"])
         assert content[:start].count("\n") + 1 == fragment["start_line"]
+        location = fragment["location"]
+        assert location["symbol_id"] == fragment["symbol_id"]
+        assert (location["start_line"], location["end_line"]) == (
+            fragment["start_line"],
+            fragment["end_line"],
+        )
+        assert location["relative_path"] == fragment["provenance"]["relative_path"]
+        assert location["content_sha256"] == hashlib.sha256(content.encode()).hexdigest()
+    assert bundle["fragments"][0]["location"] == top["primary"]
 
 
 def test_python_function_helper_constant_bundle(setup) -> None:
@@ -271,6 +281,7 @@ def test_stale_sources_are_not_returned(setup) -> None:
     rate = symbol_id("memory://symbol/pkg/constants.py::RATE")
     assert {"symbol_id": rate, "reason": "stale_revision"} in partial["omissions"]
     assert all("RATE" not in fragment["content"] for fragment in partial["fragments"])
+    assert all(fragment["location"]["symbol_id"] != rate for fragment in partial["fragments"])
     (root / "pkg/service.py").write_text("def compute():\n    return 0\n")
     with pytest.raises(ServiceError) as changed:
         _bundle(service, top)
@@ -287,6 +298,13 @@ def test_stale_sources_are_not_returned(setup) -> None:
     assert cursor.value.code is ErrorCode.SOURCE_CHANGED
     fresh = _search(service, "compute")["candidates"][0]
     assert fresh["index_revision"] == 2 and _bundle(service, fresh)["fragments"]
+    restored = R0SymbolService(service.index, service.counter, service.roots)
+    reread = _bundle(restored, fresh)["fragments"][0]
+    assert reread["location"] == fresh["primary"]
+    assert (
+        reread["location"]["content_sha256"]
+        == hashlib.sha256((root / "pkg/service.py").read_bytes()).hexdigest()
+    )
 
 
 def test_source_edit_during_bundle_count_is_rejected(setup, monkeypatch) -> None:
