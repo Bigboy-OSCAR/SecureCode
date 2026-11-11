@@ -13,6 +13,8 @@ from securecode_context.pointers.runtime.media import supported_selectors
 BOUNDED_READ_ORIGINS = frozenset(
     {"runtime_read", "runtime_search", "source_read", "source_search", "pdf_read"}
 )
+# Contract RunId (contracts/common/primitives.schema.json).
+RUN_ID_PATTERN = r"^run_[A-Za-z0-9-]{8,64}$"
 
 
 class RuntimeStoreError(Exception):
@@ -131,6 +133,7 @@ class RuntimePut:
     ttl_seconds: int = 86_400
     origin: str = "tool_output"
     truncated_before_storage: bool = False
+    run_id: str | None = None
 
 
 @dataclass(frozen=True)
@@ -152,6 +155,7 @@ class RuntimeDescriptor:
     preview: str
     origin: str = "tool_output"
     truncated_before_storage: bool = False
+    run_id: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         """
@@ -167,6 +171,8 @@ class RuntimeDescriptor:
         }
         if self.truncated_before_storage:
             provenance["truncated_before_storage"] = True
+        if self.run_id is not None:
+            provenance["run_id"] = self.run_id
         return {
             "schema_version": "1",
             "pointer": self.pointer,

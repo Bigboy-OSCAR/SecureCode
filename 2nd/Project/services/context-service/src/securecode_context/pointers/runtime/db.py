@@ -1,6 +1,7 @@
 """Runtime Pointer 저장소의 SQLite 연결·스키마(v2)·공통 한도.
 
 v2는 저장 예약(pending)→완료(ready) 상태, 64 KiB 청크 digest, origin, tombstone을 가진다.
+v3(2026-11-11)은 출력을 만든 run_id(선택)를 더한다. v2 자료는 열만 추가해 보존한다.
 v1(2026-11-06) 스키마의 자료는 24시간 TTL의 임시 출력이므로 업그레이드 때 비우고 다시 만든다.
 """
 
@@ -13,7 +14,7 @@ from pathlib import Path
 MAX_OBJECT_BYTES = 32 * 1024 * 1024
 MAX_SESSION_BYTES = 128 * 1024 * 1024
 MAX_PREVIEW_BYTES = 512
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 TOMBSTONE_DAYS = 7
 
 _SCHEMA = """
@@ -30,7 +31,8 @@ CREATE TABLE IF NOT EXISTS runtime_pointers (
     truncated_before_storage INTEGER NOT NULL,
     created_at TEXT NOT NULL,
     expires_at TEXT NOT NULL,
-    preview TEXT NOT NULL
+    preview TEXT NOT NULL,
+    run_id TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_runtime_scope ON runtime_pointers(workspace_id, session_id, state);
 CREATE INDEX IF NOT EXISTS idx_runtime_expiry ON runtime_pointers(expires_at);
@@ -58,7 +60,7 @@ def utc_now() -> datetime:
 def open_connection(db_path: Path) -> sqlite3.Connection:
     """
     함수 이름: open_connection()
-    기능: SQLite 연결을 열고 WAL·busy timeout을 설정한 뒤 v2 스키마를 준비한다.
+    기능: SQLite 연결을 열고 WAL·busy timeout을 설정한 뒤 v3 스키마를 준비한다.
         autocommit 모드라 쓰기 묶음은 transaction()으로 명시한다.
     인자: db_path -> SQLite 파일 경로
     반환값: sqlite3.Connection
@@ -72,10 +74,12 @@ def open_connection(db_path: Path) -> sqlite3.Connection:
     # before their row commits, and restart recovery removes blobs whose row was lost.
     connection.execute("PRAGMA synchronous=NORMAL")
     version = int(connection.execute("PRAGMA user_version").fetchone()[0])
-    if version < SCHEMA_VERSION:
+    if version < 2:
         # v1 rows have no chunk digests or state; they are short-lived outputs, so start clean.
         connection.execute("DROP TABLE IF EXISTS runtime_pointers")
         connection.execute("DROP TABLE IF EXISTS runtime_tombstones")
+    elif version == 2:
+        connection.execute("ALTER TABLE runtime_pointers ADD COLUMN run_id TEXT")
     connection.executescript(_SCHEMA)
     connection.execute(f"PRAGMA user_version={SCHEMA_VERSION}")
     return connection

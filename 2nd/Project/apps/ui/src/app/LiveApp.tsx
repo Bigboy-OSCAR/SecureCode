@@ -34,14 +34,21 @@ export function LiveApp(): React.JSX.Element {
     const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(null);
     const [session, setSession] = useState<Session | null>(null);
     const [workspaceError, setWorkspaceError] = useState<string | null>(null);
-    const [runtimePointerRun, setRuntimePointerRun] = useState<{ pointer: string; runId: string } | null>(null);
+    // Pointer URI -> run ID seen in this page's run events; a fallback for rows stored before run_id existed.
+    const [runtimePointerRuns, setRuntimePointerRuns] = useState<Readonly<Record<string, string>>>({});
     const [pointerContextRef, setPointerContextRef] = useState<SelectedPointerContextRef | null>(null);
     const indexWorkflow = useIndexWorkflow(api, selectedWorkspace?.workspace_id ?? null);
+    const refreshIndexStatus = indexWorkflow.refresh;
+    const refreshIndex = useCallback((): void => void refreshIndexStatus(), [refreshIndexStatus]);
     const reportRuntimePointer = useCallback(
         (pointer: string | null, runId: string | null) => {
-            setRuntimePointerRun(pointer && runId ? { pointer, runId } : null);
+            if (pointer && runId) {
+                setRuntimePointerRuns((current) =>
+                    current[pointer] === runId ? current : { ...current, [pointer]: runId },
+                );
+            }
         },
-        [setRuntimePointerRun],
+        [setRuntimePointerRuns],
     );
     const reportReadSelection = useCallback((pointer: UiPointer | null, selection: PointerSelection | null): void => {
         setPointerContextRef(pointer && selection ? { kind: pointer.kind, pointer: pointer.pointer, selection } : null);
@@ -99,7 +106,7 @@ export function LiveApp(): React.JSX.Element {
         });
         setSelectedWorkspace(workspace);
         setSession(null);
-        setRuntimePointerRun(null);
+        setRuntimePointerRuns({});
         setPointerContextRef(null);
         setWorkspaces((current) => upsertWorkspace(current, workspace));
         return workspace;
@@ -112,7 +119,7 @@ export function LiveApp(): React.JSX.Element {
         });
         setSelectedWorkspace(workspace);
         setSession(created);
-        setRuntimePointerRun(null);
+        setRuntimePointerRuns({});
         setPointerContextRef(null);
         return created;
     };
@@ -210,13 +217,14 @@ export function LiveApp(): React.JSX.Element {
                             sessionId={session?.session_id ?? null}
                             index={indexWorkflow.status}
                             pointerContextRef={pointerContextRef}
+                            onSourceChanged={refreshIndex}
                         />
                         <LivePointerWorkspace
                             api={api}
                             connected={connected}
                             workspaceId={selectedWorkspace?.workspace_id ?? null}
                             sessionId={session?.session_id ?? null}
-                            runtimePointerRun={runtimePointerRun}
+                            runtimePointerRuns={runtimePointerRuns}
                             onReadSelection={reportReadSelection}
                         />
                     </aside>

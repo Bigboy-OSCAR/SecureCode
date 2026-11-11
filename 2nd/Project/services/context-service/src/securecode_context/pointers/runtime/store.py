@@ -95,11 +95,11 @@ class RuntimeStore:
         target = blob_path(self.blobs, request.workspace_id, request.session_id, pointer_id)
         with self._lock, transaction(self._connection):
             self._connection.execute(
-                "INSERT INTO runtime_pointers VALUES (?, ?, ?, 'pending', ?, 0, '', x'', ?, ?, ?, ?, '')",
+                "INSERT INTO runtime_pointers VALUES (?, ?, ?, 'pending', ?, 0, '', x'', ?, ?, ?, ?, '', ?)",
                 (
                     pointer_id, request.workspace_id, request.session_id, request.media_type,
                     request.origin, int(request.truncated_before_storage),
-                    now.isoformat(), expires.isoformat(),
+                    now.isoformat(), expires.isoformat(), request.run_id,
                 ),
             )  # fmt: skip
         try:

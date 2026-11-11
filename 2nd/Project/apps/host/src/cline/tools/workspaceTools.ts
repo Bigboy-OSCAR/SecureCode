@@ -29,6 +29,8 @@ export interface WorkspaceRuntimeOptions {
     timeoutMs: number;
     /** Tells the afterTool hook that this tool call's output is already a stored pointer. */
     recordCapture(toolCallId: string, capture: ExecutorCapture): void;
+    /** The run of the turn in progress (tools are built once per session). */
+    currentRunId(): string | undefined;
 }
 
 export interface WorkspaceToolOptions {
@@ -120,7 +122,13 @@ async function runCaptured(
 ): Promise<string> {
     const { runtime } = options;
     const signal = context.signal ?? new AbortController().signal;
-    const meta = { origin: "run_command", mediaType: "text/plain", truncatedBeforeStorage: false };
+    const runId = runtime.currentRunId();
+    const meta = {
+        origin: "run_command",
+        mediaType: "text/plain",
+        truncatedBeforeStorage: false,
+        ...(runId ? { runId } : {}),
+    };
     const capture = new OutputCapture({
         thresholdBytes: runtime.thresholdBytes,
         maxStoredBytes: runtime.maxStoredBytes,

@@ -11,7 +11,7 @@ from starlette.concurrency import run_in_threadpool
 
 from securecode_context.api.runtime_errors import translate
 from securecode_context.common.errors import ErrorCode, ServiceError
-from securecode_context.pointers.models.runtime import RuntimePut, RuntimeStoreError
+from securecode_context.pointers.models.runtime import RUN_ID_PATTERN, RuntimePut, RuntimeStoreError
 from securecode_context.pointers.runtime.db import MAX_OBJECT_BYTES
 from securecode_context.pointers.runtime.store import RuntimeStore
 
@@ -50,6 +50,7 @@ class PutBody(ScopeBody):
     media_type: str = Field(default="text/plain", min_length=1, max_length=128)
     origin: str = Field(default="tool_output", min_length=1, max_length=64)
     truncated_before_storage: bool = False
+    run_id: str | None = Field(default=None, pattern=RUN_ID_PATTERN)
 
 
 class PointerBody(ScopeBody):
@@ -131,6 +132,7 @@ async def put_pointer(request: Request) -> dict[str, object]:
     put = RuntimePut(
         body.workspace_id, body.session_id, body.media_type, content,
         origin=body.origin, truncated_before_storage=body.truncated_before_storage,
+        run_id=body.run_id,
     )  # fmt: skip
     try:
         descriptor = await run_in_threadpool(_store(request).put, put)

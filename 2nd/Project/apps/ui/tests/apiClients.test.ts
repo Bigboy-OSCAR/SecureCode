@@ -139,6 +139,17 @@ test("SSE boundary validates events, sequence IDs, same-origin credentials, and 
     observedReplay.stop();
 });
 
+test("SSE boundary calls browser fetch with the global receiver", async () => {
+    const terminalEvent = terminalEventFixture.data as AppEvent;
+    const fetcher: typeof fetch = function (this: unknown) {
+        assert.equal(this, globalThis);
+        return Promise.resolve(sseResponse(terminalEvent, String(terminalEvent.sequence)));
+    };
+    const observed = waitForEvent(new SseClient("/api/v1", fetcher, 0), terminalEvent, 0);
+    await observed.promise;
+    observed.stop();
+});
+
 test("SSE boundary rejects mismatched event IDs as invalid host payload", async () => {
     const event = terminalEventFixture.data as AppEvent;
     const invalid = { ...event, sequence: event.sequence + 1 };

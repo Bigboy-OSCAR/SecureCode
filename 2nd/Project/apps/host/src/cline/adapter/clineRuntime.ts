@@ -221,8 +221,12 @@ export class ClineAgentRuntime implements AgentRuntime {
             if (!service) throw new Error("runtime pointer store is not configured");
             const holder: { session?: SessionState } = {};
             const tools = buildSessionTools(
-                sessionToolOptions(this.options, request, service, (toolCallId, capture) =>
-                    holder.session?.turn?.executorCaptures.set(toolCallId, capture),
+                sessionToolOptions(
+                    this.options,
+                    request,
+                    service,
+                    (toolCallId, capture) => holder.session?.turn?.executorCaptures.set(toolCallId, capture),
+                    () => holder.session?.turn?.runId,
                 ),
             );
             session = {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { IndexStatusResponse, WorkspaceId } from "@securecode/contracts";
 import type { ApiHttpClient } from "../../../api/httpClient.js";
 import { createIdempotencyKey } from "../../../api/runClient.js";
@@ -14,6 +14,7 @@ export function useIndexWorkflow(
     error: string | null;
     busy: boolean;
     start: () => Promise<void>;
+    refresh: () => Promise<void>;
 } {
     const [status, setStatus] = useState<IndexStatusResponse | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -76,5 +77,18 @@ export function useIndexWorkflow(
         }
     };
 
-    return { status, error, busy, start };
+    /** Re-reads the status without clearing it, so a revision-keyed screen keeps its current result. */
+    const refresh = useCallback(async (): Promise<void> => {
+        if (!workspaceId) {
+            return;
+        }
+        try {
+            const next = await api.getIndexStatus(workspaceId);
+            setStatus((current) => (current && current.workspace_id !== next.workspace_id ? current : next));
+        } catch (requestError) {
+            setError(formatApiFailure(requestError, "색인 상태를 불러오지 못했습니다."));
+        }
+    }, [api, workspaceId]);
+
+    return { status, error, busy, start, refresh };
 }

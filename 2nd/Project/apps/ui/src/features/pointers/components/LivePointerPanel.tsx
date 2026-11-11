@@ -9,7 +9,7 @@ import type { useLivePointerCatalog } from "../hooks/useLivePointerCatalog.js";
 interface LivePointerPanelProps {
     workspaceId: WorkspaceId | null;
     sessionId: SessionId | null;
-    runtimePointerRun: { pointer: string; runId: string } | null;
+    runtimePointerRuns: Readonly<Record<string, string>>;
     canMutate: boolean;
     catalog: ReturnType<typeof useLivePointerCatalog>;
 }
@@ -17,7 +17,7 @@ interface LivePointerPanelProps {
 export function LivePointerPanel({
     workspaceId,
     sessionId,
-    runtimePointerRun,
+    runtimePointerRuns,
     canMutate,
     catalog,
 }: LivePointerPanelProps): React.JSX.Element {
@@ -133,7 +133,7 @@ export function LivePointerPanel({
                 <ul className="compact-list">
                     {catalog.runtimePage.items.map((pointer) => {
                         const expired = pointer.expires_at ? Date.parse(pointer.expires_at) <= Date.now() : false;
-                        const runId = runtimePointerRun?.pointer === pointer.pointer ? runtimePointerRun.runId : null;
+                        const runId = pointer.provenance.run_id ?? runtimePointerRuns[pointer.pointer] ?? null;
                         return (
                             <li key={pointer.pointer}>
                                 <label>
@@ -150,7 +150,7 @@ export function LivePointerPanel({
                                     {formatTime(pointer.provenance.created_at)}
                                 </p>
                                 <p>
-                                    세션: {pointer.session_id} · 실행: {runId ?? "목록 API에서 실행 ID 미제공"}
+                                    세션: {pointer.session_id} · 실행: {runId ?? "기록 없음(실행 ID 저장 이전 출력)"}
                                 </p>
                                 <p>
                                     만료: {pointer.expires_at ? formatTime(pointer.expires_at) : "만료 시각 미제공"}

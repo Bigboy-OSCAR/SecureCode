@@ -71,4 +71,5 @@ def descriptor_of(row: Any) -> RuntimeDescriptor:
         preview=row["preview"],
         origin=row["origin"],
         truncated_before_storage=bool(row["truncated_before_storage"]),
+        run_id=row["run_id"],
     )

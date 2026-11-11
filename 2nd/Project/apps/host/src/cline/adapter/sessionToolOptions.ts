@@ -9,6 +9,7 @@ export function sessionToolOptions(
     request: TurnRequest,
     service: RuntimePointerService,
     recordCapture: (toolCallId: string, capture: ExecutorCapture) => void,
+    currentRunId: () => string | undefined,
 ): SessionToolOptions {
     return {
         root: request.workspaceRoot,
@@ -24,6 +25,7 @@ export function sessionToolOptions(
             maxStoredBytes: options.maxCapturedBytes ?? 32 * 1024 * 1024,
             timeoutMs: options.hookTimeoutMs,
             recordCapture,
+            currentRunId,
         },
     };
 }

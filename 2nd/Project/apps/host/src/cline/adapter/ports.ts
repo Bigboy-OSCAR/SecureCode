@@ -26,6 +26,8 @@ export interface RuntimeOutputMeta {
     origin: string;
     mediaType: string;
     truncatedBeforeStorage: boolean;
+    /** The run whose tool produced the output; shown as the pointer's source in the UI. */
+    runId?: string;
 }
 
 export interface StoredRuntimeOutput {

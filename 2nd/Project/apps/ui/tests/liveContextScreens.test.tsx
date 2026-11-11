@@ -5,6 +5,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { fixtureAdapter } from "./support/fixtureAdapter.js";
 import { PointerReadFailureNotice } from "../src/features/pointers/components/LivePointerReadPanel.js";
 import { PdfJobDetails } from "../src/features/pointers/components/LivePdfPanel.js";
+import { formatCitation, formatSelection } from "../src/features/shared/model/provenanceLabels.js";
 
 function render(element: ReactNode): string {
     return renderToStaticMarkup(createElement("div", null, element));
@@ -83,4 +84,24 @@ test("live PDF view presents job metadata and every terminal service state", () 
             assert.ok(markup.includes("추출 텍스트는 이 상태 응답에 포함되지 않습니다"));
         }
     }
+});
+
+test("context fragments show the server-confirmed source: symbol file and lines, PDF page, byte range", () => {
+    const symbol = formatCitation({
+        ref: { kind: "symbol", candidate_id: "cand_3ca867b85ea162c9f1ccd12621167335824ec6d1", index_revision: 2 },
+        location: {
+            symbol_id: "sym_3ca867b85ea162c9f1ccd12621167335824ec6d1",
+            qualname: "compute_invoice_total",
+            kind: "function",
+            relative_path: "billing.py",
+            start_line: 1,
+            end_line: 4,
+            content_sha256: "d43cbb38efbec5a88ecfc2f69133d40b6bc78e1da138e7472ed97ded45db30eb",
+        },
+    });
+    assert.equal(symbol, "billing.py:1-4 · compute_invoice_total · revision 2 · sha256 d43cbb38efbe…");
+
+    const page = formatSelection({ type: "pdf_page", page: 2, start: 0, end: 52, parser_version: "pdf-text-v1" });
+    assert.equal(page, "원본 PDF 2쪽 · byte 0-52 · parser pdf-text-v1");
+    assert.equal(formatSelection({ type: "byte", start: 10, end: 20 }), "원본 byte 10-20");
 });

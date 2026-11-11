@@ -1,8 +1,16 @@
-import type { IndexStatusResponse, SelectedPointerContextRef, SessionId, WorkspaceId } from "@securecode/contracts";
+import type {
+    ExplicitContextRef,
+    IndexStatusResponse,
+    SelectedPointerContextRef,
+    SessionId,
+    WorkspaceId,
+} from "@securecode/contracts";
+import { useEffect } from "react";
 import { Alert, Button, InputField, StatusBadge, TextAreaField } from "../../../components/index.js";
 import type { ApiHttpClient } from "../../../api/httpClient.js";
 import { useLiveContextWorkflow } from "../hooks/useLiveContextWorkflow.js";
 import { boundedPreview } from "../../shared/model/boundedPreview.js";
+import { countModeLabel, formatCitation } from "../../shared/model/provenanceLabels.js";
 
 const omissionLabels: Record<string, string> = {
     duplicate: "이미 포함된 자료",
@@ -21,6 +29,7 @@ interface LiveContextPanelProps {
     sessionId: SessionId | null;
     index: IndexStatusResponse | null;
     pointerContextRef: SelectedPointerContextRef | null;
+    onSourceChanged: () => void;
 }
 
 export function LiveContextPanel({
@@ -30,10 +39,19 @@ export function LiveContextPanel({
     sessionId,
     index,
     pointerContextRef,
+    onSourceChanged,
 }: LiveContextPanelProps): React.JSX.Element {
     const workflow = useLiveContextWorkflow(api, workspaceId, sessionId, index, pointerContextRef);
     const searchable = Boolean(index?.searchable && index.index_status !== "stale");
     const koreanOnlyQuery = /[\uac00-\ud7af]/u.test(workflow.query) && !/[A-Za-z0-9_]/u.test(workflow.query);
+    const sourceChanged = workflow.errorCode === "SOURCE_CHANGED";
+
+    useEffect(() => {
+        // The server marks the index stale once it sees the change; show that instead of the old "ready" status.
+        if (sourceChanged) {
+            onSourceChanged();
+        }
+    }, [sourceChanged, onSourceChanged]);
 
     return (
         <section className="feature-card" aria-labelledby="context-heading" data-testid="screen-context">
@@ -194,14 +212,16 @@ export function LiveContextPanel({
                     {workflow.plan.fragments.map((fragment) => (
                         <article key={`${fragment.candidate_id}-${fragment.ref.kind}`}>
                             <p>
-                                선택 이유: {fragment.inclusion} · {fragment.token_count} tokens
+                                선택 이유: {inclusionLabel(fragment.inclusion)} · {fragment.token_count} tokens
                             </p>
+                            <p>출처: {formatCitation(fragment.provenance)}</p>
                             <pre className="bounded-code">{boundedPreview(fragment.content, 4096)}</pre>
                         </article>
                     ))}
                     {workflow.plan.omitted.map((item, position) => (
                         <p key={`${item.candidate_id}-${item.reason}-${position}`}>
-                            누락 이유: {omissionLabels[item.reason] ?? item.reason}
+                            누락: {item.origin} {item.ref ? describeRef(item.ref) : item.candidate_id.slice(0, 17)} ·
+                            이유 {omissionLabels[item.reason] ?? item.reason}
                         </p>
                     ))}
                     {workflow.plan.omissions_truncated ? <p>일부 누락 사유가 응답 상한으로 생략되었습니다.</p> : null}
@@ -232,15 +252,19 @@ export function LiveContextPanel({
     );
 }
 
-function countModeLabel(mode: string): string {
-    switch (mode) {
-        case "exact":
-            return "정확 계수";
-        case "provider_estimate":
-            return "제공자 추정";
-        case "provider_reported":
-            return "제공자 실측";
+function inclusionLabel(inclusion: string): string {
+    switch (inclusion) {
+        case "full":
+            return "전체 포함";
+        case "partial_budget":
+            return "예산 때문에 일부만 포함";
+        case "partial_size":
+            return "조각 상한 때문에 일부만 포함";
         default:
-            return mode;
+            return inclusion;
     }
+}
+
+function describeRef(ref: ExplicitContextRef): string {
+    return ref.kind === "symbol" ? `symbol revision ${ref.index_revision}` : `${ref.kind} ${ref.pointer}`;
 }

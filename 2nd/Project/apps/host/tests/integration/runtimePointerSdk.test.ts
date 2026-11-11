@@ -119,7 +119,9 @@ it("replaces approved command output before the next model call and re-reads onl
             `/api/v1/workspaces/${host.workspaceId}/pointers?kind=runtime&session_id=${sessionId}&limit=20`,
         );
         assert.equal(publicList.status, 200);
-        assert.equal((publicList.body as { items: unknown[] }).items.length, 1);
+        const listed = (publicList.body as { items: { provenance: { run_id?: string } }[] }).items;
+        assert.equal(listed.length, 1);
+        assert.equal(listed[0]?.provenance.run_id, run.run_id, "the pointer names the run that produced it");
         const scope = { workspaceId: host.workspaceId, sessionId };
         const line = await host.runtimeClient.read(
             scope,

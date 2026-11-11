@@ -11,7 +11,7 @@ from starlette.concurrency import run_in_threadpool
 
 from securecode_context.api.runtime_errors import translate
 from securecode_context.common.errors import ErrorCode, ServiceError
-from securecode_context.pointers.models.runtime import RuntimePut, RuntimeStoreError
+from securecode_context.pointers.models.runtime import RUN_ID_PATTERN, RuntimePut, RuntimeStoreError
 from securecode_context.pointers.runtime.store import RuntimeStore
 
 router = APIRouter(prefix="/internal/v1/runtime", tags=["runtime-stream"])
@@ -29,6 +29,24 @@ def _header(request: Request, name: str, default: str | None = None) -> str:
     value = request.headers.get(name, default)
     if value is None or not _HEADER_VALUE.fullmatch(value):
         raise ServiceError(ErrorCode.VALIDATION_FAILED, f"{name} 헤더가 올바르지 않습니다.")
+    return value
+
+
+def _run_id(request: Request) -> str | None:
+    """
+    함수 이름: _run_id()
+    기능: 선택 헤더 x-securecode-run-id를 계약 RunId 형식으로만 받는다.
+    인자: request -> 인증된 요청
+    반환값: run ID 또는 None
+    작성 날짜: 2026/11/11
+    """
+    value = request.headers.get("x-securecode-run-id")
+    if value is None:
+        return None
+    if not re.fullmatch(RUN_ID_PATTERN, value):
+        raise ServiceError(
+            ErrorCode.VALIDATION_FAILED, "x-securecode-run-id 헤더가 올바르지 않습니다."
+        )
     return value
 
 
@@ -53,6 +71,7 @@ async def stream_runtime(request: Request) -> dict[str, object]:
         b"",
         origin=_header(request, "x-securecode-origin"),
         truncated_before_storage=_header(request, "x-securecode-truncated", "false") == "true",
+        run_id=_run_id(request),
     )
     store: RuntimeStore = request.app.state.pointer_store
     try:

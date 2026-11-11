@@ -212,6 +212,10 @@ export type PointerDescriptor = {
     relative_path?: RelativePath;
     supported_selectors?: SupportedSelectors;
 };
+/**
+ * Runtime only: the run whose tool produced the output, when the host knew it.
+ */
+export type RunId1 = string;
 export type PointerDisplayName = string;
 export type PointerSelectorKind = "line" | "byte" | "section" | "json_path" | "pdf_page";
 /**
@@ -1260,6 +1264,7 @@ export interface PointerProvenance {
     created_at: Timestamp;
     origin: string;
     truncated_before_storage?: boolean;
+    run_id?: RunId1;
 }
 export interface PointerListResult {
     schema_version: SchemaVersion;
@@ -1320,6 +1325,7 @@ export interface RuntimePutRequest {
     content: string;
     origin: string;
     truncated_before_storage?: boolean;
+    run_id?: RunId;
 }
 export interface LineSelector {
     type: "line";

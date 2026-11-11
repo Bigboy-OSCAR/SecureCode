@@ -14,6 +14,8 @@ import { runtimePrefix, storedFrom } from "./runtimeResponses.js";
 const STREAM_PATH = "/internal/v1/runtime/stream";
 const RESPONSE_LIMIT_BYTES = 256 * 1024;
 const HEADER_VALUE = /^[A-Za-z0-9_./+-]{1,128}$/;
+/** Contract RunId (contracts/common/primitives.schema.json). */
+const RUN_ID = /^run_[A-Za-z0-9-]{8,64}$/;
 
 export interface UploadOptions {
     baseUrl: string;
@@ -56,6 +58,8 @@ function readResponse(response: IncomingMessage): Promise<{ status: number; body
 export function openRuntimeUpload(options: UploadOptions): RuntimeUpload {
     const { scope, meta, validator } = options;
     runtimePrefix(scope);
+    if (meta.runId !== undefined && !RUN_ID.test(meta.runId))
+        throw new ContextServiceError("VALIDATION_FAILED", "invalid upload run id", false);
     for (const value of [meta.origin, meta.mediaType]) {
         if (!HEADER_VALUE.test(value))
             throw new ContextServiceError("VALIDATION_FAILED", "invalid upload metadata", false);
@@ -77,6 +81,7 @@ export function openRuntimeUpload(options: UploadOptions): RuntimeUpload {
             "x-securecode-origin": meta.origin,
             "x-securecode-media-type": meta.mediaType,
             "x-securecode-truncated": meta.truncatedBeforeStorage ? "true" : "false",
+            ...(meta.runId ? { "x-securecode-run-id": meta.runId } : {}),
         },
     });
     // Remember the first transport failure (abort signal, reset) for every later call.

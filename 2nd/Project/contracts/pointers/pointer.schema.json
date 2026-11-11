@@ -18,6 +18,10 @@
                 },
                 "truncated_before_storage": {
                     "type": "boolean"
+                },
+                "run_id": {
+                    "description": "Runtime only: the run whose tool produced the output, when the host knew it.",
+                    "$ref": "../common/primitives.schema.json#/definitions/RunId"
                 }
             }
         },
@@ -224,6 +228,9 @@
                 },
                 "truncated_before_storage": {
                     "type": "boolean"
+                },
+                "run_id": {
+                    "$ref": "../common/primitives.schema.json#/definitions/RunId"
                 }
             }
         },

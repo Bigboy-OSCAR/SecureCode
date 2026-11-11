@@ -10,12 +10,17 @@ interface SseMessage {
 }
 
 export class SseClient {
+    private readonly fetcher: ApiFetch;
+
     constructor(
         private readonly baseUrl = "/api/v1",
-        private readonly fetcher: ApiFetch = fetch,
+        fetcher: ApiFetch = globalThis.fetch,
         private readonly retryLimit = 6,
         private readonly idleTimeoutMs = 45000,
-    ) {}
+    ) {
+        // A bare `fetch` stored on an object throws "Illegal invocation" in browsers when called as a method.
+        this.fetcher = fetcher.bind(globalThis);
+    }
 
     subscribe(
         runId: RunId,

@@ -115,6 +115,7 @@ export function createRuntimeToolResultTransformer(
                 origin: originOf(input.toolName),
                 mediaType: mediaTypeOf(input.output, bytes),
                 truncatedBeforeStorage: input.preLimitedByExecutor,
+                runId: input.runId,
             };
             const stored = await abortable(service.store(scope, input.output, meta, signal), signal);
             if (stored.byteSize !== bytes || !stored.pointer.startsWith(runtimePrefix(scope))) {

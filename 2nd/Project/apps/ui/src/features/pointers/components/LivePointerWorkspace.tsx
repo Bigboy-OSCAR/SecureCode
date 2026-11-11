@@ -12,7 +12,7 @@ interface LivePointerWorkspaceProps {
     connected: boolean;
     workspaceId: WorkspaceId | null;
     sessionId: SessionId | null;
-    runtimePointerRun: { pointer: string; runId: string } | null;
+    runtimePointerRuns: Readonly<Record<string, string>>;
     onReadSelection: (pointer: UiPointer | null, selection: PointerSelection | null) => void;
 }
 
@@ -21,23 +21,23 @@ export function LivePointerWorkspace({
     connected,
     workspaceId,
     sessionId,
-    runtimePointerRun,
+    runtimePointerRuns,
     onReadSelection,
 }: LivePointerWorkspaceProps): React.JSX.Element {
     const catalog = useLivePointerCatalog(api, workspaceId, sessionId);
 
     useEffect(() => {
-        if (runtimePointerRun) {
+        if (Object.keys(runtimePointerRuns).length > 0) {
             void catalog.refreshRuntime();
         }
-    }, [catalog.refreshRuntime, runtimePointerRun]);
+    }, [catalog.refreshRuntime, runtimePointerRuns]);
 
     return (
         <>
             <LivePointerPanel
                 workspaceId={workspaceId}
                 sessionId={sessionId}
-                runtimePointerRun={runtimePointerRun}
+                runtimePointerRuns={runtimePointerRuns}
                 canMutate={connected}
                 catalog={catalog}
             />

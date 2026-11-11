@@ -95,6 +95,7 @@ export function sessionToolSchema(client: ContextServiceClient, runtime: Runtime
                 maxStoredBytes: 1,
                 timeoutMs: 1,
                 recordCapture: () => undefined,
+                currentRunId: () => undefined,
             },
         }),
     );

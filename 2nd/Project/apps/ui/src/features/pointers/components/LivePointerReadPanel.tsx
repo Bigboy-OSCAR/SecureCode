@@ -2,13 +2,8 @@ import { useEffect } from "react";
 import type { PointerSelection } from "@securecode/contracts";
 import { Alert, Button, InputField } from "../../../components/index.js";
 import { boundedPreview } from "../../shared/model/boundedPreview.js";
-import {
-    countModeLabel,
-    formatRequestedRange,
-    formatSelection,
-    isNumericSelector,
-    selectorLabel,
-} from "../model/pointerReadFormatting.js";
+import { formatRequestedRange, isNumericSelector, selectorLabel } from "../model/pointerReadFormatting.js";
+import { countModeLabel, formatSelection } from "../../shared/model/provenanceLabels.js";
 import type { UiPointer } from "../../../api/mappers/pointerMapper.js";
 import type { ApiHttpClient } from "../../../api/httpClient.js";
 import { useLivePointerReadWorkflow } from "../hooks/useLivePointerReadWorkflow.js";

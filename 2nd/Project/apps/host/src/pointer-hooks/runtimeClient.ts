@@ -62,6 +62,7 @@ export function createRuntimeClient(options: RuntimeClientOptions): RuntimePoint
                     media_type: meta.mediaType,
                     origin: meta.origin,
                     truncated_before_storage: meta.truncatedBeforeStorage,
+                    ...(meta.runId ? { run_id: meta.runId } : {}),
                 },
                 signal,
             );

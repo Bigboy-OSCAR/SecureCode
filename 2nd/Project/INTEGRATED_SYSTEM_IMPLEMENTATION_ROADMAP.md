@@ -486,7 +486,7 @@ docs/progress/tasks/1.4.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **선행 조건: 김민지 1.4번 + 박준형 3.6번 + 임우형 4.9번 작업이 모두 완료된 이후에 진행.**
 
-- [ ] **1.5 완료** — 구현/설계·검증·증거 기록 후에만 체크
+- [x] **1.5 완료** — 구현/설계·검증·증거 기록 후에만 체크
 
 **왜 필요한가 / 무엇을 하는가:** 코드 근거와 문서, 실행 결과가 실제로 어디에서 왔는지 보여야 사용자가 제한된 컨텍스트를 이해할 수 있다. 모든 부가 기능을 실서비스와 연결해 UI의 마지막 mock 경로를 제거한다.
 
@@ -494,11 +494,13 @@ docs/progress/tasks/1.4.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** apps/ui/src/features/{project,context,pointers}; API mappers; pointer/PDF UI 시험  
 **검증 기록:** `docs/progress/tasks/1.5.md`
 
+**2026-11-11 16:45 상태: DONE** (박준형 인계 재검증). 로컬 qwen 계수기를 켠 실제 UI→host→service에서 R0 검색·묶음·미리보기(누락·BUDGET_EXCEEDED 포함), Source 부분 읽기·검색·변경·해제(원본 유지), PDF ready/failed/unsupported·쪽 읽기, Runtime 목록·검색·만료·삭제를 확인했다. 고친 결함: 운영 UI의 SSE가 `fetch` receiver 오류로 한 번도 동작하지 않던 문제, 미리보기 출처·누락 대상 표기, SOURCE_CHANGED 뒤 stale 표시, Runtime 출력의 run ID(계약 `PointerProvenance.run_id`·service 스키마 v3 추가). check·integration·live 12/12 PASS. [1.5 기록](docs/progress/tasks/1.5.md)
+
 **완료 조건**
 
-- [ ] R0·Source·Runtime·PDF·예산 화면이 모두 실서비스로 동작한다.
-- [ ] 페이지/줄/실행 출처와 제한·누락·만료·변경 이유가 정확히 표시된다.
-- [ ] Source 등록 해제로 원본이 지워지지 않고 대형 본문 전체를 자동 다운로드하지 않는다.
+- [x] R0·Source·Runtime·PDF·예산 화면이 모두 실서비스로 동작한다.
+- [x] 페이지/줄/실행 출처와 제한·누락·만료·변경 이유가 정확히 표시된다.
+- [x] Source 등록 해제로 원본이 지워지지 않고 대형 본문 전체를 자동 다운로드하지 않는다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
 
