@@ -56,7 +56,6 @@ export async function waitRunStatus(page: Page, label: string, timeout = 60000):
 
 export async function decideApproval(page: Page, decision: "approve" | "reject"): Promise<void> {
     await page.getByTestId(decision === "approve" ? "approval-approve" : "approval-reject").click();
-    await page.getByTestId("approval-confirm").click();
 }
 
 export async function registerSource(page: Page, path: string, name: string): Promise<void> {

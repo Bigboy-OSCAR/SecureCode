@@ -194,7 +194,7 @@ test("rendered live UI keeps actions distinct, labeled, and free of opaque point
         render(createElement(ApprovalCard, { controller, state: controller.getSnapshot() })),
     ].join("");
 
-    for (const label of ["승인 검토", "거절 검토", "취소 요청", "질문 입력", "Shift+Enter로 줄 바꿈"]) {
+    for (const label of ["허용", "거절", "취소 요청", "질문 입력", "Shift+Enter로 줄 바꿈"]) {
         assert.ok(markup.includes(label), `Expected accessible action "${label}".`);
     }
     assert.ok(markup.includes('aria-live="polite"'));

@@ -41,6 +41,7 @@ it("a rejected command never runs and the run reports the rejection", async () =
     await page.getByTestId("approval-meta").waitFor();
     await decideApproval(page, "reject");
     await waitRunStatus(page, "완료");
+    assert.equal(await page.getByTestId("screen-approval").count(), 0, "the rejected request disappears");
     const tools = await page.getByTestId("tool-row").allInnerTexts();
     assert.ok(
         tools.some((row) => /명령 실행 · (거절됨|실패)/.test(row)),
@@ -50,7 +51,7 @@ it("a rejected command never runs and the run reports the rejection", async () =
     assert.doesNotMatch(fake.requests.join("\n"), /BULK-LOG-/, "the command never produced output");
 });
 
-it("cancelling a running command keeps the question and the decided approval", async () => {
+it("cancelling an approved command keeps the question and tool history without an approval panel", async () => {
     const { page, fake } = e2e;
     fake.script([{ tool: "run_command", args: { command: "node slow.js" } }, { hold: true }]);
     const question = "slow.js 를 실행하고 기다려 주세요";
@@ -62,7 +63,8 @@ it("cancelling a running command keeps the question and the decided approval", a
     await waitRunStatus(page, "취소됨");
     const chat = await page.locator("#screen-chat").innerText();
     assert.match(chat, new RegExp(question), "the cancelled run still shows its own question (UI23-09)");
-    assert.match(await page.getByTestId("screen-approval").innerText(), /승인됨 · run_command/);
+    assert.match((await page.getByTestId("tool-row").allInnerTexts()).join(" "), /명령 실행/);
+    assert.equal(await page.getByTestId("screen-approval").count(), 0, "there is no stale decision prompt");
 });
 
 it("an SSE drop is shown as a disconnection, not a cancel, and the run is followed again", async () => {

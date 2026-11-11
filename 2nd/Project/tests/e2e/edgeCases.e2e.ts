@@ -121,7 +121,7 @@ it("an approval left undecided expires and the command never runs", async () => 
     await ask(page, "승인 만료를 확인합니다");
     await page.getByTestId("approval-meta").waitFor();
     await waitRunStatus(page, "완료", APPROVAL_TIMEOUT_MS + 30000);
-    assert.match(await page.getByTestId("screen-approval").innerText(), /승인 기한 만료 · run_command/);
+    assert.equal(await page.getByTestId("screen-approval").count(), 0, "the expired request disappears");
     assert.equal(await page.getByTestId("approval-meta").count(), 0, "no decision is offered after expiry");
     assert.match((await page.getByTestId("tool-row").allInnerTexts()).join(" "), /run_command expired/);
     assert.doesNotMatch(fake.requests.join(" "), /BULK-LOG-/, "the expired command produced no output");

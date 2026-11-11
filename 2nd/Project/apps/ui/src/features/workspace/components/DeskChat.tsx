@@ -147,7 +147,6 @@ export function DeskChat({
                             {STATUS[run.status]}
                             {run.terminal?.reason_code ? ` · ${run.terminal.reason_code}` : ""}
                         </p>
-                        <ApprovalCard controller={controller} state={state} />
                     </>
                 ) : null}
                 {state.connection === "disconnected" ? (
@@ -165,6 +164,7 @@ export function DeskChat({
                 ) : null}
             </div>
             <div className="desk-composer-wrap">
+                <ApprovalCard controller={controller} state={state} />
                 <form
                     className="desk-composer"
                     onSubmit={(event) => {

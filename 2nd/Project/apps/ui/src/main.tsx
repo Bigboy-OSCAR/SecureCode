@@ -10,6 +10,7 @@ import "./styles/deskChat.css";
 import "./styles/deskPanels.css";
 import "./styles/deskDialogs.css";
 import "./styles/deskAnswers.css";
+import "./styles/deskApproval.css";
 
 const rootElement = document.getElementById("root");
 

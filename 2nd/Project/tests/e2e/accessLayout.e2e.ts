@@ -1,19 +1,12 @@
 /**
- * E2E (fixture provider): keyboard-only question and approval dialog (initial focus, Escape returns focus,
- * no decision on close), confirm dialogs, labelled pointer choices, and the 1280px / 768px layouts.
+ * E2E (fixture provider): keyboard-only question and inline approval, confirm dialogs, labelled pointer
+ * choices, and the 1280px / 768px layouts.
  */
 import assert from "node:assert/strict";
 import { after, before, it } from "node:test";
 import type { Page } from "playwright-core";
 import { startE2E, type E2E } from "./support/e2eStack.js";
-import {
-    buildIndex,
-    decideApproval,
-    registerProject,
-    registerSource,
-    startSession,
-    waitRunStatus,
-} from "./support/uiActions.js";
+import { ask, buildIndex, registerProject, registerSource, startSession, waitRunStatus } from "./support/uiActions.js";
 
 let e2e: E2E;
 
@@ -42,26 +35,30 @@ async function tabTo(page: Page, testId: string, limit = 80): Promise<void> {
     throw new Error(`${testId} is not reachable with Tab`);
 }
 
-it("a question is asked and an approval dialog is handled with the keyboard alone", async () => {
+it("an approval appears only when requested and can be decided inline with the keyboard", async () => {
     const { page, fake } = e2e;
+    assert.equal(await page.getByTestId("screen-approval").count(), 0, "there is no idle approval panel");
     fake.script([{ tool: "run_command", args: { command: "node gen.js" } }, { text: "키보드로 처리했습니다." }]);
     await page.locator("body").click({ position: { x: 1, y: 1 } });
     await tabTo(page, "question-input");
     await page.keyboard.type("키보드로 gen.js 를 실행해 주세요");
     await page.keyboard.press("Enter");
     await page.getByTestId("approval-meta").waitFor();
-
-    await page.getByTestId("approval-approve").focus();
-    await page.keyboard.press("Enter");
-    await page.locator("dialog[open]").waitFor();
-    assert.equal(await activeTestId(page), "modal-title", "the dialog opens on its title, not on a confirm button");
+    assert.equal(await activeTestId(page), "approval-heading", "the request focuses its heading, not a decision");
+    assert.equal(await page.locator("dialog[open]").count(), 0, "an approval does not open a modal dialog");
+    assert.equal(
+        await page.locator('.desk-composer-wrap [data-testid="screen-approval"]').count(),
+        1,
+        "the request remains beside the composer instead of in the scrolling conversation",
+    );
     await page.keyboard.press("Escape");
-    await page.locator("dialog[open]").waitFor({ state: "detached" });
-    assert.equal(await activeTestId(page), "approval-approve", "Escape returns focus to the opener");
-    assert.equal(await page.getByTestId("approval-meta").count(), 1, "closing the dialog decided nothing");
-
-    await decideApproval(page, "approve");
+    assert.equal(await page.getByTestId("approval-meta").count(), 1, "Escape does not decide the request");
+    await tabTo(page, "approval-approve");
+    await page.keyboard.press("Enter");
     await waitRunStatus(page, "완료");
+    assert.equal(await page.getByTestId("screen-approval").count(), 0, "the accepted request disappears");
+    assert.equal(await page.locator("dialog[open]").count(), 0, "accepting needs no second confirmation dialog");
+    assert.equal(await activeTestId(page), "question-input", "focus returns to the question after a decision");
     assert.match(
         await page.locator(".desk-run-status").ariaSnapshot(),
         /status: 완료/,
@@ -107,7 +104,7 @@ it("1280px and narrow layouts preserve conversation, dismissible drawers and key
     await page.setViewportSize({ width: 768, height: 900 });
     assert.ok((await horizontalOverflow(page)) <= 0, "no horizontal page overflow at 768px");
     assert.ok(await page.locator("#main-content").isVisible());
-    assert.ok(await page.getByTestId("screen-approval").isVisible());
+    assert.equal(await page.getByTestId("screen-approval").count(), 0, "completed requests do not leave a panel");
     assert.equal(await page.locator("#project-panel").isVisible(), false);
     assert.equal(await page.locator("#context-panel").isVisible(), false);
     const context = page.getByRole("button", { name: "자료 · 컨텍스트", exact: true });
@@ -119,5 +116,23 @@ it("1280px and narrow layouts preserve conversation, dismissible drawers and key
     await page.setViewportSize({ width: 640, height: 900 });
     assert.ok((await horizontalOverflow(page)) <= 0, "no horizontal page overflow at 200% zoom (640px)");
     assert.ok(await page.getByTestId("question-submit").isVisible());
+    await page.setViewportSize({ width: 1280, height: 900 });
+});
+
+it("a pending inline request keeps both decisions reachable on a narrow screen", async () => {
+    const { page, fake } = e2e;
+    fake.script([{ tool: "run_command", args: { command: "node gen.js" } }, { text: "실행하지 않았습니다." }]);
+    await ask(page, "좁은 화면에서 실행 요청을 확인합니다");
+    await page.getByTestId("approval-meta").waitFor();
+    await page.setViewportSize({ width: 640, height: 680 });
+    assert.ok((await horizontalOverflow(page)) <= 0, "the approval does not overflow the viewport");
+    for (const testId of ["approval-approve", "approval-reject"]) {
+        const box = await page.getByTestId(testId).boundingBox();
+        assert.ok(box && box.x >= 0 && box.x + box.width <= 640 && box.y >= 0 && box.y + box.height <= 680);
+    }
+    await tabTo(page, "approval-reject");
+    await page.keyboard.press("Enter");
+    await waitRunStatus(page, "완료");
+    assert.equal(await page.getByTestId("screen-approval").count(), 0, "the rejected request disappears");
     await page.setViewportSize({ width: 1280, height: 900 });
 });
