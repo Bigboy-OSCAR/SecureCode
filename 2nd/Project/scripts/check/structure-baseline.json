@@ -1,14 +1,6 @@
 {
     "description": "entries: open violations owned by another task. They are reported as KNOWN, never as PASS, and keep `npm run check` INCOMPLETE until the owner fixes them and deletes the entry. exceptions: permanent, justified exceptions (PASS, reason printed). path ending with '/' matches a directory prefix.",
-    "entries": [
-        {
-            "path": "apps/ui/src/",
-            "rule": "production-mock",
-            "owner": "김민지",
-            "task": "1.5",
-            "note": "The UI still ships contract-fixture screens (api/fixtureAdapter.ts, api/fixtureRunClient.ts and the feature components that import them; main.tsx renders mode=live). Roadmap 1.5 removes the last mock path. Found by the 3.7 production-mock rule on 2026-11-11."
-        }
-    ],
+    "entries": [],
     "exceptions": [
         {
             "path": "tests/fixtures/redaction-cases.json",

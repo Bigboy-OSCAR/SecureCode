@@ -1,4 +1,4 @@
-/** Supplies contract-backed examples to the UI without making network requests. */
+/** Supplies contract-backed test data without making network requests. */
 import type {
     AppEvent,
     ApprovalDecisionResponse,

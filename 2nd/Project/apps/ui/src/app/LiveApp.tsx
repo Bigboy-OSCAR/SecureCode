@@ -1,9 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type {
     HealthResponse,
     IdempotencyKey,
     Session,
     SettingsResponse,
+    PointerSelection,
+    SelectedPointerContextRef,
     Workspace,
     WorkspaceId,
 } from "@securecode/contracts";
@@ -15,8 +17,11 @@ import { ApiClientError, formatApiFailure } from "../api/apiErrors.js";
 import { ApprovalCard } from "../features/approvals/components/ApprovalCard.js";
 import { ConversationPanel } from "../features/chat/components/ConversationPanel.js";
 import { useRunController } from "../features/chat/hooks/useRunController.js";
-import { LiveFeatureReadiness } from "../features/shared/components/LiveFeatureReadiness.js";
 import { LiveProjectPanel } from "../features/project/components/LiveProjectPanel.js";
+import { useIndexWorkflow } from "../features/project/hooks/useIndexWorkflow.js";
+import { LiveContextPanel } from "../features/context/components/LiveContextPanel.js";
+import { LivePointerWorkspace } from "../features/pointers/components/LivePointerWorkspace.js";
+import type { UiPointer } from "../api/mappers/pointerMapper.js";
 import { LiveConnectionPanel } from "../features/settings/components/LiveConnectionPanel.js";
 
 export function LiveApp(): React.JSX.Element {
@@ -29,6 +34,18 @@ export function LiveApp(): React.JSX.Element {
     const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(null);
     const [session, setSession] = useState<Session | null>(null);
     const [workspaceError, setWorkspaceError] = useState<string | null>(null);
+    const [runtimePointerRun, setRuntimePointerRun] = useState<{ pointer: string; runId: string } | null>(null);
+    const [pointerContextRef, setPointerContextRef] = useState<SelectedPointerContextRef | null>(null);
+    const indexWorkflow = useIndexWorkflow(api, selectedWorkspace?.workspace_id ?? null);
+    const reportRuntimePointer = useCallback(
+        (pointer: string | null, runId: string | null) => {
+            setRuntimePointerRun(pointer && runId ? { pointer, runId } : null);
+        },
+        [setRuntimePointerRun],
+    );
+    const reportReadSelection = useCallback((pointer: UiPointer | null, selection: PointerSelection | null): void => {
+        setPointerContextRef(pointer && selection ? { kind: pointer.kind, pointer: pointer.pointer, selection } : null);
+    }, []);
 
     const onAuthenticated = (): void => {
         setConnected(true);
@@ -82,6 +99,8 @@ export function LiveApp(): React.JSX.Element {
         });
         setSelectedWorkspace(workspace);
         setSession(null);
+        setRuntimePointerRun(null);
+        setPointerContextRef(null);
         setWorkspaces((current) => upsertWorkspace(current, workspace));
         return workspace;
     };
@@ -93,6 +112,8 @@ export function LiveApp(): React.JSX.Element {
         });
         setSelectedWorkspace(workspace);
         setSession(created);
+        setRuntimePointerRun(null);
+        setPointerContextRef(null);
         return created;
     };
 
@@ -112,7 +133,7 @@ export function LiveApp(): React.JSX.Element {
                     <div className="topbar-status" aria-label="서비스 상태">
                         <StatusBadge label={connected ? (health?.status ?? "연결됨") : "연결 대기"} tone="neutral" />
                     </div>
-                    <section className="settings-summary" aria-labelledby="settings-heading">
+                    <section className="settings-summary" aria-labelledby="top-settings-heading">
                         <h2 id="top-settings-heading">설정</h2>
                         <p>실제 로컬 호스트 API · HttpOnly cookie 인증</p>
                     </section>
@@ -124,6 +145,10 @@ export function LiveApp(): React.JSX.Element {
                             workspaces={workspaces}
                             selectedWorkspace={selectedWorkspace}
                             session={session}
+                            indexStatus={indexWorkflow.status}
+                            indexError={indexWorkflow.error}
+                            indexBusy={indexWorkflow.busy}
+                            onStartIndex={indexWorkflow.start}
                             onRegister={registerWorkspace}
                             onStartSession={startSession}
                         />
@@ -135,8 +160,8 @@ export function LiveApp(): React.JSX.Element {
                             <a className="sidebar-link" href="#screen-pointers">
                                 등록 자료
                             </a>
-                            <a className="sidebar-link" href="#screen-settings">
-                                모델·예산
+                            <a className="sidebar-link" href="#screen-context">
+                                컨텍스트 예산
                             </a>
                         </div>
                     </nav>
@@ -162,6 +187,7 @@ export function LiveApp(): React.JSX.Element {
                                     client={runClient}
                                     sessionId={session.session_id}
                                     workspaceId={selectedWorkspace.workspace_id}
+                                    onRuntimePointer={reportRuntimePointer}
                                 />
                             ) : (
                                 <section
@@ -177,7 +203,22 @@ export function LiveApp(): React.JSX.Element {
                         </div>
                     </main>
                     <aside className="context-sidebar" aria-label="컨텍스트와 포인터">
-                        <LiveFeatureReadiness />
+                        <LiveContextPanel
+                            api={api}
+                            connected={connected}
+                            workspaceId={selectedWorkspace?.workspace_id ?? null}
+                            sessionId={session?.session_id ?? null}
+                            index={indexWorkflow.status}
+                            pointerContextRef={pointerContextRef}
+                        />
+                        <LivePointerWorkspace
+                            api={api}
+                            connected={connected}
+                            workspaceId={selectedWorkspace?.workspace_id ?? null}
+                            sessionId={session?.session_id ?? null}
+                            runtimePointerRun={runtimePointerRun}
+                            onReadSelection={reportReadSelection}
+                        />
                     </aside>
                 </div>
             </div>
@@ -200,14 +241,19 @@ interface LiveRunPanelProps {
     client: HttpRunClient;
     sessionId: Session["session_id"];
     workspaceId: WorkspaceId;
+    onRuntimePointer: (pointer: string | null, runId: string | null) => void;
 }
 
-function LiveRunPanel({ client, sessionId, workspaceId }: LiveRunPanelProps): React.JSX.Element {
+function LiveRunPanel({ client, sessionId, workspaceId, onRuntimePointer }: LiveRunPanelProps): React.JSX.Element {
     const { controller, state } = useRunController(client, sessionId, workspaceId);
+    useEffect(() => {
+        const pointer = state.pointerCreated?.kind === "runtime" ? state.pointerCreated.pointer : null;
+        onRuntimePointer(pointer, state.snapshot?.run_id ?? null);
+    }, [onRuntimePointer, state.pointerCreated?.kind, state.pointerCreated?.pointer, state.snapshot?.run_id]);
     return (
         <>
-            <ConversationPanel controller={controller} state={state} fixtureMode={false} />
-            <ApprovalCard controller={controller} state={state} fixtureMode={false} />
+            <ConversationPanel controller={controller} state={state} />
+            <ApprovalCard controller={controller} state={state} />
         </>
     );
 }

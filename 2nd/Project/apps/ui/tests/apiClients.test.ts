@@ -32,6 +32,20 @@ test("HTTP boundary validates bootstrap response and keeps one-time code in the 
     assert.deepEqual(JSON.parse(typeof requestBody === "string" ? requestBody : ""), { code: "one-time-code-1234" });
 });
 
+test("HTTP boundary calls browser fetch with the global receiver", async () => {
+    const fetcher: typeof fetch = function (this: unknown) {
+        assert.equal(this, globalThis);
+        return Promise.resolve(
+            new Response(JSON.stringify(bootstrapFixture.data), {
+                status: 200,
+                headers: { "content-type": "application/json" },
+            }),
+        );
+    };
+
+    await new ApiHttpClient("/api/v1", fetcher).bootstrap({ code: "one-time-code-1234" });
+});
+
 test("HTTP boundary rejects malformed success and error payloads without exposing response text", async () => {
     const secret = "provider-secret-should-not-be-displayed";
     const malformedSuccess: typeof fetch = async () =>

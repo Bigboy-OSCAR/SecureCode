@@ -13,8 +13,8 @@ import type {
 } from "@securecode/contracts";
 import { ContractValidator } from "@securecode/contracts";
 import replayUnavailableFixture from "../../../contracts/fixtures/events/stream-replay-unavailable.valid.json";
-import { fixtureAdapter } from "../src/api/fixtureAdapter.js";
-import { FixtureRunClient } from "../src/api/fixtureRunClient.js";
+import { fixtureAdapter } from "./support/fixtureAdapter.js";
+import { FixtureRunClient } from "./support/fixtureRunClient.js";
 import type { RunClient } from "../src/api/runClient.js";
 import { RunController } from "../src/features/chat/model/runController.js";
 

@@ -1,5 +1,5 @@
 import { useRef, useState, type FormEvent } from "react";
-import type { IdempotencyKey, Session, Workspace, WorkspaceId } from "@securecode/contracts";
+import type { IdempotencyKey, IndexStatusResponse, Session, Workspace, WorkspaceId } from "@securecode/contracts";
 import { Alert, Button, InputField, StatusBadge } from "../../../components/index.js";
 import { formatApiFailure } from "../../../api/apiErrors.js";
 import { createIdempotencyKey } from "../../../api/runClient.js";
@@ -9,6 +9,10 @@ export interface LiveProjectPanelProps {
     workspaces: Workspace[];
     selectedWorkspace: Workspace | null;
     session: Session | null;
+    indexStatus: IndexStatusResponse | null;
+    indexError: string | null;
+    indexBusy: boolean;
+    onStartIndex: () => Promise<void>;
     onRegister: (displayName: string, rootPath: string, idempotencyKey: IdempotencyKey) => Promise<Workspace>;
     onStartSession: (workspace: Workspace, idempotencyKey: IdempotencyKey) => Promise<Session>;
 }
@@ -18,6 +22,10 @@ export function LiveProjectPanel({
     workspaces,
     selectedWorkspace,
     session,
+    indexStatus,
+    indexError,
+    indexBusy,
+    onStartIndex,
     onRegister,
     onStartSession,
 }: LiveProjectPanelProps): React.JSX.Element {
@@ -124,9 +132,42 @@ export function LiveProjectPanel({
                 <div className="message-card">
                     <h3>색인 준비 상태</h3>
                     <p>
-                        {selectedWorkspace.index_status} · revision {selectedWorkspace.index_revision ?? "없음"}
+                        {indexStatus?.index_status ?? selectedWorkspace.index_status} · revision{" "}
+                        {indexStatus?.index_revision ?? "없음"}
                     </p>
-                    <p>색인 API는 아직 준비되지 않았습니다. 검색 가능하거나 완료된 것으로 표시하지 않습니다.</p>
+                    {indexStatus ? (
+                        <p>
+                            검색 가능: {indexStatus.searchable ? "예" : "아니요"} · 발견 {indexStatus.counts.discovered}{" "}
+                            · 색인 {indexStatus.counts.indexed} · 제외 {indexStatus.counts.skipped} · 실패{" "}
+                            {indexStatus.counts.failed}
+                        </p>
+                    ) : null}
+                    <Button
+                        type="button"
+                        disabled={
+                            !connected ||
+                            busy ||
+                            indexBusy ||
+                            indexStatus?.index_status === "queued" ||
+                            indexStatus?.index_status === "indexing"
+                        }
+                        onClick={() => void onStartIndex()}
+                        data-testid="index-start"
+                    >
+                        {indexBusy ? "색인 요청 중…" : "색인 생성 · 갱신"}
+                    </Button>
+                    {indexError ? (
+                        <Alert title="색인 상태를 확인하세요" variant="error">
+                            {indexError}
+                        </Alert>
+                    ) : null}
+                    {indexStatus?.diagnostics.map((diagnostic) => (
+                        <p key={`${diagnostic.relative_path}-${diagnostic.reason_code}-${diagnostic.line ?? 0}`}>
+                            {diagnostic.relative_path}
+                            {diagnostic.line ? `:${diagnostic.line}` : ""} · {diagnostic.reason_code}
+                        </p>
+                    ))}
+                    {indexStatus?.diagnostics_truncated ? <p>추가 색인 진단은 응답 상한으로 생략되었습니다.</p> : null}
                 </div>
             ) : null}
             {session ? <p role="status">세션이 호스트에 생성되었습니다. 실행 전 보호 상태를 확인합니다.</p> : null}

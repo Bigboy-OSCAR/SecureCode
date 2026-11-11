@@ -1,5 +1,4 @@
 import { useState, type FormEvent, type KeyboardEvent } from "react";
-import { fixtureAdapter } from "../../../api/fixtureAdapter.js";
 import { shouldSubmitQuestionOnEnter } from "../model/questionInput.js";
 import type { RunController } from "../model/runController.js";
 import type { RunViewState } from "../model/runState.js";
@@ -7,7 +6,6 @@ import type { RunViewState } from "../model/runState.js";
 export function useConversationActions(
     controller: RunController,
     state: RunViewState,
-    fixtureMode = true,
 ): {
     prompt: string;
     setPrompt: (prompt: string) => void;
@@ -17,7 +15,7 @@ export function useConversationActions(
     onPromptKeyDown: (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     reconnect: () => void;
 } {
-    const [prompt, setPrompt] = useState(fixtureMode ? fixtureAdapter.runs[0]!.prompt_preview : "");
+    const [prompt, setPrompt] = useState("");
     const submit = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         void controller.createRun(prompt);

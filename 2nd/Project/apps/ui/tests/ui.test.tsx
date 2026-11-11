@@ -8,39 +8,25 @@ import { ContractValidator } from "@securecode/contracts";
 import screenCases from "../../../tests/fixtures/ui/screen-cases.json";
 import { App } from "../src/app/App.js";
 import { Alert, Button, InputField, StatusBadge } from "../src/components/index.js";
-import { fixtureAdapter } from "../src/api/fixtureAdapter.js";
-import { FixtureRunClient } from "../src/api/fixtureRunClient.js";
+import { fixtureAdapter } from "./support/fixtureAdapter.js";
+import { FixtureRunClient } from "./support/fixtureRunClient.js";
 import { ApprovalCard } from "../src/features/approvals/components/ApprovalCard.js";
 import { ConversationPanel } from "../src/features/chat/components/ConversationPanel.js";
 import { RunController } from "../src/features/chat/model/runController.js";
 import { shouldSubmitQuestionOnEnter } from "../src/features/chat/model/questionInput.js";
-import { ProjectPanel } from "../src/features/project/components/ProjectPanel.js";
-import { PointerPanel } from "../src/features/pointers/components/PointerPanel.js";
-import { PointerReadPanel } from "../src/features/pointers/components/PointerReadPanel.js";
-import { PdfParsePanel } from "../src/features/pointers/components/PdfParsePanel.js";
 import { isBootstrapCodeValid } from "../src/features/settings/model/inputValidation.js";
 import { isProjectFormValid } from "../src/features/project/model/projectForm.js";
-import { isPdfPathValid, isSourcePathValid } from "../src/features/pointers/model/pointerForm.js";
+import { isSourcePathValid } from "../src/features/pointers/model/pointerForm.js";
 import { boundedPreview } from "../src/features/shared/model/boundedPreview.js";
 
 function render(element: ReactNode): string {
     return renderToStaticMarkup(createElement("div", null, element));
 }
 
-test("all feature screens render their stable identifiers", () => {
-    const markup = render(createElement(App, { mode: "fixture" }));
+test("live feature screens render their stable identifiers", () => {
+    const markup = render(createElement(App));
 
-    for (const screen of [
-        "connection",
-        "project",
-        "chat",
-        "approval",
-        "context",
-        "pointers",
-        "pointer-read",
-        "pdf",
-        "settings",
-    ]) {
+    for (const screen of ["connection", "project", "chat", "context", "pointers", "pointer-read", "pdf"]) {
         assert.ok(markup.includes(`data-testid="screen-${screen}"`), `Expected ${screen} screen to render.`);
     }
     assert.ok(markup.includes('href="#main-content"'));
@@ -54,14 +40,18 @@ test("all feature screens render their stable identifiers", () => {
     assert.doesNotThrow(() => new RegExp(codePattern, "v"));
 });
 
-test("live application uses host auth and labels unfinished index and pointer APIs as unavailable", () => {
-    const markup = render(createElement(App, { mode: "live" }));
+test("live application exposes real index, context, pointer, and PDF workflows behind host auth", () => {
+    const markup = render(createElement(App));
 
     assert.ok(markup.includes("same-origin bootstrap 요청"));
-    assert.ok(markup.includes("R0 색인 API가 아직 연결되지 않았습니다"));
-    assert.ok(markup.includes("Source Pointer, Runtime Pointer"));
+    assert.ok(markup.includes("R0 원문 · 컨텍스트 예산"));
+    assert.ok(markup.includes("Source · Runtime Pointer"));
+    assert.ok(markup.includes("PDF parsing job"));
+    assert.ok(markup.includes("지정한 파일 등록"));
+    assert.ok(markup.includes("전체 본문 자동 다운로드를 하지 않습니다"));
+    assert.ok(markup.includes("브라우저는 디스크 파일을 읽지 않습니다"));
     assert.ok(markup.includes("provider API 키와 내부 서비스 토큰은 브라우저에 전달되지 않습니다"));
-    assert.equal(markup.includes("fixture 기반 화면 · 실제 API 호출 없음"), false);
+    assert.equal(markup.includes("fixture"), false);
     assert.equal(markup.includes("hello from the workspace"), false);
 });
 
@@ -147,8 +137,6 @@ test("forms reject blank input and bounded previews never retain long source tex
     assert.equal(isProjectFormValid("Project", "/project"), true);
     assert.equal(isSourcePathValid(" "), false);
     assert.equal(isSourcePathValid("/notes/design.md"), true);
-    assert.equal(isPdfPathValid("/docs/input.PDF"), true);
-    assert.equal(isPdfPathValid("/docs/input.md"), false);
     assert.equal(boundedPreview("x".repeat(1000), 120).length, 121);
     assert.equal(boundedPreview("short", 120), "short");
 });
@@ -160,33 +148,17 @@ test("question keyboard handling preserves IME composition and Shift+Enter", () 
     assert.equal(shouldSubmitQuestionOnEnter("Enter", false, false, 229), false);
 });
 
-test("disconnection disables project, pointer, read, and PDF operations", () => {
-    const markup = render(
-        createElement(
-            "div",
-            null,
-            createElement(ProjectPanel, { canMutate: false }),
-            createElement(PointerPanel, { canMutate: false }),
-            createElement(PointerReadPanel, { canRead: false }),
-            createElement(PdfParsePanel, { canMutate: false }),
-        ),
-    );
+test("unauthenticated live UI disables mutations and does not offer unscoped pointer actions", () => {
+    const markup = render(createElement(App));
 
-    for (const testId of [
-        "project-register",
-        "source-register",
-        "source-unregister",
-        "runtime-delete",
-        "read-next",
-        "pdf-parse",
-    ]) {
+    for (const testId of ["project-register", "live-source-register"]) {
         assert.match(markup, new RegExp(`disabled=""[^>]*data-testid="${testId}"`), `${testId} must be disabled.`);
     }
-    assert.ok(markup.includes("연결을 복구한 뒤 등록·삭제 요청을 다시 시도하세요."));
-    assert.ok(markup.includes("연결 복구 후 범위를 다시 조회하세요."));
+    assert.equal(markup.includes(">등록 해제</button>"), false);
+    assert.equal(markup.includes(">저장 결과 삭제</button>"), false);
 });
 
-test("rendered UI keeps actions distinct, labeled, and free of opaque pointer URLs", () => {
+test("rendered live UI keeps actions distinct, labeled, and free of opaque pointer URLs", () => {
     const snapshot = fixtureAdapter.runs[0]!;
     const controller = new RunController(
         new FixtureRunClient(),
@@ -202,32 +174,13 @@ test("rendered UI keeps actions distinct, labeled, and free of opaque pointer UR
         render(createElement(ApprovalCard, { controller, state: controller.getSnapshot() })),
     ].join("");
 
-    for (const label of [
-        "승인 검토",
-        "거절 검토",
-        "취소 요청",
-        "등록 해제",
-        "저장 결과 삭제",
-        "질문 입력",
-        "Shift+Enter로 줄 바꿈",
-    ]) {
+    for (const label of ["승인 검토", "거절 검토", "취소 요청", "질문 입력", "Shift+Enter로 줄 바꿈"]) {
         assert.ok(markup.includes(label), `Expected accessible action "${label}".`);
     }
     assert.ok(markup.includes('aria-live="polite"'));
     assert.ok(markup.includes('for="question-input"'));
-    for (const stateLabel of [
-        "로컬 서비스 응답 확인 중",
-        "프로젝트가 등록되지 않은 경우",
-        "질문을 입력해 시작하세요",
-        "이 범위에 표시할 텍스트가 없습니다",
-        "승인 시간이 만료됐습니다",
-        "일치 항목이 없으면",
-        "원본 파일이 변경됐습니다",
-        "텍스트 추출 중",
-        "입력 한도 검증 전",
-    ]) {
-        assert.ok(markup.includes(stateLabel), `Expected fixture state "${stateLabel}" to render.`);
-    }
+    assert.ok(markup.includes("승인 대기 중"));
+    assert.ok(markup.includes("지정한 파일 등록"));
     assert.equal(markup.includes("securecode://"), false);
     assert.equal(markup.includes("root_path"), false);
     controller.dispose();

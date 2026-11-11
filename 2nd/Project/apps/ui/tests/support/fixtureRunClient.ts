@@ -11,8 +11,8 @@ import type {
     SessionId,
 } from "@securecode/contracts";
 import { fixtureAdapter } from "./fixtureAdapter.js";
-import type { RunClient } from "./runClient.js";
-import { boundedPreview } from "../features/shared/model/boundedPreview.js";
+import type { RunClient } from "../../src/api/runClient.js";
+import { boundedPreview } from "../../src/features/shared/model/boundedPreview.js";
 
 interface IdempotentRun {
     prompt: string;
