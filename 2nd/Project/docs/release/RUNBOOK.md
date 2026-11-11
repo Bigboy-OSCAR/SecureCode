@@ -167,7 +167,8 @@ launcher가 강제 종료돼 `<데이터 폴더>/run/dev-processes.json`이 남�
 | `<name> did not become ready` / `exited during startup` | 그 프로세스의 출력(`[context-service]`·`[host]`·`[ui]` 접두사) 확인 | 설정 오류(`ConfigError`)면 `.env`를 고친다 |
 | 세션 생성 503 `PROTECTION_UNAVAILABLE`, run `TOKENIZER_UNAVAILABLE`, `SERVICE_UNAVAILABLE`, `SOURCE_CHANGED`, PDF 오류 | 4.10 운용 안내 5절 | 같은 곳 |
 | live 단계 시간 초과 | 모델 생성 속도(무거운 프로그램 실행 중) | 다른 프로그램을 닫고 다시 실행 |
-| `npm run check`가 종료 코드 3, `KNOWN structure baseline [owner 1.5]` | UI의 fixture 화면 경로(1.5가 제거) | 1.5 완료 후 baseline 항목 삭제 |
+| `npm run check`가 종료 코드 3, `KNOWN structure baseline [owner …]` | 다른 작업이 고칠 위반이 `structure-baseline.json` `entries`에 있음(2026-11-11 기준 비어 있음) | 해당 담당이 고친 뒤 항목 삭제 |
+| `npm run test:e2e`가 종료 코드 3, `PENDING … [owner 1.6]` | 브라우저 runner가 아직 없음 | 1.6이 등록하고 `pendingSuites.ts` 항목 삭제 |
 
 ## 8. 실패하면 누가 어디를 고치나
 

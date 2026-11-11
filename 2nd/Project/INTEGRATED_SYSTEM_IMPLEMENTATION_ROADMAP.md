@@ -1091,7 +1091,7 @@ docs/progress/tasks/3.6.md에 task_id/owner/status/시각/선행 증거/변경 �
 
 **선행 조건: 박준형 3.6번 + 임우형 4.10번 작업이 모두 완료된 이후에 진행.**
 
-- [ ] **3.7 완료** — 구현/설계·검증·증거 기록 후에만 체크
+- [x] **3.7 완료** — 구현/설계·검증·증거 기록 후에만 체크
 
 **왜 필요한가 / 무엇을 하는가:** 개발자 컴퓨터에서 한 번 실행된 상태만으로는 다른 팀원이 제품을 재현할 수 없다. 백엔드 검증과 설치·기동·종료·데이터 정리 절차를 완성해 UI 최종 시험의 안정된 기반을 제공한다.
 
@@ -1099,12 +1099,12 @@ docs/progress/tasks/3.6.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** scripts; 루트 검사/빌드 설정; tests/integration; README.md; docs/release/RUNBOOK.md  
 **검증 기록:** `docs/progress/tasks/3.7.md`
 
-**2026-11-11 상태: IN_PROGRESS.** dev 3단 기동·정리, 구조 검사(순환·mock·비밀값·금지 기법·미구현), 패키징, 새 폴더 설치 smoke, RUNBOOK을 마쳤다. integration·contracts·build·install은 PASS, live는 12/12 PASS다. `npm run check`는 UI fixture 경로(1.5 담당) 18건이 KNOWN으로 남아 exit 3이라 조건 2와 '3.7 완료'를 체크하지 않았다. [3.7 기록](docs/progress/tasks/3.7.md)
+**2026-11-11 15:15 상태: DONE.** 1.5 UI 병합으로 UI fixture 경로가 사라져 `npm run check`가 exit 0으로 통과했다. HEAD에서 contracts·integration·build·`test:install` 9/9·live 12/12도 PASS다. e2e는 1.6 담당 PENDING이다. (이전 02:10 기록: dev 3단 기동·정리, 구조 검사(순환·mock·비밀값·금지 기법·미구현), 패키징, 새 폴더 설치 smoke, RUNBOOK을 마쳤다. integration·contracts·build·install은 PASS, live는 12/12 PASS다. `npm run check`는 UI fixture 경로(1.5 담당) 18건이 KNOWN으로 남아 exit 3이라 조건 2와 '3.7 완료'를 체크하지 않았다.) [3.7 기록](docs/progress/tasks/3.7.md)
 
 **완료 조건**
 
 - [x] 설치/기동/종료/빌드/검사 명령과 RUNBOOK이 다른 팀원에게 재현 가능하다.
-- [ ] 백엔드·SDK·계약·구조 검사가 통과하며 무의미한 no-op 검사가 없다.
+- [x] 백엔드·SDK·계약·구조 검사가 통과하며 무의미한 no-op 검사가 없다.
 - [x] 지원 범위·실 provider 설정·데이터 정리·오류 대응이 문서화돼 있다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**
