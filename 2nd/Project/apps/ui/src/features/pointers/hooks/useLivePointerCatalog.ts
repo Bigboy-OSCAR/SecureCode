@@ -29,7 +29,7 @@ export function useLivePointerCatalog(
     refreshSource: (pointer: UiPointer) => Promise<void>;
     removePointer: (pointer: UiPointer) => Promise<void>;
     loadMore: (kind: "source" | "runtime") => Promise<void>;
-    refreshRuntime: () => Promise<void>;
+    refreshPointers: (kind?: "source" | "runtime") => Promise<void>;
 } {
     const [sourcePage, setSourcePage] = useState<PointerPage>(emptyPage);
     const [runtimePage, setRuntimePage] = useState<PointerPage>(emptyPage);
@@ -38,63 +38,75 @@ export function useLivePointerCatalog(
     const [error, setError] = useState<string | null>(null);
     const [notice, setNotice] = useState<string | null>(null);
     const generation = useRef(0);
+    const listSequence = useRef({ source: 0, runtime: 0 });
+    const refreshSequence = useRef(0);
+
+    const refreshPointers = useCallback(
+        async (kind?: "source" | "runtime"): Promise<void> => {
+            if (!workspaceId) return;
+            const requestGeneration = generation.current;
+            const requestRefresh = ++refreshSequence.current;
+            setBusy("catalog-refresh");
+            setError(null);
+            const load = async (category: "source" | "runtime"): Promise<void> => {
+                const query = createListQuery(category, sessionId);
+                if (!query) return;
+                const requestSequence = ++listSequence.current[category];
+                const isCurrent = (): boolean =>
+                    requestGeneration === generation.current && requestSequence === listSequence.current[category];
+                try {
+                    const page = await api.listPointers(workspaceId, query);
+                    if (!isCurrent()) return;
+                    const next = toPointerPage(page.items.map(mapPointerItem), page.page);
+                    if (category === "source") setSourcePage(next);
+                    else setRuntimePage(next);
+                    setSelectedPointer((current) => {
+                        if (current?.kind !== category) return current;
+                        // Keep unchanged selections/read ranges; a new Source revision invalidates the old range.
+                        if (next.items.some((item) => item.pointer === current.pointer)) return current;
+                        const revised = next.items.some(
+                            (item) => item.pointer.split("?")[0] === current.pointer.split("?")[0],
+                        );
+                        return next.hasMore && !revised ? current : null;
+                    });
+                } catch (requestError) {
+                    if (isCurrent()) {
+                        setError(
+                            formatApiFailure(
+                                requestError,
+                                `${category === "source" ? "등록 자료" : "실행 결과"}를 불러오지 못했습니다.`,
+                            ),
+                        );
+                    }
+                }
+            };
+            await Promise.all((kind ? [kind] : (["source", "runtime"] as const)).map(load));
+            if (requestGeneration === generation.current && requestRefresh === refreshSequence.current) setBusy(null);
+        },
+        [api, workspaceId, sessionId],
+    );
 
     useEffect(() => {
-        const requestGeneration = ++generation.current;
+        generation.current += 1;
         setSourcePage(emptyPage());
         setRuntimePage(emptyPage());
         setSelectedPointer(null);
         setError(null);
         setNotice(null);
-
-        if (!workspaceId) {
-            return () => {
-                generation.current += 1;
-            };
-        }
-
-        const load = async (kind: "source" | "runtime"): Promise<void> => {
-            const query = createListQuery(kind, sessionId);
-            if (!query) {
-                return;
-            }
-            try {
-                const page = await api.listPointers(workspaceId, query);
-                if (requestGeneration !== generation.current) {
-                    return;
-                }
-                const next = toPointerPage(page.items.map(mapPointerItem), page.page);
-                if (kind === "source") {
-                    setSourcePage(next);
-                } else {
-                    setRuntimePage(next);
-                }
-            } catch (requestError) {
-                if (requestGeneration === generation.current) {
-                    setError(
-                        formatApiFailure(
-                            requestError,
-                            `${kind === "source" ? "등록 자료" : "실행 결과"}를 불러오지 못했습니다.`,
-                        ),
-                    );
-                }
-            }
-        };
-
-        void load("source");
-        if (sessionId) {
-            void load("runtime");
-        }
+        setBusy(null);
+        void refreshPointers();
         return () => {
             generation.current += 1;
         };
-    }, [api, workspaceId, sessionId]);
+    }, [refreshPointers]);
 
     const registerExternalFile = async (path: string): Promise<void> => {
         if (!workspaceId) {
             setError("먼저 프로젝트를 등록하세요.");
             return;
         }
+        const requestGeneration = generation.current;
+        listSequence.current.source += 1;
         setBusy("register");
         setError(null);
         setNotice(null);
@@ -106,6 +118,8 @@ export function useLivePointerCatalog(
                 target: { location: "external", kind: "file", path },
             };
             const result = await api.registerSource(workspaceId, request);
+            if (requestGeneration !== generation.current) return;
+            listSequence.current.source += 1;
             const added = result.items.map(mapPointerItem);
             setSourcePage((current) => ({ ...current, items: mergePointers(current.items, added) }));
             setSelectedPointer(added[0] ?? null);
@@ -115,9 +129,10 @@ export function useLivePointerCatalog(
                 setNotice("지정한 외부 파일을 Source Pointer로 등록했습니다. 브라우저는 파일 내용을 읽지 않았습니다.");
             }
         } catch (requestError) {
-            setError(formatApiFailure(requestError, "지정한 파일을 등록하지 못했습니다."));
+            if (requestGeneration === generation.current)
+                setError(formatApiFailure(requestError, "지정한 파일을 등록하지 못했습니다."));
         } finally {
-            setBusy(null);
+            if (requestGeneration === generation.current) setBusy(null);
         }
     };
 
@@ -125,6 +140,8 @@ export function useLivePointerCatalog(
         if (!workspaceId || pointer.kind !== "source") {
             return;
         }
+        const requestGeneration = generation.current;
+        listSequence.current.source += 1;
         setBusy("refresh");
         setError(null);
         setNotice(null);
@@ -136,6 +153,8 @@ export function useLivePointerCatalog(
                 pointer: pointer.pointer,
             };
             const result = await api.registerSource(workspaceId, request);
+            if (requestGeneration !== generation.current) return;
+            listSequence.current.source += 1;
             const refreshed = result.items.map(mapPointerItem);
             setSourcePage((current) => ({
                 ...current,
@@ -144,9 +163,10 @@ export function useLivePointerCatalog(
             setSelectedPointer(refreshed[0] ?? null);
             setNotice("원본을 다시 확인하고 Source 등록 정보를 갱신했습니다.");
         } catch (requestError) {
-            setError(formatApiFailure(requestError, "Source 등록을 갱신하지 못했습니다."));
+            if (requestGeneration === generation.current)
+                setError(formatApiFailure(requestError, "Source 등록을 갱신하지 못했습니다."));
         } finally {
-            setBusy(null);
+            if (requestGeneration === generation.current) setBusy(null);
         }
     };
 
@@ -178,6 +198,8 @@ export function useLivePointerCatalog(
                           session_id: pointer.session_id,
                       },
             );
+            if (requestGeneration !== generation.current) return;
+            listSequence.current[pointer.kind] += 1;
             setSourcePage((current) => ({
                 ...current,
                 items: current.items.filter((item) => item.pointer !== pointer.pointer),
@@ -192,7 +214,8 @@ export function useLivePointerCatalog(
                     : "선택한 Runtime Pointer를 삭제했습니다. 이미 실행된 도구는 되돌리지 않습니다.",
             );
         } catch (requestError) {
-            setError(formatApiFailure(requestError, "포인터를 삭제하지 못했습니다."));
+            if (requestGeneration === generation.current)
+                setError(formatApiFailure(requestError, "포인터를 삭제하지 못했습니다."));
         } finally {
             if (requestGeneration === generation.current) {
                 setBusy(null);
@@ -211,11 +234,14 @@ export function useLivePointerCatalog(
         const query = createListQuery(kind, sessionId, current.nextCursor);
         if (!query) return;
         const requestGeneration = generation.current;
+        const requestSequence = listSequence.current[kind];
+        const isCurrent = (): boolean =>
+            requestGeneration === generation.current && requestSequence === listSequence.current[kind];
         setBusy(`more-${kind}`);
         setError(null);
         try {
             const page = await api.listPointers(workspaceId, query);
-            if (requestGeneration !== generation.current) {
+            if (!isCurrent()) {
                 return;
             }
             const items = page.items.map(mapPointerItem);
@@ -228,46 +254,15 @@ export function useLivePointerCatalog(
                 setRuntimePage(updatePage);
             }
         } catch (requestError) {
-            if (requestGeneration === generation.current) {
+            if (isCurrent()) {
                 setError(formatApiFailure(requestError, "포인터 목록의 다음 페이지를 불러오지 못했습니다."));
             }
         } finally {
-            if (requestGeneration === generation.current) {
+            if (isCurrent()) {
                 setBusy(null);
             }
         }
     };
-
-    const refreshRuntime = useCallback(async (): Promise<void> => {
-        if (!workspaceId || !sessionId) {
-            return;
-        }
-        const requestGeneration = generation.current;
-        setBusy("runtime-refresh");
-        setError(null);
-        try {
-            const page = await api.listPointers(workspaceId, { kind: "runtime", session_id: sessionId, limit: 100 });
-            if (requestGeneration !== generation.current) {
-                return;
-            }
-            const items = page.items.map(mapPointerItem);
-            setRuntimePage(toPointerPage(items, page.page));
-            setSelectedPointer((current) => {
-                if (current?.kind !== "runtime") {
-                    return current;
-                }
-                return items.find((item) => item.pointer === current.pointer) ?? null;
-            });
-        } catch (requestError) {
-            if (requestGeneration === generation.current) {
-                setError(formatApiFailure(requestError, "현재 세션의 Runtime Pointer 목록을 갱신하지 못했습니다."));
-            }
-        } finally {
-            if (requestGeneration === generation.current) {
-                setBusy(null);
-            }
-        }
-    }, [api, sessionId, workspaceId]);
 
     return {
         sourcePage,
@@ -281,6 +276,6 @@ export function useLivePointerCatalog(
         refreshSource,
         removePointer,
         loadMore,
-        refreshRuntime,
+        refreshPointers,
     };
 }

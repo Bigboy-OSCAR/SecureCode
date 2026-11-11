@@ -10,6 +10,7 @@ import type { UiPointer } from "../../../api/mappers/pointerMapper.js";
 interface LivePointerWorkspaceProps {
     api: ApiHttpClient;
     connected: boolean;
+    visible: boolean;
     workspaceId: WorkspaceId | null;
     sessionId: SessionId | null;
     runtimePointerRuns: Readonly<Record<string, string>>;
@@ -19,6 +20,7 @@ interface LivePointerWorkspaceProps {
 export function LivePointerWorkspace({
     api,
     connected,
+    visible,
     workspaceId,
     sessionId,
     runtimePointerRuns,
@@ -27,10 +29,14 @@ export function LivePointerWorkspace({
     const catalog = useLivePointerCatalog(api, workspaceId, sessionId);
 
     useEffect(() => {
+        if (visible && connected) void catalog.refreshPointers();
+    }, [catalog.refreshPointers, visible, connected]);
+
+    useEffect(() => {
         if (Object.keys(runtimePointerRuns).length > 0) {
-            void catalog.refreshRuntime();
+            void catalog.refreshPointers("runtime");
         }
-    }, [catalog.refreshRuntime, runtimePointerRuns]);
+    }, [catalog.refreshPointers, runtimePointerRuns]);
 
     return (
         <>

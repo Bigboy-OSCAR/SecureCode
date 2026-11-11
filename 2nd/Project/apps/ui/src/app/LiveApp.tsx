@@ -231,6 +231,7 @@ export function LiveApp(): React.JSX.Element {
                             <LivePointerWorkspace
                                 api={api}
                                 connected={desk.connected}
+                                visible={contextOpen}
                                 workspaceId={desk.workspace?.workspace_id ?? null}
                                 sessionId={desk.session?.session_id ?? null}
                                 runtimePointerRuns={runtimePointerRuns}

@@ -145,7 +145,7 @@ export function LivePointerPanel({
                     <Button
                         type="button"
                         disabled={!canMutate || catalog.busy !== null}
-                        onClick={() => void catalog.refreshRuntime()}
+                        onClick={() => void catalog.refreshPointers("runtime")}
                     >
                         Runtime 목록 새로고침
                     </Button>
