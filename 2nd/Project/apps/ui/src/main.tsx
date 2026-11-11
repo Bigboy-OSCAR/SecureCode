@@ -6,6 +6,10 @@ import "./styles/global.css";
 import "./styles/components.css";
 import "./app/app.css";
 import "./features/features.css";
+import "./styles/deskChat.css";
+import "./styles/deskPanels.css";
+import "./styles/deskDialogs.css";
+import "./styles/deskAnswers.css";
 
 const rootElement = document.getElementById("root");
 

@@ -1,4 +1,5 @@
 import type { AppEvent, RunId, Sequence } from "@securecode/contracts";
+import { notifyAuthExpired } from "../nativeAuth.js";
 import { ApiClientError } from "../apiErrors.js";
 import { InvalidApiPayloadError, parseApiPayload } from "../mappers/contractMapper.js";
 import type { ApiFetch } from "../httpClient.js";
@@ -59,6 +60,7 @@ export class SseClient {
                     signal,
                 });
                 if (!response.ok) {
+                    if (response.status === 401) notifyAuthExpired();
                     throw toStatusError(response.status);
                 }
                 if (!response.headers.get("content-type")?.toLowerCase().startsWith("text/event-stream")) {

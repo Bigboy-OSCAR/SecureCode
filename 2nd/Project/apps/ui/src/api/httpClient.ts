@@ -22,10 +22,12 @@ import type {
     PointerSearchResult,
     RunCreateRequest,
     RunId,
+    RunListResponse,
     RunSnapshot,
     Session,
     SessionCreateRequest,
     SessionId,
+    SessionListResponse,
     SettingsResponse,
     SourceMutationRequest,
     SourceMutationResult,
@@ -34,6 +36,7 @@ import type {
     WorkspaceId,
     WorkspaceListResponse,
 } from "@securecode/contracts";
+import { notifyAuthExpired } from "./nativeAuth.js";
 import { ApiClientError, safeApiMessage } from "./apiErrors.js";
 import { InvalidApiPayloadError, parseApiPayload, serializeApiRequest } from "./mappers/contractMapper.js";
 
@@ -138,6 +141,22 @@ export class ApiHttpClient {
         return this.post("sessions", "session", request, "sessionCreateRequest");
     }
 
+    getSession(sessionId: SessionId): Promise<Session> {
+        return this.get(`sessions/${encodeURIComponent(sessionId)}`, "session");
+    }
+
+    listSessions(workspaceId: WorkspaceId, cursor?: string): Promise<SessionListResponse> {
+        const query = new URLSearchParams({ limit: "100" });
+        if (cursor) query.set("cursor", cursor);
+        return this.get(`workspaces/${encodeURIComponent(workspaceId)}/sessions?${query}`, "sessionListResponse");
+    }
+
+    listRuns(sessionId: SessionId, cursor?: string): Promise<RunListResponse> {
+        const query = new URLSearchParams({ limit: "100" });
+        if (cursor) query.set("cursor", cursor);
+        return this.get(`sessions/${encodeURIComponent(sessionId)}/runs?${query}`, "runListResponse");
+    }
+
     createRun(sessionId: SessionId, request: RunCreateRequest): Promise<RunSnapshot> {
         return this.post(`sessions/${encodeURIComponent(sessionId)}/runs`, "runSnapshot", request, "runCreateRequest");
     }
@@ -211,6 +230,7 @@ export class ApiHttpClient {
 
         const payload = await readJson(response);
         if (!response.ok) {
+            if (response.status === 401 && path !== "auth/bootstrap") notifyAuthExpired();
             throw mapHttpError(response.status, payload);
         }
         try {

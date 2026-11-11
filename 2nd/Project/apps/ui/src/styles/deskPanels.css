@@ -1,0 +1,108 @@
+.desk-history-panel,
+.desk-context-panel {
+    width: 400px;
+    flex: 0 0 400px;
+    background: #1e2123;
+    border-left: 1px solid #343a3e;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+.desk-context-panel {
+    width: 440px;
+    flex-basis: 440px;
+}
+.desk-context-panel[hidden] {
+    display: none;
+}
+.desk-drawer-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #343a3e;
+}
+.desk-drawer-heading h2 {
+    margin: 0;
+    font-size: 16px;
+}
+.desk-context-scroll,
+.desk-history-content {
+    flex: 1;
+    overflow: auto;
+    padding: 20px;
+    min-height: 0;
+}
+.desk-context-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.desk-history-footer {
+    padding: 20px;
+    border-top: 1px solid #343a3e;
+}
+.desk-history-footer .button {
+    width: 100%;
+}
+@media (max-width: 1200px) {
+    .desk-messages {
+        padding-inline: 32px;
+    }
+    .desk-context-panel,
+    .desk-history-panel {
+        position: fixed;
+        right: 0;
+        top: 44px;
+        bottom: 0;
+        z-index: 4;
+        width: min(480px, 100vw);
+        box-shadow: -12px 0 30px #0005;
+    }
+}
+@media (max-width: 850px) {
+    .desk-sidebar {
+        display: none;
+        position: fixed;
+        top: 44px;
+        bottom: 0;
+        left: 0;
+        z-index: 5;
+        box-shadow: 12px 0 30px #0008;
+    }
+    .sidebar-open .desk-sidebar {
+        display: flex;
+    }
+    .desk-chat-header {
+        flex-wrap: wrap;
+        padding: 12px 16px;
+        gap: 4px 8px;
+    }
+    .desk-chat-title {
+        flex-basis: 100%;
+    }
+    .desk-model-picker {
+        min-width: 0;
+        max-width: none;
+        flex: 1;
+    }
+    .desk-messages {
+        padding: 20px;
+    }
+    .desk-composer-wrap {
+        padding-inline: 12px;
+    }
+    .desk-welcome h1 {
+        font-size: 24px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    * {
+        scroll-behavior: auto !important;
+    }
+}
+
+.pointer-entry[hidden] {
+    display: none;
+}

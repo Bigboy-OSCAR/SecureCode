@@ -11,7 +11,13 @@ import type { RunClient } from "../../../api/runClient.js";
 import { createIdempotencyKey } from "../../../api/runClient.js";
 import { formatApiFailure } from "../../../api/apiErrors.js";
 import { RunCommands } from "./runCommands.js";
-import { applyRunEvent, applyRunSnapshot, createRunViewState, type RunViewState } from "./runState.js";
+import {
+    applyRunEvent,
+    applyRunSnapshot,
+    createRunViewState,
+    isTerminalRunStatus,
+    type RunViewState,
+} from "./runState.js";
 
 export type StateListener = () => void;
 
@@ -112,6 +118,7 @@ export class RunController {
         if (result.recoverSnapshot && this.state.snapshot) {
             void this.recoverSnapshot(this.state.snapshot.run_id, this.epoch);
         } else if (event.type === "run.status_changed" && event.payload.terminal && this.state.snapshot) {
+            this.stopSubscription();
             void this.refreshCitations(this.state.snapshot.run_id, this.epoch);
         }
     }
@@ -227,6 +234,9 @@ export class RunController {
 
     private attach(runId: RunSnapshot["run_id"], sequence: number): void {
         this.stopSubscription();
+        // A terminal snapshot already includes the final sequence. Reopening SSE after that
+        // sequence yields an empty closed stream, which must not lock the next question.
+        if (this.state.snapshot && isTerminalRunStatus(this.state.snapshot.status)) return;
         this.unsubscribe = this.client.subscribe(
             runId,
             sequence,

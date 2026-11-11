@@ -21,6 +21,8 @@ export function LivePointerPanel({
     canMutate,
     catalog,
 }: LivePointerPanelProps): React.JSX.Element {
+    const [kind, setKind] = useState<"all" | "source" | "runtime">("all");
+    const [filter, setFilter] = useState("");
     const [externalPath, setExternalPath] = useState("");
     const [pendingDelete, setPendingDelete] = useState<UiPointer | null>(null);
     const selectedSource = catalog.selectedPointer?.kind === "source" ? catalog.selectedPointer : null;
@@ -77,7 +79,20 @@ export function LivePointerPanel({
             ) : null}
             {catalog.notice ? <p role="status">{catalog.notice}</p> : null}
             {!canMutate ? <p role="status">호스트 연결이 복구되면 자료를 조회하거나 변경할 수 있습니다.</p> : null}
-            <div className="pointer-entry">
+            <div className="action-row" aria-label="자료 종류">
+                {(["all", "source", "runtime"] as const).map((value) => (
+                    <Button key={value} type="button" aria-pressed={kind === value} onClick={() => setKind(value)}>
+                        {value === "all" ? "전체" : value === "source" ? "Source" : "Runtime"}
+                    </Button>
+                ))}
+            </div>
+            <InputField
+                id="pointer-list-filter"
+                label="자료 이름 필터"
+                value={filter}
+                onChange={(event) => setFilter(event.currentTarget.value)}
+            />
+            <div className="pointer-entry" hidden={kind === "runtime"}>
                 <h3>등록한 Source</h3>
                 {selectedSource ? (
                     <Button
@@ -90,24 +105,28 @@ export function LivePointerPanel({
                 ) : null}
                 {catalog.sourcePage.items.length === 0 ? <p>등록한 Source Pointer가 없습니다.</p> : null}
                 <ul className="compact-list">
-                    {catalog.sourcePage.items.map((pointer) => (
-                        <li key={pointer.pointer}>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="selected-pointer"
-                                    checked={catalog.selectedPointer?.pointer === pointer.pointer}
-                                    onChange={() => catalog.selectPointer(pointer)}
-                                />
-                                {pointer.display_name} · {pointer.media_type} · {pointer.byte_size.toLocaleString()}{" "}
-                                bytes · revision {pointer.revision}
-                            </label>
-                            <p>{boundedPreview(pointer.preview, 120)}</p>
-                            <Button type="button" disabled={!canMutate} onClick={() => setPendingDelete(pointer)}>
-                                등록 해제
-                            </Button>
-                        </li>
-                    ))}
+                    {catalog.sourcePage.items
+                        .filter((pointer) =>
+                            pointer.display_name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()),
+                        )
+                        .map((pointer) => (
+                            <li key={pointer.pointer}>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="selected-pointer"
+                                        checked={catalog.selectedPointer?.pointer === pointer.pointer}
+                                        onChange={() => catalog.selectPointer(pointer)}
+                                    />
+                                    {pointer.display_name} · {pointer.media_type} · {pointer.byte_size.toLocaleString()}{" "}
+                                    bytes · revision {pointer.revision}
+                                </label>
+                                <p>{boundedPreview(pointer.preview, 120)}</p>
+                                <Button type="button" disabled={!canMutate} onClick={() => setPendingDelete(pointer)}>
+                                    등록 해제
+                                </Button>
+                            </li>
+                        ))}
                 </ul>
                 {catalog.sourcePage.hasMore ? (
                     <Button
@@ -119,7 +138,7 @@ export function LivePointerPanel({
                     </Button>
                 ) : null}
             </div>
-            <div className="pointer-entry">
+            <div className="pointer-entry" hidden={kind === "source"}>
                 <h3>현재 세션의 Runtime Pointer</h3>
                 {!sessionId ? <p>프로젝트 세션을 시작하면 해당 세션의 실행 결과만 조회합니다.</p> : null}
                 {sessionId ? (
@@ -133,37 +152,46 @@ export function LivePointerPanel({
                 ) : null}
                 {sessionId && catalog.runtimePage.items.length === 0 ? <p>저장된 실행 결과가 없습니다.</p> : null}
                 <ul className="compact-list">
-                    {catalog.runtimePage.items.map((pointer) => {
-                        const expired = pointer.expires_at ? Date.parse(pointer.expires_at) <= Date.now() : false;
-                        const runId = pointer.provenance.run_id ?? runtimePointerRuns[pointer.pointer] ?? null;
-                        return (
-                            <li key={pointer.pointer}>
-                                <label>
-                                    <input
-                                        type="radio"
-                                        name="selected-pointer"
-                                        checked={catalog.selectedPointer?.pointer === pointer.pointer}
-                                        onChange={() => catalog.selectPointer(pointer)}
-                                    />
-                                    {pointer.display_name} · {pointer.byte_size.toLocaleString()} bytes
-                                </label>
-                                <p>
-                                    도구: {pointer.provenance.origin} · 생성:{" "}
-                                    {formatTime(pointer.provenance.created_at)}
-                                </p>
-                                <p>
-                                    세션: {pointer.session_id} · 실행: {runId ?? "기록 없음(실행 ID 저장 이전 출력)"}
-                                </p>
-                                <p>
-                                    만료: {pointer.expires_at ? formatTime(pointer.expires_at) : "만료 시각 미제공"}
-                                    {expired ? " · 만료됨" : ""}
-                                </p>
-                                <Button type="button" disabled={!canMutate} onClick={() => setPendingDelete(pointer)}>
-                                    저장 결과 삭제
-                                </Button>
-                            </li>
-                        );
-                    })}
+                    {catalog.runtimePage.items
+                        .filter((pointer) =>
+                            pointer.display_name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()),
+                        )
+                        .map((pointer) => {
+                            const expired = pointer.expires_at ? Date.parse(pointer.expires_at) <= Date.now() : false;
+                            const runId = pointer.provenance.run_id ?? runtimePointerRuns[pointer.pointer] ?? null;
+                            return (
+                                <li key={pointer.pointer}>
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            name="selected-pointer"
+                                            checked={catalog.selectedPointer?.pointer === pointer.pointer}
+                                            onChange={() => catalog.selectPointer(pointer)}
+                                        />
+                                        {pointer.display_name} · {pointer.byte_size.toLocaleString()} bytes
+                                    </label>
+                                    <p>
+                                        도구: {pointer.provenance.origin} · 생성:{" "}
+                                        {formatTime(pointer.provenance.created_at)}
+                                    </p>
+                                    <p>
+                                        세션: {pointer.session_id} · 실행:{" "}
+                                        {runId ?? "기록 없음(실행 ID 저장 이전 출력)"}
+                                    </p>
+                                    <p>
+                                        만료: {pointer.expires_at ? formatTime(pointer.expires_at) : "만료 시각 미제공"}
+                                        {expired ? " · 만료됨" : ""}
+                                    </p>
+                                    <Button
+                                        type="button"
+                                        disabled={!canMutate}
+                                        onClick={() => setPendingDelete(pointer)}
+                                    >
+                                        저장 결과 삭제
+                                    </Button>
+                                </li>
+                            );
+                        })}
                 </ul>
                 {catalog.runtimePage.hasMore ? (
                     <Button

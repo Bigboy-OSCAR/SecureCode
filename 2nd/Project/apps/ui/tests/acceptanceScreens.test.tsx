@@ -13,6 +13,7 @@ import { FixtureRunClient } from "./support/fixtureRunClient.js";
 import { PanelSwitcher, panelClass } from "../src/app/PanelSwitcher.js";
 import { ApprovalCard } from "../src/features/approvals/components/ApprovalCard.js";
 import { ANSWER_STEP_CHARS, AnswerView } from "../src/features/chat/components/AnswerView.js";
+import { AnswerText } from "../src/features/chat/components/AnswerText.js";
 import { ToolHistory } from "../src/features/chat/components/ToolHistory.js";
 import { RunController } from "../src/features/chat/model/runController.js";
 import { outputLabel, phaseLabel, toolLabel } from "../src/features/chat/model/toolLabels.js";
@@ -133,4 +134,17 @@ test("the narrow-layout switcher exposes which panel is expanded", () => {
     assert.ok(markup.includes("프로젝트 패널 펼치기"));
     assert.equal(panelClass("context-sidebar", "context", "context"), "context-sidebar side-panel side-panel-open");
     assert.equal(panelClass("project-sidebar", "project", "context"), "project-sidebar side-panel");
+});
+
+test("answer formatting escapes model HTML and preserves fenced code as text", () => {
+    const markup = render(
+        createElement(AnswerText, {
+            text: "## Result\n<script>alert(1)</script>\n```html\n<img src=x onerror=alert(1)>\n```",
+        }),
+    );
+    assert.ok(markup.includes("<h4>Result</h4>"));
+    assert.ok(markup.includes("&lt;script&gt;alert(1)&lt;/script&gt;"));
+    assert.ok(markup.includes("&lt;img src=x onerror=alert(1)&gt;"));
+    assert.equal(markup.includes("<script>"), false);
+    assert.equal(markup.includes("<img src=x"), false);
 });
