@@ -207,6 +207,14 @@
     width: 100%;
     accent-color: #b5f5dc;
 }
+.desk-index-actions .button-secondary {
+    background: #3b3f42;
+    border-color: #697176;
+}
+.desk-index-actions .button-secondary:hover:not(:disabled) {
+    background: #484e52;
+    border-color: #889196;
+}
 .desk-search-result {
     display: grid;
     grid-template-columns: 1fr auto;
