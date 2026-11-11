@@ -23,7 +23,11 @@ export function outcomeFromResult(result: AgentResult | undefined, failure: Turn
                 ? { finish: "failed", text: result.text, reasonCode: failure.code, message: failure.message }
                 : { finish: "completed", text: result.text };
         case "aborted":
-            return { finish: "aborted", text: result.text };
+            // A host hook's stop is also reported as aborted by the SDK. Preserve its reason;
+            // explicit user cancellation is handled before this conversion in runTurn().
+            return failure
+                ? { finish: "failed", text: result.text, reasonCode: failure.code, message: failure.message }
+                : { finish: "aborted", text: result.text };
         case "error":
         case "max_iterations":
         case "mistake_limit":

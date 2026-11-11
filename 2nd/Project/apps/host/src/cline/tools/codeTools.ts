@@ -6,6 +6,7 @@
 import type { AnswerCitation, ExplicitContextRef, SymbolLocation } from "@securecode/contracts";
 import { ContextServiceError } from "../../context-client/contextServiceError.js";
 import type { SymbolService } from "../../context-client/workspaceServices.js";
+import { recordStaleCodeRead, STALE_CODE_READ_GUIDANCE } from "../adapter/staleCodeReadGuard.js";
 import { readTokenCap } from "./runtimeTools.js";
 import { objectSchema, review, type ProjectTool } from "./toolSupport.js";
 
@@ -27,11 +28,18 @@ function values(raw: unknown): Record<string, unknown> {
     return raw as Record<string, unknown>;
 }
 
-async function guarded<T>(work: () => Promise<T>): Promise<T> {
+async function guarded<T>(
+    work: () => Promise<T>,
+    read?: { candidateId: string; revision: number; toolCallId: string | undefined },
+): Promise<T> {
     try {
         return await work();
     } catch (error) {
         if (error instanceof ContextServiceError) {
+            if (error.code === "SOURCE_CHANGED" && read) {
+                recordStaleCodeRead(read.candidateId, read.revision, read.toolCallId);
+                throw new Error(STALE_CODE_READ_GUIDANCE, { cause: error });
+            }
             throw new Error(`${error.code}: ${error.message}`, { cause: error });
         }
         throw error;
@@ -108,17 +116,19 @@ export function codeTools(options: CodeToolOptions): ProjectTool[] {
                 const candidateId = String(input.candidate_id);
                 const revision = Number(input.index_revision);
                 const cap = readTokenCap();
-                const bundle = await guarded(() =>
-                    options.symbols.readBundle(
-                        {
-                            workspace_id: options.workspaceId,
-                            candidate_id: candidateId,
-                            index_revision: revision,
-                            max_tokens: Math.min(BUNDLE_MAX_TOKENS, cap ?? BUNDLE_MAX_TOKENS),
-                            max_bytes: BUNDLE_MAX_BYTES,
-                        },
-                        signalFor(options, context.signal),
-                    ),
+                const bundle = await guarded(
+                    () =>
+                        options.symbols.readBundle(
+                            {
+                                workspace_id: options.workspaceId,
+                                candidate_id: candidateId,
+                                index_revision: revision,
+                                max_tokens: Math.min(BUNDLE_MAX_TOKENS, cap ?? BUNDLE_MAX_TOKENS),
+                                max_bytes: BUNDLE_MAX_BYTES,
+                            },
+                            signalFor(options, context.signal),
+                        ),
+                    { candidateId, revision, toolCallId: context.toolCallId },
                 );
                 const ref = { kind: "symbol", candidate_id: candidateId, index_revision: revision } as const;
                 options.recordShown(ref);

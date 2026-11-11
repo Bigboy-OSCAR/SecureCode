@@ -27,6 +27,10 @@ export interface ActiveTurn {
     toolOutputs: Map<string, ToolOutputInfo>;
     /** Outputs the command executor already streamed into the store, by tool call id. */
     executorCaptures: Map<string, ExecutorCapture>;
+    /** Actual SOURCE_CHANGED responses, scoped to this question and indexed candidate/revision. */
+    staleCodeReads?: Map<string, number>;
+    /** Repeated stale reads whose transformed SDK result must stop the turn. */
+    staleCodeReadStops?: Set<string>;
     /** Window tokens left after the last allowed model request (4.8 gate); bounds tool reads. */
     remainingRequestTokens?: number;
     /** Set when the user cancelled this turn; checked before the SDK starts and before approvals. */
