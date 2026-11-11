@@ -11,6 +11,7 @@ from securecode_context.common.errors import ErrorCode, ServiceError
 from securecode_context.common.tokens import TokenCounter
 from securecode_context.context.models import Candidate, Material, Span
 from securecode_context.symbols.bundle.wire import symbol_location
+from securecode_context.symbols.graph import SourceNode
 from securecode_context.symbols.symbol_service import R0SymbolService
 
 MAX_BUNDLE_READ_BYTES = 16 * 1024
@@ -55,9 +56,9 @@ class SymbolResolver:
         response = self._service.search(request)
         return list(response.get("candidates") or [])
 
-    def _node(self, candidate_id: str, index_revision: int) -> dict[str, Any]:
+    def _nodes(self, candidate_id: str, index_revision: int) -> list[SourceNode]:
         """
-        함수 이름: _node()
+        함수 이름: _nodes()
         기능: 요청 revision이 현재 ready revision인지 확인하고 후보의 시작 심볼 노드를 찾는다.
         인자: candidate_id -> CandidateId, index_revision -> 요청 revision
         반환값: SourceNode 사전
@@ -71,7 +72,7 @@ class SymbolResolver:
         raw_id = prepared.raw_by_public_id.get(candidate_id)
         if raw_id is None:
             raise ServiceError(ErrorCode.NOT_FOUND, "후보를 찾을 수 없습니다.")
-        return dict(record["nodes"][prepared.infos[raw_id].primary])
+        return [record["nodes"][member] for member in prepared.infos[raw_id].members]
 
     def inspect(self, candidate: Candidate) -> Candidate:
         """
@@ -83,7 +84,8 @@ class SymbolResolver:
         """
         ref = candidate.ref
         try:
-            node = self._node(ref["candidate_id"], ref["index_revision"])
+            nodes = self._nodes(ref["candidate_id"], ref["index_revision"])
+            node = nodes[0]
         except ServiceError as error:
             if error.code in (ErrorCode.INDEX_NOT_READY, ErrorCode.SOURCE_CHANGED):
                 return replace(candidate, status="stale")
@@ -94,7 +96,15 @@ class SymbolResolver:
         span = Span(key, node["start_byte"], node["end_byte"])
         if span.end <= span.start:
             return replace(candidate, status="no_match")
-        return replace(candidate, span=span, handle=symbol_location(node))  # type: ignore[arg-type]
+        covered = tuple(
+            Span(
+                ("file", member["path"], member["content_sha256"]),
+                member["start_byte"],
+                member["end_byte"],
+            )
+            for member in nodes
+        )
+        return replace(candidate, span=span, handle=symbol_location(node), covered_spans=covered)
 
     def read(self, candidate: Candidate, span: Span, max_tokens: int) -> Material:
         """
@@ -106,28 +116,51 @@ class SymbolResolver:
         작성 날짜: 2026/11/10
         """
         ref = candidate.ref
+        nodes = self._nodes(ref["candidate_id"], ref["index_revision"])
+        selected = {
+            symbol_location(node)["symbol_id"]
+            for node in nodes
+            if Span(
+                ("file", node["path"], node["content_sha256"]), node["start_byte"], node["end_byte"]
+            )
+            in candidate.covered_spans
+        }
+        deduplicated = len(selected) < len(nodes)
         bundle = self._service.read_bundle(
             {
                 "workspace_id": self._workspace_id,
                 "candidate_id": ref["candidate_id"],
                 "index_revision": ref["index_revision"],
-                "max_tokens": max_tokens,
+                "max_tokens": 32768 if deduplicated else max_tokens,
                 "max_bytes": MAX_BUNDLE_READ_BYTES,
             }
         )
-        fragments = bundle["fragments"]
-        content = FRAGMENT_SEPARATOR.join(fragment["content"] for fragment in fragments)
+        fragments = [
+            fragment for fragment in bundle["fragments"] if fragment["symbol_id"] in selected
+        ]
+        content = FRAGMENT_SEPARATOR.join(
+            f"# {fragment['provenance']['relative_path']}:{fragment['start_line']}-{fragment['end_line']}\n"
+            + fragment["content"]
+            for fragment in fragments
+        )
+        included = {fragment["symbol_id"] for fragment in fragments}
+        locations = [symbol_location(node) for node in nodes]
+        locations = [location for location in locations if location["symbol_id"] in included]
         omitted = {omission["reason"] for omission in bundle["omissions"]}
         complete = bool(fragments) and not omitted & _INCOMPLETE
         counted = self._counter.count(content) if content else None
         tokens = counted.token_count if counted is not None else 0
-        if len(content) > MAX_BUNDLE_READ_BYTES or tokens > max_tokens:
+        if len(content.encode("utf-8")) > MAX_BUNDLE_READ_BYTES or tokens > max_tokens:
             complete = False
         return Material(
             content=content if complete else "",
             token_count=tokens if complete else 0,
             count_mode=counted.count_mode.value if counted is not None else "exact",
             span=span,
-            citation={"ref": dict(ref), "location": candidate.handle},
+            citation={
+                "ref": dict(ref),
+                "location": locations[0] if locations else candidate.handle,
+                "related_locations": locations[1:],
+            },
             complete=complete,
         )

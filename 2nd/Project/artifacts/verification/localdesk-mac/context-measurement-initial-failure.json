@@ -1,0 +1,191 @@
+{
+    "created_at": "2026-11-11T09:20:37.549Z",
+    "model": "qwen2.5-7b-instruct",
+    "method": "Real SDK/provider requests. Count-only counterfactual preserves each request's tools/history; selected R0 context is replaced by all source fixture files, stored runtime descriptors by their original log, and PDF page 2 by all pages. No raw baseline inference is sent. Request count is held constant; no accuracy or speed claim.",
+    "counter_checks": [
+        {
+            "name": "live llama.cpp exact count: korean chat",
+            "status": "PASS",
+            "detail": "counted 34 (exact), server prompt_tokens 34"
+        },
+        {
+            "name": "live llama.cpp exact count: tools and a tool result",
+            "status": "PASS",
+            "detail": "counted 203 (exact), server prompt_tokens 203"
+        }
+    ],
+    "live_checks": [
+        {
+            "name": "live sdk: R0 index ready",
+            "status": "PASS",
+            "detail": "{\"discovered\":54,\"indexed\":53,\"skipped\":1,\"failed\":0}"
+        },
+        {
+            "name": "live sdk: PDF parsed (metadata only)",
+            "status": "PASS",
+            "detail": "{\"schema_version\":\"1\",\"job_id\":\"pdf_d29c2ea435e2a6ad38858e18e160aaecb89d25c3\",\"workspace_id\":\"ws_146f2986cbf979c1370689fd\",\"pointer\":\"securecode://source/ws_146f2986cbf979c1370689fd/src_a40d4de6c11a479c8d356074157ccb71?v=1\",\"state\":\"ready\",\"content_sha256\":\"382930ddb4bd9c9f99c949d38ca8368bf02cbd627338bc1a7516b88df604fda2\",\"parser_version\":\"pdf-text-v1+pypdf-6.21.4\",\"page_count\":3}"
+        },
+        {
+            "name": "live sdk: context.select puts R0 evidence in the plan",
+            "status": "PASS",
+            "detail": "{\"operation\":\"plan\",\"result\":{\"schema_version\":\"1\",\"index_revision\":1,\"omissions_truncated\":false,\"selected\":[{\"candidate_id\":\"cand_3ca867b85ea162c9f1ccd12621167335824ec6d1\",\"ref\":{\"kind\":\"symbol\",\"ca"
+        },
+        {
+            "name": "live sdk: answer from R0 evidence",
+            "status": "PASS",
+            "detail": "attempt 1/2 completed: 함수 `compute_invoice_total`은 주어진 `items` 리스트에서 각 항목의 가격과 수량을 곱한 값들의 합을 구한 후, 지정된 `tax_rate`를 더하여 부가세를 추가한 총금액을 반환합니다. \n\n이 함수의 역할을 이해하기 위해 `billing.py` 파일 전체를 읽을 필요는 없습니다. 주석과 코드 자체에서 충분한 정보를 얻을 수 있습니다.\n\n여기 함수의 설명과 근거 파일(`billing.py`)을 포함하여 다음과 같이 쓸 수 있습니다:\n\n`(billing.py p.1) compute_invoice_total 함수는 주문 목록에서 각 항목의 총 가격을 합산한 후, 지정된 부가세율을 추가하여 총금액을 계산합니다.`\n\n이 정보를 제공하기 위해 `billing.py` 파일을 전체로 읽을 필요는 없으므로, `compute_invoice_total` 함수의 구체적인 구현만 읽어볼 것입니다.\n`compute_invoice_total` 함수는 주문 상품의 총 가격을 계산합니다. 이 함수는 주어진 `items` 목록에서 각 상품의 가격과 수량을 곱한 뒤 모두 더한 뒤, 지정된 세율에 따라 세금을 추가합니다.\n\n이 함수는 `billing.py` 파일에 포함되어 있습니다. 근거 코드는 아래와 같습니다:\n\n```python\ndef compute_invoice_total(items, tax_rate):\n    \"\"\"Sum line totals, then add tax.\"\"\"\n    subtotal = sum(item.price * item.quantity for item in items)\n    return round(subtotal * (1 + tax_rate), 2)\n```\n\n이 함수는 주문 상품의 가격과 수량을 기반으로 서브TOTAL을 계산하고"
+        },
+        {
+            "name": "live sdk: approved command stored as a Runtime Pointer",
+            "status": "FAIL",
+            "detail": "attempt 2/2 (first: failed, tools=) failed tools="
+        },
+        {
+            "name": "live sdk: partial re-read of the stored log",
+            "status": "FAIL",
+            "detail": "attempt 2/2 (first: failed, tools=) : 먼저 `node gen.js` 명령을 실행하겠습니다. 그 후, 출력 포인터에서 `LOG-TARGET` 줄을 찾아 `total` 값을 알려드리겠습니다.\n\n### Step 1: Run the `node gen.js` Command\n먼저 `node gen.js` 명령을 실행하겠습니다. 실행 후, 출력 포인터를 얻습니다.\n\n### Step 2: Get the Output Pointer\n이 명령을 실행하려면 사용자의 승인이 필요합니다. 실행 후, 출력 포인터를 얻습니다.\n\n### Step 3: Search for `LOG-TARGET` Line\n얻은 출력 포인터를 사용하여 `LOG-TARGET` 줄을 찾아 `total` 값을 확인합니다.\n\n### Step 4: Provide the Total Value\n찾은 `total` 값을 제공하겠습니다.\n\n먼저 `node gen.js` 명령을 실행하겠습니다.\n먼저 `node gen.js` 명령을 실행하겠습니다. 실행 결과를 기록하고, 그 후 `runtime_search`를 사용하여 `LOG-TARGET` 줄을 찾아 `total` 값을 알려드리겠습니다.\n\n### Step 1: Run the `node gen.js` Command\n먼저 `node gen.js` 명령을 실행하겠습니다. 이 명령을 실행하려면 사용자의 승인이 필요합니다.\n\n먼저 `node gen.js` 명령을 실행하겠습니다. 실행 후, 출력 포인터에서 `LOG-TARGET` 줄을 찾아 `total` 값을 알려드리겠습니다.\n\n### Step 1: Run the `node gen.js` Command\n먼저 `node gen.js` 명령을 실행하겠습니다. 이 명령을 실행하려면 사용자의 승인이 필요합니다.\n\n먼저 `node gen.js`"
+        },
+        {
+            "name": "live sdk: PDF page read and cited",
+            "status": "FAIL",
+            "detail": "attempt 2/2 (first: failed, tools=)  =>  제공하겠습니다.\n```text\n(securecode://source/ws_146f2986cbf979c1370689fd/src_a40d4de6c11a479c8d356074157ccb71 p.2) SENTINEL: \"...<SENTINEL text>...\"\n```\n\n위의 과정을 따르면, PDF의 2페이지를 읽고 `SENTINEL` 문자열을 찾을 수 있습니다."
+        },
+        {
+            "name": "live sdk: cancel stops the run",
+            "status": "PASS",
+            "detail": "{\"status\":\"cancelled\",\"finished_at\":\"2026-11-11T09:20:36.845Z\",\"reason_code\":\"CANCELLED\",\"message\":\"the run was cancelled\"}"
+        },
+        {
+            "name": "live sdk: unusable explicit choice refused before the model",
+            "status": "PASS",
+            "detail": "404 NOT_FOUND"
+        },
+        {
+            "name": "live sdk: canonical transcript holds no bulk log or unrelated files",
+            "status": "PASS",
+            "detail": "195131 bytes scanned"
+        },
+        {
+            "name": "live sdk: data kept for diagnosis",
+            "status": "PASS",
+            "detail": "/var/folders/hs/6n_tj83979s_cxb7bc3lyvfw0000gn/T/securecode-live-sdk-2uQEqV"
+        }
+    ],
+    "fixture_bytes": {
+        "source": 3707,
+        "log": 908868,
+        "pdf_text": 141
+    },
+    "requests": [
+        {
+            "request": 1,
+            "protected_tokens": 3489,
+            "raw_baseline_tokens": 4797,
+            "protected_request_bytes": 11883,
+            "raw_baseline_request_bytes": 15596
+        },
+        {
+            "request": 2,
+            "protected_tokens": 3489,
+            "raw_baseline_tokens": 4797,
+            "protected_request_bytes": 11883,
+            "raw_baseline_request_bytes": 15596
+        },
+        {
+            "request": 3,
+            "protected_tokens": 4003,
+            "raw_baseline_tokens": 5311,
+            "protected_request_bytes": 13853,
+            "raw_baseline_request_bytes": 17566
+        },
+        {
+            "request": 4,
+            "protected_tokens": 4003,
+            "raw_baseline_tokens": 5311,
+            "protected_request_bytes": 13853,
+            "raw_baseline_request_bytes": 17566
+        },
+        {
+            "request": 5,
+            "protected_tokens": 4003,
+            "raw_baseline_tokens": 5311,
+            "protected_request_bytes": 13853,
+            "raw_baseline_request_bytes": 17566
+        },
+        {
+            "request": 6,
+            "protected_tokens": 4003,
+            "raw_baseline_tokens": 5311,
+            "protected_request_bytes": 13853,
+            "raw_baseline_request_bytes": 17566
+        },
+        {
+            "request": 7,
+            "protected_tokens": 4328,
+            "raw_baseline_tokens": 5636,
+            "protected_request_bytes": 15169,
+            "raw_baseline_request_bytes": 18882
+        },
+        {
+            "request": 8,
+            "protected_tokens": 4328,
+            "raw_baseline_tokens": 5636,
+            "protected_request_bytes": 15169,
+            "raw_baseline_request_bytes": 18882
+        },
+        {
+            "request": 9,
+            "protected_tokens": 4328,
+            "raw_baseline_tokens": 5636,
+            "protected_request_bytes": 15169,
+            "raw_baseline_request_bytes": 18882
+        },
+        {
+            "request": 10,
+            "protected_tokens": 4328,
+            "raw_baseline_tokens": 5636,
+            "protected_request_bytes": 15169,
+            "raw_baseline_request_bytes": 18882
+        },
+        {
+            "request": 11,
+            "protected_tokens": 4861,
+            "raw_baseline_tokens": 6169,
+            "protected_request_bytes": 17213,
+            "raw_baseline_request_bytes": 20926
+        },
+        {
+            "request": 12,
+            "protected_tokens": 4861,
+            "raw_baseline_tokens": 6169,
+            "protected_request_bytes": 17213,
+            "raw_baseline_request_bytes": 20926
+        },
+        {
+            "request": 13,
+            "protected_tokens": 4861,
+            "raw_baseline_tokens": 6169,
+            "protected_request_bytes": 17213,
+            "raw_baseline_request_bytes": 20926
+        },
+        {
+            "request": 14,
+            "protected_tokens": 4861,
+            "raw_baseline_tokens": 6169,
+            "protected_request_bytes": 17213,
+            "raw_baseline_request_bytes": 20926
+        },
+        {
+            "request": 15,
+            "protected_tokens": 5596,
+            "raw_baseline_tokens": 6904,
+            "protected_request_bytes": 19711,
+            "raw_baseline_request_bytes": 23424
+        }
+    ],
+    "request_count": 15,
+    "protected_max_input_tokens": 5596,
+    "raw_max_input_tokens": 6904,
+    "protected_cumulative_input_tokens": 65342,
+    "raw_cumulative_input_tokens": 84962
+}

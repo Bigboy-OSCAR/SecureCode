@@ -8,6 +8,7 @@ import { createServer, type IncomingMessage, type Server, type ServerResponse } 
 import { ContextServiceError } from "../context-client/contextServiceError.js";
 import type { Logger } from "../logging/logger.js";
 import { registerApprovalRoutes } from "../routes/approvals/approvalRoutes.js";
+import { createLaunchCodeRoute } from "../routes/auth/launchCodeRoute.js";
 import { createBootstrapRoute } from "../routes/auth/bootstrapRoute.js";
 import { createHealthRoute } from "../routes/health/healthRoute.js";
 import { registerPendingRoutes } from "../routes/pendingRoutes.js";
@@ -18,6 +19,7 @@ import { Router } from "../routes/router.js";
 import { registerRunEventsRoute } from "../routes/runs/runEventsRoute.js";
 import { registerRunRoutes } from "../routes/runs/runRoutes.js";
 import { registerSessionRoutes } from "../routes/sessions/sessionRoutes.js";
+import { registerModelRoutes } from "../routes/settings/modelRoutes.js";
 import { createSettingsRoute } from "../routes/settings/settingsRoute.js";
 import { RouteFailure } from "../routes/shared/routeFailure.js";
 import { registerPreviewRoute } from "../routes/context/previewRoute.js";
@@ -34,7 +36,7 @@ export interface HostServerDependencies {
 }
 
 const REQUEST_ID_PATTERN = /^req_[A-Za-z0-9-]{8,64}$/;
-const PUBLIC_ROUTES = new Set(["GET /api/v1/health", "POST /api/v1/auth/bootstrap"]);
+const PUBLIC_ROUTES = new Set(["GET /api/v1/health", "POST /api/v1/auth/bootstrap", "POST /api/v1/auth/launch-code"]);
 
 function resolveRequestId(request: IncomingMessage): string {
     const incoming = request.headers["x-request-id"];
@@ -57,7 +59,9 @@ export function buildRouter(dependencies: HostServerDependencies): Router {
             }),
         )
         .add("POST", "/api/v1/auth/bootstrap", createBootstrapRoute(services))
+        .add("POST", "/api/v1/auth/launch-code", createLaunchCodeRoute(services))
         .add("GET", "/api/v1/settings", createSettingsRoute(services));
+    registerModelRoutes(router, services);
     registerWorkspaceRoutes(router, services);
     registerSessionRoutes(router, services);
     registerRunRoutes(router, services);

@@ -96,7 +96,7 @@ export type ShortText = string;
  * exact = local tokenizer identical to the provider (none exists for the 3.1 model). provider_estimate = provider count_tokens API (documented as an estimate). provider_reported = usage returned after a real request.
  */
 export type CountMode = "exact" | "provider_estimate" | "provider_reported";
-export type TokenCountMethod = "anthropic_count_tokens" | "llama_cpp_tokenize";
+export type TokenCountMethod = "anthropic_count_tokens" | "llama_cpp_tokenize" | "lm_studio_tokenize";
 /**
  * What surrounds the counted text. single_user_message = one user message holding one text block; the count includes that minimal framing. provider_request = the input part (system, messages, tools, tool_choice, thinking) of one serialized provider request as sent (4.8 gate). plain_text = the text alone with no message framing (local llama.cpp tokenizer).
  */
@@ -124,6 +124,10 @@ export type AnswerCitation =
     | {
           ref: SymbolContextRef;
           location: SymbolLocation;
+          /**
+           * @maxItems 64
+           */
+          related_locations?: SymbolLocation[];
       }
     | {
           ref: SelectedPointerContextRef;
@@ -438,6 +442,9 @@ export interface ContractsIndex {
     ApprovalRequest?: ApprovalRequest;
     ApprovalDecisionRequest?: ApprovalDecisionRequest;
     ApprovalDecisionResponse?: ApprovalDecisionResponse;
+    LocalModel?: LocalModel;
+    ModelListResponse?: ModelListResponse;
+    ModelSelectRequest?: ModelSelectRequest;
     RunStatus?: RunStatus;
     TerminalRunStatus?: TerminalRunStatus;
     SymbolContextRef?: SymbolContextRef;
@@ -678,6 +685,27 @@ export interface ApprovalDecisionRequest {
 export interface ApprovalDecisionResponse {
     schema_version: SchemaVersion;
     approval: ApprovalRequest;
+}
+export interface LocalModel {
+    model_id: string;
+    display_name: string;
+    runtime: "llama-cpp" | "lm-studio";
+    context_limit_tokens: number;
+    available: boolean;
+    reason?: string;
+}
+export interface ModelListResponse {
+    schema_version: SchemaVersion;
+    active_model_id: string | null;
+    status: "ready" | "loading" | "error";
+    error: string | null;
+    /**
+     * @maxItems 100
+     */
+    items: LocalModel[];
+}
+export interface ModelSelectRequest {
+    model_id: string;
 }
 export interface SymbolContextRef {
     kind: "symbol";
@@ -952,7 +980,7 @@ export interface EffectiveLimits {
     pdf_max_pages?: number;
 }
 /**
- * root_path is input only. Responses never echo it.
+ * root_path is input only; authenticated local UI receives an optional display_path.
  */
 export interface WorkspaceCreateRequest {
     display_name: string;
@@ -963,6 +991,10 @@ export interface Workspace {
     schema_version: SchemaVersion;
     workspace_id: WorkspaceId;
     display_name: string;
+    /**
+     * Local workspace location for the project sidebar.
+     */
+    display_path?: string;
     index_revision: IndexRevision | null;
     index_status: IndexState;
     /**

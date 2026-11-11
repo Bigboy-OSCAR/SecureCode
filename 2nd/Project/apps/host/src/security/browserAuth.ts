@@ -26,7 +26,7 @@ function sameSecret(left: string, right: string): boolean {
 
 export class BrowserAuth {
     private code: string | null;
-    private readonly codeExpiresAtMs: number;
+    private codeExpiresAtMs: number;
     private failedAttempts = 0;
     private readonly sessions = new Map<string, number>();
     private readonly clock: () => number;
@@ -35,6 +35,15 @@ export class BrowserAuth {
         this.code = code;
         this.clock = clock;
         this.codeExpiresAtMs = clock() + BOOTSTRAP_CODE_TTL_MS;
+    }
+
+    /** Called only by the authenticated local launcher; existing sessions and runs survive. */
+    reissueCode(): string {
+        const code = generateBootstrapCode();
+        this.code = code;
+        this.codeExpiresAtMs = this.clock() + BOOTSTRAP_CODE_TTL_MS;
+        this.failedAttempts = 0;
+        return code;
     }
 
     /** One successful exchange per code; repeated guessing locks the code. */

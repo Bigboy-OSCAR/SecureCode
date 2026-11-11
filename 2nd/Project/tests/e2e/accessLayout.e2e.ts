@@ -62,6 +62,16 @@ it("a question is asked and an approval dialog is handled with the keyboard alon
 
     await decideApproval(page, "approve");
     await waitRunStatus(page, "완료");
+    assert.match(
+        await page.locator(".desk-run-status").ariaSnapshot(),
+        /status: 완료/,
+        "completion is exposed as a polite status live region",
+    );
+    assert.equal(
+        await page.locator('[data-testid="answer"][aria-live], [data-testid="answer"] [aria-live]').count(),
+        0,
+        "streaming answer text is not announced token by token",
+    );
 });
 
 it("confirm dialogs start on the title and return focus; pointer choices have accessible names", async () => {
@@ -86,31 +96,28 @@ async function horizontalOverflow(page: Page): Promise<number> {
     return page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
 }
 
-it("1280px shows all three areas; 768px and 200% zoom keep the conversation and one side panel at a time", async () => {
+it("1280px and narrow layouts preserve conversation, dismissible drawers and keyboard controls", async () => {
     const { page } = e2e;
     await page.setViewportSize({ width: 1280, height: 900 });
     assert.ok((await horizontalOverflow(page)) <= 0, "no horizontal page overflow at 1280px");
-    assert.equal(await page.getByTestId("panel-toggle-context").isVisible(), false);
     assert.ok(await page.locator("#project-panel").isVisible());
     assert.ok(await page.locator("#context-panel").isVisible());
+    await page.locator("#context-panel").getByRole("button", { name: "닫기", exact: true }).click();
 
     await page.setViewportSize({ width: 768, height: 900 });
     assert.ok((await horizontalOverflow(page)) <= 0, "no horizontal page overflow at 768px");
-    assert.ok(await page.locator("#main-content").isVisible(), "the conversation stays visible");
-    assert.ok(await page.getByTestId("screen-approval").isVisible(), "approvals stay visible");
-    const context = page.getByTestId("panel-toggle-context");
-    assert.ok(await context.isVisible());
-    assert.equal(await context.getAttribute("aria-expanded"), "false");
+    assert.ok(await page.locator("#main-content").isVisible());
+    assert.ok(await page.getByTestId("screen-approval").isVisible());
+    assert.equal(await page.locator("#project-panel").isVisible(), false);
     assert.equal(await page.locator("#context-panel").isVisible(), false);
+    const context = page.getByRole("button", { name: "자료 · 컨텍스트", exact: true });
     await context.focus();
     await page.keyboard.press("Enter");
-    assert.equal(await context.getAttribute("aria-expanded"), "true");
     assert.ok(await page.locator("#context-panel").isVisible());
-    assert.equal(await page.locator("#project-panel").isVisible(), false, "only one side panel is open");
-
-    // 200% zoom of a 1280px window lays out like a 640px viewport.
+    assert.equal(await page.locator("#project-panel").isVisible(), false);
+    await page.locator("#context-panel").getByRole("button", { name: "닫기", exact: true }).click();
     await page.setViewportSize({ width: 640, height: 900 });
     assert.ok((await horizontalOverflow(page)) <= 0, "no horizontal page overflow at 200% zoom (640px)");
-    assert.ok(await page.getByTestId("question-submit").isVisible(), "the send button stays reachable");
+    assert.ok(await page.getByTestId("question-submit").isVisible());
     await page.setViewportSize({ width: 1280, height: 900 });
 });

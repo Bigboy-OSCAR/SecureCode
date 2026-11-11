@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import type { RunSnapshot } from "@securecode/contracts";
+import { CopyAnswer } from "./CopyAnswer.js";
+import { AnswerText } from "./AnswerText.js";
 import { Button } from "../../../components/index.js";
 import { formatCitation } from "../../shared/model/provenanceLabels.js";
 
@@ -32,7 +34,7 @@ export function AnswerView({ run }: AnswerViewProps): React.JSX.Element {
     return (
         <article className="message-card" data-testid="answer">
             <h3>{stopped ? "답변 (중단 전 결과)" : "답변"}</h3>
-            {text.length > 0 ? <p className="answer-text">{text.slice(0, visible)}</p> : null}
+            {text.length > 0 ? <AnswerText text={text.slice(0, visible)} /> : null}
             {hidden > 0 ? (
                 <Button type="button" onClick={() => setVisible((current) => current + ANSWER_STEP_CHARS)}>
                     답변 더 보기 ({hidden.toLocaleString()}자 남음)
@@ -40,6 +42,7 @@ export function AnswerView({ run }: AnswerViewProps): React.JSX.Element {
             ) : null}
             {run.answer.truncated ? <p>호스트가 답변의 일부만 보관했습니다. 나머지는 표시할 수 없습니다.</p> : null}
             {terminal && text.length === 0 ? <p>표시할 답변이 없습니다.</p> : null}
+            {terminal && text ? <CopyAnswer text={text} /> : null}
             {terminal ? (
                 <div data-testid="answer-citations">
                     <h4>답변에 사용한 근거</h4>

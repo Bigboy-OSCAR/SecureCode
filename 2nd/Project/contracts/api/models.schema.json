@@ -1,0 +1,101 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Local model controls",
+    "description": "Local-only GET /api/v1/models and POST /api/v1/models/select. Paths, endpoints and credentials remain on the host.",
+    "definitions": {
+        "LocalModel": {
+            "title": "LocalModel",
+            "type": "object",
+            "required": ["model_id", "display_name", "runtime", "context_limit_tokens", "available"],
+            "additionalProperties": false,
+            "properties": {
+                "model_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                },
+                "display_name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                },
+                "runtime": {
+                    "type": "string",
+                    "enum": ["llama-cpp", "lm-studio"]
+                },
+                "context_limit_tokens": {
+                    "type": "integer",
+                    "minimum": 1024,
+                    "maximum": 1048576
+                },
+                "available": {
+                    "type": "boolean"
+                },
+                "reason": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1024
+                }
+            }
+        },
+        "ModelListResponse": {
+            "title": "ModelListResponse",
+            "type": "object",
+            "required": ["schema_version", "active_model_id", "status", "error", "items"],
+            "additionalProperties": false,
+            "properties": {
+                "schema_version": {
+                    "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion"
+                },
+                "active_model_id": {
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "status": {
+                    "type": "string",
+                    "enum": ["ready", "loading", "error"]
+                },
+                "error": {
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1024
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "items": {
+                    "type": "array",
+                    "maxItems": 100,
+                    "items": {
+                        "$ref": "#/definitions/LocalModel"
+                    }
+                }
+            }
+        },
+        "ModelSelectRequest": {
+            "title": "ModelSelectRequest",
+            "type": "object",
+            "required": ["model_id"],
+            "additionalProperties": false,
+            "properties": {
+                "model_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                }
+            }
+        }
+    }
+}

@@ -3,6 +3,7 @@
  * Focus starts on the title (never on a confirming button) and returns to the opener on close;
  * when the opener is gone (e.g. its card was replaced) it goes to `returnFocusId` instead.
  */
+import { DeskIcon } from "./DeskIcon.js";
 import { useEffect, useRef, type PropsWithChildren } from "react";
 
 export interface ModalProps extends PropsWithChildren {
@@ -55,7 +56,7 @@ export function Modal({ open, title, onRequestClose, returnFocusId, children }: 
                     {title}
                 </h2>
                 <button className="modal-close" type="button" aria-label="대화상자 닫기" onClick={onRequestClose}>
-                    닫기
+                    <DeskIcon name="5_172-imgIconClose" />
                 </button>
             </div>
             <div className="modal-content">{children}</div>

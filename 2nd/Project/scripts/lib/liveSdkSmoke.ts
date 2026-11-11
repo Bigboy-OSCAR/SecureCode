@@ -30,7 +30,7 @@ function project(root: string): void {
     copyFileSync(join(WORK_ROOT, "tests", "fixtures", "pdf", "korean-3-pages.pdf"), join(root, "manual.pdf"));
 }
 
-export async function liveSdkSmokeSteps(): Promise<StepResult[]> {
+export async function liveSdkSmokeSteps(onFixture?: (root: string) => void): Promise<StepResult[]> {
     if (process.env.SECURECODE_LIVE_SMOKE !== "1") return [];
     const results: StepResult[] = [];
     const step = (name: string, passed: boolean, detail: string): void => {
@@ -39,6 +39,7 @@ export async function liveSdkSmokeSteps(): Promise<StepResult[]> {
     const dataDir = mkdtempSync(join(tmpdir(), "securecode-live-sdk-"));
     const root = mkdtempSync(join(tmpdir(), "securecode-live-ws-"));
     project(root);
+    onFixture?.(root);
     const services = await startServices({ ...(await findFreePorts()), dataDir });
     try {
         const api = await login(services.hostUrl, services.bootstrapCode);

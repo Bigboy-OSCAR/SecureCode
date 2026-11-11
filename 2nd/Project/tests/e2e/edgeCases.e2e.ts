@@ -32,6 +32,7 @@ after(async () => {
 
 it("a wrong launch code is refused; the right one connects and is kept nowhere in the page", async () => {
     const { page, launchCode } = e2e;
+    await page.locator(".desk-connect-prompt").getByRole("button", { name: "연결 설정" }).click();
     await page.getByLabel("연결 코드").fill("wrong-code-123456");
     await page.getByRole("button", { name: "연결", exact: true }).click();
     await page.locator("[role=alert]").first().waitFor();
@@ -53,35 +54,41 @@ it("a wrong launch code is refused; the right one connects and is kept nowhere i
     ]);
     for (const value of stored)
         assert.ok(!value.includes(launchCode), "the launch code is not in URL, storage or readable cookies");
+    await page.getByRole("button", { name: "대화상자 닫기" }).click();
 });
 
 it("a project path that does not exist is refused next to the form and not listed", async () => {
     const { page, files } = e2e;
-    await page.getByLabel("표시 이름").fill("missing");
-    await page.getByLabel("로컬 프로젝트 경로").fill(join(files.projectDir, "does-not-exist"));
-    await page.getByRole("button", { name: "프로젝트 등록" }).click();
-    await page.locator("#project-panel [role=alert]").first().waitFor();
+    await page.getByRole("button", { name: "+ 프로젝트 추가", exact: true }).click();
+    await page.getByTestId("project-path").fill(join(files.projectDir, "does-not-exist"));
+    await page.getByTestId("project-name").fill("missing");
+    await page.getByTestId("project-register").click();
+    await page.locator("dialog [role=alert]").first().waitFor();
     assert.match(
-        (await page.locator("#project-panel [role=alert]").allInnerTexts()).join(" "),
+        (await page.locator("dialog [role=alert]").allInnerTexts()).join(" "),
         /경로가 존재하지 않습니다/,
         "the reason is named, not a generic policy refusal",
     );
-    assert.equal(await page.locator("#project-panel li").filter({ hasText: "missing" }).count(), 0);
+    assert.equal(await page.locator(".desk-projects").getByRole("button", { name: "missing", exact: true }).count(), 0);
+    await page.getByRole("button", { name: "대화상자 닫기" }).click();
 });
 
 it("a five-language project with a broken file reports what was indexed and what failed", async () => {
     const { page, files } = e2e;
     await registerProject(page, "polyglot", files.polyglotDir);
-    await page.getByRole("button", { name: "색인 생성 · 갱신" }).click();
+    await page.getByRole("button", { name: "인덱스 생성·갱신", exact: true }).click();
+    await page.getByTestId("index-start").click();
     await page
-        .getByText(/(ready|partial) · revision \d+/)
+        .locator("dialog .desk-job")
+        .getByText(/부분 완료|partial/)
         .first()
         .waitFor({ timeout: 60000 });
-    const status = await page.locator(".message-card").filter({ hasText: "색인 준비 상태" }).innerText();
-    assert.match(status, /partial · revision 1/, "a partial index is not shown as a full success");
+    const status = await page.locator("dialog .desk-job").innerText();
+    assert.match(status, /부분 완료|partial/, "a partial index is not shown as a full success");
     assert.match(status, /발견 7 · 색인 5 · 제외 1 · 실패 1/, "C, C++, Java, JavaScript and Python files were indexed");
     assert.match(status, /broken.py:1 · syntax_error/);
     assert.match(status, /types.ts · unsupported_language/);
+    await page.getByRole("button", { name: "대화상자 닫기" }).click();
 });
 
 it("the send button is locked while a run is active", async () => {

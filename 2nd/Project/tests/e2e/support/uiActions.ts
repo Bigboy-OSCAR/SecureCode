@@ -2,37 +2,56 @@
 import type { Locator, Page } from "playwright-core";
 
 export async function registerProject(page: Page, name: string, path: string): Promise<void> {
-    await page.getByLabel("표시 이름").fill(name);
-    await page.getByLabel("로컬 프로젝트 경로").fill(path);
-    await page.getByRole("button", { name: "프로젝트 등록" }).click();
-    await projectRow(page, name).waitFor();
+    await page.getByRole("button", { name: "+ 프로젝트 추가", exact: true }).click();
+    await page.getByTestId("project-path").fill(path);
+    await page.getByTestId("project-name").fill(name);
+    await page.getByTestId("project-register").click();
+    await page.getByRole("dialog").waitFor({ state: "detached" });
+    await page.getByTestId("question-input").waitFor();
+    await page.locator('.desk-messages[aria-busy="false"]').waitFor();
 }
 
-function projectRow(page: Page, name: string): Locator {
-    return page.getByRole("list", { name: "등록된 프로젝트" }).locator("li").filter({ hasText: name });
+export async function openContext(page: Page): Promise<void> {
+    if (!(await page.locator("#context-panel").isVisible())) {
+        await page.getByRole("button", { name: "자료 · 컨텍스트", exact: true }).click();
+    }
 }
 
 export async function buildIndex(page: Page): Promise<void> {
-    await page.getByRole("button", { name: "색인 생성 · 갱신" }).click();
-    await page
-        .getByText(/ready · revision \d+/)
-        .first()
-        .waitFor({ timeout: 60000 });
+    await page.getByRole("button", { name: "인덱스 생성·갱신", exact: true }).click();
+    await page.getByTestId("index-start").click();
+    await page.locator("dialog .desk-job").getByText("완료", { exact: true }).first().waitFor({ timeout: 60000 });
+    await page.getByRole("button", { name: "닫기", exact: true }).last().click();
 }
 
 export async function startSession(page: Page, name: string): Promise<void> {
-    await projectRow(page, name).getByRole("button", { name: "이 프로젝트에서 세션 시작" }).click();
+    // Registering a project opens its first conversation automatically.
+    await page.getByRole("button", { name, exact: true }).first().click();
     await page.getByTestId("question-input").waitFor();
+    await page.locator('.desk-messages[aria-busy="false"]').waitFor();
+    await openContext(page);
 }
 
 export async function ask(page: Page, question: string): Promise<void> {
     await page.getByTestId("question-input").fill(question);
+    const request = page.waitForRequest(
+        (candidate) => candidate.method() === "POST" && /\/sessions\/[^/]+\/runs$/.test(candidate.url()),
+    );
     await page.getByTestId("question-submit").click();
+    const response = await (await request).response();
+    if (response?.ok()) {
+        await page.waitForFunction(
+            () => document.querySelector<HTMLTextAreaElement>('[data-testid="question-input"]')?.value === "",
+        );
+    }
 }
 
 /** The conversation status badge (live region) reaches the given label. */
 export async function waitRunStatus(page: Page, label: string, timeout = 60000): Promise<void> {
-    await page.locator("#screen-chat [role=status]").filter({ hasText: label }).first().waitFor({ timeout });
+    await page
+        .locator(".desk-run-status")
+        .filter({ hasText: new RegExp(`^${label}( ·|$)`) })
+        .waitFor({ timeout });
 }
 
 export async function decideApproval(page: Page, decision: "approve" | "reject"): Promise<void> {
@@ -41,6 +60,7 @@ export async function decideApproval(page: Page, decision: "approve" | "reject")
 }
 
 export async function registerSource(page: Page, path: string, name: string): Promise<void> {
+    await openContext(page);
     const field = page.getByLabel("등록할 외부 파일의 호스트 경로");
     await field.fill(path);
     await page.getByRole("button", { name: "지정한 파일 등록" }).click();

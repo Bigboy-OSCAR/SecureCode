@@ -81,7 +81,7 @@ it("an SSE drop is shown as a disconnection, not a cancel, and the run is follow
     await page.getByText("연결이 끊겼습니다", { exact: true }).waitFor();
     await waitRunStatus(page, "완료");
     await page.unroute("**/api/v1/runs/*/events");
-    assert.match(await page.getByTestId("answer").innerText(), /재연결 뒤에도 같은 실행의 답입니다/);
+    assert.match(await page.getByTestId("answer").last().innerText(), /재연결 뒤에도 같은 실행의 답입니다/);
     assert.equal(
         await page.getByText("연결이 끊겼습니다", { exact: true }).count(),
         0,

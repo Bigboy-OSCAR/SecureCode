@@ -61,7 +61,12 @@ export function useLivePointerReadWorkflow(
         setErrorReason(null);
         setBusy(null);
         const supported = pointer?.supported_selectors ?? [];
-        setSelectorKind(supported.includes("line") ? "line" : (supported[0] ?? "line"));
+        const nextSelector = supported.includes("line") ? "line" : (supported[0] ?? "line");
+        setSelectorKind(nextSelector);
+        setStart(nextSelector === "byte" ? "0" : "1");
+        setEnd("");
+        setSelectorValue("");
+        setQuery("");
         return () => {
             sequence.current += 1;
         };

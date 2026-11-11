@@ -11,6 +11,7 @@ export function buildSettings(
     runtimeConfig: RuntimeConfig,
     providerConfigured: boolean,
     protections: ProtectionState[],
+    verifiedLocalModel = false,
 ): SettingsResponse {
     const gateReady = protections.some((state) => state.name === "model_request_gate" && state.ready);
     return {
@@ -25,9 +26,9 @@ export function buildSettings(
             context_limit_tokens: runtimeConfig.contextLimitTokens,
             max_output_tokens: runtimeConfig.maxOutputTokens,
             safety_margin_tokens: runtimeConfig.safetyMarginTokens,
-            body_count_mode: providerConfigured ? "provider_estimate" : null,
+            body_count_mode: providerConfigured ? (verifiedLocalModel ? "exact" : "provider_estimate") : null,
             // 4.8 verifies the gate's budget policy; a registered gate is not yet "enforced".
-            final_request_gate: gateReady ? "not_verified" : "unavailable",
+            final_request_gate: gateReady ? (verifiedLocalModel ? "enforced" : "not_verified") : "unavailable",
         },
         limits: { approval_review_max_bytes: APPROVAL_REVIEW_MAX_BYTES },
         protections,

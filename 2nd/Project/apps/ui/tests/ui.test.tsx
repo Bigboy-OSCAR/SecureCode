@@ -6,6 +6,9 @@ import { createElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { ContractValidator } from "@securecode/contracts";
 import screenCases from "../../../tests/fixtures/ui/screen-cases.json";
+import { ApiHttpClient } from "../src/api/httpClient.js";
+import { LiveConnectionPanel } from "../src/features/settings/components/LiveConnectionPanel.js";
+import { ProjectDialog } from "../src/features/workspace/components/ProjectDialog.js";
 import { App } from "../src/app/App.js";
 import { Alert, Button, InputField, StatusBadge } from "../src/components/index.js";
 import { fixtureAdapter } from "./support/fixtureAdapter.js";
@@ -26,7 +29,7 @@ function render(element: ReactNode): string {
 test("live feature screens render their stable identifiers", () => {
     const markup = render(createElement(App));
 
-    for (const screen of ["connection", "project", "chat", "context", "pointers", "pointer-read", "pdf"]) {
+    for (const screen of ["context", "pointers", "pointer-read", "pdf"]) {
         assert.ok(markup.includes(`data-testid="screen-${screen}"`), `Expected ${screen} screen to render.`);
     }
     assert.ok(markup.includes('href="#main-content"'));
@@ -35,7 +38,20 @@ test("live feature screens render their stable identifiers", () => {
     }
     const identifiers = [...markup.matchAll(/data-testid="([^"]+)"/g)].map((match) => match[1]);
     assert.equal(new Set(identifiers).size, identifiers.length, "data-testid values should be unique per screen.");
-    const codePattern = markup.match(/id="connection-code"[^>]*pattern="([^"]+)"/)?.[1];
+    assert.ok(markup.includes("LocalDesk"));
+    assert.ok(markup.includes("프로젝트 추가"));
+    assert.ok(markup.includes("대화 검색"));
+    const connection = render(
+        createElement(LiveConnectionPanel, {
+            api: new ApiHttpClient(),
+            connected: false,
+            health: null,
+            settings: null,
+            onAuthenticated: () => {},
+            onStatus: () => {},
+        }),
+    );
+    const codePattern = connection.match(/id="connection-code"[^>]*pattern="([^"]+)"/)?.[1];
     assert.ok(codePattern);
     assert.doesNotThrow(() => new RegExp(codePattern, "v"));
 });
@@ -43,14 +59,14 @@ test("live feature screens render their stable identifiers", () => {
 test("live application exposes real index, context, pointer, and PDF workflows behind host auth", () => {
     const markup = render(createElement(App));
 
-    assert.ok(markup.includes("same-origin bootstrap 요청"));
+    assert.ok(markup.includes("연결 설정"));
     assert.ok(markup.includes("R0 원문 · 컨텍스트 예산"));
     assert.ok(markup.includes("Source · Runtime Pointer"));
     assert.ok(markup.includes("PDF parsing job"));
     assert.ok(markup.includes("지정한 파일 등록"));
     assert.ok(markup.includes("전체 본문 자동 다운로드를 하지 않습니다"));
     assert.ok(markup.includes("브라우저는 디스크 파일을 읽지 않습니다"));
-    assert.ok(markup.includes("provider API 키와 내부 서비스 토큰은 브라우저에 전달되지 않습니다"));
+    assert.ok(markup.includes("이 기기에서만 실행·저장"));
     assert.equal(markup.includes("fixture"), false);
     assert.equal(markup.includes("hello from the workspace"), false);
 });
@@ -151,7 +167,11 @@ test("question keyboard handling preserves IME composition and Shift+Enter", () 
 test("unauthenticated live UI disables mutations and does not offer unscoped pointer actions", () => {
     const markup = render(createElement(App));
 
-    for (const testId of ["project-register", "live-source-register"]) {
+    const projectMarkup = render(
+        createElement(ProjectDialog, { open: true, connected: false, onClose: () => {}, onRegister: async () => {} }),
+    );
+    assert.match(projectMarkup, /disabled=""[^>]*data-testid="project-register"/);
+    for (const testId of ["live-source-register"]) {
         assert.match(markup, new RegExp(`disabled=""[^>]*data-testid="${testId}"`), `${testId} must be disabled.`);
     }
     assert.equal(markup.includes(">등록 해제</button>"), false);

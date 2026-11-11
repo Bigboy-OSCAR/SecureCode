@@ -43,6 +43,9 @@ export function LivePointerReadPanel({
                         {pointer.display_name} · {pointer.kind} · revision {pointer.revision} · {pointer.media_type}
                     </p>
                     <p>미리보기는 요청할 때만 읽으며 요청당 최대 4,096 bytes입니다. 나머지는 cursor로 이어 읽습니다.</p>
+                    {pointer.media_type === "application/json" && !supported.includes("json_path") ? (
+                        <p>JSON 구조 조회는 8 MiB 이하 파일에서 지원합니다. 큰 JSON은 줄·바이트 범위로 읽으세요.</p>
+                    ) : null}
                     <div className="stack-form">
                         <div className="field">
                             <label className="field-label" htmlFor="pointer-selector-kind">

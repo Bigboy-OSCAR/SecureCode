@@ -86,6 +86,11 @@ it("replaces approved command output before the next model call and re-reads onl
         const command = done.tool_calls.find((call) => call.tool_call_id === "toolu_cmd");
         assert.ok(command?.output_pointer, "command result recorded as a pointer");
         const pointer = command.output_pointer;
+        assert.ok(
+            (command.output_bytes ?? 0) > 300_000,
+            "tool summary reports original command bytes, not descriptor bytes",
+        );
+        assert.match(command.summary ?? "", new RegExp(`${command.output_bytes} bytes`));
 
         const requests = host.provider.capturedRequests.map((request) => request.bodyText);
         assert.equal(requests.length, 6);
@@ -151,6 +156,7 @@ it("records a capped capture exactly in the descriptor and the stored object", a
         const match = /capture: truncated before storage; stored the first (\d+) of (\d+) bytes/.exec(request);
         assert.ok(match, "descriptor states the capture range");
         assert.ok(Number(match[1]) <= 64 * 1024 && Number(match[2]) > 300_000);
+        assert.equal(done.tool_calls[0]?.output_bytes, Number(match[2]), "capped capture reports all produced bytes");
         const scope = { workspaceId: host.workspaceId, sessionId };
         const tail = await host.runtimeClient.search(
             scope,

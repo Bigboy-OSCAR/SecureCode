@@ -61,6 +61,8 @@ export async function scriptUnitSteps(): Promise<StepResult[]> {
             "tsx",
             "--test",
             "scripts/test/structureRules.test.ts",
+            "scripts/test/desktopServer.test.ts",
+            "scripts/test/desktopData.test.ts",
         ]),
     ];
 }

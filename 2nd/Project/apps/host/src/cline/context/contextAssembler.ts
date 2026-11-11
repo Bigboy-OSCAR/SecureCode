@@ -41,6 +41,11 @@ function displayOf(fragment: Plan["fragments"][number]): string {
 export class ContextAssembler {
     constructor(private readonly options: ContextAssemblerOptions) {}
 
+    setModelBudget(limit: number, output: number): void {
+        this.options.contextLimitTokens = limit;
+        this.options.maxOutputTokens = output;
+    }
+
     async select(input: Omit<ContextPlanInput, "index_revision">): Promise<ContextSelectResponse> {
         const { client, sessions } = this.options;
         await this.options.ensureWorkspace(input.workspace_id);

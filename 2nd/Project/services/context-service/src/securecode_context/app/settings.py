@@ -63,8 +63,8 @@ def _token_counter(environ: Mapping[str, str]) -> str:
     작성 날짜: 2026/11/10
     """
     value = environ.get("SECURECODE_TOKEN_COUNTER", "").strip().lower()
-    if value not in ("", "llama-cpp"):
-        raise SettingsError("SECURECODE_TOKEN_COUNTER must be empty or llama-cpp")
+    if value not in ("", "llama-cpp", "lm-studio"):
+        raise SettingsError("SECURECODE_TOKEN_COUNTER must be empty, llama-cpp or lm-studio")
     return value
 
 

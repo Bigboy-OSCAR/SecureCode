@@ -12,6 +12,7 @@ from securecode_context.api.error_responses import register_error_handlers
 from securecode_context.api.health import SERVICE_VERSION
 from securecode_context.api.health import router as health_router
 from securecode_context.api.middleware import install_middleware
+from securecode_context.api.model_counter import router as model_counter_router
 from securecode_context.api.pdf import router as pdf_router
 from securecode_context.api.request_tokens import router as request_tokens_router
 from securecode_context.api.runtime_pointers import router as runtime_pointers_router
@@ -30,6 +31,8 @@ from securecode_context.common.tokens import (
 )
 from securecode_context.common.tokens.anthropic_counter import DEFAULT_BASE_URL
 from securecode_context.common.tokens.llama_cpp_counter import LlamaCppTokenCounter
+from securecode_context.common.tokens.lm_studio_counter import LmStudioTokenCounter
+from securecode_context.common.tokens.switchable_counter import SwitchableTokenCounter
 from securecode_context.common.workspace_roots import WorkspaceRootRegistry
 from securecode_context.context.service import ContextSelectService
 from securecode_context.pdf.tools import PdfService
@@ -52,6 +55,8 @@ def build_token_counter(settings: ServiceSettings) -> TokenCounter:
     반환값: TokenCounter 구현
     작성 날짜: 2026/11/04
     """
+    if settings.token_counter == "lm-studio" and settings.provider_base_url:
+        return LmStudioTokenCounter(settings.provider_base_url, settings.model_id)
     if settings.token_counter == "llama-cpp":
         if settings.provider_id != "openai-compatible" or settings.provider_base_url is None:
             return UnavailableTokenCounter("llama_cpp_needs_openai_compatible_base_url")
@@ -180,7 +185,7 @@ def create_app(
         작성 날짜: 2026/11/05
         """
         if not hasattr(app.state, "token_counter"):
-            app.state.token_counter = build_token_counter(settings)
+            app.state.token_counter = SwitchableTokenCounter(build_token_counter(settings))
         counter = app.state.token_counter
         build_state(app, settings, workspace_roots)
         sweeper = asyncio.create_task(sweep_forever(app.state.pointer_store.sweep_expired))
@@ -190,9 +195,7 @@ def create_app(
             sweeper.cancel()
             with contextlib.suppress(asyncio.CancelledError):
                 await sweeper
-            if token_counter is None and isinstance(
-                counter, AnthropicTokenCounter | LlamaCppTokenCounter
-            ):
+            if token_counter is None and isinstance(counter, SwitchableTokenCounter):
                 counter.close()
                 del app.state.token_counter
             app.state.pointer_store.close()
@@ -214,7 +217,9 @@ def create_app(
     )
     app.state.settings = settings
     app.state.token_counter = (
-        token_counter if token_counter is not None else build_token_counter(settings)
+        token_counter
+        if token_counter is not None
+        else SwitchableTokenCounter(build_token_counter(settings))
     )
     build_state(app, settings, workspace_roots)
 
@@ -222,6 +227,7 @@ def create_app(
     register_error_handlers(app)
     app.include_router(health_router)
     app.include_router(tokens_router)
+    app.include_router(model_counter_router)
     app.include_router(request_tokens_router)
     app.include_router(context_select_router)
     app.include_router(runtime_pointers_router)

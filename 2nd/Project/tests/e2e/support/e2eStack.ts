@@ -29,6 +29,7 @@ export interface E2E {
     fake: FakeLlama;
     files: WorkspaceFixture;
     uiUrl: string;
+    reissueCode(): Promise<string>;
     stop(): Promise<void>;
 }
 
@@ -46,6 +47,7 @@ export async function startE2E(options: E2EOptions = {}): Promise<E2E> {
     const ports = await findFreePorts();
     Object.assign(process.env, {
         SECURECODE_PROVIDER_ID: "openai-compatible",
+        SECURECODE_LOCAL_MODELS: "0",
         SECURECODE_MODEL_ID: FAKE_MODEL_ID,
         SECURECODE_PROVIDER_BASE_URL: fake.baseUrl,
         SECURECODE_PROVIDER_API_KEY: "e2e-fixture-provider",
@@ -81,11 +83,31 @@ export async function startE2E(options: E2EOptions = {}): Promise<E2E> {
         await page.goto(stack.ui.uiUrl);
         const launchCode = stack.services.bootstrapCode;
         if (!options.skipLogin) {
+            await page.locator(".desk-connect-prompt").getByRole("button", { name: "연결 설정" }).click();
             await page.getByLabel("연결 코드").fill(launchCode);
             await page.getByRole("button", { name: "연결", exact: true }).click();
             await page.getByText("호스트 상태: ok").waitFor();
+            await page.getByRole("button", { name: "대화상자 닫기", exact: true }).click();
         }
-        return { page, launchCode, fake, files, uiUrl: stack.ui.uiUrl, stop };
+        const services = stack.services;
+        const reissueCode = async (): Promise<string> => {
+            const response = await fetch(`${services.hostUrl}/api/v1/auth/launch-code`, {
+                method: "POST",
+                headers: { authorization: `Bearer ${services.internalToken}`, origin: services.hostUrl },
+            });
+            const body: unknown = await response.json();
+            if (
+                !response.ok ||
+                !body ||
+                typeof body !== "object" ||
+                !("code" in body) ||
+                typeof body.code !== "string"
+            ) {
+                throw new Error("Launcher could not reissue a bootstrap code");
+            }
+            return body.code;
+        };
+        return { page, launchCode, fake, files, uiUrl: stack.ui.uiUrl, stop, reissueCode };
     } catch (error) {
         await stop();
         throw error;

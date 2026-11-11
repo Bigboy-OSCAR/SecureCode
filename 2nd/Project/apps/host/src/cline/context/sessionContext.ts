@@ -89,6 +89,10 @@ export class SessionContextStore {
         };
     }
 
+    clear(): void {
+        this.sessions.clear();
+    }
+
     forget(sessionId: string): void {
         this.sessions.delete(sessionId);
     }

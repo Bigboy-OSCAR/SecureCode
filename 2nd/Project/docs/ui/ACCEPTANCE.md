@@ -2,7 +2,7 @@
 
 > 작업: 2.3 · 담당: 김찬우 · 작성일: 2026-11-09 (Asia/Seoul)
 >
-> 상태: **fixture UI 설계 검토·인계용 인수표**. 이 문서의 작성 완료는 제품 UI 최종 통과가 아니다. 최종 UI 판정은 김민지 1.6, 전체 제품 판정은 박준형 3.8에서 실제 서비스 증거로 결정한다.
+> 현재 상태: **COMPLETED — Mac UI 기능·화면 인수 및 최신 native 앱 직접 조작 재검증 완료**. VoiceOver 음성 낭독은 미검증이며, 키보드·접근성 트리·명도 대비의 확인 범위와 구별한다. 최신 판정은 이 문서 10절과 [Mac 최종 인수 보고서](../release/ACCEPTANCE_REPORT.md)를 따른다. 1~9절은 기존 fixture 검토·인계 당시 기록으로 보존한다.
 
 ## 1. 기준과 판정 규칙
 
@@ -123,7 +123,7 @@
 
 완료 근거와 브라우저 실측 결과는 [작업 2.3 기록](../progress/tasks/2.3.md)에 있으며, 이 표의 미검증 최종 인수를 완료로 바꾸지 않는다. commit/push는 수행하지 않는다.
 
-## 9. 1.6 인수 결과 (2026-11-11, 박준형 인계)
+## 9. 초기 1.6 인수 기록 (2026-11-11, Mac 완성 작업 이전)
 
 판정 기호:
 - **E**: `npm run test:e2e`. 실제 context-service·host·SDK·Vite UI를 headless 브라우저로 조작하고, 모델은 fixture provider다.
@@ -180,3 +180,30 @@
 - UI23-07: 1.4·1.5 실 API로 해소. 단 AC-02·AC-03의 복구는 남았다.
 - UI23-08: 1.6에서 해소. 4,000자 단위 "더 보기", 상태만 live region.
 - UI23-09: 1.6 E2E로 실서비스 이력 보존을 확인했다.
+
+
+## 10. 최종 Mac UI 인수 결과 (2026-11-11 · COMPLETED)
+
+이 절은 9절의 잔여 항목을 현재 구현과 시험으로 갱신한다. 과거의 `부분`·`미구현` 표시는 당시 기록이며 현재 판정에 사용하지 않는다. 전체 34개 인수의 최신 근거와 최종 제품 판정은 [Mac 최종 인수 보고서](../release/ACCEPTANCE_REPORT.md#ui-인수-34개-대응)에 모았다. 화면 구성 대응은 [Figma 화면 구현표](../progress/FIGMA_UI_IMPLEMENTATION_2026-11-11.md), 실제 앱 조작은 [native CUA 기록](../progress/CUA_MAC_ACCEPTANCE_2026-11-11.md)을 따른다.
+
+- 자동 시험은 실제 UI·host·SDK·Python 서비스와 명시적인 시험용 모델 응답으로 수행했다. 실제 모델 시험과 native 앱 직접 조작은 별도 증거다.
+- 현재 UI 단위 **50/50 PASS**. 선택 자료의 실제 전송 및 응답 유실 재시도에서 자료·idempotency key가 그대로 유지되는 회귀를 포함한다.
+- 포인터 전환 및 PDF 선택 전송 E2E **2/2 PASS**. 이전 줄/검색어가 다음 파일에 남지 않으며, PDF 2쪽 선택 후 패널을 닫아도 실제 모델 입력에는 그 쪽만 포함되고 서버 확인 인용이 표시된다.
+- 실제 CSS 명도 대비 **24표본 PASS, 최소 6.100:1**. 입력 placeholder의 초기 3.514:1 결함을 수정했다. [실측 JSON](../progress/evidence/localdesk-macos-contrast.json)에 색상·배경 합성·각 비율을 기록했다.
+- 최신 native 앱에서 발견 결함의 재검증을 완료했다. 저장된 대화의 함수·helper·상수 출처, 최신 대화 위치 복원, PDF 2쪽 선택을 유지한 실제 답변 `바다`와 페이지 출처, 모델 양방향 전환, 파일 변경 거절/승인, 실행 취소, 3개 프로젝트 일괄 색인을 직접 확인했다.
+- 대화 스크롤 E2E **2/2 PASS**. 복원·새 질문 전송은 최신 위치를 보이고, 사용자가 이전 답변을 읽는 동안에는 위치를 보존한다.
+- **VoiceOver의 실제 음성 낭독은 시험하지 않았다.** 키보드·초점·native 접근성 트리의 이름/상태·CSS 명도 대비는 통과했다. 접근성 트리 확인을 음성 출력 확인으로 취급하지 않는다.
+
+| 종전 잔여 인수 | 현재 결과 | 추가된 구현·검증 |
+| --- | --- | --- |
+| AC-02 인증 복구 | 자동 PASS | cookie 소실 → 새 코드 교환 → 같은 active run 복원, 새 모델 요청 없음. native 재인증 bridge 연결 |
+| AC-03 선택·세션 복구 | PASS | 브라우저 reload 및 native 재시작 후 두 번째 프로젝트·새 대화·기존 기록 복원. UserDefaults에는 workspace/session ID만 보존 |
+| AC-08 중복·유실 응답 | PASS | create 응답 유실 → reload → 원래 run 복구. 동일 질문·선택 자료 재확인 시 같은 key 재사용, 변경된 자료는 기존 key로 보내지 않음 |
+| AC-12 단절·범위 이동 | 자동 PASS | SSE 재연결, active run reload, 완료 run 복구 뒤 추가 질문, 다른 프로젝트의 지연 색인 응답 격리 |
+| AC-15 승인 복구 | PASS | 만료·결정 응답 유실 복구·중복 명령 없음. digest 변경·다른 scope 결정 거부는 host 회귀로 확인 |
+| AC-18 목록 탭·필터 | PASS | Source/Runtime 종류 탭, 이름 필터, 빈 목록·무결과 구분, 현재 session의 Runtime만 표시. native CUA에서 Source+manual 필터로 PDF만 표시 확인 |
+| AC-25 JSON 선택 | PASS | JSON Pointer 값만 반환. 8MiB 초과 JSON 구조 선택 제외와 줄·바이트 안내, 제한된 줄 읽기, 역범위 입력 거절 |
+| AC-32 모델 상태 | PASS | 미설정 시 자료 준비 가능·질문 버튼/Enter 차단. 최신 native 앱의 Qwen2.5 ↔ Qwen3.8 cold loading·사용 중 전환·실제 질문·이전 대화 유지 확인. 실행 중 교체는 거부 |
+| AC-33 접근성 | 키보드·AX·대비 PASS / 음성 낭독 미검증 | 모달 제목 초점·Escape 복귀·키보드 입력·1280/768/640 너비 검사, CSS 실측 최소 6.100:1, native 접근성 이름/상태 조작. VoiceOver 실제 음성은 시험하지 않음 |
+
+CUA에서 발견한 자료 선택 누락, 포인터 범위 잔류, 과거 답변의 잘못된 모델명, 완료 run 전송 잠금, 프로젝트 간 색인 오류 잔류, 관련 코드 출처 누락, 대화 스크롤 위치를 수정하고 최신 앱에서 재검증했다. UI23-07의 AC-02·AC-03 복구 미구현도 해소됐다. 최종 직접 조작 증거와 검증 범위는 [native CUA 기록](../progress/CUA_MAC_ACCEPTANCE_2026-11-11.md), 제품 전체 판정은 [Mac 최종 인수 보고서](../release/ACCEPTANCE_REPORT.md)에 있다.

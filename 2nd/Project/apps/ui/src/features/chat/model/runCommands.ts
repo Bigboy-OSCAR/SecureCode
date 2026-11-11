@@ -4,6 +4,7 @@ import type {
     ApprovalOutcome,
     ApprovalRequest,
     IdempotencyKey,
+    ExplicitContextRef,
     RunCreateRequest,
     RunId,
     RunSnapshot,
@@ -11,10 +12,13 @@ import type {
 import type { RunClient } from "../../../api/runClient.js";
 import { createIdempotencyKey } from "../../../api/runClient.js";
 import { formatApiFailure } from "../../../api/apiErrors.js";
+import { isCancelable, toApprovalOutcomeStatus } from "./runCommandPolicy.js";
 import { isTerminalRunStatus, type RunViewState } from "./runState.js";
 
 interface PendingCreate {
     prompt: string;
+    contextRefs: ExplicitContextRef[];
+    contextKey: string;
     key: IdempotencyKey;
     promise: Promise<boolean> | null;
 }
@@ -42,26 +46,39 @@ export class RunCommands {
         this.pendingCreate = null;
     }
 
-    async createRun(prompt: string): Promise<boolean> {
+    async createRun(prompt: string, contextRefs: ExplicitContextRef[] = []): Promise<boolean> {
+        const contextKey = JSON.stringify(contextRefs);
         if (!prompt.trim() || prompt.length > 32_000) {
             return false;
         }
         if (this.pendingCreate?.promise) {
-            return this.pendingCreate.prompt === prompt ? this.pendingCreate.promise : false;
+            return this.pendingCreate.prompt === prompt && this.pendingCreate.contextKey === contextKey
+                ? this.pendingCreate.promise
+                : false;
         }
         if (!this.canSubmitRun(prompt)) {
             return false;
         }
 
         const retry = this.pendingCreate;
-        if (retry && retry.prompt !== prompt) {
+        if (retry && (retry.prompt !== prompt || retry.contextKey !== contextKey)) {
             this.host.publish({ ...this.host.getState(), error: "이전 요청 결과를 확인한 뒤 새 질문을 시작하세요." });
             return false;
         }
-        const create = retry ?? { prompt, key: this.makeIdempotencyKey(), promise: null };
+        const create = retry ?? {
+            prompt,
+            contextRefs: structuredClone(contextRefs),
+            contextKey,
+            key: this.makeIdempotencyKey(),
+            promise: null,
+        };
         this.pendingCreate = create;
         const state = this.host.getState();
-        const request: RunCreateRequest = { prompt, idempotency_key: create.key };
+        const request: RunCreateRequest = {
+            prompt,
+            idempotency_key: create.key,
+            ...(create.contextRefs.length ? { context_refs: create.contextRefs } : {}),
+        };
         const sessionId = state.sessionId;
         const epoch = this.host.getEpoch();
         this.host.publish({ ...state, operation: { kind: "creating" }, error: null });
@@ -278,21 +295,5 @@ export class RunCommands {
             snapshot: { ...snapshot, pending_approvals: pending, approval_history: history },
             approvalDecision: approval,
         });
-    }
-}
-
-function isCancelable(snapshot: RunSnapshot): boolean {
-    return snapshot.status === "queued" || snapshot.status === "running" || snapshot.status === "awaiting_approval";
-}
-
-function toApprovalOutcomeStatus(status: ApprovalRequest["status"]): ApprovalOutcome["status"] | null {
-    switch (status) {
-        case "approved":
-        case "rejected":
-        case "expired":
-        case "cancelled":
-            return status;
-        case "pending":
-            return null;
     }
 }

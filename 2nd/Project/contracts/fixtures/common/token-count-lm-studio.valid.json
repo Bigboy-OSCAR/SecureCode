@@ -1,0 +1,16 @@
+{
+    "schema_ref": "common/token-count.schema.json#/definitions/TokenCountResult",
+    "expect": "valid",
+    "scenario": "4.8",
+    "data": {
+        "schema_version": "1",
+        "token_count": 351,
+        "count_mode": "exact",
+        "provider_id": "openai-compatible",
+        "model_id": "qwen3.8-27b-mlx",
+        "method": "lm_studio_tokenize",
+        "framing": "provider_request",
+        "text_bytes": 1000,
+        "cached": false
+    }
+}

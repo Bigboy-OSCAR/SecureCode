@@ -1,0 +1,9 @@
+{
+    "schema_ref": "api/models.schema.json#/definitions/ModelSelectRequest",
+    "expect": "invalid",
+    "scenario": "H-10",
+    "data": {
+        "model_id": "local",
+        "executable": "/tmp/untrusted"
+    }
+}

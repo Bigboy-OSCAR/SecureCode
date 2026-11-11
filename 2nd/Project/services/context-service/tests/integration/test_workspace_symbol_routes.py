@@ -3,11 +3,13 @@
 import time
 from collections.abc import Iterator
 from pathlib import Path
+from threading import Event
 from typing import Any
 
 import pytest
 from fastapi.testclient import TestClient
 
+from securecode_context.api.symbols import _BUILDS
 from securecode_context.app.factory import create_app
 from securecode_context.app.settings import ServiceSettings
 from support.helpers import TEST_TOKEN, ContractCheck, FixedTokenCounter
@@ -111,3 +113,32 @@ def test_registration_rechecks_roots(env: dict[str, Any], tmp_path: Path) -> Non
     other = tmp_path / "other"
     other.mkdir()
     assert register(env, other)["error"]["details"]["reason"] == "root_conflict"
+
+
+def test_queued_index_stays_pending_until_worker_starts(
+    env: dict[str, Any], contract_check: ContractCheck
+) -> None:
+    """
+    함수 이름: test_queued_index_stays_pending_until_worker_starts()
+    기능: 다른 색인 작업 뒤에 대기한 프로젝트가 not_indexed로 돌아가지 않고 중복 제출되지 않는다.
+    인자: env -> 환경, contract_check -> 계약 검사기
+    반환값: 없음
+    작성 날짜: 2026/11/11
+    """
+    release = Event()
+    blocker = _BUILDS.submit(release.wait, 10)
+    try:
+        assert register(env, env["root"])["registered"] is True
+        body = {"schema_version": "1", "workspace_id": WS}
+        started = post(env, "symbols/index", body)
+        assert started["index_status"] == "queued"
+        assert contract_check(STATUS_REF, started) == []
+        job = env["client"].app.state.index_jobs[WS]
+        assert post(env, "symbols/index/status", body)["index_status"] == "queued"
+        assert post(env, "symbols/index", body)["index_status"] == "queued"
+        assert env["client"].app.state.index_jobs[WS] is job
+    finally:
+        release.set()
+        blocker.result(timeout=10)
+    job.result(timeout=10)
+    assert post(env, "symbols/index/status", body)["index_status"] == "ready"

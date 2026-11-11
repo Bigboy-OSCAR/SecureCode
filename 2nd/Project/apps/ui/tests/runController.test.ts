@@ -477,3 +477,17 @@ test("a delayed previous-run snapshot cannot replace a newer completed run", asy
     assert.equal(controller.getSnapshot().snapshot?.run_id, second.run_id);
     controller.dispose();
 });
+
+test("restoring a terminal run never reopens an exhausted stream or locks the next question", () => {
+    const client = new FakeRunClient();
+    const controller = createController(client);
+    controller.restore(fixtureAdapter.runs[0]!);
+    assert.equal(client.activeSubscriptionCount, 1);
+    controller.restore(fixtureAdapter.runs[1]!);
+    assert.equal(client.activeSubscriptionCount, 0);
+    assert.equal(client.subscribedAt.length, 1);
+    client.disconnect(fixtureAdapter.runs[1]!.run_id);
+    assert.equal(controller.getSnapshot().connection, "connected");
+    assert.equal(controller.canSubmitRun("다음 질문"), true);
+    controller.dispose();
+});

@@ -136,10 +136,14 @@ export class ClineAgentRuntime implements AgentRuntime {
                 if (turn.aborted) return undefined;
                 if (session.started) return this.core.send({ sessionId: request.sessionId, prompt: request.prompt });
                 const projectTools = [...session.tools.values()];
+                // Public SDK canonical history survives host restart and model changes. Reuse it
+                // with the new connection; the final gate recounts every restored message.
+                const initialMessages = await this.core.readMessages(request.sessionId);
                 const started = await this.core.start(
                     buildStartInput({
                         sessionId: request.sessionId,
                         prompt: request.prompt,
+                        initialMessages,
                         workspaceRoot: request.workspaceRoot,
                         providerId: this.options.providerId,
                         modelId: this.options.modelId,

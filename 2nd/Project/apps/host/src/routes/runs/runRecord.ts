@@ -52,6 +52,32 @@ export interface SnapshotQuery {
     citationCursor?: string;
 }
 
+/** A bundle may cite several symbols with the same candidate ref. */
+export function citationKey(citation: AnswerCitation): string {
+    return JSON.stringify({ ref: citation.ref, ...("location" in citation ? { location: citation.location } : {}) });
+}
+
+function expandedCitations(citations: AnswerCitation[]): AnswerCitation[] {
+    const seen = new Set<string>();
+    return citations
+        .flatMap<AnswerCitation>((citation) => {
+            const expanded: AnswerCitation[] =
+                "related_locations" in citation
+                    ? [
+                          citation,
+                          ...(citation.related_locations ?? []).map((location) => ({ ref: citation.ref, location })),
+                      ]
+                    : [citation];
+            return expanded.filter((item) => {
+                const key = citationKey(item);
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
+        })
+        .slice(0, CITATIONS_MAX);
+}
+
 export function toSnapshot(record: RunRecord, replay: ReplayWindow, query: SnapshotQuery = {}): RunSnapshot {
     const scope = `approvals:${record.run_id}:${record.last_sequence}`;
     const request: PageRequestInput = { limit: HISTORY_PAGE_SIZE };
@@ -59,7 +85,7 @@ export function toSnapshot(record: RunRecord, replay: ReplayWindow, query: Snaps
     const history = paginate(record.approval_history, scope, request);
     const citationRequest: PageRequestInput = { limit: HISTORY_PAGE_SIZE };
     if (query.citationCursor) citationRequest.cursor = query.citationCursor;
-    const cited = record.citations ?? [];
+    const cited = expandedCitations(record.citations ?? []);
     const citations = paginate(cited, `citations:${record.run_id}:${cited.length}`, citationRequest);
     return {
         schema_version: "1",

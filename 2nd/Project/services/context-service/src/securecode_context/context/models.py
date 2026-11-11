@@ -78,6 +78,9 @@ class Candidate:
     status: Status = "ok"
     span: Span | None = None
     handle: Any = None
+    # Whole symbol spans to include; history/retained symbols may be removed before reading.
+    # Budget truncation never cuts a symbol or an outstanding dependency bundle.
+    covered_spans: tuple[Span, ...] = ()
 
     @property
     def splittable(self) -> bool:

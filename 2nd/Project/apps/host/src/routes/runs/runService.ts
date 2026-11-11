@@ -89,7 +89,15 @@ export class RunService {
             // Selection → bounded reads → counted plan; explicit choices that cannot be used refuse the run.
             const planned = await this.deps.assembler.forRun(session.workspace_id, sessionId, request);
             prompt = planned.prompt;
-            inserted = planned.plan.fragments.map((fragment) => fragment.provenance);
+            inserted = planned.plan.fragments.flatMap<AnswerCitation>((fragment) => {
+                const citation = fragment.provenance;
+                return "related_locations" in citation
+                    ? [
+                          citation,
+                          ...(citation.related_locations ?? []).map((location) => ({ ref: citation.ref, location })),
+                      ]
+                    : [citation];
+            });
         } finally {
             this.planning.delete(sessionId);
         }
@@ -124,6 +132,10 @@ export class RunService {
         this.deps.sessionContext.beginRun(sessionId, (citation) => recorder.cite(citation));
         void this.execute(recorder, workspaceRoot, prompt);
         return { snapshot: this.snapshot(record.run_id), created: true };
+    }
+
+    hasActiveRuns(): boolean {
+        return this.planning.size > 0 || [...this.recorders.values()].some((recorder) => !recorder.terminal);
     }
 
     snapshot(runId: string, query: SnapshotQuery = {}): RunSnapshot {

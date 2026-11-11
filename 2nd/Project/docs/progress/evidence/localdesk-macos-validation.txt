@@ -1,0 +1,99 @@
+COMMAND npm run check
+PASS generated contract types are up to date
+# tests 100
+# pass 100
+# fail 0
+# skipped 0
+# tests 7
+# pass 7
+# fail 0
+# skipped 0
+# tests 50
+# pass 50
+# fail 0
+# skipped 0
+256 passed, 1 skipped, 1 deselected, 1 warning in 14.10s
+PASS lint: eslint: ok
+PASS format: prettier: ok
+PASS types: contracts: ok
+PASS types: apps/host: ok
+PASS types: apps/ui: ok
+PASS types: tools/sdk-probe: ok
+PASS types: scripts: ok
+PASS types: tests/e2e: ok
+PASS structure rules: no new violations (1 documented exception(s))
+PASS contracts: generated types fresh: ok
+PASS lint: ruff: ok
+PASS format: ruff: ok
+PASS types: mypy: ok
+PASS convention: python docstrings: ok
+PASS unit: host: ok
+PASS unit: structure rules: ok
+PASS unit: UI rendering and behaviour: ok
+PASS unit: context-service: ok
+=== check: PASS (exit 0) ===
+
+COMMAND npm run test:contracts
+PASS generated contract types are up to date
+# tests 246
+# pass 246
+# fail 0
+# skipped 0
+249 passed, 1 warning in 1.07s
+PASS contracts: generated types fresh: ok
+PASS contracts: fixtures (Ajv): ok
+PASS contracts: fixtures + service responses: ok
+=== test:contracts: PASS (exit 0) ===
+
+COMMAND npm run test:integration
+1 passed, 506 deselected, 1 warning in 1.25s
+# tests 36
+# pass 36
+# fail 0
+# skipped 0
+# tests 4
+# pass 4
+# fail 0
+# skipped 0
+PASS service process (pytest -m integration): ok
+PASS SDK host: pointer plugin, runs, approvals, cancel, SSE: ok
+PASS dev launcher lifecycle: ok
+PASS chain: start host + service: both healthy on 127.0.0.1
+PASS chain: host health ok: {"schema_version":"1","status":"ok"}
+PASS chain: service rejects no token: HTTP 401
+PASS chain: API needs the launch cookie: HTTP 401
+PASS chain: bootstrap sets HttpOnly cookie: HTTP 200
+PASS chain: sessions open once the 4.4 hook and 4.8 request gate are registered: workspace HTTP 201, session HTTP 201 
+PASS chain: runtime store streams and stores through the real service: internal stream + JSON store, scoped pointers, exact byte counts
+PASS chain: runtime read fails closed without a configured token counter: read result: TOKENIZER_UNAVAILABLE (no raw fallback; counted reads are covered by host SDK tests)
+PASS chain: host degraded when service stops: {"schema_version":"1","status":"degraded"}
+=== test:integration: PASS (exit 0) ===
+
+COMMAND npm run test:install
+PASS install: npm ci (package-lock.json): exit 0
+PASS install: uv sync --locked (uv.lock): exit 0
+PASS start: service -> host -> UI ready: UI page served, launch code printed
+PASS use: login and register a workspace via the UI proxy: HTTP 201
+PASS stop: npm run stop: exit 0, ports closed
+PASS restart: data survives in the same data directory: HTTP 200
+PASS restart: health ok with real feature components: {"schema_version":"1","status":"ok","components":[{"name":"host","status":"ok"},{"name":"context_service","status":"ok"},{"name":"cline_sdk","status":"ok"},{"na
+PASS stop after restart: exit 0
+PASS user data untouched: work-root .securecode
+=== test:install: PASS (exit 0) ===
+
+COMMAND npm run test:e2e
+# tests 30
+# pass 30
+# fail 0
+# skipped 0
+PASS UI end-to-end flows (fixture provider, real stack, headless browser): ok
+=== test:e2e: PASS (exit 0) ===
+
+COMMAND npm run build:app
+PASS generated contract types are up to date
+PASS contracts: generated types fresh: ok
+PASS build: host types: ok
+PASS build: UI: ok
+PASS build: context-service wheel: ok
+PASS package: local release manifest: dist/securecode-local/manifest.json (securecode_context_service-0.1.0-py3-none-any.whl, 2 UI assets)
+=== build: PASS (exit 0) ===

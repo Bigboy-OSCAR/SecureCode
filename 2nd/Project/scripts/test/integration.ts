@@ -27,7 +27,11 @@ function expectStep(name: string, passed: boolean, detail: string): StepResult {
  * Gate decisions on real SDK payloads are covered by apps/host/tests/integration/requestBudgetSdk.test.ts
  * (this chain has no provider key, so the SDK stops before fetch).
  */
-async function productionGuardSteps(hostUrl: string, bootstrapCode: string, dataDir: string): Promise<StepResult[]> {
+async function productionGuardSteps(
+    hostUrl: string,
+    bootstrapCode: string,
+    workspaceRoot: string,
+): Promise<StepResult[]> {
     const results: StepResult[] = [];
     const json = { origin: hostUrl, "content-type": "application/json" };
     const anonymous = await fetch(`${hostUrl}/api/v1/sessions`, { method: "POST", headers: json, body: "{}" });
@@ -48,11 +52,10 @@ async function productionGuardSteps(hostUrl: string, bootstrapCode: string, data
         ),
     );
     const authed = { ...json, cookie };
-    const root = mkdtempSync(join(dataDir, "ws-"));
     const workspace = await fetch(`${hostUrl}/api/v1/workspaces`, {
         method: "POST",
         headers: authed,
-        body: JSON.stringify({ display_name: "it", root_path: root, idempotency_key: "it-workspace-key" }),
+        body: JSON.stringify({ display_name: "it", root_path: workspaceRoot, idempotency_key: "it-workspace-key" }),
     });
     const workspaceBody = (await workspace.json()) as { workspace_id?: string };
     const session = await fetch(`${hostUrl}/api/v1/sessions`, {
@@ -73,12 +76,14 @@ async function productionGuardSteps(hostUrl: string, bootstrapCode: string, data
 
 async function hostServiceChainSteps(): Promise<StepResult[]> {
     const dataDir = mkdtempSync(join(tmpdir(), "securecode-it-"));
+    const workspaceRoot = mkdtempSync(join(tmpdir(), "securecode-it-workspace-"));
     const results: StepResult[] = [];
     let services;
     try {
         services = await startServices({ ...(await findFreePorts()), dataDir });
     } catch (error) {
         rmSync(dataDir, { recursive: true, force: true });
+        rmSync(workspaceRoot, { recursive: true, force: true });
         return [
             expectStep("chain: start host + service", false, error instanceof Error ? error.message : "start failed"),
         ];
@@ -101,7 +106,7 @@ async function hostServiceChainSteps(): Promise<StepResult[]> {
             expectStep("chain: service rejects no token", anonymous.status === 401, `HTTP ${anonymous.status}`),
         );
 
-        results.push(...(await productionGuardSteps(services.hostUrl, services.bootstrapCode, dataDir)));
+        results.push(...(await productionGuardSteps(services.hostUrl, services.bootstrapCode, workspaceRoot)));
 
         const scope = { workspaceId: "ws_review1234", sessionId: "ses_review1234" };
         const client = createRuntimeClient({
@@ -147,6 +152,7 @@ async function hostServiceChainSteps(): Promise<StepResult[]> {
     } finally {
         await services.stopAll();
         rmSync(dataDir, { recursive: true, force: true });
+        rmSync(workspaceRoot, { recursive: true, force: true });
     }
     return results;
 }
