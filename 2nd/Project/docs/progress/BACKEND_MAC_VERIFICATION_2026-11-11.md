@@ -23,6 +23,9 @@ The installed Python environment lacked the locked `pypdf` dependency, preventin
 - Tool execution summaries now report original produced bytes from the streaming executor, including a capped capture, instead of the small pointer descriptor size.
 - Model controls now use the shared JSON Schema, generated TypeScript and browser/host validators. The LM Studio token-count method is included in the same contract; missing this enum previously let selection succeed but blocked the final model request.
 
+- Replaced CLI-only LM Studio cold loading with the pinned official JS SDK (`@lmstudio/sdk@2.1.0`) and its AbortSignal. Shutdown cancels in-flight model selection before awaiting the HTTP listener, releases only acquired model handles, and guards post-shutdown activation. Tests cover pending and immediate cancellation, completion racing with cancellation, and the assembled HTTP shutdown path. The installed server's cancellation channel was also exercised using an isolated instance of its small existing embedding model; cancellation succeeded, the probe was absent afterward, and pre-existing instances were unchanged.
+- Fixed citation deduplication across different symbols of one bundle. Snapshot expansion also restores related locations from already saved runs. The actual CUA run was checked: its SDK input contains the function, helper and constant, and the corrected snapshot yields `billing.py`, `helpers.py`, `constants.py`, and the separately retrieved `Invoice.java` candidate.
+
 ## Verification
 
 | Check | Result |

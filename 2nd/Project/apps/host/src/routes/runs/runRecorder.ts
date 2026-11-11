@@ -18,6 +18,7 @@ import type { RunEventLog } from "./eventLog.js";
 import {
     ANSWER_MAX_CHARS,
     CITATIONS_MAX,
+    citationKey,
     isTerminal,
     PENDING_APPROVALS_MAX,
     TOOL_CALLS_MAX,
@@ -156,8 +157,8 @@ export class RunRecorder {
     cite(citation: AnswerCitation): void {
         if (this.terminal) return;
         const cited = (this.record.citations ??= []);
-        const key = JSON.stringify(citation.ref);
-        if (cited.length >= CITATIONS_MAX || cited.some((item) => JSON.stringify(item.ref) === key)) return;
+        const key = citationKey(citation);
+        if (cited.length >= CITATIONS_MAX || cited.some((item) => citationKey(item) === key)) return;
         cited.push(citation);
         this.persist(this.record, false);
     }
