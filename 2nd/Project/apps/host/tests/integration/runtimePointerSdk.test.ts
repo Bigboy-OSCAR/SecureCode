@@ -114,6 +114,12 @@ it("replaces approved command output before the next model call and re-reads onl
         }
 
         assert.equal(await listCount(host, sessionId), 1, "only the command output was stored; bounded reads were not");
+        const publicList = await host.client.send(
+            "GET",
+            `/api/v1/workspaces/${host.workspaceId}/pointers?kind=runtime&session_id=${sessionId}&limit=20`,
+        );
+        assert.equal(publicList.status, 200);
+        assert.equal((publicList.body as { items: unknown[] }).items.length, 1);
         const scope = { workspaceId: host.workspaceId, sessionId };
         const line = await host.runtimeClient.read(
             scope,

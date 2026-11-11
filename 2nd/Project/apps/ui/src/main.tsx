@@ -15,6 +15,6 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
     <StrictMode>
-        <App mode="live" />
+        <App />
     </StrictMode>,
 );

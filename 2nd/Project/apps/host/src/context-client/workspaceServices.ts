@@ -148,7 +148,6 @@ export function createRuntimeAdminService(options: ServiceCallOptions): RuntimeA
     return {
         async list(scope, page, signal) {
             const request = {
-                schema_version: "1",
                 workspace_id: scope.workspaceId,
                 session_id: scope.sessionId,
                 ...page,

@@ -6,6 +6,7 @@ export class ApiClientError extends Error {
         message: string,
         readonly status?: number,
         readonly code?: string,
+        readonly details?: Readonly<Record<string, string | number | boolean | null | undefined>>,
     ) {
         super(message);
         this.name = "ApiClientError";
@@ -18,12 +19,21 @@ const messagesByCode: Record<string, string> = {
     APPROVAL_EXPIRED: "승인 기한이 지났습니다. 실행 상태를 다시 확인하세요.",
     BOOTSTRAP_CODE_EXPIRED: "연결 코드가 만료되었습니다. 실행 창에서 새 코드를 확인하세요.",
     BOOTSTRAP_CODE_INVALID: "연결 코드를 확인하고 다시 입력하세요.",
+    BUDGET_EXCEEDED: "선택한 자료가 컨텍스트 예산을 초과했습니다. 범위나 입력을 줄이세요.",
+    EXPIRED: "실행 결과의 보관 기간이 끝났습니다.",
     FORBIDDEN: "이 요청은 호스트 정책에 의해 거부되었습니다.",
+    INDEX_NOT_READY: "색인이 준비되지 않았습니다. 색인 상태를 확인하세요.",
+    INVALID_POINTER: "포인터가 더 이상 유효하지 않습니다.",
+    INVALID_SELECTOR: "읽을 범위가 올바르지 않습니다.",
     IDEMPOTENCY_CONFLICT: "같은 요청 키에 다른 내용이 연결되어 있습니다. 상태를 확인한 뒤 다시 시도하세요.",
-    INDEX_NOT_READY: "색인이 준비되지 않았습니다.",
+    NO_MATCH: "일치하는 결과가 없습니다.",
     NOT_FOUND: "요청한 항목을 찾을 수 없습니다.",
+    PARSE_FAILED: "PDF를 처리하지 못했습니다.",
     PROTECTION_UNAVAILABLE: "필수 보호 기능이 준비되지 않아 실행을 시작할 수 없습니다.",
     RUN_ALREADY_ACTIVE: "현재 실행이 끝난 뒤 다시 시도하세요.",
+    SOURCE_CHANGED: "원본이 변경되었습니다. 등록 자료를 갱신한 뒤 다시 시도하세요.",
+    TOKENIZER_UNAVAILABLE: "토큰 계수기를 사용할 수 없어 예산을 검증하지 못했습니다.",
+    UNSUPPORTED_FORMAT: "지원하지 않는 파일 형식입니다.",
     UNAUTHENTICATED: "연결 세션이 만료되었습니다. 일회용 연결 코드를 다시 입력하세요.",
     VALIDATION_FAILED: "요청 내용을 확인하고 다시 시도하세요.",
 };
