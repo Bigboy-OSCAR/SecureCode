@@ -4,7 +4,7 @@
  * idempotency, body caps and 501 routes left for 3.6.
  */
 import assert from "node:assert/strict";
-import { mkdtempSync, writeFileSync } from "node:fs";
+import { mkdtempSync, realpathSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { after, before, describe, it } from "node:test";
@@ -75,12 +75,19 @@ describe("host public API", () => {
         assert.doesNotMatch(JSON.stringify(settings.body), /fixture-not-a-secret|securecode-host-test/);
     });
 
-    it("registers allowed workspace roots idempotently and never echoes the path", async () => {
+    it("registers workspace roots idempotently with a separate local display path", async () => {
         const request = { display_name: "demo", root_path: root, idempotency_key: "ws-key-0001" };
+        const overlap = await test.client.send("POST", "/api/v1/workspaces", { ...request, root_path: test.dataDir });
+        assert.equal(overlap.status, 403);
+        assert.equal(
+            (overlap.body as { error: { details: { reason: string } } }).error.details.reason,
+            "root_overlaps_service_data",
+        );
         const created = await test.client.send("POST", "/api/v1/workspaces", request);
         assert.equal(created.status, 201);
         assert.ok(validator.validate(SCHEMA_REFS.workspace, created.body).valid);
-        assert.ok(!JSON.stringify(created.body).includes(root));
+        assert.equal((created.body as Workspace).display_path, realpathSync(root));
+        assert.equal("root_path" in (created.body as object), false);
         const replay = await test.client.send("POST", "/api/v1/workspaces", request);
         assert.equal((replay.body as Workspace).workspace_id, (created.body as Workspace).workspace_id);
         const conflict = await test.client.send("POST", "/api/v1/workspaces", { ...request, display_name: "other" });

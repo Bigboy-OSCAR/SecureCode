@@ -6,6 +6,7 @@
  */
 import type { ModelRequestGate } from "./ports.js";
 import { recordFailure, turnStorage } from "./turnContext.js";
+import { normalizeProviderTools } from "./providerToolSchema.js";
 
 export class GateBlockedError extends Error {
     readonly code: string;
@@ -71,11 +72,12 @@ function linkedSignal(...signals: (AbortSignal | null | undefined)[]): AbortSign
 export function createGatedFetch(options: GatedFetchOptions): typeof fetch {
     return async (input, init) => {
         const turn = turnStorage.getStore();
-        const body = bodyText(init?.body);
-        if (body === null) {
+        const originalBody = bodyText(init?.body);
+        if (originalBody === null) {
             recordFailure(turn, { code: "BUDGET_EXCEEDED", message: "the model request could not be inspected" });
             throw new GateBlockedError("BUDGET_EXCEEDED", "outbound request body is not inspectable");
         }
+        const body = normalizeProviderTools(originalBody, options.providerId);
         if (unexpectedToolName(body, options.allowedToolNames) !== null) {
             recordFailure(turn, {
                 code: "PROTECTION_UNAVAILABLE",
@@ -113,6 +115,6 @@ export function createGatedFetch(options: GatedFetchOptions): typeof fetch {
         }
         signal.throwIfAborted();
         if (turn) options.onOutbound?.(turn.sessionId, body);
-        return options.baseFetch(input, { ...init, signal });
+        return options.baseFetch(input, { ...init, body, signal });
     };
 }

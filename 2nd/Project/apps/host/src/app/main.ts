@@ -15,12 +15,13 @@ import { createLogger } from "../logging/logger.js";
 import { Redactor } from "../logging/redaction.js";
 import { SYSTEM_PROMPT } from "../cline/adapter/sessionConfig.js";
 import { loadPdfPointerSkill, withSkills } from "../cline/skills/pdfPointerSkill.js";
+import { localModelProfiles } from "./models/modelProfiles.js";
 import { assembleHost } from "./hostAssembly.js";
 import { createModelRequestGate } from "../pointer-hooks/modelRequestGate.js";
 import { createRuntimeClient } from "../pointer-hooks/runtimeClient.js";
 import { createRuntimeToolResultTransformer } from "../pointer-hooks/runtimeToolResultTransformer.js";
 
-const SHUTDOWN_TIMEOUT_MS = 5000;
+const SHUTDOWN_TIMEOUT_MS = 15000;
 const workRoot = join(fileURLToPath(import.meta.url), "..", "..", "..", "..", "..");
 
 async function main(): Promise<void> {
@@ -60,6 +61,9 @@ async function main(): Promise<void> {
     const host = await assembleHost({
         hostConfig,
         runtimeConfig,
+        ...(process.env.SECURECODE_LOCAL_MODELS === "1"
+            ? { modelProfiles: localModelProfiles(process.env, workRoot) }
+            : {}),
         credentials,
         contextClient,
         validator: ContractValidator.load(),
@@ -83,6 +87,15 @@ async function main(): Promise<void> {
     }
 
     host.server.listen(hostConfig.port, hostConfig.host, () => {
+        if (host.models) {
+            const initial = host.models.savedSelection() ?? hostConfig.modelId;
+            if (host.models.snapshot().items.some((item) => item.model_id === initial && item.available)) {
+                void host.models
+                    .select(initial)
+                    .catch(() => logger.warn("local model startup failed; select a model in the UI"));
+            }
+        }
+
         logger.info(`host listening on http://${hostConfig.host}:${hostConfig.port}`);
         if (host.bootstrapCodeGenerated) {
             // Shown once on the local terminal; it is single-use and expires in 10 minutes.

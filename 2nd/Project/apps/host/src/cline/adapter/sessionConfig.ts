@@ -27,11 +27,13 @@ export interface SessionStartOptions {
     tools: AgentTool[];
     toolPolicies: Record<string, ToolPolicyEntry>;
     hooks: AgentHooks;
+    initialMessages?: ClineCoreStartInput["initialMessages"];
 }
 
 export function buildStartInput(options: SessionStartOptions): ClineCoreStartInput {
     return {
         prompt: options.prompt,
+        ...(options.initialMessages?.length ? { initialMessages: options.initialMessages } : {}),
         // true keeps the SDK session alive for the next run's send() (3.1 C-05).
         interactive: true,
         toolPolicies: options.toolPolicies,

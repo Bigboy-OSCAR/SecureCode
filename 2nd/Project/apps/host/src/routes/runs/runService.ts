@@ -126,6 +126,10 @@ export class RunService {
         return { snapshot: this.snapshot(record.run_id), created: true };
     }
 
+    hasActiveRuns(): boolean {
+        return this.planning.size > 0 || [...this.recorders.values()].some((recorder) => !recorder.terminal);
+    }
+
     snapshot(runId: string, query: SnapshotQuery = {}): RunSnapshot {
         const recorder = this.requireRun(runId);
         return toSnapshot(recorder.record, recorder.log.window(), query);

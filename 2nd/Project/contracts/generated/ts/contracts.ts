@@ -952,7 +952,7 @@ export interface EffectiveLimits {
     pdf_max_pages?: number;
 }
 /**
- * root_path is input only. Responses never echo it.
+ * root_path is input only; authenticated local UI receives an optional display_path.
  */
 export interface WorkspaceCreateRequest {
     display_name: string;
@@ -963,6 +963,10 @@ export interface Workspace {
     schema_version: SchemaVersion;
     workspace_id: WorkspaceId;
     display_name: string;
+    /**
+     * Local workspace location for the project sidebar.
+     */
+    display_path?: string;
     index_revision: IndexRevision | null;
     index_status: IndexState;
     /**

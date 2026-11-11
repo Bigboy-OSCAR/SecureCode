@@ -14,7 +14,11 @@ import type { RunService } from "./runs/runService.js";
 import type { SessionStore } from "./sessions/sessionStore.js";
 import type { IdempotencyStore } from "./shared/idempotency.js";
 
+import type { ModelManager } from "../app/models/modelManager.js";
+
 export interface RouteServices {
+    models?: ModelManager;
+    launcherToken?: string;
     validator: ContractValidator;
     contextClient: ContextServiceClient;
     auth: BrowserAuth;

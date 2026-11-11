@@ -16,7 +16,7 @@
         },
         "WorkspaceCreateRequest": {
             "title": "WorkspaceCreateRequest",
-            "description": "root_path is input only. Responses never echo it.",
+            "description": "root_path is input only; authenticated local UI receives an optional display_path.",
             "type": "object",
             "required": ["display_name", "root_path", "idempotency_key"],
             "additionalProperties": false,
@@ -43,6 +43,11 @@
                 "schema_version": { "$ref": "../common/primitives.schema.json#/definitions/SchemaVersion" },
                 "workspace_id": { "$ref": "../common/primitives.schema.json#/definitions/WorkspaceId" },
                 "display_name": { "type": "string", "minLength": 1, "maxLength": 120 },
+                "display_path": {
+                    "type": "string",
+                    "maxLength": 4096,
+                    "description": "Local workspace location for the project sidebar."
+                },
                 "index_revision": {
                     "oneOf": [
                         { "$ref": "../common/primitives.schema.json#/definitions/IndexRevision" },
