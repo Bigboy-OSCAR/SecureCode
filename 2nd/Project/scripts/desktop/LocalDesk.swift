@@ -10,12 +10,35 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, 
     private var output = Data()
     private var origin: URL?
     private var terminating = false
+    private let input = Pipe()
+    private var authenticating = false
+    private var diagnosticURL: URL?
+
+    private func trace(_ message: String) {
+        guard let url = diagnosticURL else { return }
+        let data = Data("\(Date()): \(message)\n".utf8)
+        if let file = try? FileHandle(forWritingTo: url) {
+            defer { try? file.close() }
+            _ = try? file.seekToEnd()
+            try? file.write(contentsOf: data)
+        } else { try? data.write(to: url) }
+    }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         installMenu()
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = .nonPersistent()
         configuration.userContentController.add(self, name: "selectFolder")
+        configuration.userContentController.add(self, name: "reauthenticate")
+        configuration.userContentController.add(self, name: "saveSelection")
+        if let selection = UserDefaults.standard.dictionary(forKey: "LocalDeskSelection"),
+           let data = try? JSONSerialization.data(withJSONObject: selection),
+           let json = String(data: data, encoding: .utf8),
+           let encoded = try? JSONSerialization.data(withJSONObject: [json]),
+           let array = String(data: encoded, encoding: .utf8) {
+            let script = "try { if (!localStorage.getItem('localdesk.selection.v1')) localStorage.setItem('localdesk.selection.v1', \(array)[0]); } catch {}"
+            configuration.userContentController.addUserScript(WKUserScript(source: script, injectionTime: .atDocumentStart, forMainFrameOnly: true))
+        }
         webView = WKWebView(frame: .zero, configuration: configuration)
         webView.navigationDelegate = self
         webView.setValue(false, forKey: "drawsBackground")
@@ -67,6 +90,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, 
             throw NSError(domain: "LocalDesk", code: 1, userInfo: [NSLocalizedDescriptionKey: "앱 실행 설정이 없습니다."])
         }
         let process = Process()
+        diagnosticURL = URL(fileURLWithPath: root).appendingPathComponent(".securecode/native-startup.log")
+        trace("Starting local services")
         process.executableURL = URL(fileURLWithPath: node)
         process.arguments = ["--import", "tsx", "scripts/desktop/start.ts"]
         process.currentDirectoryURL = URL(fileURLWithPath: root)
@@ -75,6 +100,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, 
         process.environment = environment
         let pipe = Pipe()
         process.standardOutput = pipe
+        process.standardInput = input
         process.standardError = FileHandle.nullDevice
         pipe.fileHandleForReading.readabilityHandler = { [weak self] handle in
             let data = handle.availableData
@@ -90,9 +116,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, 
         }
         launcher = process
         try process.run()
+        status.stringValue = "로컬 서비스를 준비하고 있습니다…"
     }
 
     private func consume(_ data: Data) {
+        trace("Received launcher response")
         output.append(data)
         while let newline = output.firstIndex(of: 10) {
             let line = output.prefix(upTo: newline)
@@ -105,6 +133,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, 
     }
 
     private func authenticate(url: URL, code: String) {
+        trace("Exchanging one-time bootstrap code")
+        status.stringValue = "로컬 연결을 인증하고 있습니다…"
         origin = url
         var request = URLRequest(url: url.appendingPathComponent("api/v1/auth/bootstrap"))
         request.httpMethod = "POST"
@@ -113,6 +143,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, 
         request.httpBody = try? JSONSerialization.data(withJSONObject: ["code": code])
         let session = URLSession(configuration: .ephemeral)
         session.dataTask(with: request) { [weak self] _, response, error in
+            self?.trace("Bootstrap response status \((response as? HTTPURLResponse)?.statusCode ?? 0)")
             defer { session.finishTasksAndInvalidate() }
             guard error == nil, let response = response as? HTTPURLResponse, response.statusCode == 200,
                   let headers = response.allHeaderFields as? [String: String] else {
@@ -128,15 +159,38 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, 
                     group.enter()
                     self.webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie) { group.leave() }
                 }
-                group.notify(queue: .main) { self.status.isHidden = true; self.webView.load(URLRequest(url: url)) }
+                group.notify(queue: .main) {
+                    self.trace("Cookie installed; loading built UI")
+                    self.authenticating = false
+                    self.status.isHidden = true
+                    self.webView.load(URLRequest(url: url))
+                }
             }
         }.resume()
     }
 
     func userContentController(_ controller: WKUserContentController, didReceive message: WKScriptMessage) {
-        guard message.name == "selectFolder", message.frameInfo.isMainFrame,
+        guard message.frameInfo.isMainFrame,
               message.frameInfo.securityOrigin.host == "127.0.0.1",
-              message.frameInfo.securityOrigin.port == origin?.port,
+              message.frameInfo.securityOrigin.port == origin?.port else { return }
+        if message.name == "reauthenticate" {
+            if !authenticating {
+                authenticating = true
+                input.fileHandleForWriting.write(Data("{\"reauthenticate\":true}\n".utf8))
+            }
+            return
+        }
+        if message.name == "saveSelection" {
+            guard let body = message.body as? [String: String],
+                  let workspace = body["workspaceId"], workspace.range(of: "^ws_[A-Za-z0-9-]{8,128}$", options: .regularExpression) != nil else { return }
+            var selection = ["workspaceId": workspace]
+            if let session = body["sessionId"], session.range(of: "^ses_[A-Za-z0-9-]{8,128}$", options: .regularExpression) != nil {
+                selection["sessionId"] = session
+            }
+            UserDefaults.standard.set(selection, forKey: "LocalDeskSelection")
+            return
+        }
+        guard message.name == "selectFolder",
               let body = message.body as? [String: String], let requestID = body["requestId"] else { return }
         let panel = NSOpenPanel()
         panel.canChooseFiles = false
@@ -164,6 +218,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, 
     }
 
     private func showError(_ message: String) {
+        trace("Startup failed")
         status.stringValue = "LocalDesk를 시작할 수 없습니다."
         status.isHidden = false
         let alert = NSAlert()

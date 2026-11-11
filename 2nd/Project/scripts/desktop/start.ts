@@ -2,6 +2,7 @@
 import { once } from "node:events";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
+import { createInterface } from "node:readline";
 import { devDataDir, claimInstance, releaseInstance, stopRequestPath } from "../dev/state.js";
 import { startServices, type Services } from "../lib/services.js";
 import { findFreePorts } from "../lib/ports.js";
@@ -25,6 +26,33 @@ let services: Services | undefined;
 let ui: Awaited<ReturnType<typeof startDesktopUi>> | undefined;
 let instance: string | undefined;
 let dataDir: string | undefined;
+const input = createInterface({ input: process.stdin });
+let authenticating = false;
+input.on("line", (line: string) => {
+    if (line !== '{"reauthenticate":true}' || authenticating || !services || !ui) return;
+    authenticating = true;
+    const current = services;
+    void (async () => {
+        const response = await fetch(`${current.hostUrl}/api/v1/auth/launch-code`, {
+            method: "POST",
+            headers: { authorization: `Bearer ${current.internalToken}`, origin: current.hostUrl },
+            signal: AbortSignal.timeout(15000),
+        });
+        const data: unknown = await response.json();
+        if (!response.ok || !data || typeof data !== "object" || !("code" in data) || typeof data.code !== "string") {
+            throw new Error("Could not renew local authentication.");
+        }
+        process.stdout.write(JSON.stringify({ ready: true, url: ui?.url, code: data.code }) + "\n");
+    })()
+        .catch(() => {
+            process.stdout.write(
+                JSON.stringify({ error: "로컬 인증을 갱신하지 못했습니다. 앱을 다시 실행해 주세요." }) + "\n",
+            );
+        })
+        .finally(() => {
+            authenticating = false;
+        });
+});
 const stopWatch = setInterval(() => {
     if (dataDir && instance && existsSync(stopRequestPath(dataDir, instance))) controller.abort();
 }, 150);
@@ -57,6 +85,7 @@ try {
     controller.abort();
     clearInterval(parentWatch);
     clearInterval(stopWatch);
+    input.close();
     await ui?.stop();
     await services?.stopAll();
     if (dataDir && instance) releaseInstance(dataDir, instance);

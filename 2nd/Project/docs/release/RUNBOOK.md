@@ -25,7 +25,10 @@
 | @cline/sdk | 0.2.0 (lock 고정) | 바꾸면 `npm run probe:sdk` |
 | 모델(live) | Qwen2.5-7B-Instruct Q4_K_M, llama.cpp b12242 (`openai-compatible`) | Anthropic live는 이번에 실행하지 않음 |
 
-macOS·Linux(POSIX)에서는 실행하지 않았다. 코드에는 POSIX 경로가 있다(파일 열기 `O_NOFOLLOW`, 프로세스 그룹 종료, `bin/python`). 처음 실행하는 사람은 `npm run test:install`과 `npm run test:integration` 결과를 [3.7 기록](../progress/tasks/3.7.md)에 남긴다.
+2026-11-11에는 현재 Mac(Apple Silicon, macOS 27.2)에서도 Node 22.14.0/npm 10.9.2,
+uv 0.9.17/Python 3.14.4로 전체 `check`, 프로세스 통합 검사, 새 폴더 설치·기동·종료·재시작을
+통과했다. `test:install`은 9개 단계를 모두 통과했고 기존 사용자 데이터를 보존했다.
+Linux에서는 실행하지 않았다. 이 Mac의 앱 실행 방법은 4절을 따른다.
 
 ## 2. 설치
 
@@ -95,6 +98,9 @@ Finder에서 이 앱을 열면 독립 창으로 실행된다. 연결 코드 입�
 빌드된 정적 UI를 사용하며 Vite 개발 서버를 띄우지 않는다. 창을 닫거나 Command-Q를 누르면
 호스트와 Python 서비스를 함께 종료한다. `npm run stop`으로도 종료할 수 있다.
 앱의 프로젝트 추가 화면에서는 macOS 폴더 선택 창을 사용할 수 있다.
+실행 중 인증이 만료되면 앱은 전용 파이프와 내부 인증으로 새 일회용 코드를 발급받아 재인증한다.
+호스트를 다시 시작하지 않으므로 기존 실행은 유지되고 화면만 다시 불러온다.
+시작 단계 진단은 `.securecode/native-startup.log`에 기록한다. 코드·쿠키·모델 키는 기록하지 않는다.
 
 이 앱은 현재 Mac과 checkout용이다. 빌드 시 현재 Node 실행 파일과 프로젝트 경로를 기록한다.
 앱 자체를 옮겨도 되지만 프로젝트 폴더·Node·Python 환경은 유지해야 한다. 프로젝트를 옮기거나
