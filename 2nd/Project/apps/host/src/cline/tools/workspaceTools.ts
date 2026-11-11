@@ -4,6 +4,7 @@
  * and commands need a user approval whose review shows the exact input.
  */
 import { lstatSync, readdirSync, writeFileSync } from "node:fs";
+import type { AnswerCitation } from "@securecode/contracts";
 import type { ExecutorCapture, RuntimePointerService, RuntimeScope } from "../adapter/ports.js";
 import { refuseCommand } from "../permissions/commandPolicy.js";
 import { describeStoredOutput } from "../../pointer-hooks/runtimeDescriptor.js";
@@ -37,6 +38,7 @@ export interface WorkspaceToolOptions {
     root: string;
     commandTimeoutMs: number;
     runtime: WorkspaceRuntimeOptions;
+    readonly recordCited: (citation: AnswerCitation) => void;
 }
 
 function listFilesTool(root: string): ProjectTool {
@@ -174,8 +176,9 @@ async function runCaptured(
     });
 }
 
-function runtimeToolOptions(runtime: WorkspaceRuntimeOptions): Parameters<typeof runtimeReadTool>[0] {
-    return { service: runtime.service, scope: runtime.scope, timeoutMs: runtime.timeoutMs };
+function runtimeToolOptions(options: WorkspaceToolOptions): Parameters<typeof runtimeReadTool>[0] {
+    const { runtime, recordCited } = options;
+    return { service: runtime.service, scope: runtime.scope, timeoutMs: runtime.timeoutMs, recordCited };
 }
 
 export function createWorkspaceTools(options: WorkspaceToolOptions): ProjectTool[] {
@@ -183,7 +186,7 @@ export function createWorkspaceTools(options: WorkspaceToolOptions): ProjectTool
         listFilesTool(options.root),
         writeFileTool(options.root),
         runCommandTool(options),
-        runtimeReadTool(runtimeToolOptions(options.runtime)),
-        runtimeSearchTool(runtimeToolOptions(options.runtime)),
+        runtimeReadTool(runtimeToolOptions(options)),
+        runtimeSearchTool(runtimeToolOptions(options)),
     ];
 }

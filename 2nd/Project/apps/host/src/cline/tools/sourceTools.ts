@@ -101,7 +101,8 @@ export function sourceTools(options: SourceToolOptions): ProjectTool[] {
             name: "read_file",
             description:
                 "Read part of a text file inside the workspace (at most 16 KiB per call). Optional start_line/end_line " +
-                "pick lines; omit cursor on the first call and pass next_cursor back only to continue. Returns the exact range read.",
+                "pick lines (start_line defaults to 1 when only end_line is given); omit cursor on the first call " +
+                "and pass next_cursor back only to continue. Returns the exact range read.",
             inputSchema: objectSchema(
                 {
                     path: { type: "string" },
@@ -124,9 +125,9 @@ export function sourceTools(options: SourceToolOptions): ProjectTool[] {
                         options.workspaceId,
                         {
                             pointer,
-                            ...(start === undefined
+                            ...(start === undefined && end === undefined
                                 ? {}
-                                : { selector: { type: "line", start, ...(end ? { end } : {}) } }),
+                                : { selector: { type: "line", start: start ?? 1, ...(end ? { end } : {}) } }),
                             max_bytes: positive(values.max_bytes, "max_bytes") ?? READ_MAX_BYTES,
                             ...(cap === null ? {} : { max_tokens: cap }),
                             ...(typeof values.cursor === "string" ? { cursor: values.cursor } : {}),

@@ -3,11 +3,13 @@ import { execFileSync } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { WORK_ROOT } from "../lib/processes.js";
+import { buildIcon, cleanSigningMetadata } from "./buildIcon.js";
 
 if (process.platform !== "darwin") throw new Error("LocalDesk.app requires macOS.");
 const contents = join(WORK_ROOT, "dist", "LocalDesk.app", "Contents");
 mkdirSync(join(contents, "MacOS"), { recursive: true });
 mkdirSync(join(contents, "Resources"), { recursive: true });
+buildIcon(WORK_ROOT, contents);
 execFileSync(
     "/usr/bin/xcrun",
     [
@@ -41,6 +43,7 @@ writeFileSync(
 <key>CFBundleName</key><string>LocalDesk</string>
 <key>CFBundleDisplayName</key><string>LocalDesk</string>
 <key>CFBundlePackageType</key><string>APPL</string>
+<key>CFBundleIconFile</key><string>LocalDesk.icns</string>
 <key>CFBundleShortVersionString</key><string>1.0.0</string>
 <key>CFBundleVersion</key><string>1</string>
 <key>LSMinimumSystemVersion</key><string>13.0</string>
@@ -48,7 +51,9 @@ writeFileSync(
 <key>NSAppTransportSecurity</key><dict><key>NSAllowsLocalNetworking</key><true/></dict>
 </dict></plist>\n`,
 );
-execFileSync("/usr/bin/codesign", ["--force", "--sign", "-", join(WORK_ROOT, "dist", "LocalDesk.app")], {
+const bundle = join(WORK_ROOT, "dist", "LocalDesk.app");
+cleanSigningMetadata(bundle);
+execFileSync("/usr/bin/codesign", ["--force", "--sign", "-", bundle], {
     stdio: "inherit",
 });
 console.log(`Built ${join(WORK_ROOT, "dist", "LocalDesk.app")}`);

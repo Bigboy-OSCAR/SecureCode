@@ -67,11 +67,14 @@
 | `GET /workspaces` | `?limit&cursor` → `workspace#WorkspaceListResponse` | **구현** | 3.5 (H-02 목록 복구용, 3.2 추가) |
 | `POST /workspaces` | `WorkspaceCreateRequest` → `Workspace` | **구현** | 3.5 |
 | `GET /workspaces/:workspace_id` | → `Workspace` | **구현** | 3.5 |
+| `DELETE /workspaces/:workspace_id` | → `Workspace` (200, 반복 요청도 동일). 앱 목록에서 제거하며 원본 폴더·대화·색인은 보존. 같은 폴더를 새 요청 키로 등록하면 동일 ID로 복원. 실행 준비 또는 실행 중에는 409 `RUN_ALREADY_ACTIVE(workspace_has_active_run)` | **구현** | 프로젝트 관리 |
 | `POST /workspaces/:id/index` | `IndexRequest` → `IndexStatusResponse` (202) | **구현** | 3.6 (+3.3). 백그라운드 색인 |
 | `GET /workspaces/:id/index` | → `IndexStatusResponse` | **구현** | 3.6 |
 | `GET /workspaces/:id/sessions` | `?limit&cursor` → `session#SessionListResponse` | **구현** | 3.5 (H-04 세션 복구용, 3.2 추가) |
 | `POST /sessions` | `SessionCreateRequest` → `Session` | **구현** | 3.5 |
 | `GET /sessions/:session_id` | → `Session` (`active_run_id`로 재연결) | **구현** | 3.5 |
+| `DELETE /sessions/:id` | → `Session` (200, 멱등). 대화 목록에서 제거하고 재시작 후에도 유지. 원본 파일·프로젝트·다른 대화는 보존하며 준비/실행 중인 해당 대화는 409(`session_has_active_run`) | **구현** | 대화 우클릭 삭제 |
+| `POST /sessions/:id/restore` | → `Session` (200, 멱등). 삭제한 대화를 같은 ID와 기존 실행 이력으로 복원. 부모 프로젝트가 삭제된 상태면 404 | **구현** | 삭제 실행 취소 |
 | `GET /sessions/:id/runs` | `?limit&cursor` → `run#RunListResponse` | **구현** | 3.5 |
 | `POST /sessions/:id/runs` | `run#RunCreateRequest` → `RunSnapshot` (201, 재전송 200) | **구현** | 3.5 |
 | `GET /runs/:run_id` | `run#RunSnapshotQuery` (선택 query) → `RunSnapshot` | **구현** | 3.5 |

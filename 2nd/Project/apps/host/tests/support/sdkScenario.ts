@@ -12,6 +12,7 @@ import { SCHEMA_REFS, type AppEvent, type RunSnapshot, type Session, type Worksp
 import type { ScriptedTurn } from "../../../../tools/sdk-probe/src/fixtures/anthropic-sse.js";
 import { ScriptedProviderFetch } from "../../../../tools/sdk-probe/src/fixtures/scripted-fetch.js";
 import { ClineAgentRuntime } from "../../src/cline/adapter/clineRuntime.js";
+import type { ContextServiceClient } from "../../src/context-client/ports.js";
 import { FixtureGate, FixtureTransformer } from "./fixtureHooks.js";
 import { startTestHost, validator, type TestHost } from "./hostHarness.js";
 
@@ -30,6 +31,7 @@ export async function startSdkHost(
         dataDir?: string;
         workspaceRoot?: string;
         initializeWorkspace?: boolean;
+        contextClient?: ContextServiceClient;
     } = {},
 ): Promise<SdkHost> {
     const provider = new ScriptedProviderFetch(turns);
@@ -40,6 +42,7 @@ export async function startSdkHost(
         transformer,
         gate,
         providerFetch: provider.fetch,
+        ...(options.contextClient ? { contextClient: options.contextClient } : {}),
         ...(options.approvalTimeoutMs ? { approvalTimeoutMs: options.approvalTimeoutMs } : {}),
         ...(options.dataDir ? { dataDir: options.dataDir } : {}),
     });

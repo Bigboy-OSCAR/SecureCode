@@ -54,9 +54,15 @@ export async function waitRunStatus(page: Page, label: string, timeout = 60000):
         .waitFor({ timeout });
 }
 
+/** Inspect the current answer's activity without opening or mixing earlier turns. */
+export async function openCurrentToolActivity(page: Page): Promise<Locator> {
+    const activity = page.getByTestId("conversation-turn").last().getByTestId("tool-history");
+    if ((await activity.getAttribute("open")) === null) await activity.locator(":scope > summary").click();
+    return activity;
+}
+
 export async function decideApproval(page: Page, decision: "approve" | "reject"): Promise<void> {
     await page.getByTestId(decision === "approve" ? "approval-approve" : "approval-reject").click();
-    await page.getByTestId("approval-confirm").click();
 }
 
 export async function registerSource(page: Page, path: string, name: string): Promise<void> {

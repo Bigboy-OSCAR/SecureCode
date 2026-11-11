@@ -3,6 +3,7 @@
 import concurrent.futures
 import os
 import sqlite3
+import threading
 import time
 from datetime import timedelta
 from pathlib import Path
@@ -86,6 +87,42 @@ def test_concurrent_puts_in_one_store(tmp_path: Path) -> None:
             )
         assert len(set(pointers)) == 50
         assert len(store.list_pointers(WS, SES, limit=100)["items"]) == 50
+    finally:
+        store.close()
+
+
+def test_concurrent_reads_keep_descriptors_and_session_lists_exact(tmp_path: Path) -> None:
+    """
+    함수 이름: test_concurrent_reads_keep_descriptors_and_session_lists_exact()
+    기능: 같은 연결에서 8개 세션의 stat·목록을 동시에 반복해 누락·행 값 혼합이 없음을 확인한다.
+    인자: tmp_path -> 임시 저장소 폴더
+    반환값: 없음
+    작성 날짜: 2026/11/12
+    """
+    store = RuntimeStore(tmp_path / "runtime")
+    expected = [
+        store.put(RuntimePut(WS, f"ses-{index}", "text/plain", f"value-{index}".encode()))
+        for index in range(8)
+    ]
+    ready = threading.Barrier(8)
+
+    def read(index: int) -> None:
+        """
+        함수 이름: read()
+        기능: 자기 세션의 포인터와 목록을 100회 읽어 저장 직후 descriptor와 정확히 비교한다.
+        인자: index -> 세션 번호
+        반환값: 없음
+        작성 날짜: 2026/11/12
+        """
+        item = expected[index]
+        ready.wait(timeout=5)
+        for _ in range(100):
+            assert store.stat(WS, item.session_id, _pid(item.pointer)) == item
+            assert store.list_pointers(WS, item.session_id)["items"] == [item.to_dict()]
+
+    try:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+            list(pool.map(read, range(8)))
     finally:
         store.close()
 

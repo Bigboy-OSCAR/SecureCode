@@ -57,6 +57,11 @@ export function IndexDialog({ open, onClose, api, workspaces, selectedId, onUpda
         }
     };
     const running = Object.values(jobs).some((job) => ["queued", "indexing"].includes(job.index_status));
+    const completed =
+        !busy &&
+        !error &&
+        Object.keys(jobs).length > 0 &&
+        Object.values(jobs).every((job) => ["ready", "partial"].includes(job.index_status));
     return (
         <Modal
             open={open}
@@ -140,19 +145,26 @@ export function IndexDialog({ open, onClose, api, workspaces, selectedId, onUpda
                 <p className="muted-copy">
                     모든 작업은 로컬에서 처리됩니다. 완료 후 새 인덱스로 교체하며, 실패하면 기존 인덱스를 유지합니다.
                 </p>
-                <div className="desk-modal-actions">
-                    <Button type="button" variant="quiet" onClick={onClose}>
-                        {running ? "진행 화면 닫기" : "닫기"}
-                    </Button>
+                <div className={`desk-modal-actions${completed ? " desk-index-actions" : ""}`}>
+                    {!completed ? (
+                        <Button type="button" variant="quiet" onClick={onClose}>
+                            {running ? "진행 화면 닫기" : "닫기"}
+                        </Button>
+                    ) : null}
                     <Button
                         type="button"
-                        variant="primary"
+                        variant={completed ? "secondary" : "primary"}
                         disabled={busy || running || !selected.length}
                         onClick={() => void start()}
                         data-testid="index-start"
                     >
                         {busy ? "요청 중…" : `${selected.length}개 생성·갱신`}
                     </Button>
+                    {completed ? (
+                        <Button type="button" variant="primary" onClick={onClose}>
+                            닫기
+                        </Button>
+                    ) : null}
                 </div>
             </div>
         </Modal>

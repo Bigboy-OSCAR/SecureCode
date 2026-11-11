@@ -31,25 +31,33 @@ function completedRun(): RunSnapshot {
 test("tool history shows each phase and never turns a missing size into 0 bytes", () => {
     const markup = render(
         createElement(ToolHistory, {
-            tools: [
-                { tool_call_id: "t1", tool_name: "run_command", phase: "awaiting_approval", summary: "node gen.js" },
-                {
-                    tool_call_id: "t2",
-                    tool_name: "run_command",
-                    phase: "completed",
-                    summary: "done",
-                    output_bytes: 908895,
-                    output_pointer:
-                        "securecode://runtime/ws_00000001/ses_00000001/00000000-0000-4000-8000-000000000000?v=1",
-                },
-                { tool_call_id: "t3", tool_name: "pdf_read_pages", phase: "rejected", summary: "page 2" },
-            ],
-            truncated: false,
+            run: {
+                ...completedRun(),
+                tool_calls: [
+                    {
+                        tool_call_id: "t1",
+                        tool_name: "run_command",
+                        phase: "awaiting_approval",
+                        summary: "node gen.js",
+                    },
+                    {
+                        tool_call_id: "t2",
+                        tool_name: "run_command",
+                        phase: "completed",
+                        summary: "done",
+                        output_bytes: 908895,
+                        output_pointer:
+                            "securecode://runtime/ws_00000001/ses_00000001/00000000-0000-4000-8000-000000000000?v=1",
+                    },
+                    { tool_call_id: "t3", tool_name: "pdf_read_pages", phase: "rejected", summary: "page 2" },
+                ],
+                tool_calls_truncated: false,
+            },
         }),
     );
     assert.ok(markup.includes("명령 실행 · 승인 대기"));
     assert.ok(markup.includes("PDF 페이지 읽기 · 거절됨"));
-    assert.ok(markup.includes("크기 미확인"));
+    assert.ok(markup.includes("이 답변의 작업"));
     assert.ok(markup.includes("908,895 bytes · 실행 결과로 저장됨"));
     assert.equal(markup.includes("0 bytes"), false);
     assert.equal(markup.includes("securecode://"), false, "pointer URIs stay out of the DOM");

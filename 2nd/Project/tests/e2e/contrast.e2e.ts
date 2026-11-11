@@ -89,13 +89,12 @@ it("actual text, placeholders, dialogs and answer controls meet WCAG AA contrast
     const { page, files, fake } = e2e;
     await measure("brand", page.locator(".desk-brand strong"));
     await measure("sidebar search", page.locator(".desk-nav-row").filter({ hasText: "대화 검색" }));
-    await measure("LOCAL tag", page.locator(".desk-brand .desk-tag"));
     await measure("model state caption", page.locator(".desk-model-picker small"));
     await measure("local privacy caption", page.locator(".desk-local"));
     await registerProject(page, "contrast-project", files.projectDir);
     await measure("welcome title", page.locator(".desk-welcome h1"));
     await measure("welcome description", page.locator(".desk-welcome p").first());
-    await measure("project path", page.locator(".desk-project.selected p"));
+    await measure("project path", page.locator(".desk-project.selected .desk-project-path"));
     await measure("suggestion button", page.locator(".desk-suggestions button").first());
     await measure("composer context", page.locator(".desk-composer-context > span").first());
     await measure("composer folder tag", page.locator(".desk-composer-context .desk-tag"));

@@ -28,6 +28,7 @@ import { RouteFailure } from "../shared/routeFailure.js";
 import { RunEventLog } from "./eventLog.js";
 import { isTerminal, toSnapshot, toSummary, type RunRecord, type SnapshotQuery } from "./runRecord.js";
 import { RunRecorder } from "./runRecorder.js";
+import { hasActiveWork } from "./runActivity.js";
 
 const PERSIST_DELAY_MS = 500;
 
@@ -134,8 +135,8 @@ export class RunService {
         return { snapshot: this.snapshot(record.run_id), created: true };
     }
 
-    hasActiveRuns(): boolean {
-        return this.planning.size > 0 || [...this.recorders.values()].some((recorder) => !recorder.terminal);
+    hasActiveRuns(workspaceId?: string, sessionId?: string): boolean {
+        return hasActiveWork(this.planning, this.recorders.values(), this.deps.sessions, workspaceId, sessionId);
     }
 
     snapshot(runId: string, query: SnapshotQuery = {}): RunSnapshot {

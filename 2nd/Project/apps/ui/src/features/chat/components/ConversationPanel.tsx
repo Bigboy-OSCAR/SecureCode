@@ -71,8 +71,8 @@ export function ConversationPanel({ controller, state }: ConversationPanelProps)
                 <h3>질문</h3>
                 <p>{run?.prompt_preview ?? "질문이 아직 없습니다."}</p>
             </article>
+            <ToolHistory key={run?.run_id} run={run} />
             <AnswerView run={run} />
-            <ToolHistory tools={run ? run.tool_calls : null} truncated={run?.tool_calls_truncated === true} />
             {run ? (
                 <Button
                     type="button"

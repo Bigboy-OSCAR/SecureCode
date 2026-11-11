@@ -7,6 +7,8 @@
 import type { AgentHooks } from "@cline/sdk";
 import type { ToolResultTransformer } from "./ports.js";
 import { recordFailure, type ActiveTurn } from "./turnContext.js";
+import { STALE_CODE_READ_STOP_MESSAGE } from "./staleCodeReadGuard.js";
+import { describeToolFinish } from "./turnOutcome.js";
 
 type AfterToolHook = NonNullable<AgentHooks["afterTool"]>;
 
@@ -89,7 +91,25 @@ export function createAfterToolHook(
                 byteSize: transformed.byteSize,
             });
         }
+        const repeatedStaleRead = turn.staleCodeReadStops?.delete(toolCall.toolCallId) === true;
+        if (repeatedStaleRead) {
+            recordFailure(turn, { code: "SOURCE_CHANGED", message: STALE_CODE_READ_STOP_MESSAGE });
+            // The SDK stops before emitting content_end for this result. Preserve the actual failed
+            // read (including bounded output metadata), instead of leaving it marked cancelled.
+            turn.listener(
+                describeToolFinish(
+                    {
+                        kind: "tool_finished",
+                        toolCallId: toolCall.toolCallId,
+                        toolName: toolCall.toolName,
+                        failed: true,
+                    },
+                    info,
+                ),
+            );
+        }
         return {
+            ...(repeatedStaleRead ? { stop: true, reason: STALE_CODE_READ_STOP_MESSAGE } : {}),
             result: {
                 output: transformed.text,
                 isError: result.isError ?? false,

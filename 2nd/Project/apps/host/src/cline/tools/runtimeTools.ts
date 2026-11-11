@@ -3,7 +3,7 @@
  * 4.3 contract routes (selector, byte/token caps, scoped cursor). Their results are bounded by the
  * service caps and are never stored again by the transformer (bounded-read policy).
  */
-import type { PointerReadRequest, PointerSearchRequest } from "@securecode/contracts";
+import type { AnswerCitation, PointerReadRequest, PointerSearchRequest } from "@securecode/contracts";
 import type { RuntimePointerService, RuntimeScope } from "../adapter/ports.js";
 import { turnStorage } from "../adapter/turnContext.js";
 import { ContextServiceError } from "../../context-client/contextServiceError.js";
@@ -19,6 +19,8 @@ export interface RuntimeToolOptions {
     service: RuntimePointerService;
     scope: RuntimeScope;
     timeoutMs: number;
+    /** Records only the confirmed range returned by a successful bounded read. */
+    readonly recordCited: (citation: AnswerCitation) => void;
 }
 
 const selectorSchema = {
@@ -98,6 +100,8 @@ export function runtimeReadTool(options: RuntimeToolOptions): ProjectTool {
                 const result = await guarded(() =>
                     options.service.read(options.scope, request, signalFor(options, context.signal)),
                 );
+                const selection = result.provenance.selection;
+                if (selection) options.recordCited({ ref: { kind: "runtime", pointer: result.pointer, selection } });
                 return JSON.stringify({
                     content: result.content,
                     truncated: result.truncated,

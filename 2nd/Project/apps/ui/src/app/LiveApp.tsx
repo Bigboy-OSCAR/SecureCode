@@ -10,6 +10,7 @@ import { DeskIcon } from "../components/DeskIcon.js";
 import { useDeskWorkspace, type DeskChat as Chat } from "../features/workspace/hooks/useDeskWorkspace.js";
 import { useDeskModels } from "../features/workspace/hooks/useDeskModels.js";
 import { DeskSidebar } from "../features/workspace/components/DeskSidebar.js";
+import { ChatRemovalNotice } from "../features/workspace/components/ChatRemovalNotice.js";
 import { DeskChat } from "../features/workspace/components/DeskChat.js";
 import { DeskWelcome } from "../features/workspace/components/DeskWelcome.js";
 import { ProjectDialog } from "../features/workspace/components/ProjectDialog.js";
@@ -83,6 +84,10 @@ export function LiveApp(): React.JSX.Element {
                         workspace={desk.workspace}
                         session={desk.session}
                         chats={desk.chats}
+                        loadingChats={desk.loadingChats}
+                        onRemoveProject={desk.removeProject}
+                        onRemoveChat={desk.removeChat}
+                        busy={desk.busy}
                         onProject={() => setDialog("project")}
                         onSearch={() => setDialog("search")}
                         onModels={() => {
@@ -144,6 +149,7 @@ export function LiveApp(): React.JSX.Element {
                                 {desk.error}
                             </p>
                         ) : null}
+                        <ChatRemovalNotice state={desk} />
                         {!desk.connected ? (
                             <div className="desk-connect-prompt">
                                 <p>로컬 서비스에 연결하면 프로젝트와 대화를 불러옵니다.</p>
@@ -185,7 +191,12 @@ export function LiveApp(): React.JSX.Element {
                     {historyOpen ? (
                         <HistoryPanel
                             api={api}
-                            chat={historyChat}
+                            chat={
+                                historyChat &&
+                                desk.chats.some((item) => item.session.session_id === historyChat.session.session_id)
+                                    ? historyChat
+                                    : null
+                            }
                             chats={desk.chats}
                             onSelect={setHistoryChat}
                             onClose={() => setHistoryOpen(false)}
@@ -220,6 +231,7 @@ export function LiveApp(): React.JSX.Element {
                             <LivePointerWorkspace
                                 api={api}
                                 connected={desk.connected}
+                                visible={contextOpen}
                                 workspaceId={desk.workspace?.workspace_id ?? null}
                                 sessionId={desk.session?.session_id ?? null}
                                 runtimePointerRuns={runtimePointerRuns}

@@ -11,7 +11,7 @@ from ..graph import SourceNode
 from ..index import VerifiedSymbol
 from ..public_ids import candidate_id, symbol_id
 from ..retrieval import CandidateInfo
-from .wire import MAX_LISTED, unresolved_references
+from .wire import MAX_LISTED, symbol_location, unresolved_references
 
 MAX_BUNDLE_BYTES = 32 * 1024
 MAX_FRAGMENT_CHARS = 32768
@@ -71,6 +71,7 @@ def _fragment(node: SourceNode, verified: VerifiedSymbol) -> dict[str, Any]:
         "end_line": node["end"],
         "content": node["source"],
         "provenance": verified.provenance,
+        "location": symbol_location(node),
     }
 
 

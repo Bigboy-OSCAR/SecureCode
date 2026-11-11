@@ -45,9 +45,6 @@
     min-height: 32px;
     font-size: 20px;
 }
-.desk-brand .desk-tag {
-    margin-left: auto;
-}
 .desk-tag {
     display: inline-flex;
     align-items: center;
@@ -115,43 +112,88 @@
     overflow: auto;
 }
 .desk-project {
-    padding: 8px 10px;
+    position: relative;
     border-radius: 8px;
     margin-bottom: 8px;
 }
 .desk-project.selected {
     background: #1e2123;
 }
-.desk-project-row {
-    display: flex;
-    align-items: center;
-    gap: 4px;
+.desk-project:hover,
+.desk-project:focus-within,
+.desk-project.menu-open {
+    background: #272b2e;
 }
-.desk-project-row > button:first-child {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex: 1;
+.desk-project-open {
+    display: block;
+    width: 100%;
     min-width: 0;
-    padding: 0;
+    min-height: 48px;
+    padding: 8px 44px 8px 10px;
     border: 0;
+    border-radius: inherit;
     background: none;
     color: #edf1f2;
     text-align: left;
     cursor: pointer;
 }
-.desk-project-row span {
+.desk-project-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 32px;
+}
+.desk-project-label > span {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-.desk-project p {
+.desk-project-path {
+    display: block;
     margin: 0;
     font-size: 12px;
     color: #a1abb1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.desk-project-new-chat {
+    position: absolute;
+    right: 6px;
+    top: 8px;
+    visibility: hidden;
+}
+.desk-project:hover .desk-project-new-chat,
+.desk-project:focus-within .desk-project-new-chat,
+.desk-project.menu-open .desk-project-new-chat {
+    visibility: visible;
+}
+.desk-project-menu {
+    position: fixed;
+    z-index: 30;
+    padding: 5px;
+    min-width: 172px;
+    border: 1px solid #43494d;
+    border-radius: 10px;
+    background: #242728;
+    box-shadow: 0 8px 24px #0006;
+}
+.desk-project-menu button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    border: 0;
+    border-radius: 6px;
+    padding: 9px 12px;
+    background: transparent;
+    color: #ffb6bc;
+    font-size: 13px;
+    cursor: pointer;
+}
+.desk-project-menu button:hover,
+.desk-project-menu button:focus-visible {
+    background: #343a3e;
 }
 .desk-chat-list {
     display: grid;
@@ -173,6 +215,7 @@
     font-size: 13px;
 }
 .desk-chat-list button.selected,
+.desk-chat-list button.menu-open,
 .desk-chat-list button:hover {
     background: #272b2e;
 }
@@ -207,5 +250,20 @@
 }
 
 .desk-nav-row > .desk-tag {
+    margin-left: auto;
+}
+.desk-deletion-notice {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 24px 0;
+    padding: 4px 10px;
+    border: 1px solid #343a3e;
+    border-radius: 8px;
+    background: #1e2123;
+    color: #a1abb1;
+    font-size: 12px;
+}
+.desk-deletion-notice > .desk-icon-button {
     margin-left: auto;
 }

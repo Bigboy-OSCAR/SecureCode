@@ -40,6 +40,8 @@ const messagesByCode: Record<string, string> = {
 
 /** Server reasons that tell the user what to fix (host workspace-root and selector checks). */
 const messagesByReason: Record<string, string> = {
+    workspace_has_active_run: "이 프로젝트의 실행이 끝나거나 취소된 뒤 삭제할 수 있습니다.",
+    session_has_active_run: "이 대화의 실행이 끝나거나 취소된 뒤 삭제할 수 있습니다.",
     root_overlaps_service_data:
         "앱 내부 데이터 폴더와 겹치는 위치는 등록할 수 없습니다. 다른 프로젝트 폴더를 선택하세요.",
     root_not_found: "경로가 존재하지 않습니다. 호스트 컴퓨터의 실제 폴더 경로를 입력하세요.",

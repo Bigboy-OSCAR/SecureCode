@@ -90,15 +90,40 @@ it("keeps small results inline, pointers large ones, re-reads parts across runs 
         assert.equal(first.status, "completed", JSON.stringify(first.terminal));
         const pointer = first.tool_calls.find((call) => call.tool_name === "run_command")?.output_pointer ?? "";
         assert.ok(pointer, "large command output became a pointer");
+        const scope = { workspaceId: host.workspaceId, sessionId };
+        const firstRead = await host.runtimeClient.read(
+            scope,
+            { pointer, selector: { type: "line", start: 7000, end: 7000 } },
+            AbortSignal.timeout(5000),
+        );
+        const firstCitations = (first.answer.citations ?? []).flatMap((citation) =>
+            citation.ref.kind === "runtime" ? [citation.ref] : [],
+        );
+        assert.deepEqual(firstCitations, [{ kind: "runtime", pointer, selection: firstRead.provenance.selection }]);
 
         writeFileSync(join(host.workspaceRoot, "data.txt"), "DATA-VERSION-2 changed during the session\n");
         const second = await finish(host, (await createRun(host, sessionId, "다른 줄과 바뀐 데이터")).run_id);
         assert.equal(second.status, "completed", JSON.stringify(second.terminal));
+        const secondRead = await host.runtimeClient.read(
+            scope,
+            { pointer, selector: { type: "line", start: 3000, end: 3000 } },
+            AbortSignal.timeout(5000),
+        );
+        const secondCitations = (second.answer.citations ?? []).flatMap((citation) =>
+            citation.ref.kind === "runtime" ? [citation.ref] : [],
+        );
+        assert.deepEqual(
+            secondCitations,
+            [{ kind: "runtime", pointer, selection: secondRead.provenance.selection }],
+            "each question cites only its own range, not the earlier question's read",
+        );
+        assert.notDeepEqual(firstCitations, secondCitations);
 
         const otherSession = await createSession(host, "session-other-1");
         (foreignRead.toolUses[0] as { input: Record<string, unknown> }).input.pointer = pointer;
         const foreign = await finish(host, (await createRun(host, otherSession, "다른 세션 포인터")).run_id);
         assert.equal(foreign.tool_calls[0]?.phase, "failed", "another session cannot read the pointer");
+        assert.deepEqual(foreign.answer.citations ?? [], [], "a refused cross-session read creates no citation");
 
         const bodies = host.provider.capturedRequests.map((request) => request.bodyText);
         const firstSystem = (JSON.parse(bodies[0] ?? "{}") as { system: { text: string }[] }).system

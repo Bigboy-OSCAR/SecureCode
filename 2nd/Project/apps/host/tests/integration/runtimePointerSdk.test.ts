@@ -106,6 +106,30 @@ it("replaces approved command output before the next model call and re-reads onl
         assert.ok(!text.includes("FILE-SENTINEL"), "read_file (Source adapter) returned only the requested line");
         assert.match(text, /file head file head/, "the requested line was read");
 
+        const scope = { workspaceId: host.workspaceId, sessionId };
+        const exactLine = await host.runtimeClient.read(
+            scope,
+            { pointer, selector: { type: "line", start: 4321 } },
+            AbortSignal.timeout(5000),
+        );
+        const exactHead = await host.runtimeClient.read(
+            scope,
+            { pointer, selector: { type: "byte", start: 0, end: 5000 } },
+            AbortSignal.timeout(5000),
+        );
+        const runtimeCitations = (done.answer.citations ?? []).flatMap((citation) =>
+            citation.ref.kind === "runtime" ? [citation.ref] : [],
+        );
+        assert.deepEqual(
+            runtimeCitations,
+            [
+                { kind: "runtime", pointer, selection: exactLine.provenance.selection },
+                { kind: "runtime", pointer, selection: exactHead.provenance.selection },
+            ],
+            "only the two exact read ranges are cited; the command descriptor and search preview add no citation",
+        );
+        assert.doesNotMatch(JSON.stringify(runtimeCitations), /TARGET-LINE-OK|preface line|SENTINEL-BULK/);
+
         const { events } = await host.client.events(run.run_id);
         const sse = JSON.stringify(events);
         assert.ok(!sse.includes("SENTINEL-BULK") && !sse.includes("TARGET-LINE-OK") && !sse.includes("preface line"));
@@ -127,7 +151,6 @@ it("replaces approved command output before the next model call and re-reads onl
         const listed = (publicList.body as { items: { provenance: { run_id?: string } }[] }).items;
         assert.equal(listed.length, 1);
         assert.equal(listed[0]?.provenance.run_id, run.run_id, "the pointer names the run that produced it");
-        const scope = { workspaceId: host.workspaceId, sessionId };
         const line = await host.runtimeClient.read(
             scope,
             { pointer, selector: { type: "line", start: 6000 } },

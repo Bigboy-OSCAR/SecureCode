@@ -6,24 +6,13 @@ import type { HttpRunClient } from "../../../api/httpRunClient.js";
 import { useRunController } from "../../chat/hooks/useRunController.js";
 import { useConversationActions } from "../../chat/hooks/useConversationActions.js";
 import { useChatScroll } from "../../chat/hooks/useChatScroll.js";
-import { AnswerView } from "../../chat/components/AnswerView.js";
-import { ToolHistory } from "../../chat/components/ToolHistory.js";
 import { ApprovalCard } from "../../approvals/components/ApprovalCard.js";
 import { Alert, Button, TextAreaField } from "../../../components/index.js";
 import { DeskIcon } from "../../../components/DeskIcon.js";
 import { formatApiFailure } from "../../../api/apiErrors.js";
 import { formatSelection } from "../../shared/model/provenanceLabels.js";
 import { DeskWelcome } from "./DeskWelcome.js";
-
-const STATUS = {
-    queued: "실행 대기 중",
-    running: "실행 중",
-    awaiting_approval: "승인 대기 중",
-    cancelling: "취소 요청 중",
-    completed: "완료",
-    failed: "실패",
-    cancelled: "취소됨",
-} as const;
+import { ChatTurn } from "./ChatTurn.js";
 interface Props {
     api: ApiHttpClient;
     client: HttpRunClient;
@@ -125,31 +114,9 @@ export function DeskChat({
                     />
                 ) : null}
                 {preceding.map((item) => (
-                    <div key={item.run_id}>
-                        <div className="desk-user-message">{item.prompt_preview}</div>
-                        <AnswerView run={item} />
-                    </div>
+                    <ChatTurn key={item.run_id} run={item} />
                 ))}
-                {run ? (
-                    <>
-                        <p className="desk-date">{new Date(run.created_at).toLocaleDateString("ko-KR")}</p>
-                        <div className="desk-user-message">{run.prompt_preview}</div>
-                        <div className="desk-response-title">
-                            <span>
-                                <DeskIcon name="imgIconTerminal1" />
-                            </span>
-                            <strong>LocalDesk</strong>
-                            <small>로컬</small>
-                        </div>
-                        <AnswerView run={run} />
-                        <ToolHistory tools={run.tool_calls} truncated={run.tool_calls_truncated === true} />
-                        <p className="desk-run-status" role="status">
-                            {STATUS[run.status]}
-                            {run.terminal?.reason_code ? ` · ${run.terminal.reason_code}` : ""}
-                        </p>
-                        <ApprovalCard controller={controller} state={state} />
-                    </>
-                ) : null}
+                {run ? <ChatTurn key={run.run_id} run={run} current /> : null}
                 {state.connection === "disconnected" ? (
                     <Alert title="연결이 끊겼습니다" variant="warning">
                         입력과 결과가 유지됩니다.
@@ -165,6 +132,7 @@ export function DeskChat({
                 ) : null}
             </div>
             <div className="desk-composer-wrap">
+                <ApprovalCard controller={controller} state={state} />
                 <form
                     className="desk-composer"
                     onSubmit={(event) => {

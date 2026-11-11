@@ -184,24 +184,26 @@ class RuntimeStore:
         if not _UUID.fullmatch(pointer_id):
             raise PointerNotFound("포인터를 찾을 수 없습니다", "unknown")
         scope = (pointer_id, workspace_id, session_id)
-        row = self._connection.execute(
-            "SELECT * FROM runtime_pointers WHERE pointer_id = ? AND workspace_id = ? "
-            "AND session_id = ? AND state = 'ready'",
-            scope,
-        ).fetchone()
-        if row is None:
-            gone = self._connection.execute(
-                "SELECT reason FROM runtime_tombstones WHERE pointer_id = ? AND workspace_id = ? "
-                "AND session_id = ?",
+        # The connection is shared by request threads; reads must use the same lock as writes.
+        with self._lock:
+            row = self._connection.execute(
+                "SELECT * FROM runtime_pointers WHERE pointer_id = ? AND workspace_id = ? "
+                "AND session_id = ? AND state = 'ready'",
                 scope,
             ).fetchone()
-            if gone is not None and gone["reason"] == "expired":
+            if row is None:
+                gone = self._connection.execute(
+                    "SELECT reason FROM runtime_tombstones WHERE pointer_id = ? AND workspace_id = ? "
+                    "AND session_id = ?",
+                    scope,
+                ).fetchone()
+                if gone is not None and gone["reason"] == "expired":
+                    raise PointerExpired("포인터가 만료되었습니다", "expired")
+                raise PointerNotFound(
+                    "포인터를 찾을 수 없습니다", gone["reason"] if gone else "unknown"
+                )
+            if datetime.fromisoformat(row["expires_at"]) <= utc_now():
                 raise PointerExpired("포인터가 만료되었습니다", "expired")
-            raise PointerNotFound(
-                "포인터를 찾을 수 없습니다", gone["reason"] if gone else "unknown"
-            )
-        if datetime.fromisoformat(row["expires_at"]) <= utc_now():
-            raise PointerExpired("포인터가 만료되었습니다", "expired")
         return row
 
     def stat(self, workspace_id: str, session_id: str, pointer_id: str) -> RuntimeDescriptor:
@@ -227,7 +229,8 @@ class RuntimeStore:
         check_scope(workspace_id, session_id)
         if cursor is not None and not _UUID.fullmatch(cursor):
             raise InvalidSelector("목록 cursor가 올바르지 않습니다", "invalid_page")
-        return list_page(self._connection, (workspace_id, session_id), limit, cursor)
+        with self._lock:
+            return list_page(self._connection, (workspace_id, session_id), limit, cursor)
 
     def delete(self, workspace_id: str, session_id: str, pointer_id: str) -> None:
         """
@@ -290,4 +293,5 @@ class RuntimeStore:
         반환값: 없음
         작성 날짜: 2026/11/10
         """
-        self._connection.close()
+        with self._lock:
+            self._connection.close()
