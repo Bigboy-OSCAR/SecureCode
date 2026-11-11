@@ -29,6 +29,7 @@
         "test:live": "tsx scripts/test/live.ts",
         "test:install": "tsx scripts/test/install.ts",
         "build": "tsx scripts/build.ts",
+        "build:app": "npm run build && node --import tsx scripts/desktop/build.ts",
         "probe:sdk": "npm run probe -w @securecode/sdk-probe --"
     },
     "devDependencies": {

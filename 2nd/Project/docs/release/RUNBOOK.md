@@ -84,6 +84,25 @@ SECURECODE_TOKEN_COUNTER=
 
 ## 4. 실행과 중단
 
+### 이 Mac에서 앱으로 실행
+
+`npm run build:app`은 UI·호스트 타입·Python wheel 검사를 마친 뒤 `dist/LocalDesk.app`을 만든다.
+Finder에서 이 앱을 열면 독립 창으로 실행된다. 연결 코드 입력은 필요 없다. 앱은 일회용 코드를
+자식 프로세스의 전용 파이프로 받아 POST로 교환하고, WebKit의 HttpOnly 쿠키에 인증을 저장한다.
+코드나 키를 URL·브라우저 저장소에 넣지 않는다.
+
+앱은 세 개의 빈 loopback 포트를 선택하므로 다른 개발 서버의 포트와 충돌하지 않는다.
+빌드된 정적 UI를 사용하며 Vite 개발 서버를 띄우지 않는다. 창을 닫거나 Command-Q를 누르면
+호스트와 Python 서비스를 함께 종료한다. `npm run stop`으로도 종료할 수 있다.
+앱의 프로젝트 추가 화면에서는 macOS 폴더 선택 창을 사용할 수 있다.
+
+이 앱은 현재 Mac과 checkout용이다. 빌드 시 현재 Node 실행 파일과 프로젝트 경로를 기록한다.
+앱 자체를 옮겨도 되지만 프로젝트 폴더·Node·Python 환경은 유지해야 한다. 프로젝트를 옮기거나
+Node 경로가 바뀌면 새 위치에서 `npm run build:app`을 다시 실행한다. 개발 실행과 앱 실행은
+같은 데이터 폴더를 동시에 사용하지 않는다. 모델 설정은 기존 `.env`를 그대로 읽는다.
+
+### 개발 실행
+
 ```bash
 npm run dev
 ```
