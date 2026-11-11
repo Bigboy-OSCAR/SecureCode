@@ -31,6 +31,12 @@ export interface ActiveTurn {
     remainingRequestTokens?: number;
     /** Set when the user cancelled this turn; checked before the SDK starts and before approvals. */
     aborted?: boolean;
+    /**
+     * Aborted with the turn. The request gate refuses to send for an aborted turn and ties every provider
+     * request to it, so a cancel that lands while the gate counts (before the SDK fetch starts) still
+     * stops the request instead of leaving it waiting (1.6 E2E).
+     */
+    cancel: AbortController;
 }
 
 export const turnStorage = new AsyncLocalStorage<ActiveTurn>();

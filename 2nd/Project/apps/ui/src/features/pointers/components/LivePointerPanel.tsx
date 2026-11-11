@@ -42,7 +42,9 @@ export function LivePointerPanel({
     return (
         <section className="feature-card" aria-labelledby="pointers-heading" data-testid="screen-pointers">
             <div className="feature-heading">
-                <h2 id="pointers-heading">Source · Runtime Pointer</h2>
+                <h2 id="pointers-heading" tabIndex={-1}>
+                    Source · Runtime Pointer
+                </h2>
                 <StatusBadge label={sessionId ? "프로젝트·세션 범위" : "세션 필요"} tone="neutral" />
             </div>
             <form onSubmit={(event) => void submitRegistration(event)} className="stack-form">
@@ -177,6 +179,7 @@ export function LivePointerPanel({
                 open={pendingDelete !== null}
                 title={pendingDelete?.kind === "source" ? "Source 등록을 해제할까요?" : "Runtime Pointer를 삭제할까요?"}
                 onRequestClose={() => setPendingDelete(null)}
+                returnFocusId="pointers-heading"
             >
                 <p>
                     {pendingDelete?.kind === "source"

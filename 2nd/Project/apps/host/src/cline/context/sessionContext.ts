@@ -5,7 +5,7 @@
  * list of the last outbound provider request (history cost). Memory only; a host restart starts fresh
  * SDK sessions, so nothing here outlives the history it describes.
  */
-import type { ContextRef, ExplicitContextRef } from "@securecode/contracts";
+import type { AnswerCitation, ContextRef, ExplicitContextRef } from "@securecode/contracts";
 
 const MAX_POINTERS = 64;
 const MAX_HISTORY = 256;
@@ -14,6 +14,8 @@ interface SessionEntry {
     runtimePointers: string[];
     history: ExplicitContextRef[];
     lastMessages: string[];
+    /** Receives the server-verified inputs of the run in progress (answer citations). */
+    citationSink?: (citation: AnswerCitation) => void;
 }
 
 function refKey(ref: ContextRef): string {
@@ -47,6 +49,20 @@ export class SessionContextStore {
         const key = refKey(ref);
         if (entry.history.some((item) => refKey(item) === key)) return;
         entry.history = [...entry.history, ref].slice(-MAX_HISTORY);
+    }
+
+    /** The run whose citations the next cite() calls belong to; endRun() detaches it. */
+    beginRun(sessionId: string, sink: (citation: AnswerCitation) => void): void {
+        this.entry(sessionId).citationSink = sink;
+    }
+
+    endRun(sessionId: string): void {
+        delete this.entry(sessionId).citationSink;
+    }
+
+    /** A verified input (fragment, bounded read with a selection) the current run's model received. */
+    cite(sessionId: string, citation: AnswerCitation): void {
+        this.sessions.get(sessionId)?.citationSink?.(citation);
     }
 
     /** Records the messages of the request that just left for the provider (history cost source). */

@@ -3,7 +3,7 @@
  * text) and code_read returns one candidate's bundle within byte and token caps, with the verified
  * file hash and lines. No other code-search technique is offered to the model.
  */
-import type { ExplicitContextRef } from "@securecode/contracts";
+import type { AnswerCitation, ExplicitContextRef, SymbolLocation } from "@securecode/contracts";
 import { ContextServiceError } from "../../context-client/contextServiceError.js";
 import type { SymbolService } from "../../context-client/workspaceServices.js";
 import { readTokenCap } from "./runtimeTools.js";
@@ -18,6 +18,8 @@ export interface CodeToolOptions {
     workspaceId: string;
     timeoutMs: number;
     recordShown(ref: ExplicitContextRef): void;
+    /** Reports a verified input of the current run (answer citation). */
+    recordCited(citation: AnswerCitation): void;
 }
 
 function values(raw: unknown): Record<string, unknown> {
@@ -42,6 +44,8 @@ function signalFor(options: CodeToolOptions, signal: AbortSignal | undefined): A
 }
 
 export function codeTools(options: CodeToolOptions): ProjectTool[] {
+    // Locations from code_search, so a code_read can be cited with its symbol, file and lines.
+    const located = new Map<string, SymbolLocation>();
     const search: ProjectTool = {
         requiresApproval: false,
         review: () => review("other", "search code", ""),
@@ -69,6 +73,7 @@ export function codeTools(options: CodeToolOptions): ProjectTool[] {
                     ),
                 );
                 if (result.no_match) return JSON.stringify({ candidates: [], hint: result.no_match.hint ?? null });
+                for (const candidate of result.candidates) located.set(candidate.candidate_id, candidate.primary);
                 const candidates = result.candidates.map((candidate) => ({
                     candidate_id: candidate.candidate_id,
                     index_revision: candidate.index_revision,
@@ -115,7 +120,10 @@ export function codeTools(options: CodeToolOptions): ProjectTool[] {
                         signalFor(options, context.signal),
                     ),
                 );
-                options.recordShown({ kind: "symbol", candidate_id: candidateId, index_revision: revision });
+                const ref = { kind: "symbol", candidate_id: candidateId, index_revision: revision } as const;
+                options.recordShown(ref);
+                const location = located.get(candidateId);
+                if (location) options.recordCited({ ref, location });
                 return JSON.stringify({
                     fragments: bundle.fragments.map((fragment) => ({
                         path: fragment.provenance.relative_path,

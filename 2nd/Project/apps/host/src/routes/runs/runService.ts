@@ -4,6 +4,7 @@
  * the broker, persisted snapshots and recovery of interrupted runs on restart.
  */
 import type {
+    AnswerCitation,
     ApprovalDecisionRequest,
     ApprovalRequest,
     ErrorCode,
@@ -83,9 +84,12 @@ export class RunService {
         const workspaceRoot = this.deps.workspaces.rootFor(session.workspace_id);
         this.planning.add(sessionId);
         let prompt: string;
+        let inserted: AnswerCitation[];
         try {
             // Selection → bounded reads → counted plan; explicit choices that cannot be used refuse the run.
-            prompt = (await this.deps.assembler.forRun(session.workspace_id, sessionId, request)).prompt;
+            const planned = await this.deps.assembler.forRun(session.workspace_id, sessionId, request);
+            prompt = planned.prompt;
+            inserted = planned.plan.fragments.map((fragment) => fragment.provenance);
         } finally {
             this.planning.delete(sessionId);
         }
@@ -109,12 +113,15 @@ export class RunService {
             approval_history: [],
             terminal: null,
             last_sequence: 0,
+            citations: [],
         };
         const recorder = this.track(record);
         recorder.log.append("run.status_changed", { status: "queued", previous_status: null });
         this.persist(record, true);
         this.deps.sessions.setActiveRun(sessionId, record.run_id);
         this.deps.idempotency.remember(`runs:${sessionId}`, request.idempotency_key, lookup.bodyDigest, record.run_id);
+        for (const citation of inserted) recorder.cite(citation);
+        this.deps.sessionContext.beginRun(sessionId, (citation) => recorder.cite(citation));
         void this.execute(recorder, workspaceRoot, prompt);
         return { snapshot: this.snapshot(record.run_id), created: true };
     }
@@ -213,6 +220,7 @@ export class RunService {
         } else {
             recorder.finish("failed", outcome.reasonCode ?? "SDK_UNAVAILABLE", outcome.message);
         }
+        this.deps.sessionContext.endRun(recorder.record.session_id);
         this.deps.sessions.setActiveRun(recorder.record.session_id, null);
     }
 

@@ -8,6 +8,7 @@ import { copyFileSync, mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { after, before, it } from "node:test";
+import type { AnswerCitation } from "@securecode/contracts";
 import { pdfTools } from "../../src/cline/tools/pdfTools.js";
 import { createPdfClient } from "../../src/context-client/pdfClient.js";
 import { validator } from "../support/hostHarness.js";
@@ -17,12 +18,16 @@ const WORKSPACE = "ws_00000001";
 const FIXTURE = resolve(import.meta.dirname, "../../../../tests/fixtures/pdf/korean-3-pages.pdf");
 let service: CountedService;
 let pointer = "";
+const cited: AnswerCitation[] = [];
 
 function run(name: string, input: Record<string, unknown>): Promise<string> {
     const client = createPdfClient({ baseUrl: service.url, internalToken: service.token, validator });
-    const tool = pdfTools({ service: client, workspaceId: WORKSPACE, timeoutMs: 20000 }).find(
-        (entry) => entry.tool.name === name,
-    );
+    const tool = pdfTools({
+        service: client,
+        workspaceId: WORKSPACE,
+        timeoutMs: 20000,
+        recordCited: (citation) => cited.push(citation),
+    }).find((entry) => entry.tool.name === name);
     assert.ok(tool);
     return tool.tool.execute(input, { signal: AbortSignal.timeout(30000) } as never) as Promise<string>;
 }
@@ -69,6 +74,10 @@ it("parses to job metadata only and reads exactly the requested page with its ci
     assert.match(page.content, /둘째 페이지/);
     assert.doesNotMatch(page.content, /PAGE-ONE|PAGE-THREE/);
     assert.equal(page.range.end - page.range.start, Buffer.byteLength(page.content, "utf8"));
+    const citation = cited.at(-1);
+    assert.ok(citation && "selection" in citation.ref, "the page read is reported as an answer citation");
+    assert.equal(citation.ref.pointer, pointer);
+    assert.deepEqual(citation.ref.selection.range, page.range);
 
     const found = JSON.parse(await run("pdf_search", { pointer, query: "바다" })) as {
         matches: { page: number }[];

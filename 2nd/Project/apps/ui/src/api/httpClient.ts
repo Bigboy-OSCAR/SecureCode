@@ -244,15 +244,27 @@ function mapHttpError(status: number, payload: unknown): ApiClientError {
     }
 
     if (status === 401) {
-        return new ApiClientError("unauthorized", safeApiMessage(code, "unauthorized"), status, code, details);
+        return new ApiClientError(
+            "unauthorized",
+            safeApiMessage(code, "unauthorized", details?.reason),
+            status,
+            code,
+            details,
+        );
     }
     if (status === 403) {
-        return new ApiClientError("forbidden", safeApiMessage(code, "forbidden"), status, code, details);
+        return new ApiClientError(
+            "forbidden",
+            safeApiMessage(code, "forbidden", details?.reason),
+            status,
+            code,
+            details,
+        );
     }
     if (status >= 500) {
-        return new ApiClientError("server", safeApiMessage(code, "server"), status, code, details);
+        return new ApiClientError("server", safeApiMessage(code, "server", details?.reason), status, code, details);
     }
-    return new ApiClientError("request", safeApiMessage(code, "request"), status, code, details);
+    return new ApiClientError("request", safeApiMessage(code, "request", details?.reason), status, code, details);
 }
 
 function toTransportError(error: unknown): ApiClientError {

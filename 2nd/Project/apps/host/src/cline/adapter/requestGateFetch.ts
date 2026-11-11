@@ -63,6 +63,11 @@ function bodyText(body: RequestInit["body"]): string | null {
     return null;
 }
 
+function linkedSignal(...signals: (AbortSignal | null | undefined)[]): AbortSignal {
+    const present = signals.filter((signal): signal is AbortSignal => signal instanceof AbortSignal);
+    return present.length === 0 ? new AbortController().signal : AbortSignal.any(present);
+}
+
 export function createGatedFetch(options: GatedFetchOptions): typeof fetch {
     return async (input, init) => {
         const turn = turnStorage.getStore();
@@ -81,7 +86,9 @@ export function createGatedFetch(options: GatedFetchOptions): typeof fetch {
                 "outbound request contains a tool outside the allow list",
             );
         }
-        const signal = init?.signal ?? new AbortController().signal;
+        // The SDK signal and the turn cancel both stop the request; an already cancelled turn sends nothing.
+        const signal = linkedSignal(init?.signal, turn?.cancel.signal);
+        signal.throwIfAborted();
         let decision;
         try {
             decision = await options.gate.check(
@@ -94,6 +101,8 @@ export function createGatedFetch(options: GatedFetchOptions): typeof fetch {
                 signal,
             );
         } catch {
+            // A cancel during counting is a cancel, not a gate failure.
+            signal.throwIfAborted();
             // A gate that cannot decide fails closed, like an unavailable tokenizer (0.7).
             recordFailure(turn, { code: "TOKENIZER_UNAVAILABLE", message: "the model request could not be counted" });
             throw new GateBlockedError("TOKENIZER_UNAVAILABLE", "model request gate failed");
@@ -102,7 +111,8 @@ export function createGatedFetch(options: GatedFetchOptions): typeof fetch {
             recordFailure(turn, { code: decision.code, message: decision.message.slice(0, 500) });
             throw new GateBlockedError(decision.code, decision.message);
         }
+        signal.throwIfAborted();
         if (turn) options.onOutbound?.(turn.sessionId, body);
-        return options.baseFetch(input, init);
+        return options.baseFetch(input, { ...init, signal });
     };
 }

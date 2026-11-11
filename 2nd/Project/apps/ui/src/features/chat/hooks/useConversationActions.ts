@@ -18,7 +18,13 @@ export function useConversationActions(
     const [prompt, setPrompt] = useState("");
     const submit = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        void controller.createRun(prompt);
+        const sent = prompt;
+        void controller.createRun(sent).then((created) => {
+            // Clear only after the host accepted the run; a failed create keeps the text for a retry.
+            if (created) {
+                setPrompt((current) => (current === sent ? "" : current));
+            }
+        });
     };
     const onPromptKeyDown = (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         if (

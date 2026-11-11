@@ -5,7 +5,7 @@
  * describes these exact names and shapes (checked by pdfPointerSkill.ts and its test).
  */
 import { randomUUID } from "node:crypto";
-import type { PdfJobStatus } from "@securecode/contracts";
+import type { AnswerCitation, PdfJobStatus } from "@securecode/contracts";
 import { ContextServiceError } from "../../context-client/contextServiceError.js";
 import type { PdfService } from "../../context-client/pdfClient.js";
 import { readTokenCap } from "./runtimeTools.js";
@@ -19,6 +19,8 @@ export interface PdfToolOptions {
     service: PdfService;
     workspaceId: string;
     timeoutMs: number;
+    /** Reports a page read as a verified input of the current run (answer citation). */
+    recordCited(citation: AnswerCitation): void;
 }
 
 function record(input: unknown): Record<string, unknown> {
@@ -176,7 +178,9 @@ export function pdfTools(options: PdfToolOptions): ProjectTool[] {
                         signalFor(options, signal),
                     ),
                 );
-                const range = result.provenance.selection?.range;
+                const selection = result.provenance.selection;
+                const range = selection?.range;
+                if (selection) options.recordCited({ ref: { kind: "source", pointer: result.pointer, selection } });
                 return JSON.stringify({
                     page: range?.type === "pdf_page" ? range.page : startPage,
                     content: result.content,

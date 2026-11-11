@@ -18,6 +18,7 @@ export function sessionToolOptions(
         serviceTimeoutMs: Math.max(options.hookTimeoutMs, 15000),
         client: options.contextClient,
         recordShown: (ref) => options.sessionContext.shown(request.sessionId, ref),
+        recordCited: (citation) => options.sessionContext.cite(request.sessionId, citation),
         runtime: {
             service,
             scope: { workspaceId: request.workspaceId, sessionId: request.sessionId },

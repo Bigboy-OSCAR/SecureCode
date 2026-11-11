@@ -4,9 +4,9 @@
  * replay positions come from the in-memory event log.
  */
 import type {
+    AnswerCitation,
     ApprovalOutcome,
     ApprovalRequest,
-    PageInfo,
     ReplayWindow,
     RunSnapshot,
     RunStatus,
@@ -20,6 +20,7 @@ export const TERMINAL_STATUSES: ReadonlySet<RunStatus> = new Set(["completed", "
 export const ANSWER_MAX_CHARS = 65536;
 export const TOOL_CALLS_MAX = 50;
 export const PENDING_APPROVALS_MAX = 8;
+export const CITATIONS_MAX = 200;
 const HISTORY_PAGE_SIZE = 50;
 
 export interface RunRecord {
@@ -38,13 +39,13 @@ export interface RunRecord {
     approval_history: ApprovalOutcome[];
     terminal: RunTerminal | null;
     last_sequence: number;
+    /** Verified inputs of this run; absent in records written before 1.6. */
+    citations?: AnswerCitation[];
 }
 
 export function isTerminal(status: RunStatus): boolean {
     return TERMINAL_STATUSES.has(status);
 }
-
-const EMPTY_PAGE: PageInfo = { limit: HISTORY_PAGE_SIZE, next_cursor: null, has_more: false };
 
 export interface SnapshotQuery {
     approvalCursor?: string;
@@ -56,10 +57,10 @@ export function toSnapshot(record: RunRecord, replay: ReplayWindow, query: Snaps
     const request: PageRequestInput = { limit: HISTORY_PAGE_SIZE };
     if (query.approvalCursor) request.cursor = query.approvalCursor;
     const history = paginate(record.approval_history, scope, request);
-    if (query.citationCursor) {
-        // Citations arrive with 3.6; no citation cursor has been issued yet.
-        paginate([], `citations:${record.run_id}`, { cursor: query.citationCursor });
-    }
+    const citationRequest: PageRequestInput = { limit: HISTORY_PAGE_SIZE };
+    if (query.citationCursor) citationRequest.cursor = query.citationCursor;
+    const cited = record.citations ?? [];
+    const citations = paginate(cited, `citations:${record.run_id}:${cited.length}`, citationRequest);
     return {
         schema_version: "1",
         run_id: record.run_id,
@@ -73,8 +74,8 @@ export function toSnapshot(record: RunRecord, replay: ReplayWindow, query: Snaps
         answer: {
             text: record.answer_text,
             truncated: record.answer_truncated,
-            citations: [],
-            citations_page: EMPTY_PAGE,
+            citations: citations.items,
+            citations_page: citations.page,
         },
         tool_calls: record.tool_calls,
         ...(record.tool_calls_truncated ? { tool_calls_truncated: true } : {}),

@@ -139,3 +139,24 @@
         grid-template-columns: minmax(0, 1fr);
     }
 }
+
+.approval-meta {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: var(--space-1) var(--space-3);
+    margin: 0;
+}
+
+.approval-meta dt {
+    color: var(--color-text-muted);
+}
+
+.approval-meta dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.answer-text {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}

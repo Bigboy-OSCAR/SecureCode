@@ -548,10 +548,12 @@ docs/progress/tasks/1.5.md에 task_id/owner/status/시각/선행 증거/변경 �
 **주요 산출물·수정 범위:** apps/ui; tests/e2e; docs/ui의 구현 대응표; 1.6 검증 증거  
 **검증 기록:** `docs/progress/tasks/1.6.md`
 
+**2026-11-11 17:50 상태: IN_PROGRESS** (박준형 인계). 다음을 마쳤다. <br>- 브라우저 E2E 18개(`npm run test:e2e`, fixture provider + 실제 stack + Edge headless) 통과 <br>- 실제 provider live 12/12 <br>- UI 결함 8건과 host 조립 결함 2건(첫 응답 전 취소 멈춤, provider 오류 본문 노출) 수정, 답변 근거 연결 <br>인수표 34개 중 PASS 25, 부분 9다. 남은 것: AC-03 새로고침 뒤 세션 복구 미구현, AC-02·08·12·15·18·25·32 일부 미확인, AC-33 스크린리더·명도 대비 미측정. 선행 2.3의 로드맵 체크가 1.4 커밋(`94ec5d4f`)에서 실수로 되돌려져 있다. 그래서 조건 1·3과 '1.6 완료'는 체크하지 않았다. [1.6 기록](docs/progress/tasks/1.6.md)
+
 **완료 조건**
 
 - [ ] 2.3의 필수 UI 인수 항목과 전체 E2E가 통과하고 UI 차단 결함이 없다.
-- [ ] 실제 provider smoke와 자동 fixture 시험을 구분한 증거가 있다.
+- [x] 실제 provider smoke와 자동 fixture 시험을 구분한 증거가 있다.
 - [ ] 빌드·접근성/반응형·오류 표시를 확인했고 최종 3.8이 바로 재현할 수 있다.
 
 **LLM에 그대로 붙여넣을 실행 프롬프트**

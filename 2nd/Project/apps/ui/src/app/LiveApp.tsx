@@ -23,6 +23,7 @@ import { LiveContextPanel } from "../features/context/components/LiveContextPane
 import { LivePointerWorkspace } from "../features/pointers/components/LivePointerWorkspace.js";
 import type { UiPointer } from "../api/mappers/pointerMapper.js";
 import { LiveConnectionPanel } from "../features/settings/components/LiveConnectionPanel.js";
+import { PanelSwitcher, panelClass, type SidePanel } from "./PanelSwitcher.js";
 
 export function LiveApp(): React.JSX.Element {
     const api = useMemo(() => new ApiHttpClient(), []);
@@ -37,6 +38,8 @@ export function LiveApp(): React.JSX.Element {
     // Pointer URI -> run ID seen in this page's run events; a fallback for rows stored before run_id existed.
     const [runtimePointerRuns, setRuntimePointerRuns] = useState<Readonly<Record<string, string>>>({});
     const [pointerContextRef, setPointerContextRef] = useState<SelectedPointerContextRef | null>(null);
+    const [openPanel, setOpenPanel] = useState<SidePanel | null>("project");
+    const togglePanel = (panel: SidePanel): void => setOpenPanel((current) => (current === panel ? null : panel));
     const indexWorkflow = useIndexWorkflow(api, selectedWorkspace?.workspace_id ?? null);
     const refreshIndexStatus = indexWorkflow.refresh;
     const refreshIndex = useCallback((): void => void refreshIndexStatus(), [refreshIndexStatus]);
@@ -145,8 +148,13 @@ export function LiveApp(): React.JSX.Element {
                         <p>실제 로컬 호스트 API · HttpOnly cookie 인증</p>
                     </section>
                 </header>
+                <PanelSwitcher open={openPanel} onToggle={togglePanel} />
                 <div className="workspace-grid">
-                    <nav className="project-sidebar" aria-label="프로젝트 및 화면">
+                    <nav
+                        id="project-panel"
+                        className={panelClass("project-sidebar", "project", openPanel)}
+                        aria-label="프로젝트 및 화면"
+                    >
                         <LiveProjectPanel
                             connected={connected}
                             workspaces={workspaces}
@@ -164,10 +172,10 @@ export function LiveApp(): React.JSX.Element {
                             <a className="sidebar-link sidebar-link-active" href="#screen-chat">
                                 대화
                             </a>
-                            <a className="sidebar-link" href="#screen-pointers">
+                            <a className="sidebar-link" href="#screen-pointers" onClick={() => setOpenPanel("context")}>
                                 등록 자료
                             </a>
-                            <a className="sidebar-link" href="#screen-context">
+                            <a className="sidebar-link" href="#screen-context" onClick={() => setOpenPanel("context")}>
                                 컨텍스트 예산
                             </a>
                         </div>
@@ -209,7 +217,11 @@ export function LiveApp(): React.JSX.Element {
                             )}
                         </div>
                     </main>
-                    <aside className="context-sidebar" aria-label="컨텍스트와 포인터">
+                    <aside
+                        id="context-panel"
+                        className={panelClass("context-sidebar", "context", openPanel)}
+                        aria-label="컨텍스트와 포인터"
+                    >
                         <LiveContextPanel
                             api={api}
                             connected={connected}

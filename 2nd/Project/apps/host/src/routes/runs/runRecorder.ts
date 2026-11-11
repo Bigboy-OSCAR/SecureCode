@@ -5,6 +5,7 @@
  * terminal status never changes again (late SDK facts are dropped).
  */
 import type {
+    AnswerCitation,
     ApprovalRequest,
     ErrorCode,
     RunStatus,
@@ -14,7 +15,14 @@ import type {
 } from "@securecode/contracts";
 import { clipText, isoTime, type Clock } from "../../security/ids.js";
 import type { RunEventLog } from "./eventLog.js";
-import { ANSWER_MAX_CHARS, isTerminal, PENDING_APPROVALS_MAX, TOOL_CALLS_MAX, type RunRecord } from "./runRecord.js";
+import {
+    ANSWER_MAX_CHARS,
+    CITATIONS_MAX,
+    isTerminal,
+    PENDING_APPROVALS_MAX,
+    TOOL_CALLS_MAX,
+    type RunRecord,
+} from "./runRecord.js";
 
 const DELTA_MAX_CHARS = 4096;
 const FINAL_TOOL_PHASES: ReadonlySet<ToolCallPhase> = new Set(["completed", "failed", "rejected", "cancelled"]);
@@ -142,6 +150,16 @@ export class RunRecorder {
             byte_size: byteSize,
             tool_call_id: toolCallId,
         });
+    }
+
+    /** Adds one verified input of this run (deduplicated, bounded); the snapshot pages them. */
+    cite(citation: AnswerCitation): void {
+        if (this.terminal) return;
+        const cited = (this.record.citations ??= []);
+        const key = JSON.stringify(citation.ref);
+        if (cited.length >= CITATIONS_MAX || cited.some((item) => JSON.stringify(item.ref) === key)) return;
+        cited.push(citation);
+        this.persist(this.record, false);
     }
 
     finish(status: TerminalRunStatus, reasonCode?: ErrorCode, message?: string): void {

@@ -119,10 +119,10 @@ launcher가 강제 종료돼 `<데이터 폴더>/run/dev-processes.json`이 남�
 | `npm run build` | 생성 타입, host 타입, UI 빌드, service wheel, **로컬 패키지 검사**(`dist/securecode-local/manifest.json`에 lock hash·wheel·UI asset SHA-256 기록) | 없음 |
 | `npm run test:install` | 작업 트리를 새 임시 폴더에 복사 → `npm ci` + `uv sync --locked` → 새 데이터 폴더로 dev 기동 → UI proxy로 로그인·작업 공간 등록 → stop → 재시작 후 데이터 유지·health 확인 → stop. 사용자 `.securecode`는 건드리지 않는다 | npm·uv 내려받기(캐시가 있으면 빠름) |
 | `SECURECODE_LIVE_SMOKE=1 npm run test:live` | 실제 provider. 토큰 계수 일치, R0 색인·답, 명령 승인 → Runtime Pointer → 부분 재조회, PDF 쪽 인용, 취소, 거절, 기록 검사 | 모델 서버 필요 |
-| `npm run test:e2e` | UI 브라우저 E2E. 1.6이 작성할 때까지 PENDING | — |
+| `npm run test:e2e` | 브라우저 E2E(1.6), 18개. 시험 파일마다 새 임시 폴더와 빈 포트로 실제 service·host·Vite UI를 띄운다. 모델 자리에는 fixture provider(`tests/e2e/support/fakeLlama.ts`, OpenAI 호환 + `/tokenize`·`/apply-template`)를 두고, 설치된 Edge/Chrome을 headless로 조작한다(`playwright-core`, 브라우저 내려받기 없음). 다른 브라우저는 `SECURECODE_E2E_BROWSER=msedge|chrome` 또는 `SECURECODE_E2E_BROWSER_PATH`로 고른다. 실행 로그는 `E2E_LOG=1` | 없음(fixture provider). Edge 또는 Chrome 설치 필요 |
 
 - 종료 코드: `0` 모두 통과, `1` 실패, `3` 미완료다. 미완료는 다른 작업이 담당하는 기존 위반(KNOWN), 아직 없는 시험(PENDING), live opt-in 꺼짐을 뜻한다.
-- 오프라인 검사(`check`, `test:contracts`, `test:integration`, `build`)는 모델과 네트워크 없이 돈다.
+- 오프라인 검사(`check`, `test:contracts`, `test:integration`, `build`, `test:e2e`)는 모델과 네트워크 없이 돈다. `test:e2e`는 fixture provider 결과이고, 실제 provider 판정은 `test:live`로 따로 한다.
 - live는 `SECURECODE_LIVE_SMOKE=1`일 때만 provider를 부른다.
 
 ### 구조 검사가 막는 것
@@ -168,7 +168,7 @@ launcher가 강제 종료돼 `<데이터 폴더>/run/dev-processes.json`이 남�
 | 세션 생성 503 `PROTECTION_UNAVAILABLE`, run `TOKENIZER_UNAVAILABLE`, `SERVICE_UNAVAILABLE`, `SOURCE_CHANGED`, PDF 오류 | 4.10 운용 안내 5절 | 같은 곳 |
 | live 단계 시간 초과 | 모델 생성 속도(무거운 프로그램 실행 중) | 다른 프로그램을 닫고 다시 실행 |
 | `npm run check`가 종료 코드 3, `KNOWN structure baseline [owner …]` | 다른 작업이 고칠 위반이 `structure-baseline.json` `entries`에 있음(2026-11-11 기준 비어 있음) | 해당 담당이 고친 뒤 항목 삭제 |
-| `npm run test:e2e`가 종료 코드 3, `PENDING … [owner 1.6]` | 브라우저 runner가 아직 없음 | 1.6이 등록하고 `pendingSuites.ts` 항목 삭제 |
+| `npm run test:e2e`가 `browserType.launch: … channel` 오류 | Edge/Chrome을 찾지 못함 | `SECURECODE_E2E_BROWSER=chrome` 또는 `SECURECODE_E2E_BROWSER_PATH=<브라우저 실행 파일>` |
 
 ## 8. 실패하면 누가 어디를 고치나
 

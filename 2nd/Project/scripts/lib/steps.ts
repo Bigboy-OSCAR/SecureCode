@@ -17,7 +17,7 @@ function withArgs(tool: string, args: string[]): [string, string[]] {
 
 export async function typecheckSteps(): Promise<StepResult[]> {
     const results: StepResult[] = [];
-    for (const project of ["contracts", "apps/host", "apps/ui", "tools/sdk-probe", "scripts"]) {
+    for (const project of ["contracts", "apps/host", "apps/ui", "tools/sdk-probe", "scripts", "tests/e2e"]) {
         results.push(await toolStep(`types: ${project}`, ...withArgs("typescript/bin/tsc", ["-p", project])));
     }
     return results;

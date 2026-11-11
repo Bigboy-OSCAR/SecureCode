@@ -42,7 +42,7 @@ context-service → host → UI 순서로 127.0.0.1에 뜬다. 터미널에 나�
 | `npm run build` | 생성 타입·host 타입·UI·Python wheel·로컬 패키지 manifest |
 | `npm run test:install` | 새 임시 폴더에서 설치 → 기동 → 중단 → 재시작 smoke |
 | `npm run test:live` | 실제 provider smoke (opt-in: `SECURECODE_LIVE_SMOKE=1`) |
-| `npm run test:e2e` | UI E2E (1.6, 그 전까지 PENDING) |
+| `npm run test:e2e` | 브라우저 E2E (1.6, fixture provider + 실제 stack, Edge/Chrome headless) |
 | `npm run generate:contracts` | 스키마에서 TS 타입 생성 |
 | `npm run probe:sdk` | Cline SDK 호환성 검증기(3.1) |
 

@@ -20,11 +20,25 @@ export function ApprovalCard({ controller, state }: ApprovalCardProps): React.JS
     return (
         <section className="feature-card" aria-labelledby="approval-heading" data-testid="screen-approval">
             <div className="feature-heading">
-                <h2 id="approval-heading">실행 승인</h2>
+                <h2 id="approval-heading" tabIndex={-1}>
+                    실행 승인
+                </h2>
                 <StatusBadge label={approval ? "승인 대기" : "대기 승인 요청 없음"} tone="warning" />
             </div>
             {approval ? (
                 <>
+                    <dl className="approval-meta" data-testid="approval-meta">
+                        <dt>종류</dt>
+                        <dd>{reviewKindLabel(approval.review.kind)}</dd>
+                        <dt>도구</dt>
+                        <dd>{approval.tool_name}</dd>
+                        <dt>대상</dt>
+                        <dd>{approval.review.target_paths?.join(", ") || "지정된 파일 없음(작업 공간 루트)"}</dd>
+                        <dt>만료</dt>
+                        <dd>
+                            <time dateTime={approval.expires_at}>{formatDateTime(approval.expires_at)}</time>
+                        </dd>
+                    </dl>
                     <p>{approval.review.summary}</p>
                     <pre className="bounded-code">{approval.review.content}</pre>
                     {approval.review.content_truncated || !approval.review.reviewable ? (
@@ -80,12 +94,22 @@ export function ApprovalCard({ controller, state }: ApprovalCardProps): React.JS
                     {approvalStatusLabel(item.status)} · {item.tool_name}
                 </p>
             ))}
-            <Modal open={actions.intent !== null} title={modalTitle} onRequestClose={actions.close}>
+            <Modal
+                open={actions.intent !== null}
+                title={modalTitle}
+                onRequestClose={actions.close}
+                returnFocusId="approval-heading"
+            >
                 <p>
                     {actions.intent === "approve"
                         ? "검토한 변경 또는 명령 실행을 허용합니다."
                         : "이 요청을 거절하고 실행하지 않습니다."}
                 </p>
+                {approval ? (
+                    <p>
+                        {reviewKindLabel(approval.review.kind)} · {approval.review.summary}
+                    </p>
+                ) : null}
                 <div className="action-row">
                     <Button
                         type="button"
@@ -103,6 +127,22 @@ export function ApprovalCard({ controller, state }: ApprovalCardProps): React.JS
             </Modal>
         </section>
     );
+}
+
+function reviewKindLabel(kind: string): string {
+    switch (kind) {
+        case "command":
+            return "명령 실행";
+        case "file_change":
+            return "파일 변경";
+        default:
+            return "기타 작업";
+    }
+}
+
+function formatDateTime(value: string): string {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? value : date.toLocaleString("ko-KR");
 }
 
 function approvalStatusLabel(status: string): string {

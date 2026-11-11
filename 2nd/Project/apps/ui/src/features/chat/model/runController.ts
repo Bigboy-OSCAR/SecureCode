@@ -111,6 +111,31 @@ export class RunController {
         }
         if (result.recoverSnapshot && this.state.snapshot) {
             void this.recoverSnapshot(this.state.snapshot.run_id, this.epoch);
+        } else if (event.type === "run.status_changed" && event.payload.terminal && this.state.snapshot) {
+            void this.refreshCitations(this.state.snapshot.run_id, this.epoch);
+        }
+    }
+
+    /** Citations are not streamed: after the terminal event, take the final list from the snapshot. */
+    private async refreshCitations(runId: RunSnapshot["run_id"], epoch: number): Promise<void> {
+        try {
+            const snapshot = await this.client.getRun(runId);
+            const current = this.state.snapshot;
+            if (!this.isCurrent(epoch) || !current || current.run_id !== runId || snapshot.run_id !== runId) {
+                return;
+            }
+            const { citations } = snapshot.answer;
+            this.publish({
+                ...this.state,
+                snapshot: {
+                    ...current,
+                    answer: citations
+                        ? { ...current.answer, citations, citations_page: snapshot.answer.citations_page }
+                        : current.answer,
+                },
+            });
+        } catch {
+            // The run already finished; the answer stays shown without the late citation list.
         }
     }
 

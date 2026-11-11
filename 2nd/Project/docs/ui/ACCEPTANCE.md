@@ -81,15 +81,20 @@
 
 | 화면 | 구현 진입점 (`apps/ui/src/` 기준) | 인수 항목 | 최종 실서비스 확인 책임 |
 | --- | --- | --- | --- |
-| SC-01 | `features/settings/components/ConnectionPanel.tsx` | AC-01, AC-02, AC-33 | 1.4 연결 후 1.6 / 3.8 |
-| SC-02 | `features/project/components/ProjectPanel.tsx` | AC-03~AC-06, AC-12, AC-17, AC-33 | 1.4·1.5와 3.6 색인 연결 후 1.6 / 3.8 |
-| SC-03 | `features/chat/components/ConversationPanel.tsx`, `model/runController.ts` | AC-02, AC-07~AC-12, AC-14, AC-17, AC-31, AC-33, AC-34 | 1.4·1.5 및 실제 SDK 실행 후 1.6 / 3.8 |
-| SC-04 | `features/approvals/components/ApprovalCard.tsx` | AC-13~AC-15, AC-33 | 1.4 승인·SDK 도구 효과 연결 후 1.6 / 3.8 |
-| SC-05 | `features/context/components/ContextPanel.tsx` | AC-09, AC-12, AC-16, AC-17, AC-22, AC-31, AC-33 | 1.5 R0·context 연결 후 1.6 / 3.8 |
-| SC-06 | `features/pointers/components/PointerPanel.tsx` | AC-12, AC-18~AC-22, AC-24, AC-33, AC-34 | 1.5 및 4.3~4.6 후 1.6 / 3.8 |
-| SC-07 | `features/pointers/components/PointerReadPanel.tsx` | AC-12, AC-22~AC-27, AC-29, AC-31, AC-33 | 1.5 및 4.6·4.9 후 1.6 / 3.8 |
-| SC-08 | `features/pointers/components/PdfParsePanel.tsx` | AC-12, AC-20, AC-27~AC-29, AC-31, AC-33 | 1.5 및 4.9·4.10 후 1.6 / 3.8 |
-| SC-09 | `features/context/components/ContextPanel.tsx`, `features/settings/components/SettingsPanel.tsx` | AC-10, AC-12, AC-17, AC-22, AC-24, AC-30~AC-33 | 1.5 및 4.8 최종 gate 후 1.6 / 3.8 |
+2026-11-11 1.6에서 구현 진입점을 실제 서비스 화면(`Live*`)으로 갱신했다. 2.3 시점의 fixture 화면 파일은 1.5에서 삭제됐다.
+
+| 화면 | 구현 진입점 (`apps/ui/src/` 기준) | 인수 항목 | 최종 실서비스 확인 책임 |
+| --- | --- | --- | --- |
+| SC-01 | `features/settings/components/LiveConnectionPanel.tsx`, `app/LiveApp.tsx` | AC-01, AC-02, AC-33 | 1.4 연결 후 1.6 / 3.8 |
+| SC-02 | `features/project/components/LiveProjectPanel.tsx`, `features/project/hooks/useIndexWorkflow.ts` | AC-03~AC-06, AC-12, AC-17, AC-33 | 1.4·1.5와 3.6 색인 연결 후 1.6 / 3.8 |
+| SC-03 | `features/chat/components/{ConversationPanel,AnswerView,ToolHistory}.tsx`, `model/runController.ts`, `model/toolLabels.ts` | AC-02, AC-07~AC-12, AC-14, AC-17, AC-31, AC-33, AC-34 | 1.4·1.5 및 실제 SDK 실행 후 1.6 / 3.8 |
+| SC-04 | `features/approvals/components/ApprovalCard.tsx`, `components/Modal.tsx` | AC-13~AC-15, AC-33 | 1.4 승인·SDK 도구 효과 연결 후 1.6 / 3.8 |
+| SC-05 | `features/context/components/LiveContextPanel.tsx` | AC-09, AC-12, AC-16, AC-17, AC-22, AC-31, AC-33 | 1.5 R0·context 연결 후 1.6 / 3.8 |
+| SC-06 | `features/pointers/components/{LivePointerWorkspace,LivePointerPanel}.tsx` | AC-12, AC-18~AC-22, AC-24, AC-33, AC-34 | 1.5 및 4.3~4.6 후 1.6 / 3.8 |
+| SC-07 | `features/pointers/components/LivePointerReadPanel.tsx`, `model/pointerSelector.ts` | AC-12, AC-22~AC-27, AC-29, AC-31, AC-33 | 1.5 및 4.6·4.9 후 1.6 / 3.8 |
+| SC-08 | `features/pointers/components/LivePdfPanel.tsx` | AC-12, AC-20, AC-27~AC-29, AC-31, AC-33 | 1.5 및 4.9·4.10 후 1.6 / 3.8 |
+| SC-09 | `features/context/components/LiveContextPanel.tsx`, `features/settings/components/LiveConnectionPanel.tsx` | AC-10, AC-12, AC-17, AC-22, AC-24, AC-30~AC-33 | 1.5 및 4.8 최종 gate 후 1.6 / 3.8 |
+| 공통 | `app/PanelSwitcher.tsx`(1024px 미만 패널 전환), `features/shared/model/provenanceLabels.ts`(출처 표기) | AC-07, AC-16, AC-23, AC-27, AC-33 | 1.6 / 3.8 |
 
 ## 7. 1.6·3.8 실행 절차와 증거 필수 항목
 
@@ -117,3 +122,61 @@
 수정 요청은 [2.3 UI 검토 인계](../handoffs/2.3-ui-review-fixes.md)에 재현·실제·기대·영향·심각도·담당 작업으로 기록한다. 검토 가능한 fixture 표시와 동작은 현재 기준으로 리뷰했고, UI/상태/API 구현 누락은 1.4·1.5·1.6에서 처리한다. 2.3은 상태 관리 코드·hook·컴포넌트를 수정하지 않는다. 동작 검토 자체를 막는 결함이 생기면 1.3 재개방·수정·재검증 후 2.3을 닫는다.
 
 완료 근거와 브라우저 실측 결과는 [작업 2.3 기록](../progress/tasks/2.3.md)에 있으며, 이 표의 미검증 최종 인수를 완료로 바꾸지 않는다. commit/push는 수행하지 않는다.
+
+## 9. 1.6 인수 결과 (2026-11-11, 박준형 인계)
+
+판정 기호:
+- **E**: `npm run test:e2e`. 실제 context-service·host·SDK·Vite UI를 headless 브라우저로 조작하고, 모델은 fixture provider다.
+- **L**: 실제 provider(로컬 Qwen2.5-7B, llama.cpp)로 브라우저 화면 또는 `npm run test:live`를 확인했다.
+- **U**: UI 단위 시험.
+- **H**: host 시험.
+
+미해결 항목은 PASS로 적지 않았다. 상세 근거는 [1.6 기록](../progress/tasks/1.6.md)에 있다.
+
+| 인수 ID | 결과 | 근거 / 남은 것 |
+| --- | --- | --- |
+| AC-01 | PASS | E: 잘못된 코드 거절, 올바른 코드로 연결. 연결 뒤 입력칸이 비고, URL·localStorage·sessionStorage·읽을 수 있는 cookie에 코드가 없다 |
+| AC-02 | 부분 | E: 잘못된 코드 안내. 만료·재사용 코드, 서비스 중지 중 연결, 실행 중 인증 만료 뒤 기존 run 복구는 브라우저로 확인하지 않았다 |
+| AC-03 | 부분 | E: 등록 성공. 없는 경로는 폼 옆에 사유("경로가 존재하지 않습니다")를 보이고 목록에 넣지 않는다. 새로고침 뒤 목록은 보이지만 **선택·세션은 복구하지 않는다**(미구현) |
+| AC-04 | PASS | E: C·C++·Java·JavaScript·Python 프로젝트 색인. 진행 중 중복 시작은 버튼 잠금 |
+| AC-05 | PASS | E: `partial`, 발견 7·색인 5·제외 1·실패 1, `broken.py:1 · syntax_error`, `types.ts · unsupported_language` |
+| AC-06 | PASS | E·L: 원본 수정 뒤 `stale` 표시, 재색인으로 새 revision |
+| AC-07 | PASS | E·L: 질문 → 도구 단계 → 완료. 답변과 서버가 확인한 근거(R0 `파일:줄`, PDF 쪽)를 같은 run에 표시. 빈 질문은 전송 비활성 |
+| AC-08 | 부분 | E: 실행 중 전송 잠금. H: 같은 idempotency key로 run 1회. 응답 유실·새로고침 뒤 보존은 브라우저로 확인하지 않았다 |
+| AC-09 | PASS | L(1.5): NO_MATCH와 한국어 전용 안내 |
+| AC-10 | PASS | E: provider 500 → `실패`. provider 오류 본문을 답변으로 쓰지 않는다(1.6 결함 수정) |
+| AC-11 | PASS | E·L: 실행 중 취소 → `취소됨`. 질문과 결정된 승인 이력을 유지한다(UI23-09). 모델 첫 응답 전 취소도 멈추지 않는다(1.6 결함 수정) |
+| AC-12 | 부분 | E: SSE 2회 끊김 → "연결이 끊겼습니다" → 자동 재연결 → 같은 run 완료. 색인·PDF 상태 재조회와 화면 이동 중 늦은 응답은 확인하지 않았다 |
+| AC-13 | PASS | E: 종류·도구·대상·만료 표시. 대화상자는 제목에 초점, Escape로 시작 버튼에 복귀, 닫기는 결정 없음 |
+| AC-14 | PASS | E: 거절 → `거절됨`, 출력 저장 없음 |
+| AC-15 | 부분 | E: 결정하지 않은 승인 → `승인 기한 만료`, 명령 미실행. 입력 digest 변경·다른 scope 결정은 host 시험만 있다 |
+| AC-16 | PASS | L(1.5)·E: 후보 `파일:줄`·score·정확 계수, 원문 묶음, 연결 못 한 참조 |
+| AC-17 | PASS | E·L: 원본 변경 → SOURCE_CHANGED, 머리말 `stale` |
+| AC-18 | 부분 | L(1.5): Source·Runtime 목록, 빈 목록 안내, Runtime 다음 목록. 종류 탭·필터는 없다 |
+| AC-19 | PASS | L·E: 지정한 경로만 등록, 없는 경로 404 안내 |
+| AC-20 | PASS | L(1.5): 해제 뒤 원본 SHA-256 유지. E: 확인창 제목 초점·돌아가기 시 원래 버튼 복귀 |
+| AC-21 | PASS | L(1.5): Runtime 저장분만 삭제, 목록·미리보기 비움 |
+| AC-22 | PASS | L(1.5): EXPIRED·삭제 안내 |
+| AC-23 | PASS | E·L: 4.5 MB/2 MB 원본에서 지정 줄만 읽음. 브라우저가 받은 API 본문 합계는 512 KiB 미만 |
+| AC-24 | PASS | L(1.5): 원본 변경 → 미리보기 폐기와 등록 갱신 안내 |
+| AC-25 | 부분 | E: 끝 줄 < 시작 줄을 요청 전에 원인별로 안내. JSON 경로 선택자와 8 MiB 초과 JSON은 확인하지 않았다 |
+| AC-26 | PASS | E·L: 한국어·영문 검색, 일치 줄 표시 |
+| AC-27 | PASS | E·L: 파싱 ready, 2쪽만 읽음, 원본 PDF 쪽·parser 출처, 답변 근거에 PDF 쪽 |
+| AC-28 | PASS | E·L: 텍스트 없는 PDF `unsupported`, 손상 PDF `failed`. 암호화·용량 초과 PDF는 4.9 시험만 있다 |
+| AC-29 | PASS | E: 파싱 뒤 원본 변경 → 이전 쪽 폐기·갱신 안내, 옛 본문 미표시 |
+| AC-30 | PASS | L(1.5): 선택·누락 사유·정확 계수·출처 |
+| AC-31 | PASS | E: 창보다 고정 비용이 크면 미리보기와 질문 모두 BUDGET_EXCEEDED, 모델 요청 0회 |
+| AC-32 | 부분 | L: 호스트 설정 상태 표시. 설정 변경 뒤 다시 조회와 미설정 시 전송 차단은 확인하지 않았다 |
+| AC-33 | 부분 | E: 키보드만으로 질문·승인창, 1280·768·640(200%) 가로 넘침 없음, 768 이하 패널 하나씩, 포인터 선택 접근성 이름. **스크린리더 낭독과 명도 대비 측정은 하지 않았다** |
+| AC-34 | PASS | E: 대용량 로그·무관 파일·미선택 PDF 쪽이 provider 요청과 DOM에 없음. H: SSE·SDK 기록(3.6/4.10) |
+
+2.3 수정 요청 처리:
+- UI23-01: 1.5 실서비스 화면으로 해소. 현재 결과만 표시한다.
+- UI23-02: 1.5에서 검색·범위·선택·목록 조작을 연결했다.
+- UI23-03: 1.5 PDF 상태로 해소. 1.6 E2E로 재확인했다.
+- UI23-04: 1.6에서 해소. 승인 메타와 대화상자 초점·복귀.
+- UI23-05: 1.6에서 해소. 도구 단계, 크기 미확인, 서버 근거 목록.
+- UI23-06: 1.6에서 해소. 768px 패널 전환.
+- UI23-07: 1.4·1.5 실 API로 해소. 단 AC-02·AC-03의 복구는 남았다.
+- UI23-08: 1.6에서 해소. 4,000자 단위 "더 보기", 상태만 live region.
+- UI23-09: 1.6 E2E로 실서비스 이력 보존을 확인했다.

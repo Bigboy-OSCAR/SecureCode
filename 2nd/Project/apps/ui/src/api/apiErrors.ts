@@ -38,6 +38,16 @@ const messagesByCode: Record<string, string> = {
     VALIDATION_FAILED: "요청 내용을 확인하고 다시 시도하세요.",
 };
 
+/** Server reasons that tell the user what to fix (host workspace-root and selector checks). */
+const messagesByReason: Record<string, string> = {
+    root_not_found: "경로가 존재하지 않습니다. 호스트 컴퓨터의 실제 폴더 경로를 입력하세요.",
+    root_not_directory: "폴더가 아닌 파일 경로입니다. 프로젝트 폴더 경로를 입력하세요.",
+    root_is_link: "심볼릭 링크 경로는 등록할 수 없습니다. 실제 폴더 경로를 입력하세요.",
+    root_not_absolute: "절대 경로를 입력하세요.",
+    root_is_filesystem_root: "드라이브 최상위 폴더는 등록할 수 없습니다.",
+    path_outside_allowed_roots: "호스트 설정(SECURECODE_ALLOWED_WORKSPACE_ROOTS)이 허용한 위치 밖의 경로입니다.",
+};
+
 export function toApiClientError(error: unknown): ApiClientError {
     if (error instanceof ApiClientError) {
         return error;
@@ -64,7 +74,14 @@ export function formatApiFailure(error: unknown, fallback: string): string {
     }
 }
 
-export function safeApiMessage(code: string | undefined, kind: ApiFailureKind): string {
+export function safeApiMessage(
+    code: string | undefined,
+    kind: ApiFailureKind,
+    reason?: string | number | boolean | null,
+): string {
+    if (typeof reason === "string" && messagesByReason[reason]) {
+        return messagesByReason[reason];
+    }
     if (code && messagesByCode[code]) {
         return messagesByCode[code];
     }

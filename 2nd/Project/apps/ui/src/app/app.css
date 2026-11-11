@@ -218,8 +218,7 @@
     }
 
     .project-sidebar {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-        align-items: center;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .project-sidebar .sidebar-links {
@@ -268,5 +267,40 @@
     .conversation-heading {
         align-items: start;
         flex-direction: column;
+    }
+}
+
+/* 1.6 (UI23-06): one side panel at a time below 1024px; the conversation and approvals stay visible. */
+.panel-switcher {
+    display: none;
+}
+
+@media (max-width: 1023px) {
+    .panel-switcher {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+        margin-top: var(--space-3);
+    }
+
+    .panel-toggle {
+        min-height: 2.75rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        padding: var(--space-2) var(--space-4);
+        color: var(--color-text);
+        background: var(--color-surface);
+        font: inherit;
+        cursor: pointer;
+    }
+
+    .panel-toggle[aria-expanded="true"] {
+        border-color: var(--color-accent);
+        color: var(--color-accent);
+        font-weight: 700;
+    }
+
+    .side-panel:not(.side-panel-open) {
+        display: none;
     }
 }

@@ -1,13 +1,9 @@
 import { Alert, Button, StatusBadge, TextAreaField } from "../../../components/index.js";
-import { boundedPreview } from "../../shared/model/boundedPreview.js";
+import { AnswerView } from "./AnswerView.js";
+import { ToolHistory } from "./ToolHistory.js";
 import { useConversationActions } from "../hooks/useConversationActions.js";
 import type { RunController } from "../model/runController.js";
 import type { RunViewState } from "../model/runState.js";
-
-const toolLabels: Record<string, string> = {
-    read_log: "로그 읽기",
-    run_project_command: "프로젝트 명령 실행",
-};
 
 const statusLabels = {
     queued: "실행 대기 중",
@@ -28,7 +24,6 @@ export function ConversationPanel({ controller, state }: ConversationPanelProps)
     const actions = useConversationActions(controller, state);
     const run = state.snapshot;
     const runCanContinue = !run || run.status === "completed" || run.status === "failed" || run.status === "cancelled";
-    const streamText = run?.answer.text ?? "";
     const currentStatus = run ? statusLabels[run.status] : "질문을 입력해 시작하세요";
     const operationLabel =
         state.operation?.kind === "cancelling"
@@ -46,7 +41,9 @@ export function ConversationPanel({ controller, state }: ConversationPanelProps)
         >
             <div className="feature-heading">
                 <h2 id="conversation-heading">대화 · 실행 이력</h2>
-                <StatusBadge label={currentStatus} tone={run ? "warning" : "neutral"} />
+                <span role="status" aria-live="polite">
+                    <StatusBadge label={currentStatus} tone={run ? "warning" : "neutral"} />
+                </span>
             </div>
             {run ? (
                 <p>
@@ -74,27 +71,8 @@ export function ConversationPanel({ controller, state }: ConversationPanelProps)
                 <h3>질문</h3>
                 <p>{run?.prompt_preview ?? "질문이 아직 없습니다."}</p>
             </article>
-            <article className="message-card" aria-live="polite">
-                <h3>답변</h3>
-                <p>{run ? boundedPreview(streamText, 280) : "답변이 도착하면 여기에 표시됩니다."}</p>
-                {run?.status === "failed" || run?.status === "cancelled" ? (
-                    <p>중단 전 결과: {boundedPreview(streamText, 280)}</p>
-                ) : null}
-                {run?.answer.truncated ? <p>답변 일부만 표시됩니다.</p> : null}
-                {run && isTerminalWithoutAnswer(run) ? <p>표시할 답변이 없습니다.</p> : null}
-            </article>
-            <div className="tool-history">
-                <h3>실행 도구 이력</h3>
-                {run?.tool_calls.map((tool) => (
-                    <div className="tool-row" key={tool.tool_call_id}>
-                        <strong>{toolLabels[tool.tool_name] ?? "작업 도구"}</strong>
-                        <span>{tool.summary}</span>
-                        <span>{tool.output_bytes?.toLocaleString() ?? 0} bytes 저장</span>
-                    </div>
-                ))}
-                {run?.tool_calls_truncated ? <p>도구 이력 일부만 표시됩니다.</p> : null}
-                {!run ? <p>현재 실행의 도구 이력은 실행 후 확인할 수 있습니다.</p> : null}
-            </div>
+            <AnswerView run={run} />
+            <ToolHistory tools={run ? run.tool_calls : null} truncated={run?.tool_calls_truncated === true} />
             {run ? (
                 <Button
                     type="button"
@@ -135,12 +113,5 @@ export function ConversationPanel({ controller, state }: ConversationPanelProps)
                 </Button>
             </form>
         </section>
-    );
-}
-
-function isTerminalWithoutAnswer(run: NonNullable<RunViewState["snapshot"]>): boolean {
-    return (
-        (run.status === "completed" || run.status === "failed" || run.status === "cancelled") &&
-        run.answer.text.length === 0
     );
 }

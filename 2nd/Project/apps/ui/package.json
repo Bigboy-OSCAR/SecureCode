@@ -7,7 +7,7 @@
         "dev": "vite --host 127.0.0.1 --strictPort",
         "build": "npm run typecheck && vite build",
         "typecheck": "tsc -p tsconfig.json",
-        "test": "tsx --test tests/ui.test.tsx tests/runController.test.ts tests/viteProxy.test.ts tests/apiClients.test.ts tests/contextApi.test.ts tests/liveContextScreens.test.tsx"
+        "test": "tsx --test tests/ui.test.tsx tests/runController.test.ts tests/viteProxy.test.ts tests/apiClients.test.ts tests/contextApi.test.ts tests/liveContextScreens.test.tsx tests/acceptanceScreens.test.tsx"
     },
     "devDependencies": {
         "@types/react": "19.3.0",

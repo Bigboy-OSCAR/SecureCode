@@ -6,9 +6,8 @@ interface PendingSuite {
     ownerTask: string;
     detail: string;
 }
-export const PENDING_SUITES: readonly PendingSuite[] = [
-    { command: "e2e", name: "UI end-to-end flows", ownerTask: "1.6", detail: "browser workflow runner pending" },
-];
+// Empty since 1.6 registered the browser E2E runner (2026-11-11); kept for later suites.
+export const PENDING_SUITES: readonly PendingSuite[] = [];
 export function pendingResults(command: string): StepResult[] {
     return PENDING_SUITES.filter((suite) => suite.command === command).map((suite) => ({
         ...suite,

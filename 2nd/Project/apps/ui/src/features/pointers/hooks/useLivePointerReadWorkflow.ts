@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import type { PointerReadRequest, PointerReadResult, PointerSearchResult } from "@securecode/contracts";
+import type { PointerReadResult, PointerSearchResult } from "@securecode/contracts";
 import { ApiClientError, formatApiFailure } from "../../../api/apiErrors.js";
 import type { ApiHttpClient } from "../../../api/httpClient.js";
 import type { UiPointer } from "../../../api/mappers/pointerMapper.js";
-
-type PointerSelector = NonNullable<PointerReadRequest["selector"]>;
-type SelectorKind = PointerSelector["type"];
+import { buildSelector, rangeProblem, type SelectorKind } from "../model/pointerSelector.js";
 
 export function useLivePointerReadWorkflow(
     api: ApiHttpClient,
@@ -75,7 +73,7 @@ export function useLivePointerReadWorkflow(
         }
         const selector = buildSelector(selectorKind, start, end, selectorValue);
         if (!selector) {
-            setError("읽을 범위의 시작 줄·페이지 또는 선택자를 입력하세요.");
+            setError(rangeProblem(selectorKind, start));
             setErrorCode(null);
             setErrorReason(null);
             return;
@@ -262,30 +260,4 @@ export function useLivePointerReadWorkflow(
         searchPointer,
         searchNext,
     };
-}
-
-function buildSelector(kind: SelectorKind, start: string, end: string, value: string): PointerSelector | undefined {
-    switch (kind) {
-        case "line":
-        case "pdf_page":
-        case "byte": {
-            const first = Number(start);
-            const last = end ? Number(end) : undefined;
-            if (!Number.isInteger(first) || first < (kind === "byte" ? 0 : 1)) {
-                return undefined;
-            }
-            if (last !== undefined && (!Number.isInteger(last) || last < first)) {
-                return undefined;
-            }
-            return {
-                type: kind,
-                start: first,
-                ...(last === undefined ? {} : { end: last }),
-            };
-        }
-        case "section":
-            return value.trim() ? { type: kind, section: value.trim() } : undefined;
-        case "json_path":
-            return value.trim() ? { type: kind, path: value.trim() } : undefined;
-    }
 }

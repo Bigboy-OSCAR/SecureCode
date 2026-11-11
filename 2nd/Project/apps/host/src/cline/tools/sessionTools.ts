@@ -6,7 +6,7 @@
  * and write_file needs approval. SDK built-in tools stay disabled (enableTools=false, 3.1 C-04), and the
  * fetch gate refuses any request exposing a tool outside ALLOWED_TOOL_NAMES.
  */
-import type { ExplicitContextRef } from "@securecode/contracts";
+import type { AnswerCitation, ExplicitContextRef } from "@securecode/contracts";
 import type { ContextServiceClient } from "../../context-client/ports.js";
 import type { RuntimePointerService } from "../adapter/ports.js";
 import type { WorkspaceRuntimeOptions } from "./workspaceTools.js";
@@ -37,6 +37,7 @@ export interface SessionToolOptions {
     client: ContextServiceClient;
     runtime: WorkspaceRuntimeOptions;
     readonly recordShown: (ref: ExplicitContextRef) => void;
+    readonly recordCited: (citation: AnswerCitation) => void;
 }
 
 export function buildSessionTools(options: SessionToolOptions): ProjectTool[] {
@@ -44,6 +45,7 @@ export function buildSessionTools(options: SessionToolOptions): ProjectTool[] {
         workspaceId: options.workspaceId,
         timeoutMs: options.serviceTimeoutMs,
         recordShown: options.recordShown,
+        recordCited: options.recordCited,
     };
     const tools = [
         ...sourceTools({ ...shared, sources: options.client.sources, root: options.root }),
@@ -57,6 +59,7 @@ export function buildSessionTools(options: SessionToolOptions): ProjectTool[] {
             service: options.client.pdf,
             workspaceId: options.workspaceId,
             timeoutMs: options.serviceTimeoutMs,
+            recordCited: options.recordCited,
         }),
     ];
     const unknown = tools.filter((entry) => !ALLOWED_TOOL_NAMES.has(entry.tool.name));
@@ -88,6 +91,7 @@ export function sessionToolSchema(client: ContextServiceClient, runtime: Runtime
             serviceTimeoutMs: 1,
             client,
             recordShown: () => undefined,
+            recordCited: () => undefined,
             runtime: {
                 service: runtime as RuntimePointerService,
                 scope: { workspaceId: placeholder, sessionId: "ses_00000000" },

@@ -124,6 +124,7 @@ export class ClineAgentRuntime implements AgentRuntime {
             failure: null,
             toolOutputs: new Map(),
             executorCaptures: new Map(),
+            cancel: new AbortController(),
         };
         session.turn = turn;
         if (this.earlyAborts.delete(request.runId)) {
@@ -187,7 +188,10 @@ export class ClineAgentRuntime implements AgentRuntime {
         // Raise the SDK abort first, then settle pending approvals: abort alone never settles
         // them (3.1 C-03), and settling first would let the SDK continue to another model call.
         const session = this.sessions.get(sessionId);
-        if (session?.turn) session.turn.aborted = true;
+        if (session?.turn) {
+            session.turn.aborted = true;
+            session.turn.cancel.abort(new DOMException(reason, "AbortError"));
+        }
         // A cancel that arrives before the turn exists is kept for that run (3.6 live: it was lost).
         else if (runId) this.earlyAborts.add(runId);
         const aborting = session?.started || session?.turn ? this.core.abort(sessionId, reason) : Promise.resolve();

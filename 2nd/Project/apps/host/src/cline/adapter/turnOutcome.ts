@@ -29,7 +29,9 @@ export function outcomeFromResult(result: AgentResult | undefined, failure: Turn
         case "mistake_limit":
             return {
                 finish: "failed",
-                text: result.text,
+                // On "error" the SDK puts the provider error text here; it is not an answer and may echo
+                // provider internals (1.6 E2E). Text the model streamed before the error is already recorded.
+                text: result.finishReason === "error" ? "" : result.text,
                 reasonCode: failure?.code ?? "PROVIDER_ERROR",
                 message: failure?.message ?? `the model run stopped (${result.finishReason})`,
             };

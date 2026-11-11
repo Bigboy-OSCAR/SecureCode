@@ -6,7 +6,7 @@
  * Selector never inserts them again.
  */
 import { createHash } from "node:crypto";
-import type { ExplicitContextRef, PointerReadResult } from "@securecode/contracts";
+import type { AnswerCitation, ExplicitContextRef, PointerReadResult } from "@securecode/contracts";
 import { ContextServiceError } from "../../context-client/contextServiceError.js";
 import type { SourceService } from "../../context-client/workspaceServices.js";
 import { readTokenCap } from "./runtimeTools.js";
@@ -23,6 +23,7 @@ export interface SourceToolOptions {
     timeoutMs: number;
     /** Records a range whose raw text the model has now seen. */
     recordShown(ref: ExplicitContextRef): void;
+    recordCited(citation: AnswerCitation): void;
 }
 
 function input(value: unknown): Record<string, unknown> {
@@ -134,7 +135,10 @@ export function sourceTools(options: SourceToolOptions): ProjectTool[] {
                     ),
                 );
                 const selection = result.provenance.selection;
-                if (selection) options.recordShown({ kind: "source", pointer, selection });
+                if (selection) {
+                    options.recordShown({ kind: "source", pointer, selection });
+                    options.recordCited({ ref: { kind: "source", pointer, selection } });
+                }
                 return readView(rel, result);
             },
         },

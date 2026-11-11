@@ -16,7 +16,12 @@ const fixture = JSON.parse(readFileSync(resolve(WORK_ROOT, "skills/pdf-pointer/r
     prompt_marker: string;
     tools: { name: string; required: string[]; properties: string[] }[];
 };
-const tools = pdfTools({ service: {} as PdfService, workspaceId: "ws_00000001", timeoutMs: 1000 });
+const tools = pdfTools({
+    service: {} as PdfService,
+    workspaceId: "ws_00000001",
+    timeoutMs: 1000,
+    recordCited: () => undefined,
+});
 
 test("the loaded skill matches the registration fixture byte for byte", () => {
     const skill = loadPdfPointerSkill(WORK_ROOT);
