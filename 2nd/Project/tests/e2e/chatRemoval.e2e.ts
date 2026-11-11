@@ -140,6 +140,8 @@ it("removing an unselected conversation preserves the selected one and undo rest
 it("a delayed conversation list cannot bring back a deleted conversation", async () => {
     const { page } = e2e;
     await page.waitForLoadState("networkidle");
+    await page.getByRole("button", { name: PROJECT, exact: true }).click();
+    await page.locator(".desk-chat-list").waitFor({ state: "detached" });
     const entered = deferred();
     const release = deferred();
     const delivered = deferred();

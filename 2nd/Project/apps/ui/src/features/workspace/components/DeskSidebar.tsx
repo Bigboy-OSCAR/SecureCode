@@ -1,5 +1,5 @@
 /** Project and conversation navigation matching the LocalDesk prototype. */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Session, Workspace } from "@securecode/contracts";
 import { DeskIcon } from "../../../components/DeskIcon.js";
 import type { DeskChat } from "../hooks/useDeskWorkspace.js";
@@ -28,6 +28,10 @@ interface Props {
 }
 export function DeskSidebar(props: Props): React.JSX.Element {
     const [menu, setMenu] = useState<MenuTarget | null>(null);
+    const [collapsedWorkspaceId, setCollapsedWorkspaceId] = useState<string | null>(null);
+    useEffect(() => setCollapsedWorkspaceId(null), [props.workspace?.workspace_id]);
+    const isExpanded = (workspace: Workspace): boolean =>
+        props.workspace?.workspace_id === workspace.workspace_id && collapsedWorkspaceId !== workspace.workspace_id;
     return (
         <nav id="project-panel" className="desk-sidebar" aria-label="프로젝트 및 대화">
             <div className="desk-brand">
@@ -67,8 +71,14 @@ export function DeskSidebar(props: Props): React.JSX.Element {
                             <button
                                 className="desk-project-open"
                                 aria-label={workspace.display_name}
-                                aria-expanded={props.workspace?.workspace_id === workspace.workspace_id}
-                                onClick={() => props.onWorkspace(workspace)}
+                                aria-expanded={isExpanded(workspace)}
+                                onClick={() => {
+                                    if (isExpanded(workspace)) setCollapsedWorkspaceId(workspace.workspace_id);
+                                    else {
+                                        setCollapsedWorkspaceId(null);
+                                        props.onWorkspace(workspace);
+                                    }
+                                }}
                                 onKeyDown={(event) => {
                                     if (event.key === "ContextMenu" || (event.shiftKey && event.key === "F10")) {
                                         event.preventDefault();
@@ -100,12 +110,15 @@ export function DeskSidebar(props: Props): React.JSX.Element {
                                 className="desk-icon-button desk-project-new-chat"
                                 aria-label={`${workspace.display_name} 새 대화`}
                                 disabled={props.busy}
-                                onClick={() => props.onNewChat(workspace)}
+                                onClick={() => {
+                                    setCollapsedWorkspaceId(null);
+                                    props.onNewChat(workspace);
+                                }}
                             >
                                 <DeskIcon name="img" />
                             </button>
                         </div>
-                        {props.workspace?.workspace_id === workspace.workspace_id ? (
+                        {isExpanded(workspace) ? (
                             <div className="desk-chat-list" aria-label="대화 목록">
                                 {props.loadingChats ? (
                                     <p className="muted-copy" role="status">

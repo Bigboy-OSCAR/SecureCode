@@ -94,7 +94,7 @@ it("hover highlights the whole project and reveals the new-chat button at the ri
     assert.equal(await isPainted(newChat(page, FIRST)), false, "moving away hides it again");
 });
 
-it("one project click exposes every conversation and the hover action creates exactly one new conversation", async () => {
+it("project clicks toggle conversations without changing selection and the hover action creates one conversation", async () => {
     const { page } = e2e;
     // Click the padding, rather than just the title text, once.
     await project(page, FIRST).click({ position: { x: 3, y: 3 } });
@@ -104,13 +104,19 @@ it("one project click exposes every conversation and the hover action creates ex
         await page.locator(".desk-chat-list").getByRole("button", { name: SECOND_CHAT, exact: true }).count(),
         1,
     );
+    const selectedId = await page.locator(".desk-chat-list button.selected").getAttribute("data-session-id");
+    const selectedTitle = await page.locator(".desk-chat-title").innerText();
     await project(page, FIRST).locator(".desk-project-path").click();
+    await page.locator(".desk-chat-list").waitFor({ state: "detached" });
+    assert.equal(await page.getByRole("button", { name: FIRST, exact: true }).getAttribute("aria-expanded"), "false");
+    assert.equal(await page.locator(".desk-chat-title").innerText(), selectedTitle, "collapse keeps the current chat");
+    await page.getByRole("button", { name: FIRST, exact: true }).click();
     await page.locator(".desk-chat-list").getByRole("button", { name: FIRST_CHAT, exact: true }).waitFor();
-    assert.equal(
-        await page.locator(".desk-chat-list button").count(),
-        2,
-        "clicking the path keeps the conversations open",
-    );
+    assert.equal(await page.getByRole("button", { name: FIRST, exact: true }).getAttribute("aria-expanded"), "true");
+    assert.equal(await page.locator(".desk-chat-list button").count(), 2, "the next click reopens every conversation");
+    assert.equal(await page.locator(".desk-chat-list button.selected").getAttribute("data-session-id"), selectedId);
+    await page.getByRole("button", { name: FIRST, exact: true }).click();
+    await page.locator(".desk-chat-list").waitFor({ state: "detached" });
     await createChat(page, FIRST);
     await page.locator(".desk-chat-list").getByRole("button", { name: "새 대화", exact: true }).waitFor();
     assert.equal(await page.locator(".desk-chat-list button").count(), 3);
@@ -174,6 +180,8 @@ it("a delayed project refresh cannot replace a conversation selected while it wa
     await page.locator(".desk-chat-list").getByRole("button", { name: FIRST_CHAT, exact: true }).click();
     await page.getByTestId("answer").getByText("첫 대화 답변입니다.", { exact: true }).waitFor();
     await page.waitForLoadState("networkidle");
+    await page.getByRole("button", { name: FIRST, exact: true }).click();
+    await page.locator(".desk-chat-list").waitFor({ state: "detached" });
     const entered = deferred();
     const release = deferred();
     const delivered = deferred();
@@ -222,6 +230,8 @@ it("a delayed project refresh cannot replace a new conversation created while it
     await page.getByTestId("answer").getByText("첫 대화 답변입니다.", { exact: true }).waitFor();
     await page.waitForLoadState("networkidle");
     const initialCount = await page.locator(".desk-chat-list button").count();
+    await page.getByRole("button", { name: FIRST, exact: true }).click();
+    await page.locator(".desk-chat-list").waitFor({ state: "detached" });
     const entered = deferred();
     const release = deferred();
     const delivered = deferred();
