@@ -62,6 +62,16 @@ it("a question is asked and an approval dialog is handled with the keyboard alon
 
     await decideApproval(page, "approve");
     await waitRunStatus(page, "완료");
+    assert.match(
+        await page.locator(".desk-run-status").ariaSnapshot(),
+        /status: 완료/,
+        "completion is exposed as a polite status live region",
+    );
+    assert.equal(
+        await page.locator('[data-testid="answer"][aria-live], [data-testid="answer"] [aria-live]').count(),
+        0,
+        "streaming answer text is not announced token by token",
+    );
 });
 
 it("confirm dialogs start on the title and return focus; pointer choices have accessible names", async () => {

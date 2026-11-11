@@ -1,0 +1,78 @@
+{
+    "schema_version": "1",
+    "recorded_at": "2026-11-11T10:03:22.767367+00:00",
+    "scope": "Current Apple Silicon Mac only. E2E and integration use fixture providers; actual model and native CUA evidence are recorded separately.",
+    "checks": [
+        {
+            "command": "npm run check",
+            "status": "PASS",
+            "exit_code": 0,
+            "log_sha256": "da59fcd0421ebcad665bca796b4fac2e4784b326f4e3d35145f507f3a1184388",
+            "completed_at": "2026-11-11T10:02:05.651579+00:00"
+        },
+        {
+            "command": "npm run test:contracts",
+            "status": "PASS",
+            "exit_code": 0,
+            "log_sha256": "1da5f24099945476c6e959630075b43db79a30f525c7fadbfea15546838dff81",
+            "completed_at": "2026-11-11T09:51:49.165715+00:00"
+        },
+        {
+            "command": "npm run test:integration",
+            "status": "PASS",
+            "exit_code": 0,
+            "log_sha256": "734bfed87a7912598e8fa9169b4e2ff1fe51c345c31cece24ef32ee55821d712",
+            "completed_at": "2026-11-11T10:01:50.415461+00:00"
+        },
+        {
+            "command": "npm run test:install",
+            "status": "PASS",
+            "exit_code": 0,
+            "log_sha256": "8aba4479a924690013e671483af16282485b414e686373fd27a1b3e4de492d02",
+            "completed_at": "2026-11-11T09:57:38.988572+00:00"
+        },
+        {
+            "command": "npm run test:e2e",
+            "status": "PASS",
+            "exit_code": 0,
+            "log_sha256": "36173ce4f9e566e4e4ff694ddab81dba97d1f94853da03d9040cba3938975ee0",
+            "completed_at": "2026-11-11T10:02:47.220338+00:00"
+        },
+        {
+            "command": "npm run build:app",
+            "status": "PASS",
+            "exit_code": 0,
+            "log_sha256": "4c56c41e1a45f6a83bbef12fd55c91a3c77a48ca086da22fb9847cb6e42d46db",
+            "completed_at": "2026-11-11T10:02:11.092449+00:00"
+        }
+    ],
+    "counts": {
+        "host_unit": 100,
+        "scripts_unit": 7,
+        "ui_unit": 50,
+        "python_unit_passed": 256,
+        "python_unit_live_skipped": 1,
+        "python_integration_deselected_from_unit": 1,
+        "typescript_contracts": 246,
+        "python_contracts": 249,
+        "sdk_integration": 36,
+        "launcher_integration": 4,
+        "install_steps": 9,
+        "browser_e2e": 30
+    },
+    "native_build": {
+        "path": "dist/LocalDesk.app",
+        "codesign_verify_deep_strict": "PASS",
+        "figma_public_assets": 38,
+        "all_figma_assets_match_source_hashes": true
+    },
+    "data_migration": {
+        "target": "~/Library/Application Support/LocalDesk",
+        "originals_preserved": true,
+        "models_copied": false,
+        "sdk_sessions_copied": 1,
+        "old_sdk_storage_paths_remaining": 0,
+        "existing_destination_never_overwritten": true
+    },
+    "rerun_note": "After a temporary incomplete citation import during concurrent editing, all final checks above were rerun from new processes after code freeze. No incomplete worker result is counted as a pass."
+}

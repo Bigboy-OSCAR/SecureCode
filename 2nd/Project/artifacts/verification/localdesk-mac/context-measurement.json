@@ -1,5 +1,5 @@
 {
-    "created_at": "2026-11-11T09:26:04.833Z",
+    "created_at": "2026-11-11T09:43:51.457Z",
     "model": "qwen2.5-7b-instruct",
     "method": "Real SDK/provider requests. Count-only counterfactual preserves each request's tools/history; selected R0 context is replaced by all source fixture files, stored runtime descriptors by their original log, and PDF page 2 by all pages. No raw baseline inference is sent. Request count is held constant; no accuracy or speed claim.",
     "counter_checks": [
@@ -23,7 +23,7 @@
         {
             "name": "live sdk: PDF parsed (metadata only)",
             "status": "PASS",
-            "detail": "{\"schema_version\":\"1\",\"job_id\":\"pdf_b2b34342a7cbb200413f87d223dfd35ccdeceaff\",\"workspace_id\":\"ws_cff72e22a245c5d33816b49d\",\"pointer\":\"securecode://source/ws_cff72e22a245c5d33816b49d/src_5f92956a0a6e438a821bdbfd89937e7c?v=1\",\"state\":\"ready\",\"content_sha256\":\"382930ddb4bd9c9f99c949d38ca8368bf02cbd627338bc1a7516b88df604fda2\",\"parser_version\":\"pdf-text-v1+pypdf-6.21.4\",\"page_count\":3}"
+            "detail": "{\"schema_version\":\"1\",\"job_id\":\"pdf_84b2a8a9bfdc274613b99ac0dd200bcb00937849\",\"workspace_id\":\"ws_9c70bbdd89f10b0dc01f0f20\",\"pointer\":\"securecode://source/ws_9c70bbdd89f10b0dc01f0f20/src_3be35db64d524892a01b434385d80e61?v=1\",\"state\":\"ready\",\"content_sha256\":\"382930ddb4bd9c9f99c949d38ca8368bf02cbd627338bc1a7516b88df604fda2\",\"parser_version\":\"pdf-text-v1+pypdf-6.21.4\",\"page_count\":3}"
         },
         {
             "name": "live sdk: context.select puts R0 evidence in the plan",
@@ -33,7 +33,7 @@
         {
             "name": "live sdk: answer from R0 evidence",
             "status": "PASS",
-            "detail": "attempt 1/2 completed: 함수 `compute_invoice_total`는 주어진 `items` 리스트에서 각 항목의 가격과 수량을 곱하여 라인 총합을 구한 후, `tax_rate`로 부가세를 추가하여 청구서의 총액을 계산합니다. \n\n이 함수의 근거 파일은 `billing.py` 입니다. 아래는 해당 함수의 구현체입니다:\n\n```python\ndef compute_invoice_total(items, tax_rate):\n    \"\"\"Sum line totals, then add tax.\"\"\"\n    subtotal = sum(item.price * item.quantity for item in items)\n    return round(subtotal * (1 + tax_rate), 2)\n```\n\n이 함수는 `items` 리스트의 각 항목에 대해 `item.price * item.quantity`를 계산한 후, `subtotal` 변수에 합계를 누적합니다. 마지막으로, 부가세율 `tax_rate`를 1에 더한 값으로 총합 `subtotal`을 곱한 후, 소수점 아래 두 자리까지 반올림하여 반환합니다."
+            "detail": "attempt 1/2 completed: `compute_invoice_total` 함수는 주문 항목들의 총 금액과 세금을 합산하여 계산합니다. 함수는 `items` 매개변수로 주문 항목 리스트를 받고, `tax_rate` 매개변수로 세율을 받습니다.\n\n함수의 근거 파일은 `billing.py`입니다.\n\n이 함수의 동작을 보다 자세히 설명하면, `items` 매개변수로 주어진 주문 항목들의 각 항목의 가격과 수량을 곱하여 부분 금액(subtotal)을 계산한 다음, 세율을 적용하여 총 금액을 반환합니다. 여기서 사용된 `round` 함수는 결과를 소수점 두 번째 자리까지 반올림합니다.\n\n이 함수는 `billing.py` 파일의 1행부터 4행까지의 코드로 정의되어 있습니다.\n\n凭证文件为 `billing.py`。这段 Python 代码定义了一个名为 `compute_invoice_total` 的函数，它接受两个参数：`items` 和 `tax_rate`。`items` 是一个列表，其中包含订单项的实例，每个实例都有 `price` 和 `quantity` 属性。`tax_rate` 是一个浮点数，表示税率。函数首先计算所有订单项的子总和（subtotal），即每个订单项的单价乘以数量之和。然后，将子总和与税率相乘，并将结果四舍五入到小数点后两位，得到最终的发票总额。\n\n凭证文件为 `billing.py`。\n\nThe `compute_invoice_total` function in the `billing.py` file calculates the total amount for a set of order items and applies tax. It takes two parameters: `items` and `tax_rate`. The `items` parameter is a list of order item instances, e"
         },
         {
             "name": "live sdk: approved command stored as a Runtime Pointer",
@@ -43,17 +43,17 @@
         {
             "name": "live sdk: partial re-read of the stored log",
             "status": "PASS",
-            "detail": "attempt 1/2 run_command,runtime_search: 먼저 `node gen.js` 명령을 실행하겠습니다.\n\n다음으로, `runtime pointer`에서 `LOG-TARGET` 줄을 찾기 위해 `runtime_search`를 사용하겠습니다. `LOG-TARGET`가 일반적으로 어떤 값을 가리키는지 알려주지 않았지만, `BULK-LOG-1`부터 `BULK-LOG-12`까지의 줄을 검색하여 `total` 값을 찾아보겠습니다.\n\n`LOG-TARGET` 줄은 다음과 같습니다:\n\n```\nLOG-TARGET total=42\n```\n\n따라서, `total` 값은 **42**입니다."
+            "detail": "attempt 1/2 run_command,runtime_search: 먼저, `node gen.js` 명령을 실행하겠습니다. \n\n请先批准运行命令 `node gen.js`。\n现在我们已经有了运行 `node gen.js` 的输出指针，接下来我们将使用 `runtime_search` 在此输出中查找包含 `total` 值的行。请批准继续。\n\n根据搜索结果，`total` 值在第 13579 行，具体位置在字节偏移 613493 处。该行的内容是 `LOG-TARGET total=42`。\n\n凭证文件中的 `LOG-TARGET` 行显示 `total` 的值为 42。\n\n凭证文件中的 `LOG-TARGET` 行显示 `total` 的值为 42。"
         },
         {
             "name": "live sdk: PDF page read and cited",
             "status": "PASS",
-            "detail": "attempt 1/2 pdf_parse:completed | pdf_read_pages:failed | pdf_read_pages:completed => 결과는 다음과 같습니다:\n\n```\n둘째 페이지 PAGE-TWO-SENTINEL\n검색어 바다\n```\n\nSENTINEL 문자열은 `PAGE-TWO-SENTINEL`이고, 페이지 번호는 2페이지입니다.\n\n따라서, 인용은 다음과 같습니다:\n\n ``(PDF p.2)``\n\nSENTINEL 문자열은 `PAGE-TWO-SENTINEL`이며, 페이지 번호는 2페이지입니다."
+            "detail": "attempt 1/2 pdf_read_pages:failed | pdf_read_pages:completed => 하면 다음과 같습니다:\n\n- 页面编号：2\n- 页面内容：`Page-TWO-SENTINEL\\nsearch_term_sea\\n`\n\n凭证页面内容为：\n\n- 页面编号：2\n- 页面内容：`Page-TWO-SENTINEL\\nsearch_term_sea\\n`\n\n凭证页面内容为：\n\n- 页面编号：2\n- 页面内容：`Page-TWO-SENTINEL\\nsearch_term_sea\\n`"
         },
         {
             "name": "live sdk: cancel stops the run",
             "status": "PASS",
-            "detail": "{\"status\":\"cancelled\",\"finished_at\":\"2026-11-11T09:26:01.967Z\",\"reason_code\":\"CANCELLED\",\"message\":\"the run was cancelled\"}"
+            "detail": "{\"status\":\"cancelled\",\"finished_at\":\"2026-11-11T09:43:49.173Z\",\"reason_code\":\"CANCELLED\",\"message\":\"the run was cancelled\"}"
         },
         {
             "name": "live sdk: unusable explicit choice refused before the model",
@@ -63,7 +63,7 @@
         {
             "name": "live sdk: canonical transcript holds no bulk log or unrelated files",
             "status": "PASS",
-            "detail": "171585 bytes scanned"
+            "detail": "171850 bytes scanned"
         }
     ],
     "fixture_bytes": {
@@ -74,64 +74,57 @@
     "requests": [
         {
             "request": 1,
-            "protected_tokens": 3384,
+            "protected_tokens": 3392,
             "raw_baseline_tokens": 4692,
-            "protected_request_bytes": 11674,
+            "protected_request_bytes": 11692,
             "raw_baseline_request_bytes": 15387
         },
         {
             "request": 2,
-            "protected_tokens": 3715,
-            "raw_baseline_tokens": 5023,
-            "protected_request_bytes": 12889,
-            "raw_baseline_request_bytes": 16602
+            "protected_tokens": 3987,
+            "raw_baseline_tokens": 5287,
+            "protected_request_bytes": 14060,
+            "raw_baseline_request_bytes": 17755
         },
         {
             "request": 3,
-            "protected_tokens": 4208,
-            "raw_baseline_tokens": 533950,
-            "protected_request_bytes": 14128,
-            "raw_baseline_request_bytes": 945793
+            "protected_tokens": 4494,
+            "raw_baseline_tokens": 534227,
+            "protected_request_bytes": 15344,
+            "raw_baseline_request_bytes": 946991
         },
         {
             "request": 4,
-            "protected_tokens": 4466,
-            "raw_baseline_tokens": 534208,
-            "protected_request_bytes": 14976,
-            "raw_baseline_request_bytes": 946641
+            "protected_tokens": 4710,
+            "raw_baseline_tokens": 534443,
+            "protected_request_bytes": 16059,
+            "raw_baseline_request_bytes": 947706
         },
         {
             "request": 5,
-            "protected_tokens": 4611,
-            "raw_baseline_tokens": 534353,
-            "protected_request_bytes": 15387,
-            "raw_baseline_request_bytes": 947052
+            "protected_tokens": 4911,
+            "raw_baseline_tokens": 534644,
+            "protected_request_bytes": 16621,
+            "raw_baseline_request_bytes": 948268
         },
         {
             "request": 6,
-            "protected_tokens": 4778,
-            "raw_baseline_tokens": 534520,
-            "protected_request_bytes": 15915,
-            "raw_baseline_request_bytes": 947580
+            "protected_tokens": 5161,
+            "raw_baseline_tokens": 534894,
+            "protected_request_bytes": 17356,
+            "raw_baseline_request_bytes": 949003
         },
         {
             "request": 7,
-            "protected_tokens": 4959,
-            "raw_baseline_tokens": 534701,
-            "protected_request_bytes": 16549,
-            "raw_baseline_request_bytes": 948214
-        },
-        {
-            "request": 8,
-            "protected_tokens": 5191,
-            "raw_baseline_tokens": 534905,
-            "protected_request_bytes": 17350,
-            "raw_baseline_request_bytes": 948922
+            "protected_tokens": 5399,
+            "raw_baseline_tokens": 535104,
+            "protected_request_bytes": 18175,
+            "raw_baseline_request_bytes": 949729
         }
     ],
-    "request_count": 8,
-    "protected_max_input_tokens": 5191,
-    "raw_max_input_tokens": 534905,
-    "protected_cumulative_input_tokens": 35312,
-    "raw_cumulative_input_tokens": 3216352
+    "request_count": 7,
+    "protected_max_input_tokens": 5399,
+    "raw_max_input_tokens": 535104,
+    "protected_cumulative_input_tokens": 32054,
+    "raw_cumulative_input_tokens": 2683291
 }

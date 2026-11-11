@@ -150,7 +150,7 @@ launcher가 강제 종료돼 `<데이터 폴더>/run/dev-processes.json`이 남�
 | `npm run build` | 생성 타입, host 타입, UI 빌드, service wheel, **로컬 패키지 검사**(`dist/securecode-local/manifest.json`에 lock hash·wheel·UI asset SHA-256 기록) | 없음 |
 | `npm run test:install` | 작업 트리를 새 임시 폴더에 복사 → `npm ci` + `uv sync --locked` → 새 데이터 폴더로 dev 기동 → UI proxy로 로그인·작업 공간 등록 → stop → 재시작 후 데이터 유지·health 확인 → stop. 사용자 `.securecode`는 건드리지 않는다 | npm·uv 내려받기(캐시가 있으면 빠름) |
 | `SECURECODE_LIVE_SMOKE=1 npm run test:live` | 실제 provider. 토큰 계수 일치, R0 색인·답, 명령 승인 → Runtime Pointer → 부분 재조회, PDF 쪽 인용, 취소, 거절, 기록 검사 | 모델 서버 필요 |
-| `npm run test:e2e` | 브라우저 E2E(1.6), 18개. 시험 파일마다 새 임시 폴더와 빈 포트로 실제 service·host·Vite UI를 띄운다. 모델 자리에는 fixture provider(`tests/e2e/support/fakeLlama.ts`, OpenAI 호환 + `/tokenize`·`/apply-template`)를 두고, 설치된 Edge/Chrome을 headless로 조작한다(`playwright-core`, 브라우저 내려받기 없음). 다른 브라우저는 `SECURECODE_E2E_BROWSER=msedge|chrome` 또는 `SECURECODE_E2E_BROWSER_PATH`로 고른다. 실행 로그는 `E2E_LOG=1` | 없음(fixture provider). Edge 또는 Chrome 설치 필요 |
+| `npm run test:e2e` | 브라우저 E2E(1.6), 30개. 시험 파일마다 새 임시 폴더와 빈 포트로 실제 service·host·Vite UI를 띄운다. 모델 자리에는 fixture provider(`tests/e2e/support/fakeLlama.ts`, OpenAI 호환 + `/tokenize`·`/apply-template`)를 두고, 설치된 Edge/Chrome을 headless로 조작한다(`playwright-core`, 브라우저 내려받기 없음). 다른 브라우저는 `SECURECODE_E2E_BROWSER=msedge|chrome` 또는 `SECURECODE_E2E_BROWSER_PATH`로 고른다. 실행 로그는 `E2E_LOG=1` | 없음(fixture provider). Edge 또는 Chrome 설치 필요 |
 
 - 종료 코드: `0` 모두 통과, `1` 실패, `3` 미완료다. 미완료는 다른 작업이 담당하는 기존 위반(KNOWN), 아직 없는 시험(PENDING), live opt-in 꺼짐을 뜻한다.
 - 오프라인 검사(`check`, `test:contracts`, `test:integration`, `build`, `test:e2e`)는 모델과 네트워크 없이 돈다. `test:e2e`는 fixture provider 결과이고, 실제 provider 판정은 `test:live`로 따로 한다.
@@ -175,7 +175,7 @@ launcher가 강제 종료돼 `<데이터 폴더>/run/dev-processes.json`이 남�
 
 ## 6. 데이터 폴더·정리·재시작
 
-- 위치: `SECURECODE_DATA_DIR`(기본 `.securecode`, Git 제외). 하위 구조와 각 항목을 지워도 되는지는 [4.10 운용 안내](../handoffs/4.10-pointer-operations.md) 1절에 있다.
+- 위치: 앱은 `~/Library/Application Support/LocalDesk`(`LOCALDESK_DATA_DIR`로 재정의), 개발 실행은 `SECURECODE_DATA_DIR`(기본 `.securecode`, Git 제외). 하위 구조와 각 항목을 지워도 되는지는 [4.10 운용 안내](../handoffs/4.10-pointer-operations.md) 1절에 있다.
 - 기간과 정리:
   - Runtime 출력은 기본 24시간(최대 7일) 뒤 만료된다. service가 시작할 때와 10분마다 지운다.
   - 세션을 닫으면 그 세션의 출력이 지워진다.

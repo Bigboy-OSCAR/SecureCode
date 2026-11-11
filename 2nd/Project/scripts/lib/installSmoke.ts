@@ -45,6 +45,7 @@ export async function copyWorkTree(): Promise<InstallCopy> {
         ...process.env,
         ANTHROPIC_API_KEY: "",
         SECURECODE_PROVIDER_API_KEY: "",
+        SECURECODE_LOCAL_MODELS: "0",
         SECURECODE_DATA_DIR: join(root, "fresh-data"),
         SECURECODE_HOST_PORT: String(ports.hostPort),
         SECURECODE_CONTEXT_SERVICE_PORT: String(ports.servicePort),

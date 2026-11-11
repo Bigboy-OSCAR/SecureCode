@@ -1,4 +1,4 @@
-# SecureCode (2nd/Project)
+# LocalDesk / SecureCode (2nd/Project)
 
 Cline SDK를 쓰는 로컬 코드 작업 도구다. 구성은 다음과 같다.
 
@@ -9,10 +9,18 @@ Cline SDK를 쓰는 로컬 코드 작업 도구다. 구성은 다음과 같다.
 
 설치·설정·실행·중단·데이터 정리·오류 대응은 [RUNBOOK](docs/release/RUNBOOK.md)에, 전체 계획은 [로드맵](INTEGRATED_SYSTEM_IMPLEMENTATION_ROADMAP.md)에, 구조와 소유권은 [ARCHITECTURE.md](docs/architecture/ARCHITECTURE.md)에 있다.
 
+## 현재 Mac에서 앱 실행
+
+[LocalDesk.app](dist/LocalDesk.app)을 열면 로컬 서비스와 모델이 자동 준비된다. 앱은 현재 프로젝트 경로와 설치된 의존성을 사용하는 개인용 Mac 앱이다. 프로젝트 또는 Node 설치 경로를 옮겼다면 `npm run build:app`으로 다시 만든다.
+
+Qwen3.8-27B MLX와 다운로드한 Qwen2.5-7B GGUF를 상단 모델 메뉴에서 교체할 수 있다. 대화·프로젝트·등록 자료는 `~/Library/Application Support/LocalDesk`에 보관하며, 앱 종료 시 직접 시작한 서비스를 정리한다. 기존 `.securecode` 데이터와 모델 파일은 보존한다.
+
+로드맵27개 작업과 최종11개 조건을 완료했다. 현재 Mac의 자동 검사·실제 모델·직접 앱 조작 결과는 [최종 인수 보고서](docs/release/ACCEPTANCE_REPORT.md)에 있다.
+
 ## 빠른 시작
 
 - 준비물:
-  - Node.js 22, 24 또는 26과 npm. 2026-11-11에는 26.13.0만 실행해 확인했다.
+  - Node.js와 npm. 현재 Mac은 Node.js 22.14.0 / npm 10.9.2에서 검증했다.
   - [uv](https://docs.astral.sh/uv/). context-service는 Python 3.14를 쓰며 uv가 설치한다. `uv`가 PATH에 없으면 `UV_BIN`에 실행 파일 경로를 지정한다.
 
 ```bash
@@ -39,6 +47,7 @@ context-service → host → UI 순서로 127.0.0.1에 뜬다. 터미널에 나�
 | `npm run check` | lint·format·타입·구조(파일 길이·순환·mock·비밀값·금지 기법·미구현 표시)·규약·unit |
 | `npm run test:contracts` | 계약 fixture(TS·Python)와 service 응답 |
 | `npm run test:integration` | 실제 프로세스 통합 시험(오프라인, scripted provider) |
+| `npm run build:app` | 현재 Mac용 `dist/LocalDesk.app` 빌드·서명 |
 | `npm run build` | 생성 타입·host 타입·UI·Python wheel·로컬 패키지 manifest |
 | `npm run test:install` | 새 임시 폴더에서 설치 → 기동 → 중단 → 재시작 smoke |
 | `npm run test:live` | 실제 provider smoke (opt-in: `SECURECODE_LIVE_SMOKE=1`) |
@@ -69,4 +78,4 @@ uv run --project services/context-service python -m securecode_context.symbols /
 - TypeScript/React: [docs/conventions/TYPESCRIPT_REACT.md](docs/conventions/TYPESCRIPT_REACT.md)
 - 계약: [docs/contracts/API.md](docs/contracts/API.md), [docs/contracts/EVENTS.md](docs/contracts/EVENTS.md)
 
-git commit과 git push는 팀원이 직접 한다.
+최신 사용자 지시에 따라 완료 작업 단위를 commit하고 `codex/localdesk-macos-completion` 브랜치로 push했다.
