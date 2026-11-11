@@ -3,7 +3,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
-import { parseModelListResponse } from "@securecode/contracts";
+import { ContractValidator, SCHEMA_REFS, type ModelListResponse } from "@securecode/contracts";
 import { ModelManager } from "../../src/app/models/modelManager.js";
 import type { ModelProfile } from "../../src/app/models/modelProfiles.js";
 import { BrowserAuth, SESSION_TTL_MS } from "../../src/security/browserAuth.js";
@@ -45,7 +45,7 @@ test("model switching blocks concurrent turns, exposes loading, persists only th
         assert.equal(manager.ready(), false);
         await assert.rejects(manager.select(profile.model_id), /끝난 뒤/);
         finish?.();
-        const result = parseModelListResponse(await loading);
+        const result = ContractValidator.load().parse<ModelListResponse>(SCHEMA_REFS.modelListResponse, await loading);
         assert.equal(result.active_model_id, profile.model_id);
         assert.equal(manager.savedSelection(), profile.model_id);
         assert.equal(JSON.stringify(result).includes("private"), false);

@@ -11,6 +11,8 @@ export const SCHEMA_REFS = {
     contextSelectResponse: "context/context.schema.json#/definitions/ContextSelectResponse",
     healthResponse: "api/system.schema.json#/definitions/HealthResponse",
     serviceHealthResponse: "api/system.schema.json#/definitions/ServiceHealthResponse",
+    modelListResponse: "api/models.schema.json#/definitions/ModelListResponse",
+    modelSelectRequest: "api/models.schema.json#/definitions/ModelSelectRequest",
     settingsResponse: "api/system.schema.json#/definitions/SettingsResponse",
     bootstrapRequest: "api/system.schema.json#/definitions/BootstrapRequest",
     bootstrapResponse: "api/system.schema.json#/definitions/BootstrapResponse",

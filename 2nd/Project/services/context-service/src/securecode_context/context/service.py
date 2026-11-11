@@ -117,6 +117,12 @@ class ContextSelectService:
             assert isinstance(symbols, SymbolResolver)
             items = _r0_items(symbols, request, caps["r0"])
             keep = relevant_r0([float(item["score"]) for item in items])
+            # Atomic and expanded candidates share a retrieval anchor. Try that anchor's
+            # dependency bundle first; if it exceeds budget, the atomic candidate remains.
+            anchor_scores: dict[str, float] = {}
+            for item in items:
+                anchor = item["primary"]["symbol_id"]
+                anchor_scores[anchor] = max(anchor_scores.get(anchor, 0), float(item["score"]))
             for item in (item for item, kept in zip(items, keep, strict=True) if kept):
                 ref = {
                     "kind": "symbol",
@@ -125,7 +131,15 @@ class ContextSelectService:
                 }
                 tokens = item["estimated_tokens"]["token_count"]
                 raw.append(
-                    Candidate(item["candidate_id"], "r0", "symbol", ref, item["score"], 0, tokens)
+                    Candidate(
+                        item["candidate_id"],
+                        "r0",
+                        "symbol",
+                        ref,
+                        anchor_scores[item["primary"]["symbol_id"]],
+                        item["depth"],
+                        tokens,
+                    )
                 )
         return [self._inspect(candidate, reader) for candidate in _unique(raw)]
 
@@ -159,7 +173,7 @@ class ContextSelectService:
                 Candidate(cid, "explicit", ref["kind"], ref, 0.0, 0, 0), reader
             )
             if resolved.status == "ok" and resolved.span is not None:
-                spans.append(resolved.span)
+                spans.extend(resolved.covered_spans or (resolved.span,))
         return spans
 
     def plan(self, request: SelectRequest) -> dict[str, Any]:

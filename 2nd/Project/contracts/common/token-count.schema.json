@@ -12,7 +12,7 @@
         "TokenCountMethod": {
             "title": "TokenCountMethod",
             "type": "string",
-            "enum": ["anthropic_count_tokens", "llama_cpp_tokenize"]
+            "enum": ["anthropic_count_tokens", "llama_cpp_tokenize", "lm_studio_tokenize"]
         },
         "TokenCountFraming": {
             "title": "TokenCountFraming",

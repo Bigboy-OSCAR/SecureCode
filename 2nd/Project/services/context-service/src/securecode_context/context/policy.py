@@ -59,14 +59,14 @@ def order_key(candidate: Candidate) -> tuple[object, ...]:
     """
     함수 이름: order_key()
     기능: 그룹 순서(explicit > current_task > r0)와 그룹 안 결정적 키를 만든다.
-        explicit은 요청 위치, current_task는 최신 순번, r0는 점수 내림차순이고 동점은 candidate_id다.
+        explicit은 요청 위치, current_task는 최신 순번, r0는 점수·깊이 내림차순이고 동점은 candidate_id다.
     인자: candidate -> 후보
     반환값: 정렬 키
     작성 날짜: 2026/11/10
     """
     inner: tuple[object, ...]
     if candidate.origin == "r0":
-        inner = (-candidate.score, candidate.candidate_id)
+        inner = (-candidate.score, -candidate.rank, candidate.candidate_id)
     else:
         inner = (candidate.rank, candidate.candidate_id)
     return (GROUP_RANK[candidate.origin], *inner)
@@ -128,11 +128,34 @@ def screen(
     candidate = skip_history_prefix(candidate, history)
     span = candidate.span
     assert span is not None
-    if span.start >= span.end or any(held.contains(span) for held in history):
+    spans = candidate.covered_spans or (span,)
+    fresh = tuple(part for part in spans if not any(held.contains(part) for held in history))
+    if span.start >= span.end or not fresh:
         return Omission(candidate, "in_history")
-    holder = next((kept for kept in retained if kept.material.span.contains(span)), None)
-    if holder is not None:
-        return Omission(candidate, "duplicate", holder.candidate.candidate_id)
+    holders = [
+        kept
+        for kept in retained
+        if any(
+            held.contains(part)
+            for held in (kept.candidate.covered_spans or (kept.material.span,))
+            for part in fresh
+        )
+    ]
+    remaining = tuple(
+        part
+        for part in fresh
+        if not any(
+            held.contains(part)
+            for kept in holders
+            for held in (kept.candidate.covered_spans or (kept.material.span,))
+        )
+    )
+    if not remaining:
+        return Omission(candidate, "duplicate", holders[0].candidate.candidate_id)
+    # A bundle remains indivisible for budget truncation. Already available complete
+    # symbols may be removed, while newly discovered dependencies remain eligible.
+    if candidate.covered_spans and remaining != spans:
+        candidate = replace(candidate, covered_spans=remaining, span=remaining[0])
     return candidate
 
 

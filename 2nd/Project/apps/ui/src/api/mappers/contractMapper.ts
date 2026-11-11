@@ -1,6 +1,7 @@
 import Ajv, { type ErrorObject } from "ajv";
 import addFormats from "ajv-formats";
 import { SCHEMA_REFS, type SchemaRefName } from "../../../../../contracts/src/schemaRefs.js";
+import modelsSchema from "../../../../../contracts/api/models.schema.json";
 import approvalSchema from "../../../../../contracts/api/approval.schema.json";
 import runSchema from "../../../../../contracts/api/run.schema.json";
 import sessionSchema from "../../../../../contracts/api/session.schema.json";
@@ -21,6 +22,7 @@ import symbolSchema from "../../../../../contracts/symbols/symbol.schema.json";
 
 const contractBaseUri = "https://contracts.securecode.invalid/";
 const schemas = [
+    ["api/models.schema.json", modelsSchema],
     ["api/approval.schema.json", approvalSchema],
     ["api/run.schema.json", runSchema],
     ["api/session.schema.json", sessionSchema],

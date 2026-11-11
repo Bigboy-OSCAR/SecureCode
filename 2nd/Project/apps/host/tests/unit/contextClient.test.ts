@@ -10,6 +10,7 @@ import { ContractValidator } from "@securecode/contracts";
 import { ContextServiceError } from "../../src/context-client/contextServiceError.js";
 import { HttpContextServiceClient } from "../../src/context-client/httpContextServiceClient.js";
 import { loadSharedVectors } from "../support/sharedFixtures.js";
+import { createModelRequestGate } from "../../src/pointer-hooks/modelRequestGate.js";
 
 interface UnicodeVectors {
     cases: { name: string; text: string; expect: "valid" | "invalid_unicode"; utf8_bytes?: number }[];
@@ -65,6 +66,41 @@ describe("HttpContextServiceClient", () => {
 
     after(() => {
         server.close();
+    });
+
+    it("accepts both local model counter methods through the HTTP boundary and final exact gate", async () => {
+        const gate = createModelRequestGate({
+            counter: client.tokens,
+            contextLimitTokens: 32768,
+            safetyMarginTokens: 1024,
+            requireExactCount: true,
+        });
+        for (const [model, method] of [
+            ["qwen2.5-7b-instruct", "llama_cpp_tokenize"],
+            ["qwen3.8-27b-mlx", "lm_studio_tokenize"],
+        ] as const) {
+            nextResponse = {
+                status: 200,
+                body: {
+                    ...tokenResult("history"),
+                    model_id: model,
+                    provider_id: "openai-compatible",
+                    method,
+                    framing: "provider_request",
+                    count_mode: "exact",
+                },
+            };
+            const decision = await gate.check(
+                {
+                    providerId: "openai-compatible",
+                    modelId: model,
+                    body: JSON.stringify({ model, messages: [{ role: "user", content: "history" }] }),
+                    maxOutputTokens: 1024,
+                },
+                AbortSignal.timeout(2000),
+            );
+            assert.deepEqual(decision, { allow: true, countedTokens: 3, countMode: "exact" });
+        }
     });
 
     for (const vector of vectors.cases.filter((item) => item.expect === "valid")) {

@@ -103,7 +103,14 @@ class RequestReader:
         작성 날짜: 2026/11/10
         """
         handle = candidate.handle
-        source = handle["relative_path"] if candidate.kind == "symbol" else handle.display
+        if candidate.kind == "symbol":
+            source = (
+                candidate.covered_spans[0].object_key[1]
+                if candidate.covered_spans
+                else handle["relative_path"]
+            )
+        else:
+            source = handle.display
         text = render_envelope(candidate.candidate_id, source, "")
         return self._counter.count(text).token_count
 

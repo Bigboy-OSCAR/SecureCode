@@ -89,7 +89,15 @@ export class RunService {
             // Selection → bounded reads → counted plan; explicit choices that cannot be used refuse the run.
             const planned = await this.deps.assembler.forRun(session.workspace_id, sessionId, request);
             prompt = planned.prompt;
-            inserted = planned.plan.fragments.map((fragment) => fragment.provenance);
+            inserted = planned.plan.fragments.flatMap<AnswerCitation>((fragment) => {
+                const citation = fragment.provenance;
+                return "related_locations" in citation
+                    ? [
+                          citation,
+                          ...(citation.related_locations ?? []).map((location) => ({ ref: citation.ref, location })),
+                      ]
+                    : [citation];
+            });
         } finally {
             this.planning.delete(sessionId);
         }

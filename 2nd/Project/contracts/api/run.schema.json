@@ -256,7 +256,12 @@
                     "required": ["ref", "location"],
                     "properties": {
                         "ref": { "$ref": "#/definitions/SymbolContextRef" },
-                        "location": { "$ref": "../symbols/symbol.schema.json#/definitions/SymbolLocation" }
+                        "location": { "$ref": "../symbols/symbol.schema.json#/definitions/SymbolLocation" },
+                        "related_locations": {
+                            "type": "array",
+                            "maxItems": 64,
+                            "items": { "$ref": "../symbols/symbol.schema.json#/definitions/SymbolLocation" }
+                        }
                     }
                 },
                 {

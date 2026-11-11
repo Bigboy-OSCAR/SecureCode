@@ -1,5 +1,7 @@
 /** Authenticated host-only model selection; no provider credentials enter the browser. */
-import { parseModelListResponse, type ModelListResponse } from "../../../../contracts/src/localModels.js";
+import type { ModelListResponse } from "@securecode/contracts";
+import { parseApiPayload, serializeApiRequest } from "./mappers/contractMapper.js";
+import { notifyAuthExpired } from "./nativeAuth.js";
 import { ApiClientError } from "./apiErrors.js";
 
 export class ModelClient {
@@ -14,9 +16,12 @@ export class ModelClient {
             method: modelId ? "POST" : "GET",
             credentials: "same-origin",
             headers: { "content-type": "application/json" },
-            ...(modelId ? { body: JSON.stringify({ model_id: modelId }) } : {}),
+            ...(modelId
+                ? { body: JSON.stringify(serializeApiRequest("modelSelectRequest", { model_id: modelId })) }
+                : {}),
             signal: AbortSignal.timeout(modelId ? 300000 : 15000),
         });
+        if (response.status === 401) notifyAuthExpired();
         if (!response.ok)
             throw new ApiClientError(
                 "request",
@@ -25,6 +30,6 @@ export class ModelClient {
                     : "모델을 불러오지 못했습니다. 로컬 모델 설정을 확인하세요.",
                 response.status,
             );
-        return parseModelListResponse(await response.json());
+        return parseApiPayload<ModelListResponse>("modelListResponse", await response.json());
     }
 }

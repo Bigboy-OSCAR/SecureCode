@@ -4,7 +4,7 @@ host가 작업 공간을 만들 때 root를 등록하고, 색인은 백그라운
 검색 결과에는 원문이 없고 원문은 bundle(바이트·토큰 상한)로만 나간다.
 """
 
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import Future, ThreadPoolExecutor
 from typing import Annotated, Any, Literal
 
 from fastapi import APIRouter, Request
@@ -18,6 +18,36 @@ from securecode_context.symbols.symbol_service import R0SymbolService
 router = APIRouter(prefix="/internal/v1", tags=["symbols"])
 WorkspaceIdField = Annotated[str, Field(pattern=r"^ws_[A-Za-z0-9-]{8,64}$")]
 _BUILDS = ThreadPoolExecutor(1, thread_name_prefix="r0-index")
+
+
+def _jobs(request: Request) -> dict[str, Future[dict[str, Any]]]:
+    """
+    함수 이름: _jobs()
+    기능: 앱별 예약된 색인 작업을 반환한다. 작업 스레드가 시작하기 전에도 queued를 표시한다.
+    인자: request -> 현재 앱 요청
+    반환값: workspace별 작업 Future
+    작성 날짜: 2026/11/11
+    """
+    if not hasattr(request.app.state, "index_jobs"):
+        request.app.state.index_jobs = {}
+    jobs: dict[str, Future[dict[str, Any]]] = request.app.state.index_jobs
+    return jobs
+
+
+async def _status(request: Request, workspace_id: str) -> dict[str, Any]:
+    """
+    함수 이름: _status()
+    기능: 실제 색인 상태에 아직 시작하지 않은 예약 작업의 queued 상태를 반영한다.
+    인자: request -> 현재 앱 요청, workspace_id -> 작업 공간
+    반환값: IndexStatusResponse
+    작성 날짜: 2026/11/11
+    """
+    root = _roots(request).root_for(workspace_id)
+    result = await run_in_threadpool(_symbols(request).index.status, workspace_id, root)
+    pending = _jobs(request).get(workspace_id)
+    if pending is not None and not pending.done() and result["index_status"] != "indexing":
+        result = {**result, "index_status": "queued"}
+    return result
 
 
 class _Strict(BaseModel):
@@ -140,8 +170,11 @@ async def start_index(request: Request, body: WorkspaceBody) -> dict[str, Any]:
     """
     root = _roots(request).root_for(body.workspace_id)
     index: SymbolIndexService = _symbols(request).index
-    _BUILDS.submit(index.build, body.workspace_id, root)
-    return await run_in_threadpool(index.status, body.workspace_id, root)
+    jobs = _jobs(request)
+    pending = jobs.get(body.workspace_id)
+    if pending is None or pending.done():
+        jobs[body.workspace_id] = _BUILDS.submit(index.build, body.workspace_id, root)
+    return await _status(request, body.workspace_id)
 
 
 @router.post("/symbols/index/status")
@@ -153,8 +186,7 @@ async def index_status(request: Request, body: WorkspaceBody) -> dict[str, Any]:
     반환값: IndexStatusResponse
     작성 날짜: 2026/11/10
     """
-    root = _roots(request).root_for(body.workspace_id)
-    return await run_in_threadpool(_symbols(request).index.status, body.workspace_id, root)
+    return await _status(request, body.workspace_id)
 
 
 @router.post("/symbols/search")

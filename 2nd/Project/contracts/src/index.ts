@@ -9,6 +9,3 @@ export {
     ContractValidator,
     type ContractValidationResult,
 } from "./validator.js";
-
-export type { LocalModel, ModelListResponse } from "./localModels.js";
-export { parseModelListResponse } from "./localModels.js";

@@ -76,7 +76,10 @@ export function createAfterToolHook(
             });
             throw error;
         }
-        const info = { outputBytes, ...(transformed.kind === "pointer" ? { pointer: transformed.pointer } : {}) };
+        const info = {
+            outputBytes: executorStored?.producedBytes ?? outputBytes,
+            ...(transformed.kind === "pointer" ? { pointer: transformed.pointer } : {}),
+        };
         turn.toolOutputs.set(toolCall.toolCallId, info);
         if (transformed.kind === "pointer") {
             turn.listener({

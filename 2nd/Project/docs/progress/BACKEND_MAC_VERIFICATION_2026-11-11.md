@@ -18,13 +18,21 @@ The installed Python environment lacked the locked `pypdf` dependency, preventin
 - Workspace registration now rejects folders overlapping the app's internal data folder before creating an unusable workspace, matching the Python service policy.
 - Fixed llama.cpp tool grammar failure: large string `maxLength` generation hints overflowed the installed llama.cpp grammar parser. The OpenAI-compatible provider projection removes these hints from tool definitions before counting and sending. The SDK and executor retain their original schemas and validation; the exact gate counts precisely the body sent.
 
+- Fixed automatic R0 dependency selection: expanded candidates now precede their atomic anchor, with atomic fallback when the whole dependency bundle exceeds the budget. Full symbol boundaries are compared across history and retained material, so a previously included function cannot hide newly discovered helper and constant definitions. Inserted fragments include file/line labels and all actual symbol citations.
+- Fixed queued indexing races: the API records the submitted Future and reports `queued` until the sole build worker starts. Repeated start requests reuse the pending job.
+- Tool execution summaries now report original produced bytes from the streaming executor, including a capped capture, instead of the small pointer descriptor size.
+- Model controls now use the shared JSON Schema, generated TypeScript and browser/host validators. The LM Studio token-count method is included in the same contract; missing this enum previously let selection succeed but blocked the final model request.
+
 ## Verification
 
 | Check | Result |
 | --- | --- |
 | Host full suite after model, history and grammar changes | 129 passed, 0 failed |
+| Host model HTTP boundary and exact gate | 17 passed, both llama.cpp and LM Studio methods accepted |
+| Shared contract suite including model schemas and LM Studio method | 246 passed |
+| R0 dependency and index queue integration | 13 passed, including atomic history and explicit selection cases |
 | Host workspace registration regression after early overlap refusal | 6 passed, 0 failed |
-| Python full suite | 497 passed, 1 opt-in live test skipped |
+| Python full suite after R0 and queue corrections | 501 passed, 1 opt-in live test skipped |
 | Python ruff, format, mypy, docstring checks | PASS |
 | Host TypeScript, ESLint and structure checks | PASS |
 | SDK recreation history test | Previous Korean user message and assistant reply present in next outbound request; final gate invoked |
