@@ -73,6 +73,8 @@
 | `GET /workspaces/:id/sessions` | `?limit&cursor` → `session#SessionListResponse` | **구현** | 3.5 (H-04 세션 복구용, 3.2 추가) |
 | `POST /sessions` | `SessionCreateRequest` → `Session` | **구현** | 3.5 |
 | `GET /sessions/:session_id` | → `Session` (`active_run_id`로 재연결) | **구현** | 3.5 |
+| `DELETE /sessions/:id` | → `Session` (200, 멱등). 대화 목록에서 제거하고 재시작 후에도 유지. 원본 파일·프로젝트·다른 대화는 보존하며 준비/실행 중인 해당 대화는 409(`session_has_active_run`) | **구현** | 대화 우클릭 삭제 |
+| `POST /sessions/:id/restore` | → `Session` (200, 멱등). 삭제한 대화를 같은 ID와 기존 실행 이력으로 복원. 부모 프로젝트가 삭제된 상태면 404 | **구현** | 삭제 실행 취소 |
 | `GET /sessions/:id/runs` | `?limit&cursor` → `run#RunListResponse` | **구현** | 3.5 |
 | `POST /sessions/:id/runs` | `run#RunCreateRequest` → `RunSnapshot` (201, 재전송 200) | **구현** | 3.5 |
 | `GET /runs/:run_id` | `run#RunSnapshotQuery` (선택 query) → `RunSnapshot` | **구현** | 3.5 |

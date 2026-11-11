@@ -218,6 +218,7 @@
     font-size: 13px;
 }
 .desk-chat-list button.selected,
+.desk-chat-list button.menu-open,
 .desk-chat-list button:hover {
     background: #272b2e;
 }
@@ -252,5 +253,20 @@
 }
 
 .desk-nav-row > .desk-tag {
+    margin-left: auto;
+}
+.desk-deletion-notice {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 24px 0;
+    padding: 4px 10px;
+    border: 1px solid #343a3e;
+    border-radius: 8px;
+    background: #1e2123;
+    color: #a1abb1;
+    font-size: 12px;
+}
+.desk-deletion-notice > .desk-icon-button {
     margin-left: auto;
 }

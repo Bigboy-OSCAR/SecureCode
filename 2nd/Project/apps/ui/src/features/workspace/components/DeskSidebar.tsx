@@ -3,7 +3,9 @@ import { useState } from "react";
 import type { Session, Workspace } from "@securecode/contracts";
 import { DeskIcon } from "../../../components/DeskIcon.js";
 import type { DeskChat } from "../hooks/useDeskWorkspace.js";
-import { ProjectContextMenu, type ProjectMenuTarget } from "./ProjectContextMenu.js";
+import { SidebarContextMenu, type SidebarMenuTarget } from "./SidebarContextMenu.js";
+
+type MenuTarget = SidebarMenuTarget & ({ kind: "project"; workspace: Workspace } | { kind: "chat"; chat: DeskChat });
 
 interface Props {
     modelCount: number | null;
@@ -20,10 +22,12 @@ interface Props {
     onChat: (session: Session) => void;
     onNewChat: (workspace: Workspace) => void;
     onRemoveProject: (workspace: Workspace) => Promise<boolean>;
+    onRemoveChat: (session: Session) => Promise<boolean>;
     loadingChats: boolean;
+    busy: boolean;
 }
 export function DeskSidebar(props: Props): React.JSX.Element {
-    const [menu, setMenu] = useState<ProjectMenuTarget | null>(null);
+    const [menu, setMenu] = useState<MenuTarget | null>(null);
     return (
         <nav id="project-panel" className="desk-sidebar" aria-label="프로젝트 및 대화">
             <div className="desk-brand">
@@ -45,12 +49,19 @@ export function DeskSidebar(props: Props): React.JSX.Element {
                 {props.workspaces.map((workspace) => (
                     <div key={workspace.workspace_id}>
                         <div
-                            className={`desk-project ${props.workspace?.workspace_id === workspace.workspace_id ? "selected" : ""} ${menu?.workspace.workspace_id === workspace.workspace_id ? "menu-open" : ""}`}
+                            className={`desk-project ${props.workspace?.workspace_id === workspace.workspace_id ? "selected" : ""} ${menu?.kind === "project" && menu.workspace.workspace_id === workspace.workspace_id ? "menu-open" : ""}`}
                             onContextMenu={(event) => {
                                 event.preventDefault();
                                 const trigger =
                                     event.currentTarget.querySelector<HTMLButtonElement>(".desk-project-open");
-                                if (trigger) setMenu({ workspace, x: event.clientX, y: event.clientY, trigger });
+                                if (trigger)
+                                    setMenu({
+                                        kind: "project",
+                                        workspace,
+                                        x: event.clientX,
+                                        y: event.clientY,
+                                        trigger,
+                                    });
                             }}
                         >
                             <button
@@ -63,6 +74,7 @@ export function DeskSidebar(props: Props): React.JSX.Element {
                                         event.preventDefault();
                                         const rect = event.currentTarget.getBoundingClientRect();
                                         setMenu({
+                                            kind: "project",
                                             workspace,
                                             x: rect.left + 12,
                                             y: rect.bottom,
@@ -87,6 +99,7 @@ export function DeskSidebar(props: Props): React.JSX.Element {
                             <button
                                 className="desk-icon-button desk-project-new-chat"
                                 aria-label={`${workspace.display_name} 새 대화`}
+                                disabled={props.busy}
                                 onClick={() => props.onNewChat(workspace)}
                             >
                                 <DeskIcon name="img" />
@@ -105,10 +118,35 @@ export function DeskSidebar(props: Props): React.JSX.Element {
                                 {props.chats.map((chat) => (
                                     <button
                                         key={chat.session.session_id}
-                                        className={
-                                            props.session?.session_id === chat.session.session_id ? "selected" : ""
-                                        }
+                                        className={`${props.session?.session_id === chat.session.session_id ? "selected" : ""} ${menu?.kind === "chat" && menu.chat.session.session_id === chat.session.session_id ? "menu-open" : ""}`}
+                                        data-session-id={chat.session.session_id}
                                         onClick={() => props.onChat(chat.session)}
+                                        onContextMenu={(event) => {
+                                            event.preventDefault();
+                                            setMenu({
+                                                kind: "chat",
+                                                chat,
+                                                x: event.clientX,
+                                                y: event.clientY,
+                                                trigger: event.currentTarget,
+                                            });
+                                        }}
+                                        onKeyDown={(event) => {
+                                            if (
+                                                event.key === "ContextMenu" ||
+                                                (event.shiftKey && event.key === "F10")
+                                            ) {
+                                                event.preventDefault();
+                                                const rect = event.currentTarget.getBoundingClientRect();
+                                                setMenu({
+                                                    kind: "chat",
+                                                    chat,
+                                                    x: rect.left + 12,
+                                                    y: rect.bottom,
+                                                    trigger: event.currentTarget,
+                                                });
+                                            }
+                                        }}
                                         title={chat.title}
                                     >
                                         {chat.title}
@@ -139,7 +177,27 @@ export function DeskSidebar(props: Props): React.JSX.Element {
                 </button>
             </div>
             {menu ? (
-                <ProjectContextMenu target={menu} onClose={() => setMenu(null)} onRemove={props.onRemoveProject} />
+                <SidebarContextMenu
+                    target={menu}
+                    disabled={props.busy}
+                    label={
+                        menu.kind === "project"
+                            ? `${menu.workspace.display_name} 프로젝트 메뉴`
+                            : `${menu.chat.title} 대화 메뉴`
+                    }
+                    actionLabel={menu.kind === "project" ? "프로젝트 삭제" : "대화 삭제"}
+                    focusSelector={
+                        menu.kind === "project"
+                            ? ".desk-project.selected .desk-project-open"
+                            : "#project-panel .desk-chat-list .selected"
+                    }
+                    onClose={() => setMenu(null)}
+                    onRemove={() =>
+                        menu.kind === "project"
+                            ? props.onRemoveProject(menu.workspace)
+                            : props.onRemoveChat(menu.chat.session)
+                    }
+                />
             ) : null}
         </nav>
     );

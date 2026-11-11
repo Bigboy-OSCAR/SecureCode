@@ -8,7 +8,7 @@ import { isoTime, newId, type Clock } from "../../security/ids.js";
 import { JsonFileStore } from "../shared/jsonFileStore.js";
 import { RouteFailure } from "../shared/routeFailure.js";
 
-type SessionRecord = Omit<Session, "schema_version">;
+type SessionRecord = Omit<Session, "schema_version"> & { deleted_at?: string };
 
 export class SessionStore {
     private readonly records = new Map<string, SessionRecord>();
@@ -35,20 +35,38 @@ export class SessionStore {
             created_at: isoTime(this.clock()),
         };
         this.save(record);
-        return { schema_version: "1", ...record };
+        return this.toWire(record);
     }
 
     get(sessionId: string): Session {
         const record = this.records.get(sessionId);
-        if (!record) throw new RouteFailure("NOT_FOUND", "session not found");
-        return { schema_version: "1", ...record };
+        if (!record || record.deleted_at) throw new RouteFailure("NOT_FOUND", "session not found");
+        return this.toWire(record);
     }
 
     listForWorkspace(workspaceId: string): Session[] {
         return [...this.records.values()]
-            .filter((record) => record.workspace_id === workspaceId)
+            .filter((record) => record.workspace_id === workspaceId && !record.deleted_at)
             .sort((left, right) => right.created_at.localeCompare(left.created_at))
-            .map((record) => ({ schema_version: "1", ...record }));
+            .map((record) => this.toWire(record));
+    }
+
+    /** Server-only lookup used to validate a parent workspace before restoring a conversation. */
+    workspaceFor(sessionId: string): string {
+        return this.requireStored(sessionId).workspace_id;
+    }
+
+    remove(sessionId: string): Session {
+        const record = this.requireStored(sessionId);
+        if (!record.deleted_at) this.save({ ...record, deleted_at: isoTime(this.clock()) });
+        return this.toWire(record);
+    }
+
+    restore(sessionId: string): Session {
+        const record = { ...this.requireStored(sessionId) };
+        delete record.deleted_at;
+        this.save(record);
+        return this.toWire(record);
     }
 
     setActiveRun(sessionId: string, runId: string | null): void {
@@ -62,5 +80,17 @@ export class SessionStore {
     private save(record: SessionRecord): void {
         this.records.set(record.session_id, record);
         this.store.write(record.session_id, record);
+    }
+
+    private requireStored(sessionId: string): SessionRecord {
+        const record = this.records.get(sessionId);
+        if (!record) throw new RouteFailure("NOT_FOUND", "session not found");
+        return record;
+    }
+
+    private toWire(record: SessionRecord): Session {
+        const session = { ...record };
+        delete session.deleted_at;
+        return { schema_version: "1", ...session };
     }
 }

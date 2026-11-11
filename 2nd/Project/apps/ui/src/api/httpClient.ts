@@ -6,7 +6,6 @@ import type {
     ContextPreviewResponse,
     BootstrapRequest,
     BootstrapResponse,
-    ErrorResponse,
     HealthResponse,
     IndexRequest,
     IndexStatusResponse,
@@ -37,8 +36,9 @@ import type {
     WorkspaceListResponse,
 } from "@securecode/contracts";
 import { notifyAuthExpired } from "./nativeAuth.js";
-import { ApiClientError, safeApiMessage } from "./apiErrors.js";
+import { ApiClientError } from "./apiErrors.js";
 import { InvalidApiPayloadError, parseApiPayload, serializeApiRequest } from "./mappers/contractMapper.js";
+import { mapHttpError } from "./mappers/httpErrorMapper.js";
 
 export type ApiFetch = typeof fetch;
 
@@ -149,6 +149,14 @@ export class ApiHttpClient {
         return this.get(`sessions/${encodeURIComponent(sessionId)}`, "session");
     }
 
+    deleteSession(sessionId: SessionId): Promise<Session> {
+        return this.request("DELETE", `sessions/${encodeURIComponent(sessionId)}`, undefined, "session");
+    }
+
+    restoreSession(sessionId: SessionId): Promise<Session> {
+        return this.post(`sessions/${encodeURIComponent(sessionId)}/restore`, "session", undefined);
+    }
+
     listSessions(workspaceId: WorkspaceId, cursor?: string): Promise<SessionListResponse> {
         const query = new URLSearchParams({ limit: "100" });
         if (cursor) query.set("cursor", cursor);
@@ -254,41 +262,6 @@ async function readJson(response: Response): Promise<unknown> {
     } catch {
         throw new ApiClientError("contract", "호스트가 유효한 JSON 응답을 반환하지 않았습니다.", response.status);
     }
-}
-
-function mapHttpError(status: number, payload: unknown): ApiClientError {
-    let code: string | undefined;
-    let details: ErrorResponse["error"]["details"];
-    try {
-        const response = parseApiPayload<ErrorResponse>("errorResponse", payload);
-        code = response.error.code;
-        details = response.error.details;
-    } catch {
-        return new ApiClientError("contract", "호스트 오류 응답이 API 계약과 일치하지 않습니다.", status);
-    }
-
-    if (status === 401) {
-        return new ApiClientError(
-            "unauthorized",
-            safeApiMessage(code, "unauthorized", details?.reason),
-            status,
-            code,
-            details,
-        );
-    }
-    if (status === 403) {
-        return new ApiClientError(
-            "forbidden",
-            safeApiMessage(code, "forbidden", details?.reason),
-            status,
-            code,
-            details,
-        );
-    }
-    if (status >= 500) {
-        return new ApiClientError("server", safeApiMessage(code, "server", details?.reason), status, code, details);
-    }
-    return new ApiClientError("request", safeApiMessage(code, "request", details?.reason), status, code, details);
 }
 
 function toTransportError(error: unknown): ApiClientError {
