@@ -53,6 +53,7 @@ export function buildSessionTools(options: SessionToolOptions): ProjectTool[] {
             root: options.root,
             commandTimeoutMs: options.commandTimeoutMs,
             runtime: options.runtime,
+            recordCited: options.recordCited,
         }),
         ...codeTools({ ...shared, symbols: options.client.symbols }),
         ...pdfTools({

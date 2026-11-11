@@ -136,11 +136,13 @@ it("sends only selected evidence to the model across R0, Runtime and PDF pointer
         assert.match(all, /PAGE-TWO-SENTINEL/, "the selected PDF page was read");
         assert.doesNotMatch(all, /PAGE-ONE-SENTINEL|PAGE-THREE-SENTINEL/, "unselected PDF pages stayed out");
 
-        // The answer's citations are exactly the verified inputs: the inserted R0 fragment and the PDF page read.
+        // Each verified input is cited: the inserted R0 fragment, Runtime range and PDF page read.
         const citations = done.answer.citations ?? [];
         const symbol = citations.find((citation) => "location" in citation);
         assert.equal(symbol && "location" in symbol ? symbol.location.relative_path : null, "billing.py");
-        const page = citations.find((citation) => "selection" in citation.ref);
+        const page = citations.find(
+            (citation) => citation.ref.kind === "source" && citation.ref.selection.range.type === "pdf_page",
+        );
         const range = page && "selection" in page.ref ? page.ref.selection.range : null;
         assert.deepEqual(range && range.type === "pdf_page" ? range.page : null, 2, "the PDF page read is cited");
         assert.ok(!JSON.stringify(citations).includes("PAGE-TWO-SENTINEL"), "citations carry no raw text");
