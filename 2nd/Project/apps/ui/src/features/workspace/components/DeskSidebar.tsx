@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import type { Session, Workspace } from "@securecode/contracts";
 import { DeskIcon } from "../../../components/DeskIcon.js";
+import { BrandMark } from "../../../components/BrandMark.js";
 import type { DeskChat } from "../hooks/useDeskWorkspace.js";
 import { SidebarContextMenu, type SidebarMenuTarget } from "./SidebarContextMenu.js";
 
@@ -35,9 +36,8 @@ export function DeskSidebar(props: Props): React.JSX.Element {
     return (
         <nav id="project-panel" className="desk-sidebar" aria-label="프로젝트 및 대화">
             <div className="desk-brand">
-                <DeskIcon name="imgIconTerminal" />
+                <BrandMark />
                 <strong>LocalDesk</strong>
-                <span className="desk-tag">LOCAL</span>
             </div>
             <button className="desk-nav-row" onClick={props.onSearch}>
                 <DeskIcon name="imgIconSearch" />

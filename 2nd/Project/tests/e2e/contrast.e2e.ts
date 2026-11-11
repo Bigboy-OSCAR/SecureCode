@@ -89,7 +89,6 @@ it("actual text, placeholders, dialogs and answer controls meet WCAG AA contrast
     const { page, files, fake } = e2e;
     await measure("brand", page.locator(".desk-brand strong"));
     await measure("sidebar search", page.locator(".desk-nav-row").filter({ hasText: "대화 검색" }));
-    await measure("LOCAL tag", page.locator(".desk-brand .desk-tag"));
     await measure("model state caption", page.locator(".desk-model-picker small"));
     await measure("local privacy caption", page.locator(".desk-local"));
     await registerProject(page, "contrast-project", files.projectDir);

@@ -45,9 +45,6 @@
     min-height: 32px;
     font-size: 20px;
 }
-.desk-brand .desk-tag {
-    margin-left: auto;
-}
 .desk-tag {
     display: inline-flex;
     align-items: center;

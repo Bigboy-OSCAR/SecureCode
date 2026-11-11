@@ -11,6 +11,7 @@ import { ToolHistory } from "../../chat/components/ToolHistory.js";
 import { ApprovalCard } from "../../approvals/components/ApprovalCard.js";
 import { Alert, Button, TextAreaField } from "../../../components/index.js";
 import { DeskIcon } from "../../../components/DeskIcon.js";
+import { BrandMark } from "../../../components/BrandMark.js";
 import { formatApiFailure } from "../../../api/apiErrors.js";
 import { formatSelection } from "../../shared/model/provenanceLabels.js";
 import { DeskWelcome } from "./DeskWelcome.js";
@@ -136,7 +137,7 @@ export function DeskChat({
                         <div className="desk-user-message">{run.prompt_preview}</div>
                         <div className="desk-response-title">
                             <span>
-                                <DeskIcon name="imgIconTerminal1" />
+                                <BrandMark compact />
                             </span>
                             <strong>LocalDesk</strong>
                             <small>로컬</small>
