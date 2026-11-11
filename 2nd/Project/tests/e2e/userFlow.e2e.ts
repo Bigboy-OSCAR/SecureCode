@@ -12,6 +12,7 @@ import {
     buildIndex,
     contextPanelText,
     decideApproval,
+    openCurrentToolActivity,
     registerProject,
     registerSource,
     selectPointer,
@@ -61,7 +62,7 @@ it("answers from R0 evidence, a stored log and a PDF page, and cites only verifi
     assert.match(answer, /합계는 42입니다/);
     assert.match(answer, /billing\.py:1-4 · compute_invoice_total · revision 1/, "R0 fragment is cited");
     assert.match(answer, /원본 PDF 2쪽/, "the PDF page read is cited");
-    const tools = await page.getByTestId("tool-row").allInnerTexts();
+    const tools = await (await openCurrentToolActivity(page)).getByTestId("tool-row").allInnerTexts();
     assert.ok(tools.some((row) => /명령 실행 · 완료/.test(row) && /실행 결과로 저장됨/.test(row)));
     assert.ok(tools.some((row) => /실행 결과 검색 · 완료/.test(row)));
     assert.ok(tools.some((row) => /PDF 페이지 읽기 · 완료/.test(row)));

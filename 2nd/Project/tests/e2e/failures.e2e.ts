@@ -11,6 +11,7 @@ import {
     buildIndex,
     contextPanelText,
     decideApproval,
+    openCurrentToolActivity,
     registerProject,
     registerSource,
     selectPointer,
@@ -42,7 +43,7 @@ it("a rejected command never runs and the run reports the rejection", async () =
     await decideApproval(page, "reject");
     await waitRunStatus(page, "완료");
     assert.equal(await page.getByTestId("screen-approval").count(), 0, "the rejected request disappears");
-    const tools = await page.getByTestId("tool-row").allInnerTexts();
+    const tools = await (await openCurrentToolActivity(page)).getByTestId("tool-row").allInnerTexts();
     assert.ok(
         tools.some((row) => /명령 실행 · (거절됨|실패)/.test(row)),
         tools.join(" | "),
@@ -63,7 +64,10 @@ it("cancelling an approved command keeps the question and tool history without a
     await waitRunStatus(page, "취소됨");
     const chat = await page.locator("#screen-chat").innerText();
     assert.match(chat, new RegExp(question), "the cancelled run still shows its own question (UI23-09)");
-    assert.match((await page.getByTestId("tool-row").allInnerTexts()).join(" "), /명령 실행/);
+    assert.match(
+        (await (await openCurrentToolActivity(page)).getByTestId("tool-row").allInnerTexts()).join(" "),
+        /명령 실행/,
+    );
     assert.equal(await page.getByTestId("screen-approval").count(), 0, "there is no stale decision prompt");
 });
 

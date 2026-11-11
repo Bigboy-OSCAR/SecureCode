@@ -12,6 +12,7 @@ import {
     ask,
     buildIndex,
     contextPanelText,
+    openCurrentToolActivity,
     registerProject,
     registerSource,
     selectPointer,
@@ -123,7 +124,9 @@ it("an approval left undecided expires and the command never runs", async () => 
     await waitRunStatus(page, "완료", APPROVAL_TIMEOUT_MS + 30000);
     assert.equal(await page.getByTestId("screen-approval").count(), 0, "the expired request disappears");
     assert.equal(await page.getByTestId("approval-meta").count(), 0, "no decision is offered after expiry");
-    assert.match((await page.getByTestId("tool-row").allInnerTexts()).join(" "), /run_command expired/);
+    const activity = await openCurrentToolActivity(page);
+    await activity.getByText("상세 기록", { exact: true }).click();
+    assert.match((await activity.getByTestId("tool-row").allInnerTexts()).join(" "), /run_command expired/);
     assert.doesNotMatch(fake.requests.join(" "), /BULK-LOG-/, "the expired command produced no output");
 });
 

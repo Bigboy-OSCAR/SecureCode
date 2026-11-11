@@ -11,6 +11,7 @@ import "./styles/deskPanels.css";
 import "./styles/deskDialogs.css";
 import "./styles/deskAnswers.css";
 import "./styles/deskApproval.css";
+import "./styles/deskActivity.css";
 
 const rootElement = document.getElementById("root");
 
