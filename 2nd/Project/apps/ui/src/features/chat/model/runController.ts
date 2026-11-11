@@ -3,6 +3,7 @@ import type {
     ApprovalId,
     AppEvent,
     IdempotencyKey,
+    ExplicitContextRef,
     RunSnapshot,
     SessionId,
     WorkspaceId,
@@ -92,8 +93,8 @@ export class RunController {
         this.publish(createRunViewState(sessionId, workspaceId));
     }
 
-    createRun(prompt: string): Promise<boolean> {
-        return this.disposed ? Promise.resolve(false) : this.commands.createRun(prompt);
+    createRun(prompt: string, contextRefs: ExplicitContextRef[] = []): Promise<boolean> {
+        return this.disposed ? Promise.resolve(false) : this.commands.createRun(prompt, contextRefs);
     }
 
     cancelRun(): Promise<boolean> {

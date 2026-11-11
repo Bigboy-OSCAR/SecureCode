@@ -7,7 +7,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { createElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import type { RunSnapshot } from "@securecode/contracts";
+import type { ExplicitContextRef, RunCreateRequest, RunSnapshot, SessionId } from "@securecode/contracts";
 import { fixtureAdapter } from "./support/fixtureAdapter.js";
 import { FixtureRunClient } from "./support/fixtureRunClient.js";
 import { PanelSwitcher, panelClass } from "../src/app/PanelSwitcher.js";
@@ -147,4 +147,52 @@ test("answer formatting escapes model HTML and preserves fenced code as text", (
     assert.ok(markup.includes("&lt;img src=x onerror=alert(1)&gt;"));
     assert.equal(markup.includes("<script>"), false);
     assert.equal(markup.includes("<img src=x"), false);
+});
+
+test("retrying a lost run response preserves the exact selected context and idempotency key", async () => {
+    const requests: RunCreateRequest[] = [];
+    class LostResponseClient extends FixtureRunClient {
+        override async createRun(sessionId: SessionId, request: RunCreateRequest): Promise<RunSnapshot> {
+            requests.push(structuredClone(request));
+            const snapshot = await super.createRun(sessionId, request);
+            if (requests.length === 1) throw new Error("response lost");
+            return snapshot;
+        }
+    }
+    const template = fixtureAdapter.runs[0]!;
+    let keyCount = 0;
+    const controller = new RunController(
+        new LostResponseClient(),
+        template.session_id,
+        template.workspace_id,
+        () => `selected-context-key-${++keyCount}`,
+    );
+    const refs: ExplicitContextRef[] = [
+        {
+            kind: "source",
+            pointer: "securecode://source/ws_00000001/00000000-0000-4000-8000-000000000000?v=1",
+            selection: {
+                revision: 1,
+                content_sha256: "a".repeat(64),
+                range: {
+                    type: "pdf_page",
+                    page: 2,
+                    start: 0,
+                    end: 17,
+                    parser_version: "test-parser",
+                },
+            },
+        },
+    ];
+    try {
+        assert.equal(await controller.createRun("selected page", refs), false);
+        assert.equal(await controller.createRun("selected page", []), false, "changed selection cannot reuse the key");
+        assert.equal(requests.length, 1);
+        assert.equal(await controller.createRun("selected page", structuredClone(refs)), true);
+        assert.equal(keyCount, 1);
+        assert.deepEqual(requests[0], requests[1]);
+        assert.deepEqual(requests[1]?.context_refs, refs);
+    } finally {
+        controller.dispose();
+    }
 });

@@ -162,3 +162,8 @@
 .modal-content {
     margin-top: var(--space-4);
 }
+
+.text-input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+}

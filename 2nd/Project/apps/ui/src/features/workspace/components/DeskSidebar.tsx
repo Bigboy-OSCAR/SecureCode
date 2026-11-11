@@ -4,7 +4,7 @@ import { DeskIcon } from "../../../components/DeskIcon.js";
 import type { DeskChat } from "../hooks/useDeskWorkspace.js";
 
 interface Props {
-    modelCount: number;
+    modelCount: number | null;
     workspaces: Workspace[];
     workspace: Workspace | null;
     session: Session | null;
@@ -90,7 +90,7 @@ export function DeskSidebar(props: Props): React.JSX.Element {
             <div className="desk-sidebar-bottom">
                 <button className="desk-nav-row" onClick={props.onModels}>
                     <DeskIcon name="imgIconChip" />내 모델
-                    <span className="desk-tag">{props.modelCount}</span>
+                    <span className="desk-tag">{props.modelCount ?? "—"}</span>
                 </button>
                 <p className="desk-local">
                     <DeskIcon name="imgIconShield" />이 기기에서만 실행·저장

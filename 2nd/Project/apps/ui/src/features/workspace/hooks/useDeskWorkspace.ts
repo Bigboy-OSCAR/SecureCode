@@ -10,6 +10,7 @@ import type {
 } from "@securecode/contracts";
 import type { ApiHttpClient } from "../../../api/httpClient.js";
 import { ApiClientError, formatApiFailure } from "../../../api/apiErrors.js";
+import { persistNativeSelection } from "../../../api/nativeSelection.js";
 import { createIdempotencyKey } from "../../../api/runClient.js";
 
 const SELECTION_KEY = "localdesk.selection.v1";
@@ -148,6 +149,7 @@ export function useDeskWorkspace(api: ApiHttpClient): DeskWorkspaceState {
         } catch {
             /* Selection can still be restored from server lists if storage is unavailable. */
         }
+        persistNativeSelection(workspace.workspace_id, session?.session_id);
     }, [workspace, session]);
     const newChat = async (target: Workspace | null = workspace): Promise<void> => {
         if (!target || busy) return;

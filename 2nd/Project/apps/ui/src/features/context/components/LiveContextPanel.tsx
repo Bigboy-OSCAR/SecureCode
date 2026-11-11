@@ -198,8 +198,8 @@ export function LiveContextPanel({
                 <div className="budget-box" data-testid="live-budget-preview">
                     <strong>호스트 컨텍스트 계획 · digest {workflow.plan.preview_digest.slice(0, 12)}…</strong>
                     <p>
-                        실제 계수 {workflow.plan.budget.used_tokens} / {workflow.plan.budget.budget_tokens} tokens ·{" "}
-                        {countModeLabel(workflow.plan.budget.count_mode)}
+                        선택 자료 {workflow.plan.budget.used_tokens} / 가용 예산 {workflow.plan.budget.budget_tokens}{" "}
+                        tokens · 예산 산정: {countModeLabel(workflow.plan.budget.count_mode)}
                     </p>
                     <ul className="compact-list">
                         {workflow.plan.selected.map((candidate) => (

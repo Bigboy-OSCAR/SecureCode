@@ -93,7 +93,7 @@ export function LiveApp(): React.JSX.Element {
                 </div>
                 <div className="desk-body">
                     <DeskSidebar
-                        modelCount={models.models?.items.length ?? 0}
+                        modelCount={models.models?.items.length ?? null}
                         workspaces={desk.workspaces}
                         workspace={desk.workspace}
                         session={desk.session}
@@ -167,7 +167,8 @@ export function LiveApp(): React.JSX.Element {
                                 client={runClient}
                                 session={desk.session}
                                 workspace={desk.workspace}
-                                modelName={modelName}
+                                contextRef={pointerContextRef}
+                                onClearContext={() => setPointerContextRef(null)}
                                 canSend={desk.connected && modelReady}
                                 onAttach={openContext}
                                 onRunChanged={desk.refreshChats}

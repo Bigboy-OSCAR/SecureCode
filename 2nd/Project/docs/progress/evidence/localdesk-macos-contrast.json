@@ -1,0 +1,224 @@
+{
+    "measured_at": "2026-11-11T09:35:26.861Z",
+    "browser": "installed Chrome, 1440x960",
+    "method": "WCAG 2.x sRGB relative luminance, alpha-composited computed CSS, unrounded assertion",
+    "disabled_controls": "excluded as WCAG exempts inactive controls",
+    "samples": [
+        {
+            "name": "brand",
+            "foreground": "rgb(237, 241, 242)",
+            "background": "rgb(17, 19, 20)",
+            "ratio": 16.38314220625521,
+            "required": 3,
+            "fontSize": 20,
+            "fontWeight": "700"
+        },
+        {
+            "name": "sidebar search",
+            "foreground": "rgb(161, 171, 177)",
+            "background": "rgb(17, 19, 20)",
+            "ratio": 7.963416059208806,
+            "required": 4.5,
+            "fontSize": 13,
+            "fontWeight": "400"
+        },
+        {
+            "name": "LOCAL tag",
+            "foreground": "rgb(161, 171, 177)",
+            "background": "rgb(39, 43, 46)",
+            "ratio": 6.100476308943094,
+            "required": 4.5,
+            "fontSize": 12,
+            "fontWeight": "400"
+        },
+        {
+            "name": "model state caption",
+            "foreground": "rgb(181, 245, 220)",
+            "background": "rgb(30, 33, 35)",
+            "ratio": 13.152630391784072,
+            "required": 4.5,
+            "fontSize": 12,
+            "fontWeight": "400"
+        },
+        {
+            "name": "local privacy caption",
+            "foreground": "rgb(161, 171, 177)",
+            "background": "rgb(17, 19, 20)",
+            "ratio": 7.963416059208806,
+            "required": 4.5,
+            "fontSize": 12,
+            "fontWeight": "400"
+        },
+        {
+            "name": "welcome title",
+            "foreground": "rgb(237, 241, 242)",
+            "background": "rgb(22, 24, 25)",
+            "ratio": 15.664316709050583,
+            "required": 3,
+            "fontSize": 30,
+            "fontWeight": "700"
+        },
+        {
+            "name": "welcome description",
+            "foreground": "rgb(161, 171, 177)",
+            "background": "rgb(22, 24, 25)",
+            "ratio": 7.614013823902413,
+            "required": 4.5,
+            "fontSize": 14,
+            "fontWeight": "400"
+        },
+        {
+            "name": "project path",
+            "foreground": "rgb(161, 171, 177)",
+            "background": "rgb(30, 33, 35)",
+            "ratio": 6.92006908598647,
+            "required": 4.5,
+            "fontSize": 12,
+            "fontWeight": "400"
+        },
+        {
+            "name": "suggestion button",
+            "foreground": "rgb(237, 241, 242)",
+            "background": "rgb(39, 43, 46)",
+            "ratio": 12.550514773082883,
+            "required": 4.5,
+            "fontSize": 13,
+            "fontWeight": "400"
+        },
+        {
+            "name": "composer context",
+            "foreground": "rgb(161, 171, 177)",
+            "background": "rgb(30, 33, 35)",
+            "ratio": 6.92006908598647,
+            "required": 4.5,
+            "fontSize": 12,
+            "fontWeight": "400"
+        },
+        {
+            "name": "composer folder tag",
+            "foreground": "rgb(161, 171, 177)",
+            "background": "rgb(39, 43, 46)",
+            "ratio": 6.100476308943094,
+            "required": 4.5,
+            "fontSize": 12,
+            "fontWeight": "400"
+        },
+        {
+            "name": "input placeholder",
+            "foreground": "rgb(161, 171, 177)",
+            "background": "rgb(30, 33, 35)",
+            "ratio": 6.92006908598647,
+            "required": 4.5,
+            "fontSize": 14,
+            "fontWeight": "400"
+        },
+        {
+            "name": "input instruction",
+            "foreground": "rgb(161, 171, 177)",
+            "background": "rgb(30, 33, 35)",
+            "ratio": 6.92006908598647,
+            "required": 4.5,
+            "fontSize": 12,
+            "fontWeight": "400"
+        },
+        {
+            "name": "privacy footer",
+            "foreground": "rgb(161, 171, 177)",
+            "background": "rgb(22, 24, 25)",
+            "ratio": 7.614013823902413,
+            "required": 4.5,
+            "fontSize": 12,
+            "fontWeight": "400"
+        },
+        {
+            "name": "user message",
+            "foreground": "rgb(237, 241, 242)",
+            "background": "rgb(39, 43, 46)",
+            "ratio": 12.550514773082883,
+            "required": 4.5,
+            "fontSize": 14,
+            "fontWeight": "400"
+        },
+        {
+            "name": "answer body",
+            "foreground": "rgb(237, 241, 242)",
+            "background": "rgb(22, 24, 25)",
+            "ratio": 15.664316709050583,
+            "required": 4.5,
+            "fontSize": 14,
+            "fontWeight": "400"
+        },
+        {
+            "name": "code text",
+            "foreground": "rgb(237, 241, 242)",
+            "background": "rgb(17, 19, 20)",
+            "ratio": 16.38314220625521,
+            "required": 4.5,
+            "fontSize": 12,
+            "fontWeight": "400"
+        },
+        {
+            "name": "code copy",
+            "foreground": "rgb(161, 171, 177)",
+            "background": "rgb(17, 19, 20)",
+            "ratio": 7.963416059208806,
+            "required": 4.5,
+            "fontSize": 12,
+            "fontWeight": "400"
+        },
+        {
+            "name": "dialog title",
+            "foreground": "rgb(237, 241, 242)",
+            "background": "rgb(30, 33, 35)",
+            "ratio": 14.23666364659224,
+            "required": 3,
+            "fontSize": 20,
+            "fontWeight": "700"
+        },
+        {
+            "name": "field label",
+            "foreground": "rgb(161, 171, 177)",
+            "background": "rgb(30, 33, 35)",
+            "ratio": 6.92006908598647,
+            "required": 4.5,
+            "fontSize": 13,
+            "fontWeight": "500"
+        },
+        {
+            "name": "primary enabled button",
+            "foreground": "rgb(18, 35, 30)",
+            "background": "rgb(181, 245, 220)",
+            "ratio": 13.276864815123902,
+            "required": 4.5,
+            "fontSize": 13,
+            "fontWeight": "500"
+        },
+        {
+            "name": "field entered value",
+            "foreground": "rgb(237, 241, 242)",
+            "background": "rgb(17, 19, 20)",
+            "ratio": 16.38314220625521,
+            "required": 4.5,
+            "fontSize": 14,
+            "fontWeight": "400"
+        },
+        {
+            "name": "project privacy notice",
+            "foreground": "rgb(183, 198, 192)",
+            "background": "rgb(36, 61, 53)",
+            "ratio": 6.606899009122649,
+            "required": 4.5,
+            "fontSize": 12,
+            "fontWeight": "400"
+        },
+        {
+            "name": "error alert",
+            "foreground": "rgb(255, 182, 188)",
+            "background": "rgb(64, 39, 42)",
+            "ratio": 8.21810364031704,
+            "required": 4.5,
+            "fontSize": 14,
+            "fontWeight": "400"
+        }
+    ]
+}

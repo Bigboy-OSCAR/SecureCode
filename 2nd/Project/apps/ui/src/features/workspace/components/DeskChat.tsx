@@ -1,6 +1,6 @@
 /** Live chat restores the last server run and preserves earlier turns while streaming a new one. */
 import { useEffect, useRef, useState } from "react";
-import type { RunSnapshot, Session, Workspace } from "@securecode/contracts";
+import type { RunSnapshot, Session, Workspace, SelectedPointerContextRef } from "@securecode/contracts";
 import type { ApiHttpClient } from "../../../api/httpClient.js";
 import type { HttpRunClient } from "../../../api/httpRunClient.js";
 import { useRunController } from "../../chat/hooks/useRunController.js";
@@ -11,6 +11,7 @@ import { ApprovalCard } from "../../approvals/components/ApprovalCard.js";
 import { Alert, Button, TextAreaField } from "../../../components/index.js";
 import { DeskIcon } from "../../../components/DeskIcon.js";
 import { formatApiFailure } from "../../../api/apiErrors.js";
+import { formatSelection } from "../../shared/model/provenanceLabels.js";
 import { DeskWelcome } from "./DeskWelcome.js";
 
 const STATUS = {
@@ -27,7 +28,8 @@ interface Props {
     client: HttpRunClient;
     session: Session;
     workspace: Workspace;
-    modelName: string;
+    contextRef: SelectedPointerContextRef | null;
+    onClearContext: () => void;
     canSend: boolean;
     onAttach: () => void;
     onRunChanged: () => Promise<void>;
@@ -38,14 +40,15 @@ export function DeskChat({
     client,
     session,
     workspace,
-    modelName,
+    contextRef,
+    onClearContext,
     canSend,
     onAttach,
     onRunChanged,
     onRuntimePointer,
 }: Props): React.JSX.Element {
     const { controller, state } = useRunController(client, session.session_id, workspace.workspace_id);
-    const actions = useConversationActions(controller, state);
+    const actions = useConversationActions(controller, state, contextRef ? [contextRef] : []);
     const [history, setHistory] = useState<RunSnapshot[]>([]);
     const [restoreError, setRestoreError] = useState<string | null>(null);
     const [restoring, setRestoring] = useState(true);
@@ -128,7 +131,7 @@ export function DeskChat({
                             <span>
                                 <DeskIcon name="imgIconTerminal1" />
                             </span>
-                            <strong>{modelName}</strong>
+                            <strong>LocalDesk</strong>
                             <small>로컬</small>
                         </div>
                         <AnswerView run={run} />
@@ -169,6 +172,14 @@ export function DeskChat({
                         <DeskIcon name="imgIconFolder2" />
                         <span>{workspace.display_name}</span>
                         <span className="desk-tag">로컬 폴더</span>
+                        {contextRef ? (
+                            <span className="desk-context-chip">
+                                선택 자료 · {formatSelection(contextRef.selection.range)}
+                                <button type="button" onClick={onClearContext} aria-label="선택 자료 포함 해제">
+                                    ×
+                                </button>
+                            </span>
+                        ) : null}
                         <button
                             type="button"
                             className="desk-icon-button"

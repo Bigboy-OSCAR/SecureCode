@@ -77,3 +77,21 @@
 .desk-search-input .text-input {
     border: 0;
 }
+
+.desk-context-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #243d35;
+    color: #b5f5dc;
+    border-radius: 8px;
+    padding: 3px 8px;
+}
+.desk-context-chip button {
+    color: inherit;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    min-width: 24px;
+    min-height: 24px;
+}
