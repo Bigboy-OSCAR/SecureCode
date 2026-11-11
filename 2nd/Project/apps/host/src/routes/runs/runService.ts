@@ -134,8 +134,12 @@ export class RunService {
         return { snapshot: this.snapshot(record.run_id), created: true };
     }
 
-    hasActiveRuns(): boolean {
-        return this.planning.size > 0 || [...this.recorders.values()].some((recorder) => !recorder.terminal);
+    hasActiveRuns(workspaceId?: string): boolean {
+        for (const sessionId of this.planning)
+            if (!workspaceId || this.deps.sessions.get(sessionId).workspace_id === workspaceId) return true;
+        return [...this.recorders.values()].some(
+            (recorder) => !recorder.terminal && (!workspaceId || recorder.record.workspace_id === workspaceId),
+        );
     }
 
     snapshot(runId: string, query: SnapshotQuery = {}): RunSnapshot {

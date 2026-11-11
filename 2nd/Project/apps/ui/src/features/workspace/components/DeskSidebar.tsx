@@ -1,7 +1,9 @@
 /** Project and conversation navigation matching the LocalDesk prototype. */
+import { useState } from "react";
 import type { Session, Workspace } from "@securecode/contracts";
 import { DeskIcon } from "../../../components/DeskIcon.js";
 import type { DeskChat } from "../hooks/useDeskWorkspace.js";
+import { ProjectContextMenu, type ProjectMenuTarget } from "./ProjectContextMenu.js";
 
 interface Props {
     modelCount: number | null;
@@ -17,8 +19,11 @@ interface Props {
     onWorkspace: (workspace: Workspace) => void;
     onChat: (session: Session) => void;
     onNewChat: (workspace: Workspace) => void;
+    onRemoveProject: (workspace: Workspace) => Promise<boolean>;
+    loadingChats: boolean;
 }
 export function DeskSidebar(props: Props): React.JSX.Element {
+    const [menu, setMenu] = useState<ProjectMenuTarget | null>(null);
     return (
         <nav id="project-panel" className="desk-sidebar" aria-label="프로젝트 및 대화">
             <div className="desk-brand">
@@ -40,31 +45,61 @@ export function DeskSidebar(props: Props): React.JSX.Element {
                 {props.workspaces.map((workspace) => (
                     <div key={workspace.workspace_id}>
                         <div
-                            className={`desk-project ${props.workspace?.workspace_id === workspace.workspace_id ? "selected" : ""}`}
+                            className={`desk-project ${props.workspace?.workspace_id === workspace.workspace_id ? "selected" : ""} ${menu?.workspace.workspace_id === workspace.workspace_id ? "menu-open" : ""}`}
+                            onContextMenu={(event) => {
+                                event.preventDefault();
+                                const trigger =
+                                    event.currentTarget.querySelector<HTMLButtonElement>(".desk-project-open");
+                                if (trigger) setMenu({ workspace, x: event.clientX, y: event.clientY, trigger });
+                            }}
                         >
-                            <div className="desk-project-row">
-                                <button onClick={() => props.onWorkspace(workspace)}>
+                            <button
+                                className="desk-project-open"
+                                aria-label={workspace.display_name}
+                                aria-expanded={props.workspace?.workspace_id === workspace.workspace_id}
+                                onClick={() => props.onWorkspace(workspace)}
+                                onKeyDown={(event) => {
+                                    if (event.key === "ContextMenu" || (event.shiftKey && event.key === "F10")) {
+                                        event.preventDefault();
+                                        const rect = event.currentTarget.getBoundingClientRect();
+                                        setMenu({
+                                            workspace,
+                                            x: rect.left + 12,
+                                            y: rect.bottom,
+                                            trigger: event.currentTarget,
+                                        });
+                                    }
+                                }}
+                            >
+                                <span className="desk-project-label">
                                     <DeskIcon name="imgIconFolder" />
                                     <span>{workspace.display_name}</span>
-                                </button>
-                                <button
-                                    className="desk-icon-button"
-                                    aria-label={`${workspace.display_name} 새 대화`}
-                                    onClick={() => props.onNewChat(workspace)}
-                                >
-                                    <DeskIcon name="img" />
-                                </button>
-                                <DeskIcon name="imgIconDown" />
-                            </div>
-                            {props.workspace?.workspace_id === workspace.workspace_id ? (
-                                <p title={workspace.display_path ?? workspace.display_name}>
-                                    {workspace.display_path ?? workspace.display_name}
-                                </p>
-                            ) : null}
+                                </span>
+                                {props.workspace?.workspace_id === workspace.workspace_id ? (
+                                    <span
+                                        className="desk-project-path"
+                                        title={workspace.display_path ?? workspace.display_name}
+                                    >
+                                        {workspace.display_path ?? workspace.display_name}
+                                    </span>
+                                ) : null}
+                            </button>
+                            <button
+                                className="desk-icon-button desk-project-new-chat"
+                                aria-label={`${workspace.display_name} 새 대화`}
+                                onClick={() => props.onNewChat(workspace)}
+                            >
+                                <DeskIcon name="img" />
+                            </button>
                         </div>
                         {props.workspace?.workspace_id === workspace.workspace_id ? (
                             <div className="desk-chat-list" aria-label="대화 목록">
-                                {props.chats.length === 0 ? (
+                                {props.loadingChats ? (
+                                    <p className="muted-copy" role="status">
+                                        대화를 불러오는 중…
+                                    </p>
+                                ) : null}
+                                {!props.loadingChats && props.chats.length === 0 ? (
                                     <p className="muted-copy">아직 이전 대화가 없어요.</p>
                                 ) : null}
                                 {props.chats.map((chat) => (
@@ -103,6 +138,9 @@ export function DeskSidebar(props: Props): React.JSX.Element {
                     연결 설정
                 </button>
             </div>
+            {menu ? (
+                <ProjectContextMenu target={menu} onClose={() => setMenu(null)} onRemove={props.onRemoveProject} />
+            ) : null}
         </nav>
     );
 }

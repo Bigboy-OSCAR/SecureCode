@@ -137,6 +137,10 @@ export class ApiHttpClient {
         return this.post("workspaces", "workspace", request, "workspaceCreateRequest");
     }
 
+    deleteWorkspace(workspaceId: WorkspaceId): Promise<Workspace> {
+        return this.request("DELETE", `workspaces/${encodeURIComponent(workspaceId)}`, undefined, "workspace");
+    }
+
     createSession(request: SessionCreateRequest): Promise<Session> {
         return this.post("sessions", "session", request, "sessionCreateRequest");
     }

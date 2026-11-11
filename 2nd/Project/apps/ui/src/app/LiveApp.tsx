@@ -83,6 +83,8 @@ export function LiveApp(): React.JSX.Element {
                         workspace={desk.workspace}
                         session={desk.session}
                         chats={desk.chats}
+                        loadingChats={desk.loadingChats}
+                        onRemoveProject={desk.removeProject}
                         onProject={() => setDialog("project")}
                         onSearch={() => setDialog("search")}
                         onModels={() => {

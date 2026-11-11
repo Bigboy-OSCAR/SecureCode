@@ -67,6 +67,7 @@
 | `GET /workspaces` | `?limit&cursor` → `workspace#WorkspaceListResponse` | **구현** | 3.5 (H-02 목록 복구용, 3.2 추가) |
 | `POST /workspaces` | `WorkspaceCreateRequest` → `Workspace` | **구현** | 3.5 |
 | `GET /workspaces/:workspace_id` | → `Workspace` | **구현** | 3.5 |
+| `DELETE /workspaces/:workspace_id` | → `Workspace` (200, 반복 요청도 동일). 앱 목록에서 제거하며 원본 폴더·대화·색인은 보존. 같은 폴더를 새 요청 키로 등록하면 동일 ID로 복원. 실행 준비 또는 실행 중에는 409 `RUN_ALREADY_ACTIVE(workspace_has_active_run)` | **구현** | 프로젝트 관리 |
 | `POST /workspaces/:id/index` | `IndexRequest` → `IndexStatusResponse` (202) | **구현** | 3.6 (+3.3). 백그라운드 색인 |
 | `GET /workspaces/:id/index` | → `IndexStatusResponse` | **구현** | 3.6 |
 | `GET /workspaces/:id/sessions` | `?limit&cursor` → `session#SessionListResponse` | **구현** | 3.5 (H-04 세션 복구용, 3.2 추가) |

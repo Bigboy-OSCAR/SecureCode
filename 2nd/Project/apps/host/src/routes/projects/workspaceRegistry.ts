@@ -24,6 +24,7 @@ interface WorkspaceRecord {
     display_name: string;
     root: string;
     created_at: string;
+    removed_at?: string;
 }
 
 export class WorkspaceRegistry {
@@ -48,6 +49,19 @@ export class WorkspaceRegistry {
         const root = resolveWorkspaceRoot(request.root_path, this.allowedRoots, this.forbiddenRoots);
         const existing = [...this.records.values()].find((record) => record.root === root);
         if (existing) {
+            if (existing.removed_at) {
+                const restored = { ...existing, display_name: request.display_name };
+                delete restored.removed_at;
+                this.store.write(restored.workspace_id, restored);
+                this.records.set(restored.workspace_id, restored);
+                this.idempotency.remember(
+                    "workspaces",
+                    request.idempotency_key,
+                    lookup.bodyDigest,
+                    restored.workspace_id,
+                );
+                return [this.toWire(restored), false];
+            }
             this.idempotency.remember("workspaces", request.idempotency_key, lookup.bodyDigest, existing.workspace_id);
             return [this.toWire(existing), false];
         }
@@ -69,6 +83,7 @@ export class WorkspaceRegistry {
 
     list(): Workspace[] {
         return [...this.records.values()]
+            .filter((record) => !record.removed_at)
             .sort((left, right) => left.created_at.localeCompare(right.created_at))
             .map((record) => this.toWire(record));
     }
@@ -78,9 +93,21 @@ export class WorkspaceRegistry {
         return this.requireRecord(workspaceId).root;
     }
 
-    private requireRecord(workspaceId: string): WorkspaceRecord {
+    /** Remove only the app registration; the folder, sessions and indexes remain recoverable. */
+    remove(workspaceId: string): Workspace {
         const record = this.records.get(workspaceId);
         if (!record) throw new RouteFailure("NOT_FOUND", "workspace not found");
+        if (!record.removed_at) {
+            const removed = { ...record, removed_at: isoTime(this.clock()) };
+            this.store.write(workspaceId, removed);
+            this.records.set(workspaceId, removed);
+        }
+        return this.toWire(record);
+    }
+
+    private requireRecord(workspaceId: string): WorkspaceRecord {
+        const record = this.records.get(workspaceId);
+        if (!record || record.removed_at) throw new RouteFailure("NOT_FOUND", "workspace not found");
         return record;
     }
 

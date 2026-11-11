@@ -95,7 +95,7 @@ it("actual text, placeholders, dialogs and answer controls meet WCAG AA contrast
     await registerProject(page, "contrast-project", files.projectDir);
     await measure("welcome title", page.locator(".desk-welcome h1"));
     await measure("welcome description", page.locator(".desk-welcome p").first());
-    await measure("project path", page.locator(".desk-project.selected p"));
+    await measure("project path", page.locator(".desk-project.selected .desk-project-path"));
     await measure("suggestion button", page.locator(".desk-suggestions button").first());
     await measure("composer context", page.locator(".desk-composer-context > span").first());
     await measure("composer folder tag", page.locator(".desk-composer-context .desk-tag"));

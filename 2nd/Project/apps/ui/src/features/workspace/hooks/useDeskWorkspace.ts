@@ -1,24 +1,14 @@
 /** Restore server-owned workspaces and conversations; only selection IDs are stored in the browser. */
 import { useCallback, useEffect, useRef, useState } from "react";
-import type {
-    IdempotencyKey,
-    HealthResponse,
-    RunSummary,
-    Session,
-    SettingsResponse,
-    Workspace,
-} from "@securecode/contracts";
+import type { IdempotencyKey, HealthResponse, Session, SettingsResponse, Workspace } from "@securecode/contracts";
 import type { ApiHttpClient } from "../../../api/httpClient.js";
 import { ApiClientError, formatApiFailure } from "../../../api/apiErrors.js";
 import { persistNativeSelection } from "../../../api/nativeSelection.js";
 import { createIdempotencyKey } from "../../../api/runClient.js";
+import { readChats, type DeskChat } from "../model/deskChats.js";
+export type { DeskChat } from "../model/deskChats.js";
 
 const SELECTION_KEY = "localdesk.selection.v1";
-export interface DeskChat {
-    session: Session;
-    runs: RunSummary[];
-    title: string;
-}
 
 function readSelection(): { workspaceId?: string; sessionId?: string } {
     try {
@@ -33,29 +23,6 @@ function readSelection(): { workspaceId?: string; sessionId?: string } {
     }
 }
 
-async function readChats(api: ApiHttpClient, workspace: Workspace): Promise<DeskChat[]> {
-    const sessions: Session[] = [];
-    let cursor: string | undefined;
-    do {
-        const page = await api.listSessions(workspace.workspace_id, cursor);
-        sessions.push(...page.items);
-        cursor = page.page.next_cursor ?? undefined;
-    } while (cursor);
-    return Promise.all(
-        sessions.map(async (session) => {
-            const runs: RunSummary[] = [];
-            let runCursor: string | undefined;
-            do {
-                const page = await api.listRuns(session.session_id, runCursor);
-                runs.push(...page.items);
-                runCursor = page.page.next_cursor ?? undefined;
-            } while (runCursor);
-            runs.sort((a, b) => a.created_at.localeCompare(b.created_at));
-            return { session, runs, title: runs[0]?.prompt_preview ?? "새 대화" };
-        }),
-    );
-}
-
 export interface DeskWorkspaceState {
     connected: boolean;
     health: HealthResponse | null;
@@ -66,11 +33,13 @@ export interface DeskWorkspaceState {
     chats: DeskChat[];
     error: string | null;
     busy: boolean;
+    loadingChats: boolean;
     refresh: () => Promise<void>;
     selectWorkspace: (workspace: Workspace, preferredSession?: string) => Promise<void>;
     setSession: (session: Session) => void;
     newChat: (workspace?: Workspace | null) => Promise<void>;
     register: (name: string, path: string) => Promise<void>;
+    removeProject: (workspace: Workspace) => Promise<boolean>;
     refreshChats: () => Promise<void>;
     onStatus: (health: HealthResponse, settings: SettingsResponse) => void;
 }
@@ -83,31 +52,63 @@ export function useDeskWorkspace(api: ApiHttpClient): DeskWorkspaceState {
     const [session, setSession] = useState<Session | null>(null);
     const [chats, setChats] = useState<DeskChat[]>([]);
     const [error, setError] = useState<string | null>(null);
-    const [busy, setBusy] = useState(false);
+    const [busy, setBusyState] = useState(false);
+    const busyRef = useRef(false);
+    const setBusy = useCallback((value: boolean): void => {
+        busyRef.current = value;
+        setBusyState(value);
+    }, []);
+    const [loadingChats, setLoadingChats] = useState(false);
     const epoch = useRef(0);
+    const selectedWorkspace = useRef<Workspace | null>(null);
+    const selectedSession = useRef<Session | null>(null);
+    const workspaceList = useRef<Workspace[]>([]);
+    const saveWorkspaces = useCallback((rows: Workspace[]): void => {
+        workspaceList.current = rows;
+        setWorkspaces(rows);
+    }, []);
+    const chooseSession = useCallback((next: Session | null): void => {
+        selectedSession.current = next;
+        setSession(next);
+    }, []);
     const registration = useRef<{ fingerprint: string; key: IdempotencyKey } | null>(null);
     const sessionRequests = useRef(new Map<string, IdempotencyKey>());
+    const projectMutation = useRef(Promise.resolve());
+    const inProjectOrder = <T>(operation: () => Promise<T>): Promise<T> => {
+        const result = projectMutation.current.then(operation);
+        projectMutation.current = result.then(
+            () => undefined,
+            () => undefined,
+        );
+        return result;
+    };
     const selectWorkspace = useCallback(
         async (next: Workspace, preferredSession?: string): Promise<void> => {
             const token = ++epoch.current;
+            const sameProject = selectedWorkspace.current?.workspace_id === next.workspace_id;
+            const preferred = preferredSession ?? (sameProject ? selectedSession.current?.session_id : undefined);
+            selectedWorkspace.current = next;
             setWorkspace(next);
-            setSession(null);
-            setChats([]);
+            if (!sameProject) {
+                chooseSession(null);
+                setChats([]);
+            }
+            setLoadingChats(true);
             setError(null);
             try {
                 const rows = await readChats(api, next);
                 if (token !== epoch.current) return;
                 setChats(rows);
-                setSession(
-                    rows.find((row) => row.session.session_id === preferredSession)?.session ??
-                        rows.at(-1)?.session ??
-                        null,
+                chooseSession(
+                    rows.find((row) => row.session.session_id === preferred)?.session ?? rows[0]?.session ?? null,
                 );
             } catch (failure) {
                 if (token === epoch.current) setError(formatApiFailure(failure, "이전 대화를 불러오지 못했습니다."));
+            } finally {
+                if (token === epoch.current) setLoadingChats(false);
             }
         },
-        [api],
+        [api, chooseSession],
     );
     const refresh = useCallback(async (): Promise<void> => {
         try {
@@ -122,15 +123,23 @@ export function useDeskWorkspace(api: ApiHttpClient): DeskWorkspaceState {
             setConnected(true);
             setSettings(nextSettings);
             setHealth(nextHealth);
-            setWorkspaces(all);
+            saveWorkspaces(all);
             const selection = readSelection();
             const next = all.find((item) => item.workspace_id === selection.workspaceId) ?? all[0];
             if (next) await selectWorkspace(next, selection.sessionId);
+            else {
+                ++epoch.current;
+                selectedWorkspace.current = null;
+                setWorkspace(null);
+                chooseSession(null);
+                setChats([]);
+                setLoadingChats(false);
+            }
         } catch (failure) {
             if (failure instanceof ApiClientError && failure.kind === "unauthorized") setConnected(false);
             else setError(formatApiFailure(failure, "로컬 서비스에 연결하지 못했습니다."));
         }
-    }, [api, selectWorkspace]);
+    }, [api, selectWorkspace, chooseSession, saveWorkspaces]);
     useEffect(() => {
         void refresh();
     }, [refresh]);
@@ -152,7 +161,9 @@ export function useDeskWorkspace(api: ApiHttpClient): DeskWorkspaceState {
         persistNativeSelection(workspace.workspace_id, session?.session_id);
     }, [workspace, session]);
     const newChat = async (target: Workspace | null = workspace): Promise<void> => {
-        if (!target || busy) return;
+        if (!target || busyRef.current) return;
+        const token = ++epoch.current;
+        setLoadingChats(false);
         setBusy(true);
         setError(null);
         try {
@@ -163,29 +174,32 @@ export function useDeskWorkspace(api: ApiHttpClient): DeskWorkspaceState {
                 idempotency_key: requestKey,
             });
             sessionRequests.current.delete(target.workspace_id);
-            if (workspace?.workspace_id !== target.workspace_id) await selectWorkspace(target, created.session_id);
-            else setChats((rows) => [...rows, { session: created, runs: [], title: "새 대화" }]);
-            setSession(created);
+            if (token !== epoch.current) return;
+            await selectWorkspace(target, created.session_id);
         } catch (failure) {
             setError(formatApiFailure(failure, "새 대화를 시작하지 못했습니다."));
         } finally {
             setBusy(false);
         }
     };
-    const register = async (name: string, path: string): Promise<void> => {
-        const fingerprint = `${name}\0${path}`;
-        if (registration.current?.fingerprint !== fingerprint)
-            registration.current = { fingerprint, key: createIdempotencyKey() };
-        const created = await api.createWorkspace({
-            display_name: name,
-            root_path: path,
-            idempotency_key: registration.current.key,
+    const register = (name: string, path: string): Promise<void> =>
+        inProjectOrder(async () => {
+            const fingerprint = `${name}\0${path}`;
+            if (registration.current?.fingerprint !== fingerprint)
+                registration.current = { fingerprint, key: createIdempotencyKey() };
+            const created = await api.createWorkspace({
+                display_name: name,
+                root_path: path,
+                idempotency_key: registration.current.key,
+            });
+            registration.current = null;
+            saveWorkspaces([
+                ...workspaceList.current.filter((row) => row.workspace_id !== created.workspace_id),
+                created,
+            ]);
+            await selectWorkspace(created);
+            await newChat(created);
         });
-        registration.current = null;
-        setWorkspaces((rows) => [...rows.filter((row) => row.workspace_id !== created.workspace_id), created]);
-        await selectWorkspace(created);
-        await newChat(created);
-    };
     const refreshChats = useCallback(async (): Promise<void> => {
         if (!workspace) return;
         const token = epoch.current;
@@ -193,9 +207,43 @@ export function useDeskWorkspace(api: ApiHttpClient): DeskWorkspaceState {
             const rows = await readChats(api, workspace);
             if (token === epoch.current) setChats(rows);
         } catch (failure) {
-            setError(formatApiFailure(failure, "대화 목록을 갱신하지 못했습니다."));
+            if (token === epoch.current) setError(formatApiFailure(failure, "대화 목록을 갱신하지 못했습니다."));
         }
     }, [api, workspace]);
+    const removeProject = (target: Workspace): Promise<boolean> =>
+        inProjectOrder(async () => {
+            if (busyRef.current) return false;
+            setBusy(true);
+            setError(null);
+            try {
+                await api.deleteWorkspace(target.workspace_id);
+                const remaining = workspaceList.current.filter((item) => item.workspace_id !== target.workspace_id);
+                saveWorkspaces(remaining);
+                if (selectedWorkspace.current?.workspace_id === target.workspace_id) {
+                    const next = remaining[0];
+                    if (next) await selectWorkspace(next);
+                    else {
+                        ++epoch.current;
+                        selectedWorkspace.current = null;
+                        setWorkspace(null);
+                        chooseSession(null);
+                        setChats([]);
+                        setLoadingChats(false);
+                        try {
+                            localStorage.removeItem(SELECTION_KEY);
+                        } catch {
+                            /* Server list remains authoritative. */
+                        }
+                    }
+                }
+                return true;
+            } catch (failure) {
+                setError(formatApiFailure(failure, "프로젝트를 삭제하지 못했습니다."));
+                return false;
+            } finally {
+                setBusy(false);
+            }
+        });
     return {
         connected,
         health,
@@ -206,11 +254,18 @@ export function useDeskWorkspace(api: ApiHttpClient): DeskWorkspaceState {
         chats,
         error,
         busy,
+        loadingChats,
         refresh,
         selectWorkspace,
-        setSession,
+        setSession: (next): void => {
+            if (next.workspace_id !== selectedWorkspace.current?.workspace_id) return;
+            ++epoch.current;
+            setLoadingChats(false);
+            chooseSession(next);
+        },
         newChat,
         register,
+        removeProject,
         refreshChats,
         onStatus: (h: HealthResponse, s: SettingsResponse): void => {
             setHealth(h);
