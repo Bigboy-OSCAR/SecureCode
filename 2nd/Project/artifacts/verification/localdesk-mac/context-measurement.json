@@ -1,0 +1,137 @@
+{
+    "created_at": "2026-11-11T09:26:04.833Z",
+    "model": "qwen2.5-7b-instruct",
+    "method": "Real SDK/provider requests. Count-only counterfactual preserves each request's tools/history; selected R0 context is replaced by all source fixture files, stored runtime descriptors by their original log, and PDF page 2 by all pages. No raw baseline inference is sent. Request count is held constant; no accuracy or speed claim.",
+    "counter_checks": [
+        {
+            "name": "live llama.cpp exact count: korean chat",
+            "status": "PASS",
+            "detail": "counted 34 (exact), server prompt_tokens 34"
+        },
+        {
+            "name": "live llama.cpp exact count: tools and a tool result",
+            "status": "PASS",
+            "detail": "counted 203 (exact), server prompt_tokens 203"
+        }
+    ],
+    "live_checks": [
+        {
+            "name": "live sdk: R0 index ready",
+            "status": "PASS",
+            "detail": "{\"discovered\":54,\"indexed\":53,\"skipped\":1,\"failed\":0}"
+        },
+        {
+            "name": "live sdk: PDF parsed (metadata only)",
+            "status": "PASS",
+            "detail": "{\"schema_version\":\"1\",\"job_id\":\"pdf_b2b34342a7cbb200413f87d223dfd35ccdeceaff\",\"workspace_id\":\"ws_cff72e22a245c5d33816b49d\",\"pointer\":\"securecode://source/ws_cff72e22a245c5d33816b49d/src_5f92956a0a6e438a821bdbfd89937e7c?v=1\",\"state\":\"ready\",\"content_sha256\":\"382930ddb4bd9c9f99c949d38ca8368bf02cbd627338bc1a7516b88df604fda2\",\"parser_version\":\"pdf-text-v1+pypdf-6.21.4\",\"page_count\":3}"
+        },
+        {
+            "name": "live sdk: context.select puts R0 evidence in the plan",
+            "status": "PASS",
+            "detail": "{\"operation\":\"plan\",\"result\":{\"schema_version\":\"1\",\"index_revision\":1,\"omissions_truncated\":false,\"selected\":[{\"candidate_id\":\"cand_3ca867b85ea162c9f1ccd12621167335824ec6d1\",\"ref\":{\"kind\":\"symbol\",\"ca"
+        },
+        {
+            "name": "live sdk: answer from R0 evidence",
+            "status": "PASS",
+            "detail": "attempt 1/2 completed: 함수 `compute_invoice_total`는 주어진 `items` 리스트에서 각 항목의 가격과 수량을 곱하여 라인 총합을 구한 후, `tax_rate`로 부가세를 추가하여 청구서의 총액을 계산합니다. \n\n이 함수의 근거 파일은 `billing.py` 입니다. 아래는 해당 함수의 구현체입니다:\n\n```python\ndef compute_invoice_total(items, tax_rate):\n    \"\"\"Sum line totals, then add tax.\"\"\"\n    subtotal = sum(item.price * item.quantity for item in items)\n    return round(subtotal * (1 + tax_rate), 2)\n```\n\n이 함수는 `items` 리스트의 각 항목에 대해 `item.price * item.quantity`를 계산한 후, `subtotal` 변수에 합계를 누적합니다. 마지막으로, 부가세율 `tax_rate`를 1에 더한 값으로 총합 `subtotal`을 곱한 후, 소수점 아래 두 자리까지 반올림하여 반환합니다."
+        },
+        {
+            "name": "live sdk: approved command stored as a Runtime Pointer",
+            "status": "PASS",
+            "detail": "attempt 1/2 completed tools=run_command,runtime_search"
+        },
+        {
+            "name": "live sdk: partial re-read of the stored log",
+            "status": "PASS",
+            "detail": "attempt 1/2 run_command,runtime_search: 먼저 `node gen.js` 명령을 실행하겠습니다.\n\n다음으로, `runtime pointer`에서 `LOG-TARGET` 줄을 찾기 위해 `runtime_search`를 사용하겠습니다. `LOG-TARGET`가 일반적으로 어떤 값을 가리키는지 알려주지 않았지만, `BULK-LOG-1`부터 `BULK-LOG-12`까지의 줄을 검색하여 `total` 값을 찾아보겠습니다.\n\n`LOG-TARGET` 줄은 다음과 같습니다:\n\n```\nLOG-TARGET total=42\n```\n\n따라서, `total` 값은 **42**입니다."
+        },
+        {
+            "name": "live sdk: PDF page read and cited",
+            "status": "PASS",
+            "detail": "attempt 1/2 pdf_parse:completed | pdf_read_pages:failed | pdf_read_pages:completed => 결과는 다음과 같습니다:\n\n```\n둘째 페이지 PAGE-TWO-SENTINEL\n검색어 바다\n```\n\nSENTINEL 문자열은 `PAGE-TWO-SENTINEL`이고, 페이지 번호는 2페이지입니다.\n\n따라서, 인용은 다음과 같습니다:\n\n ``(PDF p.2)``\n\nSENTINEL 문자열은 `PAGE-TWO-SENTINEL`이며, 페이지 번호는 2페이지입니다."
+        },
+        {
+            "name": "live sdk: cancel stops the run",
+            "status": "PASS",
+            "detail": "{\"status\":\"cancelled\",\"finished_at\":\"2026-11-11T09:26:01.967Z\",\"reason_code\":\"CANCELLED\",\"message\":\"the run was cancelled\"}"
+        },
+        {
+            "name": "live sdk: unusable explicit choice refused before the model",
+            "status": "PASS",
+            "detail": "404 NOT_FOUND"
+        },
+        {
+            "name": "live sdk: canonical transcript holds no bulk log or unrelated files",
+            "status": "PASS",
+            "detail": "171585 bytes scanned"
+        }
+    ],
+    "fixture_bytes": {
+        "source": 3707,
+        "log": 908868,
+        "pdf_text": 141
+    },
+    "requests": [
+        {
+            "request": 1,
+            "protected_tokens": 3384,
+            "raw_baseline_tokens": 4692,
+            "protected_request_bytes": 11674,
+            "raw_baseline_request_bytes": 15387
+        },
+        {
+            "request": 2,
+            "protected_tokens": 3715,
+            "raw_baseline_tokens": 5023,
+            "protected_request_bytes": 12889,
+            "raw_baseline_request_bytes": 16602
+        },
+        {
+            "request": 3,
+            "protected_tokens": 4208,
+            "raw_baseline_tokens": 533950,
+            "protected_request_bytes": 14128,
+            "raw_baseline_request_bytes": 945793
+        },
+        {
+            "request": 4,
+            "protected_tokens": 4466,
+            "raw_baseline_tokens": 534208,
+            "protected_request_bytes": 14976,
+            "raw_baseline_request_bytes": 946641
+        },
+        {
+            "request": 5,
+            "protected_tokens": 4611,
+            "raw_baseline_tokens": 534353,
+            "protected_request_bytes": 15387,
+            "raw_baseline_request_bytes": 947052
+        },
+        {
+            "request": 6,
+            "protected_tokens": 4778,
+            "raw_baseline_tokens": 534520,
+            "protected_request_bytes": 15915,
+            "raw_baseline_request_bytes": 947580
+        },
+        {
+            "request": 7,
+            "protected_tokens": 4959,
+            "raw_baseline_tokens": 534701,
+            "protected_request_bytes": 16549,
+            "raw_baseline_request_bytes": 948214
+        },
+        {
+            "request": 8,
+            "protected_tokens": 5191,
+            "raw_baseline_tokens": 534905,
+            "protected_request_bytes": 17350,
+            "raw_baseline_request_bytes": 948922
+        }
+    ],
+    "request_count": 8,
+    "protected_max_input_tokens": 5191,
+    "raw_max_input_tokens": 534905,
+    "protected_cumulative_input_tokens": 35312,
+    "raw_cumulative_input_tokens": 3216352
+}

@@ -19,3 +19,13 @@
 ## 후속 증거
 
 최종 자동 시험·실 모델·화면 조작·패키징 결과는 작업 기록과 `docs/release/ACCEPTANCE_REPORT.md`에 연결한다. 현재 최종 인수는 미완료다.
+
+## 실제 모델 및 입력량 측정
+
+- Qwen2.5 7B Instruct Q4_K_M의 실제 llama.cpp provider + SDK 통합 12개 검사 통과. 모델 자리의 fixture 없이 코드 근거 답변, 승인 명령, Runtime 저장/검색, PDF 지정 페이지, 취소, 부적합 자료 차단을 실행했다.
+- 최초 실행은 도구 호출 3개 항목이 실패했다. llama.cpp grammar 생성기가 도구 정의의 큰 maxLength 반복 제한을 처리하지 못한 원인을 확인했다. 서버에 보내는 generation hint만 제거하고 SDK/실행 검증은 유지했으며, 변환 후 전송 본문을 예산 게이트가 계수한다. 수정 후 동일 시험은 첫 시도에 전부 통과했다.
+- 계수 대조: 한글 chat 34=34, 도구 정의/호출 이력 203=203 (계수기 대 실제 provider usage).
+- 실제 SDK 요청 8회의 최대 입력 5,191토큰, 누적 입력 35,312토큰. 동일 프레임/도구/이력에 선택 코드 대신 전체 fixture 소스, 저장 descriptor 대신 원래 로그, PDF 2쪽 대신 전체 쪽을 넣은 계수 전용 대조군은 최대 534,905, 누적 3,216,352토큰이다. 대조군은 모델에 추론 요청하지 않았으며 정확도·실행속도 향상을 주장하지 않는다.
+- 재현: `SECURECODE_LIVE_SMOKE=1 node --import tsx scripts/acceptance/measureContext.ts` (로컬 llama.cpp 실행 및 `.env` 설정 필요).
+- 최종 상세: [context-measurement.json](../../artifacts/verification/localdesk-mac/context-measurement.json). 최초 실패 기록: [context-measurement-initial-failure.json](../../artifacts/verification/localdesk-mac/context-measurement-initial-failure.json).
+- native 앱에서 폴더 선택→프로젝트 등록→별도 시험 폴더의 5언어 1,009개 파일 색인(revision 1)→실제 질문/답변·근거 표시를 computer use로 확인했다. 전체 화면 인수는 계속 진행 중이다.
