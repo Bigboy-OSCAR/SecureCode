@@ -23,26 +23,6 @@
     display: inline-block;
     vertical-align: middle;
 }
-.desk-titlebar {
-    height: 44px;
-    min-height: 44px;
-    background: #111314;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    gap: 16px;
-    color: #a1abb1;
-    font-size: 12px;
-    border-bottom: 1px solid #1e2123;
-}
-.desk-titlebar > span {
-    flex: 1;
-    text-align: center;
-}
-.desk-traffic {
-    display: flex;
-    gap: 8px;
-}
 .desk-body {
     display: flex;
     flex: 1;
@@ -126,6 +106,9 @@
 }
 .desk-icon-button:hover {
     background: #272b2e;
+}
+.desk-sidebar-toggle {
+    display: none;
 }
 .desk-projects {
     min-height: 0;

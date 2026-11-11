@@ -76,21 +76,6 @@ export function LiveApp(): React.JSX.Element {
                 본문으로 건너뛰기
             </a>
             <div className={`desk-shell ${sidebarOpen ? "sidebar-open" : ""}`}>
-                <div className="desk-titlebar">
-                    <div className="desk-traffic">
-                        <DeskIcon name="imgEllipse" />
-                        <DeskIcon name="imgEllipse1" />
-                        <DeskIcon name="imgEllipse2" />
-                    </div>
-                    <span>LocalDesk / 개인 로컬 워크스페이스</span>
-                    <button
-                        className="desk-icon-button"
-                        aria-label="프로젝트 패널"
-                        onClick={() => setSidebarOpen((value) => !value)}
-                    >
-                        <DeskIcon name="imgIconPanel" />
-                    </button>
-                </div>
                 <div className="desk-body">
                     <DeskSidebar
                         modelCount={models.models?.items.length ?? null}
@@ -145,6 +130,13 @@ export function LiveApp(): React.JSX.Element {
                                 <span>{modelName}</span>
                                 <DeskIcon name="imgIconDown1" />
                                 <small>{modelLoading ? "불러오는 중" : modelReady ? "실행 중" : "선택"}</small>
+                            </button>
+                            <button
+                                className="desk-icon-button desk-sidebar-toggle"
+                                aria-label="프로젝트 패널"
+                                onClick={() => setSidebarOpen((value) => !value)}
+                            >
+                                <DeskIcon name="imgIconPanel" />
                             </button>
                         </header>
                         {desk.error ? (
