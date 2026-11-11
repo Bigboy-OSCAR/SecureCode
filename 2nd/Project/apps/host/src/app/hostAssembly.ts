@@ -49,6 +49,7 @@ export interface HostAssemblyOptions {
     clock?: Clock;
     sseKeepAliveMs?: number;
     modelProfiles?: ModelProfile[];
+    modelServers?: Pick<ModelServers, "load" | "stop">;
 }
 
 export interface AssembledHost {
@@ -130,7 +131,11 @@ export async function assembleHost(options: HostAssemblyOptions): Promise<Assemb
         assembler,
         sessionContext,
     });
-    const modelServers = new ModelServers();
+    const modelServers = options.modelServers ?? new ModelServers();
+    let stopping = false;
+    const requireRunning = (): void => {
+        if (stopping) throw new Error("host is stopping");
+    };
     if (options.modelProfiles) {
         models = new ModelManager({
             profiles: options.modelProfiles,
@@ -138,9 +143,13 @@ export async function assembleHost(options: HostAssemblyOptions): Promise<Assemb
             activeModelId: null,
             hasActiveRuns: () => runs.hasActiveRuns(),
             activate: async (profile) => {
+                requireRunning();
                 await currentRuntime.dispose();
+                requireRunning();
                 await modelServers.load(profile);
+                requireRunning();
                 await configureModelCounter(hostConfig, profile);
+                requireRunning();
                 hostConfig.providerId = "openai-compatible";
                 hostConfig.modelId = profile.model_id;
                 runtimeConfig.providerBaseUrl = profile.baseUrl;
@@ -148,7 +157,7 @@ export async function assembleHost(options: HostAssemblyOptions): Promise<Assemb
                 runtimeConfig.maxOutputTokens = Math.min(runtimeConfig.maxOutputTokens, 4096);
                 options.credentials.apiKey = profile.apiKey;
                 assembler.setModelBudget(runtimeConfig.contextLimitTokens, runtimeConfig.maxOutputTokens);
-                currentRuntime = await options.runtimeFactory({
+                const nextRuntime = await options.runtimeFactory({
                     ...runtimeOptions,
                     providerId: hostConfig.providerId,
                     modelId: profile.model_id,
@@ -162,6 +171,11 @@ export async function assembleHost(options: HostAssemblyOptions): Promise<Assemb
                         requireExactCount: true,
                     }),
                 });
+                if (stopping) {
+                    await nextRuntime.dispose();
+                    throw new Error("host is stopping");
+                }
+                currentRuntime = nextRuntime;
             },
         });
     }
@@ -205,9 +219,12 @@ export async function assembleHost(options: HostAssemblyOptions): Promise<Assemb
         bootstrapCodeGenerated: runtimeConfig.bootstrapCode === null,
         runtime,
         shutdown: async () => {
-            await new Promise<void>((resolve) => server.close(() => resolve()));
-            await runtime.dispose();
+            stopping = true;
+            // Stop accepting requests, then cancel a load before waiting for its HTTP response.
+            const closed = new Promise<void>((resolve) => server.close(() => resolve()));
             await modelServers.stop();
+            await runtime.dispose();
+            await closed;
         },
     };
 }

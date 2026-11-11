@@ -38,6 +38,8 @@ export interface TestHostOptions {
     /** Real HttpContextServiceClient for tests that start the context-service. */
     contextClient?: ContextServiceClient;
     systemPrompt?: string;
+    modelProfiles?: HostAssemblyOptions["modelProfiles"];
+    modelServers?: HostAssemblyOptions["modelServers"];
 }
 
 export interface TestHost {
@@ -91,6 +93,8 @@ export async function startTestHost(options: TestHostOptions): Promise<TestHost>
         gate: options.gate,
         runtimePointers: options.runtimePointers === undefined ? new FixtureRuntimeService() : options.runtimePointers,
         ...(options.providerFetch ? { providerFetch: options.providerFetch } : {}),
+        ...(options.modelProfiles ? { modelProfiles: options.modelProfiles } : {}),
+        ...(options.modelServers ? { modelServers: options.modelServers } : {}),
         sseKeepAliveMs: 200,
     });
     await new Promise<void>((resolve) => host.server.listen(0, "127.0.0.1", resolve));
