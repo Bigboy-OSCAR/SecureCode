@@ -5,6 +5,7 @@ import type { ApiHttpClient } from "../../../api/httpClient.js";
 import type { HttpRunClient } from "../../../api/httpRunClient.js";
 import { useRunController } from "../../chat/hooks/useRunController.js";
 import { useConversationActions } from "../../chat/hooks/useConversationActions.js";
+import { useChatScroll } from "../../chat/hooks/useChatScroll.js";
 import { AnswerView } from "../../chat/components/AnswerView.js";
 import { ToolHistory } from "../../chat/components/ToolHistory.js";
 import { ApprovalCard } from "../../approvals/components/ApprovalCard.js";
@@ -52,6 +53,7 @@ export function DeskChat({
     const [history, setHistory] = useState<RunSnapshot[]>([]);
     const [restoreError, setRestoreError] = useState<string | null>(null);
     const [restoring, setRestoring] = useState(true);
+    const chatScroll = useChatScroll(session.session_id, restoring);
     const lastSnapshot = useRef<RunSnapshot | null>(null);
     const run = state.snapshot;
     useEffect(() => {
@@ -103,7 +105,12 @@ export function DeskChat({
     const preceding = history.filter((item) => item.run_id !== run?.run_id);
     return (
         <section className="desk-chat" id="screen-chat" data-testid="screen-chat" aria-label="대화 · 실행 이력">
-            <div className="desk-messages" aria-busy={restoring}>
+            <div
+                className="desk-messages"
+                aria-busy={restoring}
+                ref={chatScroll.messagesRef}
+                onScroll={chatScroll.onScroll}
+            >
                 {restoring ? <p role="status">대화를 불러오는 중…</p> : null}
                 {restoreError ? (
                     <Alert title="대화를 확인하세요" variant="error">
@@ -161,10 +168,11 @@ export function DeskChat({
                 <form
                     className="desk-composer"
                     onSubmit={(event) => {
-                        if (!canSend || restoring) {
+                        if (!canSend || restoring || !actions.canSubmit) {
                             event.preventDefault();
                             return;
                         }
+                        chatScroll.followLatest();
                         actions.submit(event);
                     }}
                 >
