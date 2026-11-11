@@ -3,11 +3,12 @@ import { once } from "node:events";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { createInterface } from "node:readline";
-import { devDataDir, claimInstance, releaseInstance, stopRequestPath } from "../dev/state.js";
+import { claimInstance, releaseInstance, stopRequestPath } from "../dev/state.js";
 import { startServices, type Services } from "../lib/services.js";
 import { findFreePorts } from "../lib/ports.js";
 import { WORK_ROOT } from "../lib/processes.js";
 import { startDesktopUi } from "./uiServer.js";
+import { desktopDataDir } from "./dataDirectory.js";
 
 const controller = new AbortController();
 for (const signal of ["SIGTERM", "SIGINT", "SIGHUP"] as const) {
@@ -57,7 +58,7 @@ const stopWatch = setInterval(() => {
     if (dataDir && instance && existsSync(stopRequestPath(dataDir, instance))) controller.abort();
 }, 150);
 try {
-    dataDir = devDataDir();
+    dataDir = desktopDataDir();
     instance = claimInstance(dataDir);
     const ports = await findFreePorts();
     // The host permits this exact UI origin, even when the developer ports are occupied.
