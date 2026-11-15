@@ -74,3 +74,64 @@
    ```
 
 5. 예상 답은 **"hot"**입니다. **답변에 사용한 근거**에서 `archive.js`와 줄 범위를 확인합니다. 웹 도감에서 **물가 → 방파제의 잔물결**을 선택하면 이 규칙이 적용된 **레벨 주의 · -6 dBFS**를 볼 수 있습니다.
+
+## 부록 · 대화에서 개별 도구의 실행 이력 확인하기
+
+앞의 네 단계에서 사용한 **같은 대화**에서 이어 갑니다. 한 질문의 답변이 끝나면 **이 답변의 작업**을 펼치세요. 각 줄의 한글 이름과 **완료** 표시로 어떤 도구가 실행되었는지 확인할 수 있습니다. **상세 기록**에는 해당 작업의 요약이 있습니다.
+
+아래 질문 중 `POINTER`가 있는 경우에는 보내기 전에 자기 화면의 주소로 바꿉니다. PDF는 **3단계**의 답변, 실행 기록은 **1단계 6번**의 답변으로 스크롤하세요. 각각 **답변에 사용한 근거**에서 `securecode://`부터 `?v=1`까지 복사합니다. 바로 뒤의 공백·가운뎃점(`·`)·revision 표시는 빼세요. 등록을 갱신해서 버전 값이 달라졌다면 화면에 표시된 버전을 그대로 복사합니다. 질문 속 대문자 `POINTER` 자리에 그 주소만 붙여 넣습니다.
+
+### A. 파일 목록 → 검색 → 한 줄 읽기
+
+아래 질문을 보냅니다. 파일을 찾는 범위는 이 프로젝트의 `reference` 폴더이고, 읽을 곳은 장비 설정의 5번째 줄입니다.
+
+```text
+Call list_files on reference. Then call search_file for wind_guard in reference/recorder.json and read_file for line 5 only. What wind guard is listed? Answer in Korean if possible.
+```
+
+**이 답변의 작업**에 **파일 목록 · 완료**, **파일 검색 · 완료**, **파일 부분 읽기 · 완료**가 보이고, 답에는 **double fleece**가 나옵니다.
+
+### B. PDF 파싱 → 상태 확인 → 검색 → 한 쪽 읽기
+
+`POINTER`를 **3단계에서 수첩 2쪽을 읽은 답변**의 근거 주소로 바꿔 보냅니다.
+
+```text
+Use pdf_parse for POINTER. Call pdf_status with its returned job_id. Use pdf_search for "The return cue is". Call pdf_read_pages with only pointer, start_page 2 and end_page 2. Omit cursor. What is the return cue? Answer in Korean if possible.
+```
+
+**이 답변의 작업**에서 **PDF 파싱**, **PDF 상태 확인**, **PDF 검색**, **PDF 페이지 읽기** 각각의 **완료**를 확인합니다. 답은 **AMBER REED**, **답변에 사용한 근거**는 **원본 PDF 2쪽**입니다. 위 질문은 처음 읽을 때 이어 읽기 값(`cursor`)을 생략하도록 지정합니다. 검증 때 네 도구가 각각 한 번에 완료됐습니다. 모델이 재시도하면 완료 행과 쪽수 근거를 확인하세요. 본문의 **3. PDF** 절차로 같은 페이지를 직접 열 수도 있습니다.
+
+### C. 실행 기록 검색 → 요약 한 줄 읽기
+
+`POINTER`를 **1단계에서 192개 구간을 확인한 답변**의 근거 주소로 바꿔 보냅니다. 줄 번호와 중괄호 안의 영문은 그대로 둡니다.
+
+```text
+Call runtime_search on POINTER for CAPTURE_SUMMARY. Then call runtime_read with the same pointer and selector {"type":"line","start":193,"end":193}. Omit cursor. Report the window count in Korean if possible.
+```
+
+**이 답변의 작업**에서 **실행 결과 검색 · 완료**, **실행 결과 부분 읽기 · 완료**를 확인합니다. 답에는 **192개**(`windows=192`), **답변에 사용한 근거**에는 원본 바이트 범위 **10322–10377**이 나옵니다.
+
+### D. R0 코드 검색 → 검색한 함수의 원문 읽기
+
+본문 4단계에서 Fieldnote의 인덱스를 만든 다음 아래 질문을 보냅니다. 모델이 함수명으로 검색하고, 검색 결과에 들어 있는 후보 번호와 인덱스 버전으로 실제 원문을 읽습니다.
+
+```text
+Call code_search with query classifyPeak and limit 1. Call code_read using the exact candidate_id and index_revision returned. Which label does the function return at -6 dBFS? Answer in Korean if possible.
+```
+
+**이 답변의 작업**에 **R0 코드 검색 · 완료**와 **R0 원문 읽기 · 완료**가 모두 보입니다. 답은 **hot**이며, **답변에 사용한 근거**의 **archive.js:2-8**은 해당 함수가 있는 파일과 줄입니다.
+
+### E. 파일 쓰기 승인 → 저장한 한 줄 확인하기
+
+이 단계에서는 Fieldnote 폴더에 실습용 `review-slip.txt` 한 개를 만듭니다. 처음 배포된 프로젝트에는 이 파일이 없습니다. 같은 이름으로 보관 중인 파일이 있다면 질문 속 파일명을 새 이름으로 바꾸세요.
+
+```text
+Use write_file to create review-slip.txt with exactly the text FIELDNOTE REVIEWED. Then use read_file to verify the saved text. Answer in Korean if possible.
+```
+
+1. **이 파일 변경을 허용할까요?**가 뜨면 대상이 **write review-slip.txt**이고 내용이 **FIELDNOTE REVIEWED**인지 확인하고 **허용**을 누릅니다. 새 이름을 사용했다면 승인 카드에도 그 이름이 보여야 합니다. 기존 파일을 덮어쓰게 되는 경우에는 **거절**을 누릅니다.
+2. **이 답변의 작업**에 **파일 쓰기 · 완료**, **파일 부분 읽기 · 완료**가 차례로 보이고, 답에는 방금 저장한 **FIELDNOTE REVIEWED**가 나옵니다. **답변에 사용한 근거**의 원본 범위는 **byte 0–18**입니다. Finder에서 Fieldnote 폴더의 실습 파일을 열어 한 줄을 직접 대조할 수 있습니다.
+
+## 시연 검증 기록
+
+2026년 11월 15일 이 Mac의 Local Desk에서 **Qwen 2.5 · 7B**를 선택하고 본문과 부록의 질문을 전송했습니다. 최종 프로젝트의 인덱스는 **발견 10 · 색인 3 · 제외 7 · 실패 0**이었습니다. 본문 네 단계의 답변에서 각각 실행 로그의 193번째 줄, 설정 파일의 5번째 줄, PDF 2쪽, `archive.js`의 2–8번째 줄을 근거와 대조했습니다. 부록까지 포함해 서로 다른 도구 13개의 **완료** 행을 확인했습니다. 같은 질문도 답변의 문장이나 작업 횟수는 달라질 수 있으니, 시연에서는 각 단계에 적힌 값과 출처를 확인하세요.
