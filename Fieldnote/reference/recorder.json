@@ -1,0 +1,11 @@
+{
+  "kit": "Reed-04",
+  "profile": {
+    "sample_rate_hz": 48000,
+    "wind_guard": "double fleece"
+  },
+  "survey": {
+    "track_ids": ["FN-01", "FN-02", "FN-03", "FN-04"],
+    "windows_per_track": 48
+  }
+}
