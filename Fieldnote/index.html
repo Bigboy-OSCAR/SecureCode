@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f2e9">
+  <title>Fieldnote — 현장 소리 도감</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./archive.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="masthead"><div class="wrap masthead-inner">
+    <div class="brand" lang="en"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>Fieldnote</div>
+    <span class="edition" lang="en">ACOUSTIC FIELD ARCHIVE</span>
+  </div></header>
+  <main class="wrap">
+    <div class="intro">
+      <div><h1>현장 소리 도감<span>.</span></h1>
+      <p>네 곳의 풍경을 담은 합성 음원을 듣고, 검토한 기록에 표시하세요.</p></div>
+      <div class="review-count">검토 완료 <strong id="review-count">0 / 4</strong></div>
+    </div>
+    <div class="workspace">
+      <article class="inspector" aria-label="선택한 소리 기록">
+        <section class="player" aria-labelledby="track-title">
+          <div class="player-meta"><span class="tape"><i aria-hidden="true"></i> <b id="track-id"></b></span><span>MONO · 22.05 kHz</span></div>
+          <h2 id="track-title"></h2>
+          <p class="track-location" id="track-location"></p>
+          <div class="wave-plot"><canvas id="waveform" role="img" aria-label="선택한 합성 음원의 6초 파형"></canvas></div>
+          <div class="axis" aria-hidden="true"><span>0 s</span><span>2 s</span><span>4 s</span><span>6 s</span></div>
+          <div class="transport"><button type="button" id="play" aria-pressed="false" disabled><span class="play-icon" aria-hidden="true"></span><span id="play-label">샘플 재생</span></button>
+            <span class="clock"><span id="elapsed">00:00</span> <span>/ 00:06</span></span></div>
+        </section>
+        <section class="notes" aria-labelledby="note-title">
+          <div class="note-heading"><h3 id="note-title">관찰 메모</h3><span id="peak" class="peak"></span></div>
+          <p id="note"></p>
+          <label class="review"><input type="checkbox" id="reviewed">이 기록 검토 완료</label>
+        </section>
+      </article>
+      <section class="catalogue" aria-labelledby="catalogue-title">
+        <div class="catalogue-heading"><h2 id="catalogue-title">기록 목록</h2><span id="result-count"></span></div>
+        <div class="filters" id="filters" role="group" aria-label="환경 필터"></div>
+        <div id="records" class="records" role="group" aria-label="소리 기록 선택"></div>
+      </section>
+    </div>
+    <p id="status" role="status" class="status"></p>
+  </main>
+</body>
+</html>
