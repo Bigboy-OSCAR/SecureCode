@@ -2,7 +2,8 @@
 
 const sampleRate = 22050;
 const duration = 6;
-const storageKey = "fieldnote.reviewed.v1";
+const legacyReviewKey = "fieldnote.reviewed.v1";
+const reviewPrefix = "fieldnote.reviewed.v2.";
 const byId = id => document.getElementById(id);
 const wave = byId("waveform");
 const playButton = byId("play");
@@ -15,11 +16,23 @@ let habitat = "전체";
 let reviewed = new Set();
 let context, source, frame, startedAt;
 
-try {
-  const saved = JSON.parse(localStorage.getItem(storageKey) || "[]");
-  if (Array.isArray(saved)) reviewed = new Set(saved.filter(id => recordings.some(row => row.id === id)));
-} catch {
-  byId("status").textContent = "저장한 검토 상태를 열 수 없어 새로 시작합니다.";
+function loadReviews() {
+  try {
+    const raw = localStorage.getItem(legacyReviewKey);
+    let legacy = [];
+    if (raw) {
+      try { legacy = JSON.parse(raw); } catch { /* An unreadable old list has no usable flags. */ }
+    }
+    const saved = new Set();
+    for (const { id } of recordings) {
+      const flag = localStorage.getItem(reviewPrefix + id);
+      const checked = flag === null ? Array.isArray(legacy) && legacy.includes(id) : flag === "1";
+      if (checked) saved.add(id);
+    }
+    reviewed = saved;
+  } catch {
+    byId("status").textContent = "브라우저에 저장된 검토 상태를 읽을 수 없습니다.";
+  }
 }
 
 // Each preview's waveform and playback are derived from the same mono samples.
@@ -155,9 +168,13 @@ function showDetails() {
   byId("note").textContent = selected.note;
   byId("peak").textContent = (hot ? "레벨 주의" : "레벨 안정") + " · " + selected.peakDb + " dBFS";
   byId("peak").classList.toggle("hot", hot);
+  showReviewState();
+  showWave();
+}
+
+function showReviewState() {
   byId("reviewed").checked = reviewed.has(selected.id);
   byId("review-count").textContent = reviewed.size + " / " + recordings.length;
-  showWave();
 }
 
 function visibleRecords() {
@@ -217,11 +234,18 @@ byId("reviewed").addEventListener("change", event => {
   if (event.target.checked) reviewed.add(selected.id);
   else reviewed.delete(selected.id);
   try {
-    localStorage.setItem(storageKey, JSON.stringify([...reviewed]));
+    localStorage.setItem(reviewPrefix + selected.id, event.target.checked ? "1" : "0");
   } catch {
     byId("status").textContent = "현재 창에 검토 상태를 표시했습니다. 브라우저가 영구 저장을 허용하지 않습니다.";
   }
-  byId("review-count").textContent = reviewed.size + " / " + recordings.length;
+  showReviewState();
+  showList();
+});
+
+window.addEventListener("storage", event => {
+  if (event.key !== null && event.key !== legacyReviewKey && !event.key.startsWith(reviewPrefix)) return;
+  loadReviews();
+  showReviewState();
   showList();
 });
 
@@ -229,6 +253,7 @@ window.addEventListener("resize", () => {
   if (!source) showWave();
   showList();
 });
+loadReviews();
 showDetails();
 showList();
 playButton.disabled = false;
