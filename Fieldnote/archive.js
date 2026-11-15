@@ -1,6 +1,10 @@
 // Peak level is measured in dBFS. A sample at the threshold needs attention.
 function classifyPeak(peakDb) {
-  return peakDb >= -6 ? "hot" : "normal";
+  // At exactly -6 dBFS the peak is already hot.
+  if (peakDb >= -6) {
+    return "hot";
+  }
+  return "normal";
 }
 
 const recordings = [
